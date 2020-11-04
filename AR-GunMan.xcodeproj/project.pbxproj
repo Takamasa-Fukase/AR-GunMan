@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		00A6965B4FCC1456D7FB68EA /* Pods_AR_GunMan_AR_GunManUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C6F9F6D2421B8A957F5120A /* Pods_AR_GunMan_AR_GunManUITests.framework */; };
 		59940B882552F54900EC20C1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 59940B872552F54900EC20C1 /* GoogleService-Info.plist */; };
+		59940BAC2552FAA600EC20C1 /* RegisterNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59940BAB2552FAA600EC20C1 /* RegisterNameViewController.swift */; };
+		59940BB12552FAAF00EC20C1 /* RegisterNameViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59940BB02552FAAF00EC20C1 /* RegisterNameViewController.storyboard */; };
 		59D2D4D92552DE66006DDB70 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2D4D82552DE66006DDB70 /* AppDelegate.swift */; };
 		59D2D4E52552DE67006DDB70 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59D2D4E32552DE67006DDB70 /* LaunchScreen.storyboard */; };
 		59D2D4F02552DE67006DDB70 /* AR_GunManTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2D4EF2552DE67006DDB70 /* AR_GunManTests.swift */; };
@@ -59,6 +61,8 @@
 		3C6F9F6D2421B8A957F5120A /* Pods_AR_GunMan_AR_GunManUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_GunMan_AR_GunManUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4280580740F2443B66781090 /* Pods_AR_GunMan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_GunMan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		59940B872552F54900EC20C1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		59940BAB2552FAA600EC20C1 /* RegisterNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterNameViewController.swift; sourceTree = "<group>"; };
+		59940BB02552FAAF00EC20C1 /* RegisterNameViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RegisterNameViewController.storyboard; sourceTree = "<group>"; };
 		59D2D4D52552DE66006DDB70 /* AR-GunMan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AR-GunMan.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		59D2D4D82552DE66006DDB70 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		59D2D4E42552DE67006DDB70 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -264,6 +268,8 @@
 		59D2D5732552E4A9006DDB70 /* RegisterName */ = {
 			isa = PBXGroup;
 			children = (
+				59940BAB2552FAA600EC20C1 /* RegisterNameViewController.swift */,
+				59940BB02552FAAF00EC20C1 /* RegisterNameViewController.storyboard */,
 			);
 			path = RegisterName;
 			sourceTree = "<group>";
@@ -402,6 +408,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				59D2D55D2552E2CC006DDB70 /* pistol-fire.mp3 in Resources */,
+				59940BB12552FAAF00EC20C1 /* RegisterNameViewController.storyboard in Resources */,
 				59D2D5942552E718006DDB70 /* SwitchWeaponCell.xib in Resources */,
 				59D2D55B2552E2CC006DDB70 /* pistol-out-bullets.mp3 in Resources */,
 				59D2D55F2552E2CC006DDB70 /* pistol-reload.mp3 in Resources */,
@@ -549,6 +556,7 @@
 				59D2D53A2552E1D2006DDB70 /* Extension+Storyboard.swift in Sources */,
 				59D2D5932552E718006DDB70 /* SwitchWeaponCell.swift in Sources */,
 				59D2D59E2552E751006DDB70 /* CalcuModel.swift in Sources */,
+				59940BAC2552FAA600EC20C1 /* RegisterNameViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
