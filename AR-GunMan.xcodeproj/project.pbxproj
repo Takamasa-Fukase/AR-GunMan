@@ -143,8 +143,9 @@
 			children = (
 				59D2D4D82552DE66006DDB70 /* AppDelegate.swift */,
 				59D2D5392552E1D2006DDB70 /* Extension+Storyboard.swift */,
-				59D2D4DC2552DE66006DDB70 /* ViewController.swift */,
-				59D2D4DE2552DE66006DDB70 /* Main.storyboard */,
+				59D2D56E2552E3B8006DDB70 /* Model */,
+				59D2D56F2552E3C0006DDB70 /* ViewModel */,
+				59D2D5702552E3C7006DDB70 /* View */,
 				59D2D5462552E2CC006DDB70 /* Resources */,
 				59D2D5412552E24D006DDB70 /* art.scnassets */,
 				59D2D5692552E31D006DDB70 /* Assets.xcassets */,
@@ -190,6 +191,61 @@
 				59D2D5542552E2CC006DDB70 /* pistol-reload.mp3 */,
 			);
 			path = mp3;
+			sourceTree = "<group>";
+		};
+		59D2D56E2552E3B8006DDB70 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		59D2D56F2552E3C0006DDB70 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		59D2D5702552E3C7006DDB70 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				59D2D5712552E448006DDB70 /* Top */,
+				59D2D5722552E458006DDB70 /* Game */,
+				59D2D5732552E4A9006DDB70 /* RegisterName */,
+				59D2D5742552E4D1006DDB70 /* WorldRanking */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		59D2D5712552E448006DDB70 /* Top */ = {
+			isa = PBXGroup;
+			children = (
+				59D2D4DC2552DE66006DDB70 /* ViewController.swift */,
+				59D2D4DE2552DE66006DDB70 /* Main.storyboard */,
+			);
+			path = Top;
+			sourceTree = "<group>";
+		};
+		59D2D5722552E458006DDB70 /* Game */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
+		59D2D5732552E4A9006DDB70 /* RegisterName */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = RegisterName;
+			sourceTree = "<group>";
+		};
+		59D2D5742552E4D1006DDB70 /* WorldRanking */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = WorldRanking;
 			sourceTree = "<group>";
 		};
 		9181646D3CDAAE6BA576903B /* Frameworks */ = {
