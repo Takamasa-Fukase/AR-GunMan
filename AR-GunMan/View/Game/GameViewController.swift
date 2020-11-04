@@ -1,6 +1,6 @@
 //
 //  GameViewController.swift
-//  ARPlay
+//  AR-GunMan
 //
 //  Created by 深瀬 貴将 on 2020/08/15.
 //  Copyright © 2020 fukase. All rights reserved.
@@ -33,7 +33,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
     
     var currentWeaponIndex = 0
     
-    private var presenter: TargetModePresenter?
+    private var presenter: GamePresenter?
     
     @IBOutlet weak var sceneView: ARSCNView!
     @IBOutlet weak var pistolBulletsCountImageView: UIImageView!
@@ -63,7 +63,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         targetNode?.physicsBody = SCNPhysicsBody(type: .dynamic, shape: shape)
         targetNode?.physicsBody?.isAffectedByGravity = false
         
-        self.presenter = TargetModePresenter(listener: self)
+        self.presenter = GamePresenter(listener: self)
         presenter?.viewDidLoad()
         
     }
@@ -284,7 +284,7 @@ extension GameViewController: SwitchWeaponDelegate {
     
 }
 
-extension GameViewController: TargetModeInterface {
+extension GameViewController: GameInterface {
     func addPistol() {
         //バズーカを削除
         if let detonator = self.sceneView.scene.rootNode.childNode(withName: "bazookaParent", recursively: false) {

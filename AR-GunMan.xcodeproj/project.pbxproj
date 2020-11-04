@@ -29,6 +29,7 @@
 		59D2D5952552E718006DDB70 /* SwitchWeaponViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2D5912552E718006DDB70 /* SwitchWeaponViewController.swift */; };
 		59D2D5962552E718006DDB70 /* SwitchWeaponViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59D2D5922552E718006DDB70 /* SwitchWeaponViewController.storyboard */; };
 		59D2D59E2552E751006DDB70 /* CalcuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2D59D2552E751006DDB70 /* CalcuModel.swift */; };
+		59D2D5A42552ECD8006DDB70 /* TargetModePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2D5A32552ECD8006DDB70 /* TargetModePresenter.swift */; };
 		5F0F53972765C07884597855 /* Pods_AR_GunManTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82CB4F049BB35C36EAA5A632 /* Pods_AR_GunManTests.framework */; };
 		D54734259EA1C7BF11A28908 /* Pods_AR_GunMan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4280580740F2443B66781090 /* Pods_AR_GunMan.framework */; };
 /* End PBXBuildFile section */
@@ -83,6 +84,7 @@
 		59D2D5912552E718006DDB70 /* SwitchWeaponViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchWeaponViewController.swift; sourceTree = "<group>"; };
 		59D2D5922552E718006DDB70 /* SwitchWeaponViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SwitchWeaponViewController.storyboard; sourceTree = "<group>"; };
 		59D2D59D2552E751006DDB70 /* CalcuModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalcuModel.swift; sourceTree = "<group>"; };
+		59D2D5A32552ECD8006DDB70 /* TargetModePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargetModePresenter.swift; sourceTree = "<group>"; };
 		59E43329A2D9B4F8752F833A /* Pods-AR-GunMan-AR-GunManUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-GunMan-AR-GunManUITests.debug.xcconfig"; path = "Target Support Files/Pods-AR-GunMan-AR-GunManUITests/Pods-AR-GunMan-AR-GunManUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		5AB32EC76FF682FB7040AD4D /* Pods-AR-GunMan-AR-GunManUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-GunMan-AR-GunManUITests.release.xcconfig"; path = "Target Support Files/Pods-AR-GunMan-AR-GunManUITests/Pods-AR-GunMan-AR-GunManUITests.release.xcconfig"; sourceTree = "<group>"; };
 		82CB4F049BB35C36EAA5A632 /* Pods_AR_GunManTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_GunManTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -159,6 +161,7 @@
 				59D2D5392552E1D2006DDB70 /* Extension+Storyboard.swift */,
 				59D2D56E2552E3B8006DDB70 /* Model */,
 				59D2D56F2552E3C0006DDB70 /* ViewModel */,
+				59D2D5A22552ECCA006DDB70 /* Presenter */,
 				59D2D5702552E3C7006DDB70 /* View */,
 				59D2D5462552E2CC006DDB70 /* Resources */,
 				59D2D5412552E24D006DDB70 /* art.scnassets */,
@@ -267,6 +270,14 @@
 			children = (
 			);
 			path = WorldRanking;
+			sourceTree = "<group>";
+		};
+		59D2D5A22552ECCA006DDB70 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				59D2D5A32552ECD8006DDB70 /* TargetModePresenter.swift */,
+			);
+			path = Presenter;
 			sourceTree = "<group>";
 		};
 		9181646D3CDAAE6BA576903B /* Frameworks */ = {
@@ -526,6 +537,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59D2D5A42552ECD8006DDB70 /* TargetModePresenter.swift in Sources */,
 				59D2D5952552E718006DDB70 /* SwitchWeaponViewController.swift in Sources */,
 				59D2D5852552E6B2006DDB70 /* GameViewController.swift in Sources */,
 				59D2D57B2552E536006DDB70 /* ViewController.swift in Sources */,

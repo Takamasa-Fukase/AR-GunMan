@@ -1,6 +1,6 @@
 //
 //  CalcuModel.swift
-//  ARPlay
+//  AR-GunMan
 //
 //  Created by 深瀬 貴将 on 2020/08/16.
 //  Copyright © 2020 fukase. All rights reserved.
