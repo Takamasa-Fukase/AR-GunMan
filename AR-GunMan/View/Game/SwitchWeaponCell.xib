@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SwitchWeaponCell" id="gTV-IL-0wX" customClass="SwitchWeaponCell" customModule="ARPlay" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="242" height="198"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="242" height="198"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pistol" translatesAutoresizingMaskIntoConstraints="NO" id="ipK-6B-nY3">
+                        <rect key="frame" x="10" y="10" width="222" height="178"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </imageView>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="COMMING SOON" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vgC-gD-3Dp">
+                        <rect key="frame" x="21" y="69" width="200" height="60"/>
+                        <color key="backgroundColor" red="0.88624991143959386" green="0.26060140320282948" blue="0.26889879076516598" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="60" id="GP4-SX-79l"/>
+                            <constraint firstAttribute="width" constant="200" id="sTe-ui-kEC"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="MarkerFelt-Wide" family="Marker Felt" pointSize="25"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstItem="ipK-6B-nY3" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="BPi-24-GXM"/>
+                <constraint firstAttribute="bottom" secondItem="ipK-6B-nY3" secondAttribute="bottom" constant="10" id="Mtr-a5-1t6"/>
+                <constraint firstItem="vgC-gD-3Dp" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="fhj-WQ-tQN"/>
+                <constraint firstItem="ipK-6B-nY3" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="mfK-Yo-cmO"/>
+                <constraint firstItem="vgC-gD-3Dp" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="vKf-lb-VP5"/>
+                <constraint firstAttribute="trailing" secondItem="ipK-6B-nY3" secondAttribute="trailing" constant="10" id="xBh-wR-hZx"/>
+            </constraints>
+            <size key="customSize" width="242" height="198"/>
+            <connections>
+                <outlet property="commingSoonLabel" destination="vgC-gD-3Dp" id="iL3-R4-JaX"/>
+                <outlet property="weaponImageView" destination="ipK-6B-nY3" id="gBT-Cj-VKa"/>
+            </connections>
+            <point key="canvasLocation" x="39.130434782608695" y="141.29464285714286"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="pistol" width="512" height="512"/>
+    </resources>
+</document>
