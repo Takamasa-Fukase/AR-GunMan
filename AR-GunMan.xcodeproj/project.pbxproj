@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		00A6965B4FCC1456D7FB68EA /* Pods_AR_GunMan_AR_GunManUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C6F9F6D2421B8A957F5120A /* Pods_AR_GunMan_AR_GunManUITests.framework */; };
 		59D2D4D92552DE66006DDB70 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2D4D82552DE66006DDB70 /* AppDelegate.swift */; };
-		59D2D4DD2552DE66006DDB70 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2D4DC2552DE66006DDB70 /* ViewController.swift */; };
-		59D2D4E02552DE66006DDB70 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59D2D4DE2552DE66006DDB70 /* Main.storyboard */; };
 		59D2D4E52552DE67006DDB70 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59D2D4E32552DE67006DDB70 /* LaunchScreen.storyboard */; };
 		59D2D4F02552DE67006DDB70 /* AR_GunManTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2D4EF2552DE67006DDB70 /* AR_GunManTests.swift */; };
 		59D2D4FB2552DE67006DDB70 /* AR_GunManUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2D4FA2552DE67006DDB70 /* AR_GunManUITests.swift */; };
@@ -22,6 +20,8 @@
 		59D2D55E2552E2CC006DDB70 /* headShot.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 59D2D5532552E2CC006DDB70 /* headShot.mp3 */; };
 		59D2D55F2552E2CC006DDB70 /* pistol-reload.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 59D2D5542552E2CC006DDB70 /* pistol-reload.mp3 */; };
 		59D2D56A2552E31E006DDB70 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59D2D5692552E31D006DDB70 /* Assets.xcassets */; };
+		59D2D57A2552E536006DDB70 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59D2D5782552E536006DDB70 /* Main.storyboard */; };
+		59D2D57B2552E536006DDB70 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2D5792552E536006DDB70 /* ViewController.swift */; };
 		5F0F53972765C07884597855 /* Pods_AR_GunManTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82CB4F049BB35C36EAA5A632 /* Pods_AR_GunManTests.framework */; };
 		D54734259EA1C7BF11A28908 /* Pods_AR_GunMan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4280580740F2443B66781090 /* Pods_AR_GunMan.framework */; };
 /* End PBXBuildFile section */
@@ -51,8 +51,6 @@
 		4280580740F2443B66781090 /* Pods_AR_GunMan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_GunMan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		59D2D4D52552DE66006DDB70 /* AR-GunMan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AR-GunMan.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		59D2D4D82552DE66006DDB70 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		59D2D4DC2552DE66006DDB70 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		59D2D4DF2552DE66006DDB70 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		59D2D4E42552DE67006DDB70 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		59D2D4E62552DE67006DDB70 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		59D2D4EB2552DE67006DDB70 /* AR-GunManTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AR-GunManTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -69,6 +67,8 @@
 		59D2D5532552E2CC006DDB70 /* headShot.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = headShot.mp3; sourceTree = "<group>"; };
 		59D2D5542552E2CC006DDB70 /* pistol-reload.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "pistol-reload.mp3"; sourceTree = "<group>"; };
 		59D2D5692552E31D006DDB70 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		59D2D5782552E536006DDB70 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		59D2D5792552E536006DDB70 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		59E43329A2D9B4F8752F833A /* Pods-AR-GunMan-AR-GunManUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-GunMan-AR-GunManUITests.debug.xcconfig"; path = "Target Support Files/Pods-AR-GunMan-AR-GunManUITests/Pods-AR-GunMan-AR-GunManUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		5AB32EC76FF682FB7040AD4D /* Pods-AR-GunMan-AR-GunManUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-GunMan-AR-GunManUITests.release.xcconfig"; path = "Target Support Files/Pods-AR-GunMan-AR-GunManUITests/Pods-AR-GunMan-AR-GunManUITests.release.xcconfig"; sourceTree = "<group>"; };
 		82CB4F049BB35C36EAA5A632 /* Pods_AR_GunManTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_GunManTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -211,6 +211,8 @@
 			isa = PBXGroup;
 			children = (
 				59D2D5712552E448006DDB70 /* Top */,
+				59D2D5792552E536006DDB70 /* ViewController.swift */,
+				59D2D5782552E536006DDB70 /* Main.storyboard */,
 				59D2D5722552E458006DDB70 /* Game */,
 				59D2D5732552E4A9006DDB70 /* RegisterName */,
 				59D2D5742552E4D1006DDB70 /* WorldRanking */,
@@ -221,8 +223,6 @@
 		59D2D5712552E448006DDB70 /* Top */ = {
 			isa = PBXGroup;
 			children = (
-				59D2D4DC2552DE66006DDB70 /* ViewController.swift */,
-				59D2D4DE2552DE66006DDB70 /* Main.storyboard */,
 			);
 			path = Top;
 			sourceTree = "<group>";
@@ -371,8 +371,8 @@
 				59D2D55F2552E2CC006DDB70 /* pistol-reload.mp3 in Resources */,
 				59D2D4E52552DE67006DDB70 /* LaunchScreen.storyboard in Resources */,
 				59D2D5422552E24D006DDB70 /* art.scnassets in Resources */,
-				59D2D4E02552DE66006DDB70 /* Main.storyboard in Resources */,
 				59D2D55E2552E2CC006DDB70 /* headShot.mp3 in Resources */,
+				59D2D57A2552E536006DDB70 /* Main.storyboard in Resources */,
 				59D2D56A2552E31E006DDB70 /* Assets.xcassets in Resources */,
 				59D2D55C2552E2CC006DDB70 /* pistol-slide.mp3 in Resources */,
 			);
@@ -502,7 +502,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				59D2D4DD2552DE66006DDB70 /* ViewController.swift in Sources */,
+				59D2D57B2552E536006DDB70 /* ViewController.swift in Sources */,
 				59D2D4D92552DE66006DDB70 /* AppDelegate.swift in Sources */,
 				59D2D53A2552E1D2006DDB70 /* Extension+Storyboard.swift in Sources */,
 			);
@@ -540,14 +540,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		59D2D4DE2552DE66006DDB70 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				59D2D4DF2552DE66006DDB70 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		59D2D4E32552DE67006DDB70 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
