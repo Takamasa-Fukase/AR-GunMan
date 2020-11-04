@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		00A6965B4FCC1456D7FB68EA /* Pods_AR_GunMan_AR_GunManUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C6F9F6D2421B8A957F5120A /* Pods_AR_GunMan_AR_GunManUITests.framework */; };
 		59D2D4D92552DE66006DDB70 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2D4D82552DE66006DDB70 /* AppDelegate.swift */; };
-		59D2D4DB2552DE66006DDB70 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 59D2D4DA2552DE66006DDB70 /* art.scnassets */; };
 		59D2D4DD2552DE66006DDB70 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2D4DC2552DE66006DDB70 /* ViewController.swift */; };
 		59D2D4E02552DE66006DDB70 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59D2D4DE2552DE66006DDB70 /* Main.storyboard */; };
 		59D2D4E22552DE67006DDB70 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59D2D4E12552DE67006DDB70 /* Assets.xcassets */; };
@@ -17,6 +16,7 @@
 		59D2D4F02552DE67006DDB70 /* AR_GunManTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2D4EF2552DE67006DDB70 /* AR_GunManTests.swift */; };
 		59D2D4FB2552DE67006DDB70 /* AR_GunManUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2D4FA2552DE67006DDB70 /* AR_GunManUITests.swift */; };
 		59D2D53A2552E1D2006DDB70 /* Extension+Storyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2D5392552E1D2006DDB70 /* Extension+Storyboard.swift */; };
+		59D2D5422552E24D006DDB70 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 59D2D5412552E24D006DDB70 /* art.scnassets */; };
 		5F0F53972765C07884597855 /* Pods_AR_GunManTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82CB4F049BB35C36EAA5A632 /* Pods_AR_GunManTests.framework */; };
 		D54734259EA1C7BF11A28908 /* Pods_AR_GunMan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4280580740F2443B66781090 /* Pods_AR_GunMan.framework */; };
 /* End PBXBuildFile section */
@@ -46,7 +46,6 @@
 		4280580740F2443B66781090 /* Pods_AR_GunMan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_GunMan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		59D2D4D52552DE66006DDB70 /* AR-GunMan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AR-GunMan.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		59D2D4D82552DE66006DDB70 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		59D2D4DA2552DE66006DDB70 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 		59D2D4DC2552DE66006DDB70 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		59D2D4DF2552DE66006DDB70 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		59D2D4E12552DE67006DDB70 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -59,6 +58,7 @@
 		59D2D4FA2552DE67006DDB70 /* AR_GunManUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AR_GunManUITests.swift; sourceTree = "<group>"; };
 		59D2D4FC2552DE67006DDB70 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		59D2D5392552E1D2006DDB70 /* Extension+Storyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Extension+Storyboard.swift"; sourceTree = "<group>"; };
+		59D2D5412552E24D006DDB70 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 		59E43329A2D9B4F8752F833A /* Pods-AR-GunMan-AR-GunManUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-GunMan-AR-GunManUITests.debug.xcconfig"; path = "Target Support Files/Pods-AR-GunMan-AR-GunManUITests/Pods-AR-GunMan-AR-GunManUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		5AB32EC76FF682FB7040AD4D /* Pods-AR-GunMan-AR-GunManUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-GunMan-AR-GunManUITests.release.xcconfig"; path = "Target Support Files/Pods-AR-GunMan-AR-GunManUITests/Pods-AR-GunMan-AR-GunManUITests.release.xcconfig"; sourceTree = "<group>"; };
 		82CB4F049BB35C36EAA5A632 /* Pods_AR_GunManTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_GunManTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -133,9 +133,9 @@
 			children = (
 				59D2D4D82552DE66006DDB70 /* AppDelegate.swift */,
 				59D2D5392552E1D2006DDB70 /* Extension+Storyboard.swift */,
-				59D2D4DA2552DE66006DDB70 /* art.scnassets */,
 				59D2D4DC2552DE66006DDB70 /* ViewController.swift */,
 				59D2D4DE2552DE66006DDB70 /* Main.storyboard */,
+				59D2D5412552E24D006DDB70 /* art.scnassets */,
 				59D2D4E12552DE67006DDB70 /* Assets.xcassets */,
 				59D2D4E32552DE67006DDB70 /* LaunchScreen.storyboard */,
 				59D2D4E62552DE67006DDB70 /* Info.plist */,
@@ -279,8 +279,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				59D2D4DB2552DE66006DDB70 /* art.scnassets in Resources */,
 				59D2D4E52552DE67006DDB70 /* LaunchScreen.storyboard in Resources */,
+				59D2D5422552E24D006DDB70 /* art.scnassets in Resources */,
 				59D2D4E22552DE67006DDB70 /* Assets.xcassets in Resources */,
 				59D2D4E02552DE66006DDB70 /* Main.storyboard in Resources */,
 			);

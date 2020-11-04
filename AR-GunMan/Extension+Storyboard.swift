@@ -1,9 +1,8 @@
 //
-//  test.swift
-//  Kurasel
+//  Extension+Storyboard.swift
+//  AR-GunMan
 //
-//  Created by 服部　翼 on 2019/11/20.
-//  Copyright © 2019 kurasel. All rights reserved.
+//  Created by 深瀬 貴将 on 2020/11/04.
 //
 
 import Foundation
