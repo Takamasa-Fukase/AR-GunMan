@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		00A6965B4FCC1456D7FB68EA /* Pods_AR_GunMan_AR_GunManUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C6F9F6D2421B8A957F5120A /* Pods_AR_GunMan_AR_GunManUITests.framework */; };
+		59940B882552F54900EC20C1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 59940B872552F54900EC20C1 /* GoogleService-Info.plist */; };
 		59D2D4D92552DE66006DDB70 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2D4D82552DE66006DDB70 /* AppDelegate.swift */; };
 		59D2D4E52552DE67006DDB70 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59D2D4E32552DE67006DDB70 /* LaunchScreen.storyboard */; };
 		59D2D4F02552DE67006DDB70 /* AR_GunManTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2D4EF2552DE67006DDB70 /* AR_GunManTests.swift */; };
@@ -57,6 +58,7 @@
 		31648D71D23C89DB3138AE8E /* Pods-AR-GunMan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-GunMan.debug.xcconfig"; path = "Target Support Files/Pods-AR-GunMan/Pods-AR-GunMan.debug.xcconfig"; sourceTree = "<group>"; };
 		3C6F9F6D2421B8A957F5120A /* Pods_AR_GunMan_AR_GunManUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_GunMan_AR_GunManUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4280580740F2443B66781090 /* Pods_AR_GunMan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_GunMan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		59940B872552F54900EC20C1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		59D2D4D52552DE66006DDB70 /* AR-GunMan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AR-GunMan.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		59D2D4D82552DE66006DDB70 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		59D2D4E42552DE67006DDB70 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 				59D2D5692552E31D006DDB70 /* Assets.xcassets */,
 				59D2D4E32552DE67006DDB70 /* LaunchScreen.storyboard */,
 				59D2D4E62552DE67006DDB70 /* Info.plist */,
+				59940B872552F54900EC20C1 /* GoogleService-Info.plist */,
 			);
 			path = "AR-GunMan";
 			sourceTree = "<group>";
@@ -405,6 +408,7 @@
 				59D2D4E52552DE67006DDB70 /* LaunchScreen.storyboard in Resources */,
 				59D2D5422552E24D006DDB70 /* art.scnassets in Resources */,
 				59D2D5842552E6B2006DDB70 /* GameViewController.storyboard in Resources */,
+				59940B882552F54900EC20C1 /* GoogleService-Info.plist in Resources */,
 				59D2D5962552E718006DDB70 /* SwitchWeaponViewController.storyboard in Resources */,
 				59D2D55E2552E2CC006DDB70 /* headShot.mp3 in Resources */,
 				59D2D57A2552E536006DDB70 /* Main.storyboard in Resources */,

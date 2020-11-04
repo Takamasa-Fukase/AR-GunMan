@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>535003008646-a1c4uvsfkr7csohadvd37ha8g48qjsb6.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.535003008646-a1c4uvsfkr7csohadvd37ha8g48qjsb6</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAVJYynFtV0aXmrArbSJbzJW1yrHkZivJE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>535003008646</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.takamasafuksae.AR-GunMan</string>
+	<key>PROJECT_ID</key>
+	<string>ar-gunman</string>
+	<key>STORAGE_BUCKET</key>
+	<string>ar-gunman.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:535003008646:ios:28e400e92625b965b44b07</string>
+	<key>DATABASE_URL</key>
+	<string>https://ar-gunman.firebaseio.com</string>
+</dict>
+</plist>
