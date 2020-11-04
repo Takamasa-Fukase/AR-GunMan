@@ -229,8 +229,6 @@
 			isa = PBXGroup;
 			children = (
 				59D2D5712552E448006DDB70 /* Top */,
-				59D2D5792552E536006DDB70 /* ViewController.swift */,
-				59D2D5782552E536006DDB70 /* Main.storyboard */,
 				59D2D5722552E458006DDB70 /* Game */,
 				59D2D5732552E4A9006DDB70 /* RegisterName */,
 				59D2D5742552E4D1006DDB70 /* WorldRanking */,
@@ -241,6 +239,8 @@
 		59D2D5712552E448006DDB70 /* Top */ = {
 			isa = PBXGroup;
 			children = (
+				59D2D5792552E536006DDB70 /* ViewController.swift */,
+				59D2D5782552E536006DDB70 /* Main.storyboard */,
 			);
 			path = Top;
 			sourceTree = "<group>";
