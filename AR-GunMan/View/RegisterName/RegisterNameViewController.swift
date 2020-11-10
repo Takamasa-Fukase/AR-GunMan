@@ -53,7 +53,7 @@ class RegisterNameViewController: UIViewController {
     //FireStoreによって世界ランキングへの保存を行う
     @IBAction func yesRegisterButton(_ sender: Any) {
         //入力されたテキストを変数に入れる＆nilの場合はそこで止める
-        guard let rankingName = nameTextField.text else {
+        guard nameTextField.text != nil else {
             return
         }
         //テキストが空欄の場合はそこで止める
@@ -61,11 +61,14 @@ class RegisterNameViewController: UIViewController {
             return
         }
         
-        let nameAndScoreArr = [rankingName, totalScore]
-        let nameAndScoreDictionary:[String: String] = [rankingName: totalScore]
+        db.collection("worldRanking").addDocument(data: [
+            "score": totalScore,
+            "user_name": nameTextField.text ?? ""
+        ]) { (error) in
+            print("error: \(String(describing: error))")
+        }
         
-        db.collection("worldRanking").addDocument(data: nameAndScoreDictionary)
-        self.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
         
     }
     @IBAction func tappedNoRegisterButton(_ sender: Any) {
