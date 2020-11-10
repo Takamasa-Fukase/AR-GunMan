@@ -64,12 +64,16 @@ class RegisterNameViewController: UIViewController {
         let nameAndScoreArr = [rankingName, totalScore]
         let nameAndScoreDictionary:[String: String] = [rankingName: totalScore]
         
-        //スイッチボタンがONの時は、Firestoreに送信する（世界ランキング用）
         db.collection("worldRanking").addDocument(data: nameAndScoreDictionary)
         self.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
         
     }
-
+    @IBAction func tappedNoRegisterButton(_ sender: Any) {
+        
+        self.dismiss(animated: true, completion: nil)
+        
+    }
+    
 }
 
 extension RegisterNameViewController: UITextFieldDelegate {
