@@ -22,6 +22,18 @@ class WorldRankingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        db = Firestore.firestore()
+        //自動更新を設定
+        db.collection("worldRanking").order(by: "score").addSnapshotListener{ snapshot, err in
+            guard let snapshot = snapshot else {
+                print("snapshotListener Error: \(String(describing: err))"); return
+            }
+            self.list = snapshot.documents.map { data -> Ranking in
+                return Ranking(score: data.data()["score"] as! String, userName: data.data()["user_name"] as! String)
+            }
+            self.tableView.reloadData()
+        }
 
     }
     
