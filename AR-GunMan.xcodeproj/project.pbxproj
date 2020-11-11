@@ -11,6 +11,8 @@
 		59940B882552F54900EC20C1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 59940B872552F54900EC20C1 /* GoogleService-Info.plist */; };
 		59940BAC2552FAA600EC20C1 /* RegisterNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59940BAB2552FAA600EC20C1 /* RegisterNameViewController.swift */; };
 		59940BB12552FAAF00EC20C1 /* RegisterNameViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59940BB02552FAAF00EC20C1 /* RegisterNameViewController.storyboard */; };
+		59A01134255AF580008996E3 /* WorldRankingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A01133255AF580008996E3 /* WorldRankingViewController.swift */; };
+		59A01139255AF588008996E3 /* WorldRankingViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59A01138255AF588008996E3 /* WorldRankingViewController.storyboard */; };
 		59D2D4D92552DE66006DDB70 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2D4D82552DE66006DDB70 /* AppDelegate.swift */; };
 		59D2D4E52552DE67006DDB70 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59D2D4E32552DE67006DDB70 /* LaunchScreen.storyboard */; };
 		59D2D4F02552DE67006DDB70 /* AR_GunManTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2D4EF2552DE67006DDB70 /* AR_GunManTests.swift */; };
@@ -63,6 +65,8 @@
 		59940B872552F54900EC20C1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		59940BAB2552FAA600EC20C1 /* RegisterNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterNameViewController.swift; sourceTree = "<group>"; };
 		59940BB02552FAAF00EC20C1 /* RegisterNameViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RegisterNameViewController.storyboard; sourceTree = "<group>"; };
+		59A01133255AF580008996E3 /* WorldRankingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldRankingViewController.swift; sourceTree = "<group>"; };
+		59A01138255AF588008996E3 /* WorldRankingViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WorldRankingViewController.storyboard; sourceTree = "<group>"; };
 		59D2D4D52552DE66006DDB70 /* AR-GunMan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AR-GunMan.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		59D2D4D82552DE66006DDB70 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		59D2D4E42552DE67006DDB70 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -277,6 +281,8 @@
 		59D2D5742552E4D1006DDB70 /* WorldRanking */ = {
 			isa = PBXGroup;
 			children = (
+				59A01133255AF580008996E3 /* WorldRankingViewController.swift */,
+				59A01138255AF588008996E3 /* WorldRankingViewController.storyboard */,
 			);
 			path = WorldRanking;
 			sourceTree = "<group>";
@@ -407,6 +413,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59A01139255AF588008996E3 /* WorldRankingViewController.storyboard in Resources */,
 				59D2D55D2552E2CC006DDB70 /* pistol-fire.mp3 in Resources */,
 				59940BB12552FAAF00EC20C1 /* RegisterNameViewController.storyboard in Resources */,
 				59D2D5942552E718006DDB70 /* SwitchWeaponCell.xib in Resources */,
@@ -554,6 +561,7 @@
 				59D2D57B2552E536006DDB70 /* ViewController.swift in Sources */,
 				59D2D4D92552DE66006DDB70 /* AppDelegate.swift in Sources */,
 				59D2D53A2552E1D2006DDB70 /* Extension+Storyboard.swift in Sources */,
+				59A01134255AF580008996E3 /* WorldRankingViewController.swift in Sources */,
 				59D2D5932552E718006DDB70 /* SwitchWeaponCell.swift in Sources */,
 				59D2D59E2552E751006DDB70 /* CalcuModel.swift in Sources */,
 				59940BAC2552FAA600EC20C1 /* RegisterNameViewController.swift in Sources */,

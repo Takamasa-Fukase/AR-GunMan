@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="fhR-3F-0ga">
+    <device id="retina6_1" orientation="landscape" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--World Ranking View Controller-->
+        <scene sceneID="nXb-ih-cMF">
+            <objects>
+                <viewController storyboardIdentifier="WorldRankingViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="fhR-3F-0ga" customClass="WorldRankingViewController" customModule="AR_GunMan" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="xLG-70-cDK">
+                        <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8Qm-qL-jSi">
+                                <rect key="frame" x="84" y="20" width="728" height="353"/>
+                                <color key="backgroundColor" red="0.0" green="0.81929553614657524" blue="0.99987536669999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" id="CUb-ec-M8z">
+                                        <rect key="frame" x="0.0" y="28" width="728" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="CUb-ec-M8z" id="uUC-OJ-5LU">
+                                            <rect key="frame" x="0.0" y="0.0" width="728" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="20"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <outlet property="dataSource" destination="fhR-3F-0ga" id="jCq-nf-iO0"/>
+                                    <outlet property="delegate" destination="fhR-3F-0ga" id="rk8-UQ-CnA"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="nZh-qX-GxV"/>
+                        <constraints>
+                            <constraint firstItem="8Qm-qL-jSi" firstAttribute="top" secondItem="nZh-qX-GxV" secondAttribute="top" constant="20" id="1Bq-q2-q8p"/>
+                            <constraint firstItem="nZh-qX-GxV" firstAttribute="bottom" secondItem="8Qm-qL-jSi" secondAttribute="bottom" constant="20" id="MB7-fL-A6m"/>
+                            <constraint firstItem="nZh-qX-GxV" firstAttribute="trailing" secondItem="8Qm-qL-jSi" secondAttribute="trailing" constant="40" id="f9r-bq-JvK"/>
+                            <constraint firstItem="8Qm-qL-jSi" firstAttribute="leading" secondItem="nZh-qX-GxV" secondAttribute="leading" constant="40" id="jUr-Kq-YiY"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="8Qm-qL-jSi" id="WyP-bS-Grl"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MKM-Yl-M2b" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1" y="169"/>
+        </scene>
+    </scenes>
+</document>
