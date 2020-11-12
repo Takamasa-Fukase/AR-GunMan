@@ -34,6 +34,12 @@ class WorldRankingViewController: UIViewController {
             }
             self.tableView.reloadData()
         }
+        
+        //背景をぼかし処理
+        let blurEffect = UIBlurEffect(style: .dark)
+        let visualEffectView = UIVisualEffectView(effect: blurEffect)
+        visualEffectView.frame = self.view.frame
+        self.view.insertSubview(visualEffectView, at: 0)
 
     }
     
