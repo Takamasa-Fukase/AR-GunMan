@@ -39,6 +39,15 @@ class WorldRankingViewController: UIViewController {
         let blurEffect = UIBlurEffect(style: .dark)
         let visualEffectView = UIVisualEffectView(effect: blurEffect)
         visualEffectView.frame = self.view.frame
+        
+        let blueView = UIView(frame: self.view.frame)
+        blueView.backgroundColor = .blue
+        blueView.alpha = 0.2
+        
+        self.view.addSubview(blueView)
+        self.view.sendSubviewToBack(blueView)
+        
+        
         self.view.insertSubview(visualEffectView, at: 0)
 
     }
