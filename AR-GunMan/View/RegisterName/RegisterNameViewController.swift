@@ -95,13 +95,13 @@ class RegisterNameViewController: UIViewController {
         ]) { (error) in
             print("error: \(String(describing: error))")
         }
-        self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+        self.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
         
     }
     @IBAction func tappedNoRegisterButton(_ sender: Any) {
 
-        self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
-        
+        self.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+
     }
     
 }
