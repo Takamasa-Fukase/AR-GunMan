@@ -9,7 +9,7 @@ import UIKit
 import Firebase
 
 struct Ranking {
-    let score: String
+    let score: Double
     let userName: String
 }
 
@@ -23,6 +23,9 @@ class WorldRankingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.contentInset.top = 10
+        tableView.register(UINib(nibName: "WorldRankingCell", bundle: nil), forCellReuseIdentifier: "WorldRankingCell")
+        
         db = Firestore.firestore()
         //自動更新を設定
         db.collection("worldRanking").order(by: "score").addSnapshotListener{ snapshot, err in
@@ -30,7 +33,7 @@ class WorldRankingViewController: UIViewController {
                 print("snapshotListener Error: \(String(describing: err))"); return
             }
             self.list = snapshot.documents.map { data -> Ranking in
-                return Ranking(score: data.data()["score"] as! String, userName: data.data()["user_name"] as! String)
+                return Ranking(score: data.data()["score"] as? Double ?? 0.000, userName: data.data()["user_name"] as? String ?? "NO NAME")
             }
             self.tableView.reloadData()
         }
@@ -47,7 +50,6 @@ class WorldRankingViewController: UIViewController {
         self.view.addSubview(blueView)
         self.view.sendSubviewToBack(blueView)
         
-        
         self.view.insertSubview(visualEffectView, at: 0)
 
     }
@@ -60,13 +62,11 @@ extension WorldRankingViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell") ?? UITableViewCell()
-        cell.textLabel?.text = list[indexPath.row].userName
-        cell.detailTextLabel?.text = list[indexPath.row].score
-        return cell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "WorldRankingCell") as? WorldRankingCell
+        cell?.nameLabel.text = list[indexPath.row].userName
+        cell?.scoreLabel.text = String(list[indexPath.row].score)
+        cell?.rankLabel.text = String(indexPath.row + 1)
+        return cell ?? UITableViewCell()
     }
-    
-    
-    
     
 }
