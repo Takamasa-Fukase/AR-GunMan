@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		00A6965B4FCC1456D7FB68EA /* Pods_AR_GunMan_AR_GunManUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C6F9F6D2421B8A957F5120A /* Pods_AR_GunMan_AR_GunManUITests.framework */; };
+		5921A208255D6A4E001D8C39 /* WorldRankingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5921A206255D6A4E001D8C39 /* WorldRankingCell.swift */; };
+		5921A209255D6A4E001D8C39 /* WorldRankingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5921A207255D6A4E001D8C39 /* WorldRankingCell.xib */; };
 		59940B882552F54900EC20C1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 59940B872552F54900EC20C1 /* GoogleService-Info.plist */; };
 		59940BAC2552FAA600EC20C1 /* RegisterNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59940BAB2552FAA600EC20C1 /* RegisterNameViewController.swift */; };
 		59940BB12552FAAF00EC20C1 /* RegisterNameViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59940BB02552FAAF00EC20C1 /* RegisterNameViewController.storyboard */; };
@@ -62,6 +64,8 @@
 		31648D71D23C89DB3138AE8E /* Pods-AR-GunMan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-GunMan.debug.xcconfig"; path = "Target Support Files/Pods-AR-GunMan/Pods-AR-GunMan.debug.xcconfig"; sourceTree = "<group>"; };
 		3C6F9F6D2421B8A957F5120A /* Pods_AR_GunMan_AR_GunManUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_GunMan_AR_GunManUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4280580740F2443B66781090 /* Pods_AR_GunMan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_GunMan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5921A206255D6A4E001D8C39 /* WorldRankingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldRankingCell.swift; sourceTree = "<group>"; };
+		5921A207255D6A4E001D8C39 /* WorldRankingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WorldRankingCell.xib; sourceTree = "<group>"; };
 		59940B872552F54900EC20C1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		59940BAB2552FAA600EC20C1 /* RegisterNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterNameViewController.swift; sourceTree = "<group>"; };
 		59940BB02552FAAF00EC20C1 /* RegisterNameViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RegisterNameViewController.storyboard; sourceTree = "<group>"; };
@@ -283,6 +287,8 @@
 			children = (
 				59A01133255AF580008996E3 /* WorldRankingViewController.swift */,
 				59A01138255AF588008996E3 /* WorldRankingViewController.storyboard */,
+				5921A206255D6A4E001D8C39 /* WorldRankingCell.swift */,
+				5921A207255D6A4E001D8C39 /* WorldRankingCell.xib */,
 			);
 			path = WorldRanking;
 			sourceTree = "<group>";
@@ -420,6 +426,7 @@
 				59D2D55B2552E2CC006DDB70 /* pistol-out-bullets.mp3 in Resources */,
 				59D2D55F2552E2CC006DDB70 /* pistol-reload.mp3 in Resources */,
 				59D2D4E52552DE67006DDB70 /* LaunchScreen.storyboard in Resources */,
+				5921A209255D6A4E001D8C39 /* WorldRankingCell.xib in Resources */,
 				59D2D5422552E24D006DDB70 /* art.scnassets in Resources */,
 				59D2D5842552E6B2006DDB70 /* GameViewController.storyboard in Resources */,
 				59940B882552F54900EC20C1 /* GoogleService-Info.plist in Resources */,
@@ -555,6 +562,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5921A208255D6A4E001D8C39 /* WorldRankingCell.swift in Sources */,
 				59D2D5A42552ECD8006DDB70 /* TargetModePresenter.swift in Sources */,
 				59D2D5952552E718006DDB70 /* SwitchWeaponViewController.swift in Sources */,
 				59D2D5852552E6B2006DDB70 /* GameViewController.swift in Sources */,
