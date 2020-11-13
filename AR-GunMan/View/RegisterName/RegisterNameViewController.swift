@@ -15,7 +15,7 @@ class RegisterNameViewController: UIViewController {
     let disposeBag = DisposeBag()
     
     //前画面から引くつぐゲーム結果のデータ
-    var totalScore:String = "0"
+    var totalScore: Double = 0.000
     var db: Firestore!
     
     @IBOutlet weak var totalScoreLabel: UILabel!
@@ -25,7 +25,9 @@ class RegisterNameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        totalScoreLabel.text = "Score: \(totalScore)"
+        totalScore = Double.random(in: 0...100)
+        
+        totalScoreLabel.text = "Score: \(String(format: "%.3f", totalScore))"
         
         yesRegisterButton.setTitleColor(UIColor.gray, for: .normal)
         
@@ -85,25 +87,20 @@ class RegisterNameViewController: UIViewController {
             return
         }
         
+        let threeDigitsScore = Double(round(1000 * totalScore)/1000)
+        
         db.collection("worldRanking").addDocument(data: [
-            "score": totalScore,
-            "user_name": nameTextField.text ?? ""
+            "score": threeDigitsScore,
+            "user_name": nameTextField.text ?? "NO NAME"
         ]) { (error) in
             print("error: \(String(describing: error))")
         }
-//
-//        let storyboard: UIStoryboard = UIStoryboard(name: "WorldRankingViewController", bundle: nil)
-//        let vc = storyboard.instantiateViewController(withIdentifier: "WorldRankingViewController") as! WorldRankingViewController
-//        self.present(vc, animated: true)
-        self.dismiss(animated: true, completion: nil)
+        self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
         
     }
     @IBAction func tappedNoRegisterButton(_ sender: Any) {
-        
-//        let storyboard: UIStoryboard = UIStoryboard(name: "WorldRankingViewController", bundle: nil)
-//        let vc = storyboard.instantiateViewController(withIdentifier: "WorldRankingViewController") as! WorldRankingViewController
-//        self.present(vc, animated: true)
-        self.dismiss(animated: true, completion: nil)
+
+        self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
         
     }
     
