@@ -28,7 +28,7 @@ class WorldRankingViewController: UIViewController {
         
         db = Firestore.firestore()
         //自動更新を設定
-        db.collection("worldRanking").order(by: "score").addSnapshotListener{ snapshot, err in
+        db.collection("worldRanking").order(by: "score", descending: true).addSnapshotListener{ snapshot, err in
             guard let snapshot = snapshot else {
                 print("snapshotListener Error: \(String(describing: err))"); return
             }
