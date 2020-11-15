@@ -42,16 +42,16 @@
                                                 <color key="textColor" red="0.89984905719999997" green="0.99998325109999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="You're ranked at 105 in the world!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="UzT-s3-C44">
-                                                <rect key="frame" x="15.5" y="28.5" width="373.5" height="21.5"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="You're ranked at 12 / 105 in the world!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="UzT-s3-C44">
+                                                <rect key="frame" x="51" y="25.5" width="302" height="42.5"/>
                                                 <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="21"/>
                                                 <color key="textColor" red="0.89984905719999997" green="0.99998325109999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 78.753" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ZFZ-99-WcG">
-                                                <rect key="frame" x="67.5" y="53" width="269.5" height="48"/>
+                                                <rect key="frame" x="67.5" y="68" width="269.5" height="36"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="48" id="5gM-oK-wUY"/>
+                                                    <constraint firstAttribute="height" constant="36" id="5gM-oK-wUY"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="Copperplate-Bold" family="Copperplate" pointSize="38"/>
                                                 <color key="textColor" red="0.89984905719999997" green="0.99998325109999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -176,6 +176,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="displayRankLabel" destination="UzT-s3-C44" id="h8B-mj-gYD"/>
                         <outlet property="nameTextField" destination="fjQ-Lx-pol" id="Ao9-hW-VNV"/>
                         <outlet property="totalScoreLabel" destination="ZFZ-99-WcG" id="HFG-FC-uvm"/>
                         <outlet property="yesRegisterButton" destination="q8t-oZ-HM7" id="fqP-AL-K7f"/>

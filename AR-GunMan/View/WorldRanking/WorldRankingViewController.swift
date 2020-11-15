@@ -42,7 +42,7 @@ class WorldRankingViewController: UIViewController {
                 return Ranking(score: data.data()["score"] as? Double ?? 0.000, userName: data.data()["user_name"] as? String ?? "NO NAME")
             }
             
-//            if !self.list.isEmpty {
+            if !self.list.isEmpty {
                 
                 let threeDigitsScore = Double(round(1000 * self.totalScore)/1000)
                 
@@ -53,14 +53,10 @@ class WorldRankingViewController: UIViewController {
                 
                 self.list.insert(Ranking(score: threeDigitsScore, userName: "YOU"), at: limitRankIndex ?? 0)
                 
-//                print("list: \(self.list)")
-//                print("limitRankIndex: \(limitRankIndex)")
+                self.tableView.reloadData()
                 
-//            }
-            
-            self.tableView.reloadData()
-            
-            print("reload()")
+            }
+                        
         }
         
         //背景をぼかし処理
@@ -82,6 +78,8 @@ class WorldRankingViewController: UIViewController {
             let storyboard: UIStoryboard = UIStoryboard(name: "RegisterNameViewController", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "RegisterNameViewController") as! RegisterNameViewController
             vc.totalScore = self.totalScore
+            vc.tentativeRank = self.limitRankIndex + 1
+            vc.rankingCount = self.list.count
             self.present(vc, animated: true)
         }
 
