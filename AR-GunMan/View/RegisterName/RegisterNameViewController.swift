@@ -31,6 +31,12 @@ class RegisterNameViewController: UIViewController {
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var yesRegisterButton: UIButton!
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        self.registerNameVCDelegate?.showRightButtons()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
