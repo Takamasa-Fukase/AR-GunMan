@@ -16,8 +16,11 @@ class RegisterNameViewController: UIViewController {
     
     //前画面から引くつぐゲーム結果のデータ
     var totalScore: Double = 0.000
+    var tentativeRank = Int()
+    var rankingCount = Int()
     var db: Firestore!
     
+    @IBOutlet weak var displayRankLabel: UILabel!
     @IBOutlet weak var totalScoreLabel: UILabel!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var yesRegisterButton: UIButton!
@@ -25,7 +28,7 @@ class RegisterNameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        totalScore = Double.random(in: 0...100)
+        displayRankLabel.attributedText = customAttributedString()
         
         totalScoreLabel.text = "Score: \(String(format: "%.3f", totalScore))"
         
@@ -35,13 +38,6 @@ class RegisterNameViewController: UIViewController {
         db = Firestore.firestore()
         
         nameTextField.delegate = self
-        
-        //背景をぼかし処理
-//        let blurEffect = UIBlurEffect(style: .dark)
-//        let visualEffectView = UIVisualEffectView(effect: blurEffect)
-//        visualEffectView.frame = self.view.frame
-//        self.view.insertSubview(visualEffectView, at: 0)
-        
         
         NotificationCenter.default.rx.notification(UIResponder.keyboardWillShowNotification, object: nil)
             .subscribe({ (notification) in
@@ -100,8 +96,36 @@ class RegisterNameViewController: UIViewController {
     }
     @IBAction func tappedNoRegisterButton(_ sender: Any) {
 
-        self.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+        self.presentingViewController?.dismiss(animated: true, completion: nil)
 
+    }
+    
+    
+    func customAttributedString() -> NSMutableAttributedString {
+        let stringAttributes1: [NSAttributedString.Key : Any] = [
+            .foregroundColor : UIColor(red: 229/255, green: 255/255, blue: 255/255, alpha: 1),
+            .font : UIFont(name: "Copperplate", size: 21.0) ?? UIFont.systemFont(ofSize: 21.0),
+        ]
+        let string1 = NSAttributedString(string: "You're ranked at ", attributes: stringAttributes1)
+
+        let stringAttributes2: [NSAttributedString.Key : Any] = [
+            .foregroundColor : UIColor(red: 255/255, green: 190/255, blue: 0/255, alpha: 1),
+            .font : UIFont(name: "Copperplate", size: 25.0) ?? UIFont.systemFont(ofSize: 25.0),
+        ]
+        let string2 = NSAttributedString(string: "\(tentativeRank) / \(rankingCount)", attributes: stringAttributes2)
+        
+        let stringAttributes3: [NSAttributedString.Key : Any] = [
+            .foregroundColor : UIColor(red: 229/255, green: 255/255, blue: 255/255, alpha: 1),
+            .font : UIFont(name: "Copperplate", size: 21.0) ?? UIFont.systemFont(ofSize: 21.0),
+        ]
+        let string3 = NSAttributedString(string: " in the world!", attributes:stringAttributes3)
+
+        let mutableAttributedString = NSMutableAttributedString()
+        mutableAttributedString.append(string1)
+        mutableAttributedString.append(string2)
+        mutableAttributedString.append(string3)
+        
+        return mutableAttributedString
     }
     
 }
