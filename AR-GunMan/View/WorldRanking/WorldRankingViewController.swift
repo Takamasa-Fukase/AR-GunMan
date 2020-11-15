@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import PanModal
 
 struct Ranking {
     let score: Double
@@ -42,20 +43,20 @@ class WorldRankingViewController: UIViewController {
                 return Ranking(score: data.data()["score"] as? Double ?? 0.000, userName: data.data()["user_name"] as? String ?? "NO NAME")
             }
             
-            if !self.list.isEmpty {
-                
-                let threeDigitsScore = Double(round(1000 * self.totalScore)/1000)
-                
-                let limitRankIndex = self.list.firstIndex(where: {
-                    $0.score < threeDigitsScore
-                })
-                self.limitRankIndex = limitRankIndex ?? 0
-                
-                self.list.insert(Ranking(score: threeDigitsScore, userName: "YOU"), at: limitRankIndex ?? 0)
-                
-                self.tableView.reloadData()
-                
-            }
+//            if !self.list.isEmpty {
+//
+//                let threeDigitsScore = Double(round(1000 * self.totalScore)/1000)
+//
+//                let limitRankIndex = self.list.firstIndex(where: {
+//                    $0.score < threeDigitsScore
+//                })
+//                self.limitRankIndex = limitRankIndex ?? 0
+//
+//                self.list.insert(Ranking(score: threeDigitsScore, userName: "YOU"), at: limitRankIndex ?? 0)
+//
+//            }
+            
+            self.tableView.reloadData()
                         
         }
         
@@ -77,9 +78,21 @@ class WorldRankingViewController: UIViewController {
             let storyboard: UIStoryboard = UIStoryboard(name: "RegisterNameViewController", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "RegisterNameViewController") as! RegisterNameViewController
             vc.totalScore = self.totalScore
-            vc.tentativeRank = self.limitRankIndex + 1
+//            vc.tentativeRank = self.limitRankIndex + 1
             vc.rankingCount = self.list.count
-            self.present(vc, animated: true)
+            vc.modalPresentationStyle = .overCurrentContext
+            let navi = UINavigationController(rootViewController: vc)
+            navi.setNavigationBarHidden(true, animated: false)
+//            self.present(vc, animated: true)
+            
+            let threeDigitsScore = Double(round(1000 * self.totalScore)/1000)
+            
+            let limitRankIndex = self.list.firstIndex(where: {
+                $0.score < threeDigitsScore
+            })
+            vc.tentativeRank = limitRankIndex ?? 0 + 1
+            
+            self.presentPanModal(navi)
         }
 
     }
@@ -97,25 +110,58 @@ extension WorldRankingViewController: UITableViewDelegate, UITableViewDataSource
         cell?.scoreLabel.text = String(list[indexPath.row].score)
         cell?.rankLabel.text = String(indexPath.row + 1)
         
-        if indexPath.row == limitRankIndex {
-            
-            cell?.contentView.backgroundColor = UIColor(red: 239/255, green: 239/255, blue: 239/255, alpha: 1)
-            cell?.contentView.subviews[0].backgroundColor = UIColor(red: 135/255, green: 125/255, blue: 116/255, alpha: 1)
-//            cell?.contentView.subviews[0].borderColor = UIColor(red: 202/255, green: 177/255, blue: 136/255, alpha: 1)
-            cell?.contentView.subviews[1].backgroundColor = UIColor(red: 202/255, green: 177/255, blue: 136/255, alpha: 0.58)
-            cell?.nameLabel.textColor = UIColor(red: 255/255, green: 224/255, blue: 173/255, alpha: 1)
-            cell?.scoreLabel.textColor = UIColor(red: 255/255, green: 224/255, blue: 173/255, alpha: 1)
-        }else {
-
-            cell?.contentView.backgroundColor = .clear
-            cell?.contentView.subviews[0].backgroundColor = UIColor(red: 85/255, green: 78/255, blue: 72/255, alpha: 1)
-//            cell?.contentView.subviews[0].borderColor = UIColor(red: 202/255, green: 177/255, blue: 136/255, alpha: 1)
-            cell?.contentView.subviews[1].backgroundColor = UIColor(red: 110/255, green: 102/255, blue: 94/255, alpha: 1)
-            cell?.nameLabel.textColor = UIColor(red: 239/255, green: 239/255, blue: 239/255, alpha: 1)
-            cell?.scoreLabel.textColor = UIColor(red: 239/255, green: 239/255, blue: 239/255, alpha: 1)
-        }
+//        if indexPath.row == limitRankIndex {
+//
+//            cell?.contentView.backgroundColor = UIColor(red: 239/255, green: 239/255, blue: 239/255, alpha: 1)
+//            cell?.contentView.subviews[0].backgroundColor = UIColor(red: 135/255, green: 125/255, blue: 116/255, alpha: 1)
+//            cell?.contentView.subviews[1].backgroundColor = UIColor(red: 202/255, green: 177/255, blue: 136/255, alpha: 0.58)
+//            cell?.nameLabel.textColor = UIColor(red: 255/255, green: 224/255, blue: 173/255, alpha: 1)
+//            cell?.scoreLabel.textColor = UIColor(red: 255/255, green: 224/255, blue: 173/255, alpha: 1)
+//        }else {
+//
+//            cell?.contentView.backgroundColor = .clear
+//            cell?.contentView.subviews[0].backgroundColor = UIColor(red: 85/255, green: 78/255, blue: 72/255, alpha: 1)
+//            cell?.contentView.subviews[1].backgroundColor = UIColor(red: 110/255, green: 102/255, blue: 94/255, alpha: 1)
+//            cell?.nameLabel.textColor = UIColor(red: 239/255, green: 239/255, blue: 239/255, alpha: 1)
+//            cell?.scoreLabel.textColor = UIColor(red: 239/255, green: 239/255, blue: 239/255, alpha: 1)
+//        }
         
         return cell ?? UITableViewCell()
+    }
+    
+}
+
+extension UINavigationController: PanModalPresentable {
+    public var panScrollable: UIScrollView? {
+        nil
+    }
+    
+    public var topOffset: CGFloat {
+        return 0.0
+    }
+
+    public var springDamping: CGFloat {
+        return 1.0
+    }
+
+    public var transitionDuration: Double {
+        return 0.4
+    }
+
+    public var transitionAnimationOptions: UIView.AnimationOptions {
+        return [.allowUserInteraction, .beginFromCurrentState]
+    }
+
+    public var shouldRoundTopCorners: Bool {
+        return false
+    }
+
+    public var showDragIndicator: Bool {
+        return false
+    }
+    
+    public var longFormHeight: PanModalHeight {
+        return .maxHeight
     }
     
 }
