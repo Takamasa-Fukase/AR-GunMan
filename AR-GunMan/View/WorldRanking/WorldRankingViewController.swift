@@ -23,9 +23,16 @@ class WorldRankingViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var totalScoreLabel: UILabel!
+    @IBOutlet weak var rightButtonsStackView: UIStackView!
+    @IBOutlet weak var replayButton: UIButton!
+    @IBOutlet weak var homeButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        rightButtonsStackView.isHidden = true
+        replayButton.alpha = 0
+        homeButton.alpha = 0
         
         totalScore = Double.random(in: 0...100)
         
@@ -74,16 +81,13 @@ class WorldRankingViewController: UIViewController {
         self.view.insertSubview(visualEffectView, at: 0)
         
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             let storyboard: UIStoryboard = UIStoryboard(name: "RegisterNameViewController", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "RegisterNameViewController") as! RegisterNameViewController
             vc.totalScore = self.totalScore
 //            vc.tentativeRank = self.limitRankIndex + 1
             vc.rankingCount = self.list.count
             vc.modalPresentationStyle = .overCurrentContext
-            let navi = UINavigationController(rootViewController: vc)
-            navi.setNavigationBarHidden(true, animated: false)
-//            self.present(vc, animated: true)
             
             let threeDigitsScore = Double(round(1000 * self.totalScore)/1000)
             
@@ -91,8 +95,43 @@ class WorldRankingViewController: UIViewController {
                 $0.score < threeDigitsScore
             })
             vc.tentativeRank = limitRankIndex ?? 0 + 1
+            vc.registerNameVCDelegate = self
+            
+            let navi = UINavigationController(rootViewController: vc)
+            navi.setNavigationBarHidden(true, animated: false)
+//            self.present(vc, animated: true)
             
             self.presentPanModal(navi)
+        }
+        
+        
+
+    }
+    
+    @IBAction func tappedReplay(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func tappedHome(_ sender: Any) {
+        self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+    }
+    
+    
+    
+}
+
+extension WorldRankingViewController: RegisterNameVCDelegate {
+    
+    func showRightButtons() {
+        
+        UIView.animate(withDuration: 0.6, delay: 0.2) {
+            self.rightButtonsStackView.isHidden = false
+            
+        } completion: { (Bool) in
+            UIView.animate(withDuration: 0.2, delay: 0) {
+                self.replayButton.alpha = 1
+                self.homeButton.alpha = 1
+            }
         }
 
     }

@@ -10,6 +10,10 @@ import Firebase
 import RxSwift
 import RxCocoa
 
+protocol RegisterNameVCDelegate {
+    func showRightButtons()
+}
+
 class RegisterNameViewController: UIViewController {
     
     let disposeBag = DisposeBag()
@@ -19,6 +23,8 @@ class RegisterNameViewController: UIViewController {
     var tentativeRank = Int()
     var rankingCount = Int()
     var db: Firestore!
+    
+    var registerNameVCDelegate: RegisterNameVCDelegate?
     
     @IBOutlet weak var displayRankLabel: UILabel!
     @IBOutlet weak var totalScoreLabel: UILabel!
@@ -89,11 +95,13 @@ class RegisterNameViewController: UIViewController {
         ]) { (error) in
             print("error: \(String(describing: error))")
         }
+        self.registerNameVCDelegate?.showRightButtons()
         self.presentingViewController?.dismiss(animated: true, completion: nil)
 
     }
     @IBAction func tappedNoRegisterButton(_ sender: Any) {
 
+        self.registerNameVCDelegate?.showRightButtons()
         self.presentingViewController?.dismiss(animated: true, completion: nil)
 
     }
