@@ -124,7 +124,7 @@ extension WorldRankingViewController: RegisterNameVCDelegate {
     
     func showRightButtons() {
         
-        UIView.animate(withDuration: 0.6, delay: 0.2) {
+        UIView.animate(withDuration: 0.6, delay: 0.1) {
             self.rightButtonsStackView.isHidden = false
             
         } completion: { (Bool) in

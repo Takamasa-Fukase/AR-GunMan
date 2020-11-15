@@ -24,7 +24,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
     var audioPlayer4 = AVAudioPlayer()
     var audioPlayer5 = AVAudioPlayer()
     
-    var targetCount = 30
+    var targetCount = 200
     
     var toggleActionInterval = 0.2
     var lastCameraPos = SCNVector3()
@@ -34,7 +34,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
     var currentWeaponIndex = 0
     
     var timer:Timer!
-    var timeCount:Double = 5.00
+    var timeCount:Double = 10.00
     
     private var presenter: GamePresenter?
     
@@ -60,7 +60,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         
         let scene = SCNScene(named: "art.scnassets/target.scn")
         targetNode = (scene?.rootNode.childNode(withName: "target", recursively: false))!
-        targetNode?.scale = SCNVector3(0.2, 0.2, 0.2)
+        targetNode?.scale = SCNVector3(0.25, 0.25, 0.25)
         
         //当たり判定用のphysicBodyを追加
         targetNode?.physicsBody = SCNPhysicsBody(type: .dynamic, shape: shape)
@@ -428,10 +428,22 @@ extension GameViewController: GameInterface {
         //ランダムな座標に10回設置
         DispatchQueue.main.async {
             for _ in 0..<self.targetCount {
+//                let randomX = Float.random(in: -3...3)
+//                let randomY = Float.random(in: -1...1)
+//                let randomZ = Float.random(in: -3...(-0.5))
                 let randomX = Float.random(in: -3...3)
-                let randomY = Float.random(in: -1...1)
-                let randomZ = Float.random(in: -3...(-0.5))
-                let randomPosition = SCNVector3(x: randomX, y: randomY, z: randomZ)
+                let randomY = Float.random(in: -1.5...2)
+                let randomZfirst = Float.random(in: -3...(-0.5))
+                let randomZsecond = Float.random(in: 0.5...3)
+                let randomZthird = Float.random(in: -3...3)
+                var randomZ: Float?
+                
+                if randomX < -0.5 || randomX > 0.5 || randomY < -0.5 || randomY > 0.5 {
+                    randomZ = randomZthird
+                }else {
+                    randomZ = [randomZfirst, randomZsecond].randomElement()
+                }
+                let randomPosition = SCNVector3(x: randomX, y: randomY, z: randomZ ?? 0)
                 
                 let cloneTargetNode = self.targetNode?.clone()
                 
