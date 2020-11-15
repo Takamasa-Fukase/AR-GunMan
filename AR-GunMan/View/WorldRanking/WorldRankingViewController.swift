@@ -64,12 +64,11 @@ class WorldRankingViewController: UIViewController {
         let visualEffectView = UIVisualEffectView(effect: blurEffect)
         visualEffectView.frame = self.view.frame
         
-        let blueView = UIView(frame: self.view.frame)
-        blueView.backgroundColor = .blue
-        blueView.alpha = 0.2
-        
-        self.view.addSubview(blueView)
-        self.view.sendSubviewToBack(blueView)
+//        let blueView = UIView(frame: self.view.frame)
+//        blueView.backgroundColor = .brown
+//        blueView.alpha = 0.2
+//        self.view.addSubview(blueView)
+//        self.view.sendSubviewToBack(blueView)
         
         self.view.insertSubview(visualEffectView, at: 0)
         
@@ -100,13 +99,20 @@ extension WorldRankingViewController: UITableViewDelegate, UITableViewDataSource
         
         if indexPath.row == limitRankIndex {
             
-            cell?.contentView.subviews[0].backgroundColor = UIColor(red: 255/255, green: 217/255, blue: 0/255, alpha: 1)
-            cell?.contentView.subviews[1].backgroundColor = UIColor(red: 255/255, green: 190/255, blue: 0/255, alpha: 1)
+            cell?.contentView.backgroundColor = UIColor(red: 239/255, green: 239/255, blue: 239/255, alpha: 1)
+            cell?.contentView.subviews[0].backgroundColor = UIColor(red: 135/255, green: 125/255, blue: 116/255, alpha: 1)
+//            cell?.contentView.subviews[0].borderColor = UIColor(red: 202/255, green: 177/255, blue: 136/255, alpha: 1)
+            cell?.contentView.subviews[1].backgroundColor = UIColor(red: 202/255, green: 177/255, blue: 136/255, alpha: 0.58)
+            cell?.nameLabel.textColor = UIColor(red: 255/255, green: 224/255, blue: 173/255, alpha: 1)
+            cell?.scoreLabel.textColor = UIColor(red: 255/255, green: 224/255, blue: 173/255, alpha: 1)
         }else {
-            
-            cell?.contentView.subviews[0].backgroundColor = UIColor(red: 52/255, green: 78/255, blue: 130/255, alpha: 1)
-            cell?.contentView.subviews[1].backgroundColor = UIColor(red: 59/255, green: 89/255, blue: 148/255, alpha: 1)
-            
+
+            cell?.contentView.backgroundColor = .clear
+            cell?.contentView.subviews[0].backgroundColor = UIColor(red: 85/255, green: 78/255, blue: 72/255, alpha: 1)
+//            cell?.contentView.subviews[0].borderColor = UIColor(red: 202/255, green: 177/255, blue: 136/255, alpha: 1)
+            cell?.contentView.subviews[1].backgroundColor = UIColor(red: 110/255, green: 102/255, blue: 94/255, alpha: 1)
+            cell?.nameLabel.textColor = UIColor(red: 239/255, green: 239/255, blue: 239/255, alpha: 1)
+            cell?.scoreLabel.textColor = UIColor(red: 239/255, green: 239/255, blue: 239/255, alpha: 1)
         }
         
         return cell ?? UITableViewCell()
