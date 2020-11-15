@@ -33,6 +33,9 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
     
     var currentWeaponIndex = 0
     
+    var timer:Timer!
+    var timeCount:Double = 5.00
+    
     private var presenter: GamePresenter?
     
     @IBOutlet weak var sceneView: ARSCNView!
@@ -66,6 +69,28 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         self.presenter = GamePresenter(listener: self)
         presenter?.viewDidLoad()
         
+        self.timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(timerUpdate(timer:)), userInfo: nil, repeats: true)
+        
+        targetCountLabel.font = targetCountLabel.font.monospacedDigitFont
+
+        
+    }
+    
+    //タイマーで指定間隔ごとに呼ばれる関数
+    @objc func timerUpdate(timer: Timer) {
+        let lowwerTime = 0.00
+        timeCount = max(timeCount - 0.01, lowwerTime)
+        let strTimeCount = String(format: "%.2f", timeCount)
+        let twoDigitTimeCount = timeCount > 10 ? "\(strTimeCount)" : "0\(strTimeCount)"
+        targetCountLabel.text = twoDigitTimeCount
+        
+        //タイマーが0になったらタイマーを破棄して結果画面へ遷移
+        if timeCount <= 0 {
+            timer.invalidate()
+            let storyboard: UIStoryboard = UIStoryboard(name: "WorldRankingViewController", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "WorldRankingViewController") as! WorldRankingViewController
+            self.present(vc, animated: true)
+        }
     }
     
     @IBAction func switchWeaponButtonTapped(_ sender: Any) {
@@ -247,7 +272,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
             nodeB.removeFromParentNode()
             targetCount -= 1
             DispatchQueue.main.async {
-                self.targetCountLabel.text = "残り\(self.targetCount)個！"
+//                self.targetCountLabel.text = "残り\(self.targetCount)個！"
             }
         }
     }
@@ -489,3 +514,23 @@ extension GameViewController: AVAudioPlayerDelegate {
 }
 
 
+
+
+
+//タイムカウント（0.01秒刻みで動く）を等幅フォントにして左右のブレをなくす設定
+extension UIFont {
+    var monospacedDigitFont: UIFont {
+        let oldFontDescriptor = fontDescriptor
+        let newFontDescriptor = oldFontDescriptor.monospacedDigitFontDescriptor
+        return UIFont(descriptor: newFontDescriptor, size: 0)
+    }
+}
+
+private extension UIFontDescriptor {
+    var monospacedDigitFontDescriptor: UIFontDescriptor {
+        let fontDescriptorFeatureSettings = [[UIFontDescriptor.FeatureKey.featureIdentifier: kNumberSpacingType, UIFontDescriptor.FeatureKey.typeIdentifier: kMonospacedNumbersSelector]]
+        let fontDescriptorAttributes = [UIFontDescriptor.AttributeName.featureSettings: fontDescriptorFeatureSettings]
+        let fontDescriptor = self.addingAttributes(fontDescriptorAttributes)
+        return fontDescriptor
+    }
+}
