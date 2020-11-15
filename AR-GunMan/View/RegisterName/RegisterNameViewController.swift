@@ -59,15 +59,13 @@ class RegisterNameViewController: UIViewController {
     
     //名前が空欄だと登録ボタンを押せなくする　色もグレーにする
     @IBAction func changeRegisterButtonOnOff(_ sender: Any) {
-        
-        let customBlue = UIColor(red: 229/255, green: 255/255, blue: 255/255, alpha: 1)
-        
+                
         if !(nameTextField.text == "") {
             yesRegisterButton.isEnabled = true
-            yesRegisterButton.setTitleColor(customBlue, for: .normal)
+            yesRegisterButton.setTitleColor(.black, for: .normal)
         }else {
             yesRegisterButton.isEnabled = false
-            yesRegisterButton.setTitleColor(UIColor.gray, for: .normal)
+            yesRegisterButton.setTitleColor(.lightGray, for: .normal)
         }
     }
     
@@ -103,19 +101,19 @@ class RegisterNameViewController: UIViewController {
     
     func customAttributedString() -> NSMutableAttributedString {
         let stringAttributes1: [NSAttributedString.Key : Any] = [
-            .foregroundColor : UIColor(red: 229/255, green: 255/255, blue: 255/255, alpha: 1),
+            .foregroundColor : UIColor(red: 239/255, green: 239/255, blue: 239/255, alpha: 1),
             .font : UIFont(name: "Copperplate", size: 21.0) ?? UIFont.systemFont(ofSize: 21.0),
         ]
         let string1 = NSAttributedString(string: "You're ranked at ", attributes: stringAttributes1)
 
         let stringAttributes2: [NSAttributedString.Key : Any] = [
-            .foregroundColor : UIColor(red: 255/255, green: 190/255, blue: 0/255, alpha: 1),
+            .foregroundColor : UIColor(red: 85/255, green: 78/255, blue: 72/255, alpha: 1),
             .font : UIFont(name: "Copperplate", size: 25.0) ?? UIFont.systemFont(ofSize: 25.0),
         ]
         let string2 = NSAttributedString(string: "\(tentativeRank) / \(rankingCount)", attributes: stringAttributes2)
         
         let stringAttributes3: [NSAttributedString.Key : Any] = [
-            .foregroundColor : UIColor(red: 229/255, green: 255/255, blue: 255/255, alpha: 1),
+            .foregroundColor : UIColor(red: 239/255, green: 239/255, blue: 239/255, alpha: 1),
             .font : UIFont(name: "Copperplate", size: 21.0) ?? UIFont.systemFont(ofSize: 21.0),
         ]
         let string3 = NSAttributedString(string: " in the world!", attributes:stringAttributes3)
