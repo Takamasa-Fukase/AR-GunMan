@@ -20,6 +20,7 @@ target 'AR-GunMan' do
  pod 'Gecco'
  pod 'RxSwift'
  pod 'RxCocoa'
+ pod 'PanModal'
 
   target 'AR-GunManTests' do
     inherit! :search_paths
