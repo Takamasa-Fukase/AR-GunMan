@@ -420,17 +420,11 @@ extension GameViewController: GameInterface {
     
     //的ノードを設置
     func addTarget() {
-//        let sphere: SCNGeometry = SCNSphere(radius: 0.05)
-//        sphere.firstMaterial?.diffuse.contents = UIColor.red
-//
-//        let shape = SCNPhysicsShape(geometry: sphere, options: nil)
         
         //ランダムな座標に10回設置
         DispatchQueue.main.async {
             for _ in 0..<self.targetCount {
-//                let randomX = Float.random(in: -3...3)
-//                let randomY = Float.random(in: -1...1)
-//                let randomZ = Float.random(in: -3...(-0.5))
+
                 let randomX = Float.random(in: -3...3)
                 let randomY = Float.random(in: -1.5...2)
                 let randomZfirst = Float.random(in: -3...(-0.5))
@@ -448,6 +442,11 @@ extension GameViewController: GameInterface {
                 let cloneTargetNode = self.targetNode?.clone()
                 
                 cloneTargetNode?.position = randomPosition
+                
+                //常にカメラを向く制約
+                let billBoardConstraint = SCNBillboardConstraint()
+                cloneTargetNode?.constraints = [billBoardConstraint]
+                
                 self.sceneView.scene.rootNode.addChildNode(cloneTargetNode ?? SCNNode())
                 print("的を設置")
             }
