@@ -19,7 +19,7 @@
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pyp-xO-C8Y">
                         <rect key="frame" x="16" y="2" width="343" height="56"/>
-                        <color key="backgroundColor" red="0.53067919170558375" green="0.49009491675041317" blue="0.45386169790871489" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="backgroundColor" red="0.33286827800000002" green="0.30608814950000002" blue="0.28234505650000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                 <real key="value" value="3"/>
@@ -41,13 +41,13 @@
                                     <constraint firstAttribute="width" constant="75" id="UWf-aN-qoX"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="22"/>
-                                <color key="textColor" red="1" green="0.87977044278241845" blue="0.67840746143418185" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="textColor" red="0.93726116420000005" green="0.93724352119999998" blue="0.93725550170000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="マイケル" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Rbq-Q8-6ck">
                                 <rect key="frame" x="119" y="0.0" width="181" height="50"/>
                                 <fontDescription key="fontDescription" name="Copperplate-Bold" family="Copperplate" pointSize="38"/>
-                                <color key="textColor" red="1" green="0.87977044280000005" blue="0.67840746139999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="textColor" red="0.93726116420000005" green="0.93724352119999998" blue="0.93725550170000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="shV-Qu-rtZ">
@@ -83,7 +83,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.79046171899999995" green="0.69538801910000003" blue="0.53327715399999998" alpha="0.58096104452054798" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="backgroundColor" red="0.43278499749999999" green="0.39968728879999998" blue="0.3701379984" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="Ucg-FN-Uay" firstAttribute="bottom" secondItem="6gd-X9-0NE" secondAttribute="bottom" id="248-b8-obA"/>
                             <constraint firstAttribute="bottom" secondItem="jq7-uw-yfe" secondAttribute="bottom" id="2a4-ag-Kwr"/>
