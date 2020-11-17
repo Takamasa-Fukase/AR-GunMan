@@ -199,8 +199,8 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         switch weaponIndex {
         case 0:
             sceneView.scene.rootNode.childNode(withName: "parent", recursively: false)?.childNode(withName: "M1911_a", recursively: false)?.runAction(repeatAction)
-        case 5:
-            sceneView.scene.rootNode.childNode(withName: "bazookaParent", recursively: false)?.childNode(withName: "bazooka", recursively: false)?.runAction(repeatAction)
+//        case 5:
+//            sceneView.scene.rootNode.childNode(withName: "bazookaParent", recursively: false)?.childNode(withName: "bazooka", recursively: false)?.runAction(repeatAction)
         default: break
         }
     }
@@ -231,8 +231,8 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         switch weaponIndex {
         case 0:
             sceneView.scene.rootNode.childNode(withName: "parent", recursively: false)?.childNode(withName: "M1911_a", recursively: false)?.runAction(repeatAction)
-        case 5:
-            sceneView.scene.rootNode.childNode(withName: "bazookaParent", recursively: false)?.childNode(withName: "bazooka", recursively: false)?.runAction(repeatAction)
+//        case 5:
+//            sceneView.scene.rootNode.childNode(withName: "bazookaParent", recursively: false)?.childNode(withName: "bazooka", recursively: false)?.runAction(repeatAction)
         default: break
         }
     }
