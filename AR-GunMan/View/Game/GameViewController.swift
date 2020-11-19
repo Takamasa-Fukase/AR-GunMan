@@ -23,8 +23,15 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
     var audioPlayer3 = AVAudioPlayer()
     var audioPlayer4 = AVAudioPlayer()
     var audioPlayer5 = AVAudioPlayer()
+    var bazookaSet = AVAudioPlayer()
+    var bazookaReload = AVAudioPlayer()
+    var bazookaShoot = AVAudioPlayer()
+    var bazookaHit = AVAudioPlayer()
+    var startWhistle = AVAudioPlayer()
+    var endWhistle = AVAudioPlayer()
+    var rankingAppear = AVAudioPlayer()
     
-    var targetCount = 200
+    var targetCount = 30
     
     var toggleActionInterval = 0.2
     var lastCameraPos = SCNVector3()
@@ -36,6 +43,11 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
     var timer:Timer!
     var timeCount:Double = 10.00
     
+    var bulletNode: SCNNode?
+    var bazookaRocket: SCNNode?
+    var jetFire: SCNNode?
+    var targetNode: SCNNode?
+    
     private var presenter: GamePresenter?
     
     @IBOutlet weak var sceneView: ARSCNView!
@@ -43,10 +55,6 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
     @IBOutlet weak var targetCountLabel: UILabel!
     
     @IBOutlet weak var switchWeaponButton: UIButton!
-    
-    var bulletNode: SCNNode?
-    var targetNode: SCNNode?
-    var kingTaimeiSan: SCNNode?
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,10 +74,15 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         targetNode?.physicsBody = SCNPhysicsBody(type: .dynamic, shape: shape)
         targetNode?.physicsBody?.isAffectedByGravity = false
         
+        //ロケラン弾頭のジェット炎
+        let jetFireScebe = SCNScene(named: "art.scnassets/Weapon/ParticleSystem/jetFire.scn")
+        jetFire = (jetFireScebe?.rootNode.childNode(withName: "jetFire", recursively: false))!
+        jetFire?.scale = SCNVector3(1, 1, 1)
+        
         self.presenter = GamePresenter(listener: self)
         presenter?.viewDidLoad()
         
-        self.timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(timerUpdate(timer:)), userInfo: nil, repeats: true)
+//        self.timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(timerUpdate(timer:)), userInfo: nil, repeats: true)
         
         targetCountLabel.font = targetCountLabel.font.monospacedDigitFont
 
@@ -270,6 +283,16 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
             audioPlayer5.play()
             nodeA.removeFromParentNode()
             nodeB.removeFromParentNode()
+            
+            if let jetFire = self.sceneView.scene.rootNode.childNode(withName: "jetFire", recursively: false) {
+                print("jetFireを削除しました")
+                jetFire.removeFromParentNode()
+            }
+            
+            
+//            self.sceneView.scene.rootNode.childNode(withName: "KingTaimeiSan", recursively: false)!.removeFromParentNode()
+//            self.sceneView.scene.rootNode.childNode(withName: "jetFire", recursively: false)!.removeFromParentNode()
+            
             targetCount -= 1
             DispatchQueue.main.async {
 //                self.targetCountLabel.text = "残り\(self.targetCount)個！"
@@ -282,6 +305,12 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         motionManager.accelerometerUpdateInterval = 0.2
         motionManager.startAccelerometerUpdates(to: OperationQueue()) {
             (data, error) in
+            
+            print("acce")
+            if let error = error {
+                print("acce error: \(error)")
+            }
+            
             DispatchQueue.main.async {
                 guard let acceleration = data?.acceleration else { return }
                 self.presenter?.accele = acceleration
@@ -294,6 +323,12 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         motionManager.gyroUpdateInterval = 0.2
         motionManager.startGyroUpdates(to: OperationQueue()) {
             (data, error) in
+            
+            print("gyro")
+            if let error = error {
+                print("gyro error: \(error)")
+            }
+            
             DispatchQueue.main.async {
                 guard let rotationRate = data?.rotationRate else { return }
                 self.presenter?.gyro = rotationRate
@@ -318,14 +353,24 @@ extension GameViewController: SwitchWeaponDelegate {
         switch index {
         case 0:
             addPistol()
+            setBulletsImageView(with: UIImage(named: "bullets\(presenter?.pistolBulletsCount ?? 0)"))
+            pistolBulletsCountImageView.contentMode = .scaleAspectFit
         case 5:
             addBazooka()
+            setBulletsImageView(with: UIImage(named: "bazookaRocket\(presenter?.bazookaRocketCount ?? 0)"))
+            pistolBulletsCountImageView.contentMode = .scaleAspectFill
         default:
             print("まだ開発中の武器が選択されたので何も処理せずに終了")
+            print("Accelerometerとgyroの取得メソッドをリセット")
+            
+            getAccelerometer()
+            getGyro()
+            
             return
         }
         
         currentWeaponIndex = index
+        presenter?.currentWeaponIndex = index
         
     }
     
@@ -380,7 +425,7 @@ extension GameViewController: GameInterface {
     func addBullet() {
         guard let cameraPos = sceneView.pointOfView?.position else {return}
         //        guard bulletNode == nil else {return}
-        let position = SCNVector3(x: cameraPos.x, y: cameraPos.y, z: cameraPos.z)
+//        let position = SCNVector3(x: cameraPos.x, y: cameraPos.y, z: cameraPos.z)
         let sphere: SCNGeometry = SCNSphere(radius: 0.05)
         let customYellow = UIColor(red: 253/255, green: 202/255, blue: 119/255, alpha: 1)
         
@@ -389,13 +434,20 @@ extension GameViewController: GameInterface {
         guard let bulletNode = bulletNode else {return}
         bulletNode.name = "bullet"
         bulletNode.scale = SCNVector3(x: 1, y: 1, z: 1)
-        bulletNode.position = position
+        bulletNode.position = cameraPos
         
         //当たり判定用のphysicBodyを追加
         let shape = SCNPhysicsShape(geometry: sphere, options: nil)
         bulletNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: shape)
         bulletNode.physicsBody?.contactTestBitMask = 1
         bulletNode.physicsBody?.isAffectedByGravity = false
+        
+        jetFire?.position = SCNVector3(x: cameraPos.x, y: cameraPos.y, z: cameraPos.z + 0.1)
+        jetFire?.name = "jetFire"
+
+        if currentWeaponIndex == 5 {
+            self.sceneView.scene.rootNode.addChildNode(jetFire!)
+        }
         
         sceneView.scene.rootNode.addChildNode(bulletNode)
         
@@ -412,6 +464,12 @@ extension GameViewController: GameInterface {
         bulletNode?.runAction(action, completionHandler: {
             self.bulletNode?.removeFromParentNode()
         })
+        
+        if currentWeaponIndex == 5 {
+            jetFire?.runAction(action, completionHandler: {
+                self.jetFire?.removeFromParentNode()
+            })
+        }
         
         shootingAnimation()
         
@@ -459,6 +517,13 @@ extension GameViewController: GameInterface {
         setAudioPlayer(forIndex: 3, resourceFileName: "pistol-out-bullets")
         setAudioPlayer(forIndex: 4, resourceFileName: "pistol-reload")
         setAudioPlayer(forIndex: 5, resourceFileName: "headShot")
+        setAudioPlayer(forIndex: 6, resourceFileName: "bazookaSet")
+        setAudioPlayer(forIndex: 7, resourceFileName: "bazookaReload")
+        setAudioPlayer(forIndex: 8, resourceFileName: "bazookaShoot")
+        setAudioPlayer(forIndex: 9, resourceFileName: "bazookaHit")
+        setAudioPlayer(forIndex: 10, resourceFileName: "startWhistle")
+        setAudioPlayer(forIndex: 11, resourceFileName: "endWhistle")
+        setAudioPlayer(forIndex: 12, resourceFileName: "rankingAppear")
     }
     
     func playSound(of index: Int) {
@@ -478,6 +543,27 @@ extension GameViewController: GameInterface {
         case 5:
             audioPlayer5.currentTime = 0
             audioPlayer5.play()
+        case 6:
+            bazookaSet.currentTime = 0
+            bazookaSet.play()
+        case 7:
+            bazookaReload.currentTime = 0
+            bazookaReload.play()
+        case 8:
+            bazookaShoot.currentTime = 0
+            bazookaShoot.play()
+        case 9:
+            bazookaHit.currentTime = 0
+            bazookaHit.play()
+        case 10:
+            startWhistle.currentTime = 0
+            startWhistle.play()
+        case 11:
+            endWhistle.currentTime = 0
+            endWhistle.play()
+        case 12:
+            rankingAppear.currentTime = 0
+            rankingAppear.play()
         default: break
         }
     }
@@ -515,6 +601,28 @@ extension GameViewController: AVAudioPlayerDelegate {
             case 5:
                 audioPlayer5 = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
                 audioPlayer5.prepareToPlay()
+            case 6:
+                bazookaSet = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+                bazookaSet.prepareToPlay()
+            case 7:
+                bazookaReload = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+                bazookaReload.prepareToPlay()
+            case 8:
+                bazookaShoot = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+                bazookaShoot.prepareToPlay()
+            case 9:
+                bazookaHit = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+                bazookaHit.prepareToPlay()
+            case 10:
+                startWhistle = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+                startWhistle.prepareToPlay()
+            case 11:
+                endWhistle = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+                endWhistle.prepareToPlay()
+            case 12:
+                rankingAppear = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+                rankingAppear.prepareToPlay()
+                
             default:
                 break
             }
