@@ -11,12 +11,12 @@
 		5921A208255D6A4E001D8C39 /* WorldRankingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5921A206255D6A4E001D8C39 /* WorldRankingCell.swift */; };
 		5921A209255D6A4E001D8C39 /* WorldRankingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5921A207255D6A4E001D8C39 /* WorldRankingCell.xib */; };
 		59484C5A2565792300F9C6A8 /* bazookaSet.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 59484C592565792300F9C6A8 /* bazookaSet.mp3 */; };
-		59484C612565794500F9C6A8 /* bazookaHit.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 59484C5F2565794500F9C6A8 /* bazookaHit.mp3 */; };
 		59484C662565796400F9C6A8 /* bazookaReload.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 59484C652565796400F9C6A8 /* bazookaReload.mp3 */; };
 		59484C6B25657E1C00F9C6A8 /* endWhistle.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 59484C6A25657E1C00F9C6A8 /* endWhistle.mp3 */; };
 		59484C7025657E2B00F9C6A8 /* rankingAppear.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 59484C6F25657E2B00F9C6A8 /* rankingAppear.mp3 */; };
-		59484C752565848900F9C6A8 /* bazookaShoot.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 59484C742565848900F9C6A8 /* bazookaShoot.mp3 */; };
 		59484C7D256584B000F9C6A8 /* startWhistle.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 59484C7C256584B000F9C6A8 /* startWhistle.mp3 */; };
+		59484C8525664E7400F9C6A8 /* bazookaShoot.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 59484C8425664E7400F9C6A8 /* bazookaShoot.mp3 */; };
+		59484C8A25664FEC00F9C6A8 /* bazookaHit.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 59484C8925664FEB00F9C6A8 /* bazookaHit.mp3 */; };
 		59940B882552F54900EC20C1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 59940B872552F54900EC20C1 /* GoogleService-Info.plist */; };
 		59940BAC2552FAA600EC20C1 /* RegisterNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59940BAB2552FAA600EC20C1 /* RegisterNameViewController.swift */; };
 		59940BB12552FAAF00EC20C1 /* RegisterNameViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59940BB02552FAAF00EC20C1 /* RegisterNameViewController.storyboard */; };
@@ -74,12 +74,12 @@
 		5921A206255D6A4E001D8C39 /* WorldRankingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldRankingCell.swift; sourceTree = "<group>"; };
 		5921A207255D6A4E001D8C39 /* WorldRankingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WorldRankingCell.xib; sourceTree = "<group>"; };
 		59484C592565792300F9C6A8 /* bazookaSet.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bazookaSet.mp3; sourceTree = "<group>"; };
-		59484C5F2565794500F9C6A8 /* bazookaHit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bazookaHit.mp3; sourceTree = "<group>"; };
 		59484C652565796400F9C6A8 /* bazookaReload.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bazookaReload.mp3; sourceTree = "<group>"; };
 		59484C6A25657E1C00F9C6A8 /* endWhistle.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = endWhistle.mp3; sourceTree = "<group>"; };
 		59484C6F25657E2B00F9C6A8 /* rankingAppear.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = rankingAppear.mp3; sourceTree = "<group>"; };
-		59484C742565848900F9C6A8 /* bazookaShoot.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bazookaShoot.mp3; sourceTree = "<group>"; };
 		59484C7C256584B000F9C6A8 /* startWhistle.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = startWhistle.mp3; sourceTree = "<group>"; };
+		59484C8425664E7400F9C6A8 /* bazookaShoot.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bazookaShoot.mp3; sourceTree = "<group>"; };
+		59484C8925664FEB00F9C6A8 /* bazookaHit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bazookaHit.mp3; sourceTree = "<group>"; };
 		59940B872552F54900EC20C1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		59940BAB2552FAA600EC20C1 /* RegisterNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterNameViewController.swift; sourceTree = "<group>"; };
 		59940BB02552FAAF00EC20C1 /* RegisterNameViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RegisterNameViewController.storyboard; sourceTree = "<group>"; };
@@ -236,8 +236,8 @@
 				59D2D5532552E2CC006DDB70 /* headShot.mp3 */,
 				59D2D5542552E2CC006DDB70 /* pistol-reload.mp3 */,
 				59484C592565792300F9C6A8 /* bazookaSet.mp3 */,
-				59484C5F2565794500F9C6A8 /* bazookaHit.mp3 */,
-				59484C742565848900F9C6A8 /* bazookaShoot.mp3 */,
+				59484C8425664E7400F9C6A8 /* bazookaShoot.mp3 */,
+				59484C8925664FEB00F9C6A8 /* bazookaHit.mp3 */,
 				59484C652565796400F9C6A8 /* bazookaReload.mp3 */,
 				59484C7C256584B000F9C6A8 /* startWhistle.mp3 */,
 				59484C6A25657E1C00F9C6A8 /* endWhistle.mp3 */,
@@ -441,10 +441,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				59484C7025657E2B00F9C6A8 /* rankingAppear.mp3 in Resources */,
-				59484C612565794500F9C6A8 /* bazookaHit.mp3 in Resources */,
 				59A01139255AF588008996E3 /* WorldRankingViewController.storyboard in Resources */,
 				59484C7D256584B000F9C6A8 /* startWhistle.mp3 in Resources */,
 				59D2D55D2552E2CC006DDB70 /* pistol-fire.mp3 in Resources */,
+				59484C8A25664FEC00F9C6A8 /* bazookaHit.mp3 in Resources */,
 				59940BB12552FAAF00EC20C1 /* RegisterNameViewController.storyboard in Resources */,
 				59D2D5942552E718006DDB70 /* SwitchWeaponCell.xib in Resources */,
 				59D2D55B2552E2CC006DDB70 /* pistol-out-bullets.mp3 in Resources */,
@@ -459,7 +459,7 @@
 				59484C662565796400F9C6A8 /* bazookaReload.mp3 in Resources */,
 				59D2D5962552E718006DDB70 /* SwitchWeaponViewController.storyboard in Resources */,
 				59D2D55E2552E2CC006DDB70 /* headShot.mp3 in Resources */,
-				59484C752565848900F9C6A8 /* bazookaShoot.mp3 in Resources */,
+				59484C8525664E7400F9C6A8 /* bazookaShoot.mp3 in Resources */,
 				59D2D57A2552E536006DDB70 /* Main.storyboard in Resources */,
 				59D2D56A2552E31E006DDB70 /* Assets.xcassets in Resources */,
 				59D2D55C2552E2CC006DDB70 /* pistol-slide.mp3 in Resources */,
