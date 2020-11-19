@@ -31,9 +31,12 @@ class GamePresenter {
     private var preBool = false
     private var postBool = false
     
-    private var pistolBulletsCount = 7
+    var pistolBulletsCount = 7
+    var bazookaRocketCount = 1
     var accele = CMAcceleration()
     var gyro = CMRotationRate()
+    
+    var currentWeaponIndex = 0
     
     var isShootEnabled = false
     
@@ -55,10 +58,12 @@ class GamePresenter {
     }
     
     func didUpdateAccelerationData(data: CMAcceleration) {
+        print("acceleration")
         pistolAccelerometer(data.x, data.y, data.z)
     }
     
     func didUpdateGyroData(data: CMRotationRate) {
+        print("gyro")
         pistolGyro(data.x, data.y, data.z)
     }
 }
@@ -87,44 +92,100 @@ extension GamePresenter {
     //            && gyroX < 1.5
     //            && gyroY < 3
                 && gyroZ < 10 {
-                if pistolBulletsCount > 0 {
-                    pistolBulletsCount -= 1
+                
+                switch currentWeaponIndex {
+                case 0:
                     
-                    listener.addBullet()
-                    listener.shootBullet()
+                    if pistolBulletsCount > 0 {
+                        pistolBulletsCount -= 1
+                        
+                        listener.addBullet()
+                        listener.shootBullet()
+                        print("shoot")
+                        
+                        listener.playSound(of: 2)
+                        listener.vibration()
+                        preBool = true
+                    }else if pistolBulletsCount <= 0 {
+                        listener.playSound(of: 3)
+                        preBool = true
+                    }
+                    print("ピストルの残弾数: \(pistolBulletsCount) / 7発")
+                    listener.setBulletsImageView(with: UIImage(named: "bullets\(pistolBulletsCount)"))
                     
-                    listener.playSound(of: 2)
-                    listener.vibration()
-                    preBool = true
-                }else if pistolBulletsCount <= 0 {
-                    listener.playSound(of: 3)
-                    preBool = true
+                case 5:
+                    
+                    if bazookaRocketCount > 0 {
+                        
+                        bazookaRocketCount -= 1
+                        
+                        listener.addBullet()
+                        listener.shootBullet()
+                        print("shootRocket")
+                        
+                        listener.playSound(of: 8)
+                        listener.playSound(of: 7)
+                        listener.vibration()
+                        preBool = true
+                    }else if pistolBulletsCount <= 0 {
+                        preBool = true
+                    }
+                    print("ロケランの残弾数: \(bazookaRocketCount) / 1発")
+                    listener.setBulletsImageView(with: UIImage(named: "bazookaRocket\(bazookaRocketCount)"))
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        self.bazookaRocketCount = 1
+                        print("ロケランの残弾数: \(self.bazookaRocketCount) / 1発")
+                        self.listener.setBulletsImageView(with: UIImage(named: "bazookaRocket\(self.bazookaRocketCount)"))
+                    }
+                    
+                default:
+                    break
                 }
-                print("ピストルの残弾数: \(pistolBulletsCount) / 7発")
+                
             }
             if postBool
                 && compositAcceleration >= 1.5
                 //            && gyroX < 1.5
                 //            && gyroY < 3
                 && gyroZ < 10 {
-                if pistolBulletsCount > 0 {
-                    pistolBulletsCount -= 1
+                
+                switch currentWeaponIndex {
+                case 0:
                     
-                    listener.addBullet()
-                    listener.shootBullet()
+                    if pistolBulletsCount > 0 {
+                        pistolBulletsCount -= 1
+                        
+                        listener.addBullet()
+                        listener.shootBullet()
+                        print("shoot")
+                        
+                        listener.playSound(of: 2)
+                        listener.vibration()
+                        postBool = false
+                        preBool = false
+                    }else if pistolBulletsCount <= 0 {
+                        listener.playSound(of: 3)
+                        postBool = false
+                        preBool = false
+                    }
+                    print("ピストルの残弾数: \(pistolBulletsCount) / 7発")
+                    listener.setBulletsImageView(with: UIImage(named: "bullets\(pistolBulletsCount)"))
                     
-                    listener.playSound(of: 2)
-                    listener.vibration()
-                    postBool = false
-                    preBool = false
-                }else if pistolBulletsCount <= 0 {
-                    listener.playSound(of: 3)
-                    postBool = false
-                    preBool = false
+                case 5:
+                    
+                    if bazookaRocketCount > 0 {
+                        
+                    }else {
+                        
+                    }
+                    
+                default:
+                    break
                 }
-                print("ピストルの残弾数: \(pistolBulletsCount) / 7発")
+                
             }
-            listener.setBulletsImageView(with: UIImage(named: "bullets\(pistolBulletsCount)"))
+        
 //        }
         
     }
@@ -132,7 +193,8 @@ extension GamePresenter {
     func pistolGyro(_ x: Double, _ y: Double, _ z: Double) {
         
 //        if isShootEnabled {
-            
+        
+        if currentWeaponIndex == 0 {
             let compositGyro = model.getCompositeGyro(0, 0, gyro.z)
             
             if pistolBulletsCount <= 0 && compositGyro >= 10 {
@@ -143,6 +205,7 @@ extension GamePresenter {
                 print("ピストルの弾をリロードしました  残弾数: \(pistolBulletsCount)発")
             }
             listener.setBulletsImageView(with: UIImage(named: "bullets\(pistolBulletsCount)"))
+        }
             
 //        }
         
