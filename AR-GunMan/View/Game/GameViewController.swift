@@ -18,11 +18,11 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
     
     let motionManager = CMMotionManager()
     
-    var audioPlayer1 = AVAudioPlayer()
-    var audioPlayer2 = AVAudioPlayer()
-    var audioPlayer3 = AVAudioPlayer()
-    var audioPlayer4 = AVAudioPlayer()
-    var audioPlayer5 = AVAudioPlayer()
+    var pistolSet = AVAudioPlayer()
+    var pistolShoot = AVAudioPlayer()
+    var pistolOutBullets = AVAudioPlayer()
+    var pistolReload = AVAudioPlayer()
+    var headShot = AVAudioPlayer()
     var bazookaSet = AVAudioPlayer()
     var bazookaReload = AVAudioPlayer()
     var bazookaShoot = AVAudioPlayer()
@@ -280,7 +280,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         
         if (nodeA.name == "bullet" && nodeB.name == "target") || (nodeB.name == "bullet" && nodeA.name == "target") {
             print("当たった")
-            audioPlayer5.play()
+            headShot.play()
             nodeA.removeFromParentNode()
             nodeB.removeFromParentNode()
             
@@ -394,7 +394,7 @@ extension GameViewController: GameInterface {
         self.sceneView.scene.rootNode.addChildNode(parentNode)
         
         //チャキッ　の再生
-        self.audioPlayer1.play()
+        self.pistolSet.play()
         
         gunnerShakeAnimationNormal(0)
     }
@@ -416,7 +416,7 @@ extension GameViewController: GameInterface {
         self.sceneView.scene.rootNode.addChildNode(bazooka)
         
         //チャキッ　の再生
-        self.audioPlayer1.play()
+        self.bazookaSet.play()
         
         gunnerShakeAnimationNormal(5)
     }
@@ -529,20 +529,20 @@ extension GameViewController: GameInterface {
     func playSound(of index: Int) {
         switch index {
         case 1:
-            audioPlayer1.currentTime = 0
-            audioPlayer1.play()
+            pistolSet.currentTime = 0
+            pistolSet.play()
         case 2:
-            audioPlayer2.currentTime = 0
-            audioPlayer2.play()
+            pistolShoot.currentTime = 0
+            pistolShoot.play()
         case 3:
-            audioPlayer3.currentTime = 0
-            audioPlayer3.play()
+            pistolOutBullets.currentTime = 0
+            pistolOutBullets.play()
         case 4:
-            audioPlayer4.currentTime = 0
-            audioPlayer4.play()
+            pistolReload.currentTime = 0
+            pistolReload.play()
         case 5:
-            audioPlayer5.currentTime = 0
-            audioPlayer5.play()
+            headShot.currentTime = 0
+            headShot.play()
         case 6:
             bazookaSet.currentTime = 0
             bazookaSet.play()
@@ -587,20 +587,20 @@ extension GameViewController: AVAudioPlayerDelegate {
         do {
             switch index {
             case 1:
-                audioPlayer1 = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
-                audioPlayer1.prepareToPlay()
+                pistolSet = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+                pistolSet.prepareToPlay()
             case 2:
-                audioPlayer2 = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
-                audioPlayer2.prepareToPlay()
+                pistolShoot = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+                pistolShoot.prepareToPlay()
             case 3:
-                audioPlayer3 = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
-                audioPlayer3.prepareToPlay()
+                pistolOutBullets = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+                pistolOutBullets.prepareToPlay()
             case 4:
-                audioPlayer4 = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
-                audioPlayer4.prepareToPlay()
+                pistolReload = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+                pistolReload.prepareToPlay()
             case 5:
-                audioPlayer5 = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
-                audioPlayer5.prepareToPlay()
+                headShot = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+                headShot.prepareToPlay()
             case 6:
                 bazookaSet = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
                 bazookaSet.prepareToPlay()
