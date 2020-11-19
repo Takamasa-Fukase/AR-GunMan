@@ -41,7 +41,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
     var currentWeaponIndex = 0
     
     var timer:Timer!
-    var timeCount:Double = 10.00
+    var timeCount:Double = 60.00
     
     var bulletNode: SCNNode?
     var bazookaRocket: SCNNode?
@@ -82,7 +82,12 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         self.presenter = GamePresenter(listener: self)
         presenter?.viewDidLoad()
         
-//        self.timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(timerUpdate(timer:)), userInfo: nil, repeats: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            
+            self.startWhistle.play()
+            
+            self.timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(self.timerUpdate(timer:)), userInfo: nil, repeats: true)
+        }
         
         targetCountLabel.font = targetCountLabel.font.monospacedDigitFont
 
@@ -99,10 +104,20 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         
         //タイマーが0になったらタイマーを破棄して結果画面へ遷移
         if timeCount <= 0 {
+            
             timer.invalidate()
-            let storyboard: UIStoryboard = UIStoryboard(name: "WorldRankingViewController", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "WorldRankingViewController") as! WorldRankingViewController
-            self.present(vc, animated: true)
+
+            endWhistle.play()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
+                
+                self.rankingAppear.play()
+                
+                let storyboard: UIStoryboard = UIStoryboard(name: "WorldRankingViewController", bundle: nil)
+                let vc = storyboard.instantiateViewController(withIdentifier: "WorldRankingViewController") as! WorldRankingViewController
+                self.present(vc, animated: true)
+            })
+            
         }
     }
     
@@ -287,6 +302,10 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
             if let jetFire = self.sceneView.scene.rootNode.childNode(withName: "jetFire", recursively: false) {
                 print("jetFireを削除しました")
                 jetFire.removeFromParentNode()
+            }
+            
+            if currentWeaponIndex == 5 {
+                bazookaHit.play()
             }
             
             

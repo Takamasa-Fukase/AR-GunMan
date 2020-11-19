@@ -35,7 +35,7 @@
                                     <constraint firstAttribute="width" constant="210" id="pgh-38-QwQ"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="raj-Cg-8Fj">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="60:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="raj-Cg-8Fj">
                                 <rect key="frame" x="44" y="10" width="120" height="40"/>
                                 <color key="backgroundColor" white="1" alpha="0.50203339041095896" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>

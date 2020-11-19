@@ -58,12 +58,10 @@ class GamePresenter {
     }
     
     func didUpdateAccelerationData(data: CMAcceleration) {
-        print("acceleration")
         pistolAccelerometer(data.x, data.y, data.z)
     }
     
     func didUpdateGyroData(data: CMRotationRate) {
-        print("gyro")
         pistolGyro(data.x, data.y, data.z)
     }
 }
@@ -133,7 +131,7 @@ extension GamePresenter {
                     print("ロケランの残弾数: \(bazookaRocketCount) / 1発")
                     listener.setBulletsImageView(with: UIImage(named: "bazookaRocket\(bazookaRocketCount)"))
                     
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3.2) {
                         self.bazookaRocketCount = 1
                         print("ロケランの残弾数: \(self.bazookaRocketCount) / 1発")
                         self.listener.setBulletsImageView(with: UIImage(named: "bazookaRocket\(self.bazookaRocketCount)"))
@@ -176,8 +174,26 @@ extension GamePresenter {
                     
                     if bazookaRocketCount > 0 {
                         
-                    }else {
+                        bazookaRocketCount -= 1
                         
+                        listener.addBullet()
+                        listener.shootBullet()
+                        print("shootRocket")
+                        
+                        listener.playSound(of: 8)
+                        listener.playSound(of: 7)
+                        listener.vibration()
+                        preBool = true
+                    }else if pistolBulletsCount <= 0 {
+                        preBool = true
+                    }
+                    print("ロケランの残弾数: \(bazookaRocketCount) / 1発")
+                    listener.setBulletsImageView(with: UIImage(named: "bazookaRocket\(bazookaRocketCount)"))
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3.5) {
+                        self.bazookaRocketCount = 1
+                        print("ロケランの残弾数: \(self.bazookaRocketCount) / 1発")
+                        self.listener.setBulletsImageView(with: UIImage(named: "bazookaRocket\(self.bazookaRocketCount)"))
                     }
                     
                 default:
