@@ -63,12 +63,13 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         getAccelerometer()
         getGyro()
         
-        let sphere: SCNGeometry = SCNSphere(radius: 0.05)
-        let shape = SCNPhysicsShape(geometry: sphere, options: nil)
-        
         let scene = SCNScene(named: "art.scnassets/target.scn")
         targetNode = (scene?.rootNode.childNode(withName: "target", recursively: false))!
         targetNode?.scale = SCNVector3(0.25, 0.25, 0.25)
+        
+        let targetNodeGeometry = (targetNode?.childNode(withName: "sphere", recursively: false)?.geometry)!
+        
+        let shape = SCNPhysicsShape(geometry: targetNodeGeometry, options: nil)
         
         //当たり判定用のphysicBodyを追加
         targetNode?.physicsBody = SCNPhysicsBody(type: .dynamic, shape: shape)
