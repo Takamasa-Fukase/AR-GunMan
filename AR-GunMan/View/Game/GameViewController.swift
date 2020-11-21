@@ -76,9 +76,9 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         targetNode?.physicsBody?.isAffectedByGravity = false
         
         //ロケラン弾頭のジェット炎
-        let jetFireScebe = SCNScene(named: "art.scnassets/Weapon/ParticleSystem/jetFire.scn")
-        jetFire = (jetFireScebe?.rootNode.childNode(withName: "jetFire", recursively: false))!
-        jetFire?.scale = SCNVector3(1, 1, 1)
+//        let jetFireScebe = SCNScene(named: "art.scnassets/Weapon/ParticleSystem/jetFire.scn")
+//        jetFire = (jetFireScebe?.rootNode.childNode(withName: "jetFire", recursively: false))!
+//        jetFire?.scale = SCNVector3(1, 1, 1)
         
         self.presenter = GamePresenter(listener: self)
         presenter?.viewDidLoad()
@@ -300,10 +300,10 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
             nodeA.removeFromParentNode()
             nodeB.removeFromParentNode()
             
-            if let jetFire = self.sceneView.scene.rootNode.childNode(withName: "jetFire", recursively: false) {
-                print("jetFireを削除しました")
-                jetFire.removeFromParentNode()
-            }
+//            if let jetFire = self.sceneView.scene.rootNode.childNode(withName: "jetFire", recursively: false) {
+//                print("jetFireを削除しました")
+//                jetFire.removeFromParentNode()
+//            }
             
             if currentWeaponIndex == 5 {
                 bazookaHit.play()
@@ -435,6 +435,11 @@ extension GameViewController: GameInterface {
         bazooka.position = sceneView.pointOfView?.position ?? SCNVector3()
         self.sceneView.scene.rootNode.addChildNode(bazooka)
         
+//        if let par = bazooka.childNode(withName: "jetFire", recursively: false) {
+//            print(par.particleSystems)
+//            par.particleSystems?[0].birthRate = 0
+//        }
+        
         //チャキッ　の再生
         self.bazookaSet.play()
         
@@ -462,11 +467,11 @@ extension GameViewController: GameInterface {
         bulletNode.physicsBody?.contactTestBitMask = 1
         bulletNode.physicsBody?.isAffectedByGravity = false
         
-        jetFire?.position = SCNVector3(x: cameraPos.x, y: cameraPos.y, z: cameraPos.z + 0.1)
-        jetFire?.name = "jetFire"
+//        jetFire?.position = SCNVector3(x: cameraPos.x, y: cameraPos.y, z: cameraPos.z + 0.1)
+//        jetFire?.name = "jetFire"
 
         if currentWeaponIndex == 5 {
-            self.sceneView.scene.rootNode.addChildNode(jetFire!)
+//            self.sceneView.scene.rootNode.addChildNode(jetFire!)
         }
         
         sceneView.scene.rootNode.addChildNode(bulletNode)
@@ -486,9 +491,26 @@ extension GameViewController: GameInterface {
         })
         
         if currentWeaponIndex == 5 {
-            jetFire?.runAction(action, completionHandler: {
-                self.jetFire?.removeFromParentNode()
-            })
+//            jetFire?.runAction(action, completionHandler: {
+//                self.jetFire?.removeFromParentNode()
+//            })
+//            let bazooka = sceneView.scene.rootNode.childNode(withName: "bazookaParent", recursively: false)!
+//
+//            if let par = bazooka.childNode(withName: "jetFire", recursively: false) {
+//                print("par: \(par)")
+//                print("par.particleSystems: \(par.particleSystems)")
+//
+//                if let firstPar = par.particleSystems?.first {
+//
+//                    firstPar.birthRate = 40
+//                    firstPar.birthRate = 0
+////                    firstPar.loops = false
+//
+//                    print("firstPar: \(firstPar)")
+//
+//                }
+//            }
+            
         }
         
         shootingAnimation()
