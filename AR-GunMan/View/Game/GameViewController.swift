@@ -89,6 +89,8 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
             
             self.startWhistle.play()
             
+            self.presenter?.isShootEnabled = true
+            
             self.timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(self.timerUpdate(timer:)), userInfo: nil, repeats: true)
         }
         
@@ -109,6 +111,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         if timeCount <= 0 {
             
             timer.invalidate()
+            presenter?.isShootEnabled = false
 
             endWhistle.play()
             
