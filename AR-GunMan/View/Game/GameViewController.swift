@@ -53,6 +53,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
     
     @IBOutlet weak var sceneView: ARSCNView!
     @IBOutlet weak var pistolBulletsCountImageView: UIImageView!
+    @IBOutlet weak var sightImageView: UIImageView!
     @IBOutlet weak var targetCountLabel: UILabel!
     
     @IBOutlet weak var switchWeaponButton: UIButton!
@@ -124,19 +125,24 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
     }
     
     @IBAction func switchWeaponButtonTapped(_ sender: Any) {
+        
+        sightImageView.image = nil
+        pistolBulletsCountImageView.image = nil
+        presenter?.isShootEnabled = false
+        
         let storyboard: UIStoryboard = UIStoryboard(name: "SwitchWeaponViewController", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "SwitchWeaponViewController") as! SwitchWeaponViewController
         vc.modalPresentationStyle = .overCurrentContext
         
         vc.switchWeaponDelegate = self
-        vc.modalPresentationStyle = .overCurrentContext
+//        vc.modalPresentationStyle = .overFullScreen
         
-//        self.present(vc, animated: true)
+        self.present(vc, animated: true)
         
-        let navi = UINavigationController(rootViewController: vc)
-        navi.setNavigationBarHidden(true, animated: false)
-        
-        self.presentPanModal(navi)
+//        let navi = UINavigationController(rootViewController: vc)
+//        navi.setNavigationBarHidden(true, animated: false)
+//
+//        self.presentPanModal(navi)
     }
     
     func setupScnView() {
@@ -382,32 +388,33 @@ extension GameViewController: SwitchWeaponDelegate {
         
         print("current: \(currentWeaponIndex), selectedAt: \(index)")
         
-        //同じ武器を選択した場合は何も処理しないで終了
-        guard index != currentWeaponIndex else {
-            print("同じ武器を選択した場合は何も処理しないで終了")
-            return}
-        
         switch index {
         case 0:
-            addPistol()
+            if index != currentWeaponIndex {
+                addPistol()
+            }
             setBulletsImageView(with: UIImage(named: "bullets\(presenter?.pistolBulletsCount ?? 0)"))
             pistolBulletsCountImageView.contentMode = .scaleAspectFit
+            sightImageView.image = UIImage(named: "pistolSight")
+            sightImageView.tintColor = .systemRed
+            
         case 5:
-            addBazooka()
+            if index != currentWeaponIndex {
+                addBazooka()
+            }
             setBulletsImageView(with: UIImage(named: "bazookaRocket\(presenter?.bazookaRocketCount ?? 0)"))
             pistolBulletsCountImageView.contentMode = .scaleAspectFill
+            sightImageView.image = UIImage(named: "bazookaSight")
+            sightImageView.tintColor = .systemGreen
+            
         default:
             print("まだ開発中の武器が選択されたので何も処理せずに終了")
-            print("Accelerometerとgyroの取得メソッドをリセット")
-            
-            getAccelerometer()
-            getGyro()
-            
             return
         }
         
         currentWeaponIndex = index
         presenter?.currentWeaponIndex = index
+        presenter?.isShootEnabled = true
         
     }
     
