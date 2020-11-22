@@ -8,6 +8,8 @@
 
 import UIKit
 import FSPagerView
+import RxSwift
+import RxCocoa
 
 protocol SwitchWeaponDelegate {
     func selectedAt(index: Int)
@@ -15,7 +17,9 @@ protocol SwitchWeaponDelegate {
 
 class SwitchWeaponViewController: UIViewController {
     
+    let disposeBag = DisposeBag()
     var switchWeaponDelegate: SwitchWeaponDelegate?
+    var viewModel: GameViewModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +32,18 @@ class SwitchWeaponViewController: UIViewController {
         pagerView.interitemSpacing = 8
         
         pagerView.transformer = FSPagerViewTransformer(type: .ferrisWheel)
+        
+        
+        //output
+        viewModel?.dismissSwitchWeaponVC
+            .subscribe(onNext: { [weak self] element in
+                guard let self = self else {return}
+                
+                print("SwitchWeaponVC dismissSelfを通知受け取ったのでdismissします")
+                self.dismiss(animated: false, completion: nil)
+                
+            }).disposed(by: disposeBag)
+        
     }
     
     @IBOutlet weak var pagerView: FSPagerView! {

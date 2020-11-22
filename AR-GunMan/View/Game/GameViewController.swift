@@ -42,7 +42,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
     var currentWeaponIndex = 0
     
     var timer:Timer!
-    var timeCount:Double = 30.00
+    var timeCount:Double = 3.00
     
     var bulletNode: SCNNode?
     var bazookaRocket: SCNNode?
@@ -50,6 +50,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
     var targetNode: SCNNode?
     
     private var presenter: GamePresenter?
+    var viewModel = GameViewModel()
     
     @IBOutlet weak var sceneView: ARSCNView!
     @IBOutlet weak var pistolBulletsCountImageView: UIImageView!
@@ -117,6 +118,8 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
                 
+                self.viewModel.rankingWillAppear.onNext(Void())
+                
                 self.rankingAppear.play()
                 
                 let storyboard: UIStoryboard = UIStoryboard(name: "WorldRankingViewController", bundle: nil)
@@ -138,6 +141,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         vc.modalPresentationStyle = .overCurrentContext
         
         vc.switchWeaponDelegate = self
+        vc.viewModel = self.viewModel
 //        vc.modalPresentationStyle = .overFullScreen
         
         self.present(vc, animated: true)
