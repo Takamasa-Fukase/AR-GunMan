@@ -44,6 +44,10 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
     var timer:Timer!
     var timeCount:Double = 30.00
     
+    var explosionCount = 0
+    
+    var exploPar: SCNParticleSystem?
+    
     var bulletNode: SCNNode?
     var bazookaHitExplosion: SCNNode?
     var jetFire: SCNNode?
@@ -82,7 +86,9 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         //ロケラン名中時の爆発
         let explosionScene = SCNScene(named: "art.scnassets/ParticleSystem/Explosion1.scn")
         //注意:scnのファイル名ではなく、Identity欄のnameを指定する
-        bazookaHitExplosion = (explosionScene?.rootNode.childNode(withName: "Explosion1", recursively: false))!
+        bazookaHitExplosion = (explosionScene?.rootNode.childNode(withName: "Explosion1", recursively: false))
+        
+        exploPar = bazookaHitExplosion?.particleSystems?.first!
         
         
         self.presenter = GamePresenter(listener: self)
@@ -329,31 +335,31 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
             if currentWeaponIndex == 5 {
                 bazookaHit.play()
                 
-                (sceneView.scene.rootNode.childNode(withName: "bazookaHitExplosion", recursively: false) ?? SCNNode()).childNode(withName: "sub", recursively: false)?.particleSystems?[0].birthRate = 300
-                (sceneView.scene.rootNode.childNode(withName: "bazookaHitExplosion", recursively: false) ?? SCNNode()).childNode(withName: "sub", recursively: false)?.particleSystems?[0].loops = false
-                print("explode")
+                print("衝突時origin loops :\(self.exploPar?.loops)")
+                
+                if let sub = sceneView.scene.rootNode.childNode(withName: "bazookaHitExplosion\(explosionCount)", recursively: false) {
+                    
+                    print("衝突時subあります count:\(explosionCount)")
+                    
+                    if let first = sub.particleSystems?.first {
+                        print("衝突時 firstあります: \(first)")
+                        first.birthRate = 300
+                        first.loops = false
+                        
+                        print("衝突時falseにしたあと :\(first)")
+                    }else {
+                        print("衝突時 firstありません")
+                    }
+                    
+                }else {
+                    print("衝突時subありません count:\(explosionCount)")
+                }
                 
             }
             
-            
-//            self.sceneView.scene.rootNode.childNode(withName: "KingTaimeiSan", recursively: false)!.removeFromParentNode()
-//            self.sceneView.scene.rootNode.childNode(withName: "jetFire", recursively: false)!.removeFromParentNode()
-            
-            targetCount -= 1
-            DispatchQueue.main.async {
-//                self.targetCountLabel.text = "残り\(self.targetCount)個！"
-            }
-        }
-        
-        if (nodeA.name == "explosion" && nodeB.name == "target") {
-            print("explosion当たった")
-            headShot.play()
-            nodeB.removeFromParentNode()
-            
-        } else if (nodeB.name == "explosion" && nodeA.name == "target") {
-            print("explosion当たった")
-            headShot.play()
-            nodeA.removeFromParentNode()
+//            targetCount -= 1
+//            DispatchQueue.main.async {
+//            }
         }
     }
     
@@ -472,12 +478,7 @@ extension GameViewController: GameInterface {
         
         bazooka.position = sceneView.pointOfView?.position ?? SCNVector3()
         self.sceneView.scene.rootNode.addChildNode(bazooka)
-        
-//        if let par = bazooka.childNode(withName: "jetFire", recursively: false) {
-//            print(par.particleSystems)
-//            par.particleSystems?[0].birthRate = 0
-//        }
-        
+
         //チャキッ　の再生
         self.bazookaSet.play()
         
@@ -504,20 +505,30 @@ extension GameViewController: GameInterface {
         bulletNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: shape)
         bulletNode.physicsBody?.contactTestBitMask = 1
         bulletNode.physicsBody?.isAffectedByGravity = false
-        
-//        jetFire?.position = SCNVector3(x: cameraPos.x, y: cameraPos.y, z: cameraPos.z + 0.1)
-//        jetFire?.name = "jetFire"
 
         if currentWeaponIndex == 5 {
-//            self.sceneView.scene.rootNode.addChildNode(jetFire!)
-            let cloneBazookaHitExplosion = self.bazookaHitExplosion?.clone()
-            cloneBazookaHitExplosion?.name = "bazookaHitExplosion"
-            cloneBazookaHitExplosion?.position = cameraPos
-            sceneView.scene.rootNode.addChildNode(cloneBazookaHitExplosion ?? SCNNode())
+            explosionCount += 1
+
+            var parti: SCNParticleSystem? = SCNParticleSystem()
+            parti?.loops = true
             
-            if let par = cloneBazookaHitExplosion?.childNode(withName: "sub", recursively: false) {
-                print(par.particleSystems)
-                par.particleSystems?[0].birthRate = 0
+            parti = exploPar
+            
+            parti?.loops = true
+            
+            if let par = parti {
+
+                par.birthRate = 0
+                print("loops: \(par.loops)")
+                
+                print("origin loops :\(self.exploPar?.loops)")
+                print("parti loops: \(par.loops)")
+                
+                let node = SCNNode()
+                node.addParticleSystem(par)
+                node.name = "bazookaHitExplosion\(explosionCount)"
+                node.position = cameraPos
+                sceneView.scene.rootNode.addChildNode(node)
             }
             
         }
@@ -539,27 +550,8 @@ extension GameViewController: GameInterface {
         })
         
         if currentWeaponIndex == 5 {
-//            jetFire?.runAction(action, completionHandler: {
-//                self.jetFire?.removeFromParentNode()
-//            })
-//            let bazooka = sceneView.scene.rootNode.childNode(withName: "bazookaParent", recursively: false)!
-//
-//            if let par = bazooka.childNode(withName: "jetFire", recursively: false) {
-//                print("par: \(par)")
-//                print("par.particleSystems: \(par.particleSystems)")
-//
-//                if let firstPar = par.particleSystems?.first {
-//
-//                    firstPar.birthRate = 40
-//                    firstPar.birthRate = 0
-////                    firstPar.loops = false
-//
-//                    print("firstPar: \(firstPar)")
-//
-//                }
-//            }
-            
-            sceneView.scene.rootNode.childNode(withName: "bazookaHitExplosion", recursively: false)?.runAction(action)
+
+            sceneView.scene.rootNode.childNode(withName: "bazookaHitExplosion\(explosionCount)", recursively: false)?.runAction(action)
             
         }
         
