@@ -87,19 +87,21 @@ class WorldRankingViewController: UIViewController {
             self.presentPanModal(navi)
         }
         
-        
-
     }
     
     @IBAction func tappedReplay(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+        dismissToTopVC(retry: true)
     }
     
     @IBAction func tappedHome(_ sender: Any) {
-        self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+        dismissToTopVC()
     }
     
-    
+    func dismissToTopVC(retry: Bool = false) {
+        let topVC = self.presentingViewController?.presentingViewController as! ViewController
+        topVC.replayFlag = retry
+        topVC.dismiss(animated: false, completion: nil)
+    }
     
 }
 

@@ -10,18 +10,31 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    var replayFlag = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
+        if replayFlag {
+            presentGameVC(animated: false)
+        }
     }
 
     @IBAction func toGameButtonTapped(_ sender: Any) {
         
+        presentGameVC()
+        
+    }
+    
+    func presentGameVC(animated: Bool = true) {
         let storyboard: UIStoryboard = UIStoryboard(name: "GameViewController", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "GameViewController") as! GameViewController
         vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: true)
-        
+        self.present(vc, animated: animated)
     }
     
 }
