@@ -72,23 +72,11 @@ extension GamePresenter {
         
         if isShootEnabled {
             let compositAcceleration = model.getCompositeAcceleration(0, y, z)
-            //        let compositGyro = model.getCompositeGyro(gyro.x, gyro.y, gyro.z)
-            //        let gyroX = (gyro.x * gyro.x)
-            //        let gyroY = (gyro.y * gyro.y)
+
             let gyroZ = (gyro.z * gyro.z)
-            //        if gyroX >= 1.5 {
-            //            print("gyroXが1.5以上です(\(gyroX)")
-            //        }
-            //        if gyroY >= 3 {
-            //            print("gyroYが3以上です(\(gyroY)")
-            //        }
-            //        if gyroZ >= 10 {
-            //            print("gyroZが1.5以上です(\(gyroZ)")
-            //        }
+
             if !postBool
                 && compositAcceleration >= 1.5
-                //            && gyroX < 1.5
-                //            && gyroY < 3
                 && gyroZ < 10 {
                 
                 switch currentWeaponIndex {
@@ -144,8 +132,6 @@ extension GamePresenter {
             }
             if postBool
                 && compositAcceleration >= 1.5
-                //            && gyroX < 1.5
-                //            && gyroY < 3
                 && gyroZ < 10 {
                 
                 switch currentWeaponIndex {

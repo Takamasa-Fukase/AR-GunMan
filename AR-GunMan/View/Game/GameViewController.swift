@@ -160,11 +160,9 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         
         let storyboard: UIStoryboard = UIStoryboard(name: "SwitchWeaponViewController", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "SwitchWeaponViewController") as! SwitchWeaponViewController
-//        vc.modalPresentationStyle = .overCurrentContext
         
         vc.switchWeaponDelegate = self
         vc.viewModel = self.viewModel
-//        vc.modalPresentationStyle = .overFullScreen
         
         self.present(vc, animated: true)
     }
@@ -313,19 +311,9 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         //実行
         sceneView.scene.rootNode.childNode(withName: "parent", recursively: false)?.childNode(withName: "M1911_a", recursively: false)?.runAction(shoot)
     }
-    
-    func addExplosion() {
-        let scene = SCNScene(named: "art.scnassets/Explosion1.scn")
-        //注意:scnのファイル名ではなく、Identity欄のnameを指定する
-        let node = (scene?.rootNode.childNode(withName: "Explosion1", recursively: false))!
-        
-        let pos = sceneView.pointOfView?.position ?? SCNVector3()
-        node.position = SCNVector3(pos.x, pos.y - 10, pos.z - 10)
-//        node.scale = SCNVector3(1, 1, 1)
-        self.sceneView.scene.rootNode.addChildNode(node)
-    }
-    
+
     //衝突検知時に呼ばれる
+    //MEMO: - このメソッド内でUIの更新を行いたい場合はmainThreadで行う
     func physicsWorld(_ world: SCNPhysicsWorld, didEnd contact: SCNPhysicsContact) {
         let nodeA = contact.nodeA
         let nodeB = contact.nodeB
@@ -336,34 +324,15 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
             nodeA.removeFromParentNode()
             nodeB.removeFromParentNode()
             
-//            if let jetFire = self.sceneView.scene.rootNode.childNode(withName: "jetFire", recursively: false) {
-//                print("jetFireを削除しました")
-//                jetFire.removeFromParentNode()
-//            }
-            
             if currentWeaponIndex == 5 {
                 bazookaHit.play()
                 
-                print("衝突時origin loops :\(self.exploPar?.loops)")
-                
-                if let sub = sceneView.scene.rootNode.childNode(withName: "bazookaHitExplosion\(explosionCount)", recursively: false) {
+                if let first = sceneView.scene.rootNode.childNode(withName: "bazookaHitExplosion\(explosionCount)", recursively: false)?.particleSystems?.first  {
                     
-                    print("衝突時subあります count:\(explosionCount)")
+                    first.birthRate = 300
+                    first.loops = false
                     
-                    if let first = sub.particleSystems?.first {
-                        print("衝突時 firstあります: \(first)")
-                        first.birthRate = 300
-                        first.loops = false
-                        
-                        print("衝突時falseにしたあと :\(first)")
-                    }else {
-                        print("衝突時 firstありません")
-                    }
-                    
-                }else {
-                    print("衝突時subありません count:\(explosionCount)")
                 }
-                
             }
             
             switch currentWeaponIndex {
@@ -376,8 +345,6 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
             }
             
             targetCount -= 1
-//            DispatchQueue.main.async {
-//            }
         }
     }
     
@@ -386,11 +353,6 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         motionManager.accelerometerUpdateInterval = 0.2
         motionManager.startAccelerometerUpdates(to: OperationQueue.current!) {
             (data, error) in
-            
-            print("acce")
-            if let error = error {
-                print("acce error: \(error)")
-            }
             
             DispatchQueue.main.async {
                 guard let acceleration = data?.acceleration else { return }
@@ -404,11 +366,6 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         motionManager.gyroUpdateInterval = 0.2
         motionManager.startGyroUpdates(to: OperationQueue.current!) {
             (data, error) in
-            
-            print("gyro")
-            if let error = error {
-                print("gyro error: \(error)")
-            }
             
             DispatchQueue.main.async {
                 guard let rotationRate = data?.rotationRate else { return }
@@ -506,8 +463,7 @@ extension GameViewController: GameInterface {
     //弾ノードを設置
     func addBullet() {
         guard let cameraPos = sceneView.pointOfView?.position else {return}
-        //        guard bulletNode == nil else {return}
-//        let position = SCNVector3(x: cameraPos.x, y: cameraPos.y, z: cameraPos.z)
+
         let sphere: SCNGeometry = SCNSphere(radius: 0.05)
         let customYellow = UIColor(red: 253/255, green: 202/255, blue: 119/255, alpha: 1)
         
@@ -537,11 +493,6 @@ extension GameViewController: GameInterface {
             if let par = parti {
 
                 par.birthRate = 0
-                print("loops: \(par.loops)")
-                
-                print("origin loops :\(self.exploPar?.loops)")
-                print("parti loops: \(par.loops)")
-                
                 let node = SCNNode()
                 node.addParticleSystem(par)
                 node.name = "bazookaHitExplosion\(explosionCount)"
