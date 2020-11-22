@@ -35,7 +35,7 @@
                                     <constraint firstAttribute="width" constant="210" id="pgh-38-QwQ"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="60:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="raj-Cg-8Fj">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="30:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="raj-Cg-8Fj">
                                 <rect key="frame" x="44" y="10" width="120" height="40"/>
                                 <color key="backgroundColor" white="1" alpha="0.50203339041095896" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -46,9 +46,13 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IhJ-qs-URo">
-                                <rect key="frame" x="791" y="30" width="45" height="30"/>
-                                <state key="normal" title="switch"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IhJ-qs-URo">
+                                <rect key="frame" x="756" y="30" width="80" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="KNH-hs-7mY"/>
+                                    <constraint firstAttribute="width" constant="80" id="SXu-7M-Brk"/>
+                                </constraints>
+                                <state key="normal" title="switch" image="weaponSwitch"/>
                                 <connections>
                                     <action selector="switchWeaponButtonTapped:" destination="1Sm-g3-sNk" eventType="touchUpInside" id="Fpt-AT-tqR"/>
                                 </connections>
@@ -86,6 +90,7 @@
     </scenes>
     <resources>
         <image name="sight" width="1500" height="1500"/>
+        <image name="weaponSwitch" width="2048" height="2048"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
