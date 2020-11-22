@@ -384,7 +384,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
     //加速度設定
     func getAccelerometer() {
         motionManager.accelerometerUpdateInterval = 0.2
-        motionManager.startAccelerometerUpdates(to: OperationQueue()) {
+        motionManager.startAccelerometerUpdates(to: OperationQueue.current!) {
             (data, error) in
             
             print("acce")
@@ -402,7 +402,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
     //ジャイロ設定
     func getGyro() {
         motionManager.gyroUpdateInterval = 0.2
-        motionManager.startGyroUpdates(to: OperationQueue()) {
+        motionManager.startGyroUpdates(to: OperationQueue.current!) {
             (data, error) in
             
             print("gyro")
