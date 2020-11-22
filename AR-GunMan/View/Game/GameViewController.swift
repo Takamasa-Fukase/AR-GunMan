@@ -42,10 +42,10 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
     var currentWeaponIndex = 0
     
     var timer:Timer!
-    var timeCount:Double = 3.00
+    var timeCount:Double = 30.00
     
     var bulletNode: SCNNode?
-    var bazookaRocket: SCNNode?
+    var bazookaHitExplosion: SCNNode?
     var jetFire: SCNNode?
     var targetNode: SCNNode?
     
@@ -78,10 +78,12 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         targetNode?.physicsBody = SCNPhysicsBody(type: .dynamic, shape: shape)
         targetNode?.physicsBody?.isAffectedByGravity = false
         
-        //ロケラン弾頭のジェット炎
-//        let jetFireScebe = SCNScene(named: "art.scnassets/Weapon/ParticleSystem/jetFire.scn")
-//        jetFire = (jetFireScebe?.rootNode.childNode(withName: "jetFire", recursively: false))!
-//        jetFire?.scale = SCNVector3(1, 1, 1)
+        
+        //ロケラン名中時の爆発
+        let explosionScene = SCNScene(named: "art.scnassets/ParticleSystem/Explosion1.scn")
+        //注意:scnのファイル名ではなく、Identity欄のnameを指定する
+        bazookaHitExplosion = (explosionScene?.rootNode.childNode(withName: "Explosion1", recursively: false))!
+        
         
         self.presenter = GamePresenter(listener: self)
         presenter?.viewDidLoad()
@@ -326,6 +328,11 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
             
             if currentWeaponIndex == 5 {
                 bazookaHit.play()
+                
+                (sceneView.scene.rootNode.childNode(withName: "bazookaHitExplosion", recursively: false) ?? SCNNode()).childNode(withName: "sub", recursively: false)?.particleSystems?[0].birthRate = 300
+                (sceneView.scene.rootNode.childNode(withName: "bazookaHitExplosion", recursively: false) ?? SCNNode()).childNode(withName: "sub", recursively: false)?.particleSystems?[0].loops = false
+                print("explode")
+                
             }
             
             
@@ -503,6 +510,16 @@ extension GameViewController: GameInterface {
 
         if currentWeaponIndex == 5 {
 //            self.sceneView.scene.rootNode.addChildNode(jetFire!)
+            let cloneBazookaHitExplosion = self.bazookaHitExplosion?.clone()
+            cloneBazookaHitExplosion?.name = "bazookaHitExplosion"
+            cloneBazookaHitExplosion?.position = cameraPos
+            sceneView.scene.rootNode.addChildNode(cloneBazookaHitExplosion ?? SCNNode())
+            
+            if let par = cloneBazookaHitExplosion?.childNode(withName: "sub", recursively: false) {
+                print(par.particleSystems)
+                par.particleSystems?[0].birthRate = 0
+            }
+            
         }
         
         sceneView.scene.rootNode.addChildNode(bulletNode)
@@ -541,6 +558,8 @@ extension GameViewController: GameInterface {
 //
 //                }
 //            }
+            
+            sceneView.scene.rootNode.childNode(withName: "bazookaHitExplosion", recursively: false)?.runAction(action)
             
         }
         
