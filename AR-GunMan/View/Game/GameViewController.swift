@@ -13,6 +13,7 @@ import CoreMotion
 import AVFoundation
 import AudioToolbox
 import FSPagerView
+import PanModal
 
 class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDelegate {
     
@@ -31,7 +32,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
     var endWhistle = AVAudioPlayer()
     var rankingAppear = AVAudioPlayer()
     
-    var targetCount = 30
+    var targetCount = 50
     
     var toggleActionInterval = 0.2
     var lastCameraPos = SCNVector3()
@@ -41,7 +42,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
     var currentWeaponIndex = 0
     
     var timer:Timer!
-    var timeCount:Double = 60.00
+    var timeCount:Double = 30.00
     
     var bulletNode: SCNNode?
     var bazookaRocket: SCNNode?
@@ -128,10 +129,15 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         vc.modalPresentationStyle = .overCurrentContext
         
         vc.switchWeaponDelegate = self
+        vc.modalPresentationStyle = .overCurrentContext
         
-        self.present(vc, animated: true)
+//        self.present(vc, animated: true)
+        
+        let navi = UINavigationController(rootViewController: vc)
+        navi.setNavigationBarHidden(true, animated: false)
+        
+        self.presentPanModal(navi)
     }
-    
     
     func setupScnView() {
         //シーンの作成
@@ -317,6 +323,17 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
             DispatchQueue.main.async {
 //                self.targetCountLabel.text = "残り\(self.targetCount)個！"
             }
+        }
+        
+        if (nodeA.name == "explosion" && nodeB.name == "target") {
+            print("explosion当たった")
+            headShot.play()
+            nodeB.removeFromParentNode()
+            
+        } else if (nodeB.name == "explosion" && nodeA.name == "target") {
+            print("explosion当たった")
+            headShot.play()
+            nodeA.removeFromParentNode()
         }
     }
     

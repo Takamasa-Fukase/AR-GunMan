@@ -266,8 +266,8 @@
 			children = (
 				59D2D5712552E448006DDB70 /* Top */,
 				59D2D5722552E458006DDB70 /* Game */,
-				59D2D5732552E4A9006DDB70 /* RegisterName */,
 				59D2D5742552E4D1006DDB70 /* WorldRanking */,
+				59D2D5732552E4A9006DDB70 /* RegisterName */,
 			);
 			path = View;
 			sourceTree = "<group>";
