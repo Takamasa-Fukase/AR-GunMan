@@ -33,9 +33,7 @@ class WorldRankingViewController: UIViewController {
         rightButtonsStackView.isHidden = true
         replayButton.alpha = 0
         homeButton.alpha = 0
-        
-        totalScore = Double.random(in: 0...100)
-        
+                
         totalScoreLabel.text = String(format: "%.3f", totalScore)
         tableView.contentInset.top = 10
         tableView.register(UINib(nibName: "WorldRankingCell", bundle: nil), forCellReuseIdentifier: "WorldRankingCell")

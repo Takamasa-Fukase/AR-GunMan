@@ -34,6 +34,9 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
     
     var targetCount = 50
     
+    var pistolPoint = 0.0
+    var bazookaPoint = 0.0
+    
     var toggleActionInterval = 0.2
     var lastCameraPos = SCNVector3()
     var isPlayerRunning = false
@@ -132,6 +135,14 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
                 
                 let storyboard: UIStoryboard = UIStoryboard(name: "WorldRankingViewController", bundle: nil)
                 let vc = storyboard.instantiateViewController(withIdentifier: "WorldRankingViewController") as! WorldRankingViewController
+                
+                let sumPoint: Double = min(self.pistolPoint + self.bazookaPoint, 100.0)
+                
+                let totalScore = sumPoint * (Double.random(in: 0.9...1))
+                
+                print("pistolP: \(self.pistolPoint), bazookaP: \(self.bazookaPoint), sumP: \(sumPoint) totalScore: \(totalScore)")
+                
+                vc.totalScore = totalScore
                 self.present(vc, animated: true)
             })
             
@@ -146,18 +157,13 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         
         let storyboard: UIStoryboard = UIStoryboard(name: "SwitchWeaponViewController", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "SwitchWeaponViewController") as! SwitchWeaponViewController
-        vc.modalPresentationStyle = .overCurrentContext
+//        vc.modalPresentationStyle = .overCurrentContext
         
         vc.switchWeaponDelegate = self
         vc.viewModel = self.viewModel
 //        vc.modalPresentationStyle = .overFullScreen
         
         self.present(vc, animated: true)
-        
-//        let navi = UINavigationController(rootViewController: vc)
-//        navi.setNavigationBarHidden(true, animated: false)
-//
-//        self.presentPanModal(navi)
     }
     
     func setupScnView() {
@@ -357,7 +363,16 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
                 
             }
             
-//            targetCount -= 1
+            switch currentWeaponIndex {
+            case 0:
+                pistolPoint += 5
+            case 5:
+                bazookaPoint += 12
+            default:
+                break
+            }
+            
+            targetCount -= 1
 //            DispatchQueue.main.async {
 //            }
         }
