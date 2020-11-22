@@ -75,11 +75,14 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         
         let scene = SCNScene(named: "art.scnassets/target.scn")
         targetNode = (scene?.rootNode.childNode(withName: "target", recursively: false))!
-        targetNode?.scale = SCNVector3(0.25, 0.25, 0.25)
+        targetNode?.scale = SCNVector3(0.3, 0.3, 0.3)
         
         let targetNodeGeometry = (targetNode?.childNode(withName: "sphere", recursively: false)?.geometry)!
         
-        let shape = SCNPhysicsShape(geometry: targetNodeGeometry, options: nil)
+        //MARK: - 当たり判定の肝2つ
+        //①形状はラップしてる空のNodeではなく何か1つgeometryを持っているものにするを指定する
+        //②当たり判定のscaleはoptions: [SCNPhysicsShape.Option.scale: SCNVector3]で明示的に設定する（大体①のgeometryの元となっているNodeのscaleを代入すれば等しい当たり判定になる）
+        let shape = SCNPhysicsShape(geometry: targetNodeGeometry, options: [SCNPhysicsShape.Option.scale: targetNode?.scale])
         
         //当たり判定用のphysicBodyを追加
         targetNode?.physicsBody = SCNPhysicsBody(type: .dynamic, shape: shape)
