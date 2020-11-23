@@ -24,6 +24,9 @@ class TutorialViewController: UIViewController {
         scrollView.delegate = self
         
         pageControl.isUserInteractionEnabled = false
+        
+        animateFirstImageView()
+        animateSecondImageView()
     }
     
     @IBAction func buttonTapped(_ sender: Any) {
@@ -54,6 +57,22 @@ class TutorialViewController: UIViewController {
         let targetContentOffsetX = frameWidth * CGFloat(min(getCurrentScrollViewIndex() + 1, 2))
         let targetCGPoint = CGPoint(x: targetContentOffsetX, y: 0)
         scrollView.setContentOffset(targetCGPoint, animated: true)
+    }
+    
+    func animateFirstImageView() {
+        let images = [UIImage(named: "howToShoot0")!, UIImage(named: "howToShoot1")!]
+        firstImageView.animationImages = images
+        firstImageView.animationDuration = 0.8
+        firstImageView.animationRepeatCount = 0
+        firstImageView.startAnimating()
+    }
+    
+    func animateSecondImageView() {
+        let images = [UIImage(named: "howToReload0")!, UIImage(named: "howToReload1")!]
+        secondImageView.animationImages = images
+        secondImageView.animationDuration = 0.8
+        secondImageView.animationRepeatCount = 0
+        secondImageView.startAnimating()
     }
     
 }
