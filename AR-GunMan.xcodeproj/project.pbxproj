@@ -18,6 +18,8 @@
 		59484C8525664E7400F9C6A8 /* bazookaShoot.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 59484C8425664E7400F9C6A8 /* bazookaShoot.mp3 */; };
 		59484C8A25664FEC00F9C6A8 /* bazookaHit.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 59484C8925664FEB00F9C6A8 /* bazookaHit.mp3 */; };
 		59484CA0256A540E00F9C6A8 /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59484C9F256A540E00F9C6A8 /* GameViewModel.swift */; };
+		595E6987256C0190002B4F3E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595E6986256C0190002B4F3E /* SettingsViewController.swift */; };
+		595E698F256C01A4002B4F3E /* SettingsViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 595E698E256C01A4002B4F3E /* SettingsViewController.storyboard */; };
 		59940B882552F54900EC20C1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 59940B872552F54900EC20C1 /* GoogleService-Info.plist */; };
 		59940BAC2552FAA600EC20C1 /* RegisterNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59940BAB2552FAA600EC20C1 /* RegisterNameViewController.swift */; };
 		59940BB12552FAAF00EC20C1 /* RegisterNameViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59940BB02552FAAF00EC20C1 /* RegisterNameViewController.storyboard */; };
@@ -84,6 +86,8 @@
 		59484C8425664E7400F9C6A8 /* bazookaShoot.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bazookaShoot.mp3; sourceTree = "<group>"; };
 		59484C8925664FEB00F9C6A8 /* bazookaHit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bazookaHit.mp3; sourceTree = "<group>"; };
 		59484C9F256A540E00F9C6A8 /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
+		595E6986256C0190002B4F3E /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		595E698E256C01A4002B4F3E /* SettingsViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SettingsViewController.storyboard; sourceTree = "<group>"; };
 		59940B872552F54900EC20C1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		59940BAB2552FAA600EC20C1 /* RegisterNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterNameViewController.swift; sourceTree = "<group>"; };
 		59940BB02552FAAF00EC20C1 /* RegisterNameViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RegisterNameViewController.storyboard; sourceTree = "<group>"; };
@@ -165,6 +169,15 @@
 				90D4D1AD42BB6A3A0192887F /* Pods-AR-GunManTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		595E6985256C0169002B4F3E /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				595E6986256C0190002B4F3E /* SettingsViewController.swift */,
+				595E698E256C01A4002B4F3E /* SettingsViewController.storyboard */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		599450FE256AD53A00560202 /* Tutorial */ = {
@@ -287,6 +300,7 @@
 				59D2D5722552E458006DDB70 /* Game */,
 				59D2D5742552E4D1006DDB70 /* WorldRanking */,
 				59D2D5732552E4A9006DDB70 /* RegisterName */,
+				595E6985256C0169002B4F3E /* Settings */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -471,6 +485,7 @@
 				59484C5A2565792300F9C6A8 /* bazookaSet.mp3 in Resources */,
 				59D2D55F2552E2CC006DDB70 /* pistol-reload.mp3 in Resources */,
 				59D2D4E52552DE67006DDB70 /* LaunchScreen.storyboard in Resources */,
+				595E698F256C01A4002B4F3E /* SettingsViewController.storyboard in Resources */,
 				5921A209255D6A4E001D8C39 /* WorldRankingCell.xib in Resources */,
 				59D2D5422552E24D006DDB70 /* art.scnassets in Resources */,
 				59484C6B25657E1C00F9C6A8 /* endWhistle.mp3 in Resources */,
@@ -619,6 +634,7 @@
 				59D2D57B2552E536006DDB70 /* ViewController.swift in Sources */,
 				59D2D4D92552DE66006DDB70 /* AppDelegate.swift in Sources */,
 				59D2D53A2552E1D2006DDB70 /* Extension+Storyboard.swift in Sources */,
+				595E6987256C0190002B4F3E /* SettingsViewController.swift in Sources */,
 				59A01134255AF580008996E3 /* WorldRankingViewController.swift in Sources */,
 				59D2D5932552E718006DDB70 /* SwitchWeaponCell.swift in Sources */,
 				59D2D59E2552E751006DDB70 /* CalcuModel.swift in Sources */,
