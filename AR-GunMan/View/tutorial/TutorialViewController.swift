@@ -21,6 +21,9 @@ class TutorialViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        scrollView.delegate = self
+        
+        pageControl.isUserInteractionEnabled = false
     }
     
     @IBAction func buttonTapped(_ sender: Any) {
