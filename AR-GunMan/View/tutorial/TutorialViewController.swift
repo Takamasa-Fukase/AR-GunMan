@@ -13,6 +13,8 @@ import UIKit
 
 class TutorialViewController: UIViewController {
     
+    var isBlurEffectEnabled: Bool = true
+    
     var delegate: TutorialVCDelegate?
     
     @IBOutlet weak var scrollView: UIScrollView!
@@ -43,7 +45,9 @@ class TutorialViewController: UIViewController {
 //        self.view.addSubview(blueView)
 //        self.view.sendSubviewToBack(blueView)
         
-        self.view.insertSubview(visualEffectView, at: 0)
+        if isBlurEffectEnabled {
+            self.view.insertSubview(visualEffectView, at: 0)
+        }
     }
     
     @IBAction func buttonTapped(_ sender: Any) {
@@ -51,9 +55,12 @@ class TutorialViewController: UIViewController {
         if getCurrentScrollViewIndex() == 2 {
             print("OK tapped")
             
-            UserDefaults.standard.setValue(true, forKey: "tutorialAlreadySeen")
+            if isBlurEffectEnabled {
+                UserDefaults.standard.setValue(true, forKey: "tutorialAlreadySeen")
+                
+                self.delegate?.startGame()
+            }
             
-            self.delegate?.startGame()
             self.dismiss(animated: true, completion: nil)
         }else {
             scrollPage()
