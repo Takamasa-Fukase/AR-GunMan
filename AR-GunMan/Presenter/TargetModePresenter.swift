@@ -16,7 +16,7 @@ enum SoundType: Int {
 }
  
 protocol GameInterface: AnyObject {
-    func addPistol()
+    func addPistol(shouldPlayPistolSet: Bool)
     func addBullet()
     func shootBullet()
     func addTarget()
@@ -49,7 +49,7 @@ class GamePresenter {
     }
     
     func viewDidLoad() {
-        listener.addPistol()
+        listener.addPistol(shouldPlayPistolSet: false)
         listener.addTarget()
         guard let soundType = SoundType(rawValue: 0) else {return}
         listener.setSounds(for: soundType)

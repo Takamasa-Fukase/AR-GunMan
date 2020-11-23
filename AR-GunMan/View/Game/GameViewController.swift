@@ -100,19 +100,47 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         self.presenter = GamePresenter(listener: self)
         presenter?.viewDidLoad()
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            
-            self.startWhistle.play()
-            
-            self.presenter?.isShootEnabled = true
-            
-            self.timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(self.timerUpdate(timer:)), userInfo: nil, repeats: true)
-        }
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+        
+//            self.startWhistle.play()
+//
+//            self.presenter?.isShootEnabled = true
+//
+//            self.timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(self.timerUpdate(timer:)), userInfo: nil, repeats: true)
+//        }
         
         targetCountLabel.font = targetCountLabel.font.monospacedDigitFont
 
         
     }
+    
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if UserDefaults.standard.value(forKey: "tutorialAlreadySeen") == nil {
+            
+            let storyboard: UIStoryboard = UIStoryboard(name: "TutorialViewController", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "TutorialViewController") as! TutorialViewController
+            vc.delegate = self
+            self.present(vc, animated: animated)
+            
+        }else {
+            print("tutorialAlreadySeen=true")
+            
+            pistolSet.play()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                
+                self.startWhistle.play()
+                
+                self.presenter?.isShootEnabled = true
+                
+                self.timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(self.timerUpdate(timer:)), userInfo: nil, repeats: true)
+            }
+        }
+    }
+    
     
     //タイマーで指定間隔ごとに呼ばれる関数
     @objc func timerUpdate(timer: Timer) {
@@ -415,8 +443,23 @@ extension GameViewController: SwitchWeaponDelegate {
     
 }
 
+extension GameViewController: TutorialVCDelegate {
+    func startGame() {
+        pistolSet.play()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            
+            self.startWhistle.play()
+            
+            self.presenter?.isShootEnabled = true
+            
+            self.timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(self.timerUpdate(timer:)), userInfo: nil, repeats: true)
+        }
+    }
+}
+
 extension GameViewController: GameInterface {
-    func addPistol() {
+    func addPistol(shouldPlayPistolSet: Bool = true) {
         //バズーカを削除
         if let detonator = self.sceneView.scene.rootNode.childNode(withName: "bazookaParent", recursively: false) {
             print("bazookaを削除しました")
@@ -432,8 +475,10 @@ extension GameViewController: GameInterface {
         parentNode.position = sceneView.pointOfView?.position ?? SCNVector3()
         self.sceneView.scene.rootNode.addChildNode(parentNode)
         
-        //チャキッ　の再生
-        self.pistolSet.play()
+        if shouldPlayPistolSet {
+            //チャキッ　の再生
+            self.pistolSet.play()
+        }
         
         gunnerShakeAnimationNormal(0)
     }

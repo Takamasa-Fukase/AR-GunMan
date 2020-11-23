@@ -5,11 +5,15 @@
 //  Created by 深瀬 貴将 on 2020/11/23.
 //
 
+protocol TutorialVCDelegate {
+    func startGame()
+}
+
 import UIKit
 
 class TutorialViewController: UIViewController {
-
     
+    var delegate: TutorialVCDelegate?
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var firstImageView: UIImageView!
@@ -27,12 +31,29 @@ class TutorialViewController: UIViewController {
         
         animateFirstImageView()
         animateSecondImageView()
+        
+        //背景をぼかし処理
+        let blurEffect = UIBlurEffect(style: .dark)
+        let visualEffectView = UIVisualEffectView(effect: blurEffect)
+        visualEffectView.frame = self.view.frame
+        
+//        let blueView = UIView(frame: self.view.frame)
+//        blueView.backgroundColor = .brown
+//        blueView.alpha = 0.2
+//        self.view.addSubview(blueView)
+//        self.view.sendSubviewToBack(blueView)
+        
+        self.view.insertSubview(visualEffectView, at: 0)
     }
     
     @IBAction func buttonTapped(_ sender: Any) {
         
         if getCurrentScrollViewIndex() == 2 {
             print("OK tapped")
+            
+            UserDefaults.standard.setValue(true, forKey: "tutorialAlreadySeen")
+            
+            self.delegate?.startGame()
             self.dismiss(animated: true, completion: nil)
         }else {
             scrollPage()
@@ -43,7 +64,6 @@ class TutorialViewController: UIViewController {
     func getCurrentScrollViewIndex() -> Int {
         let contentsOffSetX: CGFloat = scrollView.contentOffset.x
         let pageIndex = Int(round(contentsOffSetX / scrollView.frame.width))
-        print("currentIndex: \(pageIndex)")
         return pageIndex
     }
     
