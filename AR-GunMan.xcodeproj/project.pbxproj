@@ -166,13 +166,13 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		599450FE256AD53A00560202 /* tutorial */ = {
+		599450FE256AD53A00560202 /* Tutorial */ = {
 			isa = PBXGroup;
 			children = (
 				599450FF256AD55900560202 /* TutorialViewController.swift */,
 				59945107256AD57300560202 /* TutorialViewController.storyboard */,
 			);
-			path = tutorial;
+			path = Tutorial;
 			sourceTree = "<group>";
 		};
 		59D2D4CC2552DE66006DDB70 = {
@@ -281,7 +281,7 @@
 			isa = PBXGroup;
 			children = (
 				59D2D5712552E448006DDB70 /* Top */,
-				599450FE256AD53A00560202 /* tutorial */,
+				599450FE256AD53A00560202 /* Tutorial */,
 				59D2D5722552E458006DDB70 /* Game */,
 				59D2D5742552E4D1006DDB70 /* WorldRanking */,
 				59D2D5732552E4A9006DDB70 /* RegisterName */,
