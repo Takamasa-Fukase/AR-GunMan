@@ -9,6 +9,7 @@
 import UIKit
 import Photos
 import AVFoundation
+import PanModal
 
 class ViewController: UIViewController {
     
@@ -35,6 +36,27 @@ class ViewController: UIViewController {
         presentGameVC()
         
     }
+    
+    @IBAction func toSettingButtonTapped(_ sender: Any) {
+        
+        
+        
+    }
+    
+    @IBAction func toTutorialButtonTapped(_ sender: Any) {
+        
+        let storyboard: UIStoryboard = UIStoryboard(name: "TutorialViewController", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "TutorialViewController") as! TutorialViewController
+        
+        vc.isBlurEffectEnabled = false
+        
+        let navi = UINavigationController(rootViewController: vc)
+        navi.setNavigationBarHidden(true, animated: false)
+        
+        self.presentPanModal(navi)
+    }
+    
+    
     
     func presentGameVC(animated: Bool = true) {
         let storyboard: UIStoryboard = UIStoryboard(name: "GameViewController", bundle: nil)
