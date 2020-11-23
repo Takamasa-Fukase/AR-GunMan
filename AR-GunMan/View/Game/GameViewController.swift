@@ -123,7 +123,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
             let storyboard: UIStoryboard = UIStoryboard(name: "TutorialViewController", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "TutorialViewController") as! TutorialViewController
             vc.delegate = self
-            self.present(vc, animated: animated)
+            self.present(vc, animated: true)
             
         }else {
             print("tutorialAlreadySeen=true")
