@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
     <device id="retina6_1" orientation="landscape" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,32 +16,145 @@
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="80" translatesAutoresizingMaskIntoConstraints="NO" id="8aZ-dX-j1e">
-                                <rect key="frame" x="144" y="100" width="608" height="208"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AR" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TwP-yV-daN">
+                                <rect key="frame" x="303" y="38" width="144.5" height="95.5"/>
+                                <fontDescription key="fontDescription" name="Copperplate-Bold" family="Copperplate" pointSize="100"/>
+                                <color key="textColor" red="0.027436967940000001" green="0.027523037050000001" blue="0.019605956970000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0bm-EY-sLl">
+                                <rect key="frame" x="447.5" y="50" width="364.5" height="81.5"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="-GunMan">
+                                        <attributes>
+                                            <color key="NSColor" red="0.027436967940000001" green="0.027523037050000001" blue="0.019605956970000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <font key="NSFont" size="80" name="Copperplate-Bold"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S56-Y5-xWC">
+                                <rect key="frame" x="84" y="133.5" width="752" height="244.5"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ybM-iC-l3r">
-                                        <rect key="frame" x="0.0" y="0.0" width="608" height="208"/>
-                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <fontDescription key="fontDescription" name="AlNile-Bold" family="Al Nile" pointSize="100"/>
-                                        <inset key="titleEdgeInsets" minX="0.0" minY="40" maxX="0.0" maxY="0.0"/>
-                                        <state key="normal" title="START">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="toGameButtonTapped:" destination="BV1-FR-VrT" eventType="touchUpInside" id="V9R-lP-r4X"/>
-                                        </connections>
-                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="8aZ-dX-j1e">
+                                        <rect key="frame" x="0.0" y="0.0" width="418" height="244.5"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ybM-iC-l3r">
+                                                <rect key="frame" x="0.0" y="0.0" width="209.5" height="81.5"/>
+                                                <color key="tintColor" red="0.027436967940000001" green="0.027523037050000001" blue="0.019605956970000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <state key="normal" image="record.circle" catalog="system">
+                                                    <attributedString key="attributedTitle">
+                                                        <fragment content=" Start">
+                                                            <attributes>
+                                                                <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                <font key="NSFont" size="50" name="Copperplate-Bold"/>
+                                                                <integer key="NSUnderline" value="1"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="26" scale="large" weight="black"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="toGameButtonTapped:" destination="BV1-FR-VrT" eventType="touchUpInside" id="V9R-lP-r4X"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EHp-6J-ebq">
+                                                <rect key="frame" x="0.0" y="81.5" width="270.5" height="81.5"/>
+                                                <color key="tintColor" red="0.027436967940000001" green="0.027523037050000001" blue="0.019605956970000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <state key="normal" image="record.circle" catalog="system">
+                                                    <attributedString key="attributedTitle">
+                                                        <fragment content=" Ranking">
+                                                            <attributes>
+                                                                <color key="NSColor" red="0.027436967940000001" green="0.027523037050000001" blue="0.019605956970000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                <font key="NSFont" size="50" name="Copperplate-Bold"/>
+                                                                <integer key="NSUnderline" value="1"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="26" scale="large" weight="black"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="toGameButtonTapped:" destination="BV1-FR-VrT" eventType="touchUpInside" id="acC-Ri-Dxm"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Vg-oH-1a5">
+                                                <rect key="frame" x="0.0" y="163" width="284.5" height="81.5"/>
+                                                <color key="tintColor" red="0.027436967940000001" green="0.027523037050000001" blue="0.019605956970000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <state key="normal" image="record.circle" catalog="system">
+                                                    <attributedString key="attributedTitle">
+                                                        <fragment content=" Settings">
+                                                            <attributes>
+                                                                <color key="NSColor" red="0.027436967940000001" green="0.027523037050000001" blue="0.019605956970000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                <font key="NSFont" size="50" name="Copperplate-Bold"/>
+                                                                <integer key="NSUnderline" value="1"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="26" scale="large" weight="black"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="toGameButtonTapped:" destination="BV1-FR-VrT" eventType="touchUpInside" id="vpH-et-WlX"/>
+                                                </connections>
+                                            </button>
+                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rxx-OX-STO">
+                                                <rect key="frame" x="0.0" y="244.5" width="353.5" height="0.0"/>
+                                                <fontDescription key="fontDescription" name="Copperplate-Bold" family="Copperplate" pointSize="50"/>
+                                                <color key="tintColor" red="0.027436967940000001" green="0.027523037050000001" blue="0.019605956970000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <state key="normal" title=" HowToPlay" image="record.circle" catalog="system">
+                                                    <color key="titleColor" red="0.027436967940000001" green="0.027523037050000001" blue="0.019605956970000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="26" scale="large" weight="black"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="toGameButtonTapped:" destination="BV1-FR-VrT" eventType="touchUpInside" id="KDc-MR-Gkv"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="topPageGunIcon" translatesAutoresizingMaskIntoConstraints="NO" id="d9e-fg-vyn">
+                                        <rect key="frame" x="418" y="0.0" width="334" height="244.5"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                                <real key="value" value="0.0"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                                <real key="value" value="0.0"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
+                                                <size key="value" width="0.0" height="0.0"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </imageView>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="8aZ-dX-j1e" secondAttribute="bottom" id="PmD-JP-rgF"/>
+                                    <constraint firstItem="d9e-fg-vyn" firstAttribute="width" secondItem="8aZ-dX-j1e" secondAttribute="width" multiplier="0.8" id="X2c-0j-mYW"/>
+                                    <constraint firstItem="8aZ-dX-j1e" firstAttribute="top" secondItem="S56-Y5-xWC" secondAttribute="top" id="nwH-HK-7xx"/>
+                                </constraints>
                             </stackView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OhS-dt-BhM">
+                                <rect key="frame" x="303" y="111.5" width="509" height="8"/>
+                                <color key="backgroundColor" red="0.027436967940000001" green="0.027523037050000001" blue="0.019605956970000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="8" id="3LV-IS-8em"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="fQZ-KI-GVf"/>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.79046171899999995" green="0.69538801910000003" blue="0.53327715399999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
-                            <constraint firstItem="8aZ-dX-j1e" firstAttribute="top" secondItem="fQZ-KI-GVf" secondAttribute="top" constant="100" id="38V-Gr-ALP"/>
-                            <constraint firstItem="fQZ-KI-GVf" firstAttribute="bottom" secondItem="8aZ-dX-j1e" secondAttribute="bottom" constant="85" id="DNQ-FR-uTw"/>
-                            <constraint firstItem="8aZ-dX-j1e" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" constant="100" id="b2Z-Ti-b93"/>
-                            <constraint firstItem="fQZ-KI-GVf" firstAttribute="trailing" secondItem="8aZ-dX-j1e" secondAttribute="trailing" constant="100" id="fs4-G2-KSA"/>
+                            <constraint firstItem="S56-Y5-xWC" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" constant="40" id="1Ow-Fi-EjX"/>
+                            <constraint firstItem="0bm-EY-sLl" firstAttribute="top" secondItem="fQZ-KI-GVf" secondAttribute="top" constant="50" id="FA2-6B-UmM"/>
+                            <constraint firstItem="TwP-yV-daN" firstAttribute="bottom" secondItem="S56-Y5-xWC" secondAttribute="top" id="HOu-LM-Shs"/>
+                            <constraint firstItem="fQZ-KI-GVf" firstAttribute="trailing" secondItem="0bm-EY-sLl" secondAttribute="trailing" constant="40" id="HTb-Da-Isv"/>
+                            <constraint firstItem="OhS-dt-BhM" firstAttribute="leading" secondItem="TwP-yV-daN" secondAttribute="leading" id="Nfs-A5-r3u"/>
+                            <constraint firstItem="0bm-EY-sLl" firstAttribute="leading" secondItem="TwP-yV-daN" secondAttribute="trailing" id="T9d-Nn-aww"/>
+                            <constraint firstAttribute="trailing" secondItem="S56-Y5-xWC" secondAttribute="trailing" constant="60" id="kSk-qW-8lM"/>
+                            <constraint firstItem="TwP-yV-daN" firstAttribute="top" secondItem="fQZ-KI-GVf" secondAttribute="top" constant="38" id="lD7-iC-a2V"/>
+                            <constraint firstItem="S56-Y5-xWC" firstAttribute="top" secondItem="OhS-dt-BhM" secondAttribute="bottom" constant="14" id="op8-S9-AlC"/>
+                            <constraint firstItem="OhS-dt-BhM" firstAttribute="trailing" secondItem="0bm-EY-sLl" secondAttribute="trailing" id="umm-m6-Qlq"/>
+                            <constraint firstItem="fQZ-KI-GVf" firstAttribute="bottom" secondItem="S56-Y5-xWC" secondAttribute="bottom" constant="15" id="yPD-vB-031"/>
+                            <constraint firstItem="S56-Y5-xWC" firstAttribute="top" secondItem="0bm-EY-sLl" secondAttribute="bottom" constant="2" id="zks-h9-AA6"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -50,4 +163,8 @@
             <point key="canvasLocation" x="138.61607142857142" y="120.28985507246378"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="record.circle" catalog="system" width="128" height="121"/>
+        <image name="topPageGunIcon" width="512" height="335"/>
+    </resources>
 </document>
