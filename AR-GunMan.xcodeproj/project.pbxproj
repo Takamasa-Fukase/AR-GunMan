@@ -21,6 +21,8 @@
 		59940B882552F54900EC20C1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 59940B872552F54900EC20C1 /* GoogleService-Info.plist */; };
 		59940BAC2552FAA600EC20C1 /* RegisterNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59940BAB2552FAA600EC20C1 /* RegisterNameViewController.swift */; };
 		59940BB12552FAAF00EC20C1 /* RegisterNameViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59940BB02552FAAF00EC20C1 /* RegisterNameViewController.storyboard */; };
+		59945100256AD55900560202 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 599450FF256AD55900560202 /* TutorialViewController.swift */; };
+		59945108256AD57300560202 /* TutorialViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59945107256AD57300560202 /* TutorialViewController.storyboard */; };
 		59A01134255AF580008996E3 /* WorldRankingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A01133255AF580008996E3 /* WorldRankingViewController.swift */; };
 		59A01139255AF588008996E3 /* WorldRankingViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59A01138255AF588008996E3 /* WorldRankingViewController.storyboard */; };
 		59D2D4D92552DE66006DDB70 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2D4D82552DE66006DDB70 /* AppDelegate.swift */; };
@@ -85,6 +87,8 @@
 		59940B872552F54900EC20C1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		59940BAB2552FAA600EC20C1 /* RegisterNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterNameViewController.swift; sourceTree = "<group>"; };
 		59940BB02552FAAF00EC20C1 /* RegisterNameViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RegisterNameViewController.storyboard; sourceTree = "<group>"; };
+		599450FF256AD55900560202 /* TutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
+		59945107256AD57300560202 /* TutorialViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TutorialViewController.storyboard; sourceTree = "<group>"; };
 		59A01133255AF580008996E3 /* WorldRankingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldRankingViewController.swift; sourceTree = "<group>"; };
 		59A01138255AF588008996E3 /* WorldRankingViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WorldRankingViewController.storyboard; sourceTree = "<group>"; };
 		59D2D4D52552DE66006DDB70 /* AR-GunMan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AR-GunMan.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -160,6 +164,15 @@
 				90D4D1AD42BB6A3A0192887F /* Pods-AR-GunManTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		599450FE256AD53A00560202 /* tutorial */ = {
+			isa = PBXGroup;
+			children = (
+				599450FF256AD55900560202 /* TutorialViewController.swift */,
+				59945107256AD57300560202 /* TutorialViewController.storyboard */,
+			);
+			path = tutorial;
 			sourceTree = "<group>";
 		};
 		59D2D4CC2552DE66006DDB70 = {
@@ -268,6 +281,7 @@
 			isa = PBXGroup;
 			children = (
 				59D2D5712552E448006DDB70 /* Top */,
+				599450FE256AD53A00560202 /* tutorial */,
 				59D2D5722552E458006DDB70 /* Game */,
 				59D2D5742552E4D1006DDB70 /* WorldRanking */,
 				59D2D5732552E4A9006DDB70 /* RegisterName */,
@@ -444,6 +458,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				59484C7025657E2B00F9C6A8 /* rankingAppear.mp3 in Resources */,
+				59945108256AD57300560202 /* TutorialViewController.storyboard in Resources */,
 				59A01139255AF588008996E3 /* WorldRankingViewController.storyboard in Resources */,
 				59484C7D256584B000F9C6A8 /* startWhistle.mp3 in Resources */,
 				59D2D55D2552E2CC006DDB70 /* pistol-fire.mp3 in Resources */,
@@ -596,6 +611,7 @@
 				59484CA0256A540E00F9C6A8 /* GameViewModel.swift in Sources */,
 				5921A208255D6A4E001D8C39 /* WorldRankingCell.swift in Sources */,
 				59D2D5A42552ECD8006DDB70 /* TargetModePresenter.swift in Sources */,
+				59945100256AD55900560202 /* TutorialViewController.swift in Sources */,
 				59D2D5952552E718006DDB70 /* SwitchWeaponViewController.swift in Sources */,
 				59D2D5852552E6B2006DDB70 /* GameViewController.swift in Sources */,
 				59D2D57B2552E536006DDB70 /* ViewController.swift in Sources */,
