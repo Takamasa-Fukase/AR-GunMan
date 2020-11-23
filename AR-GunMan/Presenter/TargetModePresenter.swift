@@ -53,7 +53,6 @@ class GamePresenter {
         listener.addTarget()
         guard let soundType = SoundType(rawValue: 0) else {return}
         listener.setSounds(for: soundType)
-        listener.playSound(of: 1)
         listener.setBulletsImageView(with: UIImage(named: "bullets\(pistolBulletsCount)"))
     }
     
