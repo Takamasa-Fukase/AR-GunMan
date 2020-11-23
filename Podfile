@@ -12,6 +12,7 @@ target 'AR-GunMan' do
  pod 'Firebase/Core'
  pod 'Firebase/Firestore'
  pod 'FirebaseFirestoreSwift'
+ pod 'Firebase/Messaging'
  pod "CDAlertView"
  pod 'TransitionButton'
  pod 'LTMorphingLabel'
