@@ -35,7 +35,7 @@
                                 <color key="textColor" red="0.027436967940000001" green="0.027523037050000001" blue="0.019605956970000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S56-Y5-xWC">
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="S56-Y5-xWC">
                                 <rect key="frame" x="84" y="133.5" width="752" height="244.5"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="8aZ-dX-j1e">
@@ -133,7 +133,6 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="8aZ-dX-j1e" secondAttribute="bottom" id="PmD-JP-rgF"/>
-                                    <constraint firstItem="d9e-fg-vyn" firstAttribute="width" secondItem="8aZ-dX-j1e" secondAttribute="width" multiplier="0.8" id="X2c-0j-mYW"/>
                                     <constraint firstItem="8aZ-dX-j1e" firstAttribute="top" secondItem="S56-Y5-xWC" secondAttribute="top" id="nwH-HK-7xx"/>
                                 </constraints>
                             </stackView>
@@ -146,6 +145,7 @@
                             <constraint firstItem="TwP-yV-daN" firstAttribute="bottom" secondItem="S56-Y5-xWC" secondAttribute="top" id="HOu-LM-Shs"/>
                             <constraint firstItem="fQZ-KI-GVf" firstAttribute="trailing" secondItem="0bm-EY-sLl" secondAttribute="trailing" constant="40" id="HTb-Da-Isv"/>
                             <constraint firstItem="OhS-dt-BhM" firstAttribute="leading" secondItem="TwP-yV-daN" secondAttribute="leading" id="Nfs-A5-r3u"/>
+                            <constraint firstItem="8aZ-dX-j1e" firstAttribute="width" secondItem="fQZ-KI-GVf" secondAttribute="width" multiplier="0.517327" id="SsP-tF-h3Z"/>
                             <constraint firstItem="0bm-EY-sLl" firstAttribute="leading" secondItem="TwP-yV-daN" secondAttribute="trailing" id="T9d-Nn-aww"/>
                             <constraint firstAttribute="trailing" secondItem="S56-Y5-xWC" secondAttribute="trailing" constant="60" id="kSk-qW-8lM"/>
                             <constraint firstItem="TwP-yV-daN" firstAttribute="top" secondItem="fQZ-KI-GVf" secondAttribute="top" constant="38" id="lD7-iC-a2V"/>
