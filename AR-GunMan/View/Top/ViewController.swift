@@ -24,6 +24,16 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let audioSession = AVAudioSession.sharedInstance()
+        
+        do {
+            // マナーモードでも音を鳴らすようにする
+            try audioSession.setCategory(.playback)
+            
+        } catch {
+            print("error マナーモードでも音を鳴らすようにする設定失敗")
+        }
+        
         setAudioPlayer(forIndex: 1, resourceFileName: "westernPistolShoot")
         
         if #available(iOS 13.0, *) {
