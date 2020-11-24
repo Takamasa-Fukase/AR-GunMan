@@ -10,13 +10,31 @@ import UIKit
 import Photos
 import AVFoundation
 import PanModal
+import AVFoundation
 
 class ViewController: UIViewController {
     
     var replayFlag = false
+    var pistolShoot = AVAudioPlayer()
+    
+    @IBOutlet weak var startButtonIcon: UIImageView!
+    @IBOutlet weak var settingsButtonIcon: UIImageView!
+    @IBOutlet weak var howToPlayButtonIcon: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setAudioPlayer(forIndex: 1, resourceFileName: "westernPistolShoot")
+        
+        if #available(iOS 13.0, *) {
+            startButtonIcon.image = UIImage(systemName: "target")
+            settingsButtonIcon.image = UIImage(systemName: "target")
+            howToPlayButtonIcon.image = UIImage(systemName: "target")
+        } else {
+            startButtonIcon.image = UIImage(named: "targetIcon")
+            settingsButtonIcon.image = UIImage(named: "targetIcon")
+            howToPlayButtonIcon.image = UIImage(named: "targetIcon")
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -31,23 +49,33 @@ class ViewController: UIViewController {
 
     @IBAction func toGameButtonTapped(_ sender: Any) {
         
+        changeButtonIcon(startButtonIcon, isStartButtonTapped: true)
+        
         checkCameraAuthorization()
         
-        presentGameVC()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.presentGameVC()
+        }
         
     }
     
     @IBAction func toSettingButtonTapped(_ sender: Any) {
+        
+        changeButtonIcon(settingsButtonIcon)
         
         let storyboard: UIStoryboard = UIStoryboard(name: "SettingsViewController", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "SettingsViewController") as! SettingsViewController
         let navi = UINavigationController(rootViewController: vc)
         navi.setNavigationBarHidden(true, animated: false)
         
-        self.presentPanModal(navi)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.presentPanModal(navi)
+        }
     }
     
     @IBAction func toTutorialButtonTapped(_ sender: Any) {
+        
+        changeButtonIcon(howToPlayButtonIcon)
         
         let storyboard: UIStoryboard = UIStoryboard(name: "TutorialViewController", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "TutorialViewController") as! TutorialViewController
@@ -57,18 +85,67 @@ class ViewController: UIViewController {
         let navi = UINavigationController(rootViewController: vc)
         navi.setNavigationBarHidden(true, animated: false)
         
-        self.presentPanModal(navi)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.presentPanModal(navi)
+        }
     }
     
     
     
     func presentGameVC(animated: Bool = true) {
+        if #available(iOS 13.0, *) {
+            startButtonIcon.image = UIImage(systemName: "target")
+        } else {
+            startButtonIcon.image = UIImage(named: "targetIcon")
+        }
+        
         let storyboard: UIStoryboard = UIStoryboard(name: "GameViewController", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "GameViewController") as! GameViewController
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: animated)
     }
     
+    
+    func changeButtonIcon(_ imageView: UIImageView, isStartButtonTapped: Bool = false) {
+        
+        imageView.image = UIImage(named: "bulletsHole")
+        
+        pistolShoot.play()
+        
+//        if !isStartButtonTapped {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                if #available(iOS 13.0, *) {
+                    imageView.image = UIImage(systemName: "target")
+                } else {
+                    imageView.image = UIImage(named: "targetIcon")
+                }
+            }
+//        }
+        
+    }
+    
+}
+
+extension ViewController: AVAudioPlayerDelegate {
+
+    private func setAudioPlayer(forIndex index: Int, resourceFileName: String) {
+        guard let path = Bundle.main.path(forResource: resourceFileName, ofType: "mp3") else {
+            print("音源\(index)が見つかりません")
+            return
+        }
+        do {
+            switch index {
+            case 1:
+                pistolShoot = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+                pistolShoot.prepareToPlay()
+            
+            default:
+                break
+            }
+        } catch {
+            print("音声セットエラー")
+        }
+    }
 }
 
 
