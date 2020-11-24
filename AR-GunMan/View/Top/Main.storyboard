@@ -42,9 +42,9 @@
                                         <rect key="frame" x="0.0" y="0.0" width="418" height="244.5"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ybM-iC-l3r">
-                                                <rect key="frame" x="0.0" y="0.0" width="209.5" height="81.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="214" height="81.5"/>
                                                 <color key="tintColor" red="0.027436967940000001" green="0.027523037050000001" blue="0.019605956970000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                <state key="normal" image="record.circle" catalog="system">
+                                                <state key="normal" image="targetIcon">
                                                     <attributedString key="attributedTitle">
                                                         <fragment content=" Start">
                                                             <attributes>
@@ -61,9 +61,9 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EHp-6J-ebq">
-                                                <rect key="frame" x="0.0" y="81.5" width="284.5" height="81.5"/>
+                                                <rect key="frame" x="0.0" y="81.5" width="294" height="81.5"/>
                                                 <color key="tintColor" red="0.027436967940000001" green="0.027523037050000001" blue="0.019605956970000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                <state key="normal" image="record.circle" catalog="system">
+                                                <state key="normal" image="bulletsHole">
                                                     <attributedString key="attributedTitle">
                                                         <fragment content=" Settings">
                                                             <attributes>
@@ -162,7 +162,9 @@
         </scene>
     </scenes>
     <resources>
+        <image name="bulletsHole" width="50" height="50"/>
         <image name="record.circle" catalog="system" width="128" height="121"/>
+        <image name="targetIcon" width="45" height="45"/>
         <image name="topPageGunIcon" width="512" height="335"/>
     </resources>
 </document>

@@ -39,8 +39,12 @@ class ViewController: UIViewController {
     
     @IBAction func toSettingButtonTapped(_ sender: Any) {
         
+        let storyboard: UIStoryboard = UIStoryboard(name: "SettingsViewController", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "SettingsViewController") as! SettingsViewController
+        let navi = UINavigationController(rootViewController: vc)
+        navi.setNavigationBarHidden(true, animated: false)
         
-        
+        self.presentPanModal(navi)
     }
     
     @IBAction func toTutorialButtonTapped(_ sender: Any) {

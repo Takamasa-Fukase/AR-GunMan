@@ -6,24 +6,31 @@
 //
 
 import UIKit
+import SafariServices
 
 class SettingsViewController: UIViewController {
-
+    
+    let developerContactURL = "https://www.instagram.com/fukase_1783/"
+    let privacyPolicyURL = "http://takamasafukase.com/AR-GunMan_PrivacyPolicy.html"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func tappedDeveloperConctact(_ sender: Any) {
+        openSafariView(urlString: developerContactURL)
     }
-    */
-
+    
+    @IBAction func tappedPrivacyPolicy(_ sender: Any) {
+        openSafariView(urlString: privacyPolicyURL)
+    }
+    
+    @IBAction func tappedBack(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func openSafariView(urlString: String) {
+        let safariVC = SFSafariViewController(url: NSURL(string: urlString)! as URL)
+        present(safariVC, animated: true, completion: nil)
+    }
 }
