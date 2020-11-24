@@ -40,7 +40,7 @@ class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        checkCameraAuthorization()
+//        checkCameraAuthorization()
         
         if replayFlag {
             presentGameVC(animated: false)
@@ -48,10 +48,10 @@ class ViewController: UIViewController {
     }
 
     @IBAction func toGameButtonTapped(_ sender: Any) {
+                
+        checkCameraAuthorization()
         
         changeButtonIcon(startButtonIcon, isStartButtonTapped: true)
-        
-        checkCameraAuthorization()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.presentGameVC()
