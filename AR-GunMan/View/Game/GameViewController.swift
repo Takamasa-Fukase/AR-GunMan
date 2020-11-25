@@ -31,6 +31,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
     var startWhistle = AVAudioPlayer()
     var endWhistle = AVAudioPlayer()
     var rankingAppear = AVAudioPlayer()
+    var kyuiin = AVAudioPlayer()
     
     var targetCount = 50
     
@@ -622,6 +623,7 @@ extension GameViewController: GameInterface {
         setAudioPlayer(forIndex: 10, resourceFileName: "startWhistle")
         setAudioPlayer(forIndex: 11, resourceFileName: "endWhistle")
         setAudioPlayer(forIndex: 12, resourceFileName: "rankingAppear")
+        setAudioPlayer(forIndex: 13, resourceFileName: "kyuiin")
     }
     
     func playSound(of index: Int) {
@@ -662,6 +664,9 @@ extension GameViewController: GameInterface {
         case 12:
             rankingAppear.currentTime = 0
             rankingAppear.play()
+        case 13:
+            kyuiin.currentTime = 0
+            kyuiin.play()
         default: break
         }
     }
@@ -672,6 +677,26 @@ extension GameViewController: GameInterface {
     
     func setBulletsImageView(with image: UIImage?) {
         pistolBulletsCountImageView.image = image
+    }
+    
+    func changeTargetsToTaimeisan() {
+        
+        self.sceneView.scene.rootNode.childNodes.forEach({ node in
+            print("node: \(node), name: \(node.name)")
+            if node.name == "target" {
+                print("targetだった")
+                while node.childNode(withName: "torus", recursively: false) != nil {
+                    node.childNode(withName: "torus", recursively: false)?.removeFromParentNode()
+                    print("torusを削除")
+                }
+                
+                node.childNode(withName: "sphere", recursively: false)?.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "taimei4.jpg")
+                
+            }else {
+                print("targetじゃない")
+            }
+        })
+        kyuiin.play()
     }
 }
 
@@ -720,6 +745,9 @@ extension GameViewController: AVAudioPlayerDelegate {
             case 12:
                 rankingAppear = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
                 rankingAppear.prepareToPlay()
+            case 13:
+                kyuiin = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+                kyuiin.prepareToPlay()
                 
             default:
                 break

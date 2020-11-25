@@ -24,12 +24,16 @@ protocol GameInterface: AnyObject {
     func playSound(of index: Int)
     func vibration()
     func setBulletsImageView(with image: UIImage?)
+    
+    func changeTargetsToTaimeisan()
 }
 
 class GamePresenter {
     
     private var preBool = false
     private var postBool = false
+    
+    var gyroZcount = 0
     
     var pistolBulletsCount = 7
     var bazookaRocketCount = 1
@@ -206,9 +210,35 @@ extension GamePresenter {
                     pistolBulletsCount = 7
                     listener.playSound(of: 4)
                     print("ピストルの弾をリロードしました  残弾数: \(pistolBulletsCount)発")
+                    
+                }else if compositGyro >= 10 {
+                    gyroZcount += 1
+                    print("gyroZcountを+1。 現在: \(gyroZcount)回")
                 }
                 listener.setBulletsImageView(with: UIImage(named: "bullets\(pistolBulletsCount)"))
+                
+            }else {
+                let compositGyro = model.getCompositeGyro(0, 0, gyro.z)
+
+                if compositGyro >= 10 {
+                    gyroZcount += 1
+                    print("gyroZcountを+1。 現在: \(gyroZcount)回")
+                }
+                
             }
+            
+            if gyroZcount == 20 {
+                
+                print("gyroZcountが20に達したのでターゲットを泰明さんに変えます")
+                
+                listener.changeTargetsToTaimeisan()
+                gyroZcount += 1
+            }
+//                else if gyroZcount == 30 {
+//
+//                    print("gyroZcountが20に達したのでキング泰明さんを出します")
+//
+//                }
             
         }
         
