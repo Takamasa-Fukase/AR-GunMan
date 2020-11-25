@@ -98,7 +98,7 @@ extension GamePresenter {
                     print("ピストルの残弾数: \(pistolBulletsCount) / 7発")
                     listener.setBulletsImageView(with: UIImage(named: "bullets\(pistolBulletsCount)"))
                     
-                case 5:
+                case 1:
                     
                     if bazookaRocketCount > 0 {
                         
@@ -112,7 +112,7 @@ extension GamePresenter {
                         listener.playSound(of: 7)
                         listener.vibration()
                         preBool = true
-                    }else if pistolBulletsCount <= 0 {
+                    }else if bazookaRocketCount <= 0 {
                         preBool = true
                     }
                     print("ロケランの残弾数: \(bazookaRocketCount) / 1発")
@@ -155,7 +155,7 @@ extension GamePresenter {
                     print("ピストルの残弾数: \(pistolBulletsCount) / 7発")
                     listener.setBulletsImageView(with: UIImage(named: "bullets\(pistolBulletsCount)"))
                     
-                case 5:
+                case 1:
                     
                     if bazookaRocketCount > 0 {
                         
@@ -168,9 +168,11 @@ extension GamePresenter {
                         listener.playSound(of: 8)
                         listener.playSound(of: 7)
                         listener.vibration()
-                        preBool = true
-                    }else if pistolBulletsCount <= 0 {
-                        preBool = true
+                        postBool = false
+                        preBool = false
+                    }else if bazookaRocketCount <= 0 {
+                        postBool = false
+                        preBool = false
                     }
                     print("ロケランの残弾数: \(bazookaRocketCount) / 1発")
                     listener.setBulletsImageView(with: UIImage(named: "bazookaRocket\(bazookaRocketCount)"))

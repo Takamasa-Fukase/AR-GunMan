@@ -249,7 +249,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
                     sceneView.scene.rootNode.childNode(withName: "parent", recursively: false)?.childNode(withName: "M1911_a", recursively: false)?.removeAllActions()
                     sceneView.scene.rootNode.childNode(withName: "parent", recursively: false)?.childNode(withName: "M1911_a", recursively: false)?.position = SCNVector3(0.17, -0.197, -0.584)
                     sceneView.scene.rootNode.childNode(withName: "parent", recursively: false)?.childNode(withName: "M1911_a", recursively: false)?.eulerAngles = SCNVector3(-1.4382625, 1.3017014, -2.9517007)
-                case 5:
+                case 1:
                     sceneView.scene.rootNode.childNode(withName: "bazookaParent", recursively: false)?.childNode(withName: "bazooka", recursively: false)?.removeAllActions()
                     sceneView.scene.rootNode.childNode(withName: "bazookaParent", recursively: false)?.childNode(withName: "bazooka", recursively: false)?.position = SCNVector3(0, 0, 0)
                     sceneView.scene.rootNode.childNode(withName: "bazookaParent", recursively: false)?.childNode(withName: "bazooka", recursively: false)?.eulerAngles = SCNVector3(0, 0, 0)
@@ -352,7 +352,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
             nodeA.removeFromParentNode()
             nodeB.removeFromParentNode()
             
-            if currentWeaponIndex == 5 {
+            if currentWeaponIndex == 1 {
                 bazookaHit.play()
                 
                 if let first = sceneView.scene.rootNode.childNode(withName: "bazookaHitExplosion\(explosionCount)", recursively: false)?.particleSystems?.first  {
@@ -366,7 +366,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
             switch currentWeaponIndex {
             case 0:
                 pistolPoint += 5
-            case 5:
+            case 1:
                 bazookaPoint += 12
             default:
                 break
@@ -421,7 +421,7 @@ extension GameViewController: SwitchWeaponDelegate {
             sightImageView.image = UIImage(named: "pistolSight")
             sightImageView.tintColor = .systemRed
             
-        case 5:
+        case 1:
             if index != currentWeaponIndex {
                 addBazooka()
             }
@@ -525,7 +525,7 @@ extension GameViewController: GameInterface {
         bulletNode.physicsBody?.contactTestBitMask = 1
         bulletNode.physicsBody?.isAffectedByGravity = false
 
-        if currentWeaponIndex == 5 {
+        if currentWeaponIndex == 1 {
             explosionCount += 1
 
             var parti: SCNParticleSystem? = SCNParticleSystem()
@@ -563,7 +563,7 @@ extension GameViewController: GameInterface {
             self.bulletNode?.removeFromParentNode()
         })
         
-        if currentWeaponIndex == 5 {
+        if currentWeaponIndex == 1 {
 
             sceneView.scene.rootNode.childNode(withName: "bazookaHitExplosion\(explosionCount)", recursively: false)?.runAction(action)
             
