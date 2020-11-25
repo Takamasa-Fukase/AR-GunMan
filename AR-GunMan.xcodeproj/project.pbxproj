@@ -301,6 +301,7 @@
 				59D2D5712552E448006DDB70 /* Top */,
 				599450FE256AD53A00560202 /* Tutorial */,
 				59D2D5722552E458006DDB70 /* Game */,
+				59EF28EB256E93A600F63C74 /* SwitchWeapon */,
 				59D2D5742552E4D1006DDB70 /* WorldRanking */,
 				59D2D5732552E4A9006DDB70 /* RegisterName */,
 				595E6985256C0169002B4F3E /* Settings */,
@@ -322,10 +323,6 @@
 			children = (
 				59D2D5832552E6B2006DDB70 /* GameViewController.swift */,
 				59D2D5822552E6B2006DDB70 /* GameViewController.storyboard */,
-				59D2D5912552E718006DDB70 /* SwitchWeaponViewController.swift */,
-				59D2D5922552E718006DDB70 /* SwitchWeaponViewController.storyboard */,
-				59D2D58F2552E717006DDB70 /* SwitchWeaponCell.swift */,
-				59D2D5902552E718006DDB70 /* SwitchWeaponCell.xib */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -356,6 +353,17 @@
 				59D2D5A32552ECD8006DDB70 /* TargetModePresenter.swift */,
 			);
 			path = Presenter;
+			sourceTree = "<group>";
+		};
+		59EF28EB256E93A600F63C74 /* SwitchWeapon */ = {
+			isa = PBXGroup;
+			children = (
+				59D2D5912552E718006DDB70 /* SwitchWeaponViewController.swift */,
+				59D2D5922552E718006DDB70 /* SwitchWeaponViewController.storyboard */,
+				59D2D58F2552E717006DDB70 /* SwitchWeaponCell.swift */,
+				59D2D5902552E718006DDB70 /* SwitchWeaponCell.xib */,
+			);
+			path = SwitchWeapon;
 			sourceTree = "<group>";
 		};
 		9181646D3CDAAE6BA576903B /* Frameworks */ = {
