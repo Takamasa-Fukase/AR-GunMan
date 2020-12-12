@@ -33,9 +33,7 @@ class WorldRankingViewController: UIViewController {
         rightButtonsStackView.isHidden = true
         replayButton.alpha = 0
         homeButton.alpha = 0
-        
-        totalScore = Double.random(in: 0...100)
-        
+                
         totalScoreLabel.text = String(format: "%.3f", totalScore)
         tableView.contentInset.top = 10
         tableView.register(UINib(nibName: "WorldRankingCell", bundle: nil), forCellReuseIdentifier: "WorldRankingCell")
@@ -49,20 +47,7 @@ class WorldRankingViewController: UIViewController {
             self.list = snapshot.documents.map { data -> Ranking in
                 return Ranking(score: data.data()["score"] as? Double ?? 0.000, userName: data.data()["user_name"] as? String ?? "NO NAME")
             }
-            
-//            if !self.list.isEmpty {
-//
-//                let threeDigitsScore = Double(round(1000 * self.totalScore)/1000)
-//
-//                let limitRankIndex = self.list.firstIndex(where: {
-//                    $0.score < threeDigitsScore
-//                })
-//                self.limitRankIndex = limitRankIndex ?? 0
-//
-//                self.list.insert(Ranking(score: threeDigitsScore, userName: "YOU"), at: limitRankIndex ?? 0)
-//
-//            }
-            
+
             self.tableView.reloadData()
                         
         }
@@ -85,7 +70,6 @@ class WorldRankingViewController: UIViewController {
             let storyboard: UIStoryboard = UIStoryboard(name: "RegisterNameViewController", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "RegisterNameViewController") as! RegisterNameViewController
             vc.totalScore = self.totalScore
-//            vc.tentativeRank = self.limitRankIndex + 1
             vc.rankingCount = self.list.count
             vc.modalPresentationStyle = .overCurrentContext
             
@@ -94,29 +78,30 @@ class WorldRankingViewController: UIViewController {
             let limitRankIndex = self.list.firstIndex(where: {
                 $0.score < threeDigitsScore
             })
-            vc.tentativeRank = limitRankIndex ?? 0 + 1
+            vc.tentativeRank = limitRankIndex ?? 0 + 1 + 1
             vc.registerNameVCDelegate = self
             
             let navi = UINavigationController(rootViewController: vc)
             navi.setNavigationBarHidden(true, animated: false)
-//            self.present(vc, animated: true)
             
             self.presentPanModal(navi)
         }
         
-        
-
     }
     
     @IBAction func tappedReplay(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+        dismissToTopVC(retry: true)
     }
     
     @IBAction func tappedHome(_ sender: Any) {
-        self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+        dismissToTopVC()
     }
     
-    
+    func dismissToTopVC(retry: Bool = false) {
+        let topVC = self.presentingViewController?.presentingViewController as! ViewController
+        topVC.replayFlag = retry
+        topVC.dismiss(animated: false, completion: nil)
+    }
     
 }
 
@@ -148,23 +133,6 @@ extension WorldRankingViewController: UITableViewDelegate, UITableViewDataSource
         cell?.nameLabel.text = list[indexPath.row].userName
         cell?.scoreLabel.text = String(list[indexPath.row].score)
         cell?.rankLabel.text = String(indexPath.row + 1)
-        
-//        if indexPath.row == limitRankIndex {
-//
-//            cell?.contentView.backgroundColor = UIColor(red: 239/255, green: 239/255, blue: 239/255, alpha: 1)
-//            cell?.contentView.subviews[0].backgroundColor = UIColor(red: 135/255, green: 125/255, blue: 116/255, alpha: 1)
-//            cell?.contentView.subviews[1].backgroundColor = UIColor(red: 202/255, green: 177/255, blue: 136/255, alpha: 0.58)
-//            cell?.nameLabel.textColor = UIColor(red: 255/255, green: 224/255, blue: 173/255, alpha: 1)
-//            cell?.scoreLabel.textColor = UIColor(red: 255/255, green: 224/255, blue: 173/255, alpha: 1)
-//        }else {
-//
-//            cell?.contentView.backgroundColor = .clear
-//            cell?.contentView.subviews[0].backgroundColor = UIColor(red: 85/255, green: 78/255, blue: 72/255, alpha: 1)
-//            cell?.contentView.subviews[1].backgroundColor = UIColor(red: 110/255, green: 102/255, blue: 94/255, alpha: 1)
-//            cell?.nameLabel.textColor = UIColor(red: 239/255, green: 239/255, blue: 239/255, alpha: 1)
-//            cell?.scoreLabel.textColor = UIColor(red: 239/255, green: 239/255, blue: 239/255, alpha: 1)
-//        }
-        
         return cell ?? UITableViewCell()
     }
     

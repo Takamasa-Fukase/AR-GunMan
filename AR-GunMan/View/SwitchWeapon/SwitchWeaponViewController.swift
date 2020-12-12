@@ -8,6 +8,8 @@
 
 import UIKit
 import FSPagerView
+import RxSwift
+import RxCocoa
 
 protocol SwitchWeaponDelegate {
     func selectedAt(index: Int)
@@ -15,7 +17,11 @@ protocol SwitchWeaponDelegate {
 
 class SwitchWeaponViewController: UIViewController {
     
+    let weapons = ["pistol", "rocket-launcher"]
+    
+    let disposeBag = DisposeBag()
     var switchWeaponDelegate: SwitchWeaponDelegate?
+    var viewModel: GameViewModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +34,18 @@ class SwitchWeaponViewController: UIViewController {
         pagerView.interitemSpacing = 8
         
         pagerView.transformer = FSPagerViewTransformer(type: .ferrisWheel)
+        
+        
+        //output
+        viewModel?.dismissSwitchWeaponVC
+            .subscribe(onNext: { [weak self] element in
+                guard let self = self else {return}
+                
+                print("SwitchWeaponVC dismissSelfを通知受け取ったのでdismissします")
+                self.dismiss(animated: false, completion: nil)
+                
+            }).disposed(by: disposeBag)
+        
     }
     
     @IBOutlet weak var pagerView: FSPagerView! {
@@ -47,35 +65,15 @@ class SwitchWeaponViewController: UIViewController {
 extension SwitchWeaponViewController: FSPagerViewDelegate, FSPagerViewDataSource {
     
     func numberOfItems(in pagerView: FSPagerView) -> Int {
-        return 6
+        return weapons.count
     }
     
     func pagerView(_ pagerView: FSPagerView, cellForItemAt index: Int) -> FSPagerViewCell {
         guard let cell = pagerView.dequeueReusableCell(withReuseIdentifier: "SwitchWeaponCell", at: index) as? SwitchWeaponCell else {
             return FSPagerViewCell()
         }
-        switch index {
-        case 0:
-            cell.weaponImageView.image = UIImage(named: "pistol")
-            cell.commingSoonLabel.isHidden = true
-        case 1:
-            cell.weaponImageView.image = UIImage(named: "rifle")
-            cell.commingSoonLabel.isHidden = false
-        case 2:
-            cell.weaponImageView.image = UIImage(named: "shot-gun")
-            cell.commingSoonLabel.isHidden = false
-        case 3:
-            cell.weaponImageView.image = UIImage(named: "sniper-rifle")
-            cell.commingSoonLabel.isHidden = false
-        case 4:
-            cell.weaponImageView.image = UIImage(named: "mini-gun")
-            cell.commingSoonLabel.isHidden = false
-        case 5:
-            cell.weaponImageView.image = UIImage(named: "rocket-launcher")
-            cell.commingSoonLabel.isHidden = true
-        default:
-            break
-        }
+        cell.weaponImageView.image = UIImage(named: weapons[index])
+        cell.commingSoonLabel.isHidden = true
         return cell
     }
     

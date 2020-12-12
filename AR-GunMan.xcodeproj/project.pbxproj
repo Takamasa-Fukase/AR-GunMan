@@ -8,11 +8,26 @@
 
 /* Begin PBXBuildFile section */
 		00A6965B4FCC1456D7FB68EA /* Pods_AR_GunMan_AR_GunManUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C6F9F6D2421B8A957F5120A /* Pods_AR_GunMan_AR_GunManUITests.framework */; };
+		5903192F256D82BA005C30EF /* westernPistolShoot.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5903192E256D82BA005C30EF /* westernPistolShoot.mp3 */; };
 		5921A208255D6A4E001D8C39 /* WorldRankingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5921A206255D6A4E001D8C39 /* WorldRankingCell.swift */; };
 		5921A209255D6A4E001D8C39 /* WorldRankingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5921A207255D6A4E001D8C39 /* WorldRankingCell.xib */; };
+		59484C5A2565792300F9C6A8 /* bazookaSet.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 59484C592565792300F9C6A8 /* bazookaSet.mp3 */; };
+		59484C662565796400F9C6A8 /* bazookaReload.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 59484C652565796400F9C6A8 /* bazookaReload.mp3 */; };
+		59484C6B25657E1C00F9C6A8 /* endWhistle.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 59484C6A25657E1C00F9C6A8 /* endWhistle.mp3 */; };
+		59484C7025657E2B00F9C6A8 /* rankingAppear.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 59484C6F25657E2B00F9C6A8 /* rankingAppear.mp3 */; };
+		59484C7D256584B000F9C6A8 /* startWhistle.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 59484C7C256584B000F9C6A8 /* startWhistle.mp3 */; };
+		59484C8525664E7400F9C6A8 /* bazookaShoot.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 59484C8425664E7400F9C6A8 /* bazookaShoot.mp3 */; };
+		59484C8A25664FEC00F9C6A8 /* bazookaHit.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 59484C8925664FEB00F9C6A8 /* bazookaHit.mp3 */; };
+		59484CA0256A540E00F9C6A8 /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59484C9F256A540E00F9C6A8 /* GameViewModel.swift */; };
+		595E6987256C0190002B4F3E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595E6986256C0190002B4F3E /* SettingsViewController.swift */; };
+		595E698F256C01A4002B4F3E /* SettingsViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 595E698E256C01A4002B4F3E /* SettingsViewController.storyboard */; };
+		5961B6D5256EC44700B6D736 /* taimei4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5961B6D4256EC44700B6D736 /* taimei4.jpg */; };
+		5961B6DA256ECAEF00B6D736 /* kyuiin.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5961B6D9256ECAEF00B6D736 /* kyuiin.mp3 */; };
 		59940B882552F54900EC20C1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 59940B872552F54900EC20C1 /* GoogleService-Info.plist */; };
 		59940BAC2552FAA600EC20C1 /* RegisterNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59940BAB2552FAA600EC20C1 /* RegisterNameViewController.swift */; };
 		59940BB12552FAAF00EC20C1 /* RegisterNameViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59940BB02552FAAF00EC20C1 /* RegisterNameViewController.storyboard */; };
+		59945100256AD55900560202 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 599450FF256AD55900560202 /* TutorialViewController.swift */; };
+		59945108256AD57300560202 /* TutorialViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59945107256AD57300560202 /* TutorialViewController.storyboard */; };
 		59A01134255AF580008996E3 /* WorldRankingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A01133255AF580008996E3 /* WorldRankingViewController.swift */; };
 		59A01139255AF588008996E3 /* WorldRankingViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59A01138255AF588008996E3 /* WorldRankingViewController.storyboard */; };
 		59D2D4D92552DE66006DDB70 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2D4D82552DE66006DDB70 /* AppDelegate.swift */; };
@@ -64,11 +79,26 @@
 		31648D71D23C89DB3138AE8E /* Pods-AR-GunMan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-GunMan.debug.xcconfig"; path = "Target Support Files/Pods-AR-GunMan/Pods-AR-GunMan.debug.xcconfig"; sourceTree = "<group>"; };
 		3C6F9F6D2421B8A957F5120A /* Pods_AR_GunMan_AR_GunManUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_GunMan_AR_GunManUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4280580740F2443B66781090 /* Pods_AR_GunMan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_GunMan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5903192E256D82BA005C30EF /* westernPistolShoot.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = westernPistolShoot.mp3; sourceTree = "<group>"; };
 		5921A206255D6A4E001D8C39 /* WorldRankingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldRankingCell.swift; sourceTree = "<group>"; };
 		5921A207255D6A4E001D8C39 /* WorldRankingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WorldRankingCell.xib; sourceTree = "<group>"; };
+		59484C592565792300F9C6A8 /* bazookaSet.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bazookaSet.mp3; sourceTree = "<group>"; };
+		59484C652565796400F9C6A8 /* bazookaReload.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bazookaReload.mp3; sourceTree = "<group>"; };
+		59484C6A25657E1C00F9C6A8 /* endWhistle.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = endWhistle.mp3; sourceTree = "<group>"; };
+		59484C6F25657E2B00F9C6A8 /* rankingAppear.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = rankingAppear.mp3; sourceTree = "<group>"; };
+		59484C7C256584B000F9C6A8 /* startWhistle.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = startWhistle.mp3; sourceTree = "<group>"; };
+		59484C8425664E7400F9C6A8 /* bazookaShoot.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bazookaShoot.mp3; sourceTree = "<group>"; };
+		59484C8925664FEB00F9C6A8 /* bazookaHit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bazookaHit.mp3; sourceTree = "<group>"; };
+		59484C9F256A540E00F9C6A8 /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
+		595E6986256C0190002B4F3E /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		595E698E256C01A4002B4F3E /* SettingsViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SettingsViewController.storyboard; sourceTree = "<group>"; };
+		5961B6D4256EC44700B6D736 /* taimei4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = taimei4.jpg; sourceTree = "<group>"; };
+		5961B6D9256ECAEF00B6D736 /* kyuiin.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = kyuiin.mp3; sourceTree = "<group>"; };
 		59940B872552F54900EC20C1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		59940BAB2552FAA600EC20C1 /* RegisterNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterNameViewController.swift; sourceTree = "<group>"; };
 		59940BB02552FAAF00EC20C1 /* RegisterNameViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RegisterNameViewController.storyboard; sourceTree = "<group>"; };
+		599450FF256AD55900560202 /* TutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
+		59945107256AD57300560202 /* TutorialViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TutorialViewController.storyboard; sourceTree = "<group>"; };
 		59A01133255AF580008996E3 /* WorldRankingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldRankingViewController.swift; sourceTree = "<group>"; };
 		59A01138255AF588008996E3 /* WorldRankingViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WorldRankingViewController.storyboard; sourceTree = "<group>"; };
 		59D2D4D52552DE66006DDB70 /* AR-GunMan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AR-GunMan.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -100,6 +130,7 @@
 		59D2D59D2552E751006DDB70 /* CalcuModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalcuModel.swift; sourceTree = "<group>"; };
 		59D2D5A32552ECD8006DDB70 /* TargetModePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargetModePresenter.swift; sourceTree = "<group>"; };
 		59E43329A2D9B4F8752F833A /* Pods-AR-GunMan-AR-GunManUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-GunMan-AR-GunManUITests.debug.xcconfig"; path = "Target Support Files/Pods-AR-GunMan-AR-GunManUITests/Pods-AR-GunMan-AR-GunManUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		59F79E5F256BE7B0006EC1B3 /* AR-GunMan.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "AR-GunMan.entitlements"; sourceTree = "<group>"; };
 		5AB32EC76FF682FB7040AD4D /* Pods-AR-GunMan-AR-GunManUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-GunMan-AR-GunManUITests.release.xcconfig"; path = "Target Support Files/Pods-AR-GunMan-AR-GunManUITests/Pods-AR-GunMan-AR-GunManUITests.release.xcconfig"; sourceTree = "<group>"; };
 		82CB4F049BB35C36EAA5A632 /* Pods_AR_GunManTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_GunManTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		90D4D1AD42BB6A3A0192887F /* Pods-AR-GunManTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-GunManTests.release.xcconfig"; path = "Target Support Files/Pods-AR-GunManTests/Pods-AR-GunManTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -146,6 +177,24 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		595E6985256C0169002B4F3E /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				595E6986256C0190002B4F3E /* SettingsViewController.swift */,
+				595E698E256C01A4002B4F3E /* SettingsViewController.storyboard */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		599450FE256AD53A00560202 /* Tutorial */ = {
+			isa = PBXGroup;
+			children = (
+				599450FF256AD55900560202 /* TutorialViewController.swift */,
+				59945107256AD57300560202 /* TutorialViewController.storyboard */,
+			);
+			path = Tutorial;
+			sourceTree = "<group>";
+		};
 		59D2D4CC2552DE66006DDB70 = {
 			isa = PBXGroup;
 			children = (
@@ -171,6 +220,7 @@
 		59D2D4D72552DE66006DDB70 /* AR-GunMan */ = {
 			isa = PBXGroup;
 			children = (
+				59F79E5F256BE7B0006EC1B3 /* AR-GunMan.entitlements */,
 				59D2D4D82552DE66006DDB70 /* AppDelegate.swift */,
 				59D2D5392552E1D2006DDB70 /* Extension+Storyboard.swift */,
 				59D2D56E2552E3B8006DDB70 /* Model */,
@@ -208,6 +258,7 @@
 		59D2D5462552E2CC006DDB70 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5961B6D4256EC44700B6D736 /* taimei4.jpg */,
 				59D2D54F2552E2CC006DDB70 /* mp3 */,
 			);
 			path = Resources;
@@ -216,11 +267,20 @@
 		59D2D54F2552E2CC006DDB70 /* mp3 */ = {
 			isa = PBXGroup;
 			children = (
+				5961B6D9256ECAEF00B6D736 /* kyuiin.mp3 */,
 				59D2D5502552E2CC006DDB70 /* pistol-out-bullets.mp3 */,
 				59D2D5512552E2CC006DDB70 /* pistol-slide.mp3 */,
 				59D2D5522552E2CC006DDB70 /* pistol-fire.mp3 */,
 				59D2D5532552E2CC006DDB70 /* headShot.mp3 */,
 				59D2D5542552E2CC006DDB70 /* pistol-reload.mp3 */,
+				59484C592565792300F9C6A8 /* bazookaSet.mp3 */,
+				59484C8425664E7400F9C6A8 /* bazookaShoot.mp3 */,
+				59484C8925664FEB00F9C6A8 /* bazookaHit.mp3 */,
+				59484C652565796400F9C6A8 /* bazookaReload.mp3 */,
+				59484C7C256584B000F9C6A8 /* startWhistle.mp3 */,
+				59484C6A25657E1C00F9C6A8 /* endWhistle.mp3 */,
+				59484C6F25657E2B00F9C6A8 /* rankingAppear.mp3 */,
+				5903192E256D82BA005C30EF /* westernPistolShoot.mp3 */,
 			);
 			path = mp3;
 			sourceTree = "<group>";
@@ -236,6 +296,7 @@
 		59D2D56F2552E3C0006DDB70 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				59484C9F256A540E00F9C6A8 /* GameViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -244,9 +305,12 @@
 			isa = PBXGroup;
 			children = (
 				59D2D5712552E448006DDB70 /* Top */,
+				599450FE256AD53A00560202 /* Tutorial */,
 				59D2D5722552E458006DDB70 /* Game */,
-				59D2D5732552E4A9006DDB70 /* RegisterName */,
+				59EF28EB256E93A600F63C74 /* SwitchWeapon */,
 				59D2D5742552E4D1006DDB70 /* WorldRanking */,
+				59D2D5732552E4A9006DDB70 /* RegisterName */,
+				595E6985256C0169002B4F3E /* Settings */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -265,10 +329,6 @@
 			children = (
 				59D2D5832552E6B2006DDB70 /* GameViewController.swift */,
 				59D2D5822552E6B2006DDB70 /* GameViewController.storyboard */,
-				59D2D5912552E718006DDB70 /* SwitchWeaponViewController.swift */,
-				59D2D5922552E718006DDB70 /* SwitchWeaponViewController.storyboard */,
-				59D2D58F2552E717006DDB70 /* SwitchWeaponCell.swift */,
-				59D2D5902552E718006DDB70 /* SwitchWeaponCell.xib */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -299,6 +359,17 @@
 				59D2D5A32552ECD8006DDB70 /* TargetModePresenter.swift */,
 			);
 			path = Presenter;
+			sourceTree = "<group>";
+		};
+		59EF28EB256E93A600F63C74 /* SwitchWeapon */ = {
+			isa = PBXGroup;
+			children = (
+				59D2D5912552E718006DDB70 /* SwitchWeaponViewController.swift */,
+				59D2D5922552E718006DDB70 /* SwitchWeaponViewController.storyboard */,
+				59D2D58F2552E717006DDB70 /* SwitchWeaponCell.swift */,
+				59D2D5902552E718006DDB70 /* SwitchWeaponCell.xib */,
+			);
+			path = SwitchWeapon;
 			sourceTree = "<group>";
 		};
 		9181646D3CDAAE6BA576903B /* Frameworks */ = {
@@ -419,19 +490,31 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59484C7025657E2B00F9C6A8 /* rankingAppear.mp3 in Resources */,
+				59945108256AD57300560202 /* TutorialViewController.storyboard in Resources */,
 				59A01139255AF588008996E3 /* WorldRankingViewController.storyboard in Resources */,
+				59484C7D256584B000F9C6A8 /* startWhistle.mp3 in Resources */,
 				59D2D55D2552E2CC006DDB70 /* pistol-fire.mp3 in Resources */,
+				59484C8A25664FEC00F9C6A8 /* bazookaHit.mp3 in Resources */,
 				59940BB12552FAAF00EC20C1 /* RegisterNameViewController.storyboard in Resources */,
 				59D2D5942552E718006DDB70 /* SwitchWeaponCell.xib in Resources */,
+				5961B6D5256EC44700B6D736 /* taimei4.jpg in Resources */,
+				5961B6DA256ECAEF00B6D736 /* kyuiin.mp3 in Resources */,
 				59D2D55B2552E2CC006DDB70 /* pistol-out-bullets.mp3 in Resources */,
+				59484C5A2565792300F9C6A8 /* bazookaSet.mp3 in Resources */,
 				59D2D55F2552E2CC006DDB70 /* pistol-reload.mp3 in Resources */,
 				59D2D4E52552DE67006DDB70 /* LaunchScreen.storyboard in Resources */,
+				5903192F256D82BA005C30EF /* westernPistolShoot.mp3 in Resources */,
+				595E698F256C01A4002B4F3E /* SettingsViewController.storyboard in Resources */,
 				5921A209255D6A4E001D8C39 /* WorldRankingCell.xib in Resources */,
 				59D2D5422552E24D006DDB70 /* art.scnassets in Resources */,
+				59484C6B25657E1C00F9C6A8 /* endWhistle.mp3 in Resources */,
 				59D2D5842552E6B2006DDB70 /* GameViewController.storyboard in Resources */,
 				59940B882552F54900EC20C1 /* GoogleService-Info.plist in Resources */,
+				59484C662565796400F9C6A8 /* bazookaReload.mp3 in Resources */,
 				59D2D5962552E718006DDB70 /* SwitchWeaponViewController.storyboard in Resources */,
 				59D2D55E2552E2CC006DDB70 /* headShot.mp3 in Resources */,
+				59484C8525664E7400F9C6A8 /* bazookaShoot.mp3 in Resources */,
 				59D2D57A2552E536006DDB70 /* Main.storyboard in Resources */,
 				59D2D56A2552E31E006DDB70 /* Assets.xcassets in Resources */,
 				59D2D55C2552E2CC006DDB70 /* pistol-slide.mp3 in Resources */,
@@ -562,13 +645,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59484CA0256A540E00F9C6A8 /* GameViewModel.swift in Sources */,
 				5921A208255D6A4E001D8C39 /* WorldRankingCell.swift in Sources */,
 				59D2D5A42552ECD8006DDB70 /* TargetModePresenter.swift in Sources */,
+				59945100256AD55900560202 /* TutorialViewController.swift in Sources */,
 				59D2D5952552E718006DDB70 /* SwitchWeaponViewController.swift in Sources */,
 				59D2D5852552E6B2006DDB70 /* GameViewController.swift in Sources */,
 				59D2D57B2552E536006DDB70 /* ViewController.swift in Sources */,
 				59D2D4D92552DE66006DDB70 /* AppDelegate.swift in Sources */,
 				59D2D53A2552E1D2006DDB70 /* Extension+Storyboard.swift in Sources */,
+				595E6987256C0190002B4F3E /* SettingsViewController.swift in Sources */,
 				59A01134255AF580008996E3 /* WorldRankingViewController.swift in Sources */,
 				59D2D5932552E718006DDB70 /* SwitchWeaponCell.swift in Sources */,
 				59D2D59E2552E751006DDB70 /* CalcuModel.swift in Sources */,
@@ -741,7 +827,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = "AR-GunMan/AR-GunMan.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 37MFDT4LMQ;
 				INFOPLIST_FILE = "AR-GunMan/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -751,8 +839,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.takamasafuksae.AR-GunMan";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "AR-GunMan Adhoc";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -762,7 +851,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = "AR-GunMan/AR-GunMan.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 37MFDT4LMQ;
 				INFOPLIST_FILE = "AR-GunMan/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -772,8 +863,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.takamasafuksae.AR-GunMan";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "AR-GunMan Adhoc";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

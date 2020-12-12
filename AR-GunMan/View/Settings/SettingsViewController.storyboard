@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="1mi-OB-ywS">
+    <device id="retina6_1" orientation="landscape" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Settings View Controller-->
+        <scene sceneID="Zgp-zI-N7d">
+            <objects>
+                <viewController storyboardIdentifier="SettingsViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="1mi-OB-ywS" customClass="SettingsViewController" customModule="AR_GunMan" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="lHa-tN-x4z">
+                        <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SETTINGS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GRI-mk-XKP">
+                                <rect key="frame" x="74" y="50" width="215" height="43"/>
+                                <fontDescription key="fontDescription" name="Copperplate-Bold" family="Copperplate" pointSize="42"/>
+                                <color key="textColor" red="0.027436967940000001" green="0.027523037050000001" blue="0.019605956970000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="9Ii-aV-ok0">
+                                <rect key="frame" x="245" y="93" width="406" height="210"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iog-Le-8cK">
+                                        <rect key="frame" x="0.0" y="0.0" width="406" height="105"/>
+                                        <state key="normal" title="Contact Developer">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="Contact Developer">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.027436967940000001" green="0.027523037050000001" blue="0.019605956970000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                        <font key="NSFont" size="40" name="Copperplate-Bold"/>
+                                                        <integer key="NSUnderline" value="1"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </state>
+                                        <connections>
+                                            <action selector="tappedDeveloperConctact:" destination="1mi-OB-ywS" eventType="touchUpInside" id="Zcj-C9-MEd"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kAo-Ti-aEt">
+                                        <rect key="frame" x="48" y="105" width="310" height="105"/>
+                                        <state key="normal" title="Contact Developer">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="Privacy Policy">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.027436967940000001" green="0.027523037050000001" blue="0.019605956970000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                        <font key="NSFont" size="40" name="Copperplate-Bold"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                        <integer key="NSUnderline" value="1"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </state>
+                                        <connections>
+                                            <action selector="tappedPrivacyPolicy:" destination="1mi-OB-ywS" eventType="touchUpInside" id="Lbs-fQ-Vaw"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x9f-pb-rDU">
+                                <rect key="frame" x="74" y="303" width="116" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="116" id="lee-qc-0Eh"/>
+                                    <constraint firstAttribute="height" constant="50" id="wds-pq-v4O"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Copperplate-Bold" family="Copperplate" pointSize="36"/>
+                                <state key="normal" title="BACK">
+                                    <color key="titleColor" red="0.027436967940000001" green="0.027523037050000001" blue="0.019605956970000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </state>
+                                <connections>
+                                    <action selector="tappedBack:" destination="1mi-OB-ywS" eventType="touchUpInside" id="KCg-t8-STW"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="z2t-kC-wqq"/>
+                        <color key="backgroundColor" red="0.79046171899999995" green="0.69538801910000003" blue="0.53327715399999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstItem="9Ii-aV-ok0" firstAttribute="bottom" secondItem="x9f-pb-rDU" secondAttribute="top" id="7pM-Fr-4jj"/>
+                            <constraint firstItem="9Ii-aV-ok0" firstAttribute="centerX" secondItem="lHa-tN-x4z" secondAttribute="centerX" id="Abs-OW-cIE"/>
+                            <constraint firstItem="GRI-mk-XKP" firstAttribute="top" secondItem="z2t-kC-wqq" secondAttribute="top" constant="50" id="IY5-x9-x51"/>
+                            <constraint firstItem="GRI-mk-XKP" firstAttribute="leading" secondItem="z2t-kC-wqq" secondAttribute="leading" constant="30" id="VO7-ON-y2W"/>
+                            <constraint firstItem="x9f-pb-rDU" firstAttribute="leading" secondItem="z2t-kC-wqq" secondAttribute="leading" constant="30" id="l2Z-xW-qv7"/>
+                            <constraint firstItem="z2t-kC-wqq" firstAttribute="bottom" secondItem="x9f-pb-rDU" secondAttribute="bottom" constant="40" id="mda-bE-g2V"/>
+                            <constraint firstItem="9Ii-aV-ok0" firstAttribute="top" secondItem="GRI-mk-XKP" secondAttribute="bottom" id="vWa-wK-c66"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Jv7-fP-AaN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="83.705357142857139" y="157.97101449275362"/>
+        </scene>
+    </scenes>
+</document>

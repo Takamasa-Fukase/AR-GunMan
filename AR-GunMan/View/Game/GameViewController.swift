@@ -13,18 +13,31 @@ import CoreMotion
 import AVFoundation
 import AudioToolbox
 import FSPagerView
+import PanModal
 
 class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDelegate {
     
+    //MARK: - add comment test
     let motionManager = CMMotionManager()
     
-    var audioPlayer1 = AVAudioPlayer()
-    var audioPlayer2 = AVAudioPlayer()
-    var audioPlayer3 = AVAudioPlayer()
-    var audioPlayer4 = AVAudioPlayer()
-    var audioPlayer5 = AVAudioPlayer()
+    var pistolSet = AVAudioPlayer()
+    var pistolShoot = AVAudioPlayer()
+    var pistolOutBullets = AVAudioPlayer()
+    var pistolReload = AVAudioPlayer()
+    var headShot = AVAudioPlayer()
+    var bazookaSet = AVAudioPlayer()
+    var bazookaReload = AVAudioPlayer()
+    var bazookaShoot = AVAudioPlayer()
+    var bazookaHit = AVAudioPlayer()
+    var startWhistle = AVAudioPlayer()
+    var endWhistle = AVAudioPlayer()
+    var rankingAppear = AVAudioPlayer()
+    var kyuiin = AVAudioPlayer()
     
-    var targetCount = 200
+    var targetCount = 50
+    
+    var pistolPoint = 0.0
+    var bazookaPoint = 0.0
     
     var toggleActionInterval = 0.2
     var lastCameraPos = SCNVector3()
@@ -34,19 +47,26 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
     var currentWeaponIndex = 0
     
     var timer:Timer!
-    var timeCount:Double = 10.00
+    var timeCount:Double = 30.00
+    
+    var explosionCount = 0
+    
+    var exploPar: SCNParticleSystem?
+    
+    var bulletNode: SCNNode?
+    var bazookaHitExplosion: SCNNode?
+    var jetFire: SCNNode?
+    var targetNode: SCNNode?
     
     private var presenter: GamePresenter?
+    var viewModel = GameViewModel()
     
     @IBOutlet weak var sceneView: ARSCNView!
     @IBOutlet weak var pistolBulletsCountImageView: UIImageView!
+    @IBOutlet weak var sightImageView: UIImageView!
     @IBOutlet weak var targetCountLabel: UILabel!
     
     @IBOutlet weak var switchWeaponButton: UIButton!
-    
-    var bulletNode: SCNNode?
-    var targetNode: SCNNode?
-    var kingTaimeiSan: SCNNode?
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,26 +75,74 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         getAccelerometer()
         getGyro()
         
-        let sphere: SCNGeometry = SCNSphere(radius: 0.05)
-        let shape = SCNPhysicsShape(geometry: sphere, options: nil)
-        
         let scene = SCNScene(named: "art.scnassets/target.scn")
         targetNode = (scene?.rootNode.childNode(withName: "target", recursively: false))!
-        targetNode?.scale = SCNVector3(0.25, 0.25, 0.25)
+        targetNode?.scale = SCNVector3(0.3, 0.3, 0.3)
+        
+        let targetNodeGeometry = (targetNode?.childNode(withName: "sphere", recursively: false)?.geometry)!
+        
+        //MARK: - 当たり判定の肝2つ
+        //①形状はラップしてる空のNodeではなく何か1つgeometryを持っているものにするを指定する
+        //②当たり判定のscaleはoptions: [SCNPhysicsShape.Option.scale: SCNVector3]で明示的に設定する（大体①のgeometryの元となっているNodeのscaleを代入すれば等しい当たり判定になる）
+        let shape = SCNPhysicsShape(geometry: targetNodeGeometry, options: [SCNPhysicsShape.Option.scale: targetNode?.scale])
         
         //当たり判定用のphysicBodyを追加
         targetNode?.physicsBody = SCNPhysicsBody(type: .dynamic, shape: shape)
         targetNode?.physicsBody?.isAffectedByGravity = false
         
+        
+        //ロケラン名中時の爆発
+        let explosionScene = SCNScene(named: "art.scnassets/ParticleSystem/Explosion1.scn")
+        //注意:scnのファイル名ではなく、Identity欄のnameを指定する
+        bazookaHitExplosion = (explosionScene?.rootNode.childNode(withName: "Explosion1", recursively: false))
+        
+        exploPar = bazookaHitExplosion?.particleSystems?.first!
+        
+        
         self.presenter = GamePresenter(listener: self)
         presenter?.viewDidLoad()
         
-        self.timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(timerUpdate(timer:)), userInfo: nil, repeats: true)
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+        
+//            self.startWhistle.play()
+//
+//            self.presenter?.isShootEnabled = true
+//
+//            self.timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(self.timerUpdate(timer:)), userInfo: nil, repeats: true)
+//        }
         
         targetCountLabel.font = targetCountLabel.font.monospacedDigitFont
 
         
     }
+    
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if UserDefaults.standard.value(forKey: "tutorialAlreadySeen") == nil {
+            
+            let storyboard: UIStoryboard = UIStoryboard(name: "TutorialViewController", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "TutorialViewController") as! TutorialViewController
+            vc.delegate = self
+            self.present(vc, animated: true)
+            
+        }else {
+            print("tutorialAlreadySeen=true")
+            
+            pistolSet.play()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                
+                self.startWhistle.play()
+                
+                self.presenter?.isShootEnabled = true
+                
+                self.timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(self.timerUpdate(timer:)), userInfo: nil, repeats: true)
+            }
+        }
+    }
+    
     
     //タイマーで指定間隔ごとに呼ばれる関数
     @objc func timerUpdate(timer: Timer) {
@@ -86,23 +154,48 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         
         //タイマーが0になったらタイマーを破棄して結果画面へ遷移
         if timeCount <= 0 {
+            
             timer.invalidate()
-            let storyboard: UIStoryboard = UIStoryboard(name: "WorldRankingViewController", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "WorldRankingViewController") as! WorldRankingViewController
-            self.present(vc, animated: true)
+            presenter?.isShootEnabled = false
+
+            endWhistle.play()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
+                
+                self.viewModel.rankingWillAppear.onNext(Void())
+                
+                self.rankingAppear.play()
+                
+                let storyboard: UIStoryboard = UIStoryboard(name: "WorldRankingViewController", bundle: nil)
+                let vc = storyboard.instantiateViewController(withIdentifier: "WorldRankingViewController") as! WorldRankingViewController
+                
+                let sumPoint: Double = min(self.pistolPoint + self.bazookaPoint, 100.0)
+                
+                let totalScore = sumPoint * (Double.random(in: 0.9...1))
+                
+                print("pistolP: \(self.pistolPoint), bazookaP: \(self.bazookaPoint), sumP: \(sumPoint) totalScore: \(totalScore)")
+                
+                vc.totalScore = totalScore
+                self.present(vc, animated: true)
+            })
+            
         }
     }
     
     @IBAction func switchWeaponButtonTapped(_ sender: Any) {
+        
+        sightImageView.image = nil
+        pistolBulletsCountImageView.image = nil
+        presenter?.isShootEnabled = false
+        
         let storyboard: UIStoryboard = UIStoryboard(name: "SwitchWeaponViewController", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "SwitchWeaponViewController") as! SwitchWeaponViewController
-        vc.modalPresentationStyle = .overCurrentContext
         
         vc.switchWeaponDelegate = self
+        vc.viewModel = self.viewModel
         
         self.present(vc, animated: true)
     }
-    
     
     func setupScnView() {
         //シーンの作成
@@ -158,7 +251,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
                     sceneView.scene.rootNode.childNode(withName: "parent", recursively: false)?.childNode(withName: "M1911_a", recursively: false)?.removeAllActions()
                     sceneView.scene.rootNode.childNode(withName: "parent", recursively: false)?.childNode(withName: "M1911_a", recursively: false)?.position = SCNVector3(0.17, -0.197, -0.584)
                     sceneView.scene.rootNode.childNode(withName: "parent", recursively: false)?.childNode(withName: "M1911_a", recursively: false)?.eulerAngles = SCNVector3(-1.4382625, 1.3017014, -2.9517007)
-                case 5:
+                case 1:
                     sceneView.scene.rootNode.childNode(withName: "bazookaParent", recursively: false)?.childNode(withName: "bazooka", recursively: false)?.removeAllActions()
                     sceneView.scene.rootNode.childNode(withName: "bazookaParent", recursively: false)?.childNode(withName: "bazooka", recursively: false)?.position = SCNVector3(0, 0, 0)
                     sceneView.scene.rootNode.childNode(withName: "bazookaParent", recursively: false)?.childNode(withName: "bazooka", recursively: false)?.eulerAngles = SCNVector3(0, 0, 0)
@@ -199,8 +292,8 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         switch weaponIndex {
         case 0:
             sceneView.scene.rootNode.childNode(withName: "parent", recursively: false)?.childNode(withName: "M1911_a", recursively: false)?.runAction(repeatAction)
-        case 5:
-            sceneView.scene.rootNode.childNode(withName: "bazookaParent", recursively: false)?.childNode(withName: "bazooka", recursively: false)?.runAction(repeatAction)
+//        case 5:
+//            sceneView.scene.rootNode.childNode(withName: "bazookaParent", recursively: false)?.childNode(withName: "bazooka", recursively: false)?.runAction(repeatAction)
         default: break
         }
     }
@@ -231,8 +324,8 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         switch weaponIndex {
         case 0:
             sceneView.scene.rootNode.childNode(withName: "parent", recursively: false)?.childNode(withName: "M1911_a", recursively: false)?.runAction(repeatAction)
-        case 5:
-            sceneView.scene.rootNode.childNode(withName: "bazookaParent", recursively: false)?.childNode(withName: "bazooka", recursively: false)?.runAction(repeatAction)
+//        case 5:
+//            sceneView.scene.rootNode.childNode(withName: "bazookaParent", recursively: false)?.childNode(withName: "bazooka", recursively: false)?.runAction(repeatAction)
         default: break
         }
     }
@@ -248,40 +341,49 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         //実行
         sceneView.scene.rootNode.childNode(withName: "parent", recursively: false)?.childNode(withName: "M1911_a", recursively: false)?.runAction(shoot)
     }
-    
-    func addExplosion() {
-        let scene = SCNScene(named: "art.scnassets/Explosion1.scn")
-        //注意:scnのファイル名ではなく、Identity欄のnameを指定する
-        let node = (scene?.rootNode.childNode(withName: "Explosion1", recursively: false))!
-        
-        let pos = sceneView.pointOfView?.position ?? SCNVector3()
-        node.position = SCNVector3(pos.x, pos.y - 10, pos.z - 10)
-//        node.scale = SCNVector3(1, 1, 1)
-        self.sceneView.scene.rootNode.addChildNode(node)
-    }
-    
+
     //衝突検知時に呼ばれる
+    //MEMO: - このメソッド内でUIの更新を行いたい場合はmainThreadで行う
     func physicsWorld(_ world: SCNPhysicsWorld, didEnd contact: SCNPhysicsContact) {
         let nodeA = contact.nodeA
         let nodeB = contact.nodeB
         
         if (nodeA.name == "bullet" && nodeB.name == "target") || (nodeB.name == "bullet" && nodeA.name == "target") {
             print("当たった")
-            audioPlayer5.play()
+            headShot.play()
             nodeA.removeFromParentNode()
             nodeB.removeFromParentNode()
-            targetCount -= 1
-            DispatchQueue.main.async {
-//                self.targetCountLabel.text = "残り\(self.targetCount)個！"
+            
+            if currentWeaponIndex == 1 {
+                bazookaHit.play()
+                
+                if let first = sceneView.scene.rootNode.childNode(withName: "bazookaHitExplosion\(explosionCount)", recursively: false)?.particleSystems?.first  {
+                    
+                    first.birthRate = 300
+                    first.loops = false
+                    
+                }
             }
+            
+            switch currentWeaponIndex {
+            case 0:
+                pistolPoint += 5
+            case 1:
+                bazookaPoint += 12
+            default:
+                break
+            }
+            
+            targetCount -= 1
         }
     }
     
     //加速度設定
     func getAccelerometer() {
         motionManager.accelerometerUpdateInterval = 0.2
-        motionManager.startAccelerometerUpdates(to: OperationQueue()) {
+        motionManager.startAccelerometerUpdates(to: OperationQueue.current!) {
             (data, error) in
+            
             DispatchQueue.main.async {
                 guard let acceleration = data?.acceleration else { return }
                 self.presenter?.accele = acceleration
@@ -292,8 +394,9 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
     //ジャイロ設定
     func getGyro() {
         motionManager.gyroUpdateInterval = 0.2
-        motionManager.startGyroUpdates(to: OperationQueue()) {
+        motionManager.startGyroUpdates(to: OperationQueue.current!) {
             (data, error) in
+            
             DispatchQueue.main.async {
                 guard let rotationRate = data?.rotationRate else { return }
                 self.presenter?.gyro = rotationRate
@@ -310,29 +413,55 @@ extension GameViewController: SwitchWeaponDelegate {
         
         print("current: \(currentWeaponIndex), selectedAt: \(index)")
         
-        //同じ武器を選択した場合は何も処理しないで終了
-        guard index != currentWeaponIndex else {
-            print("同じ武器を選択した場合は何も処理しないで終了")
-            return}
-        
         switch index {
         case 0:
-            addPistol()
-        case 5:
-            addBazooka()
+            if index != currentWeaponIndex {
+                addPistol()
+            }
+            setBulletsImageView(with: UIImage(named: "bullets\(presenter?.pistolBulletsCount ?? 0)"))
+            pistolBulletsCountImageView.contentMode = .scaleAspectFit
+            sightImageView.image = UIImage(named: "pistolSight")
+            sightImageView.tintColor = .systemRed
+            
+        case 1:
+            if index != currentWeaponIndex {
+                addBazooka()
+            }
+            setBulletsImageView(with: UIImage(named: "bazookaRocket\(presenter?.bazookaRocketCount ?? 0)"))
+            pistolBulletsCountImageView.contentMode = .scaleAspectFill
+            sightImageView.image = UIImage(named: "bazookaSight")
+            sightImageView.tintColor = .systemGreen
+            
         default:
             print("まだ開発中の武器が選択されたので何も処理せずに終了")
             return
         }
         
         currentWeaponIndex = index
+        presenter?.currentWeaponIndex = index
+        presenter?.isShootEnabled = true
         
     }
     
 }
 
+extension GameViewController: TutorialVCDelegate {
+    func startGame() {
+        pistolSet.play()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            
+            self.startWhistle.play()
+            
+            self.presenter?.isShootEnabled = true
+            
+            self.timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(self.timerUpdate(timer:)), userInfo: nil, repeats: true)
+        }
+    }
+}
+
 extension GameViewController: GameInterface {
-    func addPistol() {
+    func addPistol(shouldPlayPistolSet: Bool = true) {
         //バズーカを削除
         if let detonator = self.sceneView.scene.rootNode.childNode(withName: "bazookaParent", recursively: false) {
             print("bazookaを削除しました")
@@ -348,8 +477,10 @@ extension GameViewController: GameInterface {
         parentNode.position = sceneView.pointOfView?.position ?? SCNVector3()
         self.sceneView.scene.rootNode.addChildNode(parentNode)
         
-        //チャキッ　の再生
-        self.audioPlayer1.play()
+        if shouldPlayPistolSet {
+            //チャキッ　の再生
+            self.pistolSet.play()
+        }
         
         gunnerShakeAnimationNormal(0)
     }
@@ -369,9 +500,9 @@ extension GameViewController: GameInterface {
         
         bazooka.position = sceneView.pointOfView?.position ?? SCNVector3()
         self.sceneView.scene.rootNode.addChildNode(bazooka)
-        
+
         //チャキッ　の再生
-        self.audioPlayer1.play()
+        self.bazookaSet.play()
         
         gunnerShakeAnimationNormal(5)
     }
@@ -379,8 +510,7 @@ extension GameViewController: GameInterface {
     //弾ノードを設置
     func addBullet() {
         guard let cameraPos = sceneView.pointOfView?.position else {return}
-        //        guard bulletNode == nil else {return}
-        let position = SCNVector3(x: cameraPos.x, y: cameraPos.y, z: cameraPos.z)
+
         let sphere: SCNGeometry = SCNSphere(radius: 0.05)
         let customYellow = UIColor(red: 253/255, green: 202/255, blue: 119/255, alpha: 1)
         
@@ -389,13 +519,35 @@ extension GameViewController: GameInterface {
         guard let bulletNode = bulletNode else {return}
         bulletNode.name = "bullet"
         bulletNode.scale = SCNVector3(x: 1, y: 1, z: 1)
-        bulletNode.position = position
+        bulletNode.position = cameraPos
         
         //当たり判定用のphysicBodyを追加
         let shape = SCNPhysicsShape(geometry: sphere, options: nil)
         bulletNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: shape)
         bulletNode.physicsBody?.contactTestBitMask = 1
         bulletNode.physicsBody?.isAffectedByGravity = false
+
+        if currentWeaponIndex == 1 {
+            explosionCount += 1
+
+            var parti: SCNParticleSystem? = SCNParticleSystem()
+            parti?.loops = true
+            
+            parti = exploPar
+            
+            parti?.loops = true
+            
+            if let par = parti {
+
+                par.birthRate = 0
+                let node = SCNNode()
+                node.addParticleSystem(par)
+                node.name = "bazookaHitExplosion\(explosionCount)"
+                node.position = cameraPos
+                sceneView.scene.rootNode.addChildNode(node)
+            }
+            
+        }
         
         sceneView.scene.rootNode.addChildNode(bulletNode)
         
@@ -412,6 +564,12 @@ extension GameViewController: GameInterface {
         bulletNode?.runAction(action, completionHandler: {
             self.bulletNode?.removeFromParentNode()
         })
+        
+        if currentWeaponIndex == 1 {
+
+            sceneView.scene.rootNode.childNode(withName: "bazookaHitExplosion\(explosionCount)", recursively: false)?.runAction(action)
+            
+        }
         
         shootingAnimation()
         
@@ -459,25 +617,57 @@ extension GameViewController: GameInterface {
         setAudioPlayer(forIndex: 3, resourceFileName: "pistol-out-bullets")
         setAudioPlayer(forIndex: 4, resourceFileName: "pistol-reload")
         setAudioPlayer(forIndex: 5, resourceFileName: "headShot")
+        setAudioPlayer(forIndex: 6, resourceFileName: "bazookaSet")
+        setAudioPlayer(forIndex: 7, resourceFileName: "bazookaReload")
+        setAudioPlayer(forIndex: 8, resourceFileName: "bazookaShoot")
+        setAudioPlayer(forIndex: 9, resourceFileName: "bazookaHit")
+        setAudioPlayer(forIndex: 10, resourceFileName: "startWhistle")
+        setAudioPlayer(forIndex: 11, resourceFileName: "endWhistle")
+        setAudioPlayer(forIndex: 12, resourceFileName: "rankingAppear")
+        setAudioPlayer(forIndex: 13, resourceFileName: "kyuiin")
     }
     
     func playSound(of index: Int) {
         switch index {
         case 1:
-            audioPlayer1.currentTime = 0
-            audioPlayer1.play()
+            pistolSet.currentTime = 0
+            pistolSet.play()
         case 2:
-            audioPlayer2.currentTime = 0
-            audioPlayer2.play()
+            pistolShoot.currentTime = 0
+            pistolShoot.play()
         case 3:
-            audioPlayer3.currentTime = 0
-            audioPlayer3.play()
+            pistolOutBullets.currentTime = 0
+            pistolOutBullets.play()
         case 4:
-            audioPlayer4.currentTime = 0
-            audioPlayer4.play()
+            pistolReload.currentTime = 0
+            pistolReload.play()
         case 5:
-            audioPlayer5.currentTime = 0
-            audioPlayer5.play()
+            headShot.currentTime = 0
+            headShot.play()
+        case 6:
+            bazookaSet.currentTime = 0
+            bazookaSet.play()
+        case 7:
+            bazookaReload.currentTime = 0
+            bazookaReload.play()
+        case 8:
+            bazookaShoot.currentTime = 0
+            bazookaShoot.play()
+        case 9:
+            bazookaHit.currentTime = 0
+            bazookaHit.play()
+        case 10:
+            startWhistle.currentTime = 0
+            startWhistle.play()
+        case 11:
+            endWhistle.currentTime = 0
+            endWhistle.play()
+        case 12:
+            rankingAppear.currentTime = 0
+            rankingAppear.play()
+        case 13:
+            kyuiin.currentTime = 0
+            kyuiin.play()
         default: break
         }
     }
@@ -488,6 +678,26 @@ extension GameViewController: GameInterface {
     
     func setBulletsImageView(with image: UIImage?) {
         pistolBulletsCountImageView.image = image
+    }
+    
+    func changeTargetsToTaimeisan() {
+        
+        self.sceneView.scene.rootNode.childNodes.forEach({ node in
+            print("node: \(node), name: \(node.name)")
+            if node.name == "target" {
+                print("targetだった")
+                while node.childNode(withName: "torus", recursively: false) != nil {
+                    node.childNode(withName: "torus", recursively: false)?.removeFromParentNode()
+                    print("torusを削除")
+                }
+                
+                node.childNode(withName: "sphere", recursively: false)?.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "taimei4.jpg")
+                
+            }else {
+                print("targetじゃない")
+            }
+        })
+        kyuiin.play()
     }
 }
 
@@ -501,20 +711,45 @@ extension GameViewController: AVAudioPlayerDelegate {
         do {
             switch index {
             case 1:
-                audioPlayer1 = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
-                audioPlayer1.prepareToPlay()
+                pistolSet = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+                pistolSet.prepareToPlay()
             case 2:
-                audioPlayer2 = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
-                audioPlayer2.prepareToPlay()
+                pistolShoot = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+                pistolShoot.prepareToPlay()
             case 3:
-                audioPlayer3 = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
-                audioPlayer3.prepareToPlay()
+                pistolOutBullets = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+                pistolOutBullets.prepareToPlay()
             case 4:
-                audioPlayer4 = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
-                audioPlayer4.prepareToPlay()
+                pistolReload = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+                pistolReload.prepareToPlay()
             case 5:
-                audioPlayer5 = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
-                audioPlayer5.prepareToPlay()
+                headShot = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+                headShot.prepareToPlay()
+            case 6:
+                bazookaSet = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+                bazookaSet.prepareToPlay()
+            case 7:
+                bazookaReload = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+                bazookaReload.prepareToPlay()
+            case 8:
+                bazookaShoot = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+                bazookaShoot.prepareToPlay()
+            case 9:
+                bazookaHit = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+                bazookaHit.prepareToPlay()
+            case 10:
+                startWhistle = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+                startWhistle.prepareToPlay()
+            case 11:
+                endWhistle = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+                endWhistle.prepareToPlay()
+            case 12:
+                rankingAppear = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+                rankingAppear.prepareToPlay()
+            case 13:
+                kyuiin = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+                kyuiin.prepareToPlay()
+                
             default:
                 break
             }

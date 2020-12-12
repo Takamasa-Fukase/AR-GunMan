@@ -16,7 +16,7 @@ enum SoundType: Int {
 }
  
 protocol GameInterface: AnyObject {
-    func addPistol()
+    func addPistol(shouldPlayPistolSet: Bool)
     func addBullet()
     func shootBullet()
     func addTarget()
@@ -24,6 +24,8 @@ protocol GameInterface: AnyObject {
     func playSound(of index: Int)
     func vibration()
     func setBulletsImageView(with image: UIImage?)
+    
+    func changeTargetsToTaimeisan()
 }
 
 class GamePresenter {
@@ -31,9 +33,14 @@ class GamePresenter {
     private var preBool = false
     private var postBool = false
     
-    private var pistolBulletsCount = 7
+    var gyroZcount = 0
+    
+    var pistolBulletsCount = 7
+    var bazookaRocketCount = 1
     var accele = CMAcceleration()
     var gyro = CMRotationRate()
+    
+    var currentWeaponIndex = 0
     
     var isShootEnabled = false
     
@@ -46,11 +53,10 @@ class GamePresenter {
     }
     
     func viewDidLoad() {
-        listener.addPistol()
+        listener.addPistol(shouldPlayPistolSet: false)
         listener.addTarget()
         guard let soundType = SoundType(rawValue: 0) else {return}
         listener.setSounds(for: soundType)
-        listener.playSound(of: 1)
         listener.setBulletsImageView(with: UIImage(named: "bullets\(pistolBulletsCount)"))
     }
     
@@ -67,84 +73,174 @@ extension GamePresenter {
     
     func pistolAccelerometer(_ x: Double, _ y: Double, _ z: Double) {
         
-//        if isShootEnabled {
+        if isShootEnabled {
             let compositAcceleration = model.getCompositeAcceleration(0, y, z)
-    //        let compositGyro = model.getCompositeGyro(gyro.x, gyro.y, gyro.z)
-    //        let gyroX = (gyro.x * gyro.x)
-    //        let gyroY = (gyro.y * gyro.y)
+
             let gyroZ = (gyro.z * gyro.z)
-    //        if gyroX >= 1.5 {
-    //            print("gyroXが1.5以上です(\(gyroX)")
-    //        }
-    //        if gyroY >= 3 {
-    //            print("gyroYが3以上です(\(gyroY)")
-    //        }
-    //        if gyroZ >= 10 {
-    //            print("gyroZが1.5以上です(\(gyroZ)")
-    //        }
+
             if !postBool
                 && compositAcceleration >= 1.5
-    //            && gyroX < 1.5
-    //            && gyroY < 3
                 && gyroZ < 10 {
-                if pistolBulletsCount > 0 {
-                    pistolBulletsCount -= 1
+                
+                switch currentWeaponIndex {
+                case 0:
                     
-                    listener.addBullet()
-                    listener.shootBullet()
+                    if pistolBulletsCount > 0 {
+                        pistolBulletsCount -= 1
+                        
+                        listener.addBullet()
+                        listener.shootBullet()
+                        print("shoot")
+                        
+                        listener.playSound(of: 2)
+                        listener.vibration()
+                        preBool = true
+                    }else if pistolBulletsCount <= 0 {
+                        listener.playSound(of: 3)
+                        preBool = true
+                    }
+                    print("ピストルの残弾数: \(pistolBulletsCount) / 7発")
+                    listener.setBulletsImageView(with: UIImage(named: "bullets\(pistolBulletsCount)"))
                     
-                    listener.playSound(of: 2)
-                    listener.vibration()
-                    preBool = true
-                }else if pistolBulletsCount <= 0 {
-                    listener.playSound(of: 3)
-                    preBool = true
+                case 1:
+                    
+                    if bazookaRocketCount > 0 {
+                        
+                        bazookaRocketCount -= 1
+                        
+                        listener.addBullet()
+                        listener.shootBullet()
+                        print("shootRocket")
+                        
+                        listener.playSound(of: 8)
+                        listener.playSound(of: 7)
+                        listener.vibration()
+                        preBool = true
+                    }else if bazookaRocketCount <= 0 {
+                        preBool = true
+                    }
+                    print("ロケランの残弾数: \(bazookaRocketCount) / 1発")
+                    listener.setBulletsImageView(with: UIImage(named: "bazookaRocket\(bazookaRocketCount)"))
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3.2) {
+                        self.bazookaRocketCount = 1
+                        print("ロケランの残弾数: \(self.bazookaRocketCount) / 1発")
+                        self.listener.setBulletsImageView(with: UIImage(named: "bazookaRocket\(self.bazookaRocketCount)"))
+                    }
+                    
+                default:
+                    break
                 }
-                print("ピストルの残弾数: \(pistolBulletsCount) / 7発")
+                
             }
             if postBool
                 && compositAcceleration >= 1.5
-                //            && gyroX < 1.5
-                //            && gyroY < 3
                 && gyroZ < 10 {
-                if pistolBulletsCount > 0 {
-                    pistolBulletsCount -= 1
+                
+                switch currentWeaponIndex {
+                case 0:
                     
-                    listener.addBullet()
-                    listener.shootBullet()
+                    if pistolBulletsCount > 0 {
+                        pistolBulletsCount -= 1
+                        
+                        listener.addBullet()
+                        listener.shootBullet()
+                        print("shoot")
+                        
+                        listener.playSound(of: 2)
+                        listener.vibration()
+                        postBool = false
+                        preBool = false
+                    }else if pistolBulletsCount <= 0 {
+                        listener.playSound(of: 3)
+                        postBool = false
+                        preBool = false
+                    }
+                    print("ピストルの残弾数: \(pistolBulletsCount) / 7発")
+                    listener.setBulletsImageView(with: UIImage(named: "bullets\(pistolBulletsCount)"))
                     
-                    listener.playSound(of: 2)
-                    listener.vibration()
-                    postBool = false
-                    preBool = false
-                }else if pistolBulletsCount <= 0 {
-                    listener.playSound(of: 3)
-                    postBool = false
-                    preBool = false
+                case 1:
+                    
+                    if bazookaRocketCount > 0 {
+                        
+                        bazookaRocketCount -= 1
+                        
+                        listener.addBullet()
+                        listener.shootBullet()
+                        print("shootRocket")
+                        
+                        listener.playSound(of: 8)
+                        listener.playSound(of: 7)
+                        listener.vibration()
+                        postBool = false
+                        preBool = false
+                    }else if bazookaRocketCount <= 0 {
+                        postBool = false
+                        preBool = false
+                    }
+                    print("ロケランの残弾数: \(bazookaRocketCount) / 1発")
+                    listener.setBulletsImageView(with: UIImage(named: "bazookaRocket\(bazookaRocketCount)"))
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3.5) {
+                        self.bazookaRocketCount = 1
+                        print("ロケランの残弾数: \(self.bazookaRocketCount) / 1発")
+                        self.listener.setBulletsImageView(with: UIImage(named: "bazookaRocket\(self.bazookaRocketCount)"))
+                    }
+                    
+                default:
+                    break
                 }
-                print("ピストルの残弾数: \(pistolBulletsCount) / 7発")
+                
             }
-            listener.setBulletsImageView(with: UIImage(named: "bullets\(pistolBulletsCount)"))
-//        }
+            
+        }
         
     }
     
     func pistolGyro(_ x: Double, _ y: Double, _ z: Double) {
         
-//        if isShootEnabled {
+        if isShootEnabled {
             
-            let compositGyro = model.getCompositeGyro(0, 0, gyro.z)
-            
-            if pistolBulletsCount <= 0 && compositGyro >= 10 {
-                print("リロード時gyroZ: \(compositGyro)")
+            if currentWeaponIndex == 0 {
+                let compositGyro = model.getCompositeGyro(0, 0, gyro.z)
                 
-                pistolBulletsCount = 7
-                listener.playSound(of: 4)
-                print("ピストルの弾をリロードしました  残弾数: \(pistolBulletsCount)発")
+                if pistolBulletsCount <= 0 && compositGyro >= 10 {
+                    print("リロード時gyroZ: \(compositGyro)")
+                    
+                    pistolBulletsCount = 7
+                    listener.playSound(of: 4)
+                    print("ピストルの弾をリロードしました  残弾数: \(pistolBulletsCount)発")
+                    
+                }else if compositGyro >= 10 {
+                    gyroZcount += 1
+                    print("gyroZcountを+1。 現在: \(gyroZcount)回")
+                }
+                listener.setBulletsImageView(with: UIImage(named: "bullets\(pistolBulletsCount)"))
+                
+            }else {
+                let compositGyro = model.getCompositeGyro(0, 0, gyro.z)
+
+                if compositGyro >= 10 {
+                    gyroZcount += 1
+                    print("gyroZcountを+1。 現在: \(gyroZcount)回")
+                }
+                
             }
-            listener.setBulletsImageView(with: UIImage(named: "bullets\(pistolBulletsCount)"))
             
-//        }
+            if gyroZcount == 20 {
+                
+                print("gyroZcountが20に達したのでターゲットを泰明さんに変えます")
+                
+                listener.changeTargetsToTaimeisan()
+                gyroZcount += 1
+            }
+//                else if gyroZcount == 30 {
+//
+//                    print("gyroZcountが20に達したのでキング泰明さんを出します")
+//
+//                }
+            
+        }
         
     }
     
