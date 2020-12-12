@@ -17,6 +17,7 @@ import PanModal
 
 class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDelegate {
     
+    
     let motionManager = CMMotionManager()
     
     var pistolSet = AVAudioPlayer()
