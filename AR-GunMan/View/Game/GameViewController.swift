@@ -16,7 +16,6 @@ import FSPagerView
 import PanModal
 
 class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDelegate {
-//    test
     
     let motionManager = CMMotionManager()
     
