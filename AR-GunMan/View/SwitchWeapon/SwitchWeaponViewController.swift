@@ -17,7 +17,7 @@ protocol SwitchWeaponDelegate {
 
 class SwitchWeaponViewController: UIViewController {
     
-    let weapons = ["pistol", "rocket-launcher"]
+    let weapons = ["pistol", "rifle", "rocket-launcher"]
     
     let disposeBag = DisposeBag()
     var switchWeaponDelegate: SwitchWeaponDelegate?
