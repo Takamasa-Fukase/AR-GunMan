@@ -91,9 +91,33 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         
         
         //ロケラン名中時の爆発
-        let explosionScene = SCNScene(named: "art.scnassets/ParticleSystem/Explosion1.scn")
-        //注意:scnのファイル名ではなく、Identity欄のnameを指定する
-        bazookaHitExplosion = (explosionScene?.rootNode.childNode(withName: "Explosion1", recursively: false))
+        
+        //art.scnassets配下のファイル名までのパスを記載
+        let explosionScene = SCNScene(named: "art.scnassets/ParticleSystems/ExplosionSamples/Explosion1.scn")
+        
+        //注意: withNameにはscnのファイル名ではなく、Identity欄のnameを指定する
+        if let explosion = (explosionScene?.rootNode.childNode(withName: "Explosion1", recursively: false)) {
+            
+            //座標を指定したい場合はここで設定（↓ではカメラ位置よりも50cm前方を指定）
+            let cameraPos = self.sceneView.pointOfView?.position ?? SCNVector3()
+            explosion.position = SCNVector3(x: cameraPos.x, y: cameraPos.y, z: cameraPos.z - 0.5)
+            
+            //画面に反映
+            self.sceneView.scene.rootNode.addChildNode(explosion)
+
+        }
+        
+        //ParticleSystemへのアクセス方法
+        sceneView.scene.rootNode.childNode(withName: "Explosion1", recursively: false)?.particleSystems?.first
+        
+        
+        
+        if let particleSystem = sceneView.scene.rootNode.childNode(withName: "bazookaHitExplosion\(explosionCount)", recursively: false)?.particleSystems?.first  {
+            
+            particleSystem.birthRate = 300
+            particleSystem.loops = false
+            
+        }
         
         exploPar = bazookaHitExplosion?.particleSystems?.first!
         
@@ -234,6 +258,9 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         if let bazooka = sceneView.scene.rootNode.childNode(withName: "bazookaParent", recursively: false) {
             bazooka.position = sceneView.pointOfView?.position ?? SCNVector3()
         }
+        if let rifle = sceneView.scene.rootNode.childNode(withName: "AKM_parent", recursively: false) {
+            rifle.position = sceneView.pointOfView?.position ?? SCNVector3()
+        }
         
         if toggleActionInterval <= 0 {
             guard let currentPos = sceneView.pointOfView?.position else {return}
@@ -251,9 +278,14 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
                     sceneView.scene.rootNode.childNode(withName: "parent", recursively: false)?.childNode(withName: "M1911_a", recursively: false)?.position = SCNVector3(0.17, -0.197, -0.584)
                     sceneView.scene.rootNode.childNode(withName: "parent", recursively: false)?.childNode(withName: "M1911_a", recursively: false)?.eulerAngles = SCNVector3(-1.4382625, 1.3017014, -2.9517007)
                 case 1:
-                    sceneView.scene.rootNode.childNode(withName: "bazookaParent", recursively: false)?.childNode(withName: "bazooka", recursively: false)?.removeAllActions()
-                    sceneView.scene.rootNode.childNode(withName: "bazookaParent", recursively: false)?.childNode(withName: "bazooka", recursively: false)?.position = SCNVector3(0, 0, 0)
-                    sceneView.scene.rootNode.childNode(withName: "bazookaParent", recursively: false)?.childNode(withName: "bazooka", recursively: false)?.eulerAngles = SCNVector3(0, 0, 0)
+//                    sceneView.scene.rootNode.childNode(withName: "bazookaParent", recursively: false)?.childNode(withName: "bazooka", recursively: false)?.removeAllActions()
+//                    sceneView.scene.rootNode.childNode(withName: "bazookaParent", recursively: false)?.childNode(withName: "bazooka", recursively: false)?.position = SCNVector3(0, 0, 0)
+//                    sceneView.scene.rootNode.childNode(withName: "bazookaParent", recursively: false)?.childNode(withName: "bazooka", recursively: false)?.eulerAngles = SCNVector3(0, 0, 0)
+                
+                    sceneView.scene.rootNode.childNode(withName: "AKM_parent", recursively: false)?.childNode(withName: "AKM", recursively: false)?.removeAllActions()
+                    sceneView.scene.rootNode.childNode(withName: "AKM_parent", recursively: false)?.childNode(withName: "AKM", recursively: false)?.position = SCNVector3(0, 0, 0)
+                    sceneView.scene.rootNode.childNode(withName: "AKM_parent", recursively: false)?.childNode(withName: "AKM", recursively: false)?.eulerAngles = SCNVector3(0, 0, 0)
+                
                 default: break
                 }
 
@@ -267,34 +299,34 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
     }
     
     func gunnerShakeAnimationNormal(_ weaponIndex: Int) {
+        
+        
         //銃の先端が上に跳ね上がる回転のアニメーション
-        let rotateAction = SCNAction.rotateBy(x: -0.1779697224, y: 0.0159312604, z: -0.1784194, duration: 1.2)
+        let rotate = SCNAction.rotateBy(x: -0.1779697224, y: 0.0159312604, z: -0.1784194, duration: 1.2)
         //↑の逆（下に戻る回転）
-        let reverse = rotateAction.reversed()
+        let rotateReverse = rotate.reversed()
         //上下のアニメーションを直列に実行するアニメーション
-        let rotate = SCNAction.sequence([rotateAction, reverse])
+        let rotateAction = SCNAction.sequence([rotate, rotateReverse])
+        
         
         //銃が垂直に持ち上がるアニメーション
         let moveUp = SCNAction.moveBy(x: 0, y: 0.01, z: 0, duration: 0.8)
         //↑の逆（垂直に下に下がる）
         let moveDown = moveUp.reversed()
         //上下のアニメーションを直列に実行するアニメーション
-        let move = SCNAction.sequence([moveUp, moveDown])
+        let moveAction = SCNAction.sequence([moveUp, moveDown])
+        
         
         //回転と上下移動のアニメーションを並列に同時実行するアニメーション(それぞれのdurationをずらすことによって不規則な動き感を出している)
-        let conbineAction = SCNAction.group([rotate, move])
+        let conbineAction = SCNAction.group([rotateAction, moveAction])
         
         //↑を永遠繰り返すアニメーション
-        let repeatAction = SCNAction.repeatForever(conbineAction)
+        let gunnerShakeAction = SCNAction.repeatForever(conbineAction)
         
         //実行
-        switch weaponIndex {
-        case 0:
-            sceneView.scene.rootNode.childNode(withName: "parent", recursively: false)?.childNode(withName: "M1911_a", recursively: false)?.runAction(repeatAction)
-//        case 5:
-//            sceneView.scene.rootNode.childNode(withName: "bazookaParent", recursively: false)?.childNode(withName: "bazooka", recursively: false)?.runAction(repeatAction)
-        default: break
-        }
+        sceneView.scene.rootNode.childNode(withName: "parentNode", recursively: false)?.childNode(withName: "M1911", recursively: false)?.runAction(gunnerShakeAction)
+
+        
     }
     
     func gunnerShakeAnimationRunning(_ weaponIndex: Int) {
@@ -424,6 +456,15 @@ extension GameViewController: SwitchWeaponDelegate {
             
         case 1:
             if index != currentWeaponIndex {
+                addRifle()
+            }
+            setBulletsImageView(with: UIImage(named: "bullets\(presenter?.pistolBulletsCount ?? 0)"))
+            pistolBulletsCountImageView.contentMode = .scaleAspectFit
+            sightImageView.image = UIImage(named: "pistolSight")
+            sightImageView.tintColor = .systemRed
+            
+        case 2:
+            if index != currentWeaponIndex {
                 addBazooka()
             }
             setBulletsImageView(with: UIImage(named: "bazookaRocket\(presenter?.bazookaRocketCount ?? 0)"))
@@ -462,9 +503,12 @@ extension GameViewController: TutorialVCDelegate {
 extension GameViewController: GameInterface {
     func addPistol(shouldPlayPistolSet: Bool = true) {
         //バズーカを削除
-        if let detonator = self.sceneView.scene.rootNode.childNode(withName: "bazookaParent", recursively: false) {
+        if let bazooka = self.sceneView.scene.rootNode.childNode(withName: "bazookaParent", recursively: false) {
             print("bazookaを削除しました")
-            detonator.removeFromParentNode()
+            bazooka.removeFromParentNode()
+        } else if let rifle = self.sceneView.scene.rootNode.childNode(withName: "AKM_parent", recursively: false) {
+            print("rifleを削除しました")
+            rifle.removeFromParentNode()
         }
         let scene = SCNScene(named: "art.scnassets/Weapon/Pistol/M1911_a.scn")
         //注意:scnのファイル名ではなく、Identity欄のnameを指定する
@@ -486,9 +530,12 @@ extension GameViewController: GameInterface {
     
     func addBazooka() {
         //ピストルを削除
-        if let detonator = self.sceneView.scene.rootNode.childNode(withName: "parent", recursively: false) {
+        if let pistol = self.sceneView.scene.rootNode.childNode(withName: "parent", recursively: false) {
             print("pistolを削除しました")
-            detonator.removeFromParentNode()
+            pistol.removeFromParentNode()
+        } else if let rifle = self.sceneView.scene.rootNode.childNode(withName: "AKM_parent", recursively: false) {
+            print("rifleを削除しました")
+            rifle.removeFromParentNode()
         }
         let scene = SCNScene(named: "art.scnassets/Weapon/RocketLauncher/bazooka2.scn")
         //注意:scnのファイル名ではなく、Identity欄のnameを指定する
@@ -504,6 +551,31 @@ extension GameViewController: GameInterface {
         self.bazookaSet.play()
         
         gunnerShakeAnimationNormal(5)
+    }
+    
+    func addRifle() {
+        //ピストルを削除
+        if let detonator = self.sceneView.scene.rootNode.childNode(withName: "parent", recursively: false) {
+            print("pistolを削除しました")
+            detonator.removeFromParentNode()
+        } else if let detonator = self.sceneView.scene.rootNode.childNode(withName: "bazookaParent", recursively: false) {
+            print("bazookaを削除しました")
+            detonator.removeFromParentNode()
+        }
+        let scene = SCNScene(named: "art.scnassets/Weapon/Rifle/AKM.scn")
+        //注意:scnのファイル名ではなく、Identity欄のnameを指定する
+        let rifle = (scene?.rootNode.childNode(withName: "AKM_parent", recursively: false))!
+        
+        let billBoardConstraint = SCNBillboardConstraint()
+        rifle.constraints = [billBoardConstraint]
+        
+        rifle.position = sceneView.pointOfView?.position ?? SCNVector3()
+        self.sceneView.scene.rootNode.addChildNode(rifle)
+
+        //チャキッ　の再生
+        self.bazookaSet.play()
+        
+//        gunnerShakeAnimationNormal(5)
     }
     
     //弾ノードを設置
