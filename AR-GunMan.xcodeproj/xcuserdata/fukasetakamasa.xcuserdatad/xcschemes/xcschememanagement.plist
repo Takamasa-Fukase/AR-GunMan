@@ -4,10 +4,33 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>AR-GunMan Dev.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>39</integer>
+		</dict>
 		<key>AR-GunMan.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>38</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>59D2D4D42552DE66006DDB70</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>59D2D4EA2552DE67006DDB70</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>59D2D4F52552DE67006DDB70</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>
