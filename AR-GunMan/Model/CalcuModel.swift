@@ -10,11 +10,11 @@ import Foundation
 
 class CalcuModel {
     
-    func getCompositeAcceleration(_ x: Double, _ y: Double, _ z: Double) -> Double {
+    static func getCompositeAcceleration(_ x: Double, _ y: Double, _ z: Double) -> Double {
         return (x * x) + (y * y) + (z * z)
     }
     
-    func getCompositeGyro(_ x: Double, _ y: Double, _ z: Double) -> Double {
+    static func getCompositeGyro(_ x: Double, _ y: Double, _ z: Double) -> Double {
         return (x * x) + (y * y) + (z * z)
     }
 }
