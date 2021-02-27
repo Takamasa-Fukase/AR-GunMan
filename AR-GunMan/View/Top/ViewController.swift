@@ -9,14 +9,12 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import AVFoundation
 import PanModal
 
 class ViewController: UIViewController {
     
     let disposeBag = DisposeBag()
     var replayFlag = false
-    var pistolShoot = AVAudioPlayer()
     
     @IBOutlet weak var startButton: UIButton!
     @IBOutlet weak var settingsButton: UIButton!
@@ -35,7 +33,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+               
         let _ = startButton.rx.tap
             .subscribe(onNext: { [weak self] element in
                 guard let self = self else {return}
@@ -79,11 +77,6 @@ class ViewController: UIViewController {
                 }
             }).disposed(by: disposeBag)
         
-        
-        
-        
-        setAudioPlayer(forIndex: 1, resourceFileName: "westernPistolShoot")
-        
         if #available(iOS 13.0, *) {
             startButtonIcon.image = UIImage(systemName: "target")
             settingsButtonIcon.image = UIImage(systemName: "target")
@@ -111,7 +104,7 @@ class ViewController: UIViewController {
     
     func changeButtonIcon(_ imageView: UIImageView) {
         imageView.image = UIImage(named: "bulletsHole")
-        pistolShoot.play()
+        AudioModel.playSound(of: .westernPistolShoot)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             if #available(iOS 13.0, *) {
                 imageView.image = UIImage(systemName: "target")
@@ -121,26 +114,4 @@ class ViewController: UIViewController {
         }
     }
     
-}
-
-extension ViewController: AVAudioPlayerDelegate {
-
-    private func setAudioPlayer(forIndex index: Int, resourceFileName: String) {
-        guard let path = Bundle.main.path(forResource: resourceFileName, ofType: "mp3") else {
-            print("音源\(index)が見つかりません")
-            return
-        }
-        do {
-            switch index {
-            case 1:
-                pistolShoot = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
-                pistolShoot.prepareToPlay()
-            
-            default:
-                break
-            }
-        } catch {
-            print("音声セットエラー")
-        }
-    }
 }

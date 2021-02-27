@@ -33,22 +33,13 @@ class AudioModel {
         audioPlayers[sound]?.currentTime = 0
         audioPlayers[sound]?.play()
     }
+}
+
+//起動時に呼ぶ初期化メソッドなど
+extension AudioModel {
     
-    static func forceSoundOn() {
-        let audioSession = AVAudioSession.sharedInstance()
-        
-        do {
-            // マナーモードでも音を鳴らすようにする
-            try audioSession.setCategory(.playback)
-            
-        } catch {
-            print("error マナーモードでも音を鳴らすようにする設定失敗")
-        }
-    }
-    
-    
-        
-    init() {
+    static func initAudioPlayers() {
+        print("AudioModel init")
         Sounds.allCases.forEach({ sound in
             guard let path = Bundle.main.path(forResource: sound.rawValue, ofType: "mp3") else {
                 print("音源\(sound.rawValue)が見つかりません")
@@ -61,11 +52,27 @@ class AudioModel {
                 
                 AudioModel.audioPlayers[sound] = audioPlayer
                 
+                print("音声追加成功")
+                
             } catch {
                 print("音声セットエラー: \(sound.rawValue)")
             }
             
         })
+        
+        forceSoundOn()
+    }
+    
+    private static func forceSoundOn() {
+        let audioSession = AVAudioSession.sharedInstance()
+        
+        do {
+            // マナーモードでも音を鳴らすようにする
+            try audioSession.setCategory(.playback)
+            
+        } catch {
+            print("error マナーモードでも音を鳴らすようにする設定失敗")
+        }
     }
  
 }
