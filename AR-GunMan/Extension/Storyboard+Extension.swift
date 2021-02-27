@@ -1,5 +1,5 @@
 //
-//  Extension+Storyboard.swift
+//  Storyboard+Extension.swift
 //  AR-GunMan
 //
 //  Created by 深瀬 貴将 on 2020/11/04.
