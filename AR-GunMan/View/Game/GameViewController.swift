@@ -9,25 +9,16 @@
 import UIKit
 import ARKit
 import SceneKit
-import CoreMotion
 import FSPagerView
 import PanModal
 
 class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDelegate {
-    
-    //coreMotion
-    var preBool = false
-    var postBool = false
-    var accele = CMAcceleration()
-    var gyro = CMRotationRate()
-    let motionManager = CMMotionManager()
-    
+
     //count
     var targetCount = 50
     var pistolBulletsCount = 7
     var bazookaRocketCount = 1
     var explosionCount = 0
-    var gyroZcount = 0
     
     var timer:Timer!
     var timeCount:Double = 30.00
@@ -56,6 +47,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
     
     var viewModel = GameViewModel()
     
+    
     @IBOutlet weak var sceneView: ARSCNView!
     @IBOutlet weak var pistolBulletsCountImageView: UIImageView!
     @IBOutlet weak var sightImageView: UIImageView!
@@ -63,177 +55,31 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
     
     @IBOutlet weak var switchWeaponButton: UIButton!
     
-    func didUpdateAccelerationData(data: CMAcceleration) {
-        pistolAccelerometer(data.x, data.y, data.z)
-    }
     
-    func didUpdateGyroData(data: CMRotationRate) {
-        pistolGyro(data.x, data.y, data.z)
-    }
-    
-    func pistolAccelerometer(_ x: Double, _ y: Double, _ z: Double) {
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
-        if isShootEnabled {
-            let compositAcceleration = CalcuModel.getCompositeAcceleration(0, y, z)
-
-            let gyroZ = (gyro.z * gyro.z)
-
-            if !postBool
-                && compositAcceleration >= 1.5
-                && gyroZ < 10 {
-                
-                switch currentWeapon {
-                case .pistol:
-                    
-                    if pistolBulletsCount > 0 {
-                        pistolBulletsCount -= 1
-                        
-                        addBullet()
-                        shootBullet()
-                        print("shoot")
-                        
-                        AudioModel.playSound(of: .pistolShoot)
-                        
-                        preBool = true
-                    }else if pistolBulletsCount <= 0 {
-                        AudioModel.playSound(of: .pistolOutBullets)
-                        preBool = true
-                    }
-                    print("ピストルの残弾数: \(pistolBulletsCount) / 7発")
-                    setBulletsImageView(with: UIImage(named: "bullets\(pistolBulletsCount)"))
-                    
-                case .bazooka:
-                    
-                    if bazookaRocketCount > 0 {
-                        
-                        bazookaRocketCount -= 1
-                        
-                        addBullet()
-                        shootBullet()
-                        print("shootRocket")
-                        
-                        AudioModel.playSound(of: .bazookaShoot)
-                        AudioModel.playSound(of: .bazookaReload)
-                        preBool = true
-                    }else if bazookaRocketCount <= 0 {
-                        preBool = true
-                    }
-                    print("ロケランの残弾数: \(bazookaRocketCount) / 1発")
-                    setBulletsImageView(with: UIImage(named: "bazookaRocket\(bazookaRocketCount)"))
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 3.2) {
-                        self.bazookaRocketCount = 1
-                        print("ロケランの残弾数: \(self.bazookaRocketCount) / 1発")
-                        self.setBulletsImageView(with: UIImage(named: "bazookaRocket\(self.bazookaRocketCount)"))
-                    }
-                    
-                default:
-                    break
-                }
-                
-            }
-            if postBool
-                && compositAcceleration >= 1.5
-                && gyroZ < 10 {
-                
-                switch currentWeapon {
-                case .pistol:
-                    
-                    if pistolBulletsCount > 0 {
-                        pistolBulletsCount -= 1
-                        
-                        addBullet()
-                        shootBullet()
-                        print("shoot")
-                        
-                        AudioModel.playSound(of: .pistolShoot)
-                        postBool = false
-                        preBool = false
-                    }else if pistolBulletsCount <= 0 {
-                        AudioModel.playSound(of: .pistolOutBullets)
-                        postBool = false
-                        preBool = false
-                    }
-                    print("ピストルの残弾数: \(pistolBulletsCount) / 7発")
-                    setBulletsImageView(with: UIImage(named: "bullets\(pistolBulletsCount)"))
-                    
-                case .bazooka:
-                    
-                    if bazookaRocketCount > 0 {
-                        
-                        bazookaRocketCount -= 1
-                        
-                        addBullet()
-                        shootBullet()
-                        print("shootRocket")
-                        
-                        AudioModel.playSound(of: .bazookaShoot)
-                        AudioModel.playSound(of: .bazookaReload)
-                        postBool = false
-                        preBool = false
-                    }else if bazookaRocketCount <= 0 {
-                        postBool = false
-                        preBool = false
-                    }
-                    print("ロケランの残弾数: \(bazookaRocketCount) / 1発")
-                    setBulletsImageView(with: UIImage(named: "bazookaRocket\(bazookaRocketCount)"))
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 3.5) {
-                        self.bazookaRocketCount = 1
-                        print("ロケランの残弾数: \(self.bazookaRocketCount) / 1発")
-                        self.setBulletsImageView(with: UIImage(named: "bazookaRocket\(self.bazookaRocketCount)"))
-                    }
-                    
-                default:
-                    break
-                }
-                
-            }
+        if UserDefaults.standard.value(forKey: "tutorialAlreadySeen") == nil {
             
+            let storyboard: UIStoryboard = UIStoryboard(name: "TutorialViewController", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "TutorialViewController") as! TutorialViewController
+            vc.delegate = self
+            self.present(vc, animated: true)
+            
+        }else {
+            print("tutorialAlreadySeen=true")
+            
+            AudioModel.playSound(of: .pistolSet)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                
+                AudioModel.playSound(of: .startWhistle)
+                
+                self.isShootEnabled = true
+                
+                self.timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(self.timerUpdate(timer:)), userInfo: nil, repeats: true)
+            }
         }
-        
-    }
-    
-    func pistolGyro(_ x: Double, _ y: Double, _ z: Double) {
-        
-        if isShootEnabled {
-            
-            if currentWeapon == .pistol {
-                let compositGyro = CalcuModel.getCompositeGyro(0, 0, gyro.z)
-                
-                if pistolBulletsCount <= 0 && compositGyro >= 10 {
-                    print("リロード時gyroZ: \(compositGyro)")
-                    
-                    pistolBulletsCount = 7
-                    AudioModel.playSound(of: .pistolReload)
-                    print("ピストルの弾をリロードしました  残弾数: \(pistolBulletsCount)発")
-                    
-                }else if compositGyro >= 10 {
-                    gyroZcount += 1
-                    print("gyroZcountを+1。 現在: \(gyroZcount)回")
-                }
-                setBulletsImageView(with: UIImage(named: "bullets\(pistolBulletsCount)"))
-                
-            }else {
-                let compositGyro = CalcuModel.getCompositeGyro(0, 0, gyro.z)
-
-                if compositGyro >= 10 {
-                    gyroZcount += 1
-                    print("gyroZcountを+1。 現在: \(gyroZcount)回")
-                }
-                
-            }
-            
-            if gyroZcount == 20 {
-                
-                print("gyroZcountが20に達したのでターゲットを泰明さんに変えます")
-                
-                changeTargetsToTaimeisan()
-                gyroZcount += 1
-            }
-            
-        }
-        
     }
         
     override func viewDidLoad() {
@@ -245,9 +91,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         
         
         setupScnView()
-        getAccelerometer()
-        getGyro()
-        
+
         let scene = SCNScene(named: "art.scnassets/target.scn")
         targetNode = (scene?.rootNode.childNode(withName: "target", recursively: false))!
         targetNode?.scale = SCNVector3(0.3, 0.3, 0.3)
@@ -300,30 +144,65 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         
     }
     
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    func fireWeapon() {
+        guard isShootEnabled else {return}
         
-        if UserDefaults.standard.value(forKey: "tutorialAlreadySeen") == nil {
+        switch currentWeapon {
+        case .pistol:
             
-            let storyboard: UIStoryboard = UIStoryboard(name: "TutorialViewController", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "TutorialViewController") as! TutorialViewController
-            vc.delegate = self
-            self.present(vc, animated: true)
-            
-        }else {
-            print("tutorialAlreadySeen=true")
-            
-            AudioModel.playSound(of: .pistolSet)
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            if pistolBulletsCount > 0 {
+                pistolBulletsCount -= 1
                 
-                AudioModel.playSound(of: .startWhistle)
+                addBullet()
+                shootBullet()
+                print("shoot")
                 
-                self.isShootEnabled = true
+                AudioModel.playSound(of: .pistolShoot)
                 
-                self.timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(self.timerUpdate(timer:)), userInfo: nil, repeats: true)
+            }else if pistolBulletsCount <= 0 {
+                AudioModel.playSound(of: .pistolOutBullets)
             }
+            print("ピストルの残弾数: \(pistolBulletsCount) / 7発")
+            setBulletsImageView(with: UIImage(named: "bullets\(pistolBulletsCount)"))
+            
+        case .bazooka:
+            
+            if bazookaRocketCount > 0 {
+                
+                bazookaRocketCount -= 1
+                
+                addBullet()
+                shootBullet()
+                print("shootRocket")
+                
+                AudioModel.playSound(of: .bazookaShoot)
+                AudioModel.playSound(of: .bazookaReload)
+            }
+            print("ロケランの残弾数: \(bazookaRocketCount) / 1発")
+            setBulletsImageView(with: UIImage(named: "bazookaRocket\(bazookaRocketCount)"))
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3.2) {
+                self.bazookaRocketCount = 1
+                print("ロケランの残弾数: \(self.bazookaRocketCount) / 1発")
+                self.setBulletsImageView(with: UIImage(named: "bazookaRocket\(self.bazookaRocketCount)"))
+            }
+            
+        default:
+            break
+        }
+    }
+    
+    func reloadPistol() {
+        
+        guard isShootEnabled else {return}
+        
+        if currentWeapon == .pistol {
+            
+            pistolBulletsCount = 7
+            AudioModel.playSound(of: .pistolReload)
+            print("ピストルの弾をリロードしました  残弾数: \(pistolBulletsCount)発")
+            
+            setBulletsImageView(with: UIImage(named: "bullets\(pistolBulletsCount)"))
         }
     }
     
@@ -564,32 +443,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         }
     }
     
-    //加速度設定
-    func getAccelerometer() {
-        motionManager.accelerometerUpdateInterval = 0.2
-        motionManager.startAccelerometerUpdates(to: OperationQueue.current!) {
-            (data, error) in
-            
-            DispatchQueue.main.async {
-                guard let acceleration = data?.acceleration else { return }
-                self.accele = acceleration
-                self.didUpdateAccelerationData(data: acceleration)
-            }
-        }
-    }
-    //ジャイロ設定
-    func getGyro() {
-        motionManager.gyroUpdateInterval = 0.2
-        motionManager.startGyroUpdates(to: OperationQueue.current!) {
-            (data, error) in
-            
-            DispatchQueue.main.async {
-                guard let rotationRate = data?.rotationRate else { return }
-                self.gyro = rotationRate
-                self.didUpdateGyroData(data: rotationRate)
-            }
-        }
-    }
+    
 }
 
 //SwitchWeaponVCでのセルタップをトリガーに発火させる武器切り替えメソッド
