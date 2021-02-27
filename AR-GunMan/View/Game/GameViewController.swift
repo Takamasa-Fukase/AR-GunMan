@@ -19,19 +19,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
     
     let motionManager = CMMotionManager()
     
-    var pistolSet = AVAudioPlayer()
-    var pistolShoot = AVAudioPlayer()
-    var pistolOutBullets = AVAudioPlayer()
-    var pistolReload = AVAudioPlayer()
-    var headShot = AVAudioPlayer()
-    var bazookaSet = AVAudioPlayer()
-    var bazookaReload = AVAudioPlayer()
-    var bazookaShoot = AVAudioPlayer()
-    var bazookaHit = AVAudioPlayer()
-    var startWhistle = AVAudioPlayer()
-    var endWhistle = AVAudioPlayer()
-    var rankingAppear = AVAudioPlayer()
-    var kyuiin = AVAudioPlayer()
+    
     
     var targetCount = 50
     
@@ -153,11 +141,11 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         }else {
             print("tutorialAlreadySeen=true")
             
-            pistolSet.play()
+            AudioModel.playSound(of: .pistolSet)
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                 
-                self.startWhistle.play()
+                AudioModel.playSound(of: .startWhistle)
                 
                 self.presenter?.isShootEnabled = true
                 
@@ -181,13 +169,13 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
             timer.invalidate()
             presenter?.isShootEnabled = false
 
-            endWhistle.play()
+            AudioModel.playSound(of: .endWhistle)
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
                 
                 self.viewModel.rankingWillAppear.onNext(Void())
                 
-                self.rankingAppear.play()
+                AudioModel.playSound(of: .rankingAppear)
                 
                 let storyboard: UIStoryboard = UIStoryboard(name: "WorldRankingViewController", bundle: nil)
                 let vc = storyboard.instantiateViewController(withIdentifier: "WorldRankingViewController") as! WorldRankingViewController
@@ -381,12 +369,12 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         
         if (nodeA.name == "bullet" && nodeB.name == "target") || (nodeB.name == "bullet" && nodeA.name == "target") {
             print("当たった")
-            headShot.play()
+            AudioModel.playSound(of: .headShot)
             nodeA.removeFromParentNode()
             nodeB.removeFromParentNode()
             
             if currentWeaponIndex == 1 {
-                bazookaHit.play()
+                AudioModel.playSound(of: .bazookaHit)
                 
                 if let first = sceneView.scene.rootNode.childNode(withName: "bazookaHitExplosion\(explosionCount)", recursively: false)?.particleSystems?.first  {
                     
@@ -487,11 +475,11 @@ extension GameViewController: SwitchWeaponDelegate {
 
 extension GameViewController: TutorialVCDelegate {
     func startGame() {
-        pistolSet.play()
+        AudioModel.playSound(of: .pistolSet)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             
-            self.startWhistle.play()
+            AudioModel.playSound(of: .startWhistle)
             
             self.presenter?.isShootEnabled = true
             
@@ -522,7 +510,7 @@ extension GameViewController: GameInterface {
         
         if shouldPlayPistolSet {
             //チャキッ　の再生
-            self.pistolSet.play()
+            AudioModel.playSound(of: .pistolSet)
         }
         
         gunnerShakeAnimationNormal(0)
@@ -548,7 +536,7 @@ extension GameViewController: GameInterface {
         self.sceneView.scene.rootNode.addChildNode(bazooka)
 
         //チャキッ　の再生
-        self.bazookaSet.play()
+        AudioModel.playSound(of: .bazookaSet)
         
         gunnerShakeAnimationNormal(5)
     }
@@ -573,7 +561,7 @@ extension GameViewController: GameInterface {
         self.sceneView.scene.rootNode.addChildNode(rifle)
 
         //チャキッ　の再生
-        self.bazookaSet.play()
+        AudioModel.playSound(of: .pistolSet)
         
 //        gunnerShakeAnimationNormal(5)
     }
@@ -682,67 +670,6 @@ extension GameViewController: GameInterface {
         }
     }
     
-    func setSounds(for soundType: SoundType?) {
-        setAudioPlayer(forIndex: 1, resourceFileName: "pistol-slide")
-        setAudioPlayer(forIndex: 2, resourceFileName: "pistol-fire")
-        setAudioPlayer(forIndex: 3, resourceFileName: "pistol-out-bullets")
-        setAudioPlayer(forIndex: 4, resourceFileName: "pistol-reload")
-        setAudioPlayer(forIndex: 5, resourceFileName: "headShot")
-        setAudioPlayer(forIndex: 6, resourceFileName: "bazookaSet")
-        setAudioPlayer(forIndex: 7, resourceFileName: "bazookaReload")
-        setAudioPlayer(forIndex: 8, resourceFileName: "bazookaShoot")
-        setAudioPlayer(forIndex: 9, resourceFileName: "bazookaHit")
-        setAudioPlayer(forIndex: 10, resourceFileName: "startWhistle")
-        setAudioPlayer(forIndex: 11, resourceFileName: "endWhistle")
-        setAudioPlayer(forIndex: 12, resourceFileName: "rankingAppear")
-        setAudioPlayer(forIndex: 13, resourceFileName: "kyuiin")
-    }
-    
-    func playSound(of index: Int) {
-        switch index {
-        case 1:
-            pistolSet.currentTime = 0
-            pistolSet.play()
-        case 2:
-            pistolShoot.currentTime = 0
-            pistolShoot.play()
-        case 3:
-            pistolOutBullets.currentTime = 0
-            pistolOutBullets.play()
-        case 4:
-            pistolReload.currentTime = 0
-            pistolReload.play()
-        case 5:
-            headShot.currentTime = 0
-            headShot.play()
-        case 6:
-            bazookaSet.currentTime = 0
-            bazookaSet.play()
-        case 7:
-            bazookaReload.currentTime = 0
-            bazookaReload.play()
-        case 8:
-            bazookaShoot.currentTime = 0
-            bazookaShoot.play()
-        case 9:
-            bazookaHit.currentTime = 0
-            bazookaHit.play()
-        case 10:
-            startWhistle.currentTime = 0
-            startWhistle.play()
-        case 11:
-            endWhistle.currentTime = 0
-            endWhistle.play()
-        case 12:
-            rankingAppear.currentTime = 0
-            rankingAppear.play()
-        case 13:
-            kyuiin.currentTime = 0
-            kyuiin.play()
-        default: break
-        }
-    }
-    
     func vibration() {
         AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
     }
@@ -768,68 +695,9 @@ extension GameViewController: GameInterface {
                 print("targetじゃない")
             }
         })
-        kyuiin.play()
+        AudioModel.playSound(of: .kyuiin)
     }
 }
-
-extension GameViewController: AVAudioPlayerDelegate {
-
-    private func setAudioPlayer(forIndex index: Int, resourceFileName: String) {
-        guard let path = Bundle.main.path(forResource: resourceFileName, ofType: "mp3") else {
-            print("音源\(index)が見つかりません")
-            return
-        }
-        do {
-            switch index {
-            case 1:
-                pistolSet = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
-                pistolSet.prepareToPlay()
-            case 2:
-                pistolShoot = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
-                pistolShoot.prepareToPlay()
-            case 3:
-                pistolOutBullets = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
-                pistolOutBullets.prepareToPlay()
-            case 4:
-                pistolReload = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
-                pistolReload.prepareToPlay()
-            case 5:
-                headShot = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
-                headShot.prepareToPlay()
-            case 6:
-                bazookaSet = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
-                bazookaSet.prepareToPlay()
-            case 7:
-                bazookaReload = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
-                bazookaReload.prepareToPlay()
-            case 8:
-                bazookaShoot = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
-                bazookaShoot.prepareToPlay()
-            case 9:
-                bazookaHit = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
-                bazookaHit.prepareToPlay()
-            case 10:
-                startWhistle = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
-                startWhistle.prepareToPlay()
-            case 11:
-                endWhistle = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
-                endWhistle.prepareToPlay()
-            case 12:
-                rankingAppear = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
-                rankingAppear.prepareToPlay()
-            case 13:
-                kyuiin = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
-                kyuiin.prepareToPlay()
-                
-            default:
-                break
-            }
-        } catch {
-            print("音声セットエラー")
-        }
-    }
-}
-
 
 
 
