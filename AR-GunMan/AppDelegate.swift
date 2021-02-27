@@ -40,16 +40,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             guard granted else {
                 print("not granted")
                 
-                self.checkCameraAuthorization()
+                CameraAuthModel.checkCameraAuthorization()
                 return
             }
             
-            self.checkCameraAuthorization()
+            CameraAuthModel.checkCameraAuthorization()
 
             // MARK: register to APNs
             DispatchQueue.main.async {
                 UIApplication.shared.registerForRemoteNotifications()
             }
+            
+            AudioModel.initAudioPlayers()
         }
         
         return true
@@ -183,33 +185,33 @@ extension AppDelegate : MessagingDelegate {
 
 
 //カメラ・フォトライブラリ
-extension AppDelegate: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
-    func checkCameraAuthorization() {
-        switch AVCaptureDevice.authorizationStatus(for: .video) {
-        case .authorized:
-            //既に許可済みなのでカメラを表示
-            print("既に許可済み")
-            
-        case .notDetermined:
-            //まだ認証をしてないのでアクセスを求める
-            print("まだ認証をしてないのでアクセスを求める")
-            AVCaptureDevice.requestAccess(for: .video) { status in
-                if status {
-                    print("許可された")
-
-                }else {
-                    print("拒否されたのでトップ画面にて再設定用のダイアログを表示")
-                }
-            }
-        case .denied:
-            //拒否されているので再設定用のダイアログを表示
-            print("拒否されているのでトップ画面にて再設定用のダイアログを表示")
-        case .restricted:
-            //システムによって拒否された、もしくはカメラが存在しない
-            print("システムによって拒否された、もしくはカメラが存在しない")
-        default:
-            print("何らかのエラー")
-        }
-    }
-}
+//extension AppDelegate: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+//
+//    func checkCameraAuthorization() {
+//        switch AVCaptureDevice.authorizationStatus(for: .video) {
+//        case .authorized:
+//            //既に許可済みなのでカメラを表示
+//            print("既に許可済み")
+//
+//        case .notDetermined:
+//            //まだ認証をしてないのでアクセスを求める
+//            print("まだ認証をしてないのでアクセスを求める")
+//            AVCaptureDevice.requestAccess(for: .video) { status in
+//                if status {
+//                    print("許可された")
+//
+//                }else {
+//                    print("拒否されたのでトップ画面にて再設定用のダイアログを表示")
+//                }
+//            }
+//        case .denied:
+//            //拒否されているので再設定用のダイアログを表示
+//            print("拒否されているのでトップ画面にて再設定用のダイアログを表示")
+//        case .restricted:
+//            //システムによって拒否された、もしくはカメラが存在しない
+//            print("システムによって拒否された、もしくはカメラが存在しない")
+//        default:
+//            print("何らかのエラー")
+//        }
+//    }
+//}

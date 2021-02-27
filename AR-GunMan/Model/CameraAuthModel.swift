@@ -11,7 +11,7 @@ import AVFoundation
 
 class CameraAuthModel: NSObject, UIImagePickerControllerDelegate {
     
-    static func checkCameraAuthorization(vc: UIViewController) {
+    static func checkCameraAuthorization(vc: UIViewController? = nil) {
         switch AVCaptureDevice.authorizationStatus(for: .video) {
         case .authorized:
             //既に許可済みなのでカメラを表示
@@ -26,13 +26,21 @@ class CameraAuthModel: NSObject, UIImagePickerControllerDelegate {
 
                 }else {
                     print("拒否されたので再設定用のダイアログを表示")
-                    self.requestPermissionForCamera(vc: vc)
+                    
+                    if let vc = vc {
+                        //VC上で呼ばれている時だけアラートを表示
+                        self.requestPermissionForCamera(vc: vc)
+                    }
                 }
             }
         case .denied:
             //拒否されているので再設定用のダイアログを表示
             print("拒否されているので再設定用のダイアログを表示")
-            self.requestPermissionForCamera(vc: vc)
+            
+            if let vc = vc {
+                //VC上で呼ばれている時だけアラートを表示
+                self.requestPermissionForCamera(vc: vc)
+            }
         case .restricted:
             //システムによって拒否された、もしくはカメラが存在しない
             print("システムによって拒否された、もしくはカメラが存在しない")
@@ -41,7 +49,7 @@ class CameraAuthModel: NSObject, UIImagePickerControllerDelegate {
         }
     }
     
-    func requestPermissionForCamera(vc: UIViewController) {
+    static func requestPermissionForCamera(vc: UIViewController) {
         DispatchQueue.main.async {
             let alert = UIAlertController(title: "カメラへのアクセスを許可", message: "カメラへのアクセスを許可する必要があります。設定を変更して下さい。", preferredStyle: .alert)
             let settingsAction = UIAlertAction(title: "設定変更", style: .default) { (UIAlertAction) in
