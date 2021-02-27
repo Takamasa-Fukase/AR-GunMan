@@ -24,6 +24,7 @@
 		5952F63225E9C62100ADB85B /* AudioModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5952F63125E9C62100ADB85B /* AudioModel.swift */; };
 		5952F63725E9E0B000ADB85B /* CoreMotionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5952F63625E9E0B000ADB85B /* CoreMotionModel.swift */; };
 		5952F64025EA0E1900ADB85B /* Font+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5952F63F25EA0E1800ADB85B /* Font+Extension.swift */; };
+		5952F64C25EA106800ADB85B /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5952F64B25EA106800ADB85B /* Const.swift */; };
 		595E6987256C0190002B4F3E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595E6986256C0190002B4F3E /* SettingsViewController.swift */; };
 		595E698F256C01A4002B4F3E /* SettingsViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 595E698E256C01A4002B4F3E /* SettingsViewController.storyboard */; };
 		5961B6D5256EC44700B6D736 /* taimei4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5961B6D4256EC44700B6D736 /* taimei4.jpg */; };
@@ -99,6 +100,7 @@
 		5952F63125E9C62100ADB85B /* AudioModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioModel.swift; sourceTree = "<group>"; };
 		5952F63625E9E0B000ADB85B /* CoreMotionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreMotionModel.swift; sourceTree = "<group>"; };
 		5952F63F25EA0E1800ADB85B /* Font+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Extension.swift"; sourceTree = "<group>"; };
+		5952F64B25EA106800ADB85B /* Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
 		595E6986256C0190002B4F3E /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		595E698E256C01A4002B4F3E /* SettingsViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SettingsViewController.storyboard; sourceTree = "<group>"; };
 		5961B6D4256EC44700B6D736 /* taimei4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = taimei4.jpg; sourceTree = "<group>"; };
@@ -194,6 +196,14 @@
 			path = Extension;
 			sourceTree = "<group>";
 		};
+		5952F64A25EA104D00ADB85B /* Const */ = {
+			isa = PBXGroup;
+			children = (
+				5952F64B25EA106800ADB85B /* Const.swift */,
+			);
+			path = Const;
+			sourceTree = "<group>";
+		};
 		595E6985256C0169002B4F3E /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -240,6 +250,7 @@
 				59F79E5F256BE7B0006EC1B3 /* AR-GunMan.entitlements */,
 				59D2D4D82552DE66006DDB70 /* AppDelegate.swift */,
 				5952F63E25EA0DE900ADB85B /* Extension */,
+				5952F64A25EA104D00ADB85B /* Const */,
 				59D2D56E2552E3B8006DDB70 /* Model */,
 				59D2D56F2552E3C0006DDB70 /* ViewModel */,
 				59D2D5702552E3C7006DDB70 /* View */,
@@ -658,6 +669,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5952F63725E9E0B000ADB85B /* CoreMotionModel.swift in Sources */,
+				5952F64C25EA106800ADB85B /* Const.swift in Sources */,
 				59484CA0256A540E00F9C6A8 /* GameViewModel.swift in Sources */,
 				5921A208255D6A4E001D8C39 /* WorldRankingCell.swift in Sources */,
 				59945100256AD55900560202 /* TutorialViewController.swift in Sources */,

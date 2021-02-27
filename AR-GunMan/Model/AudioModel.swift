@@ -8,23 +8,6 @@
 import Foundation
 import AVFoundation
 
-enum Sounds: String, CaseIterable {
-    case pistolSet = "pistol-slide"
-    case pistolShoot = "pistol-fire"
-    case pistolOutBullets = "pistol-out-bullets"
-    case pistolReload = "pistol-reload"
-    case headShot = "headShot"
-    case bazookaSet = "bazookaSet"
-    case bazookaReload = "bazookaReload"
-    case bazookaShoot = "bazookaShoot"
-    case bazookaHit = "bazookaHit"
-    case startWhistle = "startWhistle"
-    case endWhistle = "endWhistle"
-    case rankingAppear = "rankingAppear"
-    case kyuiin = "kyuiin"
-    case westernPistolShoot = "westernPistolShoot"
-}
-
 class AudioModel {
     
     static var audioPlayers: [Sounds: AVAudioPlayer] = [:]

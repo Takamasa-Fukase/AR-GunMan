@@ -12,13 +12,11 @@ import RxSwift
 import RxCocoa
 
 protocol SwitchWeaponDelegate {
-    func selectedAt(index: Int)
+    func switchWeaponTo(weapon: WeaponTypes)
 }
 
 class SwitchWeaponViewController: UIViewController {
-    
-    let weapons = ["pistol", "rifle", "rocket-launcher"]
-    
+       
     let disposeBag = DisposeBag()
     var switchWeaponDelegate: SwitchWeaponDelegate?
     var viewModel: GameViewModel?
@@ -65,20 +63,20 @@ class SwitchWeaponViewController: UIViewController {
 extension SwitchWeaponViewController: FSPagerViewDelegate, FSPagerViewDataSource {
     
     func numberOfItems(in pagerView: FSPagerView) -> Int {
-        return weapons.count
+        return WeaponTypes.allCases.count
     }
     
     func pagerView(_ pagerView: FSPagerView, cellForItemAt index: Int) -> FSPagerViewCell {
         guard let cell = pagerView.dequeueReusableCell(withReuseIdentifier: "SwitchWeaponCell", at: index) as? SwitchWeaponCell else {
             return FSPagerViewCell()
         }
-        cell.weaponImageView.image = UIImage(named: weapons[index])
+        cell.weaponImageView.image = UIImage(named: WeaponTypes.allCases[index].rawValue)
         cell.commingSoonLabel.isHidden = true
         return cell
     }
     
     func pagerView(_ pagerView: FSPagerView, didSelectItemAt index: Int) {
-        switchWeaponDelegate?.selectedAt(index: index)
+        switchWeaponDelegate?.switchWeaponTo(weapon: WeaponTypes.allCases[index])
         self.dismiss(animated: true, completion: nil)
     }
     

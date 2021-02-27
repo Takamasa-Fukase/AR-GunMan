@@ -15,45 +15,44 @@ import PanModal
 
 class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDelegate {
     
-    private var preBool = false
-    private var postBool = false
-    
-    var gyroZcount = 0
-    
-    var pistolBulletsCount = 7
-    var bazookaRocketCount = 1
+    //coreMotion
+    var preBool = false
+    var postBool = false
     var accele = CMAcceleration()
     var gyro = CMRotationRate()
-    
-    var currentWeaponIndex = 0
-    
-    var isShootEnabled = false
-           
     let motionManager = CMMotionManager()
     
-    
-    
+    //count
     var targetCount = 50
+    var pistolBulletsCount = 7
+    var bazookaRocketCount = 1
+    var explosionCount = 0
+    var gyroZcount = 0
     
+    var timer:Timer!
+    var timeCount:Double = 30.00
+    
+    //score
     var pistolPoint = 0.0
     var bazookaPoint = 0.0
     
+    //nodeAnimation
     var toggleActionInterval = 0.2
     var lastCameraPos = SCNVector3()
     var isPlayerRunning = false
     var lastPlayerStatus = false
        
-    var timer:Timer!
-    var timeCount:Double = 30.00
-    
-    var explosionCount = 0
-    
-    var exploPar: SCNParticleSystem?
-    
+    //node
     var bulletNode: SCNNode?
     var bazookaHitExplosion: SCNNode?
     var jetFire: SCNNode?
     var targetNode: SCNNode?
+    var exploPar: SCNParticleSystem?
+    
+    //other
+    var currentWeapon: WeaponTypes = .pistol
+    
+    var isShootEnabled = false
     
     var viewModel = GameViewModel()
     
@@ -83,8 +82,8 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
                 && compositAcceleration >= 1.5
                 && gyroZ < 10 {
                 
-                switch currentWeaponIndex {
-                case 0:
+                switch currentWeapon {
+                case .pistol:
                     
                     if pistolBulletsCount > 0 {
                         pistolBulletsCount -= 1
@@ -103,7 +102,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
                     print("ピストルの残弾数: \(pistolBulletsCount) / 7発")
                     setBulletsImageView(with: UIImage(named: "bullets\(pistolBulletsCount)"))
                     
-                case 1:
+                case .bazooka:
                     
                     if bazookaRocketCount > 0 {
                         
@@ -137,8 +136,8 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
                 && compositAcceleration >= 1.5
                 && gyroZ < 10 {
                 
-                switch currentWeaponIndex {
-                case 0:
+                switch currentWeapon {
+                case .pistol:
                     
                     if pistolBulletsCount > 0 {
                         pistolBulletsCount -= 1
@@ -158,7 +157,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
                     print("ピストルの残弾数: \(pistolBulletsCount) / 7発")
                     setBulletsImageView(with: UIImage(named: "bullets\(pistolBulletsCount)"))
                     
-                case 1:
+                case .bazooka:
                     
                     if bazookaRocketCount > 0 {
                         
@@ -199,7 +198,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         
         if isShootEnabled {
             
-            if currentWeaponIndex == 0 {
+            if currentWeapon == .pistol {
                 let compositGyro = CalcuModel.getCompositeGyro(0, 0, gyro.z)
                 
                 if pistolBulletsCount <= 0 && compositGyro >= 10 {
@@ -434,12 +433,12 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
             
             if isPlayerRunning != lastPlayerStatus {
                 
-                switch currentWeaponIndex {
-                case 0:
+                switch currentWeapon {
+                case .pistol:
                     sceneView.scene.rootNode.childNode(withName: "parent", recursively: false)?.childNode(withName: "M1911_a", recursively: false)?.removeAllActions()
                     sceneView.scene.rootNode.childNode(withName: "parent", recursively: false)?.childNode(withName: "M1911_a", recursively: false)?.position = SCNVector3(0.17, -0.197, -0.584)
                     sceneView.scene.rootNode.childNode(withName: "parent", recursively: false)?.childNode(withName: "M1911_a", recursively: false)?.eulerAngles = SCNVector3(-1.4382625, 1.3017014, -2.9517007)
-                case 1:
+                case .rifle:
                 
                     sceneView.scene.rootNode.childNode(withName: "AKM_parent", recursively: false)?.childNode(withName: "AKM", recursively: false)?.removeAllActions()
                     sceneView.scene.rootNode.childNode(withName: "AKM_parent", recursively: false)?.childNode(withName: "AKM", recursively: false)?.position = SCNVector3(0, 0, 0)
@@ -448,7 +447,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
                 default: break
                 }
 
-                isPlayerRunning ? gunnerShakeAnimationRunning(currentWeaponIndex) : gunnerShakeAnimationNormal(currentWeaponIndex)
+                isPlayerRunning ? gunnerShakeAnimationRunning() : gunnerShakeAnimationNormal()
             }
             self.toggleActionInterval = 0.2
             lastCameraPos = sceneView.pointOfView?.position ?? SCNVector3()
@@ -457,8 +456,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         toggleActionInterval -= 0.02
     }
     
-    func gunnerShakeAnimationNormal(_ weaponIndex: Int) {
-        
+    func gunnerShakeAnimationNormal() {
         
         //銃の先端が上に跳ね上がる回転のアニメーション
         let rotate = SCNAction.rotateBy(x: -0.1779697224, y: 0.0159312604, z: -0.1784194, duration: 1.2)
@@ -488,7 +486,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         
     }
     
-    func gunnerShakeAnimationRunning(_ weaponIndex: Int) {
+    func gunnerShakeAnimationRunning() {
         //銃が右に移動するアニメーション
         let moveRight = SCNAction.moveBy(x: 0.03, y: 0, z: 0, duration: 0.3)
         //↑の逆（左に移動）
@@ -511,11 +509,9 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         let repeatAction = SCNAction.repeatForever(conbineAction)
         
         //実行
-        switch weaponIndex {
-        case 0:
+        switch currentWeapon {
+        case .pistol:
             sceneView.scene.rootNode.childNode(withName: "parent", recursively: false)?.childNode(withName: "M1911_a", recursively: false)?.runAction(repeatAction)
-//        case 5:
-//            sceneView.scene.rootNode.childNode(withName: "bazookaParent", recursively: false)?.childNode(withName: "bazooka", recursively: false)?.runAction(repeatAction)
         default: break
         }
     }
@@ -544,7 +540,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
             nodeA.removeFromParentNode()
             nodeB.removeFromParentNode()
             
-            if currentWeaponIndex == 1 {
+            if currentWeapon == .bazooka {
                 AudioModel.playSound(of: .bazookaHit)
                 
                 if let first = sceneView.scene.rootNode.childNode(withName: "bazookaHitExplosion\(explosionCount)", recursively: false)?.particleSystems?.first  {
@@ -555,10 +551,10 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
                 }
             }
             
-            switch currentWeaponIndex {
-            case 0:
+            switch currentWeapon {
+            case .pistol:
                 pistolPoint += 5
-            case 1:
+            case .bazooka:
                 bazookaPoint += 12
             default:
                 break
@@ -599,13 +595,11 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
 //SwitchWeaponVCでのセルタップをトリガーに発火させる武器切り替えメソッド
 extension GameViewController: SwitchWeaponDelegate {
     
-    func selectedAt(index: Int) {
-        
-        print("current: \(currentWeaponIndex), selectedAt: \(index)")
-        
-        switch index {
-        case 0:
-            if index != currentWeaponIndex {
+    func switchWeaponTo(weapon: WeaponTypes) {
+               
+        switch weapon {
+        case .pistol:
+            if weapon != currentWeapon {
                 addPistol()
             }
             setBulletsImageView(with: UIImage(named: "bullets\(pistolBulletsCount)"))
@@ -613,8 +607,8 @@ extension GameViewController: SwitchWeaponDelegate {
             sightImageView.image = UIImage(named: "pistolSight")
             sightImageView.tintColor = .systemRed
             
-        case 1:
-            if index != currentWeaponIndex {
+        case .rifle:
+            if weapon != currentWeapon {
                 addRifle()
             }
             setBulletsImageView(with: UIImage(named: "bullets\(pistolBulletsCount)"))
@@ -622,8 +616,8 @@ extension GameViewController: SwitchWeaponDelegate {
             sightImageView.image = UIImage(named: "pistolSight")
             sightImageView.tintColor = .systemRed
             
-        case 2:
-            if index != currentWeaponIndex {
+        case .bazooka:
+            if weapon != currentWeapon {
                 addBazooka()
             }
             setBulletsImageView(with: UIImage(named: "bazookaRocket\(bazookaRocketCount)"))
@@ -636,8 +630,7 @@ extension GameViewController: SwitchWeaponDelegate {
             return
         }
         
-        currentWeaponIndex = index
-        currentWeaponIndex = index
+        currentWeapon = weapon
         isShootEnabled = true
         
     }
@@ -685,7 +678,7 @@ extension GameViewController {
             AudioModel.playSound(of: .pistolSet)
         }
         
-        gunnerShakeAnimationNormal(0)
+        gunnerShakeAnimationNormal()
     }
     
     func addBazooka() {
@@ -710,7 +703,7 @@ extension GameViewController {
         //チャキッ　の再生
         AudioModel.playSound(of: .bazookaSet)
         
-        gunnerShakeAnimationNormal(5)
+        gunnerShakeAnimationNormal()
     }
     
     func addRifle() {
@@ -758,7 +751,7 @@ extension GameViewController {
         bulletNode.physicsBody?.contactTestBitMask = 1
         bulletNode.physicsBody?.isAffectedByGravity = false
 
-        if currentWeaponIndex == 1 {
+        if currentWeapon == .bazooka {
             explosionCount += 1
 
             var parti: SCNParticleSystem? = SCNParticleSystem()
@@ -796,7 +789,7 @@ extension GameViewController {
             self.bulletNode?.removeFromParentNode()
         })
         
-        if currentWeaponIndex == 1 {
+        if currentWeapon == .bazooka {
 
             sceneView.scene.rootNode.childNode(withName: "bazookaHitExplosion\(explosionCount)", recursively: false)?.runAction(action)
             
