@@ -11,6 +11,8 @@ import ARKit
 import SceneKit
 import FSPagerView
 import PanModal
+import RxSwift
+import RxCocoa
 
 class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDelegate {
 
@@ -41,6 +43,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
     var exploPar: SCNParticleSystem?
     
     //other
+    let disposeBag = DisposeBag()
     var currentWeapon: WeaponTypes = .pistol
     
     var isShootEnabled = false
@@ -84,6 +87,25 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //output
+        let _ = viewModel.fireWeapon
+            .subscribe(onNext: { [weak self] element in
+                guard let self = self else {return}
+                self.fireWeapon()
+            }).disposed(by: disposeBag)
+        
+        let _ = viewModel.reloadPistol
+            .subscribe(onNext: { [weak self] element in
+                guard let self = self else {return}
+                self.reloadPistol()
+            }).disposed(by: disposeBag)
+        
+        let _ = viewModel.changeTargetsToTaimeisan
+            .subscribe(onNext: { [weak self] element in
+                guard let self = self else {return}
+                self.changeTargetsToTaimeisan()
+            }).disposed(by: disposeBag)
         
         addPistol(shouldPlayPistolSet: false)
         addTarget()
