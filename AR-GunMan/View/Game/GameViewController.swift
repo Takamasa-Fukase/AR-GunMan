@@ -10,8 +10,6 @@ import UIKit
 import ARKit
 import SceneKit
 import CoreMotion
-import AVFoundation
-import AudioToolbox
 import FSPagerView
 import PanModal
 
@@ -668,10 +666,6 @@ extension GameViewController: GameInterface {
                 print("的を設置")
             }
         }
-    }
-    
-    func vibration() {
-        AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
     }
     
     func setBulletsImageView(with image: UIImage?) {

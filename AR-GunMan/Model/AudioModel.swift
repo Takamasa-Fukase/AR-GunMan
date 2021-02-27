@@ -32,6 +32,17 @@ class AudioModel {
     static func playSound(of sound: Sounds) {
         audioPlayers[sound]?.currentTime = 0
         audioPlayers[sound]?.play()
+        
+        switch sound {
+        case .pistolShoot, .bazookaShoot:
+            vibration()
+        default:
+            break
+        }
+    }
+    
+    private static func vibration() {
+        AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
     }
 }
 
@@ -39,7 +50,6 @@ class AudioModel {
 extension AudioModel {
     
     static func initAudioPlayers() {
-        print("AudioModel init")
         Sounds.allCases.forEach({ sound in
             guard let path = Bundle.main.path(forResource: sound.rawValue, ofType: "mp3") else {
                 print("音源\(sound.rawValue)が見つかりません")
