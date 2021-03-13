@@ -9,27 +9,49 @@ import Foundation
 import RxSwift
 import RxCocoa
 
+enum TopPageButtonTypes {
+    case start
+    case settings
+    case howToPlay
+}
+
 class TopViewModel {
     
     //input
-//    var rankingWillAppear: AnyObserver<Void>
-    
+    var buttonTapped: AnyObserver<TopPageButtonTypes>
     
     //output
-//    var dismissSwitchWeaponVC: Observable<Void>
-    
+    var isShotButtonIcon: Observable<(TopPageButtonTypes, Bool)>
+    var transit: Observable<TopPageButtonTypes>
+
     
     init() {
         
-//        let _dismissSwitchWeaponVC = PublishRelay<Void>()
-//        dismissSwitchWeaponVC = _dismissSwitchWeaponVC.asObservable()
-//
-//        rankingWillAppear = AnyObserver<Void>() { _ in
-//
-//            print("GameVM 武器選択を閉じる指示を流します")
-//
-//            _dismissSwitchWeaponVC.accept(Void())
-//        }
+        //other
+        func changeButtonIcon(type: TopPageButtonTypes) {
+            _isShotButtonIcon.accept((type, true))
+            AudioModel.playSound(of: .westernPistolShoot)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                _isShotButtonIcon.accept((type, false))
+                _transit.accept(type)
+            }
+        }
+
+        
+        //output
+        let _isShotButtonIcon = PublishRelay<(TopPageButtonTypes, Bool)>()
+        self.isShotButtonIcon = _isShotButtonIcon.asObservable()
+        
+        let _transit = PublishRelay<TopPageButtonTypes>()
+        self.transit = _transit.asObservable()
+        
+        
+        //input
+        self.buttonTapped = AnyObserver<TopPageButtonTypes>() { event in
+            guard let element = event.element else {return}
+            changeButtonIcon(type: element)
+        }
+        
         
     }
     

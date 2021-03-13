@@ -13,6 +13,7 @@ import PanModal
 
 class ViewController: UIViewController {
     
+    let viewModel = TopViewModel()
     let disposeBag = DisposeBag()
     var replayFlag = false
     
@@ -37,46 +38,62 @@ class ViewController: UIViewController {
         startButtonIcon.image = Const.targetIcon
         settingsButtonIcon.image = Const.targetIcon
         howToPlayButtonIcon.image = Const.targetIcon
-
+        
+        //input
         let _ = startButton.rx.tap
-            .subscribe(onNext: { [weak self] element in
+            .subscribe(onNext: { [weak self] _ in
                 guard let self = self else {return}
-                CameraAuthModel.checkCameraAuthorization(vc: self)
-                self.changeButtonIcon(self.startButtonIcon)
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    self.presentGameVC()
-                }
+                self.viewModel.buttonTapped.onNext(.start)
             }).disposed(by: disposeBag)
         
         let _ = settingsButton.rx.tap
-            .subscribe(onNext: { [weak self] element in
+            .subscribe(onNext: { [weak self] _ in
                 guard let self = self else {return}
-                self.changeButtonIcon(self.settingsButtonIcon)
-                
-                let storyboard: UIStoryboard = UIStoryboard(name: "SettingsViewController", bundle: nil)
-                let vc = storyboard.instantiateViewController(withIdentifier: "SettingsViewController") as! SettingsViewController
-                let navi = UINavigationController(rootViewController: vc)
-                navi.setNavigationBarHidden(true, animated: false)
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    self.presentPanModal(navi)
-                }
+                self.viewModel.buttonTapped.onNext(.settings)
             }).disposed(by: disposeBag)
         
         let _ = howToPlayButton.rx.tap
-            .subscribe(onNext: { [weak self] element in
+            .subscribe(onNext: { [weak self] _ in
                 guard let self = self else {return}
-                self.changeButtonIcon(self.howToPlayButtonIcon)
-                
-                let storyboard: UIStoryboard = UIStoryboard(name: "TutorialViewController", bundle: nil)
-                let vc = storyboard.instantiateViewController(withIdentifier: "TutorialViewController") as! TutorialViewController
-                
-                vc.isBlurEffectEnabled = false
-                
-                let navi = UINavigationController(rootViewController: vc)
-                navi.setNavigationBarHidden(true, animated: false)
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.viewModel.buttonTapped.onNext(.howToPlay)
+            }).disposed(by: disposeBag)
+        
+        //output
+        let _ = viewModel.isShotButtonIcon
+            .subscribe(onNext: { [weak self] (type, bool) in
+                guard let self = self else {return}
+                let image = bool ? Const.bulletsHoleIcon : Const.targetIcon
+                switch type {
+                case .start:
+                    self.startButtonIcon.image = image
+                case .settings:
+                    self.settingsButtonIcon.image = image
+                case .howToPlay:
+                    self.howToPlayButtonIcon.image = image
+                }
+            }).disposed(by: disposeBag)
+        
+        let _ = viewModel.transit
+            .subscribe(onNext: { [weak self] type in
+                guard let self = self else {return}
+                switch type {
+                case .start:
+                    CameraAuthModel.checkCameraAuthorization(vc: self)
+                    self.presentGameVC()
+                    
+                case .settings:
+                    let storyboard: UIStoryboard = UIStoryboard(name: "SettingsViewController", bundle: nil)
+                    let vc = storyboard.instantiateViewController(withIdentifier: "SettingsViewController") as! SettingsViewController
+                    let navi = UINavigationController(rootViewController: vc)
+                    navi.setNavigationBarHidden(true, animated: false)
+                    self.presentPanModal(navi)
+
+                case .howToPlay:
+                    let storyboard: UIStoryboard = UIStoryboard(name: "TutorialViewController", bundle: nil)
+                    let vc = storyboard.instantiateViewController(withIdentifier: "TutorialViewController") as! TutorialViewController
+                    vc.isBlurEffectEnabled = false
+                    let navi = UINavigationController(rootViewController: vc)
+                    navi.setNavigationBarHidden(true, animated: false)
                     self.presentPanModal(navi)
                 }
             }).disposed(by: disposeBag)
@@ -89,15 +106,6 @@ class ViewController: UIViewController {
         let vc = storyboard.instantiateViewController(withIdentifier: "GameViewController") as! GameViewController
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: animated)
-    }
-    
-    
-    func changeButtonIcon(_ imageView: UIImageView) {
-        imageView.image = Const.bulletsHoleIcon
-        AudioModel.playSound(of: .westernPistolShoot)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            imageView.image = Const.targetIcon
-        }
     }
     
 }
