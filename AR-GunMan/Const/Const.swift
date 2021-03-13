@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 enum Sounds: String, CaseIterable {
     case pistolSet = "pistol-slide"
@@ -28,6 +29,23 @@ enum WeaponTypes: String, CaseIterable {
     case pistol = "pistol"
     case rifle = "rifle"
     case bazooka = "rocket-launcher"
+}
+
+class Const {
+    
+    static var targetIcon: UIImage? {
+        if #available(iOS 13.0, *) {
+            return UIImage(systemName: "target")
+        } else {
+            return UIImage(named: "targetIcon")
+        }
+    }
+    
+    static var bulletsHoleIcon: UIImage? {
+        return UIImage(named: "bulletsHole")
+    }
+    
+    
 }
 
 

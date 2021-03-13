@@ -33,7 +33,11 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-               
+        
+        startButtonIcon.image = Const.targetIcon
+        settingsButtonIcon.image = Const.targetIcon
+        howToPlayButtonIcon.image = Const.targetIcon
+
         let _ = startButton.rx.tap
             .subscribe(onNext: { [weak self] element in
                 guard let self = self else {return}
@@ -76,24 +80,10 @@ class ViewController: UIViewController {
                     self.presentPanModal(navi)
                 }
             }).disposed(by: disposeBag)
-        
-        if #available(iOS 13.0, *) {
-            startButtonIcon.image = UIImage(systemName: "target")
-            settingsButtonIcon.image = UIImage(systemName: "target")
-            howToPlayButtonIcon.image = UIImage(systemName: "target")
-        } else {
-            startButtonIcon.image = UIImage(named: "targetIcon")
-            settingsButtonIcon.image = UIImage(named: "targetIcon")
-            howToPlayButtonIcon.image = UIImage(named: "targetIcon")
-        }
     }
     
     func presentGameVC(animated: Bool = true) {
-        if #available(iOS 13.0, *) {
-            startButtonIcon.image = UIImage(systemName: "target")
-        } else {
-            startButtonIcon.image = UIImage(named: "targetIcon")
-        }
+        startButtonIcon.image = Const.targetIcon
         
         let storyboard: UIStoryboard = UIStoryboard(name: "GameViewController", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "GameViewController") as! GameViewController
@@ -103,14 +93,10 @@ class ViewController: UIViewController {
     
     
     func changeButtonIcon(_ imageView: UIImageView) {
-        imageView.image = UIImage(named: "bulletsHole")
+        imageView.image = Const.bulletsHoleIcon
         AudioModel.playSound(of: .westernPistolShoot)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            if #available(iOS 13.0, *) {
-                imageView.image = UIImage(systemName: "target")
-            } else {
-                imageView.image = UIImage(named: "targetIcon")
-            }
+            imageView.image = Const.targetIcon
         }
     }
     
