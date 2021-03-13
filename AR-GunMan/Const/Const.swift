@@ -41,9 +41,10 @@ class Const {
         }
     }
     
-    static var bulletsHoleIcon: UIImage? {
-        return UIImage(named: "bulletsHole")
-    }
+    static let bulletsHoleIcon = UIImage(named: "bulletsHole")
+    
+    static let developerContactURL = "https://www.instagram.com/fukase_1783/"
+    static let privacyPolicyURL = "http://takamasafukase.com/AR-GunMan_PrivacyPolicy.html"
     
     
 }

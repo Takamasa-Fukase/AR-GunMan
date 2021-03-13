@@ -5,7 +5,7 @@
 //  Created by 深瀬 貴将 on 2020/11/23.
 //
 
-protocol TutorialVCDelegate {
+protocol TutorialVCDelegate: AnyObject {
     func startGame()
 }
 
@@ -15,7 +15,7 @@ class TutorialViewController: UIViewController {
     
     var isBlurEffectEnabled: Bool = true
     
-    var delegate: TutorialVCDelegate?
+    weak var delegate: TutorialVCDelegate?
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var firstImageView: UIImageView!
@@ -38,12 +38,6 @@ class TutorialViewController: UIViewController {
         let blurEffect = UIBlurEffect(style: .dark)
         let visualEffectView = UIVisualEffectView(effect: blurEffect)
         visualEffectView.frame = self.view.frame
-        
-//        let blueView = UIView(frame: self.view.frame)
-//        blueView.backgroundColor = .brown
-//        blueView.alpha = 0.2
-//        self.view.addSubview(blueView)
-//        self.view.sendSubviewToBack(blueView)
         
         if isBlurEffectEnabled {
             self.view.insertSubview(visualEffectView, at: 0)

@@ -10,19 +10,16 @@ import SafariServices
 
 class SettingsViewController: UIViewController {
     
-    let developerContactURL = "https://www.instagram.com/fukase_1783/"
-    let privacyPolicyURL = "http://takamasafukase.com/AR-GunMan_PrivacyPolicy.html"
-    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
     @IBAction func tappedDeveloperConctact(_ sender: Any) {
-        openSafariView(urlString: developerContactURL)
+        openSafariView(urlString: Const.developerContactURL)
     }
     
     @IBAction func tappedPrivacyPolicy(_ sender: Any) {
-        openSafariView(urlString: privacyPolicyURL)
+        openSafariView(urlString: Const.privacyPolicyURL)
     }
     
     @IBAction func tappedBack(_ sender: Any) {

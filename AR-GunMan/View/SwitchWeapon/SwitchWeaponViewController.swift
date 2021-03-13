@@ -11,14 +11,14 @@ import FSPagerView
 import RxSwift
 import RxCocoa
 
-protocol SwitchWeaponDelegate {
+protocol SwitchWeaponDelegate: AnyObject {
     func switchWeaponTo(weapon: WeaponTypes)
 }
 
 class SwitchWeaponViewController: UIViewController {
        
     let disposeBag = DisposeBag()
-    var switchWeaponDelegate: SwitchWeaponDelegate?
+    weak var switchWeaponDelegate: SwitchWeaponDelegate?
     var viewModel: GameViewModel?
     
     override func viewDidLoad() {
