@@ -59,6 +59,8 @@
 		59D2D5962552E718006DDB70 /* SwitchWeaponViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59D2D5922552E718006DDB70 /* SwitchWeaponViewController.storyboard */; };
 		59D2D59E2552E751006DDB70 /* CalcuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2D59D2552E751006DDB70 /* CalcuModel.swift */; };
 		5F0F53972765C07884597855 /* Pods_AR_GunManTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82CB4F049BB35C36EAA5A632 /* Pods_AR_GunManTests.framework */; };
+		86627DE6273FD5E30044A980 /* WorldRankingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86627DE5273FD5E30044A980 /* WorldRankingViewController.swift */; };
+		86627DEB273FD61B0044A980 /* WorldRankingViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86627DEA273FD61B0044A980 /* WorldRankingViewController.storyboard */; };
 		D54734259EA1C7BF11A28908 /* Pods_AR_GunMan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4280580740F2443B66781090 /* Pods_AR_GunMan.framework */; };
 /* End PBXBuildFile section */
 
@@ -145,6 +147,8 @@
 		59F79E5F256BE7B0006EC1B3 /* AR-GunMan.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "AR-GunMan.entitlements"; sourceTree = "<group>"; };
 		5AB32EC76FF682FB7040AD4D /* Pods-AR-GunMan-AR-GunManUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-GunMan-AR-GunManUITests.release.xcconfig"; path = "Target Support Files/Pods-AR-GunMan-AR-GunManUITests/Pods-AR-GunMan-AR-GunManUITests.release.xcconfig"; sourceTree = "<group>"; };
 		82CB4F049BB35C36EAA5A632 /* Pods_AR_GunManTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_GunManTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		86627DE5273FD5E30044A980 /* WorldRankingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldRankingViewController.swift; sourceTree = "<group>"; };
+		86627DEA273FD61B0044A980 /* WorldRankingViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WorldRankingViewController.storyboard; sourceTree = "<group>"; };
 		90D4D1AD42BB6A3A0192887F /* Pods-AR-GunManTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-GunManTests.release.xcconfig"; path = "Target Support Files/Pods-AR-GunManTests/Pods-AR-GunManTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -383,6 +387,8 @@
 				59A01138255AF588008996E3 /* GameResultViewController.storyboard */,
 				5921A206255D6A4E001D8C39 /* WorldRankingCell.swift */,
 				5921A207255D6A4E001D8C39 /* WorldRankingCell.xib */,
+				86627DE5273FD5E30044A980 /* WorldRankingViewController.swift */,
+				86627DEA273FD61B0044A980 /* WorldRankingViewController.storyboard */,
 			);
 			path = WorldRanking;
 			sourceTree = "<group>";
@@ -532,6 +538,7 @@
 				59D2D4E52552DE67006DDB70 /* LaunchScreen.storyboard in Resources */,
 				5903192F256D82BA005C30EF /* westernPistolShoot.mp3 in Resources */,
 				595E698F256C01A4002B4F3E /* SettingsViewController.storyboard in Resources */,
+				86627DEB273FD61B0044A980 /* WorldRankingViewController.storyboard in Resources */,
 				5921A209255D6A4E001D8C39 /* WorldRankingCell.xib in Resources */,
 				59D2D5422552E24D006DDB70 /* art.scnassets in Resources */,
 				59484C6B25657E1C00F9C6A8 /* endWhistle.mp3 in Resources */,
@@ -677,6 +684,7 @@
 				5952F65125EA1A8100ADB85B /* WeaponModel.swift in Sources */,
 				5921A208255D6A4E001D8C39 /* WorldRankingCell.swift in Sources */,
 				59945100256AD55900560202 /* TutorialViewController.swift in Sources */,
+				86627DE6273FD5E30044A980 /* WorldRankingViewController.swift in Sources */,
 				59D2D5952552E718006DDB70 /* SwitchWeaponViewController.swift in Sources */,
 				59D2D5852552E6B2006DDB70 /* GameViewController.swift in Sources */,
 				59D2D57B2552E536006DDB70 /* ViewController.swift in Sources */,

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="AsG-KR-fsM">
+    <device id="retina6_1" orientation="landscape" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--World Ranking View Controller-->
+        <scene sceneID="gl3-uT-3uf">
+            <objects>
+                <viewController id="AsG-KR-fsM" customClass="WorldRankingViewController" customModule="AR_GunMan" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="s2e-Bb-5xu">
+                        <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="BJe-eb-WSi">
+                                <rect key="frame" x="74" y="30" width="748" height="333"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="LKg-3Y-CjO"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="BJe-eb-WSi" firstAttribute="top" secondItem="LKg-3Y-CjO" secondAttribute="top" constant="30" id="MHT-ey-kgc"/>
+                            <constraint firstItem="LKg-3Y-CjO" firstAttribute="trailing" secondItem="BJe-eb-WSi" secondAttribute="trailing" constant="30" id="R68-2a-yBq"/>
+                            <constraint firstItem="LKg-3Y-CjO" firstAttribute="bottom" secondItem="BJe-eb-WSi" secondAttribute="bottom" constant="30" id="d5c-uj-bhK"/>
+                            <constraint firstItem="BJe-eb-WSi" firstAttribute="leading" secondItem="LKg-3Y-CjO" secondAttribute="leading" constant="30" id="spB-w7-hb3"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="worldRankingTableView" destination="BJe-eb-WSi" id="5YV-k9-xby"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="svq-QY-Ors" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-224" y="146"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
