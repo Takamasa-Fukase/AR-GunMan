@@ -1,5 +1,5 @@
 //
-//  WorldRankingViewController.swift
+//  GameResultViewController.swift
 //  AR-GunMan
 //
 //  Created by 深瀬 貴将 on 2020/11/11.
@@ -14,7 +14,7 @@ struct Ranking {
     let userName: String
 }
 
-class WorldRankingViewController: UIViewController {
+class GameResultViewController: UIViewController {
 
     var totalScore: Double = 0.000
     var limitRankIndex = Int()
@@ -105,7 +105,7 @@ class WorldRankingViewController: UIViewController {
     
 }
 
-extension WorldRankingViewController: RegisterNameVCDelegate {
+extension GameResultViewController: RegisterNameVCDelegate {
     
     func showRightButtons() {
         
@@ -123,7 +123,7 @@ extension WorldRankingViewController: RegisterNameVCDelegate {
     
 }
 
-extension WorldRankingViewController: UITableViewDelegate, UITableViewDataSource {
+extension GameResultViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return list.count
     }
