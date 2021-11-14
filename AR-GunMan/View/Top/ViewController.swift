@@ -62,11 +62,15 @@ class ViewController: UIViewController {
         let _ = settingsButton.rx.tap
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else {return}
-                let storyboard: UIStoryboard = UIStoryboard(name: "SettingsViewController", bundle: nil)
-                let vc = storyboard.instantiateViewController(withIdentifier: "SettingsViewController") as! SettingsViewController
-                let navi = UINavigationController(rootViewController: vc)
-                navi.setNavigationBarHidden(true, animated: false)
-                self.presentPanModal(navi)
+                //バズーカ選択時の音声を再生
+                AudioModel.playSound(of: .bazookaSet)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                    let storyboard: UIStoryboard = UIStoryboard(name: "SettingsViewController", bundle: nil)
+                    let vc = storyboard.instantiateViewController(withIdentifier: "SettingsViewController") as! SettingsViewController
+                    let navi = UINavigationController(rootViewController: vc)
+                    navi.setNavigationBarHidden(true, animated: false)
+                    self.presentPanModal(navi)
+                }
             }).disposed(by: disposeBag)
         
         //output
