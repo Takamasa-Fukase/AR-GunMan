@@ -93,11 +93,7 @@ class ViewController: UIViewController {
                     self.presentGameVC()
                     
                 case .ranking:
-//                    let storyboard: UIStoryboard = UIStoryboard(name: "SettingsViewController", bundle: nil)
-//                    let vc = storyboard.instantiateViewController(withIdentifier: "SettingsViewController") as! SettingsViewController
-//                    let navi = UINavigationController(rootViewController: vc)
-//                    navi.setNavigationBarHidden(true, animated: false)
-//                    self.presentPanModal(navi)
+                    //TODO: - ランキングVCへ遷移を繋げる
                     break
                     
                 case .howToPlay:
