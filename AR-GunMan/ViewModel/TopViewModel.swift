@@ -11,7 +11,7 @@ import RxCocoa
 
 enum TopPageButtonTypes {
     case start
-    case settings
+    case ranking
     case howToPlay
 }
 

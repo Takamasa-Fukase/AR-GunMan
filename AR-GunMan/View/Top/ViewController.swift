@@ -18,8 +18,9 @@ class ViewController: UIViewController {
     var replayFlag = false
     
     @IBOutlet weak var startButton: UIButton!
-    @IBOutlet weak var settingsButton: UIButton!
+    @IBOutlet weak var rankingButton: UIButton!
     @IBOutlet weak var howToPlayButton: UIButton!
+    @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet weak var startButtonIcon: UIImageView!
     @IBOutlet weak var settingsButtonIcon: UIImageView!
     @IBOutlet weak var howToPlayButtonIcon: UIImageView!
@@ -46,16 +47,26 @@ class ViewController: UIViewController {
                 self.viewModel.buttonTapped.onNext(.start)
             }).disposed(by: disposeBag)
         
-        let _ = settingsButton.rx.tap
+        let _ = rankingButton.rx.tap
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else {return}
-                self.viewModel.buttonTapped.onNext(.settings)
+                self.viewModel.buttonTapped.onNext(.ranking)
             }).disposed(by: disposeBag)
         
         let _ = howToPlayButton.rx.tap
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else {return}
                 self.viewModel.buttonTapped.onNext(.howToPlay)
+            }).disposed(by: disposeBag)
+        
+        let _ = settingsButton.rx.tap
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else {return}
+                let storyboard: UIStoryboard = UIStoryboard(name: "SettingsViewController", bundle: nil)
+                let vc = storyboard.instantiateViewController(withIdentifier: "SettingsViewController") as! SettingsViewController
+                let navi = UINavigationController(rootViewController: vc)
+                navi.setNavigationBarHidden(true, animated: false)
+                self.presentPanModal(navi)
             }).disposed(by: disposeBag)
         
         //output
@@ -66,10 +77,10 @@ class ViewController: UIViewController {
                 switch type {
                 case .start:
                     self.startButtonIcon.image = image
-                case .settings:
-                    self.settingsButtonIcon.image = image
-                case .howToPlay:
+                case .ranking:
                     self.howToPlayButtonIcon.image = image
+                case .howToPlay:
+                    self.settingsButtonIcon.image = image
                 }
             }).disposed(by: disposeBag)
         
@@ -81,13 +92,14 @@ class ViewController: UIViewController {
                     CameraAuthModel.checkCameraAuthorization(vc: self)
                     self.presentGameVC()
                     
-                case .settings:
-                    let storyboard: UIStoryboard = UIStoryboard(name: "SettingsViewController", bundle: nil)
-                    let vc = storyboard.instantiateViewController(withIdentifier: "SettingsViewController") as! SettingsViewController
-                    let navi = UINavigationController(rootViewController: vc)
-                    navi.setNavigationBarHidden(true, animated: false)
-                    self.presentPanModal(navi)
-
+                case .ranking:
+//                    let storyboard: UIStoryboard = UIStoryboard(name: "SettingsViewController", bundle: nil)
+//                    let vc = storyboard.instantiateViewController(withIdentifier: "SettingsViewController") as! SettingsViewController
+//                    let navi = UINavigationController(rootViewController: vc)
+//                    navi.setNavigationBarHidden(true, animated: false)
+//                    self.presentPanModal(navi)
+                    break
+                    
                 case .howToPlay:
                     let storyboard: UIStoryboard = UIStoryboard(name: "TutorialViewController", bundle: nil)
                     let vc = storyboard.instantiateViewController(withIdentifier: "TutorialViewController") as! TutorialViewController
