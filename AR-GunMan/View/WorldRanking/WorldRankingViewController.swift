@@ -7,22 +7,32 @@
 
 import UIKit
 import Firebase
+import RxSwift
 
 class WorldRankingViewController: UIViewController {
     
     var db: Firestore!
     var list: [Ranking] = []
+    let disposeBag = DisposeBag()
 
+    @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var worldRankingTableView: UITableView!
         
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let _ = closeButton.rx.tap
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else {return}
+                self.dismiss(animated: true)
+            }).disposed(by: disposeBag)
         
         setupTableView()
         setupFirestore()
     }
     
     private func setupTableView() {
+        worldRankingTableView.contentInset.top = 10
         worldRankingTableView.dataSource = self
         worldRankingTableView.register(UINib(nibName: "WorldRankingCell", bundle: nil), forCellReuseIdentifier: "WorldRankingCell")
     }

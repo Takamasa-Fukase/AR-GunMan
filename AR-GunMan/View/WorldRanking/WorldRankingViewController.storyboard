@@ -5,7 +5,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -17,32 +16,96 @@
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lWk-qq-baE">
+                                <rect key="frame" x="205.5" y="24" width="485" height="30"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WORLD RANKING" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cUr-sQ-0y4">
+                                        <rect key="frame" x="109" y="0.0" width="267.5" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="iCg-m6-Syn"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Copperplate-Bold" family="Copperplate" pointSize="30"/>
+                                        <color key="textColor" red="0.027436967940000001" green="0.027523037050000001" blue="0.019605956970000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="xmark" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="evQ-8m-OQb">
+                                        <rect key="frame" x="425" y="6.5" width="60" height="16.5"/>
+                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="60" id="CQN-Dr-tqV"/>
+                                        </constraints>
+                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="bold"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.79215686269999996" green="0.69411764710000001" blue="0.53333333329999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstItem="evQ-8m-OQb" firstAttribute="top" secondItem="lWk-qq-baE" secondAttribute="top" constant="5" id="0h2-R8-Y9z"/>
+                                    <constraint firstAttribute="height" constant="30" id="AbX-Rt-5o8"/>
+                                    <constraint firstItem="cUr-sQ-0y4" firstAttribute="centerX" secondItem="lWk-qq-baE" secondAttribute="centerX" id="NgC-21-a8P"/>
+                                    <constraint firstAttribute="trailing" secondItem="evQ-8m-OQb" secondAttribute="trailing" id="Qq6-zZ-gac"/>
+                                    <constraint firstAttribute="bottom" secondItem="evQ-8m-OQb" secondAttribute="bottom" constant="5" id="iBV-dj-wDL"/>
+                                    <constraint firstItem="cUr-sQ-0y4" firstAttribute="centerY" secondItem="lWk-qq-baE" secondAttribute="centerY" id="oaA-S6-0o1"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gWH-de-kIl">
+                                <rect key="frame" x="630.5" y="9" width="60" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="2Vo-J1-qcx"/>
+                                    <constraint firstAttribute="width" constant="60" id="Wqb-Qf-xWe"/>
+                                    <constraint firstAttribute="height" constant="60" id="qFF-EJ-jSO"/>
+                                </constraints>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="BJe-eb-WSi">
-                                <rect key="frame" x="74" y="30" width="748" height="333"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <rect key="frame" x="205.5" y="70" width="485" height="293"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="3"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="7"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                        <color key="value" red="0.792156862745098" green="0.69411764705882351" blue="0.53333333333333333" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="LKg-3Y-CjO"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="BJe-eb-WSi" firstAttribute="top" secondItem="LKg-3Y-CjO" secondAttribute="top" constant="30" id="MHT-ey-kgc"/>
-                            <constraint firstItem="LKg-3Y-CjO" firstAttribute="trailing" secondItem="BJe-eb-WSi" secondAttribute="trailing" constant="30" id="R68-2a-yBq"/>
+                            <constraint firstItem="lWk-qq-baE" firstAttribute="width" secondItem="BJe-eb-WSi" secondAttribute="width" id="1EV-YW-bSn"/>
+                            <constraint firstItem="lWk-qq-baE" firstAttribute="top" secondItem="LKg-3Y-CjO" secondAttribute="top" constant="24" id="OoP-X5-jyX"/>
+                            <constraint firstItem="lWk-qq-baE" firstAttribute="centerX" secondItem="BJe-eb-WSi" secondAttribute="centerX" id="S2w-gh-ff6"/>
+                            <constraint firstItem="BJe-eb-WSi" firstAttribute="top" secondItem="lWk-qq-baE" secondAttribute="bottom" constant="16" id="Sc1-BG-5QC"/>
+                            <constraint firstItem="BJe-eb-WSi" firstAttribute="centerX" secondItem="s2e-Bb-5xu" secondAttribute="centerX" id="Syt-DS-yCH"/>
+                            <constraint firstItem="BJe-eb-WSi" firstAttribute="width" secondItem="LKg-3Y-CjO" secondAttribute="width" multiplier="0.6" id="VQl-xD-57X"/>
                             <constraint firstItem="LKg-3Y-CjO" firstAttribute="bottom" secondItem="BJe-eb-WSi" secondAttribute="bottom" constant="30" id="d5c-uj-bhK"/>
-                            <constraint firstItem="BJe-eb-WSi" firstAttribute="leading" secondItem="LKg-3Y-CjO" secondAttribute="leading" constant="30" id="spB-w7-hb3"/>
+                            <constraint firstItem="gWH-de-kIl" firstAttribute="centerY" secondItem="lWk-qq-baE" secondAttribute="centerY" id="eIB-XI-n5U"/>
+                            <constraint firstItem="gWH-de-kIl" firstAttribute="trailing" secondItem="lWk-qq-baE" secondAttribute="trailing" id="fqw-s4-Dk2"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="closeButton" destination="gWH-de-kIl" id="bI1-g3-sNg"/>
                         <outlet property="worldRankingTableView" destination="BJe-eb-WSi" id="5YV-k9-xby"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="svq-QY-Ors" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-224" y="146"/>
+            <point key="canvasLocation" x="-224.33035714285714" y="144.92753623188406"/>
         </scene>
     </scenes>
     <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
+        <image name="xmark" catalog="system" width="128" height="113"/>
     </resources>
 </document>
