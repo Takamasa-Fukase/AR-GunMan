@@ -2,42 +2,55 @@
 //  WorldRankingViewController.swift
 //  AR-GunMan
 //
-//  Created by 深瀬 貴将 on 2020/11/11.
+//  Created by Takahiro Fukase on 2021/11/13.
 //
 
 import UIKit
 import Firebase
-import PanModal
-
-struct Ranking {
-    let score: Double
-    let userName: String
-}
+import RxSwift
 
 class WorldRankingViewController: UIViewController {
-
-    var totalScore: Double = 0.000
-    var limitRankIndex = Int()
+    
     var db: Firestore!
     var list: [Ranking] = []
-    
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var totalScoreLabel: UILabel!
-    @IBOutlet weak var rightButtonsStackView: UIStackView!
-    @IBOutlet weak var replayButton: UIButton!
-    @IBOutlet weak var homeButton: UIButton!
+    let disposeBag = DisposeBag()
+
+    @IBOutlet weak var closeButton: UIButton!
+    @IBOutlet weak var worldRankingTableView: UITableView!
+    @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        rightButtonsStackView.isHidden = true
-        replayButton.alpha = 0
-        homeButton.alpha = 0
-                
-        totalScoreLabel.text = String(format: "%.3f", totalScore)
-        tableView.contentInset.top = 10
-        tableView.register(UINib(nibName: "WorldRankingCell", bundle: nil), forCellReuseIdentifier: "WorldRankingCell")
+        let _ = closeButton.rx.tap
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else {return}
+                self.dismiss(animated: true)
+            }).disposed(by: disposeBag)
         
+        setupTapDismiss()
+        setupTableView()
+        setupFirestore()
+    }
+    
+    //枠外タップでdismissの設定をつける
+    func setupTapDismiss() {
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissByTap))
+        tapRecognizer.delegate = self
+        self.view.addGestureRecognizer(tapRecognizer)
+    }
+    
+    @objc func dismissByTap() {
+        self.dismiss(animated: true)
+    }
+    
+    private func setupTableView() {
+        worldRankingTableView.contentInset.top = 10
+        worldRankingTableView.dataSource = self
+        worldRankingTableView.register(UINib(nibName: "WorldRankingCell", bundle: nil), forCellReuseIdentifier: "WorldRankingCell")
+    }
+    
+    private func setupFirestore() {
         db = Firestore.firestore()
         //自動更新を設定
         db.collection("worldRanking").order(by: "score", descending: true).addSnapshotListener{ snapshot, err in
@@ -48,82 +61,14 @@ class WorldRankingViewController: UIViewController {
                 return Ranking(score: data.data()["score"] as? Double ?? 0.000, userName: data.data()["user_name"] as? String ?? "NO NAME")
             }
 
-            self.tableView.reloadData()
-                        
+            self.activityIndicatorView.stopAnimating()
+            self.worldRankingTableView.reloadData()
         }
-        
-        //背景をぼかし処理
-        let blurEffect = UIBlurEffect(style: .dark)
-        let visualEffectView = UIVisualEffectView(effect: blurEffect)
-        visualEffectView.frame = self.view.frame
-        
-//        let blueView = UIView(frame: self.view.frame)
-//        blueView.backgroundColor = .brown
-//        blueView.alpha = 0.2
-//        self.view.addSubview(blueView)
-//        self.view.sendSubviewToBack(blueView)
-        
-        self.view.insertSubview(visualEffectView, at: 0)
-        
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            let storyboard: UIStoryboard = UIStoryboard(name: "RegisterNameViewController", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "RegisterNameViewController") as! RegisterNameViewController
-            vc.totalScore = self.totalScore
-            vc.rankingCount = self.list.count
-            vc.modalPresentationStyle = .overCurrentContext
-            
-            let threeDigitsScore = Double(round(1000 * self.totalScore)/1000)
-            
-            let limitRankIndex = self.list.firstIndex(where: {
-                $0.score < threeDigitsScore
-            })
-            vc.tentativeRank = limitRankIndex ?? 0 + 1 + 1
-            vc.registerNameVCDelegate = self
-            
-            let navi = UINavigationController(rootViewController: vc)
-            navi.setNavigationBarHidden(true, animated: false)
-            
-            self.presentPanModal(navi)
-        }
-        
     }
-    
-    @IBAction func tappedReplay(_ sender: Any) {
-        dismissToTopVC(retry: true)
-    }
-    
-    @IBAction func tappedHome(_ sender: Any) {
-        dismissToTopVC()
-    }
-    
-    func dismissToTopVC(retry: Bool = false) {
-        let topVC = self.presentingViewController?.presentingViewController as! ViewController
-        topVC.replayFlag = retry
-        topVC.dismiss(animated: false, completion: nil)
-    }
-    
 }
 
-extension WorldRankingViewController: RegisterNameVCDelegate {
+extension WorldRankingViewController: UITableViewDataSource {
     
-    func showRightButtons() {
-        
-        UIView.animate(withDuration: 0.6, delay: 0.1) {
-            self.rightButtonsStackView.isHidden = false
-            
-        } completion: { (Bool) in
-            UIView.animate(withDuration: 0.2, delay: 0) {
-                self.replayButton.alpha = 1
-                self.homeButton.alpha = 1
-            }
-        }
-
-    }
-    
-}
-
-extension WorldRankingViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return list.count
     }
@@ -135,40 +80,16 @@ extension WorldRankingViewController: UITableViewDelegate, UITableViewDataSource
         cell?.rankLabel.text = String(indexPath.row + 1)
         return cell ?? UITableViewCell()
     }
-    
 }
 
-extension UINavigationController: PanModalPresentable {
-    public var panScrollable: UIScrollView? {
-        nil
-    }
-    
-    public var topOffset: CGFloat {
-        return 0.0
-    }
 
-    public var springDamping: CGFloat {
-        return 1.0
-    }
 
-    public var transitionDuration: Double {
-        return 0.4
+extension WorldRankingViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        if touch.view == self.view {
+            return true
+        } else {
+            return false
+        }
     }
-
-    public var transitionAnimationOptions: UIView.AnimationOptions {
-        return [.allowUserInteraction, .beginFromCurrentState]
-    }
-
-    public var shouldRoundTopCorners: Bool {
-        return false
-    }
-
-    public var showDragIndicator: Bool {
-        return false
-    }
-    
-    public var longFormHeight: PanModalHeight {
-        return .maxHeight
-    }
-    
 }

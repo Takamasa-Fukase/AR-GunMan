@@ -251,8 +251,8 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
                 
                 AudioModel.playSound(of: .rankingAppear)
                 
-                let storyboard: UIStoryboard = UIStoryboard(name: "WorldRankingViewController", bundle: nil)
-                let vc = storyboard.instantiateViewController(withIdentifier: "WorldRankingViewController") as! WorldRankingViewController
+                let storyboard: UIStoryboard = UIStoryboard(name: "GameResultViewController", bundle: nil)
+                let vc = storyboard.instantiateViewController(withIdentifier: "GameResultViewController") as! GameResultViewController
                 
                 let sumPoint: Double = min(self.pistolPoint + self.bazookaPoint, 100.0)
                 

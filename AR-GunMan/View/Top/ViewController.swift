@@ -9,7 +9,6 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import PanModal
 
 class ViewController: UIViewController {
     
@@ -91,7 +90,6 @@ class ViewController: UIViewController {
                     self.presentGameVC()
                     
                 case .ranking:
-                    //TODO: - 遷移メソッドの中身はまだ空なので、ランキングVCへ遷移を繋げる
                     self.presentRankingVC()
                     
                 case .howToPlay:
@@ -113,24 +111,21 @@ class ViewController: UIViewController {
     }
     
     func presentRankingVC() {
-        //TODO: - ランキング画面へ遷移を繋げる
+        let storyboard: UIStoryboard = UIStoryboard(name: "WorldRankingViewController", bundle: nil)
+        let vc = storyboard.instantiateInitialViewController() as! WorldRankingViewController
+        self.presentPanModal(vc)
     }
     
     func presentHowToPlayVC() {
         let storyboard: UIStoryboard = UIStoryboard(name: "TutorialViewController", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "TutorialViewController") as! TutorialViewController
         vc.isBlurEffectEnabled = false
-        let navi = UINavigationController(rootViewController: vc)
-        navi.setNavigationBarHidden(true, animated: false)
-        self.presentPanModal(navi)
+        self.presentPanModal(vc)
     }
     
     func presentSettingsVC() {
         let storyboard: UIStoryboard = UIStoryboard(name: "SettingsViewController", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "SettingsViewController") as! SettingsViewController
-        let navi = UINavigationController(rootViewController: vc)
-        navi.setNavigationBarHidden(true, animated: false)
-        self.presentPanModal(navi)
+        self.presentPanModal(vc)
     }
-    
 }
