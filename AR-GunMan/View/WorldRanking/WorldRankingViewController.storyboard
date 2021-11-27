@@ -30,15 +30,6 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gWH-de-kIl">
-                                <rect key="frame" x="630.5" y="9" width="60" height="60"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="2Vo-J1-qcx"/>
-                                    <constraint firstAttribute="width" constant="60" id="Wqb-Qf-xWe"/>
-                                    <constraint firstAttribute="height" constant="60" id="qFF-EJ-jSO"/>
-                                </constraints>
-                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="BJe-eb-WSi">
                                 <rect key="frame" x="205.5" y="62" width="485" height="301"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -54,6 +45,19 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </tableView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="iIg-o4-aQp">
+                                <rect key="frame" x="429.5" y="194" width="37" height="37"/>
+                                <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gWH-de-kIl">
+                                <rect key="frame" x="630.5" y="9" width="60" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="2Vo-J1-qcx"/>
+                                    <constraint firstAttribute="width" constant="60" id="Wqb-Qf-xWe"/>
+                                    <constraint firstAttribute="height" constant="60" id="qFF-EJ-jSO"/>
+                                </constraints>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </button>
                             <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lWk-qq-baE">
                                 <rect key="frame" x="205.5" y="24" width="485" height="30"/>
                                 <subviews>
@@ -108,12 +112,15 @@
                             <constraint firstItem="NfF-rE-4gx" firstAttribute="top" secondItem="lWk-qq-baE" secondAttribute="top" constant="15" id="Xeh-HA-z7A"/>
                             <constraint firstItem="LKg-3Y-CjO" firstAttribute="bottom" secondItem="BJe-eb-WSi" secondAttribute="bottom" constant="30" id="d5c-uj-bhK"/>
                             <constraint firstItem="gWH-de-kIl" firstAttribute="centerY" secondItem="lWk-qq-baE" secondAttribute="centerY" id="eIB-XI-n5U"/>
+                            <constraint firstItem="iIg-o4-aQp" firstAttribute="centerY" secondItem="BJe-eb-WSi" secondAttribute="centerY" id="fbp-vy-qLp"/>
                             <constraint firstItem="gWH-de-kIl" firstAttribute="trailing" secondItem="lWk-qq-baE" secondAttribute="trailing" id="fqw-s4-Dk2"/>
+                            <constraint firstItem="iIg-o4-aQp" firstAttribute="centerX" secondItem="BJe-eb-WSi" secondAttribute="centerX" id="l0U-vb-lAa"/>
                             <constraint firstItem="NfF-rE-4gx" firstAttribute="bottom" secondItem="BJe-eb-WSi" secondAttribute="bottom" constant="10" id="q1t-mP-dDA"/>
                             <constraint firstItem="NfF-rE-4gx" firstAttribute="trailing" secondItem="BJe-eb-WSi" secondAttribute="trailing" constant="10" id="vrO-Xh-c1q"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicatorView" destination="iIg-o4-aQp" id="CUa-Fe-hKL"/>
                         <outlet property="closeButton" destination="gWH-de-kIl" id="bI1-g3-sNg"/>
                         <outlet property="worldRankingTableView" destination="BJe-eb-WSi" id="5YV-k9-xby"/>
                     </connections>

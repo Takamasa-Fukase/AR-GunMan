@@ -17,7 +17,8 @@ class WorldRankingViewController: UIViewController {
 
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var worldRankingTableView: UITableView!
-        
+    @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -48,6 +49,7 @@ class WorldRankingViewController: UIViewController {
                 return Ranking(score: data.data()["score"] as? Double ?? 0.000, userName: data.data()["user_name"] as? String ?? "NO NAME")
             }
 
+            self.activityIndicatorView.stopAnimating()
             self.worldRankingTableView.reloadData()
         }
     }
