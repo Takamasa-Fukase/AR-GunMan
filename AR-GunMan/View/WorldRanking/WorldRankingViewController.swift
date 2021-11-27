@@ -28,8 +28,20 @@ class WorldRankingViewController: UIViewController {
                 self.dismiss(animated: true)
             }).disposed(by: disposeBag)
         
+        setupTapDismiss()
         setupTableView()
         setupFirestore()
+    }
+    
+    //枠外タップでdismissの設定をつける
+    func setupTapDismiss() {
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissByTap))
+        tapRecognizer.delegate = self
+        self.view.addGestureRecognizer(tapRecognizer)
+    }
+    
+    @objc func dismissByTap() {
+        self.dismiss(animated: true)
     }
     
     private func setupTableView() {
@@ -67,5 +79,17 @@ extension WorldRankingViewController: UITableViewDataSource {
         cell?.scoreLabel.text = String(list[indexPath.row].score)
         cell?.rankLabel.text = String(indexPath.row + 1)
         return cell ?? UITableViewCell()
+    }
+}
+
+
+
+extension WorldRankingViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        if touch.view == self.view {
+            return true
+        } else {
+            return false
+        }
     }
 }
