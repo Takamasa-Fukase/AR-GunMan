@@ -22,7 +22,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var howToPlayButton: UIButton!
     @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet weak var startButtonIcon: UIImageView!
-    @IBOutlet weak var settingsButtonIcon: UIImageView!
+    @IBOutlet weak var rankingButtonIcon: UIImageView!
     @IBOutlet weak var howToPlayButtonIcon: UIImageView!
     
     override func viewDidAppear(_ animated: Bool) {
@@ -37,7 +37,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         startButtonIcon.image = Const.targetIcon
-        settingsButtonIcon.image = Const.targetIcon
+        rankingButtonIcon.image = Const.targetIcon
         howToPlayButtonIcon.image = Const.targetIcon
         
         //input
@@ -62,15 +62,7 @@ class ViewController: UIViewController {
         let _ = settingsButton.rx.tap
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else {return}
-                //バズーカ選択時の音声を再生
-                AudioModel.playSound(of: .bazookaSet)
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-                    let storyboard: UIStoryboard = UIStoryboard(name: "SettingsViewController", bundle: nil)
-                    let vc = storyboard.instantiateViewController(withIdentifier: "SettingsViewController") as! SettingsViewController
-                    let navi = UINavigationController(rootViewController: vc)
-                    navi.setNavigationBarHidden(true, animated: false)
-                    self.presentPanModal(navi)
-                }
+                self.viewModel.buttonTapped.onNext(.settings)
             }).disposed(by: disposeBag)
         
         //output
@@ -82,9 +74,11 @@ class ViewController: UIViewController {
                 case .start:
                     self.startButtonIcon.image = image
                 case .ranking:
-                    self.howToPlayButtonIcon.image = image
+                    self.rankingButtonIcon.image = image
                 case .howToPlay:
-                    self.settingsButtonIcon.image = image
+                    self.howToPlayButtonIcon.image = image
+                default:
+                    break
                 }
             }).disposed(by: disposeBag)
         
@@ -97,16 +91,14 @@ class ViewController: UIViewController {
                     self.presentGameVC()
                     
                 case .ranking:
-                    //TODO: - ランキングVCへ遷移を繋げる
-                    break
+                    //TODO: - 遷移メソッドの中身はまだ空なので、ランキングVCへ遷移を繋げる
+                    self.presentRankingVC()
                     
                 case .howToPlay:
-                    let storyboard: UIStoryboard = UIStoryboard(name: "TutorialViewController", bundle: nil)
-                    let vc = storyboard.instantiateViewController(withIdentifier: "TutorialViewController") as! TutorialViewController
-                    vc.isBlurEffectEnabled = false
-                    let navi = UINavigationController(rootViewController: vc)
-                    navi.setNavigationBarHidden(true, animated: false)
-                    self.presentPanModal(navi)
+                    self.presentHowToPlayVC()
+                    
+                case .settings:
+                    self.presentSettingsVC()
                 }
             }).disposed(by: disposeBag)
     }
@@ -118,6 +110,27 @@ class ViewController: UIViewController {
         let vc = storyboard.instantiateViewController(withIdentifier: "GameViewController") as! GameViewController
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: animated)
+    }
+    
+    func presentRankingVC() {
+        //TODO: - ランキング画面へ遷移を繋げる
+    }
+    
+    func presentHowToPlayVC() {
+        let storyboard: UIStoryboard = UIStoryboard(name: "TutorialViewController", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "TutorialViewController") as! TutorialViewController
+        vc.isBlurEffectEnabled = false
+        let navi = UINavigationController(rootViewController: vc)
+        navi.setNavigationBarHidden(true, animated: false)
+        self.presentPanModal(navi)
+    }
+    
+    func presentSettingsVC() {
+        let storyboard: UIStoryboard = UIStoryboard(name: "SettingsViewController", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "SettingsViewController") as! SettingsViewController
+        let navi = UINavigationController(rootViewController: vc)
+        navi.setNavigationBarHidden(true, animated: false)
+        self.presentPanModal(navi)
     }
     
 }

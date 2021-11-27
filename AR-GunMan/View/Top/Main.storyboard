@@ -236,10 +236,10 @@
                     </view>
                     <connections>
                         <outlet property="howToPlayButton" destination="aDv-ZE-dSr" id="BJd-fq-D2E"/>
-                        <outlet property="howToPlayButtonIcon" destination="TDP-3M-EL3" id="FBc-Ml-ckA"/>
+                        <outlet property="howToPlayButtonIcon" destination="8cQ-Eo-5C8" id="pfv-Xq-UXf"/>
                         <outlet property="rankingButton" destination="68H-Do-dng" id="Y0g-UV-7S2"/>
+                        <outlet property="rankingButtonIcon" destination="TDP-3M-EL3" id="Tea-Co-rch"/>
                         <outlet property="settingsButton" destination="RgI-Vm-H9F" id="9Hg-tV-iN5"/>
-                        <outlet property="settingsButtonIcon" destination="8cQ-Eo-5C8" id="f7B-I8-HKC"/>
                         <outlet property="startButton" destination="ybM-iC-l3r" id="mrr-qY-wPD"/>
                         <outlet property="startButtonIcon" destination="Hbr-yd-pBE" id="pqb-x1-Xto"/>
                     </connections>
