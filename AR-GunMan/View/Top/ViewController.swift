@@ -9,7 +9,6 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import PanModal
 
 class ViewController: UIViewController {
     
@@ -114,26 +113,19 @@ class ViewController: UIViewController {
     func presentRankingVC() {
         let storyboard: UIStoryboard = UIStoryboard(name: "WorldRankingViewController", bundle: nil)
         let vc = storyboard.instantiateInitialViewController() as! WorldRankingViewController
-        let navi = UINavigationController(rootViewController: vc)
-        navi.setNavigationBarHidden(true, animated: false)
-        self.presentPanModal(navi)
+        self.presentPanModal(vc)
     }
     
     func presentHowToPlayVC() {
         let storyboard: UIStoryboard = UIStoryboard(name: "TutorialViewController", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "TutorialViewController") as! TutorialViewController
         vc.isBlurEffectEnabled = false
-        let navi = UINavigationController(rootViewController: vc)
-        navi.setNavigationBarHidden(true, animated: false)
-        self.presentPanModal(navi)
+        self.presentPanModal(vc)
     }
     
     func presentSettingsVC() {
         let storyboard: UIStoryboard = UIStoryboard(name: "SettingsViewController", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "SettingsViewController") as! SettingsViewController
-        let navi = UINavigationController(rootViewController: vc)
-        navi.setNavigationBarHidden(true, animated: false)
-        self.presentPanModal(navi)
+        self.presentPanModal(vc)
     }
-    
 }
