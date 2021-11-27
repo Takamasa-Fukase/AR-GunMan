@@ -81,10 +81,7 @@ class GameResultViewController: UIViewController {
             vc.tentativeRank = limitRankIndex ?? 0 + 1 + 1
             vc.registerNameVCDelegate = self
             
-            let navi = UINavigationController(rootViewController: vc)
-            navi.setNavigationBarHidden(true, animated: false)
-            
-            self.presentPanModal(navi)
+            self.presentPanModal(vc)
         }
         
     }
@@ -134,41 +131,6 @@ extension GameResultViewController: UITableViewDelegate, UITableViewDataSource {
         cell?.scoreLabel.text = String(list[indexPath.row].score)
         cell?.rankLabel.text = String(indexPath.row + 1)
         return cell ?? UITableViewCell()
-    }
-    
-}
-
-extension UINavigationController: PanModalPresentable {
-    public var panScrollable: UIScrollView? {
-        nil
-    }
-    
-    public var topOffset: CGFloat {
-        return 0.0
-    }
-
-    public var springDamping: CGFloat {
-        return 1.0
-    }
-
-    public var transitionDuration: Double {
-        return 0.4
-    }
-
-    public var transitionAnimationOptions: UIView.AnimationOptions {
-        return [.allowUserInteraction, .beginFromCurrentState]
-    }
-
-    public var shouldRoundTopCorners: Bool {
-        return false
-    }
-
-    public var showDragIndicator: Bool {
-        return false
-    }
-    
-    public var longFormHeight: PanModalHeight {
-        return .maxHeight
     }
     
 }
