@@ -91,7 +91,6 @@ class ViewController: UIViewController {
                     self.presentGameVC()
                     
                 case .ranking:
-                    //TODO: - 遷移メソッドの中身はまだ空なので、ランキングVCへ遷移を繋げる
                     self.presentRankingVC()
                     
                 case .howToPlay:
@@ -113,7 +112,11 @@ class ViewController: UIViewController {
     }
     
     func presentRankingVC() {
-        //TODO: - ランキング画面へ遷移を繋げる
+        let storyboard: UIStoryboard = UIStoryboard(name: "WorldRankingViewController", bundle: nil)
+        let vc = storyboard.instantiateInitialViewController() as! WorldRankingViewController
+        let navi = UINavigationController(rootViewController: vc)
+        navi.setNavigationBarHidden(true, animated: false)
+        self.presentPanModal(navi)
     }
     
     func presentHowToPlayVC() {
