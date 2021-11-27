@@ -18,10 +18,11 @@ class ViewController: UIViewController {
     var replayFlag = false
     
     @IBOutlet weak var startButton: UIButton!
-    @IBOutlet weak var settingsButton: UIButton!
+    @IBOutlet weak var rankingButton: UIButton!
     @IBOutlet weak var howToPlayButton: UIButton!
+    @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet weak var startButtonIcon: UIImageView!
-    @IBOutlet weak var settingsButtonIcon: UIImageView!
+    @IBOutlet weak var rankingButtonIcon: UIImageView!
     @IBOutlet weak var howToPlayButtonIcon: UIImageView!
     
     override func viewDidAppear(_ animated: Bool) {
@@ -36,7 +37,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         startButtonIcon.image = Const.targetIcon
-        settingsButtonIcon.image = Const.targetIcon
+        rankingButtonIcon.image = Const.targetIcon
         howToPlayButtonIcon.image = Const.targetIcon
         
         //input
@@ -46,16 +47,22 @@ class ViewController: UIViewController {
                 self.viewModel.buttonTapped.onNext(.start)
             }).disposed(by: disposeBag)
         
-        let _ = settingsButton.rx.tap
+        let _ = rankingButton.rx.tap
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else {return}
-                self.viewModel.buttonTapped.onNext(.settings)
+                self.viewModel.buttonTapped.onNext(.ranking)
             }).disposed(by: disposeBag)
         
         let _ = howToPlayButton.rx.tap
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else {return}
                 self.viewModel.buttonTapped.onNext(.howToPlay)
+            }).disposed(by: disposeBag)
+        
+        let _ = settingsButton.rx.tap
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else {return}
+                self.viewModel.buttonTapped.onNext(.settings)
             }).disposed(by: disposeBag)
         
         //output
@@ -66,10 +73,12 @@ class ViewController: UIViewController {
                 switch type {
                 case .start:
                     self.startButtonIcon.image = image
-                case .settings:
-                    self.settingsButtonIcon.image = image
+                case .ranking:
+                    self.rankingButtonIcon.image = image
                 case .howToPlay:
                     self.howToPlayButtonIcon.image = image
+                default:
+                    break
                 }
             }).disposed(by: disposeBag)
         
@@ -81,20 +90,15 @@ class ViewController: UIViewController {
                     CameraAuthModel.checkCameraAuthorization(vc: self)
                     self.presentGameVC()
                     
-                case .settings:
-                    let storyboard: UIStoryboard = UIStoryboard(name: "SettingsViewController", bundle: nil)
-                    let vc = storyboard.instantiateViewController(withIdentifier: "SettingsViewController") as! SettingsViewController
-                    let navi = UINavigationController(rootViewController: vc)
-                    navi.setNavigationBarHidden(true, animated: false)
-                    self.presentPanModal(navi)
-
+                case .ranking:
+                    //TODO: - 遷移メソッドの中身はまだ空なので、ランキングVCへ遷移を繋げる
+                    self.presentRankingVC()
+                    
                 case .howToPlay:
-                    let storyboard: UIStoryboard = UIStoryboard(name: "TutorialViewController", bundle: nil)
-                    let vc = storyboard.instantiateViewController(withIdentifier: "TutorialViewController") as! TutorialViewController
-                    vc.isBlurEffectEnabled = false
-                    let navi = UINavigationController(rootViewController: vc)
-                    navi.setNavigationBarHidden(true, animated: false)
-                    self.presentPanModal(navi)
+                    self.presentHowToPlayVC()
+                    
+                case .settings:
+                    self.presentSettingsVC()
                 }
             }).disposed(by: disposeBag)
     }
@@ -106,6 +110,27 @@ class ViewController: UIViewController {
         let vc = storyboard.instantiateViewController(withIdentifier: "GameViewController") as! GameViewController
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: animated)
+    }
+    
+    func presentRankingVC() {
+        //TODO: - ランキング画面へ遷移を繋げる
+    }
+    
+    func presentHowToPlayVC() {
+        let storyboard: UIStoryboard = UIStoryboard(name: "TutorialViewController", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "TutorialViewController") as! TutorialViewController
+        vc.isBlurEffectEnabled = false
+        let navi = UINavigationController(rootViewController: vc)
+        navi.setNavigationBarHidden(true, animated: false)
+        self.presentPanModal(navi)
+    }
+    
+    func presentSettingsVC() {
+        let storyboard: UIStoryboard = UIStoryboard(name: "SettingsViewController", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "SettingsViewController") as! SettingsViewController
+        let navi = UINavigationController(rootViewController: vc)
+        navi.setNavigationBarHidden(true, animated: false)
+        self.presentPanModal(navi)
     }
     
 }

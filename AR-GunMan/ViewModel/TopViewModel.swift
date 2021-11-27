@@ -11,8 +11,9 @@ import RxCocoa
 
 enum TopPageButtonTypes {
     case start
-    case settings
+    case ranking
     case howToPlay
+    case settings
 }
 
 class TopViewModel {
@@ -29,11 +30,20 @@ class TopViewModel {
         
         //other
         func changeButtonIcon(type: TopPageButtonTypes) {
-            _isShotButtonIcon.accept((type, true))
-            AudioModel.playSound(of: .westernPistolShoot)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                _isShotButtonIcon.accept((type, false))
-                _transit.accept(type)
+            switch type {
+            case .start, .ranking, .howToPlay:
+                _isShotButtonIcon.accept((type, true))
+                AudioModel.playSound(of: .westernPistolShoot)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    _isShotButtonIcon.accept((type, false))
+                    _transit.accept(type)
+                }
+            case .settings:
+                AudioModel.playSound(of: .bazookaSet)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                    //TODO: - 後で良い画像素材が見つかればsettingsのアイコンも画像変えギミックを追加したい
+                    _transit.accept(type)
+                }
             }
         }
 
