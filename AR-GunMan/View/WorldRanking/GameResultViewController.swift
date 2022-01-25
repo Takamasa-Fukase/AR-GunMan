@@ -16,6 +16,7 @@ struct Ranking {
 
 class GameResultViewController: UIViewController {
 
+    //MARK: - Properties
     var totalScore: Double = 0.000
     var limitRankIndex = Int()
     var db: Firestore!
@@ -27,6 +28,7 @@ class GameResultViewController: UIViewController {
     @IBOutlet weak var replayButton: UIButton!
     @IBOutlet weak var homeButton: UIButton!
     
+    //MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         

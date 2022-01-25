@@ -17,10 +17,12 @@ protocol SwitchWeaponDelegate: AnyObject {
 
 class SwitchWeaponViewController: UIViewController {
        
+    //MARK: - Properties
     let disposeBag = DisposeBag()
-    weak var switchWeaponDelegate: SwitchWeaponDelegate?
     var viewModel: GameViewModel?
+    weak var switchWeaponDelegate: SwitchWeaponDelegate?
     
+    //MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
 

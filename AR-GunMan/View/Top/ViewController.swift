@@ -12,6 +12,7 @@ import RxCocoa
 
 class ViewController: UIViewController {
     
+    //MARK: - Properties
     let viewModel = TopViewModel()
     let disposeBag = DisposeBag()
     var replayFlag = false
@@ -24,6 +25,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var rankingButtonIcon: UIImageView!
     @IBOutlet weak var howToPlayButtonIcon: UIImageView!
     
+    //MARK: - Methods
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
                

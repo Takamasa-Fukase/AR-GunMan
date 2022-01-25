@@ -16,6 +16,7 @@ import RxCocoa
 
 class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDelegate {
 
+    //MARK: - Properties
     //count
     var targetCount = 50
     var pistolBulletsCount = 7
@@ -59,6 +60,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
     @IBOutlet weak var switchWeaponButton: UIButton!
     
     
+    //MARK: - Methods
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         

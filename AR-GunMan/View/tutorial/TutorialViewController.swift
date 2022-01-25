@@ -13,8 +13,8 @@ import UIKit
 
 class TutorialViewController: UIViewController {
     
+    //MARK: - Properties
     var isBlurEffectEnabled: Bool = true
-    
     weak var delegate: TutorialVCDelegate?
     
     @IBOutlet weak var scrollView: UIScrollView!
@@ -24,11 +24,11 @@ class TutorialViewController: UIViewController {
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var bottomButton: UIButton!
     
+    //MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
 
         scrollView.delegate = self
-        
         pageControl.isUserInteractionEnabled = false
         
         animateFirstImageView()

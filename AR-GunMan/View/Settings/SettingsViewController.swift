@@ -9,7 +9,8 @@ import UIKit
 import SafariServices
 
 class SettingsViewController: UIViewController {
-    
+
+    //Methods
     override func viewDidLoad() {
         super.viewDidLoad()
     }

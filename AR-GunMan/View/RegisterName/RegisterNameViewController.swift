@@ -16,6 +16,7 @@ protocol RegisterNameVCDelegate {
 
 class RegisterNameViewController: UIViewController {
     
+    //MARK: - Properties
     let disposeBag = DisposeBag()
     
     //前画面から引くつぐゲーム結果のデータ
@@ -31,6 +32,7 @@ class RegisterNameViewController: UIViewController {
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var yesRegisterButton: UIButton!
     
+    //MARK: - Methods
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
