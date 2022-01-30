@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="1mi-OB-ywS">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="1mi-OB-ywS">
     <device id="retina6_1" orientation="landscape" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -38,9 +38,6 @@
                                                 </fragment>
                                             </attributedString>
                                         </state>
-                                        <connections>
-                                            <action selector="tappedDeveloperConctact:" destination="1mi-OB-ywS" eventType="touchUpInside" id="Zcj-C9-MEd"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kAo-Ti-aEt">
                                         <rect key="frame" x="48" y="105" width="310" height="105"/>
@@ -56,9 +53,6 @@
                                                 </fragment>
                                             </attributedString>
                                         </state>
-                                        <connections>
-                                            <action selector="tappedPrivacyPolicy:" destination="1mi-OB-ywS" eventType="touchUpInside" id="Lbs-fQ-Vaw"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -72,9 +66,6 @@
                                 <state key="normal" title="BACK">
                                     <color key="titleColor" red="0.027436967940000001" green="0.027523037050000001" blue="0.019605956970000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </state>
-                                <connections>
-                                    <action selector="tappedBack:" destination="1mi-OB-ywS" eventType="touchUpInside" id="KCg-t8-STW"/>
-                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="z2t-kC-wqq"/>
@@ -89,6 +80,11 @@
                             <constraint firstItem="9Ii-aV-ok0" firstAttribute="top" secondItem="GRI-mk-XKP" secondAttribute="bottom" id="vWa-wK-c66"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="backButton" destination="x9f-pb-rDU" id="zLT-ri-E7C"/>
+                        <outlet property="developerContactButton" destination="iog-Le-8cK" id="lDB-1n-p4b"/>
+                        <outlet property="privacyPolicyButton" destination="kAo-Ti-aEt" id="a1A-pV-wqS"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jv7-fP-AaN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
