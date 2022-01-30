@@ -10,11 +10,20 @@ protocol TutorialVCDelegate: AnyObject {
 }
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class TutorialViewController: UIViewController {
     
+    enum TransitType {
+        case topPage
+        case gamePage
+    }
+    
     //MARK: - Properties
-    var isBlurEffectEnabled: Bool = true
+    let viewModel = TutorialViewModel()
+    let disposeBag = DisposeBag()
+    var transitionType: TransitType = .topPage
     weak var delegate: TutorialVCDelegate?
     
     @IBOutlet weak var scrollView: UIScrollView!
@@ -34,53 +43,60 @@ class TutorialViewController: UIViewController {
         animateFirstImageView()
         animateSecondImageView()
         
+        if transitionType = .gamePage {
+            setupBlurEffect()
+        }
+        
+        //input
+        let _ = bottomButton.rx.tap
+            .bind(to: viewModel.bottomButtonTapped)
+            .disposed(by: disposeBag)
+        
+        //output
+        let _ = viewModel.pageControlValue
+            .bind(to: pageControl.rx.currentPage)
+            .disposed(by: disposeBag)
+        
+        let _ = viewModel.buttonText
+            .bind(to: bottomButton.rx.title(for: .normal))
+            .disposed(by: disposeBag)
+        
+        let _ = viewModel.scrollPage
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else {return}
+                guard !self.scrollView.isDecelerating else {return}
+                let frameWidth = self.scrollView.frame.width
+                let targetContentOffsetX = frameWidth * CGFloat(min(self.getCurrentScrollViewIndex() + 1, 2))
+                let targetCGPoint = CGPoint(x: targetContentOffsetX, y: 0)
+                self.scrollView.setContentOffset(targetCGPoint, animated: true)
+            }).disposed(by: disposeBag)
+        
+        let _ = viewModel.dismiss
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else {return}
+                if self.transitionType = .gamePage {
+                    UserDefaults.standard.setValue(true, forKey: "tutorialAlreadySeen")
+                    self.delegate?.startGame()
+                }
+                self.dismiss(animated: true, completion: nil)
+            }).disposed(by: disposeBag)
+    }
+    
+    private func setupBlurEffect() {
         //背景をぼかし処理
         let blurEffect = UIBlurEffect(style: .dark)
         let visualEffectView = UIVisualEffectView(effect: blurEffect)
         visualEffectView.frame = self.view.frame
-        
-        if isBlurEffectEnabled {
-            self.view.insertSubview(visualEffectView, at: 0)
-        }
+        self.view.insertSubview(visualEffectView, at: 0)
     }
     
-    @IBAction func buttonTapped(_ sender: Any) {
-        
-        if getCurrentScrollViewIndex() == 2 {
-            print("OK tapped")
-            
-            if isBlurEffectEnabled {
-                UserDefaults.standard.setValue(true, forKey: "tutorialAlreadySeen")
-                
-                self.delegate?.startGame()
-            }
-            
-            self.dismiss(animated: true, completion: nil)
-        }else {
-            scrollPage()
-        }
-                
-    }
-    
-    func getCurrentScrollViewIndex() -> Int {
+    private func getCurrentScrollViewIndex() -> Int {
         let contentsOffSetX: CGFloat = scrollView.contentOffset.x
         let pageIndex = Int(round(contentsOffSetX / scrollView.frame.width))
         return pageIndex
     }
     
-    func scrollPage() {
-        guard !scrollView.isDecelerating else {
-            print("scrollview is still decelerating")
-            return
-        }
-        let frameWidth = scrollView.frame.width
-        
-        let targetContentOffsetX = frameWidth * CGFloat(min(getCurrentScrollViewIndex() + 1, 2))
-        let targetCGPoint = CGPoint(x: targetContentOffsetX, y: 0)
-        scrollView.setContentOffset(targetCGPoint, animated: true)
-    }
-    
-    func animateFirstImageView() {
+    private func animateFirstImageView() {
         let images = [UIImage(named: "howToShoot0")!, UIImage(named: "howToShoot1")!]
         firstImageView.animationImages = images
         firstImageView.animationDuration = 0.8
@@ -88,7 +104,7 @@ class TutorialViewController: UIViewController {
         firstImageView.startAnimating()
     }
     
-    func animateSecondImageView() {
+    private func animateSecondImageView() {
         let images = [UIImage(named: "howToReload0")!, UIImage(named: "howToReload1")!]
         secondImageView.animationImages = images
         secondImageView.animationDuration = 0.8
@@ -101,15 +117,7 @@ class TutorialViewController: UIViewController {
 extension TutorialViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-        pageControl.currentPage = getCurrentScrollViewIndex()
-        
-        if pageControl.currentPage == 2 {
-            bottomButton.setTitle("OK", for: .normal)
-        }else {
-            bottomButton.setTitle("NEXT", for: .normal)
-        }
-        
+        viewModel.currentScrollViewIndex.onNext(getCurrentScrollViewIndex())
     }
     
 }
