@@ -121,7 +121,7 @@ class ViewController: UIViewController {
     func presentHowToPlayVC() {
         let storyboard: UIStoryboard = UIStoryboard(name: "TutorialViewController", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "TutorialViewController") as! TutorialViewController
-        vc.isBlurEffectEnabled = false
+        vc.transitionType = .topPage
         self.presentPanModal(vc)
     }
     

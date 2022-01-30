@@ -43,7 +43,7 @@ class TutorialViewController: UIViewController {
         animateFirstImageView()
         animateSecondImageView()
         
-        if transitionType = .gamePage {
+        if transitionType == .gamePage {
             setupBlurEffect()
         }
         
@@ -74,7 +74,7 @@ class TutorialViewController: UIViewController {
         let _ = viewModel.dismiss
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else {return}
-                if self.transitionType = .gamePage {
+                if self.transitionType == .gamePage {
                     UserDefaults.standard.setValue(true, forKey: "tutorialAlreadySeen")
                     self.delegate?.startGame()
                 }
