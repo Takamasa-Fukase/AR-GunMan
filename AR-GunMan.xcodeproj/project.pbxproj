@@ -64,6 +64,7 @@
 		67200F5727A0020B00AD92EC /* WorldRankingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67200F5627A0020B00AD92EC /* WorldRankingViewModel.swift */; };
 		67200F5927A0026000AD92EC /* RegisterNameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67200F5827A0026000AD92EC /* RegisterNameViewModel.swift */; };
 		67200F5B27A0028700AD92EC /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67200F5A27A0028700AD92EC /* SettingsViewModel.swift */; };
+		677DF1EE27A710A8007512F6 /* SafariViewUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 677DF1ED27A710A8007512F6 /* SafariViewUtil.swift */; };
 		86627DE6273FD5E30044A980 /* WorldRankingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86627DE5273FD5E30044A980 /* WorldRankingViewController.swift */; };
 		86627DEB273FD61B0044A980 /* WorldRankingViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86627DEA273FD61B0044A980 /* WorldRankingViewController.storyboard */; };
 		866675D4275215AF007CB4D6 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866675D3275215AF007CB4D6 /* UIViewController+Extension.swift */; };
@@ -157,6 +158,7 @@
 		67200F5627A0020B00AD92EC /* WorldRankingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldRankingViewModel.swift; sourceTree = "<group>"; };
 		67200F5827A0026000AD92EC /* RegisterNameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterNameViewModel.swift; sourceTree = "<group>"; };
 		67200F5A27A0028700AD92EC /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		677DF1ED27A710A8007512F6 /* SafariViewUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariViewUtil.swift; sourceTree = "<group>"; };
 		82CB4F049BB35C36EAA5A632 /* Pods_AR_GunManTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_GunManTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		86627DE5273FD5E30044A980 /* WorldRankingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldRankingViewController.swift; sourceTree = "<group>"; };
 		86627DEA273FD61B0044A980 /* WorldRankingViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WorldRankingViewController.storyboard; sourceTree = "<group>"; };
@@ -269,6 +271,7 @@
 				59F79E5F256BE7B0006EC1B3 /* AR-GunMan.entitlements */,
 				59D2D4D82552DE66006DDB70 /* AppDelegate.swift */,
 				5952F63E25EA0DE900ADB85B /* Extension */,
+				677DF1EC27A71086007512F6 /* Utility */,
 				5952F64A25EA104D00ADB85B /* Const */,
 				59D2D56E2552E3B8006DDB70 /* Model */,
 				59D2D56F2552E3C0006DDB70 /* ViewModel */,
@@ -420,6 +423,14 @@
 				59D2D5902552E718006DDB70 /* SwitchWeaponCell.xib */,
 			);
 			path = SwitchWeapon;
+			sourceTree = "<group>";
+		};
+		677DF1EC27A71086007512F6 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				677DF1ED27A710A8007512F6 /* SafariViewUtil.swift */,
+			);
+			path = Utility;
 			sourceTree = "<group>";
 		};
 		9181646D3CDAAE6BA576903B /* Frameworks */ = {
@@ -706,6 +717,7 @@
 				86627DE6273FD5E30044A980 /* WorldRankingViewController.swift in Sources */,
 				59D2D5952552E718006DDB70 /* SwitchWeaponViewController.swift in Sources */,
 				59D2D5852552E6B2006DDB70 /* GameViewController.swift in Sources */,
+				677DF1EE27A710A8007512F6 /* SafariViewUtil.swift in Sources */,
 				67200F5927A0026000AD92EC /* RegisterNameViewModel.swift in Sources */,
 				67200F5527A000AC00AD92EC /* TutorialViewModel.swift in Sources */,
 				59D2D57B2552E536006DDB70 /* ViewController.swift in Sources */,
