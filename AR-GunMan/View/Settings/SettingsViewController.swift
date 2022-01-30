@@ -10,7 +10,7 @@ import SafariServices
 
 class SettingsViewController: UIViewController {
 
-    //Methods
+    //MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
     }

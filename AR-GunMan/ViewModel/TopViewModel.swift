@@ -28,6 +28,21 @@ class TopViewModel {
     
     init() {
         
+        //output
+        let _isShotButtonIcon = PublishRelay<(TopPageButtonTypes, Bool)>()
+        self.isShotButtonIcon = _isShotButtonIcon.asObservable()
+        
+        let _transit = PublishRelay<TopPageButtonTypes>()
+        self.transit = _transit.asObservable()
+        
+        
+        //input
+        self.buttonTapped = AnyObserver<TopPageButtonTypes>() { event in
+            guard let element = event.element else {return}
+            changeButtonIcon(type: element)
+        }
+        
+        
         //other
         func changeButtonIcon(type: TopPageButtonTypes) {
             switch type {
@@ -47,22 +62,6 @@ class TopViewModel {
             }
         }
 
-        
-        //output
-        let _isShotButtonIcon = PublishRelay<(TopPageButtonTypes, Bool)>()
-        self.isShotButtonIcon = _isShotButtonIcon.asObservable()
-        
-        let _transit = PublishRelay<TopPageButtonTypes>()
-        self.transit = _transit.asObservable()
-        
-        
-        //input
-        self.buttonTapped = AnyObserver<TopPageButtonTypes>() { event in
-            guard let element = event.element else {return}
-            changeButtonIcon(type: element)
-        }
-        
-        
     }
     
     

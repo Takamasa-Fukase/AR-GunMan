@@ -59,6 +59,11 @@
 		59D2D5962552E718006DDB70 /* SwitchWeaponViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59D2D5922552E718006DDB70 /* SwitchWeaponViewController.storyboard */; };
 		59D2D59E2552E751006DDB70 /* CalcuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2D59D2552E751006DDB70 /* CalcuModel.swift */; };
 		5F0F53972765C07884597855 /* Pods_AR_GunManTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82CB4F049BB35C36EAA5A632 /* Pods_AR_GunManTests.framework */; };
+		67200F53279FFF1E00AD92EC /* SwitchWeaponViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67200F52279FFF1E00AD92EC /* SwitchWeaponViewModel.swift */; };
+		67200F5527A000AC00AD92EC /* TutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67200F5427A000AC00AD92EC /* TutorialViewModel.swift */; };
+		67200F5727A0020B00AD92EC /* WorldRankingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67200F5627A0020B00AD92EC /* WorldRankingViewModel.swift */; };
+		67200F5927A0026000AD92EC /* RegisterNameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67200F5827A0026000AD92EC /* RegisterNameViewModel.swift */; };
+		67200F5B27A0028700AD92EC /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67200F5A27A0028700AD92EC /* SettingsViewModel.swift */; };
 		86627DE6273FD5E30044A980 /* WorldRankingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86627DE5273FD5E30044A980 /* WorldRankingViewController.swift */; };
 		86627DEB273FD61B0044A980 /* WorldRankingViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86627DEA273FD61B0044A980 /* WorldRankingViewController.storyboard */; };
 		866675D4275215AF007CB4D6 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866675D3275215AF007CB4D6 /* UIViewController+Extension.swift */; };
@@ -147,6 +152,11 @@
 		59E43329A2D9B4F8752F833A /* Pods-AR-GunMan-AR-GunManUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-GunMan-AR-GunManUITests.debug.xcconfig"; path = "Target Support Files/Pods-AR-GunMan-AR-GunManUITests/Pods-AR-GunMan-AR-GunManUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		59F79E5F256BE7B0006EC1B3 /* AR-GunMan.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "AR-GunMan.entitlements"; sourceTree = "<group>"; };
 		5AB32EC76FF682FB7040AD4D /* Pods-AR-GunMan-AR-GunManUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-GunMan-AR-GunManUITests.release.xcconfig"; path = "Target Support Files/Pods-AR-GunMan-AR-GunManUITests/Pods-AR-GunMan-AR-GunManUITests.release.xcconfig"; sourceTree = "<group>"; };
+		67200F52279FFF1E00AD92EC /* SwitchWeaponViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchWeaponViewModel.swift; sourceTree = "<group>"; };
+		67200F5427A000AC00AD92EC /* TutorialViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewModel.swift; sourceTree = "<group>"; };
+		67200F5627A0020B00AD92EC /* WorldRankingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldRankingViewModel.swift; sourceTree = "<group>"; };
+		67200F5827A0026000AD92EC /* RegisterNameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterNameViewModel.swift; sourceTree = "<group>"; };
+		67200F5A27A0028700AD92EC /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		82CB4F049BB35C36EAA5A632 /* Pods_AR_GunManTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_GunManTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		86627DE5273FD5E30044A980 /* WorldRankingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldRankingViewController.swift; sourceTree = "<group>"; };
 		86627DEA273FD61B0044A980 /* WorldRankingViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WorldRankingViewController.storyboard; sourceTree = "<group>"; };
@@ -337,7 +347,12 @@
 			isa = PBXGroup;
 			children = (
 				5952F62725E94D1000ADB85B /* TopViewModel.swift */,
+				67200F5427A000AC00AD92EC /* TutorialViewModel.swift */,
 				59484C9F256A540E00F9C6A8 /* GameViewModel.swift */,
+				67200F52279FFF1E00AD92EC /* SwitchWeaponViewModel.swift */,
+				67200F5627A0020B00AD92EC /* WorldRankingViewModel.swift */,
+				67200F5827A0026000AD92EC /* RegisterNameViewModel.swift */,
+				67200F5A27A0028700AD92EC /* SettingsViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -686,15 +701,19 @@
 				59484CA0256A540E00F9C6A8 /* GameViewModel.swift in Sources */,
 				5952F65125EA1A8100ADB85B /* WeaponModel.swift in Sources */,
 				5921A208255D6A4E001D8C39 /* WorldRankingCell.swift in Sources */,
+				67200F53279FFF1E00AD92EC /* SwitchWeaponViewModel.swift in Sources */,
 				59945100256AD55900560202 /* TutorialViewController.swift in Sources */,
 				86627DE6273FD5E30044A980 /* WorldRankingViewController.swift in Sources */,
 				59D2D5952552E718006DDB70 /* SwitchWeaponViewController.swift in Sources */,
 				59D2D5852552E6B2006DDB70 /* GameViewController.swift in Sources */,
+				67200F5927A0026000AD92EC /* RegisterNameViewModel.swift in Sources */,
+				67200F5527A000AC00AD92EC /* TutorialViewModel.swift in Sources */,
 				59D2D57B2552E536006DDB70 /* ViewController.swift in Sources */,
 				5952F62825E94D1000ADB85B /* TopViewModel.swift in Sources */,
 				59D2D4D92552DE66006DDB70 /* AppDelegate.swift in Sources */,
 				866675D4275215AF007CB4D6 /* UIViewController+Extension.swift in Sources */,
 				59D2D53A2552E1D2006DDB70 /* Storyboard+Extension.swift in Sources */,
+				67200F5727A0020B00AD92EC /* WorldRankingViewModel.swift in Sources */,
 				595E6987256C0190002B4F3E /* SettingsViewController.swift in Sources */,
 				59A01134255AF580008996E3 /* GameResultViewController.swift in Sources */,
 				5952F62D25E94D9200ADB85B /* CameraAuthModel.swift in Sources */,
@@ -703,6 +722,7 @@
 				59D2D5932552E718006DDB70 /* SwitchWeaponCell.swift in Sources */,
 				59D2D59E2552E751006DDB70 /* CalcuModel.swift in Sources */,
 				59940BAC2552FAA600EC20C1 /* RegisterNameViewController.swift in Sources */,
+				67200F5B27A0028700AD92EC /* SettingsViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
