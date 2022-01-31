@@ -38,8 +38,8 @@ class GameResultViewController: UIViewController {
         super.viewDidLoad()
         
         setupInitialUI()
+        setupTableView()
         setupBlurEffect()
-        tableView.register(UINib(nibName: "WorldRankingCell", bundle: nil), forCellReuseIdentifier: "WorldRankingCell")
         
         //input
         let _ = replayButton.rx.tap
@@ -71,7 +71,11 @@ class GameResultViewController: UIViewController {
         replayButton.alpha = 0
         homeButton.alpha = 0
         totalScoreLabel.text = String(format: "%.3f", totalScore)
+    }
+    
+    private func setupTableView() {
         tableView.contentInset.top = 10
+        tableView.register(UINib(nibName: "WorldRankingCell", bundle: nil), forCellReuseIdentifier: "WorldRankingCell")
     }
     
     private func setupBlurEffect() {
@@ -132,11 +136,13 @@ extension GameResultViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "WorldRankingCell") as? WorldRankingCell
-        cell?.nameLabel.text = rankingList[indexPath.row].userName
-        cell?.scoreLabel.text = String(rankingList[indexPath.row].score)
-        cell?.rankLabel.text = String(indexPath.row + 1)
-        return cell ?? UITableViewCell()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "WorldRankingCell") as? WorldRankingCell else {
+            return UITableViewCell()
+        }
+        cell.nameLabel.text = rankingList[indexPath.row].userName
+        cell.scoreLabel.text = String(rankingList[indexPath.row].score)
+        cell.rankLabel.text = String(indexPath.row + 1)
+        return cell
     }
     
 }
