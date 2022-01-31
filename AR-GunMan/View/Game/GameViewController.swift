@@ -55,7 +55,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
     @IBOutlet weak var sceneView: ARSCNView!
     @IBOutlet weak var pistolBulletsCountImageView: UIImageView!
     @IBOutlet weak var sightImageView: UIImageView!
-    @IBOutlet weak var targetCountLabel: UILabel!
+    @IBOutlet weak var timeCountLabel: UILabel!
     
     @IBOutlet weak var switchWeaponButton: UIButton!
     
@@ -163,7 +163,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         
         exploPar = bazookaHitExplosion?.particleSystems?.first!
 
-        targetCountLabel.font = targetCountLabel.font.monospacedDigitFont
+        timeCountLabel.font = timeCountLabel.font.monospacedDigitFont
 
         
     }
@@ -237,7 +237,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         timeCount = max(timeCount - 0.01, lowwerTime)
         let strTimeCount = String(format: "%.2f", timeCount)
         let twoDigitTimeCount = timeCount > 10 ? "\(strTimeCount)" : "0\(strTimeCount)"
-        targetCountLabel.text = twoDigitTimeCount
+        timeCountLabel.text = twoDigitTimeCount
         
         //タイマーが0になったらタイマーを破棄して結果画面へ遷移
         if timeCount <= 0 {
