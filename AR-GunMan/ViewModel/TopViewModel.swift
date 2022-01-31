@@ -19,11 +19,11 @@ enum TopPageButtonTypes {
 class TopViewModel {
     
     //input
-    var buttonTapped: AnyObserver<TopPageButtonTypes>
+    let buttonTapped: AnyObserver<TopPageButtonTypes>
     
     //output
-    var isShotButtonIcon: Observable<(TopPageButtonTypes, Bool)>
-    var transit: Observable<TopPageButtonTypes>
+    let isShotButtonIcon: Observable<(TopPageButtonTypes, Bool)>
+    let transit: Observable<TopPageButtonTypes>
 
     
     init() {

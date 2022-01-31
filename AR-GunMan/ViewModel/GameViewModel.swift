@@ -12,14 +12,14 @@ import RxCocoa
 class GameViewModel {
     
     //input
-    var rankingWillAppear: AnyObserver<Void>
+    let rankingWillAppear: AnyObserver<Void>
     
     
     //output
-    var fireWeapon: Observable<Void>
-    var reloadPistol: Observable<Void>
-    var changeTargetsToTaimeisan: Observable<Void>
-    var dismissSwitchWeaponVC: Observable<Void>
+    let fireWeapon: Observable<Void>
+    let reloadPistol: Observable<Void>
+    let changeTargetsToTaimeisan: Observable<Void>
+    let dismissSwitchWeaponVC: Observable<Void>
     
     
     init() {
