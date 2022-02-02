@@ -49,7 +49,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
     
     var isShootEnabled = false
     
-    var viewModel = GameViewModel()
+    let viewModel = GameViewModel()
     
     
     @IBOutlet weak var sceneView: ARSCNView!
@@ -64,33 +64,35 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if UserDefaults.standard.value(forKey: UserDefaultsKey.tutorialAlreadySeen) == nil {
-            
-            let storyboard: UIStoryboard = UIStoryboard(name: "TutorialViewController", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "TutorialViewController") as! TutorialViewController
-            vc.delegate = self
-            self.present(vc, animated: true)
-            
-        }else {
-            print("tutorialAlreadySeen=true")
-            
-            AudioModel.playSound(of: .pistolSet)
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                
-                AudioModel.playSound(of: .startWhistle)
-                
-                self.isShootEnabled = true
-                
-                self.timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(self.timerUpdate(timer:)), userInfo: nil, repeats: true)
-            }
-        }
+        //初回のみチュートリアルを表示するのでチェック
+        viewModel.checkTutorialSeenStatus.onNext(Void())
     }
         
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //output
+        let _ = viewModel.showTutorial
+            .subscribe(onNext: { [weak self] element in
+                guard let self = self else {return}
+                let storyboard: UIStoryboard = UIStoryboard(name: "TutorialViewController", bundle: nil)
+                let vc = storyboard.instantiateViewController(withIdentifier: "TutorialViewController") as! TutorialViewController
+                vc.delegate = self
+                self.present(vc, animated: true)
+            }).disposed(by: disposeBag)
+        
+        let _ = viewModel.startGame
+            .subscribe(onNext: { [weak self] element in
+                guard let self = self else {return}
+                AudioModel.playSound(of: .pistolSet)
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                    AudioModel.playSound(of: .startWhistle)
+                    self.isShootEnabled = true
+//                    self.timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(self.timerUpdate(timer:)), userInfo: nil, repeats: true)
+                }
+            }).disposed(by: disposeBag)
+        
         let _ = viewModel.fireWeapon
             .subscribe(onNext: { [weak self] element in
                 guard let self = self else {return}

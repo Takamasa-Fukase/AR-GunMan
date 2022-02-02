@@ -12,10 +12,13 @@ import RxCocoa
 class GameViewModel {
     
     //input
+    let checkTutorialSeenStatus: AnyObserver<Void>
     let rankingWillAppear: AnyObserver<Void>
     
     
     //output
+    let showTutorial: Observable<Void>
+    let startGame: Observable<Void>
     let fireWeapon: Observable<Void>
     let reloadPistol: Observable<Void>
     let changeTargetsToTaimeisan: Observable<Void>
@@ -25,6 +28,12 @@ class GameViewModel {
     init() {
         
         //output
+        let _showTutorial = PublishRelay<Void>()
+        self.showTutorial = _showTutorial.asObservable()
+        
+        let _startGame = PublishRelay<Void>()
+        self.startGame = _startGame.asObservable()
+        
         let _fireWeapon = PublishRelay<Void>()
         self.fireWeapon = _fireWeapon.asObservable()
         
@@ -54,6 +63,17 @@ class GameViewModel {
 
         
         //input
+        self.checkTutorialSeenStatus = AnyObserver<Void>() { _ in
+            if UserDefaults.standard.value(forKey: UserDefaultsKey.tutorialAlreadySeen) == nil {
+                print("tutorialAlreadySeen=false")
+                _showTutorial.accept(Void())
+                
+            }else {
+                print("tutorialAlreadySeen=true")
+                _startGame.accept(Void())
+            }
+        }
+        
         self.rankingWillAppear = AnyObserver<Void>() { _ in
             
             print("GameVM 武器選択を閉じる指示を流します")
