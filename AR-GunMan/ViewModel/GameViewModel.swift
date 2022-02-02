@@ -109,7 +109,7 @@ class GameViewModel {
         
         //input
         self.checkTutorialSeenStatus = AnyObserver<Void>() { _ in
-            if UserDefaults.standard.value(forKey: UserDefaultsKey.tutorialAlreadySeen) == nil {
+            if UserDefaultsUtil.isTutorialAlreadySeen() {
                 print("tutorialAlreadySeen=false")
                 _showTutorial.accept(Void())
                 

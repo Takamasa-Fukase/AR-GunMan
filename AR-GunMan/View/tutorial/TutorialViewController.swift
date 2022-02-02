@@ -75,7 +75,7 @@ class TutorialViewController: UIViewController {
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else {return}
                 if self.transitionType == .gamePage {
-                    UserDefaults.standard.setValue(true, forKey: UserDefaultsKey.tutorialAlreadySeen)
+                    UserDefaultsUtil.setTutorialSeen()
                     self.delegate?.startGame()
                 }
                 self.dismiss(animated: true, completion: nil)
