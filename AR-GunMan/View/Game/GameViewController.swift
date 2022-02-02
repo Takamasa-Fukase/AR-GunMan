@@ -64,7 +64,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if UserDefaults.standard.value(forKey: "tutorialAlreadySeen") == nil {
+        if UserDefaults.standard.value(forKey: UserDefaultsKey.tutorialAlreadySeen) == nil {
             
             let storyboard: UIStoryboard = UIStoryboard(name: "TutorialViewController", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "TutorialViewController") as! TutorialViewController

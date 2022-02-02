@@ -67,6 +67,7 @@
 		677DF1EE27A710A8007512F6 /* SafariViewUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 677DF1ED27A710A8007512F6 /* SafariViewUtil.swift */; };
 		677DF1F127A7C096007512F6 /* RankingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 677DF1F027A7C096007512F6 /* RankingRepository.swift */; };
 		677DF1F427A7C100007512F6 /* Ranking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 677DF1F327A7C100007512F6 /* Ranking.swift */; };
+		677DF1F627AAB3A9007512F6 /* UserDefaultsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 677DF1F527AAB3A9007512F6 /* UserDefaultsKey.swift */; };
 		86627DE6273FD5E30044A980 /* WorldRankingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86627DE5273FD5E30044A980 /* WorldRankingViewController.swift */; };
 		86627DEB273FD61B0044A980 /* WorldRankingViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86627DEA273FD61B0044A980 /* WorldRankingViewController.storyboard */; };
 		866675D4275215AF007CB4D6 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866675D3275215AF007CB4D6 /* UIViewController+Extension.swift */; };
@@ -163,6 +164,7 @@
 		677DF1ED27A710A8007512F6 /* SafariViewUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariViewUtil.swift; sourceTree = "<group>"; };
 		677DF1F027A7C096007512F6 /* RankingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingRepository.swift; sourceTree = "<group>"; };
 		677DF1F327A7C100007512F6 /* Ranking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ranking.swift; sourceTree = "<group>"; };
+		677DF1F527AAB3A9007512F6 /* UserDefaultsKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKey.swift; sourceTree = "<group>"; };
 		82CB4F049BB35C36EAA5A632 /* Pods_AR_GunManTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_GunManTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		86627DE5273FD5E30044A980 /* WorldRankingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldRankingViewController.swift; sourceTree = "<group>"; };
 		86627DEA273FD61B0044A980 /* WorldRankingViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WorldRankingViewController.storyboard; sourceTree = "<group>"; };
@@ -225,6 +227,7 @@
 			isa = PBXGroup;
 			children = (
 				5952F64B25EA106800ADB85B /* Const.swift */,
+				677DF1F527AAB3A9007512F6 /* UserDefaultsKey.swift */,
 			);
 			path = Const;
 			sourceTree = "<group>";
@@ -731,6 +734,7 @@
 			files = (
 				5952F63725E9E0B000ADB85B /* CoreMotionModel.swift in Sources */,
 				5952F64C25EA106800ADB85B /* Const.swift in Sources */,
+				677DF1F627AAB3A9007512F6 /* UserDefaultsKey.swift in Sources */,
 				59484CA0256A540E00F9C6A8 /* GameViewModel.swift in Sources */,
 				5952F65125EA1A8100ADB85B /* WeaponModel.swift in Sources */,
 				677DF1F427A7C100007512F6 /* Ranking.swift in Sources */,
