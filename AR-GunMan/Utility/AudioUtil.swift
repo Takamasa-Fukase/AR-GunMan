@@ -1,5 +1,5 @@
 //
-//  AudioModel.swift
+//  AudioUtil.swift
 //  AR-GunMan
 //
 //  Created by 深瀬 貴将 on 2021/02/27.
@@ -8,7 +8,7 @@
 import Foundation
 import AVFoundation
 
-class AudioModel {
+class AudioUtil {
     
     static var audioPlayers: [Sounds: AVAudioPlayer] = [:]
     
@@ -30,7 +30,7 @@ class AudioModel {
 }
 
 //起動時に呼ぶ初期化メソッドなど
-extension AudioModel {
+extension AudioUtil {
     
     static func initAudioPlayers() {
         Sounds.allCases.forEach({ sound in
@@ -43,7 +43,7 @@ extension AudioModel {
                 let audioPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
                 audioPlayer.prepareToPlay()
                 
-                AudioModel.audioPlayers[sound] = audioPlayer
+                AudioUtil.audioPlayers[sound] = audioPlayer
                 
                 print("音声追加成功")
                 

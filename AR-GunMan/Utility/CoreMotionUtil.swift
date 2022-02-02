@@ -1,5 +1,5 @@
 //
-//  CoreMotionModel.swift
+//  CoreMotionUtil.swift
 //  AR-GunMan
 //
 //  Created by 深瀬 貴将 on 2021/02/27.
@@ -8,7 +8,7 @@
 import Foundation
 import CoreMotion
 
-class CoreMotionModel {
+class CoreMotionUtil {
     
     //coreMotion
     private static var preBool = false
@@ -55,7 +55,7 @@ class CoreMotionModel {
     }
     
     static func didUpdateAccelerationData(data: CMAcceleration, completion: (() -> ())?) {
-        let compositAcceleration = CalcuModel.getCompositeAcceleration(0, data.y, data.z)
+        let compositAcceleration = CalcuUtil.getCompositeAcceleration(0, data.y, data.z)
         
         let gyroZ = (gyro.z * gyro.z)
         
@@ -84,7 +84,7 @@ class CoreMotionModel {
     }
     
     static func didUpdateGyroData(data: CMRotationRate, completion: (() -> ())?, secretEvent: (() -> ())?) {
-        let compositGyro = CalcuModel.getCompositeGyro(0, 0, gyro.z)
+        let compositGyro = CalcuUtil.getCompositeGyro(0, 0, gyro.z)
 
         if compositGyro >= 10 {
             

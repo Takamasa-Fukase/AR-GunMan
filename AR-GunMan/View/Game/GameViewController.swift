@@ -23,7 +23,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
     var bazookaRocketCount = 1
     var explosionCount = 0
     
-    var timer:Timer!
+//    var timer:Timer!
     var timeCount:Double = 30.00
     
     //score
@@ -84,10 +84,10 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         let _ = viewModel.startGame
             .subscribe(onNext: { [weak self] element in
                 guard let self = self else {return}
-                AudioModel.playSound(of: .pistolSet)
+                AudioUtil.playSound(of: .pistolSet)
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                    AudioModel.playSound(of: .startWhistle)
+                    AudioUtil.playSound(of: .startWhistle)
                     self.isShootEnabled = true
 //                    self.timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(self.timerUpdate(timer:)), userInfo: nil, repeats: true)
                 }
@@ -183,10 +183,10 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
                 shootBullet()
                 print("shoot")
                 
-                AudioModel.playSound(of: .pistolShoot)
+                AudioUtil.playSound(of: .pistolShoot)
                 
             }else if pistolBulletsCount <= 0 {
-                AudioModel.playSound(of: .pistolOutBullets)
+                AudioUtil.playSound(of: .pistolOutBullets)
             }
             print("ピストルの残弾数: \(pistolBulletsCount) / 7発")
             setBulletsImageView(with: UIImage(named: "bullets\(pistolBulletsCount)"))
@@ -201,8 +201,8 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
                 shootBullet()
                 print("shootRocket")
                 
-                AudioModel.playSound(of: .bazookaShoot)
-                AudioModel.playSound(of: .bazookaReload)
+                AudioUtil.playSound(of: .bazookaShoot)
+                AudioUtil.playSound(of: .bazookaReload)
             }
             print("ロケランの残弾数: \(bazookaRocketCount) / 1発")
             setBulletsImageView(with: UIImage(named: "bazookaRocket\(bazookaRocketCount)"))
@@ -225,7 +225,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         if currentWeapon == .pistol {
             
             pistolBulletsCount = 7
-            AudioModel.playSound(of: .pistolReload)
+            AudioUtil.playSound(of: .pistolReload)
             print("ピストルの弾をリロードしました  残弾数: \(pistolBulletsCount)発")
             
             setBulletsImageView(with: UIImage(named: "bullets\(pistolBulletsCount)"))
@@ -247,13 +247,13 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
             timer.invalidate()
             isShootEnabled = false
 
-            AudioModel.playSound(of: .endWhistle)
+            AudioUtil.playSound(of: .endWhistle)
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
                 
                 self.viewModel.rankingWillAppear.onNext(Void())
                 
-                AudioModel.playSound(of: .rankingAppear)
+                AudioUtil.playSound(of: .rankingAppear)
                 
                 let storyboard: UIStoryboard = UIStoryboard(name: "GameResultViewController", bundle: nil)
                 let vc = storyboard.instantiateViewController(withIdentifier: "GameResultViewController") as! GameResultViewController
@@ -441,12 +441,12 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         
         if (nodeA.name == "bullet" && nodeB.name == "target") || (nodeB.name == "bullet" && nodeA.name == "target") {
             print("当たった")
-            AudioModel.playSound(of: .headShot)
+            AudioUtil.playSound(of: .headShot)
             nodeA.removeFromParentNode()
             nodeB.removeFromParentNode()
             
             if currentWeapon == .bazooka {
-                AudioModel.playSound(of: .bazookaHit)
+                AudioUtil.playSound(of: .bazookaHit)
                 
                 if let first = sceneView.scene.rootNode.childNode(withName: "bazookaHitExplosion\(explosionCount)", recursively: false)?.particleSystems?.first  {
                     
@@ -519,11 +519,11 @@ extension GameViewController: SwitchWeaponDelegate {
 
 extension GameViewController: TutorialVCDelegate {
     func startGame() {
-        AudioModel.playSound(of: .pistolSet)
+        AudioUtil.playSound(of: .pistolSet)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             
-            AudioModel.playSound(of: .startWhistle)
+            AudioUtil.playSound(of: .startWhistle)
             
             self.isShootEnabled = true
             
@@ -555,7 +555,7 @@ extension GameViewController {
         
         if shouldPlayPistolSet {
             //チャキッ　の再生
-            AudioModel.playSound(of: .pistolSet)
+            AudioUtil.playSound(of: .pistolSet)
         }
         
         gunnerShakeAnimationNormal()
@@ -581,7 +581,7 @@ extension GameViewController {
         self.sceneView.scene.rootNode.addChildNode(bazooka)
 
         //チャキッ　の再生
-        AudioModel.playSound(of: .bazookaSet)
+        AudioUtil.playSound(of: .bazookaSet)
         
         gunnerShakeAnimationNormal()
     }
@@ -606,7 +606,7 @@ extension GameViewController {
         self.sceneView.scene.rootNode.addChildNode(rifle)
 
         //チャキッ　の再生
-        AudioModel.playSound(of: .pistolSet)
+        AudioUtil.playSound(of: .pistolSet)
         
 //        gunnerShakeAnimationNormal(5)
     }
@@ -736,6 +736,6 @@ extension GameViewController {
                 print("targetじゃない")
             }
         })
-        AudioModel.playSound(of: .kyuiin)
+        AudioUtil.playSound(of: .kyuiin)
     }
 }

@@ -40,18 +40,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             guard granted else {
                 print("not granted")
                 
-                CameraAuthModel.checkCameraAuthorization()
+                CameraAuthUtil.checkCameraAuthorization()
                 return
             }
             
-            CameraAuthModel.checkCameraAuthorization()
+            CameraAuthUtil.checkCameraAuthorization()
 
             // MARK: register to APNs
             DispatchQueue.main.async {
                 UIApplication.shared.registerForRemoteNotifications()
             }
             
-            AudioModel.initAudioPlayers()
+            AudioUtil.initAudioPlayers()
         }
         
         return true

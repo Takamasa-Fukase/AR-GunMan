@@ -1,5 +1,5 @@
 //
-//  CalcuModel.swift
+//  CalcuUtil.swift
 //  AR-GunMan
 //
 //  Created by 深瀬 貴将 on 2020/08/16.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class CalcuModel {
+class CalcuUtil {
     
     static func getCompositeAcceleration(_ x: Double, _ y: Double, _ z: Double) -> Double {
         return (x * x) + (y * y) + (z * z)

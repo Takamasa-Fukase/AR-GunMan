@@ -1,5 +1,5 @@
 //
-//  CameraAuthModel.swift
+//  CameraAuthUtil.swift
 //  AR-GunMan
 //
 //  Created by 深瀬 貴将 on 2021/02/27.
@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import AVFoundation
 
-class CameraAuthModel: NSObject, UIImagePickerControllerDelegate {
+class CameraAuthUtil: NSObject, UIImagePickerControllerDelegate {
     
     static func checkCameraAuthorization(vc: UIViewController? = nil) {
         switch AVCaptureDevice.authorizationStatus(for: .video) {

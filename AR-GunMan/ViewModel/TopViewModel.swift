@@ -48,13 +48,13 @@ class TopViewModel {
             switch type {
             case .start, .ranking, .howToPlay:
                 _isShotButtonIcon.accept((type, true))
-                AudioModel.playSound(of: .westernPistolShoot)
+                AudioUtil.playSound(of: .westernPistolShoot)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     _isShotButtonIcon.accept((type, false))
                     _transit.accept(type)
                 }
             case .settings:
-                AudioModel.playSound(of: .bazookaSet)
+                AudioUtil.playSound(of: .bazookaSet)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
                     //TODO: - 後で良い画像素材が見つかればsettingsのアイコンも画像変えギミックを追加したい
                     _transit.accept(type)
