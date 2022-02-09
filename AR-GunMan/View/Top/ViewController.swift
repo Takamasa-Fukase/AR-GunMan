@@ -88,7 +88,7 @@ class ViewController: UIViewController {
                 guard let self = self else {return}
                 switch type {
                 case .start:
-                    CameraAuthModel.checkCameraAuthorization(vc: self)
+                    CameraAuthUtil.checkCameraAuthorization(vc: self)
                     self.presentGameVC()
                     
                 case .ranking:
