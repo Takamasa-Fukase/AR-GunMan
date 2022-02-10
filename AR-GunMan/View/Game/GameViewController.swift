@@ -15,45 +15,11 @@ import RxSwift
 import RxCocoa
 
 class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDelegate {
-
-    //MARK: - Properties
-    //count
-    var targetCount = 50
-    var pistolBulletsCount = 7
-    var bazookaRocketCount = 1
-    var explosionCount = 0
-    
-//    var timer:Timer!
-    var timeCount:Double = 30.00
-    
-    //score
-    var pistolPoint = 0.0
-    var bazookaPoint = 0.0
-    
-    //nodeAnimation
-    var toggleActionInterval = 0.2
-    var lastCameraPos = SCNVector3()
-    var isPlayerRunning = false
-    var lastPlayerStatus = false
-       
-    //node
-    var bulletNode: SCNNode?
-    var bazookaHitExplosion: SCNNode?
-    var jetFire: SCNNode?
-    var targetNode: SCNNode?
-    var exploPar: SCNParticleSystem?
-    
-    //other
-    let disposeBag = DisposeBag()
-    var currentWeapon: WeaponTypes = .pistol
-    
-    var isShootEnabled = false
-    
     let viewModel = GameViewModel()
-    
+    let disposeBag = DisposeBag()
     
     @IBOutlet weak var sceneView: ARSCNView!
-    @IBOutlet weak var pistolBulletsCountImageView: UIImageView!
+    @IBOutlet weak var bulletsCountImageView: UIImageView!
     @IBOutlet weak var sightImageView: UIImageView!
     @IBOutlet weak var timeCountLabel: UILabel!
     
@@ -72,6 +38,12 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         super.viewDidLoad()
         
         //output
+        let _ = switchWeaponButton.rx.tap
+            .bind(to: viewModel.switchWeaponButtonTapped)
+            .disposed(by: disposeBag)
+        
+
+        //MARK: - output
         let _ = viewModel.showTutorial
             .subscribe(onNext: { [weak self] element in
                 guard let self = self else {return}
@@ -81,36 +53,42 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
                 self.present(vc, animated: true)
             }).disposed(by: disposeBag)
         
-        let _ = viewModel.startGame
+        let _ = viewModel.showSwitchWeaponVC
             .subscribe(onNext: { [weak self] element in
                 guard let self = self else {return}
-                AudioUtil.playSound(of: .pistolSet)
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                    AudioUtil.playSound(of: .startWhistle)
-                    self.isShootEnabled = true
-//                    self.timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(self.timerUpdate(timer:)), userInfo: nil, repeats: true)
-                }
+                let storyboard: UIStoryboard = UIStoryboard(name: "SwitchWeaponViewController", bundle: nil)
+                let vc = storyboard.instantiateViewController(withIdentifier: "SwitchWeaponViewController") as! SwitchWeaponViewController
+                vc.switchWeaponDelegate = self
+                vc.viewModel = self.viewModel
+                self.present(vc, animated: true)
             }).disposed(by: disposeBag)
         
-        let _ = viewModel.fireWeapon
-            .subscribe(onNext: { [weak self] element in
-                guard let self = self else {return}
-                self.fireWeapon()
-            }).disposed(by: disposeBag)
+        let _ = viewModel.sightImage
+            .bind(to: sightImageView.rx.image)
+            .disposed(by: disposeBag)
         
-        let _ = viewModel.reloadPistol
-            .subscribe(onNext: { [weak self] element in
-                guard let self = self else {return}
-                self.reloadPistol()
-            }).disposed(by: disposeBag)
-        
-        let _ = viewModel.changeTargetsToTaimeisan
-            .subscribe(onNext: { [weak self] element in
-                guard let self = self else {return}
-                self.changeTargetsToTaimeisan()
-            }).disposed(by: disposeBag)
-        
+        let _ = viewModel.bulletsCountImage
+            .bind(to: bulletsCountImageView.rx.image)
+            .disposed(by: disposeBag)
+
+//        let _ = viewModel.fireWeapon
+//            .subscribe(onNext: { [weak self] element in
+//                guard let self = self else {return}
+//                self.fireWeapon()
+//            }).disposed(by: disposeBag)
+//
+//        let _ = viewModel.reloadPistol
+//            .subscribe(onNext: { [weak self] element in
+//                guard let self = self else {return}
+//                self.reloadPistol()
+//            }).disposed(by: disposeBag)
+//
+//        let _ = viewModel.changeTargetsToTaimeisan
+//            .subscribe(onNext: { [weak self] element in
+//                guard let self = self else {return}
+//                self.changeTargetsToTaimeisan()
+//            }).disposed(by: disposeBag)
+
         addPistol(shouldPlayPistolSet: false)
         addTarget()
         setBulletsImageView(with: UIImage(named: "bullets\(pistolBulletsCount)"))
@@ -270,22 +248,22 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
             
         }
     }
-    
-    @IBAction func switchWeaponButtonTapped(_ sender: Any) {
-        
-        sightImageView.image = nil
-        pistolBulletsCountImageView.image = nil
-        isShootEnabled = false
-        
-        let storyboard: UIStoryboard = UIStoryboard(name: "SwitchWeaponViewController", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "SwitchWeaponViewController") as! SwitchWeaponViewController
-        
-        vc.switchWeaponDelegate = self
-        vc.viewModel = self.viewModel
-        
-        self.present(vc, animated: true)
-    }
-    
+
+//    @IBAction func switchWeaponButtonTapped(_ sender: Any) {
+
+//        sightImageView.image = nil
+//        pistolBulletsCountImageView.image = nil
+//        isShootEnabled = false
+
+//        let storyboard: UIStoryboard = UIStoryboard(name: "SwitchWeaponViewController", bundle: nil)
+//        let vc = storyboard.instantiateViewController(withIdentifier: "SwitchWeaponViewController") as! SwitchWeaponViewController
+//
+//        vc.switchWeaponDelegate = self
+//        vc.viewModel = self.viewModel
+//
+//        self.present(vc, animated: true)
+//    }
+
     func setupScnView() {
         //シーンの作成
         sceneView.scene = SCNScene()

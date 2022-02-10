@@ -64,9 +64,6 @@
                                     <constraint firstAttribute="width" constant="100" id="SXu-7M-Brk"/>
                                 </constraints>
                                 <state key="normal" title="switch" image="weaponSwitch"/>
-                                <connections>
-                                    <action selector="switchWeaponButtonTapped:" destination="1Sm-g3-sNk" eventType="touchUpInside" id="Fpt-AT-tqR"/>
-                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="oc2-y6-gKr"/>
@@ -88,7 +85,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="gMq-QZ-WE0"/>
                     <connections>
-                        <outlet property="pistolBulletsCountImageView" destination="fAS-2G-FjW" id="rdW-f4-Hew"/>
+                        <outlet property="bulletsCountImageView" destination="fAS-2G-FjW" id="cSB-ap-vlp"/>
                         <outlet property="sceneView" destination="tIZ-q4-Fil" id="ycz-Oz-4Jq"/>
                         <outlet property="sightImageView" destination="AUh-AO-KoL" id="Kni-sQ-7ph"/>
                         <outlet property="switchWeaponButton" destination="IhJ-qs-URo" id="aY2-tI-EvZ"/>

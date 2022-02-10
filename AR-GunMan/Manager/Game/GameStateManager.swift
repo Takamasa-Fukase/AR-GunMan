@@ -12,11 +12,12 @@ import RxCocoa
 enum GameStatus {
     case ready
     case start
+    case switchWeapon
     case pause
     case finish
 }
 
-enum WeaponFiringReaction {
+enum WeaponFirableReaction {
     case fireAvailable
     case fireUnavailable
     case noBullets
@@ -27,12 +28,13 @@ class GameStateManager {
     let startGame: AnyObserver<Void>
     let requestFiringWeapon: AnyObserver<Void>
     let requestReloadWeapon: AnyObserver<Void>
+    let prepareForSwitchWeapon: AnyObserver<Void>
 
     //MARK: - output
     let gameStatusChanged: Observable<GameStatus>
     let timeCount: Observable<Double>
     let weaponSelected: Observable<WeaponTypes>
-    let weaponFiringReaction: Observable<WeaponFiringReaction>
+    let weaponFirableReaction: Observable<WeaponFirableReaction>
     let isReloadWeaponEnabled: Observable<Bool>
 
     //count
@@ -65,8 +67,8 @@ class GameStateManager {
         let _weaponSelected = BehaviorRelay<WeaponTypes>(value: .pistol)
         self.weaponSelected = _weaponSelected.asObservable()
 
-        let _weaponFiringReaction = BehaviorRelay<WeaponFiringReaction>(value: .fireUnavailable)
-        self.weaponFiringReaction = _weaponFiringReaction.asObservable()
+        let _weaponFirableReaction = BehaviorRelay<WeaponFirableReaction>(value: .fireUnavailable)
+        self.weaponFirableReaction = _weaponFirableReaction.asObservable()
 
         let _isReloadWeaponEnabled = BehaviorRelay<Bool>(value: false)
         self.isReloadWeaponEnabled = _isReloadWeaponEnabled.asObservable()
@@ -75,7 +77,10 @@ class GameStateManager {
         //other (output変数を参照するためここに配置)
         // - Rxタイマー（0.01秒ごとに呼び出し）
         let _ = Observable<Int>.interval(RxTimeInterval.nanoseconds(1), scheduler: MainScheduler.instance)
-            .filter({ _ in _gameStatusChanged.value == .start})
+            .filter({ _ in
+                _gameStatusChanged.value == .start ||
+                    _gameStatusChanged.value == .pause
+            })
             //30.00から経過時間を引いた値に変換
             .map({ count in
                 let elapsedTime = Double(count / 100)
@@ -99,7 +104,7 @@ class GameStateManager {
 
         self.requestFiringWeapon = AnyObserver<Void>() { _ in
             //現在の武器が発射可能な条件かどうかチェックし、リアクションを返す
-            _weaponFiringReaction.accept(
+            _weaponFirableReaction.accept(
                 WeaponStatusUtil
                     .chackFireAvailable(
                         gameStatus: _gameStatusChanged.value,
@@ -120,6 +125,10 @@ class GameStateManager {
                         pistolBulletsCount: _pistolBulletsCount.value
                     )
             )
+        }
+        
+        self.prepareForSwitchWeapon = AnyObserver<Void>() { _ in
+            _gameStatusChanged.accept(.switchWeapon)
         }
     }
 
