@@ -32,7 +32,7 @@ enum WeaponTypes: String, CaseIterable {
 }
 
 class Const {
-    
+    //Top
     static var targetIcon: UIImage? {
         if #available(iOS 13.0, *) {
             return UIImage(systemName: "target")
@@ -43,13 +43,31 @@ class Const {
     
     static let bulletsHoleIcon = UIImage(named: "bulletsHole")
     
+    //Settings
     static let developerContactURL = "https://www.instagram.com/fukase_1783/"
+    
     static let privacyPolicyURL = "http://takamasafukase.com/AR-GunMan_PrivacyPolicy.html"
     
+    //Game
     static let targetCount = 50 //ゲームの的の数
+    
     static let timeCount: Double = 30.00 //ゲームのタイムカウント
+    
     static let pistolBulletsCapacity = 7 //ピストルの装弾数（最大数）
+    
     static let bazookaBulletsCapacity = 1 //バズーカの装弾数（最大数）
+    
+    static let pistolSightImage = UIImage(named: "pistolSight")
+    
+    static let bazookaSightImage = UIImage(named: "bazookaSight")
+    
+    static func pistolBulletsCountImage(_ count: Int) -> UIImage? {
+        return UIImage(named: "bullets\(count)")
+    }
+    
+    static func bazookaBulletsCountImage(_ count: Int) -> UIImage? {
+        return UIImage(named: "bazookaRocket\(count)")
+    }
 }
 
 
