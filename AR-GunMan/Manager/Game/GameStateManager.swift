@@ -27,8 +27,9 @@ class GameStateManager {
     //MARK: - input
     let startGame: AnyObserver<Void>
     let requestFiringWeapon: AnyObserver<Void>
-    let requestReloadWeapon: AnyObserver<Void>
-    let prepareForSwitchWeapon: AnyObserver<Void>
+    let requestReloadingWeapon: AnyObserver<Void>
+    let requestShowingSwitchWeaponPage: AnyObserver<Void>
+    let requestSwitchingWeapon: AnyObserver<WeaponTypes>
 
     //MARK: - output
     let gameStatusChanged: Observable<GameStatus>
@@ -106,7 +107,7 @@ class GameStateManager {
             //現在の武器が発射可能な条件かどうかチェックし、リアクションを返す
             _weaponFirableReaction.accept(
                 WeaponStatusUtil
-                    .chackFireAvailable(
+                    .checkFireAvailable(
                         gameStatus: _gameStatusChanged.value,
                         currentWeapon: _weaponSelected.value,
                         pistolBulletsCount: _pistolBulletsCount.value,
@@ -115,11 +116,11 @@ class GameStateManager {
             )
         }
 
-        self.requestReloadWeapon = AnyObserver<Void>() { _ in
+        self.requestReloadingWeapon = AnyObserver<Void>() { _ in
             //現在の武器がリロード可能な条件かどうかチェックし、リアクションを返す
             _isReloadWeaponEnabled.accept(
                 WeaponStatusUtil
-                    .chackReloadAvailable(
+                    .checkReloadAvailable(
                         gameStatus: _gameStatusChanged.value,
                         currentWeapon: _weaponSelected.value,
                         pistolBulletsCount: _pistolBulletsCount.value
@@ -127,8 +128,14 @@ class GameStateManager {
             )
         }
         
-        self.prepareForSwitchWeapon = AnyObserver<Void>() { _ in
+        self.requestShowingSwitchWeaponPage = AnyObserver<Void>() { _ in
             _gameStatusChanged.accept(.switchWeapon)
+        }
+        
+        self.requestSwitchingWeapon = AnyObserver<WeaponTypes>() { event in
+            guard let element = event.element else {return}
+            //同じ武器が選択されても武器選択画面を閉じる処理が必要なのでそのまま流す
+            _weaponSelected.accept(element)
         }
     }
 

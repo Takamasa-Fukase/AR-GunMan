@@ -11,33 +11,27 @@ import FSPagerView
 import RxSwift
 import RxCocoa
 
-protocol SwitchWeaponDelegate: AnyObject {
-    func switchWeaponTo(weapon: WeaponTypes)
-}
-
 class SwitchWeaponViewController: UIViewController {
        
     //MARK: - Properties
+    let viewModel = GameViewModel()
     let disposeBag = DisposeBag()
-    var viewModel: GameViewModel?
-    weak var switchWeaponDelegate: SwitchWeaponDelegate?
+    
+    @IBOutlet weak var pagerView: FSPagerView! {
+        didSet{
+            let nib = UINib(nibName: "SwitchWeaponCell", bundle: nil)
+            self.pagerView.register(nib, forCellWithReuseIdentifier: "SwitchWeaponCell")
+        }
+    }
     
     //MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        pagerView.delegate = self
-        pagerView.dataSource = self
-        pagerView.automaticSlidingInterval = 0
-        pagerView.isInfinite = true
-        pagerView.decelerationDistance = 1
-        pagerView.interitemSpacing = 8
-        
-        pagerView.transformer = FSPagerViewTransformer(type: .ferrisWheel)
-        
+        setupFSPagerView()
         
         //output
-        viewModel?.dismissSwitchWeaponVC
+        let _ = viewModel.dismissSwitchWeaponVC
             .subscribe(onNext: { [weak self] element in
                 guard let self = self else {return}
                 
@@ -47,19 +41,21 @@ class SwitchWeaponViewController: UIViewController {
             }).disposed(by: disposeBag)
         
     }
-    
-    @IBOutlet weak var pagerView: FSPagerView! {
-        didSet{
-            let nib = UINib(nibName: "SwitchWeaponCell", bundle: nil)
-            self.pagerView.register(nib, forCellWithReuseIdentifier: "SwitchWeaponCell")
-        }
-    }
-    
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         self.pagerView.itemSize = CGSize(width: self.view.frame.width * 0.5, height: self.view.frame.height * 0.8)
     }
     
+    private func setupFSPagerView() {
+        pagerView.delegate = self
+        pagerView.dataSource = self
+        pagerView.automaticSlidingInterval = 0
+        pagerView.isInfinite = true
+        pagerView.decelerationDistance = 1
+        pagerView.interitemSpacing = 8
+        pagerView.transformer = FSPagerViewTransformer(type: .ferrisWheel)
+    }
 }
 
 extension SwitchWeaponViewController: FSPagerViewDelegate, FSPagerViewDataSource {
@@ -78,8 +74,7 @@ extension SwitchWeaponViewController: FSPagerViewDelegate, FSPagerViewDataSource
     }
     
     func pagerView(_ pagerView: FSPagerView, didSelectItemAt index: Int) {
-        switchWeaponDelegate?.switchWeaponTo(weapon: WeaponTypes.allCases[index])
-        self.dismiss(animated: true, completion: nil)
+        viewModel.weaponItemTapped.onNext(index)
     }
     
     func pagerViewWillEndDragging(_ pagerView: FSPagerView, targetIndex: Int) {

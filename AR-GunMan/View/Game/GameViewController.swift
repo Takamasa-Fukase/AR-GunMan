@@ -15,6 +15,8 @@ import RxSwift
 import RxCocoa
 
 class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDelegate {
+    
+    //MARK: - Properties
     let viewModel = GameViewModel()
     let disposeBag = DisposeBag()
     

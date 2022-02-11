@@ -11,16 +11,17 @@ import RxCocoa
 
 class GameViewModel {
     
-    //input
+    //MARK: - input
     let checkTutorialSeenStatus: AnyObserver<Void>
     let userShookDevide: AnyObserver<Void>
     let userRotateDevice: AnyObserver<Void>
     let userRotateDevice20Times: AnyObserver<Void>
     let switchWeaponButtonTapped: AnyObserver<Void>
+    let weaponItemTapped: AnyObserver<Int>
     let rankingWillAppear: AnyObserver<Void>
     
     
-    //output
+    //MARK: - output
     let showTutorial: Observable<Void>
     let showSwitchWeaponVC: Observable<Void>
     let sightImage: Observable<UIImage?>
@@ -35,7 +36,7 @@ class GameViewModel {
     init() {
         let stateManager = GameStateManager()
         
-        //output
+        //MARK: - output
         let _showTutorial = PublishRelay<Void>()
         self.showTutorial = _showTutorial.asObservable()
         
@@ -83,7 +84,7 @@ class GameViewModel {
         
 
         
-        //input
+        //MARK: - input
         self.checkTutorialSeenStatus = AnyObserver<Void>() { _ in
             if UserDefaultsUtil.isTutorialAlreadySeen() {
                 _showTutorial.accept(Void())
@@ -98,7 +99,7 @@ class GameViewModel {
         }
         
         self.userRotateDevice = AnyObserver<Void>() { _ in
-            stateManager.requestReloadWeapon.onNext(Void())
+            stateManager.requestReloadingWeapon.onNext(Void())
         }
         
         self.userRotateDevice20Times = AnyObserver<Void>() { _ in
@@ -106,7 +107,14 @@ class GameViewModel {
         }
         
         self.switchWeaponButtonTapped = AnyObserver<Void>() { _ in
-            stateManager.prepareForSwitchWeapon.onNext(Void())
+            stateManager.requestShowingSwitchWeaponPage.onNext(Void())
+        }
+        
+        self.weaponItemTapped = AnyObserver<Int>() { event in
+            guard let index = event.element else {return}
+            stateManager.requestSwitchingWeapon.onNext(
+                WeaponTypes.allCases[index]
+            )
         }
         
         self.rankingWillAppear = AnyObserver<Void>() { _ in
