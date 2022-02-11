@@ -76,17 +76,10 @@ class GameStateManager {
         
         
         //other (output変数を参照するためここに配置)
-        // - Rxタイマー（0.01秒ごとに呼び出し）
-        let _ = Observable<Int>.interval(RxTimeInterval.nanoseconds(1), scheduler: MainScheduler.instance)
-            .filter({ _ in
-                _gameStatusChanged.value == .start ||
-                    _gameStatusChanged.value == .pause
-            })
-            //30.00から経過時間を引いた値に変換
-            .map({ count in
-                let elapsedTime = Double(count / 100)
-                return max(Const.timeCount - elapsedTime, 0.00)
-            })
+        let _ = TimeCountUtil.createRxTimer(.nanoseconds(1))
+            .filter({ _ in _gameStatusChanged.value == .start ||
+                    _gameStatusChanged.value == .pause })
+            .map({ TimeCountUtil.decreaseGameTimeCount(elapsedTime: Double($0 / 100)) })
             .bind(to: _timeCount)
             .disposed(by: disposeBag)
         
