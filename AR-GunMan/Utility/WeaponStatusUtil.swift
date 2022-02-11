@@ -10,11 +10,11 @@ import Foundation
 class WeaponStatusUtil {
     
     //武器発射の可否
-    static func chackFireAvailable(gameStatus: GameStatus,
+    static func checkFireAvailable(gameStatus: GameStatus,
                                    currentWeapon: WeaponTypes,
                                    pistolBulletsCount: Int,
                                    bazookaBulletsCount: Int
-    ) -> WeaponFiringReaction {
+    ) -> WeaponFirableReaction {
         
         //現在のゲームステータスがstartか（それ以外はunavailableを返す）
         if gameStatus != .start { return .fireUnavailable }
@@ -39,7 +39,7 @@ class WeaponStatusUtil {
     }
     
     //リロードの可否
-    static func chackReloadAvailable(gameStatus: GameStatus,
+    static func checkReloadAvailable(gameStatus: GameStatus,
                                    currentWeapon: WeaponTypes,
                                    pistolBulletsCount: Int
     ) -> Bool {
