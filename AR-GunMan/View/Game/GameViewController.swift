@@ -37,7 +37,17 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //output
+        //MARK: - input
+        //CoreMotionで特定の加速度とジャイロイベントを検知した時にVMに通知
+        CoreMotionUtil.getAccelerometer {
+            self.viewModel.userShookDevide.onNext(Void())
+        }
+        CoreMotionUtil.getGyro {
+            self.viewModel.userRotateDevice.onNext(Void())
+        } secretEvent: {
+            self.viewModel.userRotateDevice20Times.onNext(Void())
+        }
+        
         let _ = switchWeaponButton.rx.tap
             .bind(to: viewModel.switchWeaponButtonTapped)
             .disposed(by: disposeBag)

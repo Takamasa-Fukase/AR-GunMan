@@ -13,6 +13,9 @@ class GameViewModel {
     
     //input
     let checkTutorialSeenStatus: AnyObserver<Void>
+    let userShookDevide: AnyObserver<Void>
+    let userRotateDevice: AnyObserver<Void>
+    let userRotateDevice20Times: AnyObserver<Void>
     let switchWeaponButtonTapped: AnyObserver<Void>
     let rankingWillAppear: AnyObserver<Void>
     
@@ -22,10 +25,8 @@ class GameViewModel {
     let showSwitchWeaponVC: Observable<Void>
     let sightImage: Observable<UIImage?>
     let bulletsCountImage: Observable<UIImage?>
-    
-    let fireWeapon: Observable<Void>
-    let reloadPistol: Observable<Void>
-    let changeTargetsToTaimeisan: Observable<Void>
+    let excuteSecretEvent: Observable<Void>
+
     let dismissSwitchWeaponVC: Observable<Void>
     
     //other
@@ -47,32 +48,12 @@ class GameViewModel {
         let _bulletsCountImage = BehaviorRelay<UIImage?>(value: Const.pistolBulletsCountImage(Const.pistolBulletsCapacity))
         self.bulletsCountImage = _bulletsCountImage.asObservable()
         
+        let _excuteSecretEvent = PublishRelay<Void>()
+        self.excuteSecretEvent = _excuteSecretEvent.asObservable()
         
-        let _fireWeapon = PublishRelay<Void>()
-        self.fireWeapon = _fireWeapon.asObservable()
-        
-        let _reloadPistol = PublishRelay<Void>()
-        self.reloadPistol = _reloadPistol.asObservable()
-        
-        let _changeTargetsToTaimeisan = PublishRelay<Void>()
-        self.changeTargetsToTaimeisan = _changeTargetsToTaimeisan.asObservable()
         
         let _dismissSwitchWeaponVC = PublishRelay<Void>()
         self.dismissSwitchWeaponVC = _dismissSwitchWeaponVC.asObservable()
-        
-        //CoreMotionでイベントを検知した時にVCに通知
-        CoreMotionUtil.getAccelerometer {
-            //各種武器の発動コード
-            _fireWeapon.accept(Void())
-        }
-        CoreMotionUtil.getGyro {
-            //ピストルのリロードコード
-            _reloadPistol.accept(Void())
-            
-        } secretEvent: {
-            //泰明さんに変わるイベントの通知
-            _changeTargetsToTaimeisan.accept(Void())
-        }
                 
         let _ = stateManager.gameStatusChanged
             .subscribe(onNext: { element in
@@ -110,6 +91,18 @@ class GameViewModel {
             }else {
                 stateManager.startGame.onNext(Void())
             }
+        }
+        
+        self.userShookDevide = AnyObserver<Void>() { _ in
+            stateManager.requestFiringWeapon.onNext(Void())
+        }
+        
+        self.userRotateDevice = AnyObserver<Void>() { _ in
+            stateManager.requestReloadWeapon.onNext(Void())
+        }
+        
+        self.userRotateDevice20Times = AnyObserver<Void>() { _ in
+            _excuteSecretEvent.accept(Void())
         }
         
         self.switchWeaponButtonTapped = AnyObserver<Void>() { _ in
