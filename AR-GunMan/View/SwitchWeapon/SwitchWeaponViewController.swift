@@ -76,9 +76,4 @@ extension SwitchWeaponViewController: FSPagerViewDelegate, FSPagerViewDataSource
     func pagerView(_ pagerView: FSPagerView, didSelectItemAt index: Int) {
         viewModel.weaponItemTapped.onNext(index)
     }
-    
-    func pagerViewWillEndDragging(_ pagerView: FSPagerView, targetIndex: Int) {
-
-    }
-    
 }

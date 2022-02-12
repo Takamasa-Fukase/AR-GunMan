@@ -18,7 +18,6 @@ class GameViewModel {
     let userRotateDevice20Times: AnyObserver<Void>
     let switchWeaponButtonTapped: AnyObserver<Void>
     let weaponItemTapped: AnyObserver<Int>
-    let rankingWillAppear: AnyObserver<Void>
     
     
     //MARK: - output
@@ -26,8 +25,8 @@ class GameViewModel {
     let showSwitchWeaponVC: Observable<Void>
     let sightImage: Observable<UIImage?>
     let bulletsCountImage: Observable<UIImage?>
+    let timeCountString: Observable<String>
     let excuteSecretEvent: Observable<Void>
-
     let dismissSwitchWeaponVC: Observable<Void>
     
     //other
@@ -49,13 +48,17 @@ class GameViewModel {
         let _bulletsCountImage = BehaviorRelay<UIImage?>(value: Const.pistolBulletsCountImage(Const.pistolBulletsCapacity))
         self.bulletsCountImage = _bulletsCountImage.asObservable()
         
+        let _timeCountString = BehaviorRelay<String>(value: TimeCountUtil.twoDigitTimeCount(Const.timeCount))
+        self.timeCountString = _timeCountString.asObservable()
+        
         let _excuteSecretEvent = PublishRelay<Void>()
         self.excuteSecretEvent = _excuteSecretEvent.asObservable()
-        
         
         let _dismissSwitchWeaponVC = PublishRelay<Void>()
         self.dismissSwitchWeaponVC = _dismissSwitchWeaponVC.asObservable()
                 
+        
+        //MARK: - stateManagerの変更を購読してVCに指示を流す
         let _ = stateManager.gameStatusChanged
             .subscribe(onNext: { element in
                 switch element {
@@ -78,10 +81,43 @@ class GameViewModel {
                     break
 
                 case .finish:
+                    _dismissSwitchWeaponVC.accept(Void())
+                }
+            }).disposed(by: disposeBag)
+        
+        let _ = stateManager.timeCount
+            .map({ TimeCountUtil.twoDigitTimeCount($0) })
+            .bind(to: _timeCountString)
+            .disposed(by: disposeBag)
+        
+        let _ = stateManager.weaponSelected
+            .subscribe(onNext: { element in
+                switch element {
+                case .pistol:
+                    break
+                case .bazooka:
+                    break
+                default:
                     break
                 }
             }).disposed(by: disposeBag)
         
+        let _ = stateManager.weaponFirableReaction
+            .subscribe(onNext: { element in
+                switch element {
+                case .fireAvailable:
+                    break
+                case .fireUnavailable:
+                    break
+                case .noBullets:
+                    break
+                }
+            }).disposed(by: disposeBag)
+        
+        let _ = stateManager.isReloadWeaponEnabled
+            .subscribe(onNext: { element in
+                
+            }).disposed(by: disposeBag)
 
         
         //MARK: - input
@@ -115,10 +151,6 @@ class GameViewModel {
             stateManager.requestSwitchingWeapon.onNext(
                 WeaponTypes.allCases[index]
             )
-        }
-        
-        self.rankingWillAppear = AnyObserver<Void>() { _ in
-            _dismissSwitchWeaponVC.accept(Void())
         }
     }
     
