@@ -28,6 +28,7 @@ class GameViewModel {
     let timeCountString: Observable<String>
     let excuteSecretEvent: Observable<Void>
     let dismissSwitchWeaponVC: Observable<Void>
+    let transitResultVC: Observable<Double>
     
     //other
     private let disposeBag = DisposeBag()
@@ -54,6 +55,9 @@ class GameViewModel {
         let _excuteSecretEvent = PublishRelay<Void>()
         self.excuteSecretEvent = _excuteSecretEvent.asObservable()
         
+        let _transitResultVC = PublishRelay<Double>()
+        self.transitResultVC = _transitResultVC.asObservable()
+        
         let _dismissSwitchWeaponVC = PublishRelay<Void>()
         self.dismissSwitchWeaponVC = _dismissSwitchWeaponVC.asObservable()
                 
@@ -69,7 +73,6 @@ class GameViewModel {
                     AudioUtil.playSound(of: .pistolSet)
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                         AudioUtil.playSound(of: .startWhistle)
-//                        stateManager.isShootEnabled.accept(true)
                     }
                     
                 case .switchWeapon:
@@ -81,7 +84,22 @@ class GameViewModel {
                     break
 
                 case .finish:
-                    _dismissSwitchWeaponVC.accept(Void())
+                    AudioUtil.playSound(of: .endWhistle)
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
+                        
+                        AudioUtil.playSound(of: .rankingAppear)
+                        _dismissSwitchWeaponVC.accept(Void())
+                        //TODO : - スコアの計算ロジック（Utilにする）
+                        
+                        let sumPoint: Double = min(self.pistolPoint + self.bazookaPoint, 100.0)
+                        
+                        let totalScore = sumPoint * (Double.random(in: 0.9...1))
+                        
+                        print("pistolP: \(self.pistolPoint), bazookaP: \(self.bazookaPoint), sumP: \(sumPoint) totalScore: \(totalScore)")
+                        
+                        _transitResultVC.accept(totalScore)
+                    })
                 }
             }).disposed(by: disposeBag)
         

@@ -24,9 +24,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
     @IBOutlet weak var bulletsCountImageView: UIImageView!
     @IBOutlet weak var sightImageView: UIImageView!
     @IBOutlet weak var timeCountLabel: UILabel!
-    
     @IBOutlet weak var switchWeaponButton: UIButton!
-    
     
     //MARK: - Methods
     override func viewDidAppear(_ animated: Bool) {
@@ -86,23 +84,13 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
             .bind(to: timeCountLabel.rx.text)
             .disposed(by: disposeBag)
 
-//        let _ = viewModel.fireWeapon
-//            .subscribe(onNext: { [weak self] element in
-//                guard let self = self else {return}
-//                self.fireWeapon()
-//            }).disposed(by: disposeBag)
-//
-//        let _ = viewModel.reloadPistol
-//            .subscribe(onNext: { [weak self] element in
-//                guard let self = self else {return}
-//                self.reloadPistol()
-//            }).disposed(by: disposeBag)
-//
-//        let _ = viewModel.changeTargetsToTaimeisan
-//            .subscribe(onNext: { [weak self] element in
-//                guard let self = self else {return}
-//                self.changeTargetsToTaimeisan()
-//            }).disposed(by: disposeBag)
+        let _ = viewModel.transitResultVC
+            .subscribe(onNext: { [weak self] element in
+                guard let self = self else {return}
+                let storyboard: UIStoryboard = UIStoryboard(name: "GameResultViewController", bundle: nil)
+                let vc = storyboard.instantiateViewController(withIdentifier: "GameResultViewController") as! GameResultViewController
+                self.present(vc, animated: true)
+            }).disposed(by: disposeBag)
 
         addPistol(shouldPlayPistolSet: false)
         addTarget()
@@ -223,61 +211,8 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
             
             setBulletsImageView(with: UIImage(named: "bullets\(pistolBulletsCount)"))
         }
-    }
     
-    
-    //タイマーで指定間隔ごとに呼ばれる関数
-    @objc func timerUpdate(timer: Timer) {
-        let lowwerTime = 0.00
-        timeCount = max(timeCount - 0.01, lowwerTime)
-        let strTimeCount = String(format: "%.2f", timeCount)
-        let twoDigitTimeCount = timeCount > 10 ? "\(strTimeCount)" : "0\(strTimeCount)"
-        timeCountLabel.text = twoDigitTimeCount
-        
-        //タイマーが0になったらタイマーを破棄して結果画面へ遷移
-        if timeCount <= 0 {
-            
-            timer.invalidate()
-            isShootEnabled = false
-
-            AudioUtil.playSound(of: .endWhistle)
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
-                
-                self.viewModel.rankingWillAppear.onNext(Void())
-                
-                AudioUtil.playSound(of: .rankingAppear)
-                
-                let storyboard: UIStoryboard = UIStoryboard(name: "GameResultViewController", bundle: nil)
-                let vc = storyboard.instantiateViewController(withIdentifier: "GameResultViewController") as! GameResultViewController
-                
-                let sumPoint: Double = min(self.pistolPoint + self.bazookaPoint, 100.0)
-                
-                let totalScore = sumPoint * (Double.random(in: 0.9...1))
-                
-                print("pistolP: \(self.pistolPoint), bazookaP: \(self.bazookaPoint), sumP: \(sumPoint) totalScore: \(totalScore)")
-                
-                vc.totalScore = totalScore
-                self.present(vc, animated: true)
-            })
-            
-        }
     }
-
-//    @IBAction func switchWeaponButtonTapped(_ sender: Any) {
-
-//        sightImageView.image = nil
-//        pistolBulletsCountImageView.image = nil
-//        isShootEnabled = false
-
-//        let storyboard: UIStoryboard = UIStoryboard(name: "SwitchWeaponViewController", bundle: nil)
-//        let vc = storyboard.instantiateViewController(withIdentifier: "SwitchWeaponViewController") as! SwitchWeaponViewController
-//
-//        vc.switchWeaponDelegate = self
-//        vc.viewModel = self.viewModel
-//
-//        self.present(vc, animated: true)
-//    }
 
     func setupScnView() {
         //シーンの作成
