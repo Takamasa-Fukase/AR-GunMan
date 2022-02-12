@@ -58,7 +58,6 @@
 		59D2D5962552E718006DDB70 /* SwitchWeaponViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59D2D5922552E718006DDB70 /* SwitchWeaponViewController.storyboard */; };
 		59D2D59E2552E751006DDB70 /* CalcuUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2D59D2552E751006DDB70 /* CalcuUtil.swift */; };
 		5F0F53972765C07884597855 /* Pods_AR_GunManTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82CB4F049BB35C36EAA5A632 /* Pods_AR_GunManTests.framework */; };
-		67200F53279FFF1E00AD92EC /* SwitchWeaponViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67200F52279FFF1E00AD92EC /* SwitchWeaponViewModel.swift */; };
 		67200F5527A000AC00AD92EC /* TutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67200F5427A000AC00AD92EC /* TutorialViewModel.swift */; };
 		67200F5727A0020B00AD92EC /* RankingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67200F5627A0020B00AD92EC /* RankingViewModel.swift */; };
 		67200F5927A0026000AD92EC /* RegisterNameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67200F5827A0026000AD92EC /* RegisterNameViewModel.swift */; };
@@ -159,7 +158,6 @@
 		59E43329A2D9B4F8752F833A /* Pods-AR-GunMan-AR-GunManUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-GunMan-AR-GunManUITests.debug.xcconfig"; path = "Target Support Files/Pods-AR-GunMan-AR-GunManUITests/Pods-AR-GunMan-AR-GunManUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		59F79E5F256BE7B0006EC1B3 /* AR-GunMan.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "AR-GunMan.entitlements"; sourceTree = "<group>"; };
 		5AB32EC76FF682FB7040AD4D /* Pods-AR-GunMan-AR-GunManUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-GunMan-AR-GunManUITests.release.xcconfig"; path = "Target Support Files/Pods-AR-GunMan-AR-GunManUITests/Pods-AR-GunMan-AR-GunManUITests.release.xcconfig"; sourceTree = "<group>"; };
-		67200F52279FFF1E00AD92EC /* SwitchWeaponViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchWeaponViewModel.swift; sourceTree = "<group>"; };
 		67200F5427A000AC00AD92EC /* TutorialViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewModel.swift; sourceTree = "<group>"; };
 		67200F5627A0020B00AD92EC /* RankingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingViewModel.swift; sourceTree = "<group>"; };
 		67200F5827A0026000AD92EC /* RegisterNameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterNameViewModel.swift; sourceTree = "<group>"; };
@@ -365,7 +363,6 @@
 				5952F62725E94D1000ADB85B /* TopViewModel.swift */,
 				67200F5427A000AC00AD92EC /* TutorialViewModel.swift */,
 				59484C9F256A540E00F9C6A8 /* GameViewModel.swift */,
-				67200F52279FFF1E00AD92EC /* SwitchWeaponViewModel.swift */,
 				67200F5627A0020B00AD92EC /* RankingViewModel.swift */,
 				67200F5827A0026000AD92EC /* RegisterNameViewModel.swift */,
 				67200F5A27A0028700AD92EC /* SettingsViewModel.swift */,
@@ -768,7 +765,6 @@
 				677DF1F427A7C100007512F6 /* Ranking.swift in Sources */,
 				5921A208255D6A4E001D8C39 /* WorldRankingCell.swift in Sources */,
 				677DF1F127A7C096007512F6 /* RankingRepository.swift in Sources */,
-				67200F53279FFF1E00AD92EC /* SwitchWeaponViewModel.swift in Sources */,
 				59945100256AD55900560202 /* TutorialViewController.swift in Sources */,
 				86627DE6273FD5E30044A980 /* WorldRankingViewController.swift in Sources */,
 				59D2D5952552E718006DDB70 /* SwitchWeaponViewController.swift in Sources */,
