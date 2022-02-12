@@ -70,7 +70,6 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
                 guard let self = self else {return}
                 let storyboard: UIStoryboard = UIStoryboard(name: "SwitchWeaponViewController", bundle: nil)
                 let vc = storyboard.instantiateViewController(withIdentifier: "SwitchWeaponViewController") as! SwitchWeaponViewController
-                vc.switchWeaponDelegate = self
                 vc.viewModel = self.viewModel
                 self.present(vc, animated: true)
             }).disposed(by: disposeBag)
@@ -81,6 +80,10 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         
         let _ = viewModel.bulletsCountImage
             .bind(to: bulletsCountImageView.rx.image)
+            .disposed(by: disposeBag)
+        
+        let _ = viewModel.timeCountString
+            .bind(to: timeCountLabel.rx.text)
             .disposed(by: disposeBag)
 
 //        let _ = viewModel.fireWeapon
