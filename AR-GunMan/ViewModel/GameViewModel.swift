@@ -64,8 +64,11 @@ class GameViewModel {
         
         //MARK: - stateManagerの変更を購読してVCに指示を流す
         let _ = stateManager.gameStatusChanged
-            .subscribe(onNext: { element in
-                switch element {
+            .withLatestFrom(stateManager.totalScore) { status, score in
+                return (status, score)
+            }
+            .subscribe(onNext: { status, score in
+                switch status {
                 case .ready:
                     break
 
@@ -90,15 +93,7 @@ class GameViewModel {
                         
                         AudioUtil.playSound(of: .rankingAppear)
                         _dismissSwitchWeaponVC.accept(Void())
-                        //TODO : - スコアの計算ロジック（Utilにする）
-                        
-                        let sumPoint: Double = min(self.pistolPoint + self.bazookaPoint, 100.0)
-                        
-                        let totalScore = sumPoint * (Double.random(in: 0.9...1))
-                        
-                        print("pistolP: \(self.pistolPoint), bazookaP: \(self.bazookaPoint), sumP: \(sumPoint) totalScore: \(totalScore)")
-                        
-                        _transitResultVC.accept(totalScore)
+                        _transitResultVC.accept(score)
                     })
                 }
             }).disposed(by: disposeBag)

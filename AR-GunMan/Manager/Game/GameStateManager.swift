@@ -37,6 +37,7 @@ class GameStateManager {
     let weaponSelected: Observable<WeaponTypes>
     let weaponFirableReaction: Observable<WeaponFirableReaction>
     let isReloadWeaponEnabled: Observable<Bool>
+    let totalScore: Observable<Double>
 
     //count
 //    let explosionCount: Observable<Int>
@@ -74,22 +75,26 @@ class GameStateManager {
         let _isReloadWeaponEnabled = BehaviorRelay<Bool>(value: false)
         self.isReloadWeaponEnabled = _isReloadWeaponEnabled.asObservable()
         
+        let _totalScore = PublishRelay<Double>()
+        self.totalScore = _totalScore.asObservable()
+        
         
         //other (output変数を参照するためここに配置)
         let _ = TimeCountUtil.createRxTimer(.nanoseconds(1))
             .filter({ _ in _gameStatusChanged.value == .start ||
                     _gameStatusChanged.value == .pause })
             .map({ TimeCountUtil.decreaseGameTimeCount(elapsedTime: Double($0 / 100)) })
-            .bind(to: _timeCount)
-            .disposed(by: disposeBag)
-        
-        let _ = _timeCount
             .subscribe(onNext: { element in
+                _timeCount.accept(element)
                 if element <= 0 {
+                    _totalScore.accept(
+                        ScoreUtil.getTotalScore(pistolPoint: _pistolPoint.value,
+                                                bazookaPoint: _bazookaPoint.value)
+                    )
                     _gameStatusChanged.accept(.finish)
                 }
             }).disposed(by: disposeBag)
-
+        
 
         //MARK: - input
         self.startGame = AnyObserver<Void>() { _ in
