@@ -55,7 +55,7 @@ class CoreMotionUtil {
     }
     
     static func didUpdateAccelerationData(data: CMAcceleration, completion: (() -> ())?) {
-        let compositAcceleration = CalcuUtil.getCompositeAcceleration(0, data.y, data.z)
+        let compositAcceleration = getCompositeAcceleration(0, data.y, data.z)
         
         let gyroZ = (gyro.z * gyro.z)
         
@@ -84,7 +84,7 @@ class CoreMotionUtil {
     }
     
     static func didUpdateGyroData(data: CMRotationRate, completion: (() -> ())?, secretEvent: (() -> ())?) {
-        let compositGyro = CalcuUtil.getCompositeGyro(0, 0, gyro.z)
+        let compositGyro = getCompositeGyro(0, 0, gyro.z)
 
         if compositGyro >= 10 {
             
@@ -102,5 +102,15 @@ class CoreMotionUtil {
             secretEvent?()
         }
 
+    }
+    
+    
+    //MARK: - Private Methods
+    private static func getCompositeAcceleration(_ x: Double, _ y: Double, _ z: Double) -> Double {
+        return (x * x) + (y * y) + (z * z)
+    }
+    
+    private static func getCompositeGyro(_ x: Double, _ y: Double, _ z: Double) -> Double {
+        return (x * x) + (y * y) + (z * z)
     }
 }
