@@ -15,7 +15,7 @@ class GameStateManager {
     let requestFiringWeapon: AnyObserver<Void>
     let requestReloadingWeapon: AnyObserver<Void>
     let requestSwitchingWeapon: AnyObserver<WeaponTypes>
-    let hitTarget: AnyObserver<Void>
+    let addScore: AnyObserver<Void>
 
     //MARK: - output
     let gameStatusChanged: Observable<GameStatus>
@@ -144,8 +144,11 @@ class GameStateManager {
             )
         }
         
-        self.hitTarget = AnyObserver<Void>() { _ in
-            _totalScore.accept(ScoreUtil.addScore(currentScore: _totalScore.value, weapon: _weaponSelected.value))
+        self.addScore = AnyObserver<Void>() { _ in
+            _totalScore.accept(
+                ScoreUtil.addScore(currentScore: _totalScore.value,
+                                   weapon: _weaponSwitchingResult.value.weapon)
+            )
         }
     }
 
