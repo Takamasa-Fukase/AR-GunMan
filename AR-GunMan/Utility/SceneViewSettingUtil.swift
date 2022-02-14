@@ -17,7 +17,7 @@ class SceneViewSettingUtil {
         //シーンの作成
         sceneView.scene = SCNScene()
         //光源の有効化
-        sceneView.autoenablesDefaultLighting = true;
+        sceneView.autoenablesDefaultLighting = true
         //ARSCNViewデリゲートの指定
         sceneView.delegate = sceneViewDelegate
         //衝突検知のためのDelegate設定

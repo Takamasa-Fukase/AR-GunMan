@@ -61,7 +61,6 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
                 guard let self = self else {return}
                 let storyboard: UIStoryboard = UIStoryboard(name: "TutorialViewController", bundle: nil)
                 let vc = storyboard.instantiateViewController(withIdentifier: "TutorialViewController") as! TutorialViewController
-                vc.delegate = self
                 self.present(vc, animated: true)
             }).disposed(by: disposeBag)
         
@@ -93,12 +92,6 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
                 let vc = storyboard.instantiateViewController(withIdentifier: "GameResultViewController") as! GameResultViewController
                 self.present(vc, animated: true)
             }).disposed(by: disposeBag)
-
-//        addPistol(shouldPlayPistolSet: false)
-//        addTarget()
-//        setBulletsImageView(with: UIImage(named: "bullets\(pistolBulletsCount)"))
-        
-        
 
         let scene = SCNScene(named: "art.scnassets/target.scn")
         targetNode = (scene?.rootNode.childNode(withName: "target", recursively: false))!
@@ -381,66 +374,6 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
     }
     
     
-}
-
-//SwitchWeaponVCでのセルタップをトリガーに発火させる武器切り替えメソッド
-extension GameViewController: SwitchWeaponDelegate {
-    
-    func switchWeaponTo(weapon: WeaponTypes) {
-               
-        switch weapon {
-        case .pistol:
-            if weapon != currentWeapon {
-                addPistol()
-            }
-            setBulletsImageView(with: UIImage(named: "bullets\(pistolBulletsCount)"))
-            pistolBulletsCountImageView.contentMode = .scaleAspectFit
-            sightImageView.image = UIImage(named: "pistolSight")
-            sightImageView.tintColor = .systemRed
-            
-        case .rifle:
-            if weapon != currentWeapon {
-                addRifle()
-            }
-            setBulletsImageView(with: UIImage(named: "bullets\(pistolBulletsCount)"))
-            pistolBulletsCountImageView.contentMode = .scaleAspectFit
-            sightImageView.image = UIImage(named: "pistolSight")
-            sightImageView.tintColor = .systemRed
-            
-        case .bazooka:
-            if weapon != currentWeapon {
-                addBazooka()
-            }
-            setBulletsImageView(with: UIImage(named: "bazookaRocket\(bazookaRocketCount)"))
-            pistolBulletsCountImageView.contentMode = .scaleAspectFill
-            sightImageView.image = UIImage(named: "bazookaSight")
-            sightImageView.tintColor = .systemGreen
-            
-        default:
-            print("まだ開発中の武器が選択されたので何も処理せずに終了")
-            return
-        }
-        
-        currentWeapon = weapon
-        isShootEnabled = true
-        
-    }
-    
-}
-
-extension GameViewController: TutorialVCDelegate {
-    func startGame() {
-        AudioUtil.playSound(of: .pistolSet)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            
-            AudioUtil.playSound(of: .startWhistle)
-            
-            self.isShootEnabled = true
-            
-            self.timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(self.timerUpdate(timer:)), userInfo: nil, repeats: true)
-        }
-    }
 }
 
 extension GameViewController {
