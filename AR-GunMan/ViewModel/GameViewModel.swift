@@ -16,7 +16,6 @@ class GameViewModel {
     let userShookDevide: AnyObserver<Void>
     let userRotateDevice: AnyObserver<Void>
     let userRotateDevice20Times: AnyObserver<Void>
-    let switchWeaponButtonTapped: AnyObserver<Void>
     let weaponItemTapped: AnyObserver<Int>
     let hitTarget: AnyObserver<Void>
     
@@ -173,10 +172,6 @@ class GameViewModel {
         
         self.userRotateDevice20Times = AnyObserver<Void>() { _ in
             _excuteSecretEvent.accept(Void())
-        }
-        
-        self.switchWeaponButtonTapped = AnyObserver<Void>() { _ in
-            stateManager.requestShowingSwitchWeaponPage.onNext(Void())
         }
         
         self.weaponItemTapped = AnyObserver<Int>() { event in

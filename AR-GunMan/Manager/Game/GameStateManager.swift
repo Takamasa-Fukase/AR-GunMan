@@ -14,7 +14,6 @@ class GameStateManager {
     let startGame: AnyObserver<Void>
     let requestFiringWeapon: AnyObserver<Void>
     let requestReloadingWeapon: AnyObserver<Void>
-    let requestShowingSwitchWeaponPage: AnyObserver<Void>
     let requestSwitchingWeapon: AnyObserver<WeaponTypes>
     let hitTarget: AnyObserver<Void>
 

@@ -30,8 +30,6 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        SceneViewSettingUtil.setupSceneView(sceneView, sceneViewDelegate: self, physicContactDelegate: self)
-        
         //MARK: - input
         //CoreMotionで特定の加速度とジャイロイベントを検知した時にVMに通知
         CoreMotionUtil.getAccelerometer {
@@ -43,21 +41,8 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
             self.viewModel.userRotateDevice20Times.onNext(Void())
         }
         
-        let _ = switchWeaponButton.rx.tap
-            .bind(to: viewModel.switchWeaponButtonTapped)
-            .disposed(by: disposeBag)
-        
 
         //MARK: - output
-        let _ = viewModel.showSwitchWeaponVC
-            .subscribe(onNext: { [weak self] element in
-                guard let self = self else {return}
-                let storyboard: UIStoryboard = UIStoryboard(name: "SwitchWeaponViewController", bundle: nil)
-                let vc = storyboard.instantiateViewController(withIdentifier: "SwitchWeaponViewController") as! SwitchWeaponViewController
-                vc.viewModel = self.viewModel
-                self.present(vc, animated: true)
-            }).disposed(by: disposeBag)
-        
         let _ = viewModel.sightImage
             .bind(to: sightImageView.rx.image)
             .disposed(by: disposeBag)
@@ -77,6 +62,20 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
                 let vc = storyboard.instantiateViewController(withIdentifier: "GameResultViewController") as! GameResultViewController
                 self.present(vc, animated: true)
             }).disposed(by: disposeBag)
+        
+        
+        //MARK: - other
+        SceneViewSettingUtil.setupSceneView(sceneView, sceneViewDelegate: self, physicContactDelegate: self)
+        
+        let _ = switchWeaponButton.rx.tap
+            .subscribe(onNext: { [weak self] element in
+                guard let self = self else {return}
+                let storyboard: UIStoryboard = UIStoryboard(name: "SwitchWeaponViewController", bundle: nil)
+                let vc = storyboard.instantiateViewController(withIdentifier: "SwitchWeaponViewController") as! SwitchWeaponViewController
+                vc.viewModel = self.viewModel
+                self.present(vc, animated: true)
+            }).disposed(by: disposeBag)
+        
 
         let scene = SCNScene(named: "art.scnassets/target.scn")
         targetNode = (scene?.rootNode.childNode(withName: "target", recursively: false))!
