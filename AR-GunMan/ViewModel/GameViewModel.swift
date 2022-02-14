@@ -65,21 +65,11 @@ class GameViewModel {
             }
             .subscribe(onNext: { status, score in
                 switch status {
-                case .ready:
-                    break
-
-                case .start:
-                    AudioUtil.playSound(of: .pistolSet)
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                        AudioUtil.playSound(of: .startWhistle)
-                    }
-                    
-                case .switchWeapon:
+                case .pause:
                     _sightImage.accept(nil)
                     _bulletsCountImage.accept(nil)
-                    _showSwitchWeaponVC.accept(Void())
 
-                case .pause:
+                case .playing:
                     break
 
                 case .finish:
@@ -101,31 +91,70 @@ class GameViewModel {
         
         let _ = stateManager.weaponSelected
             .subscribe(onNext: { element in
-                switch element {
+                switch element.weapon {
                 case .pistol:
-                    break
+                    _sightImage.accept(Const.pistolSightImage)
+                    _bulletsCountImage.accept(Const.pistolBulletsCountImage(element.bulletsCount))
+                    if element.switched {
+                        AudioUtil.playSound(of: .pistolSet)
+                    }
+                    
                 case .bazooka:
-                    break
+                    _sightImage.accept(Const.bazookaSightImage)
+                    _bulletsCountImage.accept(Const.bazookaBulletsCountImage(element.bulletsCount))
+                    if element.switched {
+                        AudioUtil.playSound(of: .bazookaSet)
+                    }
+                    
                 default:
                     break
                 }
             }).disposed(by: disposeBag)
         
-        let _ = stateManager.weaponFirableReaction
+        let _ = stateManager.weaponFiringResult
             .subscribe(onNext: { element in
-                switch element {
-                case .fireAvailable:
-                    break
-                case .fireUnavailable:
-                    break
-                case .noBullets:
+                switch element.weapon {
+                case .pistol:
+                    switch element.result {
+                    case .fired:
+                        AudioUtil.playSound(of: .pistolShoot)
+                        _bulletsCountImage.accept(Const.pistolBulletsCountImage(element.remainingBulletsCount))
+                        
+                    case .canceled:
+                        break
+                        
+                    case .noBullets:
+                        AudioUtil.playSound(of: .pistolOutBullets)
+                    }
+                    
+                case .bazooka:
+                    if element.result == .fired {
+                        AudioUtil.playSound(of: .bazookaShoot)
+                        AudioUtil.playSound(of: .bazookaReload)
+                        _bulletsCountImage.accept(Const.bazookaBulletsCountImage(element.remainingBulletsCount))
+                    }
+                    
+                default:
                     break
                 }
             }).disposed(by: disposeBag)
         
-        let _ = stateManager.isReloadWeaponEnabled
+        let _ = stateManager.weaponReloadingResult
             .subscribe(onNext: { element in
-                
+                if element.result != .completed {
+                    return
+                }
+                switch element.weapon {
+                case .pistol:
+                    AudioUtil.playSound(of: .pistolReload)
+                    _bulletsCountImage.accept(Const.pistolBulletsCountImage(Const.pistolBulletsCapacity))
+                    
+                case .bazooka:
+                    _bulletsCountImage.accept(Const.bazookaBulletsCountImage(Const.bazookaBulletsCapacity))
+                    
+                default:
+                    break
+                }
             }).disposed(by: disposeBag)
 
         

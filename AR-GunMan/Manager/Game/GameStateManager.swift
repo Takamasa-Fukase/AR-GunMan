@@ -9,20 +9,6 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-enum GameStatus {
-    case ready
-    case start
-    case switchWeapon
-    case pause
-    case finish
-}
-
-enum WeaponFirableReaction {
-    case fireAvailable
-    case fireUnavailable
-    case noBullets
-}
-
 class GameStateManager {
     //MARK: - input
     let startGame: AnyObserver<Void>
@@ -35,9 +21,9 @@ class GameStateManager {
     //MARK: - output
     let gameStatusChanged: Observable<GameStatus>
     let timeCount: Observable<Double>
-    let weaponSelected: Observable<WeaponTypes>
-    let weaponFirableReaction: Observable<WeaponFirableReaction>
-    let isReloadWeaponEnabled: Observable<Bool>
+    let weaponSelected: Observable<WeaponSwitchingResult>
+    let weaponFiringResult: Observable<WeaponFiringResult>
+    let weaponReloadingResult: Observable<WeaponReloadingResult>
     let totalScore: Observable<Double>
 
     //count
@@ -56,22 +42,45 @@ class GameStateManager {
         //other
         let _pistolBulletsCount = BehaviorRelay<Int>(value: Const.pistolBulletsCapacity)
         let _bazookaBulletsCount = BehaviorRelay<Int>(value: Const.bazookaBulletsCapacity)
+        
+        func createFiringResult(excuteBazookaAutoReloading: (() -> Void)) -> WeaponFiringResult {
+            //現在の武器が発射可能な条件かどうかチェックし、結果を返す
+            return WeaponStatusUtil
+                .createWeaponFiringResult(
+                    gameStatus: _gameStatusChanged.value,
+                    currentWeapon: _weaponSelected.value.weapon,
+                    pistolBulletsCount: _pistolBulletsCount,
+                    bazookaBulletsCount: _bazookaBulletsCount,
+                    excuteBazookaAutoReloading: excuteBazookaAutoReloading)
+        }
+        
+        func createReloadingResult() -> WeaponReloadingResult {
+            //現在の武器がリロード可能な条件かどうかチェックし、結果を返す
+            return WeaponStatusUtil
+                .createWeaponReloadingResult(
+                    gameStatus: _gameStatusChanged.value,
+                    currentWeapon: _weaponSelected.value.weapon,
+                    pistolBulletsCount: _pistolBulletsCount,
+                    bazookaBulletsCount: _bazookaBulletsCount
+                )
+        }
+        
 
         //MARK: - output
-        let _gameStatusChanged = BehaviorRelay<GameStatus>(value: .ready)
+        let _gameStatusChanged = BehaviorRelay<GameStatus>(value: .pause)
         self.gameStatusChanged = _gameStatusChanged.asObservable()
 
         let _timeCount = BehaviorRelay<Double>(value: Const.timeCount)
         self.timeCount = _timeCount.asObservable()
 
-        let _weaponSelected = BehaviorRelay<WeaponTypes>(value: .pistol)
+        let _weaponSelected = BehaviorRelay<WeaponSwitchingResult>(value: WeaponSwitchingResult(switched: true, weapon: .pistol, bulletsCount: Const.pistolBulletsCapacity))
         self.weaponSelected = _weaponSelected.asObservable()
 
-        let _weaponFirableReaction = BehaviorRelay<WeaponFirableReaction>(value: .fireUnavailable)
-        self.weaponFirableReaction = _weaponFirableReaction.asObservable()
+        let _weaponFiringResult = PublishRelay<WeaponFiringResult>()
+        self.weaponFiringResult = _weaponFiringResult.asObservable()
 
-        let _isReloadWeaponEnabled = BehaviorRelay<Bool>(value: false)
-        self.isReloadWeaponEnabled = _isReloadWeaponEnabled.asObservable()
+        let _weaponReloadingResult = PublishRelay<WeaponReloadingResult>()
+        self.weaponReloadingResult = _weaponReloadingResult.asObservable()
         
         let _totalScore = BehaviorRelay<Double>(value: 0.0)
         self.totalScore = _totalScore.asObservable()
@@ -79,8 +88,7 @@ class GameStateManager {
         
         //other (output変数を参照するためここに配置)
         let _ = TimeCountUtil.createRxTimer(.nanoseconds(1))
-            .filter({ _ in _gameStatusChanged.value == .start ||
-                    _gameStatusChanged.value == .pause })
+            .filter({ _ in _gameStatusChanged.value == .playing })
             .map({ TimeCountUtil.decreaseGameTimeCount(elapsedTime: Double($0 / 100)) })
             .subscribe(onNext: { element in
                 _timeCount.accept(element)
@@ -92,36 +100,29 @@ class GameStateManager {
 
         //MARK: - input
         self.startGame = AnyObserver<Void>() { _ in
-            _gameStatusChanged.accept(.start)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                AudioUtil.playSound(of: .startWhistle)
+                _gameStatusChanged.accept(.playing)
+            }
         }
 
         self.requestFiringWeapon = AnyObserver<Void>() { _ in
-            //現在の武器が発射可能な条件かどうかチェックし、リアクションを返す
-            _weaponFirableReaction.accept(
-                WeaponStatusUtil
-                    .checkFireAvailable(
-                        gameStatus: _gameStatusChanged.value,
-                        currentWeapon: _weaponSelected.value,
-                        pistolBulletsCount: _pistolBulletsCount.value,
-                        bazookaBulletsCount: _bazookaBulletsCount.value
-                    )
-            )
+            let firingResult = createFiringResult(
+                excuteBazookaAutoReloading: {
+                    //バズーカは自動リロード（3.2秒後に完了）
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3.2) {
+                        //バズーカ残弾数をMAXに補充
+                        _bazookaBulletsCount.accept(Const.bazookaBulletsCapacity)
+                        //残弾数がある状態でリロード結果を作成して流す
+                        _weaponReloadingResult.accept(createReloadingResult())
+                    }
+                })
+            
+            _weaponFiringResult.accept(firingResult)
         }
 
         self.requestReloadingWeapon = AnyObserver<Void>() { _ in
-            //現在の武器がリロード可能な条件かどうかチェックし、リアクションを返す
-            _isReloadWeaponEnabled.accept(
-                WeaponStatusUtil
-                    .checkReloadAvailable(
-                        gameStatus: _gameStatusChanged.value,
-                        currentWeapon: _weaponSelected.value,
-                        pistolBulletsCount: _pistolBulletsCount.value
-                    )
-            )
-        }
-        
-        self.requestShowingSwitchWeaponPage = AnyObserver<Void>() { _ in
-            _gameStatusChanged.accept(.switchWeapon)
+            _weaponReloadingResult.accept(createReloadingResult())
         }
         
         self.requestSwitchingWeapon = AnyObserver<WeaponTypes>() { event in

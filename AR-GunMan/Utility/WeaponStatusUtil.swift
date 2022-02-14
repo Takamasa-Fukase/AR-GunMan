@@ -6,54 +6,103 @@
 //
 
 import Foundation
+import RxCocoa
 
 class WeaponStatusUtil {
     
-    //武器発射の可否
-    static func checkFireAvailable(gameStatus: GameStatus,
+    //武器発射の結果を作成
+    static func createWeaponFiringResult(gameStatus: GameStatus,
                                    currentWeapon: WeaponTypes,
-                                   pistolBulletsCount: Int,
-                                   bazookaBulletsCount: Int
-    ) -> WeaponFirableReaction {
+                                   pistolBulletsCount: BehaviorRelay<Int>,
+                                   bazookaBulletsCount: BehaviorRelay<Int>,
+                                   excuteBazookaAutoReloading: (() -> Void)
+    ) -> WeaponFiringResult {
+        var resultType: WeaponFiringResultType?
+        var remainingBulletsCount: Int?
         
-        //現在のゲームステータスがstartか（それ以外はunavailableを返す）
-        if gameStatus != .start { return .fireUnavailable }
-        
-        //現在の武器の弾が0じゃないか（0ならnoBulletsを返す）
+        //プレイ中以外のリクエストは却下
+        if gameStatus != .playing {
+            resultType = .canceled
+        }
+            
         switch currentWeapon {
         case .pistol:
-            if hasBullets(pistolBulletsCount) {
-                return .fireAvailable
+            if hasBullets(pistolBulletsCount.value) {
+                //弾を発射するので残弾数を更新
+                let _remainingBulletsCount = pistolBulletsCount.value - 1
+                remainingBulletsCount = _remainingBulletsCount
+                pistolBulletsCount.accept(_remainingBulletsCount)
+                resultType = .fired
             }else {
-                return .noBullets
+                remainingBulletsCount = 0
+                resultType = .noBullets
             }
+            
         case .bazooka:
-            if hasBullets(bazookaBulletsCount) {
-                return .fireAvailable
+            if hasBullets(bazookaBulletsCount.value) {
+                //弾を発射するので残弾数を更新
+                let _remainingBulletsCount = bazookaBulletsCount.value - 1
+                remainingBulletsCount = _remainingBulletsCount
+                bazookaBulletsCount.accept(_remainingBulletsCount)
+                resultType = .fired
+                //バズーカのリロードは毎回自動で行う
+                excuteBazookaAutoReloading()
             }else {
-                return .noBullets
+                remainingBulletsCount = 0
+                resultType = .noBullets
             }
+            
         default:
-            return .fireUnavailable
+            break
         }
+
+        return WeaponFiringResult(result: resultType ?? .canceled,
+                                  weapon: currentWeapon,
+                                  remainingBulletsCount: remainingBulletsCount ?? 0)
+        
+        
     }
     
-    //リロードの可否
-    static func checkReloadAvailable(gameStatus: GameStatus,
+    
+    //武器リロードの結果を作成
+    static func createWeaponReloadingResult(gameStatus: GameStatus,
                                    currentWeapon: WeaponTypes,
-                                   pistolBulletsCount: Int
-    ) -> Bool {
+                                   pistolBulletsCount: BehaviorRelay<Int>,
+                                   bazookaBulletsCount: BehaviorRelay<Int>
+    ) -> WeaponReloadingResult {
+        var resultType: WeaponReloadingResultType?
+
+        //プレイ中以外のリクエストは却下
+        if gameStatus != .playing {
+            resultType = .canceled
+        }
         
-        //現在のゲームステータスがstartか（それ以外はfalseを返す）
-        if gameStatus != .start { return false }
-        
-        //現在の武器の弾が0かどうか（0以外ならfalseを返す）
+        //現在の武器の弾が0の場合のみリロードを許可する
         switch currentWeapon {
         case .pistol:
-            return !hasBullets(pistolBulletsCount)
+            if !hasBullets(pistolBulletsCount.value) {
+                //残弾数をMAXに補充
+                pistolBulletsCount.accept(Const.pistolBulletsCapacity)
+                resultType = .completed
+            }else {
+                resultType = .canceled
+            }
+            
+        case .bazooka:
+            if !hasBullets(bazookaBulletsCount.value) {
+                //残弾数をMAXに補充
+                bazookaBulletsCount.accept(Const.bazookaBulletsCapacity)
+                resultType = .completed
+            }else {
+                resultType = .canceled
+            }
+            
         default:
-            return false
+            break
         }
+        
+        return WeaponReloadingResult(result: resultType ?? .canceled,
+                                     weapon: currentWeapon)
     }
     
     
