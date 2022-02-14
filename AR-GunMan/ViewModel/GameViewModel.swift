@@ -88,12 +88,13 @@ class GameViewModel {
             .bind(to: _timeCountString)
             .disposed(by: disposeBag)
         
-        let _ = stateManager.weaponSelected
+        let _ = stateManager.weaponSwitchingResult
             .subscribe(onNext: { element in
                 switch element.weapon {
                 case .pistol:
                     _sightImage.accept(Const.pistolSightImage)
                     _bulletsCountImage.accept(Const.pistolBulletsCountImage(element.bulletsCount))
+                    //同じ武器が選択された時は鳴らさない
                     if element.switched {
                         AudioUtil.playSound(of: .pistolSet)
                     }
@@ -101,6 +102,7 @@ class GameViewModel {
                 case .bazooka:
                     _sightImage.accept(Const.bazookaSightImage)
                     _bulletsCountImage.accept(Const.bazookaBulletsCountImage(element.bulletsCount))
+                    //同じ武器が選択された時は鳴らさない
                     if element.switched {
                         AudioUtil.playSound(of: .bazookaSet)
                     }

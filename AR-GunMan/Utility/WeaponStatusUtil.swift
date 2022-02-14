@@ -106,6 +106,34 @@ class WeaponStatusUtil {
     }
     
     
+    //武器切り替え結果を作成
+    static func createWeaponSwitchingResult(currentWeapon: WeaponTypes,
+                                   selectedWeapon: WeaponTypes,
+                                   pistolBulletsCount: BehaviorRelay<Int>,
+                                   bazookaBulletsCount: BehaviorRelay<Int>
+    ) -> WeaponSwitchingResult {
+        var switched: Bool {
+            return !(currentWeapon == selectedWeapon)
+        }
+        var bulletsCount: Int {
+            switch selectedWeapon {
+            case .pistol:
+                return pistolBulletsCount.value
+                
+            case .bazooka:
+                return bazookaBulletsCount.value
+                
+            default:
+                return 0
+            }
+        }
+        
+        return WeaponSwitchingResult(switched: switched,
+                                     weapon: selectedWeapon,
+                                     bulletsCount: bulletsCount)
+    }
+    
+    
     //MARK: - Private Methods
     private static func hasBullets(_ bulletsCount: Int) -> Bool {
         if bulletsCount > 0 {

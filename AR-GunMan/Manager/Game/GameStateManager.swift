@@ -20,7 +20,7 @@ class GameStateManager {
     //MARK: - output
     let gameStatusChanged: Observable<GameStatus>
     let timeCount: Observable<Double>
-    let weaponSelected: Observable<WeaponSwitchingResult>
+    let weaponSwitchingResult: Observable<WeaponSwitchingResult>
     let weaponFiringResult: Observable<WeaponFiringResult>
     let weaponReloadingResult: Observable<WeaponReloadingResult>
     let totalScore: Observable<Double>
@@ -47,10 +47,11 @@ class GameStateManager {
             return WeaponStatusUtil
                 .createWeaponFiringResult(
                     gameStatus: _gameStatusChanged.value,
-                    currentWeapon: _weaponSelected.value.weapon,
+                    currentWeapon: _weaponSwitchingResult.value.weapon,
                     pistolBulletsCount: _pistolBulletsCount,
                     bazookaBulletsCount: _bazookaBulletsCount,
-                    excuteBazookaAutoReloading: excuteBazookaAutoReloading)
+                    excuteBazookaAutoReloading: excuteBazookaAutoReloading
+                )
         }
         
         func createReloadingResult() -> WeaponReloadingResult {
@@ -58,7 +59,18 @@ class GameStateManager {
             return WeaponStatusUtil
                 .createWeaponReloadingResult(
                     gameStatus: _gameStatusChanged.value,
-                    currentWeapon: _weaponSelected.value.weapon,
+                    currentWeapon: _weaponSwitchingResult.value.weapon,
+                    pistolBulletsCount: _pistolBulletsCount,
+                    bazookaBulletsCount: _bazookaBulletsCount
+                )
+        }
+        
+        func createSwitchingResult(selectedWeapon: WeaponTypes) -> WeaponSwitchingResult {
+            //現在の武器がリロード可能な条件かどうかチェックし、結果を返す
+            return WeaponStatusUtil
+                .createWeaponSwitchingResult(
+                    currentWeapon: _weaponSwitchingResult.value.weapon,
+                    selectedWeapon: selectedWeapon,
                     pistolBulletsCount: _pistolBulletsCount,
                     bazookaBulletsCount: _bazookaBulletsCount
                 )
@@ -72,8 +84,8 @@ class GameStateManager {
         let _timeCount = BehaviorRelay<Double>(value: Const.timeCount)
         self.timeCount = _timeCount.asObservable()
 
-        let _weaponSelected = BehaviorRelay<WeaponSwitchingResult>(value: WeaponSwitchingResult(switched: true, weapon: .pistol, bulletsCount: Const.pistolBulletsCapacity))
-        self.weaponSelected = _weaponSelected.asObservable()
+        let _weaponSwitchingResult = BehaviorRelay<WeaponSwitchingResult>(value: WeaponSwitchingResult(switched: true, weapon: .pistol, bulletsCount: Const.pistolBulletsCapacity))
+        self.weaponSwitchingResult = _weaponSwitchingResult.asObservable()
 
         let _weaponFiringResult = PublishRelay<WeaponFiringResult>()
         self.weaponFiringResult = _weaponFiringResult.asObservable()
@@ -126,8 +138,10 @@ class GameStateManager {
         
         self.requestSwitchingWeapon = AnyObserver<WeaponTypes>() { event in
             guard let element = event.element else {return}
-            //同じ武器が選択されても武器選択画面を閉じる処理が必要なのでそのまま流す
-            _weaponSelected.accept(element)
+            
+            _weaponSwitchingResult.accept(
+                createSwitchingResult(selectedWeapon: element)
+            )
         }
         
         self.hitTarget = AnyObserver<Void>() { _ in
