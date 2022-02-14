@@ -57,6 +57,10 @@ class Const {
     
     static let bazookaBulletsCapacity = 1 //バズーカの装弾数（最大数）
     
+    static let pistolHitPoint: Double = 5
+    
+    static let bazookaHitPoint: Double = 12
+    
     static let pistolSightImage = UIImage(named: "pistolSight")
     
     static let bazookaSightImage = UIImage(named: "bazookaSight")
@@ -67,6 +71,17 @@ class Const {
     
     static func bazookaBulletsCountImage(_ count: Int) -> UIImage? {
         return UIImage(named: "bazookaRocket\(count)")
+    }
+    
+    static func getWeaponScore(_ weapon: WeaponTypes) -> Double {
+        switch weapon {
+        case .pistol:
+            return pistolHitPoint
+        case .bazooka:
+            return bazookaHitPoint
+        default:
+            return 0
+        }
     }
 }
 

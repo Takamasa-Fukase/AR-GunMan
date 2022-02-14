@@ -18,7 +18,7 @@ class GameViewModel {
     let userRotateDevice20Times: AnyObserver<Void>
     let switchWeaponButtonTapped: AnyObserver<Void>
     let weaponItemTapped: AnyObserver<Int>
-    
+    let hitTarget: AnyObserver<Void>
     
     //MARK: - output
     let showTutorial: Observable<Void>
@@ -161,9 +161,11 @@ class GameViewModel {
         
         self.weaponItemTapped = AnyObserver<Int>() { event in
             guard let index = event.element else {return}
-            stateManager.requestSwitchingWeapon.onNext(
-                WeaponTypes.allCases[index]
-            )
+            stateManager.requestSwitchingWeapon.onNext(WeaponTypes.allCases[index])
+        }
+        
+        self.hitTarget = AnyObserver<Void>() { _ in
+            stateManager.hitTarget.onNext(Void())
         }
     }
     

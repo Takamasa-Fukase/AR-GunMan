@@ -8,9 +8,11 @@
 import Foundation
 
 class ScoreUtil {
-    static func getTotalScore(pistolPoint: Double, bazookaPoint: Double) -> Double {
-        let sumPoint: Double = min(pistolPoint + bazookaPoint, 100.0)
+    
+    static func addScore(currentScore: Double, weapon: WeaponTypes) -> Double {
+        let weaponScore = Const.getWeaponScore(weapon)
+        let sumScore: Double = min(currentScore + weaponScore, 100.0)
         //ランキングがバラけるようにスコアに乱数をかけて調整する
-        return sumPoint * (Double.random(in: 0.9...1))
+        return sumScore * (Double.random(in: 0.9...1))
     }
 }

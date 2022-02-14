@@ -30,6 +30,7 @@ class GameStateManager {
     let requestReloadingWeapon: AnyObserver<Void>
     let requestShowingSwitchWeaponPage: AnyObserver<Void>
     let requestSwitchingWeapon: AnyObserver<WeaponTypes>
+    let hitTarget: AnyObserver<Void>
 
     //MARK: - output
     let gameStatusChanged: Observable<GameStatus>
@@ -55,9 +56,6 @@ class GameStateManager {
         //other
         let _pistolBulletsCount = BehaviorRelay<Int>(value: Const.pistolBulletsCapacity)
         let _bazookaBulletsCount = BehaviorRelay<Int>(value: Const.bazookaBulletsCapacity)
-        let _pistolPoint = BehaviorRelay<Double>(value: 0.0)
-        let _bazookaPoint = BehaviorRelay<Double>(value: 0.0)
-
 
         //MARK: - output
         let _gameStatusChanged = BehaviorRelay<GameStatus>(value: .ready)
@@ -75,7 +73,7 @@ class GameStateManager {
         let _isReloadWeaponEnabled = BehaviorRelay<Bool>(value: false)
         self.isReloadWeaponEnabled = _isReloadWeaponEnabled.asObservable()
         
-        let _totalScore = PublishRelay<Double>()
+        let _totalScore = BehaviorRelay<Double>(value: 0.0)
         self.totalScore = _totalScore.asObservable()
         
         
@@ -87,10 +85,6 @@ class GameStateManager {
             .subscribe(onNext: { element in
                 _timeCount.accept(element)
                 if element <= 0 {
-                    _totalScore.accept(
-                        ScoreUtil.getTotalScore(pistolPoint: _pistolPoint.value,
-                                                bazookaPoint: _bazookaPoint.value)
-                    )
                     _gameStatusChanged.accept(.finish)
                 }
             }).disposed(by: disposeBag)
@@ -134,6 +128,10 @@ class GameStateManager {
             guard let element = event.element else {return}
             //同じ武器が選択されても武器選択画面を閉じる処理が必要なのでそのまま流す
             _weaponSelected.accept(element)
+        }
+        
+        self.hitTarget = AnyObserver<Void>() { _ in
+            _totalScore.accept(ScoreUtil.addScore(currentScore: _totalScore.value, weapon: _weaponSelected.value))
         }
     }
 
