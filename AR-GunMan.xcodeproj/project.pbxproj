@@ -63,6 +63,7 @@
 		67200F5B27A0028700AD92EC /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67200F5A27A0028700AD92EC /* SettingsViewModel.swift */; };
 		67684E6927B44DFA000B2B5C /* WeaponStatusUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67684E6827B44DFA000B2B5C /* WeaponStatusUtil.swift */; };
 		67684E6B27B97B8F000B2B5C /* ScoreUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67684E6A27B97B8F000B2B5C /* ScoreUtil.swift */; };
+		67684E6D27B988C0000B2B5C /* SceneViewSettingUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67684E6C27B988C0000B2B5C /* SceneViewSettingUtil.swift */; };
 		677DF1EE27A710A8007512F6 /* SafariViewUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 677DF1ED27A710A8007512F6 /* SafariViewUtil.swift */; };
 		677DF1F127A7C096007512F6 /* RankingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 677DF1F027A7C096007512F6 /* RankingRepository.swift */; };
 		677DF1F427A7C100007512F6 /* Ranking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 677DF1F327A7C100007512F6 /* Ranking.swift */; };
@@ -163,6 +164,7 @@
 		67200F5A27A0028700AD92EC /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		67684E6827B44DFA000B2B5C /* WeaponStatusUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponStatusUtil.swift; sourceTree = "<group>"; };
 		67684E6A27B97B8F000B2B5C /* ScoreUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreUtil.swift; sourceTree = "<group>"; };
+		67684E6C27B988C0000B2B5C /* SceneViewSettingUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneViewSettingUtil.swift; sourceTree = "<group>"; };
 		677DF1ED27A710A8007512F6 /* SafariViewUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariViewUtil.swift; sourceTree = "<group>"; };
 		677DF1F027A7C096007512F6 /* RankingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingRepository.swift; sourceTree = "<group>"; };
 		677DF1F327A7C100007512F6 /* Ranking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ranking.swift; sourceTree = "<group>"; };
@@ -446,6 +448,7 @@
 				67B685EE27AAD8B300D7F413 /* TimeCountUtil.swift */,
 				67684E6827B44DFA000B2B5C /* WeaponStatusUtil.swift */,
 				67684E6A27B97B8F000B2B5C /* ScoreUtil.swift */,
+				67684E6C27B988C0000B2B5C /* SceneViewSettingUtil.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -781,6 +784,7 @@
 				59D2D53A2552E1D2006DDB70 /* Storyboard+Extension.swift in Sources */,
 				67684E6927B44DFA000B2B5C /* WeaponStatusUtil.swift in Sources */,
 				67200F5727A0020B00AD92EC /* RankingViewModel.swift in Sources */,
+				67684E6D27B988C0000B2B5C /* SceneViewSettingUtil.swift in Sources */,
 				595E6987256C0190002B4F3E /* SettingsViewController.swift in Sources */,
 				59A01134255AF580008996E3 /* GameResultViewController.swift in Sources */,
 				5952F62D25E94D9200ADB85B /* CameraAuthUtil.swift in Sources */,

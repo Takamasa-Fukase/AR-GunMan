@@ -37,6 +37,8 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        SceneViewSettingUtil.setupSceneView(sceneView, sceneViewDelegate: self, physicContactDelegate: self)
+        
         //MARK: - input
         //CoreMotionで特定の加速度とジャイロイベントを検知した時にVMに通知
         CoreMotionUtil.getAccelerometer {
@@ -92,12 +94,11 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
                 self.present(vc, animated: true)
             }).disposed(by: disposeBag)
 
-        addPistol(shouldPlayPistolSet: false)
-        addTarget()
-        setBulletsImageView(with: UIImage(named: "bullets\(pistolBulletsCount)"))
+//        addPistol(shouldPlayPistolSet: false)
+//        addTarget()
+//        setBulletsImageView(with: UIImage(named: "bullets\(pistolBulletsCount)"))
         
         
-        setupScnView()
 
         let scene = SCNScene(named: "art.scnassets/target.scn")
         targetNode = (scene?.rootNode.childNode(withName: "target", recursively: false))!
@@ -147,8 +148,18 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         exploPar = bazookaHitExplosion?.particleSystems?.first!
 
         timeCountLabel.font = timeCountLabel.font.monospacedDigitFont
-
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
+        SceneViewSettingUtil.startSession(sceneView)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        SceneViewSettingUtil.pauseSession(sceneView)
     }
     
     func fireWeapon() {
@@ -214,35 +225,7 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
     
     }
 
-    func setupScnView() {
-        //シーンの作成
-        sceneView.scene = SCNScene()
-        //光源の有効化
-        sceneView.autoenablesDefaultLighting = true;
-        //ARSCNViewデリゲートの指定
-        sceneView.delegate = self
-        //衝突検知のためのDelegate設定
-        sceneView.scene.physicsWorld.contactDelegate = self
-    }
-    
-    //ビュー表示時に呼ばれる
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        //コンフィギュレーションの生成
-        let configuration = ARWorldTrackingConfiguration()
-        //平面検出の有効化
-        configuration.planeDetection = .horizontal
-        //セッションの開始
-        sceneView.session.run(configuration)
-    }
-    
-    //ビュー非表示時に呼ばれる
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        //セッションの一時停止
-        sceneView.session.pause()
-    }
-    
+
     //常に更新され続けるdelegateメソッド
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         //現在表示中の武器をラップしている空のオブジェクトを常にカメラと同じPositionに移動させ続ける（それにより武器が常にFPS位置に保たれる）
