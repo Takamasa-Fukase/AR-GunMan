@@ -12,7 +12,7 @@ import RxCocoa
 class GameViewModel {
     
     //MARK: - input
-    let checkTutorialSeenStatus: AnyObserver<Void>
+    let tutorialEnded: AnyObserver<Void>
     let userShookDevide: AnyObserver<Void>
     let userRotateDevice: AnyObserver<Void>
     let userRotateDevice20Times: AnyObserver<Void>
@@ -21,7 +21,6 @@ class GameViewModel {
     let hitTarget: AnyObserver<Void>
     
     //MARK: - output
-    let showTutorial: Observable<Void>
     let showSwitchWeaponVC: Observable<Void>
     let sightImage: Observable<UIImage?>
     let bulletsCountImage: Observable<UIImage?>
@@ -37,9 +36,6 @@ class GameViewModel {
         let stateManager = GameStateManager()
         
         //MARK: - output
-        let _showTutorial = PublishRelay<Void>()
-        self.showTutorial = _showTutorial.asObservable()
-        
         let _showSwitchWeaponVC = PublishRelay<Void>()
         self.showSwitchWeaponVC = _showSwitchWeaponVC.asObservable()
         
@@ -134,13 +130,8 @@ class GameViewModel {
 
         
         //MARK: - input
-        self.checkTutorialSeenStatus = AnyObserver<Void>() { _ in
-            if UserDefaultsUtil.isTutorialAlreadySeen() {
-                _showTutorial.accept(Void())
-                
-            }else {
-                stateManager.startGame.onNext(Void())
-            }
+        self.tutorialEnded = AnyObserver<Void>() { _ in
+            stateManager.startGame.onNext(Void())
         }
         
         self.userShookDevide = AnyObserver<Void>() { _ in

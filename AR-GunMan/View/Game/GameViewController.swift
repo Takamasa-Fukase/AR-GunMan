@@ -27,13 +27,6 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
     @IBOutlet weak var switchWeaponButton: UIButton!
     
     //MARK: - Methods
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        //初回のみチュートリアルを表示するのでチェック
-        viewModel.checkTutorialSeenStatus.onNext(Void())
-    }
-        
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -56,14 +49,6 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         
 
         //MARK: - output
-        let _ = viewModel.showTutorial
-            .subscribe(onNext: { [weak self] element in
-                guard let self = self else {return}
-                let storyboard: UIStoryboard = UIStoryboard(name: "TutorialViewController", bundle: nil)
-                let vc = storyboard.instantiateViewController(withIdentifier: "TutorialViewController") as! TutorialViewController
-                self.present(vc, animated: true)
-            }).disposed(by: disposeBag)
-        
         let _ = viewModel.showSwitchWeaponVC
             .subscribe(onNext: { [weak self] element in
                 guard let self = self else {return}
@@ -149,10 +134,30 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
         SceneViewSettingUtil.startSession(sceneView)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        //初回のみチュートリアルを表示するのでチェック
+        checkTutorialSeenStatus()
+    }
+        
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
         SceneViewSettingUtil.pauseSession(sceneView)
+    }
+    
+    private func checkTutorialSeenStatus() {
+        if UserDefaultsUtil.isTutorialAlreadySeen() {
+            viewModel.tutorialEnded.onNext(Void())
+            
+        }else {
+            let storyboard: UIStoryboard = UIStoryboard(name: "TutorialViewController", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "TutorialViewController") as! TutorialViewController
+            vc.delegate = self
+            self.present(vc, animated: true)
+        }
     }
     
     func fireWeapon() {
@@ -374,6 +379,12 @@ class GameViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContact
     }
     
     
+}
+
+extension GameViewController: TutorialVCDelegate {
+    func tutorialEnded() {
+        viewModel.tutorialEnded.onNext(Void())
+    }
 }
 
 extension GameViewController {

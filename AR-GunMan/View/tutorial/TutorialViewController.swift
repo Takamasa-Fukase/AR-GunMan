@@ -5,13 +5,13 @@
 //  Created by 深瀬 貴将 on 2020/11/23.
 //
 
-protocol TutorialVCDelegate: AnyObject {
-    func startGame()
-}
-
 import UIKit
 import RxSwift
 import RxCocoa
+
+protocol TutorialVCDelegate: AnyObject {
+    func tutorialEnded()
+}
 
 class TutorialViewController: UIViewController {
     
@@ -76,8 +76,8 @@ class TutorialViewController: UIViewController {
                 guard let self = self else {return}
                 if self.transitionType == .gamePage {
                     UserDefaultsUtil.setTutorialSeen()
-                    self.delegate?.startGame()
                 }
+                self.delegate?.tutorialEnded()
                 self.dismiss(animated: true, completion: nil)
             }).disposed(by: disposeBag)
     }
