@@ -17,9 +17,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tIZ-q4-Fil">
-                                <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
-                            </arscnView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pistolSight" translatesAutoresizingMaskIntoConstraints="NO" id="AUh-AO-KoL">
                                 <rect key="frame" x="398" y="157" width="100" height="100"/>
                                 <color key="tintColor" systemColor="systemRedColor"/>
@@ -69,15 +66,11 @@
                         <viewLayoutGuide key="safeArea" id="oc2-y6-gKr"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="tIZ-q4-Fil" firstAttribute="top" secondItem="oc2-y6-gKr" secondAttribute="top" id="3KZ-oa-cNf"/>
                             <constraint firstItem="raj-Cg-8Fj" firstAttribute="top" secondItem="oc2-y6-gKr" secondAttribute="top" constant="30" id="6J2-T8-fzX"/>
                             <constraint firstItem="fAS-2G-FjW" firstAttribute="bottom" secondItem="oc2-y6-gKr" secondAttribute="bottom" id="6Xj-II-jP3"/>
-                            <constraint firstItem="tIZ-q4-Fil" firstAttribute="leading" secondItem="nlc-4y-E7T" secondAttribute="leading" id="TFo-xD-N4Q"/>
-                            <constraint firstAttribute="bottom" secondItem="tIZ-q4-Fil" secondAttribute="bottom" id="UzR-HQ-Dah"/>
                             <constraint firstAttribute="trailing" secondItem="IhJ-qs-URo" secondAttribute="trailing" constant="60" id="YtX-qi-cRh"/>
                             <constraint firstItem="IhJ-qs-URo" firstAttribute="top" secondItem="oc2-y6-gKr" secondAttribute="top" constant="30" id="ZEY-pR-TFG"/>
                             <constraint firstItem="AUh-AO-KoL" firstAttribute="centerY" secondItem="nlc-4y-E7T" secondAttribute="centerY" id="ZWy-ie-imj"/>
-                            <constraint firstAttribute="trailing" secondItem="tIZ-q4-Fil" secondAttribute="trailing" id="a9G-Om-QTY"/>
                             <constraint firstItem="fAS-2G-FjW" firstAttribute="leading" secondItem="oc2-y6-gKr" secondAttribute="leading" id="e9w-ii-27q"/>
                             <constraint firstItem="AUh-AO-KoL" firstAttribute="centerX" secondItem="nlc-4y-E7T" secondAttribute="centerX" id="faI-0n-Nz4"/>
                             <constraint firstItem="raj-Cg-8Fj" firstAttribute="leading" secondItem="oc2-y6-gKr" secondAttribute="leading" constant="20" id="xvX-FX-1Xc"/>
@@ -86,7 +79,6 @@
                     <navigationItem key="navigationItem" id="gMq-QZ-WE0"/>
                     <connections>
                         <outlet property="bulletsCountImageView" destination="fAS-2G-FjW" id="cSB-ap-vlp"/>
-                        <outlet property="sceneView" destination="tIZ-q4-Fil" id="ycz-Oz-4Jq"/>
                         <outlet property="sightImageView" destination="AUh-AO-KoL" id="Kni-sQ-7ph"/>
                         <outlet property="switchWeaponButton" destination="IhJ-qs-URo" id="aY2-tI-EvZ"/>
                         <outlet property="timeCountLabel" destination="raj-Cg-8Fj" id="Mqn-4G-8VE"/>
