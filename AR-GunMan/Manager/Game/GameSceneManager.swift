@@ -18,32 +18,17 @@ class GameSceneManager: NSObject {
     var bulletNode: SCNNode?
     var bazookaHitExplosion: SCNNode?
     var jetFire: SCNNode?
-    var targetNode: SCNNode?
     var exploPar: SCNParticleSystem?
     
     //MARK: - Methods
     override init() {
         super.init()
         
+        //SceneViewをセットアップ
         SceneViewSettingUtil.setupSceneView(sceneView, sceneViewDelegate: self, physicContactDelegate: self)
-    }
-
-    func addPistol(shouldPlayPistolSet: Bool = true) {
-        let scene = SCNScene(named: "art.scnassets/Weapon/Pistol/M1911_a.scn")
-        //注意:scnのファイル名ではなく、Identity欄のnameを指定する
-        let parentNode = (scene?.rootNode.childNode(withName: "parent", recursively: false))!
-        
-        let billBoardConstraint = SCNBillboardConstraint()
-        parentNode.constraints = [billBoardConstraint]
-        
-        parentNode.position = sceneView.pointOfView?.position ?? SCNVector3()
-        self.sceneView.scene.rootNode.addChildNode(parentNode)
-        
-        if shouldPlayPistolSet {
-            //チャキッ　の再生
-            AudioUtil.playSound(of: .pistolSet)
-        }
-        
+        //ターゲットをランダムな位置に配置
+        addTarget()
+        SceneNodeUtil.addWeapon(of: .pistol, scnView: sceneView)
     }
     
     //弾ノードを設置
@@ -84,6 +69,39 @@ class GameSceneManager: NSObject {
         print("弾を発射")
     }
     
+    private func createOriginalTargetNode() -> SCNNode {
+        let originalTargetNode = SceneNodeUtil.loadScnFile(of: "art.scnassets/target.scn", nodeName: "target")
+        originalTargetNode.scale = SCNVector3(0.3, 0.3, 0.3)
+        
+        let targetNodeGeometry = (originalTargetNode.childNode(withName: "sphere", recursively: false)?.geometry) ?? SCNGeometry()
+        
+        //MARK: - 当たり判定の肝2つ
+        //①形状はラップしてる空のNodeではなく何か1つgeometryを持っているものにするを指定する
+        //②当たり判定のscaleはoptions: [SCNPhysicsShape.Option.scale: SCNVector3]で明示的に設定する（大体①のgeometryの元となっているNodeのscaleを代入すれば等しい当たり判定になる）
+        let shape = SCNPhysicsShape(geometry: targetNodeGeometry, options: [SCNPhysicsShape.Option.scale: originalTargetNode.scale])
+        
+        //当たり判定用のphysicBodyを追加
+        originalTargetNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: shape)
+        originalTargetNode.physicsBody?.isAffectedByGravity = false
+        
+        return originalTargetNode
+    }
+      
+    //的ノードをランダムな座標に設置
+    private func addTarget() {
+        //メモリ節約のために１つだけオリジナルを生成し、それをクローンして使う
+        let originalTargetNode = createOriginalTargetNode()
+        
+        DispatchQueue.main.async {
+            for _ in 0..<Const.targetCount {
+                let clonedTargetNode = originalTargetNode.clone()
+                clonedTargetNode.position = SceneNodeUtil.getRandomTargetPosition()
+                SceneNodeUtil.addBillboardConstraint(clonedTargetNode)
+                self.sceneView.scene.rootNode.addChildNode(clonedTargetNode)
+            }
+        }
+    }
+    
     
     /*
      - 泰明さんにテクスチャを切り替え
@@ -103,7 +121,7 @@ class GameSceneManager: NSObject {
 extension GameSceneManager: ARSCNViewDelegate {
     //常に更新され続けるdelegateメソッド
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
-//        addPistol()
+        
     }
     
     /* //現在表示中の武器をラップしている空のオブジェクトを常にカメラと同じPositionに移動させ続ける（それにより武器が常にFPS位置に保たれる）

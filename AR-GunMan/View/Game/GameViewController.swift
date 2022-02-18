@@ -75,20 +75,7 @@ class GameViewController: UIViewController {
             }).disposed(by: disposeBag)
         
 
-//        let scene = SCNScene(named: "art.scnassets/target.scn")
-//        targetNode = (scene?.rootNode.childNode(withName: "target", recursively: false))!
-//        targetNode?.scale = SCNVector3(0.3, 0.3, 0.3)
-//
-//        let targetNodeGeometry = (targetNode?.childNode(withName: "sphere", recursively: false)?.geometry)!
-//
-//        //MARK: - 当たり判定の肝2つ
-//        //①形状はラップしてる空のNodeではなく何か1つgeometryを持っているものにするを指定する
-//        //②当たり判定のscaleはoptions: [SCNPhysicsShape.Option.scale: SCNVector3]で明示的に設定する（大体①のgeometryの元となっているNodeのscaleを代入すれば等しい当たり判定になる）
-//        let shape = SCNPhysicsShape(geometry: targetNodeGeometry, options: [SCNPhysicsShape.Option.scale: targetNode?.scale])
-//
-//        //当たり判定用のphysicBodyを追加
-//        targetNode?.physicsBody = SCNPhysicsBody(type: .dynamic, shape: shape)
-//        targetNode?.physicsBody?.isAffectedByGravity = false
+
 //
 //
 //        //ロケラン名中時の爆発
@@ -538,40 +525,7 @@ extension GameViewController {
 //        print("弾を発射")
 //    }
 //
-//    //的ノードを設置
-//    func addTarget() {
-//
-//        //ランダムな座標に10回設置
-//        DispatchQueue.main.async {
-//            for _ in 0..<self.targetCount {
-//
-//                let randomX = Float.random(in: -3...3)
-//                let randomY = Float.random(in: -1.5...2)
-//                let randomZfirst = Float.random(in: -3...(-0.5))
-//                let randomZsecond = Float.random(in: 0.5...3)
-//                let randomZthird = Float.random(in: -3...3)
-//                var randomZ: Float?
-//
-//                if randomX < -0.5 || randomX > 0.5 || randomY < -0.5 || randomY > 0.5 {
-//                    randomZ = randomZthird
-//                }else {
-//                    randomZ = [randomZfirst, randomZsecond].randomElement()
-//                }
-//                let randomPosition = SCNVector3(x: randomX, y: randomY, z: randomZ ?? 0)
-//
-//                let cloneTargetNode = self.targetNode?.clone()
-//
-//                cloneTargetNode?.position = randomPosition
-//
-//                //常にカメラを向く制約
-//                let billBoardConstraint = SCNBillboardConstraint()
-//                cloneTargetNode?.constraints = [billBoardConstraint]
-//
-//                self.sceneView.scene.rootNode.addChildNode(cloneTargetNode ?? SCNNode())
-//                print("的を設置")
-//            }
-//        }
-//    }
+
 //
 //    func setBulletsImageView(with image: UIImage?) {
 //        pistolBulletsCountImageView.image = image
