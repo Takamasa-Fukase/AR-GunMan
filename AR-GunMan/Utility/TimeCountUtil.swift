@@ -16,8 +16,8 @@ class TimeCountUtil {
     }
     
     //30.00から経過時間を引いた値に変換
-    static func decreaseGameTimeCount(elapsedTime: Double) -> Double {
-        return max(Const.timeCount - elapsedTime, 0.00)
+    static func decreaseGameTimeCount(lastValue: Double) -> Double {
+        return max(lastValue - 0.01, 0.00)
     }
     
     //2桁のStringに変換（1桁の場合は0埋めする）

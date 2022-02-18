@@ -89,11 +89,12 @@ class GameStateManager {
         
         
         //other (output変数を参照するためここに配置)
-        let _ = TimeCountUtil.createRxTimer(.nanoseconds(1))
+        let _ = TimeCountUtil.createRxTimer(.milliseconds(10))
             .filter({ _ in _gameStatusChanged.value == .playing })
-            .map({ TimeCountUtil.decreaseGameTimeCount(elapsedTime: Double($0 / 100)) })
             .subscribe(onNext: { element in
-                _timeCount.accept(element)
+                _timeCount.accept(
+                    TimeCountUtil.decreaseGameTimeCount(lastValue: _timeCount.value)
+                )
                 if element <= 0 {
                     _gameStatusChanged.accept(.finish)
                 }
