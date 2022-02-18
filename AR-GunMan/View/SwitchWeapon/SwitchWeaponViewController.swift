@@ -34,10 +34,8 @@ class SwitchWeaponViewController: UIViewController {
         let _ = viewModel.dismissSwitchWeaponVC
             .subscribe(onNext: { [weak self] element in
                 guard let self = self else {return}
-                
                 print("SwitchWeaponVC dismissSelfを通知受け取ったのでdismissします")
                 self.dismiss(animated: false, completion: nil)
-                
             }).disposed(by: disposeBag)
         
     }
@@ -75,5 +73,6 @@ extension SwitchWeaponViewController: FSPagerViewDelegate, FSPagerViewDataSource
     
     func pagerView(_ pagerView: FSPagerView, didSelectItemAt index: Int) {
         viewModel.weaponItemTapped.onNext(index)
+        self.dismiss(animated: true, completion: nil)
     }
 }

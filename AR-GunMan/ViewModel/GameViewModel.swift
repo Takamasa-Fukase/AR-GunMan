@@ -45,7 +45,7 @@ class GameViewModel {
         let _timeCountString = BehaviorRelay<String>(value: TimeCountUtil.twoDigitTimeCount(Const.timeCount))
         self.timeCountString = _timeCountString.asObservable()
         
-        let _showWeapon = PublishRelay<WeaponTypes>()
+        let _showWeapon = BehaviorRelay<WeaponTypes>(value: .pistol)
         self.showWeapon = _showWeapon.asObservable()
         
         let _fireWeapon = PublishRelay<Void>()
