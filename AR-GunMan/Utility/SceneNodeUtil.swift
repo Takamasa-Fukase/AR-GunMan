@@ -23,7 +23,7 @@ class SceneNodeUtil {
     //scnファイルからノードを読み込む
     static func loadScnFile(of path: String, nodeName: String) -> SCNNode {
         //注意:scnのファイル名ではなく、Identity欄のnameを指定する
-        guard let node = SCNScene(named: path)?.rootNode.childNode(withName: "parent", recursively: false) else {
+        guard let node = SCNScene(named: path)?.rootNode.childNode(withName: nodeName, recursively: false) else {
             print("loadScnFile失敗　ファイルパス(\(path))またはnodeのname(\(nodeName))が間違っています")
             return SCNNode()
         }
