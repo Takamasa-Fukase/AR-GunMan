@@ -86,6 +86,8 @@ class GameViewController: UIViewController {
         
         //MARK: - other
         addSceneView()
+        // - 等幅フォントにして高速で動くタイムカウントの横振れを防止
+        timeCountLabel.font = timeCountLabel.font.monospacedDigitFont
         
         let _ = switchWeaponButton.rx.tap
             .subscribe(onNext: { [weak self] element in

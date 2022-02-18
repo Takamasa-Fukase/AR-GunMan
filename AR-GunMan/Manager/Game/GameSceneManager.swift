@@ -221,6 +221,39 @@ class GameSceneManager: NSObject {
         //実行
         sceneView.scene.rootNode.childNode(withName: "parent", recursively: false)?.childNode(withName: "M1911_a", recursively: false)?.runAction(shoot)
     }
+    
+    func setupBazookaHitExplosion() {
+        //ロケラン名中時の爆発
+        
+        //art.scnassets配下のファイル名までのパスを記載
+        let explosionScene = SCNScene(named: "art.scnassets/ParticleSystems/ExplosionSamples/Explosion1.scn")
+        
+        //注意: withNameにはscnのファイル名ではなく、Identity欄のnameを指定する
+        if let explosion = (explosionScene?.rootNode.childNode(withName: "Explosion1", recursively: false)) {
+            
+            //座標を指定したい場合はここで設定（↓ではカメラ位置よりも50cm前方を指定）
+            let cameraPos = self.sceneView.pointOfView?.position ?? SCNVector3()
+            explosion.position = SCNVector3(x: cameraPos.x, y: cameraPos.y, z: cameraPos.z - 0.5)
+            
+            //画面に反映
+            self.sceneView.scene.rootNode.addChildNode(explosion)
+
+        }
+        
+        //ParticleSystemへのアクセス方法
+        sceneView.scene.rootNode.childNode(withName: "Explosion1", recursively: false)?.particleSystems?.first
+        
+        
+        
+        if let particleSystem = sceneView.scene.rootNode.childNode(withName: "bazookaHitExplosion\(explosionCount)", recursively: false)?.particleSystems?.first  {
+            
+            particleSystem.birthRate = 300
+            particleSystem.loops = false
+            
+        }
+        
+        exploPar = bazookaHitExplosion?.particleSystems?.first!
+    }
 }
 
 extension GameSceneManager: ARSCNViewDelegate {

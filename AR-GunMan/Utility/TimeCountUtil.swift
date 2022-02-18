@@ -15,7 +15,7 @@ class TimeCountUtil {
         return Observable<Int>.interval(interval, scheduler: MainScheduler.instance)
     }
     
-    //30.00から経過時間を引いた値に変換
+    //タイムカウントの減算処理
     static func decreaseGameTimeCount(lastValue: Double) -> Double {
         return max(lastValue - 0.01, 0.00)
     }
