@@ -56,6 +56,12 @@ class GameViewController: UIViewController {
         let _ = viewModel.timeCountString
             .bind(to: timeCountLabel.rx.text)
             .disposed(by: disposeBag)
+        
+        let _ = viewModel.showWeapon
+            .subscribe(onNext: { [weak self] element in
+                guard let self = self else {return}
+                self.sceneManager.showWeapon(element)
+            }).disposed(by: disposeBag)
 
         let _ = viewModel.transitResultVC
             .subscribe(onNext: { [weak self] element in

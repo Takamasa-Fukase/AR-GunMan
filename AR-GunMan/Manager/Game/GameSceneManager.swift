@@ -46,7 +46,11 @@ class GameSceneManager: NSObject {
         SceneViewSettingUtil.setupSceneView(sceneView, sceneViewDelegate: self, physicContactDelegate: self)
         //ターゲットをランダムな位置に配置
         addTarget()
-        SceneNodeUtil.addWeapon(of: .pistol, scnView: sceneView)
+    }
+    
+    //指定された武器を表示
+    func showWeapon(_ type: WeaponTypes) {
+        SceneNodeUtil.addWeapon(of: type, scnView: sceneView)
     }
     
     //弾ノードを設置

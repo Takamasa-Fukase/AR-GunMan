@@ -20,10 +20,10 @@ class GameViewModel {
     let targetHit: AnyObserver<Void>
     
     //MARK: - output
-    let showSwitchWeaponVC: Observable<Void>
     let sightImage: Observable<UIImage?>
     let bulletsCountImage: Observable<UIImage?>
     let timeCountString: Observable<String>
+    let showWeapon: Observable<WeaponTypes>
     let excuteSecretEvent: Observable<Void>
     let dismissSwitchWeaponVC: Observable<Void>
     let transitResultVC: Observable<Double>
@@ -35,9 +35,6 @@ class GameViewModel {
         let stateManager = GameStateManager()
         
         //MARK: - output
-        let _showSwitchWeaponVC = PublishRelay<Void>()
-        self.showSwitchWeaponVC = _showSwitchWeaponVC.asObservable()
-        
         let _sightImage = BehaviorRelay<UIImage?>(value: Const.pistolSightImage)
         self.sightImage = _sightImage.asObservable()
         
@@ -46,6 +43,9 @@ class GameViewModel {
         
         let _timeCountString = BehaviorRelay<String>(value: TimeCountUtil.twoDigitTimeCount(Const.timeCount))
         self.timeCountString = _timeCountString.asObservable()
+        
+        let _showWeapon = PublishRelay<WeaponTypes>()
+        self.showWeapon = _showWeapon.asObservable()
         
         let _excuteSecretEvent = PublishRelay<Void>()
         self.excuteSecretEvent = _excuteSecretEvent.asObservable()
@@ -90,6 +90,7 @@ class GameViewModel {
         
         let _ = stateManager.weaponSwitchingResult
             .subscribe(onNext: { element in
+                _showWeapon.accept(element.weapon)
                 switch element.weapon {
                 case .pistol:
                     _sightImage.accept(Const.pistolSightImage)
