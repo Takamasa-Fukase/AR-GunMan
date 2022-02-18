@@ -61,99 +61,20 @@ class GameSceneManager: NSObject {
         shootingAnimation()
     }
     
-    //弾ノードを設置
-    func addBullet() {
-        guard let cameraPos = sceneView.pointOfView?.position else {return}
-        
-        let sphere: SCNGeometry = SCNSphere(radius: 0.05)
-        let customYellow = UIColor(red: 253/255, green: 202/255, blue: 119/255, alpha: 1)
-        
-        sphere.firstMaterial?.diffuse.contents = customYellow
-        bulletNode = SCNNode(geometry: sphere)
-        guard let bulletNode = bulletNode else {return}
-        bulletNode.name = "bullet"
-        bulletNode.scale = SCNVector3(x: 1, y: 1, z: 1)
-        bulletNode.position = cameraPos
-        
-        //当たり判定用のphysicBodyを追加
-        let shape = SCNPhysicsShape(geometry: sphere, options: nil)
-        bulletNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: shape)
-        bulletNode.physicsBody?.contactTestBitMask = 1
-        bulletNode.physicsBody?.isAffectedByGravity = false
-        sceneView.scene.rootNode.addChildNode(bulletNode)
-        
-        print("弾を設置")
-    }
-    
-    //弾ノードを発射
-    func shootBullet() {
-        guard let camera = sceneView.pointOfView else {return}
-        let targetPosCamera = SCNVector3(x: camera.position.x, y: camera.position.y, z: camera.position.z - 10)
-        //カメラ座標をワールド座標に変換
-        let target = camera.convertPosition(targetPosCamera, to: nil)
-        let action = SCNAction.move(to: target, duration: TimeInterval(1))
-        bulletNode?.runAction(action, completionHandler: {
-            self.bulletNode?.removeFromParentNode()
-        })
-        
-        print("弾を発射")
-    }
-    
-    private func createOriginalTargetNode() -> SCNNode {
-        let originalTargetNode = SceneNodeUtil.loadScnFile(of: "art.scnassets/target.scn", nodeName: "target")
-        originalTargetNode.scale = SCNVector3(0.3, 0.3, 0.3)
-        
-        let targetNodeGeometry = (originalTargetNode.childNode(withName: "sphere", recursively: false)?.geometry) ?? SCNGeometry()
-        
-        //MARK: - 当たり判定の肝2つ
-        //①形状はラップしてる空のNodeではなく何か1つgeometryを持っているものにするを指定する
-        //②当たり判定のscaleはoptions: [SCNPhysicsShape.Option.scale: SCNVector3]で明示的に設定する（大体①のgeometryの元となっているNodeのscaleを代入すれば等しい当たり判定になる）
-        let shape = SCNPhysicsShape(geometry: targetNodeGeometry, options: [SCNPhysicsShape.Option.scale: originalTargetNode.scale])
-        
-        //当たり判定用のphysicBodyを追加
-        originalTargetNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: shape)
-        originalTargetNode.physicsBody?.isAffectedByGravity = false
-        
-        return originalTargetNode
-    }
-      
-    //的ノードをランダムな座標に設置
-    private func addTarget() {
-        //メモリ節約のために１つだけオリジナルを生成し、それをクローンして使う
-        let originalTargetNode = createOriginalTargetNode()
-        
-        DispatchQueue.main.async {
-            for _ in 0..<Const.targetCount {
-                let clonedTargetNode = originalTargetNode.clone()
-                clonedTargetNode.position = SceneNodeUtil.getRandomTargetPosition()
-                SceneNodeUtil.addBillboardConstraint(clonedTargetNode)
-                self.sceneView.scene.rootNode.addChildNode(clonedTargetNode)
-            }
-        }
-    }
-    
     func changeTargetsToTaimeisan() {
-        
-        self.sceneView.scene.rootNode.childNodes.forEach({ node in
-            print("node: \(node), name: \(node.name)")
+        sceneView.scene.rootNode.childNodes.forEach({ node in
             if node.name == "target" {
-                print("targetだった")
                 while node.childNode(withName: "torus", recursively: false) != nil {
                     node.childNode(withName: "torus", recursively: false)?.removeFromParentNode()
+                    //ドーナツ型の白い線のパーツを削除
                     print("torusを削除")
                 }
-                
                 node.childNode(withName: "sphere", recursively: false)?.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "taimei4.jpg")
-                
-            }else {
-                print("targetじゃない")
             }
         })
-        AudioUtil.playSound(of: .kyuiin)
     }
     
     func gunnerShakeAnimationNormal() {
-        
         //銃の先端が上に跳ね上がる回転のアニメーション
         let rotate = SCNAction.rotateBy(x: -0.1779697224, y: 0.0159312604, z: -0.1784194, duration: 1.2)
         //↑の逆（下に戻る回転）
@@ -224,7 +145,6 @@ class GameSceneManager: NSObject {
     
     func setupBazookaHitExplosion() {
         //ロケラン名中時の爆発
-        
         //art.scnassets配下のファイル名までのパスを記載
         let explosionScene = SCNScene(named: "art.scnassets/ParticleSystems/ExplosionSamples/Explosion1.scn")
         
@@ -243,17 +163,86 @@ class GameSceneManager: NSObject {
         //ParticleSystemへのアクセス方法
         sceneView.scene.rootNode.childNode(withName: "Explosion1", recursively: false)?.particleSystems?.first
         
-        
-        
         if let particleSystem = sceneView.scene.rootNode.childNode(withName: "bazookaHitExplosion\(explosionCount)", recursively: false)?.particleSystems?.first  {
             
             particleSystem.birthRate = 300
             particleSystem.loops = false
-            
         }
-        
         exploPar = bazookaHitExplosion?.particleSystems?.first!
     }
+    
+    //MARK: - Private Methods
+    //弾ノードを設置
+    private func addBullet() {
+        guard let cameraPos = sceneView.pointOfView?.position else {return}
+        
+        let sphere: SCNGeometry = SCNSphere(radius: 0.05)
+        let customYellow = UIColor(red: 253/255, green: 202/255, blue: 119/255, alpha: 1)
+        
+        sphere.firstMaterial?.diffuse.contents = customYellow
+        bulletNode = SCNNode(geometry: sphere)
+        guard let bulletNode = bulletNode else {return}
+        bulletNode.name = "bullet"
+        bulletNode.scale = SCNVector3(x: 1, y: 1, z: 1)
+        bulletNode.position = cameraPos
+        
+        //当たり判定用のphysicBodyを追加
+        let shape = SCNPhysicsShape(geometry: sphere, options: nil)
+        bulletNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: shape)
+        bulletNode.physicsBody?.contactTestBitMask = 1
+        bulletNode.physicsBody?.isAffectedByGravity = false
+        sceneView.scene.rootNode.addChildNode(bulletNode)
+        
+        print("弾を設置")
+    }
+    
+    //弾ノードを発射
+    private func shootBullet() {
+        guard let camera = sceneView.pointOfView else {return}
+        let targetPosCamera = SCNVector3(x: camera.position.x, y: camera.position.y, z: camera.position.z - 10)
+        //カメラ座標をワールド座標に変換
+        let target = camera.convertPosition(targetPosCamera, to: nil)
+        let action = SCNAction.move(to: target, duration: TimeInterval(1))
+        bulletNode?.runAction(action, completionHandler: {
+            self.bulletNode?.removeFromParentNode()
+        })
+        
+        print("弾を発射")
+    }
+    
+    private func createOriginalTargetNode() -> SCNNode {
+        let originalTargetNode = SceneNodeUtil.loadScnFile(of: "art.scnassets/target.scn", nodeName: "target")
+        originalTargetNode.scale = SCNVector3(0.3, 0.3, 0.3)
+        
+        let targetNodeGeometry = (originalTargetNode.childNode(withName: "sphere", recursively: false)?.geometry) ?? SCNGeometry()
+        
+        //MARK: - 当たり判定の肝2つ
+        //①形状はラップしてる空のNodeではなく何か1つgeometryを持っているものにするを指定する
+        //②当たり判定のscaleはoptions: [SCNPhysicsShape.Option.scale: SCNVector3]で明示的に設定する（大体①のgeometryの元となっているNodeのscaleを代入すれば等しい当たり判定になる）
+        let shape = SCNPhysicsShape(geometry: targetNodeGeometry, options: [SCNPhysicsShape.Option.scale: originalTargetNode.scale])
+        
+        //当たり判定用のphysicBodyを追加
+        originalTargetNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: shape)
+        originalTargetNode.physicsBody?.isAffectedByGravity = false
+        
+        return originalTargetNode
+    }
+      
+    //的ノードをランダムな座標に設置
+    private func addTarget() {
+        //メモリ節約のために１つだけオリジナルを生成し、それをクローンして使う
+        let originalTargetNode = createOriginalTargetNode()
+        
+        DispatchQueue.main.async {
+            for _ in 0..<Const.targetCount {
+                let clonedTargetNode = originalTargetNode.clone()
+                clonedTargetNode.position = SceneNodeUtil.getRandomTargetPosition()
+                SceneNodeUtil.addBillboardConstraint(clonedTargetNode)
+                self.sceneView.scene.rootNode.addChildNode(clonedTargetNode)
+            }
+        }
+    }
+    
 }
 
 extension GameSceneManager: ARSCNViewDelegate {

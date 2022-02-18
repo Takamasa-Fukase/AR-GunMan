@@ -180,6 +180,7 @@ class GameViewModel {
         
         self.userRotateDevice20Times = AnyObserver<Void>() { _ in
             _excuteSecretEvent.accept(Void())
+            AudioUtil.playSound(of: .kyuiin)
         }
         
         self.weaponItemTapped = AnyObserver<Int>() { event in
