@@ -14,7 +14,7 @@ import RxCocoa
 class SwitchWeaponViewController: UIViewController {
        
     //MARK: - Properties
-    var viewModel = GameViewModel()
+    var viewModel: GameViewModel!
     let disposeBag = DisposeBag()
     
     @IBOutlet weak var pagerView: FSPagerView! {
