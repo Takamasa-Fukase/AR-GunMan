@@ -78,14 +78,16 @@ class GameViewController: UIViewController {
         let _ = viewModel.transitResultVC
             .subscribe(onNext: { [weak self] element in
                 guard let self = self else {return}
-//                let storyboard: UIStoryboard = UIStoryboard(name: "GameResultViewController", bundle: nil)
-//                let vc = storyboard.instantiateViewController(withIdentifier: "GameResultViewController") as! GameResultViewController
-//                self.present(vc, animated: true)
+                let storyboard: UIStoryboard = UIStoryboard(name: "GameResultViewController", bundle: nil)
+                let vc = storyboard.instantiateViewController(withIdentifier: "GameResultViewController") as! GameResultViewController
+                self.present(vc, animated: true)
             }).disposed(by: disposeBag)
         
         
         //MARK: - other
         addSceneView()
+        // - 初回のみチュートリアルを表示するのでチェック
+        checkTutorialSeenStatus()
         // - 等幅フォントにして高速で動くタイムカウントの横振れを防止
         timeCountLabel.font = timeCountLabel.font.monospacedDigitFont
         
@@ -95,7 +97,7 @@ class GameViewController: UIViewController {
                 let storyboard: UIStoryboard = UIStoryboard(name: "SwitchWeaponViewController", bundle: nil)
                 let vc = storyboard.instantiateViewController(withIdentifier: "SwitchWeaponViewController") as! SwitchWeaponViewController
                 vc.viewModel = self.viewModel
-                self.present(vc, animated: true)
+                self.presentPanModal(vc)
             }).disposed(by: disposeBag)
     }
     
@@ -104,14 +106,7 @@ class GameViewController: UIViewController {
         
         SceneViewSettingUtil.startSession(sceneManager.sceneView)
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        //初回のみチュートリアルを表示するのでチェック
-        checkTutorialSeenStatus()
-    }
-        
+ 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
@@ -131,7 +126,7 @@ class GameViewController: UIViewController {
             let storyboard: UIStoryboard = UIStoryboard(name: "TutorialViewController", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "TutorialViewController") as! TutorialViewController
             vc.delegate = self
-            self.present(vc, animated: true)
+            self.presentPanModal(vc)
         }
     }
 }
