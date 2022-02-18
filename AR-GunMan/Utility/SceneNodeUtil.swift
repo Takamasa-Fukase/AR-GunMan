@@ -24,13 +24,15 @@ class SceneNodeUtil {
     static func loadScnFile(of path: String, nodeName: String) -> SCNNode {
         //注意:scnのファイル名ではなく、Identity欄のnameを指定する
         guard let node = SCNScene(named: path)?.rootNode.childNode(withName: "parent", recursively: false) else {
-            print("loadScnFile失敗　ファイルパスまたはnodeのnameが間違っています")
+            print("loadScnFile失敗　ファイルパス(\(path))またはnodeのname(\(nodeName))が間違っています")
             return SCNNode()
         }
         return node
     }
     
     static func addWeapon(of type: WeaponTypes, scnView: SCNView) {
+        //設置前に他の武器を削除
+        removeOtherWeapon(except: type, scnView: scnView)
         var node: SCNNode {
             switch type {
             case .pistol:
@@ -60,5 +62,26 @@ class SceneNodeUtil {
             randomZ = [randomZfirst, randomZsecond].randomElement()
         }
         return SCNVector3(x: randomX, y: randomY, z: randomZ ?? 0)
+    }
+    
+    
+    //MARK: - Private Methods
+    private static func removeOtherWeapon(except type: WeaponTypes, scnView: SCNView) {
+        var nodeNames: [String] {
+            switch type {
+            case .pistol:
+                return ["bazookaParent"]
+            case .bazooka:
+                return ["parent"]
+            default:
+                return []
+            }
+        }
+        nodeNames.forEach({ item in
+            if let node = scnView.scene?.rootNode.childNode(withName: item, recursively: false) {
+                print("\(item)を削除しました")
+                node.removeFromParentNode()
+            }
+        })
     }
 }
