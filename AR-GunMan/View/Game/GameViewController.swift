@@ -62,6 +62,18 @@ class GameViewController: UIViewController {
                 guard let self = self else {return}
                 self.sceneManager.showWeapon(element)
             }).disposed(by: disposeBag)
+        
+        let _ = viewModel.fireWeapon
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else {return}
+                self.sceneManager.fireWeapon()
+            }).disposed(by: disposeBag)
+        
+        let _ = viewModel.excuteSecretEvent
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else {return}
+                self.sceneManager.changeTargetsToTaimeisan()
+            }).disposed(by: disposeBag)
 
         let _ = viewModel.transitResultVC
             .subscribe(onNext: { [weak self] element in

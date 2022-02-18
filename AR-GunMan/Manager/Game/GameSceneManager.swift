@@ -50,7 +50,15 @@ class GameSceneManager: NSObject {
     
     //指定された武器を表示
     func showWeapon(_ type: WeaponTypes) {
+        currentWeapon = type
         SceneNodeUtil.addWeapon(of: type, scnView: sceneView)
+    }
+    
+    //現在選択中の武器の発砲に関わるアニメーション処理などを実行
+    func fireWeapon() {
+        addBullet()
+        shootBullet()
+        shootingAnimation()
     }
     
     //弾ノードを設置
@@ -124,15 +132,6 @@ class GameSceneManager: NSObject {
         }
     }
     
-    
-    /*
-     - 泰明さんにテクスチャを切り替え
-     - 発砲時のアニメーション実行
-     - ゆらゆら＆ひゅんひゅんモーションの実行
-     - 描画時のFPS移動、アニメーション削除＆再実行
-     - 衝突検知時の的＆弾消し、パーティクル設置
-     */
-
     func changeTargetsToTaimeisan() {
         
         self.sceneView.scene.rootNode.childNodes.forEach({ node in

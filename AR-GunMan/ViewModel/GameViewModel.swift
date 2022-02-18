@@ -24,6 +24,7 @@ class GameViewModel {
     let bulletsCountImage: Observable<UIImage?>
     let timeCountString: Observable<String>
     let showWeapon: Observable<WeaponTypes>
+    let fireWeapon: Observable<Void>
     let excuteSecretEvent: Observable<Void>
     let dismissSwitchWeaponVC: Observable<Void>
     let transitResultVC: Observable<Double>
@@ -46,6 +47,9 @@ class GameViewModel {
         
         let _showWeapon = PublishRelay<WeaponTypes>()
         self.showWeapon = _showWeapon.asObservable()
+        
+        let _fireWeapon = PublishRelay<Void>()
+        self.fireWeapon = _fireWeapon.asObservable()
         
         let _excuteSecretEvent = PublishRelay<Void>()
         self.excuteSecretEvent = _excuteSecretEvent.asObservable()
@@ -115,6 +119,7 @@ class GameViewModel {
         
         let _ = stateManager.weaponFiringResult
             .subscribe(onNext: { element in
+                _fireWeapon.accept(Void())
                 switch element.weapon {
                 case .pistol:
                     switch element.result {
