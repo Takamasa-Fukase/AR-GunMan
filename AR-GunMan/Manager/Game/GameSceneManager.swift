@@ -105,17 +105,103 @@ class GameSceneManager: NSObject {
     
     /*
      - 泰明さんにテクスチャを切り替え
-     - 初回に一回だけ的を50個設置
-     - 球を発射（武器共通）
-     - 球を設置（武器共通）
-     - 武器を画面に設置（共通化する）
      - 発砲時のアニメーション実行
      - ゆらゆら＆ひゅんひゅんモーションの実行
      - 描画時のFPS移動、アニメーション削除＆再実行
      - 衝突検知時の的＆弾消し、パーティクル設置
      */
 
+    //    func changeTargetsToTaimeisan() {
+    //
+    //        self.sceneView.scene.rootNode.childNodes.forEach({ node in
+    //            print("node: \(node), name: \(node.name)")
+    //            if node.name == "target" {
+    //                print("targetだった")
+    //                while node.childNode(withName: "torus", recursively: false) != nil {
+    //                    node.childNode(withName: "torus", recursively: false)?.removeFromParentNode()
+    //                    print("torusを削除")
+    //                }
+    //
+    //                node.childNode(withName: "sphere", recursively: false)?.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "taimei4.jpg")
+    //
+    //            }else {
+    //                print("targetじゃない")
+    //            }
+    //        })
+    //        AudioUtil.playSound(of: .kyuiin)
+    //    }
     
+    //    func gunnerShakeAnimationNormal() {
+    //
+    //        //銃の先端が上に跳ね上がる回転のアニメーション
+    //        let rotate = SCNAction.rotateBy(x: -0.1779697224, y: 0.0159312604, z: -0.1784194, duration: 1.2)
+    //        //↑の逆（下に戻る回転）
+    //        let rotateReverse = rotate.reversed()
+    //        //上下のアニメーションを直列に実行するアニメーション
+    //        let rotateAction = SCNAction.sequence([rotate, rotateReverse])
+    //
+    //
+    //        //銃が垂直に持ち上がるアニメーション
+    //        let moveUp = SCNAction.moveBy(x: 0, y: 0.01, z: 0, duration: 0.8)
+    //        //↑の逆（垂直に下に下がる）
+    //        let moveDown = moveUp.reversed()
+    //        //上下のアニメーションを直列に実行するアニメーション
+    //        let moveAction = SCNAction.sequence([moveUp, moveDown])
+    //
+    //
+    //        //回転と上下移動のアニメーションを並列に同時実行するアニメーション(それぞれのdurationをずらすことによって不規則な動き感を出している)
+    //        let conbineAction = SCNAction.group([rotateAction, moveAction])
+    //
+    //        //↑を永遠繰り返すアニメーション
+    //        let gunnerShakeAction = SCNAction.repeatForever(conbineAction)
+    //
+    //        //実行
+    //        sceneView.scene.rootNode.childNode(withName: "parentNode", recursively: false)?.childNode(withName: "M1911", recursively: false)?.runAction(gunnerShakeAction)
+    //
+    //
+    //    }
+        
+    //    func gunnerShakeAnimationRunning() {
+    //        //銃が右に移動するアニメーション
+    //        let moveRight = SCNAction.moveBy(x: 0.03, y: 0, z: 0, duration: 0.3)
+    //        //↑の逆（左に移動）
+    //        let moveLeft = moveRight.reversed()
+    //
+    //        //銃が垂直に持ち上がるアニメーション
+    //        let moveUp = SCNAction.moveBy(x: 0, y: 0.02, z: 0, duration: 0.15)
+    //        //↑の逆（垂直に下に下がる）
+    //        let moveDown = moveUp.reversed()
+    //        //上下交互
+    //        let upAndDown = SCNAction.sequence([moveUp, moveDown])
+    //
+    //        let rightAndUpDown = SCNAction.group([moveRight, upAndDown])
+    //        let LeftAndUpDown = SCNAction.group([moveLeft, upAndDown])
+    //
+    //        //回転と上下移動のアニメーションを並列に同時実行するアニメーション(それぞれのdurationをずらすことによって不規則な動き感を出している)
+    //        let conbineAction = SCNAction.sequence([rightAndUpDown, LeftAndUpDown])
+    //
+    //        //↑を永遠繰り返すアニメーション
+    //        let repeatAction = SCNAction.repeatForever(conbineAction)
+    //
+    //        //実行
+    ////        switch currentWeapon {
+    ////        case .pistol:
+    ////            sceneView.scene.rootNode.childNode(withName: "parent", recursively: false)?.childNode(withName: "M1911_a", recursively: false)?.runAction(repeatAction)
+    ////        default: break
+    ////        }
+    //    }
+    //
+    //    func shootingAnimation() {
+    //        //発砲時に銃の先端が上に跳ね上がる回転のアニメーション
+    //        let rotateAction = SCNAction.rotateBy(x: -0.9711356901, y: -0.08854044763, z: -1.013580166, duration: 0.1)
+    //        //↑の逆（下に戻る回転）
+    //        let reverse = rotateAction.reversed()
+    //        //上下のアニメーションを直列に実行するアニメーション
+    //        let shoot = SCNAction.sequence([rotateAction, reverse])
+    //
+    //        //実行
+    //        sceneView.scene.rootNode.childNode(withName: "parent", recursively: false)?.childNode(withName: "M1911_a", recursively: false)?.runAction(shoot)
+    //    }
 }
 
 extension GameSceneManager: ARSCNViewDelegate {
