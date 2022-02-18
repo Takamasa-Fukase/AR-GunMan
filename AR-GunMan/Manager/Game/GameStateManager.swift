@@ -25,15 +25,6 @@ class GameStateManager {
     let weaponReloadingResult: Observable<WeaponReloadingResult>
     let totalScore: Observable<Double>
 
-    //count
-//    let explosionCount: Observable<Int>
-
-    //nodeAnimation
-//    let toggleActionInterval = 0.2
-//    let lastCameraPos: (Float, Float, Float) = (0, 0, 0)
-//    let isPlayerRunning = false
-//    let lastPlayerStatus = false
-
     //other
     private let disposeBag = DisposeBag()
 

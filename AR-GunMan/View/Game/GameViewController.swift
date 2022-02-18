@@ -38,6 +38,10 @@ class GameViewController: UIViewController {
         } secretEvent: {
             self.viewModel.userRotateDevice20Times.onNext(Void())
         }
+        
+        let _ = sceneManager.targetHit
+            .bind(to: viewModel.targetHit)
+            .disposed(by: disposeBag)
                 
 
         //MARK: - output
