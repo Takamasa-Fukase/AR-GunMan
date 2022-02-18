@@ -140,6 +140,14 @@ class GameStateManager {
                 ScoreUtil.addScore(currentScore: _totalScore.value,
                                    weapon: _weaponSwitchingResult.value.weapon)
             )
+            switch _weaponSwitchingResult.value.weapon {
+            case .pistol:
+                AudioUtil.playSound(of: .headShot)
+            case .bazooka:
+                AudioUtil.playSound(of: .bazookaHit)
+            default:
+                 break
+            }
         }
     }
 
