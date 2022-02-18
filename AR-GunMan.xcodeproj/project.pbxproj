@@ -73,6 +73,7 @@
 		67B685F527AAEFD400D7F413 /* UserDefaultsUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B685F427AAEFD400D7F413 /* UserDefaultsUtil.swift */; };
 		67B6860427AB0C5600D7F413 /* GameStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B6860327AB0C5600D7F413 /* GameStateManager.swift */; };
 		67B6860627AB0C9300D7F413 /* GameSceneManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B6860527AB0C9300D7F413 /* GameSceneManager.swift */; };
+		67DB2C5727BFD01900B8CB3C /* SceneNodeUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DB2C5627BFD01900B8CB3C /* SceneNodeUtil.swift */; };
 		86627DE6273FD5E30044A980 /* WorldRankingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86627DE5273FD5E30044A980 /* WorldRankingViewController.swift */; };
 		86627DEB273FD61B0044A980 /* WorldRankingViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86627DEA273FD61B0044A980 /* WorldRankingViewController.storyboard */; };
 		866675D4275215AF007CB4D6 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866675D3275215AF007CB4D6 /* UIViewController+Extension.swift */; };
@@ -175,6 +176,7 @@
 		67B685F427AAEFD400D7F413 /* UserDefaultsUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsUtil.swift; sourceTree = "<group>"; };
 		67B6860327AB0C5600D7F413 /* GameStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameStateManager.swift; sourceTree = "<group>"; };
 		67B6860527AB0C9300D7F413 /* GameSceneManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneManager.swift; sourceTree = "<group>"; };
+		67DB2C5627BFD01900B8CB3C /* SceneNodeUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneNodeUtil.swift; sourceTree = "<group>"; };
 		82CB4F049BB35C36EAA5A632 /* Pods_AR_GunManTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_GunManTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		86627DE5273FD5E30044A980 /* WorldRankingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldRankingViewController.swift; sourceTree = "<group>"; };
 		86627DEA273FD61B0044A980 /* WorldRankingViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WorldRankingViewController.storyboard; sourceTree = "<group>"; };
@@ -452,6 +454,7 @@
 				67684E6827B44DFA000B2B5C /* WeaponStatusUtil.swift */,
 				67684E6A27B97B8F000B2B5C /* ScoreUtil.swift */,
 				67684E6C27B988C0000B2B5C /* SceneViewSettingUtil.swift */,
+				67DB2C5627BFD01900B8CB3C /* SceneNodeUtil.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -771,6 +774,7 @@
 				677DF1F427A7C100007512F6 /* Ranking.swift in Sources */,
 				5921A208255D6A4E001D8C39 /* WorldRankingCell.swift in Sources */,
 				677DF1F127A7C096007512F6 /* RankingRepository.swift in Sources */,
+				67DB2C5727BFD01900B8CB3C /* SceneNodeUtil.swift in Sources */,
 				59945100256AD55900560202 /* TutorialViewController.swift in Sources */,
 				86627DE6273FD5E30044A980 /* WorldRankingViewController.swift in Sources */,
 				59D2D5952552E718006DDB70 /* SwitchWeaponViewController.swift in Sources */,
