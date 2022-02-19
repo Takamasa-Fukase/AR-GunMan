@@ -23,6 +23,7 @@ class GameViewModel {
     let sightImage: Observable<UIImage?>
     let bulletsCountImage: Observable<UIImage?>
     let timeCountString: Observable<String>
+    let checkPlayerAnimation: Observable<Double>
     let showWeapon: Observable<WeaponTypes>
     let fireWeapon: Observable<Void>
     let excuteSecretEvent: Observable<Void>
@@ -44,6 +45,9 @@ class GameViewModel {
         
         let _timeCountString = BehaviorRelay<String>(value: TimeCountUtil.twoDigitTimeCount(Const.timeCount))
         self.timeCountString = _timeCountString.asObservable()
+        
+        let _checkPlayerAnimation = BehaviorRelay<Double>(value: Const.timeCount)
+        self.checkPlayerAnimation = _checkPlayerAnimation.asObservable()
         
         let _showWeapon = BehaviorRelay<WeaponTypes>(value: .pistol)
         self.showWeapon = _showWeapon.asObservable()
@@ -88,9 +92,16 @@ class GameViewModel {
             }).disposed(by: disposeBag)
         
         let _ = stateManager.timeCount
-            .map({ TimeCountUtil.twoDigitTimeCount($0) })
-            .bind(to: _timeCountString)
-            .disposed(by: disposeBag)
+            .subscribe(onNext: { element in
+                //表示用に整えたStringを流す
+                _timeCountString.accept(
+                    TimeCountUtil.twoDigitTimeCount(element)
+                )
+                //0.2秒ごとにプレーヤーアニメーションを更新させる
+                if (-(element - _checkPlayerAnimation.value) >= Const.playerAnimationUpdateInterval) {
+                    _checkPlayerAnimation.accept(element)
+                }
+            }).disposed(by: disposeBag)
         
         let _ = stateManager.weaponSwitchingResult
             .subscribe(onNext: { element in

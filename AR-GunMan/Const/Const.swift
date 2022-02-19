@@ -53,6 +53,8 @@ class Const {
     
     static let timeCount: Double = 30.00 //ゲームのタイムカウント
     
+    static let playerAnimationUpdateInterval: Double = 0.2
+    
     static let pistolBulletsCapacity = 7 //ピストルの装弾数（最大数）
     
     static let bazookaBulletsCapacity = 1 //バズーカの装弾数（最大数）
