@@ -105,6 +105,28 @@ class GameSceneManager: NSObject {
         exploPar = bazookaHitExplosion?.particleSystems?.first!
     }
     
+    func handlePlayerAnimation() {
+        //前回チェック時(0.2秒毎)からの端末の移動距離が15cm以上であれば走っていると判定し、武器を激しく揺らす
+        let currentPos = SceneNodeUtil.getCameraPosition(sceneView)
+        isPlayerRunning = SceneNodeUtil.isPlayerRunning(pos1: currentPos, pos2: lastCameraPos)
+                
+        if isPlayerRunning != lastPlayerStatus {
+            
+            pistolNode().removeAllActions()
+            //一度初期状態に戻す
+            pistolNode().position = SCNVector3(0.17, -0.197, -0.584)
+            pistolNode().eulerAngles = SCNVector3(-1.4382625, 1.3017014, -2.9517007)
+            
+            if isPlayerRunning {
+                pistolNode().runAction(SceneAnimationUtil.gunnerShakeAnimationRunning())
+            }else {
+                pistolNode().runAction(SceneAnimationUtil.gunnerShakeAnimationNormal())
+            }
+        }
+        lastCameraPos = SceneNodeUtil.getCameraPosition(sceneView)
+        lastPlayerStatus = isPlayerRunning
+    }
+    
     //MARK: - Private Methods
     private func setupPistolNode() {
         pistolParentNode = SceneNodeUtil.loadScnFile(of: "art.scnassets/Weapon/Pistol/M1911_a.scn", nodeName: "parent")
@@ -208,26 +230,16 @@ class GameSceneManager: NSObject {
         weaponParentNode.position = SceneNodeUtil.getCameraPosition(sceneView)
     }
     
-    func handlePlayerAnimation() {
-        //前回チェック時(0.2秒毎)からの端末の移動距離が15cm以上であれば走っていると判定し、武器を激しく揺らす
-        let currentPos = SceneNodeUtil.getCameraPosition(sceneView)
-        isPlayerRunning = SceneNodeUtil.isPlayerRunning(pos1: currentPos, pos2: lastCameraPos)
-                
-        if isPlayerRunning != lastPlayerStatus {
-            
-            pistolNode().removeAllActions()
-            //一度初期状態に戻す
-            pistolNode().position = SCNVector3(0.17, -0.197, -0.584)
-            pistolNode().eulerAngles = SCNVector3(-1.4382625, 1.3017014, -2.9517007)
-            
-            if isPlayerRunning {
-                pistolNode().runAction(SceneAnimationUtil.gunnerShakeAnimationRunning())
-            }else {
-                pistolNode().runAction(SceneAnimationUtil.gunnerShakeAnimationNormal())
-            }
+    private func isTargetHit(contact: SCNPhysicsContact) -> Bool {
+        return (contact.nodeA.name == "bullet" && contact.nodeB.name == "target") ||
+            (contact.nodeB.name == "bullet" && contact.nodeA.name == "target")
+    }
+    
+    private func excuteExplosion() {
+        if let first = sceneView.scene.rootNode.childNode(withName: "bazookaHitExplosion\(explosionCount)", recursively: false)?.particleSystems?.first  {
+            first.birthRate = 300
+            first.loops = false
         }
-        lastCameraPos = SceneNodeUtil.getCameraPosition(sceneView)
-        lastPlayerStatus = isPlayerRunning
     }
 }
 
@@ -243,21 +255,13 @@ extension GameSceneManager: SCNPhysicsContactDelegate {
     //衝突検知時に呼ばれる
     //MEMO: - このメソッド内でUIの更新を行いたい場合はmainThreadで行う
     func physicsWorld(_ world: SCNPhysicsWorld, didEnd contact: SCNPhysicsContact) {
-        let nodeA = contact.nodeA
-        let nodeB = contact.nodeB
-        
-        if (nodeA.name == "bullet" && nodeB.name == "target") || (nodeB.name == "bullet" && nodeA.name == "target") {
-            print("当たった")
-            nodeA.removeFromParentNode()
-            nodeB.removeFromParentNode()
+        if isTargetHit(contact: contact) {
+            contact.nodeA.removeFromParentNode()
+            contact.nodeB.removeFromParentNode()
             
             if currentWeapon == .bazooka {
-                if let first = sceneView.scene.rootNode.childNode(withName: "bazookaHitExplosion\(explosionCount)", recursively: false)?.particleSystems?.first  {
-                    first.birthRate = 300
-                    first.loops = false
-                }
+                excuteExplosion()
             }
-            
             //ヒットしたという通知をVC経由でsubscribeさせ、statusManagerに伝達する
             _targetHit.accept(Void())
         }
