@@ -51,9 +51,6 @@ class WeaponStatusUtil {
                 remainingBulletsCount = 0
                 resultType = .noBullets
             }
-            
-        default:
-            break
         }
 
         return WeaponFiringResult(result: resultType ?? .canceled,
@@ -96,9 +93,6 @@ class WeaponStatusUtil {
             }else {
                 resultType = .canceled
             }
-            
-        default:
-            break
         }
         
         return WeaponReloadingResult(result: resultType ?? .canceled,
@@ -119,15 +113,10 @@ class WeaponStatusUtil {
             switch selectedWeapon {
             case .pistol:
                 return pistolBulletsCount.value
-                
             case .bazooka:
                 return bazookaBulletsCount.value
-                
-            default:
-                return 0
             }
         }
-        
         return WeaponSwitchingResult(switched: switched,
                                      weapon: selectedWeapon,
                                      bulletsCount: bulletsCount)

@@ -146,8 +146,6 @@ class GameStateManager {
                 AudioUtil.playSound(of: .headShot)
             case .bazooka:
                 AudioUtil.playSound(of: .bazookaHit)
-            default:
-                 break
             }
         }
     }

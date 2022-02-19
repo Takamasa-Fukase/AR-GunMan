@@ -27,7 +27,7 @@ enum Sounds: String, CaseIterable {
 
 enum WeaponTypes: String, CaseIterable {
     case pistol = "pistol"
-    case rifle = "rifle"
+//    case rifle = "rifle"
     case bazooka = "rocket-launcher"
 }
 
@@ -79,8 +79,6 @@ class Const {
             return pistolHitPoint
         case .bazooka:
             return bazookaHitPoint
-        default:
-            return 0
         }
     }
 }

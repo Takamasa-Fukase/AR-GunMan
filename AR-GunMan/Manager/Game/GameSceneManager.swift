@@ -127,8 +127,6 @@ class GameSceneManager: NSObject {
             sceneView.scene.rootNode.addChildNode(pistolParentNode)
         case .bazooka:
             sceneView.scene.rootNode.addChildNode(bazookaParentNode)
-        default:
-            break
         }
     }
 

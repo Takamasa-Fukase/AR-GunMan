@@ -111,9 +111,6 @@ class GameViewModel {
                     if element.switched {
                         AudioUtil.playSound(of: .bazookaSet)
                     }
-                    
-                default:
-                    break
                 }
             }).disposed(by: disposeBag)
         
@@ -140,9 +137,6 @@ class GameViewModel {
                         AudioUtil.playSound(of: .bazookaReload)
                         _bulletsCountImage.accept(Const.bazookaBulletsCountImage(element.remainingBulletsCount))
                     }
-                    
-                default:
-                    break
                 }
             }).disposed(by: disposeBag)
         
@@ -158,9 +152,6 @@ class GameViewModel {
                     
                 case .bazooka:
                     _bulletsCountImage.accept(Const.bazookaBulletsCountImage(Const.bazookaBulletsCapacity))
-                    
-                default:
-                    break
                 }
             }).disposed(by: disposeBag)
 

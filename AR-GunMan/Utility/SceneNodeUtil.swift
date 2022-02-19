@@ -53,8 +53,6 @@ class SceneNodeUtil {
                 return ["bazookaParent"]
             case .bazooka:
                 return ["parent"]
-            default:
-                return []
             }
         }
         nodeNames.forEach({ item in
