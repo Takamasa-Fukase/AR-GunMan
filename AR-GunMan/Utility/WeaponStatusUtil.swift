@@ -79,7 +79,7 @@ class WeaponStatusUtil {
         case .pistol:
             if !hasBullets(pistolBulletsCount.value) {
                 //残弾数をMAXに補充
-                pistolBulletsCount.accept(Const.pistolBulletsCapacity)
+                pistolBulletsCount.accept(GameConst.pistolBulletsCapacity)
                 resultType = .completed
             }else {
                 resultType = .canceled
@@ -88,7 +88,7 @@ class WeaponStatusUtil {
         case .bazooka:
             if !hasBullets(bazookaBulletsCount.value) {
                 //残弾数をMAXに補充
-                bazookaBulletsCount.accept(Const.bazookaBulletsCapacity)
+                bazookaBulletsCount.accept(GameConst.bazookaBulletsCapacity)
                 resultType = .completed
             }else {
                 resultType = .canceled

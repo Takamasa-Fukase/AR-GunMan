@@ -209,7 +209,7 @@ class GameSceneManager: NSObject {
         let originalTargetNode = createOriginalTargetNode()
         
         DispatchQueue.main.async {
-            for _ in 0..<Const.targetCount {
+            for _ in 0..<GameConst.targetCount {
                 let clonedTargetNode = originalTargetNode.clone()
                 clonedTargetNode.position = SceneNodeUtil.getRandomTargetPosition()
                 SceneNodeUtil.addBillboardConstraint(clonedTargetNode)

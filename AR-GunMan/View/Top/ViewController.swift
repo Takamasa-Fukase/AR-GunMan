@@ -37,9 +37,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        startButtonIcon.image = Const.targetIcon
-        rankingButtonIcon.image = Const.targetIcon
-        howToPlayButtonIcon.image = Const.targetIcon
+        startButtonIcon.image = TopConst.targetIcon
+        rankingButtonIcon.image = TopConst.targetIcon
+        howToPlayButtonIcon.image = TopConst.targetIcon
         
         //input
         let _ = startButton.rx.tap
@@ -70,7 +70,7 @@ class ViewController: UIViewController {
         let _ = viewModel.isShotButtonIcon
             .subscribe(onNext: { [weak self] (type, bool) in
                 guard let self = self else {return}
-                let image = bool ? Const.bulletsHoleIcon : Const.targetIcon
+                let image = bool ? TopConst.bulletsHoleIcon : TopConst.targetIcon
                 switch type {
                 case .start:
                     self.startButtonIcon.image = image
@@ -104,7 +104,7 @@ class ViewController: UIViewController {
     }
     
     func presentGameVC(animated: Bool = true) {
-        startButtonIcon.image = Const.targetIcon
+        startButtonIcon.image = TopConst.targetIcon
         
         let storyboard: UIStoryboard = UIStoryboard(name: "GameViewController", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "GameViewController") as! GameViewController

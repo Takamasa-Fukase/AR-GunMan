@@ -37,16 +37,16 @@ class GameViewModel {
         let stateManager = GameStateManager()
         
         //MARK: - output
-        let _sightImage = BehaviorRelay<UIImage?>(value: Const.pistolSightImage)
+        let _sightImage = BehaviorRelay<UIImage?>(value: GameConst.pistolSightImage)
         self.sightImage = _sightImage.asObservable()
         
-        let _bulletsCountImage = BehaviorRelay<UIImage?>(value: Const.pistolBulletsCountImage(Const.pistolBulletsCapacity))
+        let _bulletsCountImage = BehaviorRelay<UIImage?>(value: GameConst.pistolBulletsCountImage(GameConst.pistolBulletsCapacity))
         self.bulletsCountImage = _bulletsCountImage.asObservable()
         
-        let _timeCountString = BehaviorRelay<String>(value: TimeCountUtil.twoDigitTimeCount(Const.timeCount))
+        let _timeCountString = BehaviorRelay<String>(value: TimeCountUtil.twoDigitTimeCount(GameConst.timeCount))
         self.timeCountString = _timeCountString.asObservable()
         
-        let _checkPlayerAnimation = BehaviorRelay<Double>(value: Const.timeCount)
+        let _checkPlayerAnimation = BehaviorRelay<Double>(value: GameConst.timeCount)
         self.checkPlayerAnimation = _checkPlayerAnimation.asObservable()
         
         let _showWeapon = BehaviorRelay<WeaponTypes>(value: .pistol)
@@ -98,7 +98,7 @@ class GameViewModel {
                     TimeCountUtil.twoDigitTimeCount(element)
                 )
                 //0.2秒ごとにプレーヤーアニメーションを更新させる
-                if (-(element - _checkPlayerAnimation.value) >= Const.playerAnimationUpdateInterval) {
+                if (-(element - _checkPlayerAnimation.value) >= GameConst.playerAnimationUpdateInterval) {
                     _checkPlayerAnimation.accept(element)
                 }
             }).disposed(by: disposeBag)
@@ -108,16 +108,16 @@ class GameViewModel {
                 _showWeapon.accept(element.weapon)
                 switch element.weapon {
                 case .pistol:
-                    _sightImage.accept(Const.pistolSightImage)
-                    _bulletsCountImage.accept(Const.pistolBulletsCountImage(element.bulletsCount))
+                    _sightImage.accept(GameConst.pistolSightImage)
+                    _bulletsCountImage.accept(GameConst.pistolBulletsCountImage(element.bulletsCount))
                     //同じ武器が選択された時は鳴らさない
                     if element.switched {
                         AudioUtil.playSound(of: .pistolSet)
                     }
                     
                 case .bazooka:
-                    _sightImage.accept(Const.bazookaSightImage)
-                    _bulletsCountImage.accept(Const.bazookaBulletsCountImage(element.bulletsCount))
+                    _sightImage.accept(GameConst.bazookaSightImage)
+                    _bulletsCountImage.accept(GameConst.bazookaBulletsCountImage(element.bulletsCount))
                     //同じ武器が選択された時は鳴らさない
                     if element.switched {
                         AudioUtil.playSound(of: .bazookaSet)
@@ -133,7 +133,7 @@ class GameViewModel {
                     switch element.result {
                     case .fired:
                         AudioUtil.playSound(of: .pistolShoot)
-                        _bulletsCountImage.accept(Const.pistolBulletsCountImage(element.remainingBulletsCount))
+                        _bulletsCountImage.accept(GameConst.pistolBulletsCountImage(element.remainingBulletsCount))
                         
                     case .canceled:
                         break
@@ -146,7 +146,7 @@ class GameViewModel {
                     if element.result == .fired {
                         AudioUtil.playSound(of: .bazookaShoot)
                         AudioUtil.playSound(of: .bazookaReload)
-                        _bulletsCountImage.accept(Const.bazookaBulletsCountImage(element.remainingBulletsCount))
+                        _bulletsCountImage.accept(GameConst.bazookaBulletsCountImage(element.remainingBulletsCount))
                     }
                 }
             }).disposed(by: disposeBag)
@@ -159,10 +159,10 @@ class GameViewModel {
                 switch element.weapon {
                 case .pistol:
                     AudioUtil.playSound(of: .pistolReload)
-                    _bulletsCountImage.accept(Const.pistolBulletsCountImage(Const.pistolBulletsCapacity))
+                    _bulletsCountImage.accept(GameConst.pistolBulletsCountImage(GameConst.pistolBulletsCapacity))
                     
                 case .bazooka:
-                    _bulletsCountImage.accept(Const.bazookaBulletsCountImage(Const.bazookaBulletsCapacity))
+                    _bulletsCountImage.accept(GameConst.bazookaBulletsCountImage(GameConst.bazookaBulletsCapacity))
                 }
             }).disposed(by: disposeBag)
 

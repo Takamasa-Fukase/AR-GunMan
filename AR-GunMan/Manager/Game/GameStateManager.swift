@@ -30,8 +30,8 @@ class GameStateManager {
 
     init() {
         //other
-        let _pistolBulletsCount = BehaviorRelay<Int>(value: Const.pistolBulletsCapacity)
-        let _bazookaBulletsCount = BehaviorRelay<Int>(value: Const.bazookaBulletsCapacity)
+        let _pistolBulletsCount = BehaviorRelay<Int>(value: GameConst.pistolBulletsCapacity)
+        let _bazookaBulletsCount = BehaviorRelay<Int>(value: GameConst.bazookaBulletsCapacity)
         
         func createFiringResult(excuteBazookaAutoReloading: (() -> Void)) -> WeaponFiringResult {
             //現在の武器が発射可能な条件かどうかチェックし、結果を返す
@@ -72,10 +72,10 @@ class GameStateManager {
         let _gameStatusChanged = BehaviorRelay<GameStatus>(value: .pause)
         self.gameStatusChanged = _gameStatusChanged.asObservable()
 
-        let _timeCount = BehaviorRelay<Double>(value: Const.timeCount)
+        let _timeCount = BehaviorRelay<Double>(value: GameConst.timeCount)
         self.timeCount = _timeCount.asObservable()
 
-        let _weaponSwitchingResult = BehaviorRelay<WeaponSwitchingResult>(value: WeaponSwitchingResult(switched: true, weapon: .pistol, bulletsCount: Const.pistolBulletsCapacity))
+        let _weaponSwitchingResult = BehaviorRelay<WeaponSwitchingResult>(value: WeaponSwitchingResult(switched: true, weapon: .pistol, bulletsCount: GameConst.pistolBulletsCapacity))
         self.weaponSwitchingResult = _weaponSwitchingResult.asObservable()
 
         let _weaponFiringResult = PublishRelay<WeaponFiringResult>()
@@ -115,7 +115,7 @@ class GameStateManager {
                     //バズーカは自動リロード（3.2秒後に完了）
                     DispatchQueue.main.asyncAfter(deadline: .now() + 3.2) {
                         //バズーカ残弾数をMAXに補充
-                        _bazookaBulletsCount.accept(Const.bazookaBulletsCapacity)
+                        _bazookaBulletsCount.accept(GameConst.bazookaBulletsCapacity)
                         //残弾数がある状態でリロード結果を作成して流す
                         _weaponReloadingResult.accept(createReloadingResult())
                     }
