@@ -21,7 +21,9 @@ class GameSceneManager: NSObject {
     private var bazookaHitExplosion: SCNNode?
     private var jetFire: SCNNode?
     private var exploPar: SCNParticleSystem?
-    private var currentWeapon: WeaponTypes?
+    private var pistolParentNode = SCNNode()
+    private var bazookaParentNode = SCNNode()
+    private var currentWeapon: WeaponTypes = .pistol
     
     // - count
     private var explosionCount = 0
@@ -51,14 +53,14 @@ class GameSceneManager: NSObject {
     //指定された武器を表示
     func showWeapon(_ type: WeaponTypes) {
         currentWeapon = type
-        SceneNodeUtil.addWeapon(of: type, scnView: sceneView)
+        switchWeapon()
     }
     
     //現在選択中の武器の発砲に関わるアニメーション処理などを実行
     func fireWeapon() {
         addBullet()
         shootBullet()
-        SceneAnimationUtil.shootingAnimation()
+        pistolNode().runAction(SceneAnimationUtil.shootingAnimation())
     }
 
     func changeTargetsToTaimeisan() {
@@ -83,7 +85,7 @@ class GameSceneManager: NSObject {
         if let explosion = (explosionScene?.rootNode.childNode(withName: "Explosion1", recursively: false)) {
             
             //座標を指定したい場合はここで設定（↓ではカメラ位置よりも50cm前方を指定）
-            let cameraPos = self.sceneView.pointOfView?.position ?? SCNVector3()
+            let cameraPos = SceneNodeUtil.getCameraPosition(sceneView)
             explosion.position = SCNVector3(x: cameraPos.x, y: cameraPos.y, z: cameraPos.z - 0.5)
             
             //画面に反映
@@ -102,10 +104,36 @@ class GameSceneManager: NSObject {
     }
     
     //MARK: - Private Methods
+    private func setupPistolNode() {
+        pistolParentNode = SceneNodeUtil.loadScnFile(of: "art.scnassets/Weapon/Pistol/M1911_a.scn", nodeName: "parent")
+        SceneNodeUtil.addBillboardConstraint(pistolParentNode)
+        pistolParentNode.position = SceneNodeUtil.getCameraPosition(sceneView)
+    }
+    
+    private func pistolNode() -> SCNNode {
+        return pistolParentNode.childNode(withName: "M1911_a", recursively: false) ?? SCNNode()
+    }
+    
+    private func setupBazookaNode() {
+        bazookaParentNode = SceneNodeUtil.loadScnFile(of: "art.scnassets/Weapon/RocketLauncher/bazooka2.scn", nodeName: "bazookaParent")
+        SceneNodeUtil.addBillboardConstraint(bazookaParentNode)
+        bazookaParentNode.position = SceneNodeUtil.getCameraPosition(sceneView)
+    }
+    
+    private func switchWeapon() {
+        SceneNodeUtil.removeOtherWeapon(except: currentWeapon, scnView: sceneView)
+        switch currentWeapon {
+        case .pistol:
+            sceneView.scene.rootNode.addChildNode(pistolParentNode)
+        case .bazooka:
+            sceneView.scene.rootNode.addChildNode(bazookaParentNode)
+        default:
+            break
+        }
+    }
+
     //弾ノードを設置
     private func addBullet() {
-        guard let cameraPos = sceneView.pointOfView?.position else {return}
-        
         let sphere: SCNGeometry = SCNSphere(radius: 0.05)
         let customYellow = UIColor(red: 253/255, green: 202/255, blue: 119/255, alpha: 1)
         
@@ -114,7 +142,7 @@ class GameSceneManager: NSObject {
         guard let bulletNode = bulletNode else {return}
         bulletNode.name = "bullet"
         bulletNode.scale = SCNVector3(x: 1, y: 1, z: 1)
-        bulletNode.position = cameraPos
+        bulletNode.position = SceneNodeUtil.getCameraPosition(sceneView)
         
         //当たり判定用のphysicBodyを追加
         let shape = SCNPhysicsShape(geometry: sphere, options: nil)
@@ -192,14 +220,14 @@ extension GameSceneManager: ARSCNViewDelegate {
             return
         }
         //現在表示中の武器をラップしている空のオブジェクトを常にカメラと同じPositionに移動させ続ける（それにより武器が常にFPS位置に保たれる）
-        SceneNodeUtil.positionAsSameAsCamera(weaponNode, scnView: sceneView)
+        weaponNode.position = SceneNodeUtil.getCameraPosition(sceneView)
         
         guard let pistolNode = sceneView.scene.rootNode.childNode(withName: "parent", recursively: false)?.childNode(withName: "M1911_a", recursively: false) else {
             return
         }
         
         if toggleActionInterval <= 0 {
-            guard let currentPos = sceneView.pointOfView?.position else {return}
+            let currentPos = SceneNodeUtil.getCameraPosition(sceneView)
             let diff = SCNVector3Make(lastCameraPos.x - currentPos.x, lastCameraPos.y - currentPos.y, lastCameraPos.z - currentPos.z)
             let distance = sqrt((diff.x * diff.x) + (diff.y * diff.y) + (diff.z * diff.z))
             //            print("0.2秒前からの移動距離: \(String(format: "%.1f", distance))m")
@@ -219,7 +247,7 @@ extension GameSceneManager: ARSCNViewDelegate {
                 }
             }
             self.toggleActionInterval = 0.2
-            lastCameraPos = sceneView.pointOfView?.position ?? SCNVector3()
+            lastCameraPos = SceneNodeUtil.getCameraPosition(sceneView)
             lastPlayerStatus = isPlayerRunning
         }
         toggleActionInterval -= 0.02

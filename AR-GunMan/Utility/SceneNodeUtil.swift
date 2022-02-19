@@ -16,8 +16,8 @@ class SceneNodeUtil {
     }
     
     //カメラと同じ位置に配置
-    static func positionAsSameAsCamera(_ node: SCNNode, scnView: SCNView) {
-        node.position = scnView.pointOfView?.position ?? SCNVector3()
+    static func getCameraPosition(_ scnView: SCNView) -> SCNVector3 {
+        return scnView.pointOfView?.position ?? SCNVector3()
     }
     
     //scnファイルからノードを読み込む
@@ -29,25 +29,7 @@ class SceneNodeUtil {
         }
         return node
     }
-    
-    static func addWeapon(of type: WeaponTypes, scnView: SCNView) {
-        //設置前に他の武器を削除
-        removeOtherWeapon(except: type, scnView: scnView)
-        var node: SCNNode {
-            switch type {
-            case .pistol:
-                return loadScnFile(of: "art.scnassets/Weapon/Pistol/M1911_a.scn", nodeName: "parent")
-            case .bazooka:
-                return loadScnFile(of: "art.scnassets/Weapon/RocketLauncher/bazooka2.scn", nodeName: "bazookaParent")
-            default:
-                return SCNNode()
-            }
-        }
-        SceneNodeUtil.addBillboardConstraint(node)
-        SceneNodeUtil.positionAsSameAsCamera(node, scnView: scnView)
-        scnView.scene?.rootNode.addChildNode(node)
-    }
-    
+
     static func getRandomTargetPosition() -> SCNVector3 {
         let randomX = Float.random(in: -3...3)
         let randomY = Float.random(in: -1.5...2)
@@ -64,9 +46,7 @@ class SceneNodeUtil {
         return SCNVector3(x: randomX, y: randomY, z: randomZ ?? 0)
     }
     
-    
-    //MARK: - Private Methods
-    private static func removeOtherWeapon(except type: WeaponTypes, scnView: SCNView) {
+    static func removeOtherWeapon(except type: WeaponTypes, scnView: SCNView) {
         var nodeNames: [String] {
             switch type {
             case .pistol:
