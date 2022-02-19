@@ -58,13 +58,22 @@ class SceneAnimationUtil {
     }
     
     //発砲時の反動アニメーション
-    static func shootingAnimation() -> SCNAction {
+    static func shootingMotion() -> SCNAction {
         //発砲時に銃の先端が上に跳ね上がる回転のアニメーション
         let rotateAction = SCNAction.rotateBy(x: -0.9711356901, y: -0.08854044763, z: -1.013580166, duration: 0.1)
         //↑の逆（下に戻る回転）
         let reverse = rotateAction.reversed()
         //上下のアニメーションを直列に実行するアニメーション
         return SCNAction.sequence([rotateAction, reverse])
+    }
+    
+    //弾を発射させる
+    static func shootBulletToCenterOfCamera(_ camera: SCNNode?) -> SCNAction {
+        guard let camera = camera else { return SCNAction()}
+        let targetPosCamera = SCNVector3(x: camera.position.x, y: camera.position.y, z: camera.position.z - 10)
+        //カメラ座標をワールド座標に変換
+        let target = camera.convertPosition(targetPosCamera, to: nil)
+        return SCNAction.move(to: target, duration: TimeInterval(1))
     }
     
 }

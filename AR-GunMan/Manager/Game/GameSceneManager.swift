@@ -60,7 +60,7 @@ class GameSceneManager: NSObject {
     func fireWeapon() {
         addBullet()
         shootBullet()
-        pistolNode().runAction(SceneAnimationUtil.shootingAnimation())
+        pistolNode().runAction(SceneAnimationUtil.shootingMotion())
     }
 
     func changeTargetsToTaimeisan() {
@@ -150,21 +150,16 @@ class GameSceneManager: NSObject {
         bulletNode.physicsBody?.contactTestBitMask = 1
         bulletNode.physicsBody?.isAffectedByGravity = false
         sceneView.scene.rootNode.addChildNode(bulletNode)
-        
         print("弾を設置")
     }
     
     //弾ノードを発射
     private func shootBullet() {
-        guard let camera = sceneView.pointOfView else {return}
-        let targetPosCamera = SCNVector3(x: camera.position.x, y: camera.position.y, z: camera.position.z - 10)
-        //カメラ座標をワールド座標に変換
-        let target = camera.convertPosition(targetPosCamera, to: nil)
-        let action = SCNAction.move(to: target, duration: TimeInterval(1))
-        bulletNode?.runAction(action, completionHandler: {
-            self.bulletNode?.removeFromParentNode()
-        })
-        
+        bulletNode?.runAction(
+            SceneAnimationUtil.shootBulletToCenterOfCamera(sceneView.pointOfView), completionHandler: {
+                self.bulletNode?.removeFromParentNode()
+            }
+        )
         print("弾を発射")
     }
     
