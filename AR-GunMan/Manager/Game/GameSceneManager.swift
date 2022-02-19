@@ -46,6 +46,9 @@ class GameSceneManager: NSObject {
         
         //SceneViewをセットアップ
         SceneViewSettingUtil.setupSceneView(sceneView, sceneViewDelegate: self, physicContactDelegate: self)
+        //各武器をセットアップ
+        setupPistolNode()
+        setupBazookaNode()
         //ターゲットをランダムな位置に配置
         addTarget()
     }
@@ -194,56 +197,54 @@ class GameSceneManager: NSObject {
         }
     }
     
+    private func keepWeaponInFPSPosition() {
+        var weaponParentNode: SCNNode {
+            switch currentWeapon {
+            case .pistol:
+                return pistolParentNode
+            case .bazooka:
+                return bazookaParentNode
+            }
+        }
+        weaponParentNode.position = SceneNodeUtil.getCameraPosition(sceneView)
+    }
+    
+    private func handlePlayerAnimation() {
+        //0.2秒前からの端末の移動距離が15cm以上であれば走っていると判定し、武器を激しく揺らす
+        if toggleActionInterval <= 0 {
+            let currentPos = SceneNodeUtil.getCameraPosition(sceneView)
+            isPlayerRunning = SceneNodeUtil.isPlayerRunning(pos1: currentPos, pos2: lastCameraPos)
+            
+            if isPlayerRunning != lastPlayerStatus {
+                
+                pistolNode().removeAllActions()
+                //一度初期状態に戻す
+                pistolNode().position = SCNVector3(0.17, -0.197, -0.584)
+                pistolNode().eulerAngles = SCNVector3(-1.4382625, 1.3017014, -2.9517007)
+                
+                if isPlayerRunning {
+                    pistolNode().runAction(SceneAnimationUtil.gunnerShakeAnimationRunning())
+                }else {
+                    pistolNode().runAction(SceneAnimationUtil.gunnerShakeAnimationNormal())
+                }
+            }
+            toggleActionInterval = 0.2
+            lastCameraPos = SceneNodeUtil.getCameraPosition(sceneView)
+            lastPlayerStatus = isPlayerRunning
+        }
+        toggleActionInterval -= 0.02
+    }
 }
 
 extension GameSceneManager: ARSCNViewDelegate {
     //常に更新され続けるdelegateメソッド
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
-        var nodeName: String {
-            switch currentWeapon {
-            case .pistol:
-                return "parent"
-            case .bazooka:
-                return "bazookaParent"
-            default:
-                return ""
-            }
-        }
-        guard let weaponNode = sceneView.scene.rootNode.childNode(withName: nodeName, recursively: false) else {
-            return
-        }
+                
         //現在表示中の武器をラップしている空のオブジェクトを常にカメラと同じPositionに移動させ続ける（それにより武器が常にFPS位置に保たれる）
-        weaponNode.position = SceneNodeUtil.getCameraPosition(sceneView)
+        keepWeaponInFPSPosition()
         
-        guard let pistolNode = sceneView.scene.rootNode.childNode(withName: "parent", recursively: false)?.childNode(withName: "M1911_a", recursively: false) else {
-            return
-        }
-        
-        if toggleActionInterval <= 0 {
-            let currentPos = SceneNodeUtil.getCameraPosition(sceneView)
-            let diff = SCNVector3Make(lastCameraPos.x - currentPos.x, lastCameraPos.y - currentPos.y, lastCameraPos.z - currentPos.z)
-            let distance = sqrt((diff.x * diff.x) + (diff.y * diff.y) + (diff.z * diff.z))
-            //            print("0.2秒前からの移動距離: \(String(format: "%.1f", distance))m")
-            
-            isPlayerRunning = (distance >= 0.15)
-            
-            if isPlayerRunning != lastPlayerStatus {
-                
-                pistolNode.removeAllActions()
-                pistolNode.position = SCNVector3(0.17, -0.197, -0.584)
-                pistolNode.eulerAngles = SCNVector3(-1.4382625, 1.3017014, -2.9517007)
-                
-                if isPlayerRunning {
-                    pistolNode.runAction(SceneAnimationUtil.gunnerShakeAnimationRunning())
-                }else {
-                    pistolNode.runAction(SceneAnimationUtil.gunnerShakeAnimationNormal())
-                }
-            }
-            self.toggleActionInterval = 0.2
-            lastCameraPos = SceneNodeUtil.getCameraPosition(sceneView)
-            lastPlayerStatus = isPlayerRunning
-        }
-        toggleActionInterval -= 0.02
+        //プレーヤーステータスに応じてアニメーションを切り替え
+        handlePlayerAnimation()
     }
 }
 

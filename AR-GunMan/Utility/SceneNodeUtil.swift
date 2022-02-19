@@ -62,4 +62,16 @@ class SceneNodeUtil {
             }
         })
     }
+    
+    static func isPlayerRunning(pos1: SCNVector3, pos2: SCNVector3) -> Bool {
+        let distance = getDistance(from: pos1, to: pos2)
+//            print("0.2秒前からの移動距離: \(String(format: "%.1f", distance))m")
+        return (distance >= 0.15)
+    }
+    
+    //２座標間の距離を計算（単位:m）
+    private static func getDistance(from pos1: SCNVector3, to pos2: SCNVector3) -> Float {
+        let diff = SCNVector3Make(pos1.x - pos2.x, pos1.y - pos2.y, pos1.z - pos2.z)
+        return sqrt((diff.x * diff.x) + (diff.y * diff.y) + (diff.z * diff.z))
+    }
 }
