@@ -25,22 +25,13 @@ class GameStateManager {
     let weaponReloadingResult: Observable<WeaponReloadingResult>
     let totalScore: Observable<Double>
 
-    //count
-//    let explosionCount: Observable<Int>
-
-    //nodeAnimation
-//    let toggleActionInterval = 0.2
-//    let lastCameraPos: (Float, Float, Float) = (0, 0, 0)
-//    let isPlayerRunning = false
-//    let lastPlayerStatus = false
-
     //other
     private let disposeBag = DisposeBag()
 
     init() {
         //other
-        let _pistolBulletsCount = BehaviorRelay<Int>(value: Const.pistolBulletsCapacity)
-        let _bazookaBulletsCount = BehaviorRelay<Int>(value: Const.bazookaBulletsCapacity)
+        let _pistolBulletsCount = BehaviorRelay<Int>(value: GameConst.pistolBulletsCapacity)
+        let _bazookaBulletsCount = BehaviorRelay<Int>(value: GameConst.bazookaBulletsCapacity)
         
         func createFiringResult(excuteBazookaAutoReloading: (() -> Void)) -> WeaponFiringResult {
             //現在の武器が発射可能な条件かどうかチェックし、結果を返す
@@ -81,10 +72,10 @@ class GameStateManager {
         let _gameStatusChanged = BehaviorRelay<GameStatus>(value: .pause)
         self.gameStatusChanged = _gameStatusChanged.asObservable()
 
-        let _timeCount = BehaviorRelay<Double>(value: Const.timeCount)
+        let _timeCount = BehaviorRelay<Double>(value: GameConst.timeCount)
         self.timeCount = _timeCount.asObservable()
 
-        let _weaponSwitchingResult = BehaviorRelay<WeaponSwitchingResult>(value: WeaponSwitchingResult(switched: true, weapon: .pistol, bulletsCount: Const.pistolBulletsCapacity))
+        let _weaponSwitchingResult = BehaviorRelay<WeaponSwitchingResult>(value: WeaponSwitchingResult(switched: true, weapon: .pistol, bulletsCount: GameConst.pistolBulletsCapacity))
         self.weaponSwitchingResult = _weaponSwitchingResult.asObservable()
 
         let _weaponFiringResult = PublishRelay<WeaponFiringResult>()
@@ -98,11 +89,12 @@ class GameStateManager {
         
         
         //other (output変数を参照するためここに配置)
-        let _ = TimeCountUtil.createRxTimer(.nanoseconds(1))
+        let _ = TimeCountUtil.createRxTimer(.milliseconds(10))
             .filter({ _ in _gameStatusChanged.value == .playing })
-            .map({ TimeCountUtil.decreaseGameTimeCount(elapsedTime: Double($0 / 100)) })
             .subscribe(onNext: { element in
-                _timeCount.accept(element)
+                _timeCount.accept(
+                    TimeCountUtil.decreaseGameTimeCount(lastValue: _timeCount.value)
+                )
                 if element <= 0 {
                     _gameStatusChanged.accept(.finish)
                 }
@@ -123,7 +115,7 @@ class GameStateManager {
                     //バズーカは自動リロード（3.2秒後に完了）
                     DispatchQueue.main.asyncAfter(deadline: .now() + 3.2) {
                         //バズーカ残弾数をMAXに補充
-                        _bazookaBulletsCount.accept(Const.bazookaBulletsCapacity)
+                        _bazookaBulletsCount.accept(GameConst.bazookaBulletsCapacity)
                         //残弾数がある状態でリロード結果を作成して流す
                         _weaponReloadingResult.accept(createReloadingResult())
                     }
@@ -149,6 +141,12 @@ class GameStateManager {
                 ScoreUtil.addScore(currentScore: _totalScore.value,
                                    weapon: _weaponSwitchingResult.value.weapon)
             )
+            switch _weaponSwitchingResult.value.weapon {
+            case .pistol:
+                AudioUtil.playSound(of: .headShot)
+            case .bazooka:
+                AudioUtil.playSound(of: .bazookaHit)
+            }
         }
     }
 

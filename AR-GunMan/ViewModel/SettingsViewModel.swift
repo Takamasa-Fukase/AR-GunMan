@@ -34,11 +34,11 @@ class SettingsViewModel {
         
         //input
         self.developerConctactButtonTapped = AnyObserver<Void>() { _ in
-            _openSafariView.accept(Const.developerContactURL)
+            _openSafariView.accept(SettingsConst.developerContactURL)
         }
         
         self.privacyPolicyButtonTapped = AnyObserver<Void>() { _ in
-            _openSafariView.accept(Const.privacyPolicyURL)
+            _openSafariView.accept(SettingsConst.privacyPolicyURL)
         }
         
         self.backButtonTapped = AnyObserver<Void>() { _ in

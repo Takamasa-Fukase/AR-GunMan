@@ -51,9 +51,6 @@ class WeaponStatusUtil {
                 remainingBulletsCount = 0
                 resultType = .noBullets
             }
-            
-        default:
-            break
         }
 
         return WeaponFiringResult(result: resultType ?? .canceled,
@@ -82,7 +79,7 @@ class WeaponStatusUtil {
         case .pistol:
             if !hasBullets(pistolBulletsCount.value) {
                 //残弾数をMAXに補充
-                pistolBulletsCount.accept(Const.pistolBulletsCapacity)
+                pistolBulletsCount.accept(GameConst.pistolBulletsCapacity)
                 resultType = .completed
             }else {
                 resultType = .canceled
@@ -91,14 +88,11 @@ class WeaponStatusUtil {
         case .bazooka:
             if !hasBullets(bazookaBulletsCount.value) {
                 //残弾数をMAXに補充
-                bazookaBulletsCount.accept(Const.bazookaBulletsCapacity)
+                bazookaBulletsCount.accept(GameConst.bazookaBulletsCapacity)
                 resultType = .completed
             }else {
                 resultType = .canceled
             }
-            
-        default:
-            break
         }
         
         return WeaponReloadingResult(result: resultType ?? .canceled,
@@ -119,15 +113,10 @@ class WeaponStatusUtil {
             switch selectedWeapon {
             case .pistol:
                 return pistolBulletsCount.value
-                
             case .bazooka:
                 return bazookaBulletsCount.value
-                
-            default:
-                return 0
             }
         }
-        
         return WeaponSwitchingResult(switched: switched,
                                      weapon: selectedWeapon,
                                      bulletsCount: bulletsCount)

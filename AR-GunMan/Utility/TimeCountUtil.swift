@@ -15,9 +15,9 @@ class TimeCountUtil {
         return Observable<Int>.interval(interval, scheduler: MainScheduler.instance)
     }
     
-    //30.00から経過時間を引いた値に変換
-    static func decreaseGameTimeCount(elapsedTime: Double) -> Double {
-        return max(Const.timeCount - elapsedTime, 0.00)
+    //タイムカウントの減算処理
+    static func decreaseGameTimeCount(lastValue: Double) -> Double {
+        return max(lastValue - 0.01, 0.00)
     }
     
     //2桁のStringに変換（1桁の場合は0埋めする）

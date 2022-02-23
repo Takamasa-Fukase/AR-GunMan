@@ -8,182 +8,245 @@
 import Foundation
 import ARKit
 import SceneKit
+import RxSwift
+import RxCocoa
 
 class GameSceneManager: NSObject {
     
     //MARK: - Properties
     var sceneView = ARSCNView()
 
-    //node
-    var bulletNode: SCNNode?
-    var bazookaHitExplosion: SCNNode?
-    var jetFire: SCNNode?
-    var targetNode: SCNNode?
-    var exploPar: SCNParticleSystem?
+    // - node
+    private var originalBulletNode = SCNNode()
+    private var originalBazookaHitExplosionParticle = SCNParticleSystem()
+    private var pistolParentNode = SCNNode()
+    private var bazookaParentNode = SCNNode()
+    private var currentWeapon: WeaponTypes = .pistol
+
+    // - nodeAnimation
+    private var lastCameraPos = SCNVector3()
+    private var isPlayerRunning = false
+    private var lastPlayerStatus = false
+    
+    // - notification
+    private let _targetHit = PublishRelay<Void>()
+    var targetHit: Observable<Void> {
+        return _targetHit.asObservable()
+    }
     
     //MARK: - Methods
     override init() {
         super.init()
         
+        //SceneViewをセットアップ
         SceneViewSettingUtil.setupSceneView(sceneView, sceneViewDelegate: self, physicContactDelegate: self)
-    }
-
-    func addPistol(shouldPlayPistolSet: Bool = true) {
-        let scene = SCNScene(named: "art.scnassets/Weapon/Pistol/M1911_a.scn")
-        //注意:scnのファイル名ではなく、Identity欄のnameを指定する
-        let parentNode = (scene?.rootNode.childNode(withName: "parent", recursively: false))!
-        
-        let billBoardConstraint = SCNBillboardConstraint()
-        parentNode.constraints = [billBoardConstraint]
-        
-        parentNode.position = sceneView.pointOfView?.position ?? SCNVector3()
-        self.sceneView.scene.rootNode.addChildNode(parentNode)
-        
-        if shouldPlayPistolSet {
-            //チャキッ　の再生
-            AudioUtil.playSound(of: .pistolSet)
-        }
-        
+        //各武器をセットアップ
+        pistolParentNode = setupWeaponNode(type: .pistol)
+        bazookaParentNode = setupWeaponNode(type: .bazooka)
+        originalBulletNode = createOriginalBulletNode()
+        originalBazookaHitExplosionParticle = createOriginalParticleSystem(type: .bazookaExplosion)
+        //ターゲットをランダムな位置に配置
+        addTarget()
     }
     
-    //弾ノードを設置
-    func addBullet() {
-        guard let cameraPos = sceneView.pointOfView?.position else {return}
-        
+    //指定された武器を表示
+    func showWeapon(_ type: WeaponTypes) {
+        currentWeapon = type
+        switchWeapon()
+    }
+    
+    //現在選択中の武器の発砲に関わるアニメーション処理などを実行
+    func fireWeapon() {
+        shootBullet()
+        pistolNode().runAction(SceneAnimationUtil.shootingMotion())
+    }
+
+    func changeTargetsToTaimeisan() {
+        sceneView.scene.rootNode.childNodes.forEach({ node in
+            if node.name == GameConst.targetNodeName {
+                while node.childNode(withName: "torus", recursively: false) != nil {
+                    node.childNode(withName: "torus", recursively: false)?.removeFromParentNode()
+                    //ドーナツ型の白い線のパーツを削除
+                    print("torusを削除")
+                }
+                node.childNode(withName: "sphere", recursively: false)?.geometry?.firstMaterial?.diffuse.contents = GameConst.taimeiSanImage
+            }
+        })
+    }
+    
+    func handlePlayerAnimation() {
+        //前回チェック時(0.2秒毎)からの端末の移動距離が15cm以上であれば走っていると判定し、武器を激しく揺らす
+        let currentPos = SceneNodeUtil.getCameraPosition(sceneView)
+        isPlayerRunning = SceneNodeUtil.isPlayerRunning(pos1: currentPos, pos2: lastCameraPos)
+                
+        if isPlayerRunning != lastPlayerStatus {
+            
+            pistolNode().removeAllActions()
+            //一度初期状態に戻す
+            pistolNode().position = SCNVector3(0.17, -0.197, -0.584)
+            pistolNode().eulerAngles = SCNVector3(-1.4382625, 1.3017014, -2.9517007)
+            
+            if isPlayerRunning {
+                pistolNode().runAction(SceneAnimationUtil.gunnerShakeAnimationRunning())
+            }else {
+                pistolNode().runAction(SceneAnimationUtil.gunnerShakeAnimationNormal())
+            }
+        }
+        lastCameraPos = SceneNodeUtil.getCameraPosition(sceneView)
+        lastPlayerStatus = isPlayerRunning
+    }
+    
+    //MARK: - Private Methods
+    private func setupWeaponNode(type: WeaponTypes) -> SCNNode {
+        let weaponParentNode = SceneNodeUtil.loadScnFile(of: GameConst.getWeaponScnAssetsPath(type), nodeName: "\(type.rawValue)Parent")
+        SceneNodeUtil.addBillboardConstraint(weaponParentNode)
+        weaponParentNode.position = SceneNodeUtil.getCameraPosition(sceneView)
+        return weaponParentNode
+    }
+    
+    private func pistolNode() -> SCNNode {
+        return pistolParentNode.childNode(withName: WeaponTypes.pistol.rawValue, recursively: false) ?? SCNNode()
+    }
+    
+    private func switchWeapon() {
+        SceneNodeUtil.removeOtherWeapon(except: currentWeapon, scnView: sceneView)
+        switch currentWeapon {
+        case .pistol:
+            sceneView.scene.rootNode.addChildNode(pistolParentNode)
+        case .bazooka:
+            sceneView.scene.rootNode.addChildNode(bazookaParentNode)
+        }
+    }
+
+    private func createOriginalBulletNode() -> SCNNode {
         let sphere: SCNGeometry = SCNSphere(radius: 0.05)
         let customYellow = UIColor(red: 253/255, green: 202/255, blue: 119/255, alpha: 1)
         
         sphere.firstMaterial?.diffuse.contents = customYellow
-        bulletNode = SCNNode(geometry: sphere)
-        guard let bulletNode = bulletNode else {return}
-        bulletNode.name = "bullet"
-        bulletNode.scale = SCNVector3(x: 1, y: 1, z: 1)
-        bulletNode.position = cameraPos
+        originalBulletNode = SCNNode(geometry: sphere)
+        originalBulletNode.name = GameConst.bulletNodeName
+        originalBulletNode.scale = SCNVector3(x: 1, y: 1, z: 1)
+        originalBulletNode.position = SceneNodeUtil.getCameraPosition(sceneView)
         
         //当たり判定用のphysicBodyを追加
         let shape = SCNPhysicsShape(geometry: sphere, options: nil)
-        bulletNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: shape)
-        bulletNode.physicsBody?.contactTestBitMask = 1
-        bulletNode.physicsBody?.isAffectedByGravity = false
-        sceneView.scene.rootNode.addChildNode(bulletNode)
-        
-        print("弾を設置")
+        originalBulletNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: shape)
+        originalBulletNode.physicsBody?.contactTestBitMask = 1
+        originalBulletNode.physicsBody?.isAffectedByGravity = false
+        return originalBulletNode
+    }
+
+    //ロケラン名中時の爆発をセットアップ
+    private func createOriginalParticleSystem(type: ParticleSystemTypes) -> SCNParticleSystem {
+        let originalExplosionNode = SceneNodeUtil.loadScnFile(of: GameConst.getParticleSystemScnAssetsPath(type), nodeName: type.rawValue)
+        return originalExplosionNode.particleSystems?.first ?? SCNParticleSystem()
+    }
+    
+    private func createCopiedExplosion() -> SCNParticleSystem {
+        var copiedParticle = SCNParticleSystem()
+        copiedParticle = originalBazookaHitExplosionParticle
+        copiedParticle.loops = true
+        copiedParticle.birthRate = 0
+        return copiedParticle
     }
     
     //弾ノードを発射
-    func shootBullet() {
-        guard let camera = sceneView.pointOfView else {return}
-        let targetPosCamera = SCNVector3(x: camera.position.x, y: camera.position.y, z: camera.position.z - 10)
-        //カメラ座標をワールド座標に変換
-        let target = camera.convertPosition(targetPosCamera, to: nil)
-        let action = SCNAction.move(to: target, duration: TimeInterval(1))
-        bulletNode?.runAction(action, completionHandler: {
-            self.bulletNode?.removeFromParentNode()
-        })
-        
-        print("弾を発射")
+    private func shootBullet() {
+        //メモリ節約のため、オリジナルをクローンして使う
+        let clonedBulletNode = originalBulletNode.clone()
+        //バズーカ用の爆発particleを入れ込む
+        if currentWeapon == .bazooka {
+            clonedBulletNode.addParticleSystem(createCopiedExplosion())
+        }
+        sceneView.scene.rootNode.addChildNode(clonedBulletNode)
+        clonedBulletNode.runAction(
+            SceneAnimationUtil.shootBulletToCenterOfCamera(sceneView.pointOfView), completionHandler: {
+                clonedBulletNode.removeFromParentNode()
+            }
+        )
     }
     
+    private func createOriginalTargetNode() -> SCNNode {
+        let originalTargetNode = SceneNodeUtil.loadScnFile(of: GameConst.getTargetScnAssetsPath(), nodeName: GameConst.targetNodeName)
+        originalTargetNode.scale = SCNVector3(0.3, 0.3, 0.3)
+        
+        let targetNodeGeometry = (originalTargetNode.childNode(withName: "sphere", recursively: false)?.geometry) ?? SCNGeometry()
+        
+        //MARK: - 当たり判定の肝2つ
+        //①形状はラップしてる空のNodeではなく何か1つgeometryを持っているものにするを指定する
+        //②当たり判定のscaleはoptions: [SCNPhysicsShape.Option.scale: SCNVector3]で明示的に設定する（大体①のgeometryの元となっているNodeのscaleを代入すれば等しい当たり判定になる）
+        let shape = SCNPhysicsShape(geometry: targetNodeGeometry, options: [SCNPhysicsShape.Option.scale: originalTargetNode.scale])
+        
+        //当たり判定用のphysicBodyを追加
+        originalTargetNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: shape)
+        originalTargetNode.physicsBody?.isAffectedByGravity = false
+        
+        return originalTargetNode
+    }
+      
+    //的ノードをランダムな座標に設置
+    private func addTarget() {
+        //メモリ節約のために１つだけオリジナルを生成し、それをクローンして使う
+        let originalTargetNode = createOriginalTargetNode()
+        
+        DispatchQueue.main.async {
+            for _ in 0..<GameConst.targetCount {
+                let clonedTargetNode = originalTargetNode.clone()
+                clonedTargetNode.position = SceneNodeUtil.getRandomTargetPosition()
+                SceneNodeUtil.addBillboardConstraint(clonedTargetNode)
+                self.sceneView.scene.rootNode.addChildNode(clonedTargetNode)
+            }
+        }
+    }
     
-    /*
-     - 泰明さんにテクスチャを切り替え
-     - 初回に一回だけ的を50個設置
-     - 球を発射（武器共通）
-     - 球を設置（武器共通）
-     - 武器を画面に設置（共通化する）
-     - 発砲時のアニメーション実行
-     - ゆらゆら＆ひゅんひゅんモーションの実行
-     - 描画時のFPS移動、アニメーション削除＆再実行
-     - 衝突検知時の的＆弾消し、パーティクル設置
-     */
-
+    private func keepWeaponInFPSPosition() {
+        var weaponParentNode: SCNNode {
+            switch currentWeapon {
+            case .pistol:
+                return pistolParentNode
+            case .bazooka:
+                return bazookaParentNode
+            }
+        }
+        weaponParentNode.position = SceneNodeUtil.getCameraPosition(sceneView)
+    }
     
+    private func isTargetHit(contact: SCNPhysicsContact) -> Bool {
+        return (contact.nodeA.name == GameConst.bulletNodeName && contact.nodeB.name == GameConst.targetNodeName) ||
+            (contact.nodeB.name == GameConst.bulletNodeName && contact.nodeA.name == GameConst.targetNodeName)
+    }
+    
+    private func excuteTargetHitParticle(bullet: SCNNode) {
+        let particle = bullet.particleSystems?.first
+        particle?.birthRate = 300
+        particle?.loops = false
+    }
 }
 
 extension GameSceneManager: ARSCNViewDelegate {
     //常に更新され続けるdelegateメソッド
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
-//        addPistol()
+        //現在表示中の武器をラップしている空のオブジェクトを常にカメラと同じPositionに移動させ続ける（それにより武器が常にFPS位置に保たれる）
+        keepWeaponInFPSPosition()
     }
-    
-    /* //現在表示中の武器をラップしている空のオブジェクトを常にカメラと同じPositionに移動させ続ける（それにより武器が常にFPS位置に保たれる）
-     if let pistol = sceneView.scene.rootNode.childNode(withName: "parent", recursively: false) {
-         pistol.position = sceneView.pointOfView?.position ?? SCNVector3()
-     }
-     if let bazooka = sceneView.scene.rootNode.childNode(withName: "bazookaParent", recursively: false) {
-         bazooka.position = sceneView.pointOfView?.position ?? SCNVector3()
-     }
-     if let rifle = sceneView.scene.rootNode.childNode(withName: "AKM_parent", recursively: false) {
-         rifle.position = sceneView.pointOfView?.position ?? SCNVector3()
-     }
-
-     if toggleActionInterval <= 0 {
-         guard let currentPos = sceneView.pointOfView?.position else {return}
-         let diff = SCNVector3Make(lastCameraPos.x - currentPos.x, lastCameraPos.y - currentPos.y, lastCameraPos.z - currentPos.z)
-         let distance = sqrt((diff.x * diff.x) + (diff.y * diff.y) + (diff.z * diff.z))
-//            print("0.2秒前からの移動距離: \(String(format: "%.1f", distance))m")
-
-         isPlayerRunning = (distance >= 0.15)
-
-         if isPlayerRunning != lastPlayerStatus {
-
-             switch currentWeapon {
-             case .pistol:
-                 sceneView.scene.rootNode.childNode(withName: "parent", recursively: false)?.childNode(withName: "M1911_a", recursively: false)?.removeAllActions()
-                 sceneView.scene.rootNode.childNode(withName: "parent", recursively: false)?.childNode(withName: "M1911_a", recursively: false)?.position = SCNVector3(0.17, -0.197, -0.584)
-                 sceneView.scene.rootNode.childNode(withName: "parent", recursively: false)?.childNode(withName: "M1911_a", recursively: false)?.eulerAngles = SCNVector3(-1.4382625, 1.3017014, -2.9517007)
-             case .rifle:
-
-                 sceneView.scene.rootNode.childNode(withName: "AKM_parent", recursively: false)?.childNode(withName: "AKM", recursively: false)?.removeAllActions()
-                 sceneView.scene.rootNode.childNode(withName: "AKM_parent", recursively: false)?.childNode(withName: "AKM", recursively: false)?.position = SCNVector3(0, 0, 0)
-                 sceneView.scene.rootNode.childNode(withName: "AKM_parent", recursively: false)?.childNode(withName: "AKM", recursively: false)?.eulerAngles = SCNVector3(0, 0, 0)
-
-             default: break
-             }
-
-             isPlayerRunning ? gunnerShakeAnimationRunning() : gunnerShakeAnimationNormal()
-         }
-         self.toggleActionInterval = 0.2
-         lastCameraPos = sceneView.pointOfView?.position ?? SCNVector3()
-         lastPlayerStatus = isPlayerRunning
-     }
-     toggleActionInterval -= 0.02*/
 }
 
 extension GameSceneManager: SCNPhysicsContactDelegate {
     //衝突検知時に呼ばれる
     //MEMO: - このメソッド内でUIの更新を行いたい場合はmainThreadで行う
     func physicsWorld(_ world: SCNPhysicsWorld, didEnd contact: SCNPhysicsContact) {
-//        let nodeA = contact.nodeA
-//        let nodeB = contact.nodeB
-//
-//        if (nodeA.name == "bullet" && nodeB.name == "target") || (nodeB.name == "bullet" && nodeA.name == "target") {
-//            print("当たった")
-//            AudioUtil.playSound(of: .headShot)
-//            nodeA.removeFromParentNode()
-//            nodeB.removeFromParentNode()
-//
-//            if currentWeapon == .bazooka {
-//                AudioUtil.playSound(of: .bazookaHit)
-//
-//                if let first = sceneView.scene.rootNode.childNode(withName: "bazookaHitExplosion\(explosionCount)", recursively: false)?.particleSystems?.first  {
-//
-//                    first.birthRate = 300
-//                    first.loops = false
-//
-//                }
-//            }
-//
-//            switch currentWeapon {
-//            case .pistol:
-//                pistolPoint += 5
-//            case .bazooka:
-//                bazookaPoint += 12
-//            default:
-//                break
-//            }
-//
-//            targetCount -= 1
-//        }
+        if isTargetHit(contact: contact) {
+            contact.nodeA.removeFromParentNode()
+            contact.nodeB.removeFromParentNode()
+            
+            let bulletNode = [contact.nodeA, contact.nodeB].first(where: { item in
+                item.name == GameConst.bulletNodeName
+            }) ?? SCNNode()
+            //particleが仕込まれていれば実行する
+            excuteTargetHitParticle(bullet: bulletNode)
+            
+            //ヒットしたという通知をVC経由でsubscribeさせ、statusManagerに伝達する
+            _targetHit.accept(Void())
+        }
     }
 }

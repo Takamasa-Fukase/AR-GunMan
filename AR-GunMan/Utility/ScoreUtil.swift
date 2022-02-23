@@ -10,7 +10,7 @@ import Foundation
 class ScoreUtil {
     
     static func addScore(currentScore: Double, weapon: WeaponTypes) -> Double {
-        let weaponScore = Const.getWeaponScore(weapon)
+        let weaponScore = GameConst.getWeaponScore(weapon)
         let sumScore: Double = min(currentScore + weaponScore, 100.0)
         //ランキングがバラけるようにスコアに乱数をかけて調整する
         return sumScore * (Double.random(in: 0.9...1))
