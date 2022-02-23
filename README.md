@@ -19,7 +19,9 @@ https://apps.apple.com/jp/app/ar-gunman/id1542082005
 
 # Architecture
 
-RxSwift + MVVM
+### RxSwift + MVVM
+
+![AR-GunMan_Architecture](https://user-images.githubusercontent.com/58412688/155384096-484689ce-6b6c-48df-b8ea-f1e9cd9427ff.png)
 
 # Author
 
