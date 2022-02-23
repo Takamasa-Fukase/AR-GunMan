@@ -67,24 +67,24 @@ class GameSceneManager: NSObject {
 
     func changeTargetsToTaimeisan() {
         sceneView.scene.rootNode.childNodes.forEach({ node in
-            if node.name == "target" {
+            if node.name == GameConst.targetNodeName {
                 while node.childNode(withName: "torus", recursively: false) != nil {
                     node.childNode(withName: "torus", recursively: false)?.removeFromParentNode()
                     //ドーナツ型の白い線のパーツを削除
                     print("torusを削除")
                 }
-                node.childNode(withName: "sphere", recursively: false)?.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "taimei4.jpg")
+                node.childNode(withName: "sphere", recursively: false)?.geometry?.firstMaterial?.diffuse.contents = GameConst.taimeiSanImage
             }
         })
     }
     
-    func setupBazookaHitExplosion() {
+    func setupBazookaHitExplosion(type: ParticleSystemTypes) {
         //ロケラン名中時の爆発
         //art.scnassets配下のファイル名までのパスを記載
-        let explosionScene = SCNScene(named: "art.scnassets/ParticleSystems/ExplosionSamples/Explosion1.scn")
+        let explosionScene = SCNScene(named: GameConst.getParticleSystemScnAssetsPath(type))
         
         //注意: withNameにはscnのファイル名ではなく、Identity欄のnameを指定する
-        if let explosion = (explosionScene?.rootNode.childNode(withName: "Explosion1", recursively: false)) {
+        if let explosion = (explosionScene?.rootNode.childNode(withName: type.rawValue, recursively: false)) {
             
             //座標を指定したい場合はここで設定（↓ではカメラ位置よりも50cm前方を指定）
             let cameraPos = SceneNodeUtil.getCameraPosition(sceneView)
@@ -93,16 +93,13 @@ class GameSceneManager: NSObject {
             //画面に反映
             self.sceneView.scene.rootNode.addChildNode(explosion)
         }
-        
-        //ParticleSystemへのアクセス方法
-        sceneView.scene.rootNode.childNode(withName: "Explosion1", recursively: false)?.particleSystems?.first
-        
-        if let particleSystem = sceneView.scene.rootNode.childNode(withName: "bazookaHitExplosion\(explosionCount)", recursively: false)?.particleSystems?.first  {
+                
+        if let particleSystem = sceneView.scene.rootNode.childNode(withName: "\(type.rawValue)\(explosionCount)", recursively: false)?.particleSystems?.first  {
             
             particleSystem.birthRate = 300
             particleSystem.loops = false
         }
-        exploPar = bazookaHitExplosion?.particleSystems?.first!
+        exploPar = bazookaHitExplosion?.particleSystems?.first ?? SCNParticleSystem()
     }
     
     func handlePlayerAnimation() {

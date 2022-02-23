@@ -26,7 +26,7 @@
 		5952F64025EA0E1900ADB85B /* Font+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5952F63F25EA0E1800ADB85B /* Font+Extension.swift */; };
 		595E6987256C0190002B4F3E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595E6986256C0190002B4F3E /* SettingsViewController.swift */; };
 		595E698F256C01A4002B4F3E /* SettingsViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 595E698E256C01A4002B4F3E /* SettingsViewController.storyboard */; };
-		5961B6D5256EC44700B6D736 /* taimei4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5961B6D4256EC44700B6D736 /* taimei4.jpg */; };
+		5961B6D5256EC44700B6D736 /* taimei-san.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5961B6D4256EC44700B6D736 /* taimei-san.jpg */; };
 		5961B6DA256ECAEF00B6D736 /* kyuiin.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5961B6D9256ECAEF00B6D736 /* kyuiin.mp3 */; };
 		59940B882552F54900EC20C1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 59940B872552F54900EC20C1 /* GoogleService-Info.plist */; };
 		59940BAC2552FAA600EC20C1 /* RegisterNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59940BAB2552FAA600EC20C1 /* RegisterNameViewController.swift */; };
@@ -125,7 +125,7 @@
 		5952F63F25EA0E1800ADB85B /* Font+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Extension.swift"; sourceTree = "<group>"; };
 		595E6986256C0190002B4F3E /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		595E698E256C01A4002B4F3E /* SettingsViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SettingsViewController.storyboard; sourceTree = "<group>"; };
-		5961B6D4256EC44700B6D736 /* taimei4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = taimei4.jpg; sourceTree = "<group>"; };
+		5961B6D4256EC44700B6D736 /* taimei-san.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "taimei-san.jpg"; sourceTree = "<group>"; };
 		5961B6D9256ECAEF00B6D736 /* kyuiin.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = kyuiin.mp3; sourceTree = "<group>"; };
 		59940B872552F54900EC20C1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		59940BAB2552FAA600EC20C1 /* RegisterNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterNameViewController.swift; sourceTree = "<group>"; };
@@ -340,7 +340,7 @@
 		59D2D5462552E2CC006DDB70 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				5961B6D4256EC44700B6D736 /* taimei4.jpg */,
+				5961B6D4256EC44700B6D736 /* taimei-san.jpg */,
 				59D2D54F2552E2CC006DDB70 /* mp3 */,
 			);
 			path = Resources;
@@ -630,7 +630,7 @@
 				59484C8A25664FEC00F9C6A8 /* bazookaHit.mp3 in Resources */,
 				59940BB12552FAAF00EC20C1 /* RegisterNameViewController.storyboard in Resources */,
 				59D2D5942552E718006DDB70 /* SwitchWeaponCell.xib in Resources */,
-				5961B6D5256EC44700B6D736 /* taimei4.jpg in Resources */,
+				5961B6D5256EC44700B6D736 /* taimei-san.jpg in Resources */,
 				5961B6DA256ECAEF00B6D736 /* kyuiin.mp3 in Resources */,
 				59D2D55B2552E2CC006DDB70 /* pistol-out-bullets.mp3 in Resources */,
 				59484C5A2565792300F9C6A8 /* bazookaSet.mp3 in Resources */,
