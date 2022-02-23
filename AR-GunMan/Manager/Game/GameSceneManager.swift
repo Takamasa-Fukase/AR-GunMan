@@ -17,16 +17,11 @@ class GameSceneManager: NSObject {
     var sceneView = ARSCNView()
 
     // - node
-    private var bulletNode: SCNNode?
-    private var bazookaHitExplosion: SCNNode?
-    private var jetFire: SCNNode?
-    private var exploPar: SCNParticleSystem?
+    private var originalBulletNode = SCNNode()
+    private var originalBazookaHitExplosionParticle = SCNParticleSystem()
     private var pistolParentNode = SCNNode()
     private var bazookaParentNode = SCNNode()
     private var currentWeapon: WeaponTypes = .pistol
-    
-    // - count
-    private var explosionCount = 0
 
     // - nodeAnimation
     private var lastCameraPos = SCNVector3()
@@ -46,8 +41,10 @@ class GameSceneManager: NSObject {
         //SceneViewをセットアップ
         SceneViewSettingUtil.setupSceneView(sceneView, sceneViewDelegate: self, physicContactDelegate: self)
         //各武器をセットアップ
-        setupPistolNode()
-        setupBazookaNode()
+        pistolParentNode = setupWeaponNode(type: .pistol)
+        bazookaParentNode = setupWeaponNode(type: .bazooka)
+        originalBulletNode = createOriginalBulletNode()
+        originalBazookaHitExplosionParticle = createOriginalParticleSystem(type: .bazookaExplosion)
         //ターゲットをランダムな位置に配置
         addTarget()
     }
@@ -60,7 +57,6 @@ class GameSceneManager: NSObject {
     
     //現在選択中の武器の発砲に関わるアニメーション処理などを実行
     func fireWeapon() {
-        addBullet()
         shootBullet()
         pistolNode().runAction(SceneAnimationUtil.shootingMotion())
     }
@@ -76,30 +72,6 @@ class GameSceneManager: NSObject {
                 node.childNode(withName: "sphere", recursively: false)?.geometry?.firstMaterial?.diffuse.contents = GameConst.taimeiSanImage
             }
         })
-    }
-    
-    func setupBazookaHitExplosion(type: ParticleSystemTypes) {
-        //ロケラン名中時の爆発
-        //art.scnassets配下のファイル名までのパスを記載
-        let explosionScene = SCNScene(named: GameConst.getParticleSystemScnAssetsPath(type))
-        
-        //注意: withNameにはscnのファイル名ではなく、Identity欄のnameを指定する
-        if let explosion = (explosionScene?.rootNode.childNode(withName: type.rawValue, recursively: false)) {
-            
-            //座標を指定したい場合はここで設定（↓ではカメラ位置よりも50cm前方を指定）
-            let cameraPos = SceneNodeUtil.getCameraPosition(sceneView)
-            explosion.position = SCNVector3(x: cameraPos.x, y: cameraPos.y, z: cameraPos.z - 0.5)
-            
-            //画面に反映
-            self.sceneView.scene.rootNode.addChildNode(explosion)
-        }
-                
-        if let particleSystem = sceneView.scene.rootNode.childNode(withName: "\(type.rawValue)\(explosionCount)", recursively: false)?.particleSystems?.first  {
-            
-            particleSystem.birthRate = 300
-            particleSystem.loops = false
-        }
-        exploPar = bazookaHitExplosion?.particleSystems?.first ?? SCNParticleSystem()
     }
     
     func handlePlayerAnimation() {
@@ -125,20 +97,15 @@ class GameSceneManager: NSObject {
     }
     
     //MARK: - Private Methods
-    private func setupPistolNode() {
-        pistolParentNode = SceneNodeUtil.loadScnFile(of: "art.scnassets/Weapon/Pistol/M1911_a.scn", nodeName: "parent")
-        SceneNodeUtil.addBillboardConstraint(pistolParentNode)
-        pistolParentNode.position = SceneNodeUtil.getCameraPosition(sceneView)
+    private func setupWeaponNode(type: WeaponTypes) -> SCNNode {
+        let weaponParentNode = SceneNodeUtil.loadScnFile(of: GameConst.getWeaponScnAssetsPath(type), nodeName: "\(type.rawValue)Parent")
+        SceneNodeUtil.addBillboardConstraint(weaponParentNode)
+        weaponParentNode.position = SceneNodeUtil.getCameraPosition(sceneView)
+        return weaponParentNode
     }
     
     private func pistolNode() -> SCNNode {
-        return pistolParentNode.childNode(withName: "M1911_a", recursively: false) ?? SCNNode()
-    }
-    
-    private func setupBazookaNode() {
-        bazookaParentNode = SceneNodeUtil.loadScnFile(of: "art.scnassets/Weapon/RocketLauncher/bazooka2.scn", nodeName: "bazookaParent")
-        SceneNodeUtil.addBillboardConstraint(bazookaParentNode)
-        bazookaParentNode.position = SceneNodeUtil.getCameraPosition(sceneView)
+        return pistolParentNode.childNode(withName: WeaponTypes.pistol.rawValue, recursively: false) ?? SCNNode()
     }
     
     private func switchWeapon() {
@@ -151,39 +118,56 @@ class GameSceneManager: NSObject {
         }
     }
 
-    //弾ノードを設置
-    private func addBullet() {
+    private func createOriginalBulletNode() -> SCNNode {
         let sphere: SCNGeometry = SCNSphere(radius: 0.05)
         let customYellow = UIColor(red: 253/255, green: 202/255, blue: 119/255, alpha: 1)
         
         sphere.firstMaterial?.diffuse.contents = customYellow
-        bulletNode = SCNNode(geometry: sphere)
-        guard let bulletNode = bulletNode else {return}
-        bulletNode.name = "bullet"
-        bulletNode.scale = SCNVector3(x: 1, y: 1, z: 1)
-        bulletNode.position = SceneNodeUtil.getCameraPosition(sceneView)
+        originalBulletNode = SCNNode(geometry: sphere)
+        originalBulletNode.name = GameConst.bulletNodeName
+        originalBulletNode.scale = SCNVector3(x: 1, y: 1, z: 1)
+        originalBulletNode.position = SceneNodeUtil.getCameraPosition(sceneView)
         
         //当たり判定用のphysicBodyを追加
         let shape = SCNPhysicsShape(geometry: sphere, options: nil)
-        bulletNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: shape)
-        bulletNode.physicsBody?.contactTestBitMask = 1
-        bulletNode.physicsBody?.isAffectedByGravity = false
-        sceneView.scene.rootNode.addChildNode(bulletNode)
-        print("弾を設置")
+        originalBulletNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: shape)
+        originalBulletNode.physicsBody?.contactTestBitMask = 1
+        originalBulletNode.physicsBody?.isAffectedByGravity = false
+        return originalBulletNode
+    }
+
+    //ロケラン名中時の爆発をセットアップ
+    private func createOriginalParticleSystem(type: ParticleSystemTypes) -> SCNParticleSystem {
+        let originalExplosionNode = SceneNodeUtil.loadScnFile(of: GameConst.getParticleSystemScnAssetsPath(type), nodeName: type.rawValue)
+        return originalExplosionNode.particleSystems?.first ?? SCNParticleSystem()
+    }
+    
+    private func createCopiedExplosion() -> SCNParticleSystem {
+        var copiedParticle = SCNParticleSystem()
+        copiedParticle = originalBazookaHitExplosionParticle
+        copiedParticle.loops = true
+        copiedParticle.birthRate = 0
+        return copiedParticle
     }
     
     //弾ノードを発射
     private func shootBullet() {
-        bulletNode?.runAction(
+        //メモリ節約のため、オリジナルをクローンして使う
+        let clonedBulletNode = originalBulletNode.clone()
+        //バズーカ用の爆発particleを入れ込む
+        if currentWeapon == .bazooka {
+            clonedBulletNode.addParticleSystem(createCopiedExplosion())
+        }
+        sceneView.scene.rootNode.addChildNode(clonedBulletNode)
+        clonedBulletNode.runAction(
             SceneAnimationUtil.shootBulletToCenterOfCamera(sceneView.pointOfView), completionHandler: {
-                self.bulletNode?.removeFromParentNode()
+                clonedBulletNode.removeFromParentNode()
             }
         )
-        print("弾を発射")
     }
     
     private func createOriginalTargetNode() -> SCNNode {
-        let originalTargetNode = SceneNodeUtil.loadScnFile(of: "art.scnassets/target.scn", nodeName: "target")
+        let originalTargetNode = SceneNodeUtil.loadScnFile(of: GameConst.getTargetScnAssetsPath(), nodeName: GameConst.targetNodeName)
         originalTargetNode.scale = SCNVector3(0.3, 0.3, 0.3)
         
         let targetNodeGeometry = (originalTargetNode.childNode(withName: "sphere", recursively: false)?.geometry) ?? SCNGeometry()
@@ -228,15 +212,14 @@ class GameSceneManager: NSObject {
     }
     
     private func isTargetHit(contact: SCNPhysicsContact) -> Bool {
-        return (contact.nodeA.name == "bullet" && contact.nodeB.name == "target") ||
-            (contact.nodeB.name == "bullet" && contact.nodeA.name == "target")
+        return (contact.nodeA.name == GameConst.bulletNodeName && contact.nodeB.name == GameConst.targetNodeName) ||
+            (contact.nodeB.name == GameConst.bulletNodeName && contact.nodeA.name == GameConst.targetNodeName)
     }
     
-    private func excuteExplosion() {
-        if let first = sceneView.scene.rootNode.childNode(withName: "bazookaHitExplosion\(explosionCount)", recursively: false)?.particleSystems?.first  {
-            first.birthRate = 300
-            first.loops = false
-        }
+    private func excuteTargetHitParticle(bullet: SCNNode) {
+        let particle = bullet.particleSystems?.first
+        particle?.birthRate = 300
+        particle?.loops = false
     }
 }
 
@@ -256,9 +239,12 @@ extension GameSceneManager: SCNPhysicsContactDelegate {
             contact.nodeA.removeFromParentNode()
             contact.nodeB.removeFromParentNode()
             
-            if currentWeapon == .bazooka {
-                excuteExplosion()
-            }
+            let bulletNode = [contact.nodeA, contact.nodeB].first(where: { item in
+                item.name == GameConst.bulletNodeName
+            }) ?? SCNNode()
+            //particleが仕込まれていれば実行する
+            excuteTargetHitParticle(bullet: bulletNode)
+            
             //ヒットしたという通知をVC経由でsubscribeさせ、statusManagerに伝達する
             _targetHit.accept(Void())
         }

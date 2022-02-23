@@ -34,6 +34,8 @@ class GameConst {
     static let bazookaHitPoint: Double = 12
 
     static let targetNodeName = "target"
+    
+    static let bulletNodeName = "bullet"
 
     static let pistolSightImage = UIImage(named: "pistolSight")
     
@@ -68,7 +70,7 @@ class GameConst {
         }
     }
     
-    static func getTargetScnAssetsPath(_ weapon: WeaponTypes) -> String {
+    static func getTargetScnAssetsPath() -> String {
         let targetPath = "art.scnassets/Target/"
         return targetPath + targetNodeName + ".scn"
     }
