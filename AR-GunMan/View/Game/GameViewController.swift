@@ -49,6 +49,12 @@ class GameViewController: UIViewController {
             .bind(to: sightImageView.rx.image)
             .disposed(by: disposeBag)
         
+        let _ = viewModel.sightImageColor
+            .subscribe(onNext: { [weak self] element in
+                guard let self = self else {return}
+                self.sightImageView.tintColor = element
+            }).disposed(by: disposeBag)
+        
         let _ = viewModel.bulletsCountImage
             .bind(to: bulletsCountImageView.rx.image)
             .disposed(by: disposeBag)

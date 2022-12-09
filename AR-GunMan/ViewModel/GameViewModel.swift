@@ -21,6 +21,7 @@ class GameViewModel {
     
     //MARK: - output
     let sightImage: Observable<UIImage?>
+    let sightImageColor: Observable<UIColor>
     let bulletsCountImage: Observable<UIImage?>
     let timeCountString: Observable<String>
     let checkPlayerAnimation: Observable<Double>
@@ -39,6 +40,9 @@ class GameViewModel {
         //MARK: - output
         let _sightImage = BehaviorRelay<UIImage?>(value: GameConst.pistolSightImage)
         self.sightImage = _sightImage.asObservable()
+        
+        let _sightImageColor = BehaviorRelay<UIColor>(value: GameConst.pistolSightImageColor)
+        self.sightImageColor = _sightImageColor.asObservable()
         
         let _bulletsCountImage = BehaviorRelay<UIImage?>(value: GameConst.pistolBulletsCountImage(GameConst.pistolBulletsCapacity))
         self.bulletsCountImage = _bulletsCountImage.asObservable()
@@ -109,6 +113,7 @@ class GameViewModel {
                 switch element.weapon {
                 case .pistol:
                     _sightImage.accept(GameConst.pistolSightImage)
+                    _sightImageColor.accept(GameConst.pistolSightImageColor)
                     _bulletsCountImage.accept(GameConst.pistolBulletsCountImage(element.bulletsCount))
                     //同じ武器が選択された時は鳴らさない
                     if element.switched {
@@ -117,6 +122,7 @@ class GameViewModel {
                     
                 case .bazooka:
                     _sightImage.accept(GameConst.bazookaSightImage)
+                    _sightImageColor.accept(GameConst.bazookaSightImageColor)
                     _bulletsCountImage.accept(GameConst.bazookaBulletsCountImage(element.bulletsCount))
                     //同じ武器が選択された時は鳴らさない
                     if element.switched {

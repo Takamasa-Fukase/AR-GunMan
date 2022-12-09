@@ -39,7 +39,11 @@ class GameConst {
 
     static let pistolSightImage = UIImage(named: "pistolSight")
     
+    static let pistolSightImageColor = UIColor.systemRed
+    
     static let bazookaSightImage = UIImage(named: "bazookaSight")
+    
+    static let bazookaSightImageColor = UIColor.systemGreen
     
     static let taimeiSanImage = UIImage(named: "taimei-san.jpg")
     
