@@ -85,6 +85,7 @@ class GameViewModel {
 
                 case .finish:
                     AudioUtil.playSound(of: .endWhistle)
+                    CoreMotionUtil.stopUpdate()
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
                         
