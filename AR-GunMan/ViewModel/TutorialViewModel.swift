@@ -59,7 +59,7 @@ class TutorialViewModel {
             if _currentScrollViewIndex.value != 2 {
                 _scrollPage.accept(Void())
             }else {
-                
+                _dismiss.accept(Void())
             }
         }
         
