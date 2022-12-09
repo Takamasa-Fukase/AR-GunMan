@@ -34,7 +34,9 @@ class RankingViewModel {
         
         //input
         self.getRanking = AnyObserver<Void>() { _ in
-            _rankingList.accept(RankingRepository.getRanking())
+            Task { @MainActor in
+                await _rankingList.accept(RankingRepository.getRanking())
+            }
         }
         
         self.replayButtonTapped = AnyObserver<Void>() { _ in
