@@ -95,7 +95,7 @@ class GameStateManager {
                 _timeCount.accept(
                     TimeCountUtil.decreaseGameTimeCount(lastValue: _timeCount.value)
                 )
-                if element <= 0 {
+                if _timeCount.value <= 0 {
                     _gameStatusChanged.accept(.finish)
                 }
             }).disposed(by: disposeBag)
