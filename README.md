@@ -1,6 +1,6 @@
 # AR-GunMan
 
-AR-GunMan is excellent intuitive shooting game application wrote in Swift with ARKit and CoreMotion.
+AR-GunMan is an excellent intuitive shooting game application written in Swift with ARKit and CoreMotion.
 I promise you that your boring days at home would be extreme sensational.
 
 # Demo
