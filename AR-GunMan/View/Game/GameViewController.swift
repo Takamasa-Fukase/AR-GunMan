@@ -109,7 +109,7 @@ class GameViewController: UIViewController {
                 let storyboard: UIStoryboard = UIStoryboard(name: "SwitchWeaponViewController", bundle: nil)
                 let vc = storyboard.instantiateViewController(withIdentifier: "SwitchWeaponViewController") as! SwitchWeaponViewController
                 vc.viewModel = self.viewModel
-                self.presentPanModal(vc)
+                self.present(vc, animated: true)
             }).disposed(by: disposeBag)
     }
     
