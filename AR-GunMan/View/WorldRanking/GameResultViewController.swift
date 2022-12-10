@@ -40,6 +40,7 @@ class GameResultViewController: UIViewController {
         setupInitialUI()
         setupTableView()
         setupBlurEffect()
+        showRegisterNameVC()
         
         //input
         let _ = replayButton.rx.tap

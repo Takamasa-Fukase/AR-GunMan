@@ -10,7 +10,7 @@ import Firebase
 import RxSwift
 import RxCocoa
 
-protocol RegisterNameVCDelegate {
+protocol RegisterNameVCDelegate: AnyObject {
     func showRightButtons()
 }
 
@@ -25,7 +25,7 @@ class RegisterNameViewController: UIViewController {
     var rankingCount = Int()
     var db: Firestore!
     
-    var registerNameVCDelegate: RegisterNameVCDelegate?
+    weak var registerNameVCDelegate: RegisterNameVCDelegate?
     
     @IBOutlet weak var displayRankLabel: UILabel!
     @IBOutlet weak var totalScoreLabel: UILabel!
