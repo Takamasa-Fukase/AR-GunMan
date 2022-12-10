@@ -114,13 +114,9 @@ class GameStateManager {
                 excuteBazookaAutoReloading: {
                     //バズーカは自動リロード（3.2秒後に完了）
                     DispatchQueue.main.asyncAfter(deadline: .now() + 3.2) {
-                        //バズーカ残弾数をMAXに補充
-                        _bazookaBulletsCount.accept(GameConst.bazookaBulletsCapacity)
-                        //残弾数がある状態でリロード結果を作成して流す
                         _weaponReloadingResult.accept(createReloadingResult())
                     }
                 })
-            
             _weaponFiringResult.accept(firingResult)
         }
 
