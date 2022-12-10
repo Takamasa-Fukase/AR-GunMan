@@ -134,11 +134,11 @@ class GameViewModel {
         
         let _ = stateManager.weaponFiringResult
             .subscribe(onNext: { element in
-                _fireWeapon.accept(Void())
                 switch element.weapon {
                 case .pistol:
                     switch element.result {
                     case .fired:
+                        _fireWeapon.accept(Void())
                         AudioUtil.playSound(of: .pistolShoot)
                         _bulletsCountImage.accept(GameConst.pistolBulletsCountImage(element.remainingBulletsCount))
                         
@@ -151,6 +151,7 @@ class GameViewModel {
                     
                 case .bazooka:
                     if element.result == .fired {
+                        _fireWeapon.accept(Void())
                         AudioUtil.playSound(of: .bazookaShoot)
                         AudioUtil.playSound(of: .bazookaReload)
                         _bulletsCountImage.accept(GameConst.bazookaBulletsCountImage(element.remainingBulletsCount))
