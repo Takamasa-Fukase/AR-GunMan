@@ -12,10 +12,26 @@ enum WeaponTypes: String, CaseIterable {
     case pistol = "pistol"
     //    case rifle = "rifle"
     case bazooka = "bazooka"
+    
+    var targetHitParticleType: ParticleSystemTypes? {
+        switch self {
+        case .bazooka:
+            return .bazookaExplosion
+        default:
+            return nil
+        }
+    }
 }
 
 enum ParticleSystemTypes: String {
     case bazookaExplosion = "bazookaExplosion"
+    
+    var birthRate: CGFloat {
+        switch self {
+        case .bazookaExplosion:
+            return 300
+        }
+    }
 }
 
 class GameConst {
