@@ -52,7 +52,7 @@ class SceneNodeUtil {
             case .pistol:
                 return ["bazookaParent"]
             case .bazooka:
-                return ["parent"]
+                return ["pistolParent"]
             }
         }
         nodeNames.forEach({ item in
