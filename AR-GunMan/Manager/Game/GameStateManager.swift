@@ -1,9 +1,9 @@
-////
-////  GameStateManager.swift
-////  AR-GunMan
-////
-////  Created by ウルトラ深瀬 on 2022/02/02.
-////
+//
+//  GameStateManager.swift
+//  AR-GunMan
+//
+//  Created by ウルトラ深瀬 on 2022/02/02.
+//
 
 import Foundation
 import RxSwift
