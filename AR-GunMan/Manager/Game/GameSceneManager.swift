@@ -126,7 +126,6 @@ class GameSceneManager: NSObject {
         originalBulletNode = SCNNode(geometry: sphere)
         originalBulletNode.name = GameConst.bulletNodeName
         originalBulletNode.scale = SCNVector3(x: 1, y: 1, z: 1)
-        originalBulletNode.position = SceneNodeUtil.getCameraPosition(sceneView)
         
         //当たり判定用のphysicBodyを追加
         let shape = SCNPhysicsShape(geometry: sphere, options: nil)
@@ -157,6 +156,7 @@ class GameSceneManager: NSObject {
     private func shootBullet() {
         //メモリ節約のため、オリジナルをクローンして使う
         let clonedBulletNode = originalBulletNode.clone()
+        clonedBulletNode.position = SceneNodeUtil.getCameraPosition(sceneView)
         sceneView.scene.rootNode.addChildNode(clonedBulletNode)
         clonedBulletNode.runAction(
             SceneAnimationUtil.shootBulletToCenterOfCamera(sceneView.pointOfView), completionHandler: {
