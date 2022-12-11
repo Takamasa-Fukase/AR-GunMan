@@ -113,6 +113,7 @@ class GameSceneManager: NSObject {
         switch currentWeapon {
         case .pistol:
             sceneView.scene.rootNode.addChildNode(pistolParentNode)
+            pistolNode().runAction(SceneAnimationUtil.gunnerShakeAnimationNormal())
         case .bazooka:
             sceneView.scene.rootNode.addChildNode(bazookaParentNode)
         }
