@@ -16,17 +16,20 @@ class GameViewModel {
     let userShookDevide: AnyObserver<Void>
     let userRotateDevice: AnyObserver<Void>
     let userRotateDevice20Times: AnyObserver<Void>
+    let switchWeaponButtonTapped: AnyObserver<Void>
     let weaponItemTapped: AnyObserver<Int>
     let targetHit: AnyObserver<Void>
     
     //MARK: - output
     let sightImage: Observable<UIImage?>
+    let sightImageColor: Observable<UIColor>
     let bulletsCountImage: Observable<UIImage?>
     let timeCountString: Observable<String>
     let checkPlayerAnimation: Observable<Double>
     let showWeapon: Observable<WeaponTypes>
     let fireWeapon: Observable<Void>
     let excuteSecretEvent: Observable<Void>
+    let showSwitchWeaponVC: Observable<Void>
     let dismissSwitchWeaponVC: Observable<Void>
     let transitResultVC: Observable<Double>
     
@@ -39,6 +42,9 @@ class GameViewModel {
         //MARK: - output
         let _sightImage = BehaviorRelay<UIImage?>(value: GameConst.pistolSightImage)
         self.sightImage = _sightImage.asObservable()
+        
+        let _sightImageColor = BehaviorRelay<UIColor>(value: GameConst.pistolSightImageColor)
+        self.sightImageColor = _sightImageColor.asObservable()
         
         let _bulletsCountImage = BehaviorRelay<UIImage?>(value: GameConst.pistolBulletsCountImage(GameConst.pistolBulletsCapacity))
         self.bulletsCountImage = _bulletsCountImage.asObservable()
@@ -57,30 +63,44 @@ class GameViewModel {
         
         let _excuteSecretEvent = PublishRelay<Void>()
         self.excuteSecretEvent = _excuteSecretEvent.asObservable()
-        
-        let _transitResultVC = PublishRelay<Double>()
-        self.transitResultVC = _transitResultVC.asObservable()
+
+        let _showSwitchWeaponVC = PublishRelay<Void>()
+        self.showSwitchWeaponVC = _showSwitchWeaponVC.asObservable()
         
         let _dismissSwitchWeaponVC = PublishRelay<Void>()
         self.dismissSwitchWeaponVC = _dismissSwitchWeaponVC.asObservable()
                 
+        let _transitResultVC = PublishRelay<Double>()
+        self.transitResultVC = _transitResultVC.asObservable()
         
         //MARK: - stateManagerの変更を購読してVCに指示を流す
         let _ = stateManager.gameStatusChanged
-            .withLatestFrom(stateManager.totalScore) { status, score in
-                return (status, score)
+            .withLatestFrom(
+                Observable
+                    .combineLatest(stateManager.totalScore, stateManager.timeCount)
+            ) { status, combinedElement in
+                return (status, combinedElement)
             }
-            .subscribe(onNext: { status, score in
+            .subscribe(onNext: { status, combinedElement in
+                let score = combinedElement.0
+                let timeCount = combinedElement.1
                 switch status {
                 case .pause:
                     _sightImage.accept(nil)
                     _bulletsCountImage.accept(nil)
 
                 case .playing:
-                    break
+                    // 初回スタート時だけホイッスルを鳴らす
+                    if timeCount == GameConst.timeCount {
+                        AudioUtil.playSound(of: .pistolSet)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                            AudioUtil.playSound(of: .startWhistle)
+                        }
+                    }
 
                 case .finish:
                     AudioUtil.playSound(of: .endWhistle)
+                    CoreMotionUtil.stopUpdate()
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
                         
@@ -104,22 +124,28 @@ class GameViewModel {
             }).disposed(by: disposeBag)
         
         let _ = stateManager.weaponSwitchingResult
-            .subscribe(onNext: { element in
-                _showWeapon.accept(element.weapon)
-                switch element.weapon {
+            .withLatestFrom(stateManager.gameStatusChanged) { switchingResult, gameStatus in
+                return (switchingResult, gameStatus)
+            }
+            .subscribe(onNext: { switchingResult, gameStatus in
+                _showWeapon.accept(switchingResult.weapon)
+                switch switchingResult.weapon {
                 case .pistol:
                     _sightImage.accept(GameConst.pistolSightImage)
-                    _bulletsCountImage.accept(GameConst.pistolBulletsCountImage(element.bulletsCount))
+                    _sightImageColor.accept(GameConst.pistolSightImageColor)
+                    _bulletsCountImage.accept(GameConst.pistolBulletsCountImage(switchingResult.bulletsCount))
                     //同じ武器が選択された時は鳴らさない
-                    if element.switched {
+                    //プレイ中以外は鳴らさない（初回ロード時に鳴らすタイミングを制御するため）
+                    if switchingResult.switched && gameStatus == .playing {
                         AudioUtil.playSound(of: .pistolSet)
                     }
                     
                 case .bazooka:
                     _sightImage.accept(GameConst.bazookaSightImage)
-                    _bulletsCountImage.accept(GameConst.bazookaBulletsCountImage(element.bulletsCount))
+                    _sightImageColor.accept(GameConst.bazookaSightImageColor)
+                    _bulletsCountImage.accept(GameConst.bazookaBulletsCountImage(switchingResult.bulletsCount))
                     //同じ武器が選択された時は鳴らさない
-                    if element.switched {
+                    if switchingResult.switched {
                         AudioUtil.playSound(of: .bazookaSet)
                     }
                 }
@@ -127,11 +153,11 @@ class GameViewModel {
         
         let _ = stateManager.weaponFiringResult
             .subscribe(onNext: { element in
-                _fireWeapon.accept(Void())
                 switch element.weapon {
                 case .pistol:
                     switch element.result {
                     case .fired:
+                        _fireWeapon.accept(Void())
                         AudioUtil.playSound(of: .pistolShoot)
                         _bulletsCountImage.accept(GameConst.pistolBulletsCountImage(element.remainingBulletsCount))
                         
@@ -144,6 +170,7 @@ class GameViewModel {
                     
                 case .bazooka:
                     if element.result == .fired {
+                        _fireWeapon.accept(Void())
                         AudioUtil.playSound(of: .bazookaShoot)
                         AudioUtil.playSound(of: .bazookaReload)
                         _bulletsCountImage.accept(GameConst.bazookaBulletsCountImage(element.remainingBulletsCount))
@@ -169,7 +196,7 @@ class GameViewModel {
         
         //MARK: - input
         self.tutorialEnded = AnyObserver<Void>() { _ in
-            stateManager.startGame.onNext(Void())
+            stateManager.changeGameStatus.onNext(.playing)
         }
         
         self.userShookDevide = AnyObserver<Void>() { _ in
@@ -183,6 +210,11 @@ class GameViewModel {
         self.userRotateDevice20Times = AnyObserver<Void>() { _ in
             _excuteSecretEvent.accept(Void())
             AudioUtil.playSound(of: .kyuiin)
+        }
+        
+        self.switchWeaponButtonTapped = AnyObserver<Void>() { _ in
+            stateManager.changeGameStatus.onNext(.pause)
+            _showSwitchWeaponVC.accept(Void())
         }
         
         self.weaponItemTapped = AnyObserver<Int>() { event in

@@ -113,6 +113,7 @@ class GameSceneManager: NSObject {
         switch currentWeapon {
         case .pistol:
             sceneView.scene.rootNode.addChildNode(pistolParentNode)
+            pistolNode().runAction(SceneAnimationUtil.gunnerShakeAnimationNormal())
         case .bazooka:
             sceneView.scene.rootNode.addChildNode(bazookaParentNode)
         }
@@ -126,7 +127,6 @@ class GameSceneManager: NSObject {
         originalBulletNode = SCNNode(geometry: sphere)
         originalBulletNode.name = GameConst.bulletNodeName
         originalBulletNode.scale = SCNVector3(x: 1, y: 1, z: 1)
-        originalBulletNode.position = SceneNodeUtil.getCameraPosition(sceneView)
         
         //当たり判定用のphysicBodyを追加
         let shape = SCNPhysicsShape(geometry: sphere, options: nil)
@@ -142,22 +142,22 @@ class GameSceneManager: NSObject {
         return originalExplosionNode.particleSystems?.first ?? SCNParticleSystem()
     }
     
-    private func createCopiedExplosion() -> SCNParticleSystem {
-        var copiedParticle = SCNParticleSystem()
-        copiedParticle = originalBazookaHitExplosionParticle
-        copiedParticle.loops = true
-        copiedParticle.birthRate = 0
-        return copiedParticle
+    private func createTargetHitParticleNode(type: ParticleSystemTypes) -> SCNNode {
+        originalBazookaHitExplosionParticle.birthRate = 0
+        originalBazookaHitExplosionParticle.loops = true
+        let targetHitParticleNode = SCNNode()
+        switch type {
+        case .bazookaExplosion:
+            targetHitParticleNode.addParticleSystem(originalBazookaHitExplosionParticle)
+            return targetHitParticleNode
+        }
     }
-    
+
     //弾ノードを発射
     private func shootBullet() {
         //メモリ節約のため、オリジナルをクローンして使う
         let clonedBulletNode = originalBulletNode.clone()
-        //バズーカ用の爆発particleを入れ込む
-        if currentWeapon == .bazooka {
-            clonedBulletNode.addParticleSystem(createCopiedExplosion())
-        }
+        clonedBulletNode.position = SceneNodeUtil.getCameraPosition(sceneView)
         sceneView.scene.rootNode.addChildNode(clonedBulletNode)
         clonedBulletNode.runAction(
             SceneAnimationUtil.shootBulletToCenterOfCamera(sceneView.pointOfView), completionHandler: {
@@ -216,10 +216,13 @@ class GameSceneManager: NSObject {
             (contact.nodeB.name == GameConst.bulletNodeName && contact.nodeA.name == GameConst.targetNodeName)
     }
     
-    private func excuteTargetHitParticle(bullet: SCNNode) {
-        let particle = bullet.particleSystems?.first
-        particle?.birthRate = 300
-        particle?.loops = false
+    private func executeTargetHitParticle(contactPoint: SCNVector3) {
+        guard let targetHitParticleType = currentWeapon.targetHitParticleType else { return }
+        let targetHitParticleNode = createTargetHitParticleNode(type: targetHitParticleType)
+        targetHitParticleNode.position = contactPoint
+        sceneView.scene.rootNode.addChildNode(targetHitParticleNode)
+        targetHitParticleNode.particleSystems?.first?.birthRate = targetHitParticleType.birthRate
+        targetHitParticleNode.particleSystems?.first?.loops = false
     }
 }
 
@@ -239,11 +242,8 @@ extension GameSceneManager: SCNPhysicsContactDelegate {
             contact.nodeA.removeFromParentNode()
             contact.nodeB.removeFromParentNode()
             
-            let bulletNode = [contact.nodeA, contact.nodeB].first(where: { item in
-                item.name == GameConst.bulletNodeName
-            }) ?? SCNNode()
-            //particleが仕込まれていれば実行する
-            excuteTargetHitParticle(bullet: bulletNode)
+            // ターゲットヒット座標に武器に応じたParticleを発火させる
+            executeTargetHitParticle(contactPoint: contact.contactPoint)
             
             //ヒットしたという通知をVC経由でsubscribeさせ、statusManagerに伝達する
             _targetHit.accept(Void())

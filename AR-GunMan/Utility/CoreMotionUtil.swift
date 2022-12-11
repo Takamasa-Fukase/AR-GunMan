@@ -20,8 +20,6 @@ class CoreMotionUtil {
     
     private static var gyroZcount = 0
     
-    
-    //加速度設定
     static func getAccelerometer(action: (() -> ())?) {
         motionManager.accelerometerUpdateInterval = 0.2
         motionManager.startAccelerometerUpdates(to: OperationQueue.current!) {
@@ -36,7 +34,7 @@ class CoreMotionUtil {
             }
         }
     }
-    //ジャイロ設定
+
     static func getGyro(action: (() -> ())?, secretEvent: (() -> ())?) {
         motionManager.gyroUpdateInterval = 0.2
         motionManager.startGyroUpdates(to: OperationQueue.current!) {
@@ -54,7 +52,13 @@ class CoreMotionUtil {
         }
     }
     
-    static func didUpdateAccelerationData(data: CMAcceleration, completion: (() -> ())?) {
+    static func stopUpdate() {
+        motionManager.stopAccelerometerUpdates()
+        motionManager.stopGyroUpdates()
+    }
+    
+    //MARK: - Private Methods
+    private static func didUpdateAccelerationData(data: CMAcceleration, completion: (() -> ())?) {
         let compositAcceleration = getCompositeAcceleration(0, data.y, data.z)
         
         let gyroZ = (gyro.z * gyro.z)
@@ -83,7 +87,7 @@ class CoreMotionUtil {
         }
     }
     
-    static func didUpdateGyroData(data: CMRotationRate, completion: (() -> ())?, secretEvent: (() -> ())?) {
+    private static func didUpdateGyroData(data: CMRotationRate, completion: (() -> ())?, secretEvent: (() -> ())?) {
         let compositGyro = getCompositeGyro(0, 0, gyro.z)
 
         if compositGyro >= 10 {
@@ -103,9 +107,7 @@ class CoreMotionUtil {
         }
 
     }
-    
-    
-    //MARK: - Private Methods
+        
     private static func getCompositeAcceleration(_ x: Double, _ y: Double, _ z: Double) -> Double {
         return (x * x) + (y * y) + (z * z)
     }

@@ -1,9 +1,9 @@
-////
-////  GameStateManager.swift
-////  AR-GunMan
-////
-////  Created by ウルトラ深瀬 on 2022/02/02.
-////
+//
+//  GameStateManager.swift
+//  AR-GunMan
+//
+//  Created by ウルトラ深瀬 on 2022/02/02.
+//
 
 import Foundation
 import RxSwift
@@ -11,7 +11,7 @@ import RxCocoa
 
 class GameStateManager {
     //MARK: - input
-    let startGame: AnyObserver<Void>
+    let changeGameStatus: AnyObserver<GameStatus>
     let requestFiringWeapon: AnyObserver<Void>
     let requestReloadingWeapon: AnyObserver<Void>
     let requestSwitchingWeapon: AnyObserver<WeaponTypes>
@@ -37,7 +37,6 @@ class GameStateManager {
             //現在の武器が発射可能な条件かどうかチェックし、結果を返す
             return WeaponStatusUtil
                 .createWeaponFiringResult(
-                    gameStatus: _gameStatusChanged.value,
                     currentWeapon: _weaponSwitchingResult.value.weapon,
                     pistolBulletsCount: _pistolBulletsCount,
                     bazookaBulletsCount: _bazookaBulletsCount,
@@ -49,7 +48,6 @@ class GameStateManager {
             //現在の武器がリロード可能な条件かどうかチェックし、結果を返す
             return WeaponStatusUtil
                 .createWeaponReloadingResult(
-                    gameStatus: _gameStatusChanged.value,
                     currentWeapon: _weaponSwitchingResult.value.weapon,
                     pistolBulletsCount: _pistolBulletsCount,
                     bazookaBulletsCount: _bazookaBulletsCount
@@ -95,42 +93,38 @@ class GameStateManager {
                 _timeCount.accept(
                     TimeCountUtil.decreaseGameTimeCount(lastValue: _timeCount.value)
                 )
-                if element <= 0 {
+                if _timeCount.value <= 0 {
                     _gameStatusChanged.accept(.finish)
                 }
             }).disposed(by: disposeBag)
         
 
         //MARK: - input
-        self.startGame = AnyObserver<Void>() { _ in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                AudioUtil.playSound(of: .startWhistle)
-                _gameStatusChanged.accept(.playing)
-            }
+        self.changeGameStatus = AnyObserver<GameStatus>() { element in
+            guard let status = element.element else { return }
+            _gameStatusChanged.accept(status)
         }
 
         self.requestFiringWeapon = AnyObserver<Void>() { _ in
+            if _gameStatusChanged.value != .playing { return }
             let firingResult = createFiringResult(
                 excuteBazookaAutoReloading: {
                     //バズーカは自動リロード（3.2秒後に完了）
                     DispatchQueue.main.asyncAfter(deadline: .now() + 3.2) {
-                        //バズーカ残弾数をMAXに補充
-                        _bazookaBulletsCount.accept(GameConst.bazookaBulletsCapacity)
-                        //残弾数がある状態でリロード結果を作成して流す
                         _weaponReloadingResult.accept(createReloadingResult())
                     }
                 })
-            
             _weaponFiringResult.accept(firingResult)
         }
 
         self.requestReloadingWeapon = AnyObserver<Void>() { _ in
+            if _gameStatusChanged.value != .playing { return }
             _weaponReloadingResult.accept(createReloadingResult())
         }
         
         self.requestSwitchingWeapon = AnyObserver<WeaponTypes>() { event in
             guard let element = event.element else {return}
-            
+            _gameStatusChanged.accept(.playing)
             _weaponSwitchingResult.accept(
                 createSwitchingResult(selectedWeapon: element)
             )

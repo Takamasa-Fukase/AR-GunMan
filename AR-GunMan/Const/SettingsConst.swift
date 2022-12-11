@@ -8,7 +8,6 @@
 import Foundation
 
 class SettingsConst {
-    static let developerContactURL = "https://www.instagram.com/fukase_1783/"
-    
+    static let developerContactURL = "https://www.instagram.com/takamasa_fukase/"
     static let privacyPolicyURL = "http://takamasafukase.com/AR-GunMan_PrivacyPolicy.html"
 }

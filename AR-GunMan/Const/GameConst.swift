@@ -12,10 +12,26 @@ enum WeaponTypes: String, CaseIterable {
     case pistol = "pistol"
     //    case rifle = "rifle"
     case bazooka = "bazooka"
+    
+    var targetHitParticleType: ParticleSystemTypes? {
+        switch self {
+        case .bazooka:
+            return .bazookaExplosion
+        default:
+            return nil
+        }
+    }
 }
 
 enum ParticleSystemTypes: String {
     case bazookaExplosion = "bazookaExplosion"
+    
+    var birthRate: CGFloat {
+        switch self {
+        case .bazookaExplosion:
+            return 300
+        }
+    }
 }
 
 class GameConst {
@@ -39,7 +55,11 @@ class GameConst {
 
     static let pistolSightImage = UIImage(named: "pistolSight")
     
+    static let pistolSightImageColor = UIColor.systemRed
+    
     static let bazookaSightImage = UIImage(named: "bazookaSight")
+    
+    static let bazookaSightImageColor = UIColor.systemGreen
     
     static let taimeiSanImage = UIImage(named: "taimei-san.jpg")
     
