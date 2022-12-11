@@ -109,24 +109,28 @@ class GameViewModel {
             }).disposed(by: disposeBag)
         
         let _ = stateManager.weaponSwitchingResult
-            .subscribe(onNext: { element in
-                _showWeapon.accept(element.weapon)
-                switch element.weapon {
+            .withLatestFrom(stateManager.gameStatusChanged) { switchingResult, gameStatus in
+                return (switchingResult, gameStatus)
+            }
+            .subscribe(onNext: { switchingResult, gameStatus in
+                _showWeapon.accept(switchingResult.weapon)
+                switch switchingResult.weapon {
                 case .pistol:
                     _sightImage.accept(GameConst.pistolSightImage)
                     _sightImageColor.accept(GameConst.pistolSightImageColor)
-                    _bulletsCountImage.accept(GameConst.pistolBulletsCountImage(element.bulletsCount))
+                    _bulletsCountImage.accept(GameConst.pistolBulletsCountImage(switchingResult.bulletsCount))
                     //同じ武器が選択された時は鳴らさない
-                    if element.switched {
+                    //プレイ中以外は鳴らさない（初回ロード時に鳴らすタイミングを制御するため）
+                    if switchingResult.switched && gameStatus == .playing {
                         AudioUtil.playSound(of: .pistolSet)
                     }
                     
                 case .bazooka:
                     _sightImage.accept(GameConst.bazookaSightImage)
                     _sightImageColor.accept(GameConst.bazookaSightImageColor)
-                    _bulletsCountImage.accept(GameConst.bazookaBulletsCountImage(element.bulletsCount))
+                    _bulletsCountImage.accept(GameConst.bazookaBulletsCountImage(switchingResult.bulletsCount))
                     //同じ武器が選択された時は鳴らさない
-                    if element.switched {
+                    if switchingResult.switched {
                         AudioUtil.playSound(of: .bazookaSet)
                     }
                 }

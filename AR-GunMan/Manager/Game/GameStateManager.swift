@@ -103,6 +103,7 @@ class GameStateManager {
 
         //MARK: - input
         self.startGame = AnyObserver<Void>() { _ in
+            AudioUtil.playSound(of: .pistolSet)
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                 AudioUtil.playSound(of: .startWhistle)
                 _gameStatusChanged.accept(.playing)
