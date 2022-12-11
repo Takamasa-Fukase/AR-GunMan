@@ -11,7 +11,7 @@ import RxCocoa
 
 class GameStateManager {
     //MARK: - input
-    let startGame: AnyObserver<Void>
+    let changeGameStatus: AnyObserver<GameStatus>
     let requestFiringWeapon: AnyObserver<Void>
     let requestReloadingWeapon: AnyObserver<Void>
     let requestSwitchingWeapon: AnyObserver<WeaponTypes>
@@ -37,7 +37,6 @@ class GameStateManager {
             //現在の武器が発射可能な条件かどうかチェックし、結果を返す
             return WeaponStatusUtil
                 .createWeaponFiringResult(
-                    gameStatus: _gameStatusChanged.value,
                     currentWeapon: _weaponSwitchingResult.value.weapon,
                     pistolBulletsCount: _pistolBulletsCount,
                     bazookaBulletsCount: _bazookaBulletsCount,
@@ -49,7 +48,6 @@ class GameStateManager {
             //現在の武器がリロード可能な条件かどうかチェックし、結果を返す
             return WeaponStatusUtil
                 .createWeaponReloadingResult(
-                    gameStatus: _gameStatusChanged.value,
                     currentWeapon: _weaponSwitchingResult.value.weapon,
                     pistolBulletsCount: _pistolBulletsCount,
                     bazookaBulletsCount: _bazookaBulletsCount
@@ -102,15 +100,13 @@ class GameStateManager {
         
 
         //MARK: - input
-        self.startGame = AnyObserver<Void>() { _ in
-            AudioUtil.playSound(of: .pistolSet)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                AudioUtil.playSound(of: .startWhistle)
-                _gameStatusChanged.accept(.playing)
-            }
+        self.changeGameStatus = AnyObserver<GameStatus>() { element in
+            guard let status = element.element else { return }
+            _gameStatusChanged.accept(status)
         }
 
         self.requestFiringWeapon = AnyObserver<Void>() { _ in
+            if _gameStatusChanged.value != .playing { return }
             let firingResult = createFiringResult(
                 excuteBazookaAutoReloading: {
                     //バズーカは自動リロード（3.2秒後に完了）
@@ -122,12 +118,13 @@ class GameStateManager {
         }
 
         self.requestReloadingWeapon = AnyObserver<Void>() { _ in
+            if _gameStatusChanged.value != .playing { return }
             _weaponReloadingResult.accept(createReloadingResult())
         }
         
         self.requestSwitchingWeapon = AnyObserver<WeaponTypes>() { event in
             guard let element = event.element else {return}
-            
+            _gameStatusChanged.accept(.playing)
             _weaponSwitchingResult.accept(
                 createSwitchingResult(selectedWeapon: element)
             )

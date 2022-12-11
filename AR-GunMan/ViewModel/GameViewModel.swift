@@ -16,6 +16,7 @@ class GameViewModel {
     let userShookDevide: AnyObserver<Void>
     let userRotateDevice: AnyObserver<Void>
     let userRotateDevice20Times: AnyObserver<Void>
+    let switchWeaponButtonTapped: AnyObserver<Void>
     let weaponItemTapped: AnyObserver<Int>
     let targetHit: AnyObserver<Void>
     
@@ -28,6 +29,7 @@ class GameViewModel {
     let showWeapon: Observable<WeaponTypes>
     let fireWeapon: Observable<Void>
     let excuteSecretEvent: Observable<Void>
+    let showSwitchWeaponVC: Observable<Void>
     let dismissSwitchWeaponVC: Observable<Void>
     let transitResultVC: Observable<Double>
     
@@ -61,27 +63,40 @@ class GameViewModel {
         
         let _excuteSecretEvent = PublishRelay<Void>()
         self.excuteSecretEvent = _excuteSecretEvent.asObservable()
-        
-        let _transitResultVC = PublishRelay<Double>()
-        self.transitResultVC = _transitResultVC.asObservable()
+
+        let _showSwitchWeaponVC = PublishRelay<Void>()
+        self.showSwitchWeaponVC = _showSwitchWeaponVC.asObservable()
         
         let _dismissSwitchWeaponVC = PublishRelay<Void>()
         self.dismissSwitchWeaponVC = _dismissSwitchWeaponVC.asObservable()
                 
+        let _transitResultVC = PublishRelay<Double>()
+        self.transitResultVC = _transitResultVC.asObservable()
         
         //MARK: - stateManagerの変更を購読してVCに指示を流す
         let _ = stateManager.gameStatusChanged
-            .withLatestFrom(stateManager.totalScore) { status, score in
-                return (status, score)
+            .withLatestFrom(
+                Observable
+                    .combineLatest(stateManager.totalScore, stateManager.timeCount)
+            ) { status, combinedElement in
+                return (status, combinedElement)
             }
-            .subscribe(onNext: { status, score in
+            .subscribe(onNext: { status, combinedElement in
+                let score = combinedElement.0
+                let timeCount = combinedElement.1
                 switch status {
                 case .pause:
                     _sightImage.accept(nil)
                     _bulletsCountImage.accept(nil)
 
                 case .playing:
-                    break
+                    // 初回スタート時だけホイッスルを鳴らす
+                    if timeCount == GameConst.timeCount {
+                        AudioUtil.playSound(of: .pistolSet)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                            AudioUtil.playSound(of: .startWhistle)
+                        }
+                    }
 
                 case .finish:
                     AudioUtil.playSound(of: .endWhistle)
@@ -181,7 +196,7 @@ class GameViewModel {
         
         //MARK: - input
         self.tutorialEnded = AnyObserver<Void>() { _ in
-            stateManager.startGame.onNext(Void())
+            stateManager.changeGameStatus.onNext(.playing)
         }
         
         self.userShookDevide = AnyObserver<Void>() { _ in
@@ -195,6 +210,11 @@ class GameViewModel {
         self.userRotateDevice20Times = AnyObserver<Void>() { _ in
             _excuteSecretEvent.accept(Void())
             AudioUtil.playSound(of: .kyuiin)
+        }
+        
+        self.switchWeaponButtonTapped = AnyObserver<Void>() { _ in
+            stateManager.changeGameStatus.onNext(.pause)
+            _showSwitchWeaponVC.accept(Void())
         }
         
         self.weaponItemTapped = AnyObserver<Int>() { event in
