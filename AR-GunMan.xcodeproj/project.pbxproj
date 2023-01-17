@@ -67,9 +67,7 @@
 		677DF1EE27A710A8007512F6 /* SafariViewUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 677DF1ED27A710A8007512F6 /* SafariViewUtil.swift */; };
 		677DF1F127A7C096007512F6 /* RankingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 677DF1F027A7C096007512F6 /* RankingRepository.swift */; };
 		677DF1F427A7C100007512F6 /* Ranking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 677DF1F327A7C100007512F6 /* Ranking.swift */; };
-		677DF1F627AAB3A9007512F6 /* UserDefaultsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 677DF1F527AAB3A9007512F6 /* UserDefaultsKey.swift */; };
 		67B685EF27AAD8B300D7F413 /* TimeCountUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B685EE27AAD8B300D7F413 /* TimeCountUtil.swift */; };
-		67B685F527AAEFD400D7F413 /* UserDefaultsUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B685F427AAEFD400D7F413 /* UserDefaultsUtil.swift */; };
 		67B6860427AB0C5600D7F413 /* GameStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B6860327AB0C5600D7F413 /* GameStateManager.swift */; };
 		67B6860627AB0C9300D7F413 /* GameSceneManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B6860527AB0C9300D7F413 /* GameSceneManager.swift */; };
 		67DB2C5727BFD01900B8CB3C /* SceneNodeUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DB2C5627BFD01900B8CB3C /* SceneNodeUtil.swift */; };
@@ -81,6 +79,17 @@
 		86627DE6273FD5E30044A980 /* WorldRankingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86627DE5273FD5E30044A980 /* WorldRankingViewController.swift */; };
 		86627DEB273FD61B0044A980 /* WorldRankingViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86627DEA273FD61B0044A980 /* WorldRankingViewController.storyboard */; };
 		866675D4275215AF007CB4D6 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866675D3275215AF007CB4D6 /* UIViewController+Extension.swift */; };
+		BC3866A9296DF8C2005573CC /* CurrentWeapon.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3866A8296DF8C2005573CC /* CurrentWeapon.swift */; };
+		BC3866AB296DF8D4005573CC /* TimeCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3866AA296DF8D4005573CC /* TimeCounter.swift */; };
+		BC3866AD296DF8E4005573CC /* ScoreCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3866AC296DF8E4005573CC /* ScoreCounter.swift */; };
+		BC3866AF296EA6CB005573CC /* GameViewModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3866AE296EA6CB005573CC /* GameViewModel2.swift */; };
+		BC3866B1296EF1C9005573CC /* TutorialSeenChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3866B0296EF1C9005573CC /* TutorialSeenChecker.swift */; };
+		BC92C854297061FE00E49BD5 /* WeaponType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C853297061FE00E49BD5 /* WeaponType.swift */; };
+		BC92C85629709EF600E49BD5 /* BulletsHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C85529709EF600E49BD5 /* BulletsHolder.swift */; };
+		BC92C85A297348D500E49BD5 /* ScoreCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C859297348D500E49BD5 /* ScoreCalculator.swift */; };
+		BC92C85C2973614000E49BD5 /* MotionDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C85B2973614000E49BD5 /* MotionDetector.swift */; };
+		BC92C85E297420CD00E49BD5 /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C85D297420CD00E49BD5 /* UserDefaults+Extension.swift */; };
+		BC92C8602975A2A800E49BD5 /* UIViewController+RxLifeCycleEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C85F2975A2A800E49BD5 /* UIViewController+RxLifeCycleEvents.swift */; };
 		D54734259EA1C7BF11A28908 /* Pods_AR_GunMan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4280580740F2443B66781090 /* Pods_AR_GunMan.framework */; };
 /* End PBXBuildFile section */
 
@@ -174,9 +183,7 @@
 		677DF1ED27A710A8007512F6 /* SafariViewUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariViewUtil.swift; sourceTree = "<group>"; };
 		677DF1F027A7C096007512F6 /* RankingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingRepository.swift; sourceTree = "<group>"; };
 		677DF1F327A7C100007512F6 /* Ranking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ranking.swift; sourceTree = "<group>"; };
-		677DF1F527AAB3A9007512F6 /* UserDefaultsKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKey.swift; sourceTree = "<group>"; };
 		67B685EE27AAD8B300D7F413 /* TimeCountUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCountUtil.swift; sourceTree = "<group>"; };
-		67B685F427AAEFD400D7F413 /* UserDefaultsUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsUtil.swift; sourceTree = "<group>"; };
 		67B6860327AB0C5600D7F413 /* GameStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameStateManager.swift; sourceTree = "<group>"; };
 		67B6860527AB0C9300D7F413 /* GameSceneManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneManager.swift; sourceTree = "<group>"; };
 		67DB2C5627BFD01900B8CB3C /* SceneNodeUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneNodeUtil.swift; sourceTree = "<group>"; };
@@ -190,6 +197,17 @@
 		86627DEA273FD61B0044A980 /* WorldRankingViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WorldRankingViewController.storyboard; sourceTree = "<group>"; };
 		866675D3275215AF007CB4D6 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		90D4D1AD42BB6A3A0192887F /* Pods-AR-GunManTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-GunManTests.release.xcconfig"; path = "Target Support Files/Pods-AR-GunManTests/Pods-AR-GunManTests.release.xcconfig"; sourceTree = "<group>"; };
+		BC3866A8296DF8C2005573CC /* CurrentWeapon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeapon.swift; sourceTree = "<group>"; };
+		BC3866AA296DF8D4005573CC /* TimeCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCounter.swift; sourceTree = "<group>"; };
+		BC3866AC296DF8E4005573CC /* ScoreCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCounter.swift; sourceTree = "<group>"; };
+		BC3866AE296EA6CB005573CC /* GameViewModel2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel2.swift; sourceTree = "<group>"; };
+		BC3866B0296EF1C9005573CC /* TutorialSeenChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialSeenChecker.swift; sourceTree = "<group>"; };
+		BC92C853297061FE00E49BD5 /* WeaponType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponType.swift; sourceTree = "<group>"; };
+		BC92C85529709EF600E49BD5 /* BulletsHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BulletsHolder.swift; sourceTree = "<group>"; };
+		BC92C859297348D500E49BD5 /* ScoreCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCalculator.swift; sourceTree = "<group>"; };
+		BC92C85B2973614000E49BD5 /* MotionDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionDetector.swift; sourceTree = "<group>"; };
+		BC92C85D297420CD00E49BD5 /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
+		BC92C85F2975A2A800E49BD5 /* UIViewController+RxLifeCycleEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+RxLifeCycleEvents.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -239,6 +257,8 @@
 				59D2D5392552E1D2006DDB70 /* Storyboard+Extension.swift */,
 				5952F63F25EA0E1800ADB85B /* Font+Extension.swift */,
 				866675D3275215AF007CB4D6 /* UIViewController+Extension.swift */,
+				BC92C85D297420CD00E49BD5 /* UserDefaults+Extension.swift */,
+				BC92C85F2975A2A800E49BD5 /* UIViewController+RxLifeCycleEvents.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -250,7 +270,7 @@
 				67DB2C5C27C17EF300B8CB3C /* TopConst.swift */,
 				67DB2C5E27C17F4E00B8CB3C /* SettingsConst.swift */,
 				67DB2C6027C17F8D00B8CB3C /* GameConst.swift */,
-				677DF1F527AAB3A9007512F6 /* UserDefaultsKey.swift */,
+				BC92C853297061FE00E49BD5 /* WeaponType.swift */,
 			);
 			path = Const;
 			sourceTree = "<group>";
@@ -381,6 +401,7 @@
 				5952F62725E94D1000ADB85B /* TopViewModel.swift */,
 				67200F5427A000AC00AD92EC /* TutorialViewModel.swift */,
 				59484C9F256A540E00F9C6A8 /* GameViewModel.swift */,
+				BC3866AE296EA6CB005573CC /* GameViewModel2.swift */,
 				67200F5627A0020B00AD92EC /* RankingViewModel.swift */,
 				67200F5827A0026000AD92EC /* RegisterNameViewModel.swift */,
 				67200F5A27A0028700AD92EC /* SettingsViewModel.swift */,
@@ -457,13 +478,13 @@
 			isa = PBXGroup;
 			children = (
 				5952F62C25E94D9200ADB85B /* CameraAuthUtil.swift */,
-				67B685F427AAEFD400D7F413 /* UserDefaultsUtil.swift */,
 				5952F63125E9C62100ADB85B /* AudioUtil.swift */,
 				677DF1ED27A710A8007512F6 /* SafariViewUtil.swift */,
 				5952F63625E9E0B000ADB85B /* CoreMotionUtil.swift */,
 				67B685EE27AAD8B300D7F413 /* TimeCountUtil.swift */,
 				67684E6827B44DFA000B2B5C /* WeaponStatusUtil.swift */,
 				67684E6A27B97B8F000B2B5C /* ScoreUtil.swift */,
+				BC92C859297348D500E49BD5 /* ScoreCalculator.swift */,
 				67684E6C27B988C0000B2B5C /* SceneViewSettingUtil.swift */,
 				67DB2C5627BFD01900B8CB3C /* SceneNodeUtil.swift */,
 				67DB2C5827C10E8B00B8CB3C /* SceneAnimationUtil.swift */,
@@ -500,6 +521,12 @@
 			children = (
 				67B6860327AB0C5600D7F413 /* GameStateManager.swift */,
 				67B6860527AB0C9300D7F413 /* GameSceneManager.swift */,
+				BC3866B0296EF1C9005573CC /* TutorialSeenChecker.swift */,
+				BC92C85B2973614000E49BD5 /* MotionDetector.swift */,
+				BC92C85529709EF600E49BD5 /* BulletsHolder.swift */,
+				BC3866A8296DF8C2005573CC /* CurrentWeapon.swift */,
+				BC3866AA296DF8D4005573CC /* TimeCounter.swift */,
+				BC3866AC296DF8E4005573CC /* ScoreCounter.swift */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -781,14 +808,21 @@
 				5952F63725E9E0B000ADB85B /* CoreMotionUtil.swift in Sources */,
 				67DB2C5927C10E8B00B8CB3C /* SceneAnimationUtil.swift in Sources */,
 				67DB2C5D27C17EF300B8CB3C /* TopConst.swift in Sources */,
-				677DF1F627AAB3A9007512F6 /* UserDefaultsKey.swift in Sources */,
+				BC3866AF296EA6CB005573CC /* GameViewModel2.swift in Sources */,
+				BC92C85E297420CD00E49BD5 /* UserDefaults+Extension.swift in Sources */,
 				67DB2C6127C17F8D00B8CB3C /* GameConst.swift in Sources */,
 				67DB2C5B27C17EBE00B8CB3C /* SoundConst.swift in Sources */,
 				67B6860427AB0C5600D7F413 /* GameStateManager.swift in Sources */,
+				BC92C8602975A2A800E49BD5 /* UIViewController+RxLifeCycleEvents.swift in Sources */,
 				59484CA0256A540E00F9C6A8 /* GameViewModel.swift in Sources */,
 				677DF1F427A7C100007512F6 /* Ranking.swift in Sources */,
+				BC92C85A297348D500E49BD5 /* ScoreCalculator.swift in Sources */,
+				BC92C85C2973614000E49BD5 /* MotionDetector.swift in Sources */,
+				BC3866A9296DF8C2005573CC /* CurrentWeapon.swift in Sources */,
+				BC3866B1296EF1C9005573CC /* TutorialSeenChecker.swift in Sources */,
 				5921A208255D6A4E001D8C39 /* WorldRankingCell.swift in Sources */,
 				677DF1F127A7C096007512F6 /* RankingRepository.swift in Sources */,
+				BC92C854297061FE00E49BD5 /* WeaponType.swift in Sources */,
 				67DB2C5727BFD01900B8CB3C /* SceneNodeUtil.swift in Sources */,
 				59945100256AD55900560202 /* TutorialViewController.swift in Sources */,
 				86627DE6273FD5E30044A980 /* WorldRankingViewController.swift in Sources */,
@@ -797,6 +831,7 @@
 				67684E6B27B97B8F000B2B5C /* ScoreUtil.swift in Sources */,
 				677DF1EE27A710A8007512F6 /* SafariViewUtil.swift in Sources */,
 				67200F5927A0026000AD92EC /* RegisterNameViewModel.swift in Sources */,
+				BC92C85629709EF600E49BD5 /* BulletsHolder.swift in Sources */,
 				67200F5527A000AC00AD92EC /* TutorialViewModel.swift in Sources */,
 				59D2D57B2552E536006DDB70 /* ViewController.swift in Sources */,
 				67B6860627AB0C9300D7F413 /* GameSceneManager.swift in Sources */,
@@ -804,12 +839,14 @@
 				59D2D4D92552DE66006DDB70 /* AppDelegate.swift in Sources */,
 				866675D4275215AF007CB4D6 /* UIViewController+Extension.swift in Sources */,
 				59D2D53A2552E1D2006DDB70 /* Storyboard+Extension.swift in Sources */,
+				BC3866AB296DF8D4005573CC /* TimeCounter.swift in Sources */,
 				67684E6927B44DFA000B2B5C /* WeaponStatusUtil.swift in Sources */,
 				67200F5727A0020B00AD92EC /* RankingViewModel.swift in Sources */,
 				67684E6D27B988C0000B2B5C /* SceneViewSettingUtil.swift in Sources */,
 				595E6987256C0190002B4F3E /* SettingsViewController.swift in Sources */,
 				67DB2C5F27C17F4E00B8CB3C /* SettingsConst.swift in Sources */,
 				59A01134255AF580008996E3 /* GameResultViewController.swift in Sources */,
+				BC3866AD296DF8E4005573CC /* ScoreCounter.swift in Sources */,
 				5952F62D25E94D9200ADB85B /* CameraAuthUtil.swift in Sources */,
 				5952F63225E9C62100ADB85B /* AudioUtil.swift in Sources */,
 				67684E7227BA9C94000B2B5C /* GameModel.swift in Sources */,
@@ -817,7 +854,6 @@
 				59D2D5932552E718006DDB70 /* SwitchWeaponCell.swift in Sources */,
 				67B685EF27AAD8B300D7F413 /* TimeCountUtil.swift in Sources */,
 				59940BAC2552FAA600EC20C1 /* RegisterNameViewController.swift in Sources */,
-				67B685F527AAEFD400D7F413 /* UserDefaultsUtil.swift in Sources */,
 				67200F5B27A0028700AD92EC /* SettingsViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -988,18 +1024,18 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "AR-GunMan/AR-GunMan.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 37MFDT4LMQ;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = RYD4R2QLW8;
 				INFOPLIST_FILE = "AR-GunMan/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.takamasafuksae.AR-GunMan";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.takamasafuksae.AR-GunMan2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "AR-GunMan_Development";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1012,18 +1048,18 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "AR-GunMan/AR-GunMan.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 37MFDT4LMQ;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = RYD4R2QLW8;
 				INFOPLIST_FILE = "AR-GunMan/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.takamasafuksae.AR-GunMan";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.takamasafuksae.AR-GunMan2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "AR-GunMan_Development";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

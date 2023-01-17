@@ -74,12 +74,14 @@ class TutorialViewController: UIViewController {
         let _ = viewModel.dismiss
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else {return}
-                if self.transitionType == .gamePage {
-                    UserDefaultsUtil.setTutorialSeen()
-                }
-                self.delegate?.tutorialEnded()
                 self.dismiss(animated: true, completion: nil)
             }).disposed(by: disposeBag)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        UserDefaults.isTutorialAlreadySeen = transitionType == .gamePage
+        self.delegate?.tutorialEnded()
     }
     
     private func setupBlurEffect() {
