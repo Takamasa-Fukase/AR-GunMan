@@ -9,21 +9,19 @@ import RxSwift
 import RxCocoa
 
 class BulletsHolder {
-    private var type: WeaponType
-    private let bulletsCount: BehaviorRelay<Int>
-    private var isBazookaReloading = false
-    
     var bulletsCountChanged: Observable<Int> {
         return bulletsCount.asObservable()
     }
-    
     var canFire: Bool {
         return bulletsCount.value > 0
     }
-    
     var canReload: Bool {
         return bulletsCount.value <= 0 && !isBazookaReloading
     }
+
+    private var type: WeaponType
+    private let bulletsCount: BehaviorRelay<Int>
+    private var isBazookaReloading = false
     
     init(type: WeaponType) {
         self.type = type

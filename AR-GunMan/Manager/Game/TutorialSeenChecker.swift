@@ -9,12 +9,12 @@ import RxSwift
 import RxCocoa
 
 class TutorialSeenChecker {
-    private let isSeenRelay = PublishRelay<Bool>()
-
     var isSeen: Observable<Bool> {
         return isSeenRelay.asObservable()
     }
-    
+
+    private let isSeenRelay = PublishRelay<Bool>()
+
     func checkTutorialSeen() {
         isSeenRelay.accept(UserDefaults.isTutorialAlreadySeen)
     }

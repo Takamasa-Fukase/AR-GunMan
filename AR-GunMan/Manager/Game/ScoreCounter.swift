@@ -8,12 +8,12 @@
 import RxCocoa
 
 class ScoreCounter {
-    private let totalScoreRelay = BehaviorRelay<Double>(value: 0)
-    
     var totalScore: Double {
         return totalScoreRelay.value
     }
     
+    private let totalScoreRelay = BehaviorRelay<Double>(value: 0)
+
     func addScore(weaponType: WeaponType) {
         let totalScore = ScoreCalculator.getTotalScore(currentScore: totalScore,
                                                        weaponType: weaponType)

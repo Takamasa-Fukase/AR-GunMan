@@ -9,25 +9,22 @@ import RxSwift
 import RxCocoa
 
 class CurrentWeapon {
-    private let typeRelay: BehaviorRelay<WeaponType>
-    private var bulletsHolder: BulletsHolder
-    private let firedRelay = PublishRelay<Void>()
-    
     var weaponTypeChanged: Observable<WeaponType> {
         return typeRelay.asObservable()
     }
-
     var bulletsCountChanged: Observable<Int> {
         return bulletsHolder.bulletsCountChanged.asObservable()
     }
-        
     var fired: Observable<Void> {
         return firedRelay.asObservable()
     }
-    
     var weaponType: WeaponType {
         return typeRelay.value
     }
+    
+    private let typeRelay: BehaviorRelay<WeaponType>
+    private var bulletsHolder: BulletsHolder
+    private let firedRelay = PublishRelay<Void>()
     
     init(type: WeaponType) {
         self.typeRelay = BehaviorRelay<WeaponType>(value: type)
