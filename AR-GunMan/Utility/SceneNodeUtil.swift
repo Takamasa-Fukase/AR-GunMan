@@ -46,7 +46,7 @@ class SceneNodeUtil {
         return SCNVector3(x: randomX, y: randomY, z: randomZ ?? 0)
     }
     
-    static func removeOtherWeapon(except type: WeaponTypes, scnView: SCNView) {
+    static func removeOtherWeapon(except type: WeaponType, scnView: SCNView) {
         var nodeNames: [String] {
             switch type {
             case .pistol:

@@ -21,7 +21,7 @@ class GameSceneManager: NSObject {
     private var originalBazookaHitExplosionParticle = SCNParticleSystem()
     private var pistolParentNode = SCNNode()
     private var bazookaParentNode = SCNNode()
-    private var currentWeapon: WeaponTypes = .pistol
+    private var currentWeapon: WeaponType = .pistol
 
     // - nodeAnimation
     private var lastCameraPos = SCNVector3()
@@ -50,7 +50,7 @@ class GameSceneManager: NSObject {
     }
     
     //指定された武器を表示
-    func showWeapon(_ type: WeaponTypes) {
+    func showWeapon(_ type: WeaponType) {
         currentWeapon = type
         switchWeapon()
     }
@@ -97,15 +97,15 @@ class GameSceneManager: NSObject {
     }
     
     //MARK: - Private Methods
-    private func setupWeaponNode(type: WeaponTypes) -> SCNNode {
-        let weaponParentNode = SceneNodeUtil.loadScnFile(of: GameConst.getWeaponScnAssetsPath(type), nodeName: "\(type.rawValue)Parent")
+    private func setupWeaponNode(type: WeaponType) -> SCNNode {
+        let weaponParentNode = SceneNodeUtil.loadScnFile(of: GameConst.getWeaponScnAssetsPath(type), nodeName: "\(type.name)Parent")
         SceneNodeUtil.addBillboardConstraint(weaponParentNode)
         weaponParentNode.position = SceneNodeUtil.getCameraPosition(sceneView)
         return weaponParentNode
     }
     
     private func pistolNode() -> SCNNode {
-        return pistolParentNode.childNode(withName: WeaponTypes.pistol.rawValue, recursively: false) ?? SCNNode()
+        return pistolParentNode.childNode(withName: WeaponType.pistol.name, recursively: false) ?? SCNNode()
     }
     
     private func switchWeapon() {

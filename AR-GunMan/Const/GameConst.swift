@@ -80,13 +80,13 @@ class GameConst {
         }
     }
     
-    static func getWeaponScnAssetsPath(_ weapon: WeaponTypes) -> String {
+    static func getWeaponScnAssetsPath(_ weapon: WeaponType) -> String {
         let weaponPath = "art.scnassets/Weapon/"
         switch weapon {
         case .pistol:
-            return weaponPath + "Pistol/" + weapon.rawValue + ".scn"
+            return weaponPath + "Pistol/" + weapon.name + ".scn"
         case .bazooka:
-            return weaponPath + "Bazooka/" + weapon.rawValue + ".scn"
+            return weaponPath + "Bazooka/" + weapon.name + ".scn"
         }
     }
     
