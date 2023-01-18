@@ -63,7 +63,7 @@ class GameResultViewController: UIViewController {
         let _ = viewModel.backToTopPageWithReplay
             .subscribe(onNext: { [weak self] element in
                 guard let self = self else {return}
-                self.dismissToTopVC(retry: element)
+                self.dismissToTopVC(isReplay: element)
             }).disposed(by: disposeBag)
     }
     
@@ -107,9 +107,9 @@ class GameResultViewController: UIViewController {
         }
     }
     
-    private func dismissToTopVC(retry: Bool = false) {
+    private func dismissToTopVC(isReplay: Bool = false) {
         let topVC = self.presentingViewController?.presentingViewController as! ViewController
-        topVC.replayFlag = retry
+        UserDefaults.isReplay = isReplay
         topVC.dismiss(animated: false, completion: nil)
     }
 }

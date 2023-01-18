@@ -15,7 +15,6 @@ class ViewController: UIViewController {
     //MARK: - Properties
     let viewModel = TopViewModel()
     let disposeBag = DisposeBag()
-    var replayFlag = false
     
     @IBOutlet weak var startButton: UIButton!
     @IBOutlet weak var rankingButton: UIButton!
