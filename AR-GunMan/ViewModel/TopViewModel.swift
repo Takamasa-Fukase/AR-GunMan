@@ -9,13 +9,6 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-enum TopPageButtonTypes {
-    case start
-    case ranking
-    case howToPlay
-    case settings
-}
-
 class TopViewModel {
     
     //input

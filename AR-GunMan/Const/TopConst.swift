@@ -9,13 +9,8 @@ import Foundation
 import UIKit
 
 class TopConst {
-    static var targetIcon: UIImage? {
-        if #available(iOS 13.0, *) {
-            return UIImage(systemName: "target")
-        } else {
-            return UIImage(named: "targetIcon")
-        }
-    }
-    
-    static let bulletsHoleIcon = UIImage(named: "bulletsHole")
+    static let targetIcon = UIImage(systemName: "target")
+    static let targetIconShot = UIImage(named: "bulletsHole")
+    static let toolBoxIconClosed = UIImage(named: "tool-box-outlined")
+    static let toolBoxIconOpened = UIImage(named: "tool-box-outlined")
 }
