@@ -11,9 +11,7 @@ import RxSwift
 import RxCocoa
 
 class ViewController: UIViewController {
-    
-    //MARK: - Properties
-    let viewModel = TopViewModel()
+    var viewModel: TopViewModel!
     let disposeBag = DisposeBag()
     
     @IBOutlet weak var startButton: UIButton!
@@ -24,84 +22,62 @@ class ViewController: UIViewController {
     @IBOutlet weak var rankingButtonIcon: UIImageView!
     @IBOutlet weak var howToPlayButtonIcon: UIImageView!
     
-    //MARK: - Methods
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-               
-        if replayFlag {
-            presentGameVC(animated: false)
-        }
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        //MARK: - input
+        viewModel = TopViewModel(
+            input: .init(viewDidAppear: rx.viewDidAppear,
+                         startButtonTapped: startButton.rx.tap.asObservable(),
+                         rankingButtonTapped: rankingButton.rx.tap.asObservable(),
+                         howToPlayButtonTapped: howToPlayButton.rx.tap.asObservable(),
+                         settingsButtonTapped: settingsButton.rx.tap.asObservable()),
+            dependency: TopPageButtonImageSwitcher())
         
-        startButtonIcon.image = TopConst.targetIcon
-        rankingButtonIcon.image = TopConst.targetIcon
-        howToPlayButtonIcon.image = TopConst.targetIcon
+        //MARK: - output
+        viewModel.startButtonImage
+            .bind(to: startButtonIcon.rx.image)
+            .disposed(by: disposeBag)
         
-        //input
-        let _ = startButton.rx.tap
+        viewModel.rankingButtonImage
+            .bind(to: rankingButtonIcon.rx.image)
+            .disposed(by: disposeBag)
+        
+        viewModel.howToPlayButtonImage
+            .bind(to: howToPlayButtonIcon.rx.image)
+            .disposed(by: disposeBag)
+        
+        viewModel.settingsButtonImage
+            .bind(to: settingsButton.rx.image())
+            .disposed(by: disposeBag)
+        
+        Observable
+            .combineLatest(viewModel.showGame, viewModel.isReplay)
+            .subscribe(onNext: { [weak self] (_, isReplay) in
+                guard let self = self else {return}
+                CameraAuthUtil.checkCameraAuthorization(vc: self)
+                self.presentGameVC(animated: !isReplay)
+            }).disposed(by: disposeBag)
+        
+        viewModel.showRanking
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else {return}
-                self.viewModel.buttonTapped.onNext(.start)
+                self.presentRankingVC()
             }).disposed(by: disposeBag)
         
-        let _ = rankingButton.rx.tap
+        viewModel.showTutorial
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else {return}
-                self.viewModel.buttonTapped.onNext(.ranking)
+                self.presentHowToPlayVC()
             }).disposed(by: disposeBag)
         
-        let _ = howToPlayButton.rx.tap
+        viewModel.showSettings
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else {return}
-                self.viewModel.buttonTapped.onNext(.howToPlay)
-            }).disposed(by: disposeBag)
-        
-        let _ = settingsButton.rx.tap
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else {return}
-                self.viewModel.buttonTapped.onNext(.settings)
-            }).disposed(by: disposeBag)
-        
-        //output
-        let _ = viewModel.isShotButtonIcon
-            .subscribe(onNext: { [weak self] (type, bool) in
-                guard let self = self else {return}
-                let image = bool ? TopConst.bulletsHoleIcon : TopConst.targetIcon
-                switch type {
-                case .start:
-                    self.startButtonIcon.image = image
-                case .ranking:
-                    self.rankingButtonIcon.image = image
-                case .howToPlay:
-                    self.howToPlayButtonIcon.image = image
-                default:
-                    break
-                }
-            }).disposed(by: disposeBag)
-        
-        let _ = viewModel.transit
-            .subscribe(onNext: { [weak self] type in
-                guard let self = self else {return}
-                switch type {
-                case .start:
-                    CameraAuthUtil.checkCameraAuthorization(vc: self)
-                    self.presentGameVC()
-                    
-                case .ranking:
-                    self.presentRankingVC()
-                    
-                case .howToPlay:
-                    self.presentHowToPlayVC()
-                    
-                case .settings:
-                    self.presentSettingsVC()
-                }
+                self.presentSettingsVC()
             }).disposed(by: disposeBag)
     }
-    
+
     func presentGameVC(animated: Bool = true) {
         startButtonIcon.image = TopConst.targetIcon
         

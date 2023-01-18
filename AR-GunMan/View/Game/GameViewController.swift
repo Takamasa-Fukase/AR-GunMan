@@ -13,8 +13,6 @@ import RxSwift
 import RxCocoa
 
 class GameViewController: UIViewController {
-    
-    //MARK: - Properties
     var viewModel: GameViewModel2!
     let sceneManager = GameSceneManager()
     let disposeBag = DisposeBag()
@@ -24,7 +22,6 @@ class GameViewController: UIViewController {
     @IBOutlet weak var timeCountLabel: UILabel!
     @IBOutlet weak var switchWeaponButton: UIButton!
     
-    //MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
