@@ -59,14 +59,14 @@ class WeaponChangeViewController: UIViewController {
 extension WeaponChangeViewController: FSPagerViewDelegate, FSPagerViewDataSource {
     
     func numberOfItems(in pagerView: FSPagerView) -> Int {
-        return WeaponTypes.allCases.count
+        return WeaponType.allCases.count
     }
     
     func pagerView(_ pagerView: FSPagerView, cellForItemAt index: Int) -> FSPagerViewCell {
         guard let cell = pagerView.dequeueReusableCell(withReuseIdentifier: "WeaponChangeCell", at: index) as? WeaponChangeCell else {
             return FSPagerViewCell()
         }
-        cell.weaponImageView.image = UIImage(named: WeaponTypes.allCases[index].rawValue)
+        cell.weaponImageView.image = UIImage(named: WeaponType.allCases[index].name)
         cell.commingSoonLabel.isHidden = true
         return cell
     }
