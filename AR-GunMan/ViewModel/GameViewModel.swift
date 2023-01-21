@@ -2,230 +2,115 @@
 //  GameViewModel.swift
 //  AR-GunMan
 //
-//  Created by 深瀬 貴将 on 2020/11/22.
+//  Created by ウルトラ深瀬 on 11/1/23.
 //
 
-import Foundation
 import RxSwift
 import RxCocoa
 
 class GameViewModel {
-    
-    //MARK: - input
-    let tutorialEnded: AnyObserver<Void>
-    let userShookDevide: AnyObserver<Void>
-    let userRotateDevice: AnyObserver<Void>
-    let userRotateDevice20Times: AnyObserver<Void>
-    let switchWeaponButtonTapped: AnyObserver<Void>
-    let weaponItemTapped: AnyObserver<Int>
-    let targetHit: AnyObserver<Void>
-    
-    //MARK: - output
+    let showTutorialView: Observable<TutorialVCDelegate>
     let sightImage: Observable<UIImage?>
     let sightImageColor: Observable<UIColor>
+    let timeCountText: Observable<String>
     let bulletsCountImage: Observable<UIImage?>
-    let timeCountString: Observable<String>
-    let checkPlayerAnimation: Observable<Double>
-    let showWeapon: Observable<WeaponTypes>
-    let fireWeapon: Observable<Void>
-    let excuteSecretEvent: Observable<Void>
-    let showSwitchWeaponVC: Observable<Void>
-    let dismissSwitchWeaponVC: Observable<Void>
-    let transitResultVC: Observable<Double>
+    let weaponTypeChanged: Observable<WeaponType>
+    let weaponFired: Observable<Void>
+    let showSwitchWeaponView: Observable<Void>
+    let showResultView: Observable<Double>
     
-    //other
     private let disposeBag = DisposeBag()
     
-    init() {
-        let stateManager = GameStateManager()
-        
-        //MARK: - output
-        let _sightImage = BehaviorRelay<UIImage?>(value: GameConst.pistolSightImage)
-        self.sightImage = _sightImage.asObservable()
-        
-        let _sightImageColor = BehaviorRelay<UIColor>(value: GameConst.pistolSightImageColor)
-        self.sightImageColor = _sightImageColor.asObservable()
-        
-        let _bulletsCountImage = BehaviorRelay<UIImage?>(value: GameConst.pistolBulletsCountImage(GameConst.pistolBulletsCapacity))
-        self.bulletsCountImage = _bulletsCountImage.asObservable()
-        
-        let _timeCountString = BehaviorRelay<String>(value: TimeCountUtil.twoDigitTimeCount(GameConst.timeCount))
-        self.timeCountString = _timeCountString.asObservable()
-        
-        let _checkPlayerAnimation = BehaviorRelay<Double>(value: GameConst.timeCount)
-        self.checkPlayerAnimation = _checkPlayerAnimation.asObservable()
-        
-        let _showWeapon = BehaviorRelay<WeaponTypes>(value: .pistol)
-        self.showWeapon = _showWeapon.asObservable()
-        
-        let _fireWeapon = PublishRelay<Void>()
-        self.fireWeapon = _fireWeapon.asObservable()
-        
-        let _excuteSecretEvent = PublishRelay<Void>()
-        self.excuteSecretEvent = _excuteSecretEvent.asObservable()
-
-        let _showSwitchWeaponVC = PublishRelay<Void>()
-        self.showSwitchWeaponVC = _showSwitchWeaponVC.asObservable()
-        
-        let _dismissSwitchWeaponVC = PublishRelay<Void>()
-        self.dismissSwitchWeaponVC = _dismissSwitchWeaponVC.asObservable()
-                
-        let _transitResultVC = PublishRelay<Double>()
-        self.transitResultVC = _transitResultVC.asObservable()
-        
-        //MARK: - stateManagerの変更を購読してVCに指示を流す
-        let _ = stateManager.gameStatusChanged
-            .withLatestFrom(
-                Observable
-                    .combineLatest(stateManager.totalScore, stateManager.timeCount)
-            ) { status, combinedElement in
-                return (status, combinedElement)
-            }
-            .subscribe(onNext: { status, combinedElement in
-                let score = combinedElement.0
-                let timeCount = combinedElement.1
-                switch status {
-                case .pause:
-                    _sightImage.accept(nil)
-                    _bulletsCountImage.accept(nil)
-
-                case .playing:
-                    // 初回スタート時だけホイッスルを鳴らす
-                    if timeCount == GameConst.timeCount {
-                        AudioUtil.playSound(of: .pistolSet)
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                            AudioUtil.playSound(of: .startWhistle)
-                        }
-                    }
-
-                case .finish:
-                    AudioUtil.playSound(of: .endWhistle)
-                    CoreMotionUtil.stopUpdate()
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
-                        
-                        AudioUtil.playSound(of: .rankingAppear)
-                        _dismissSwitchWeaponVC.accept(Void())
-                        _transitResultVC.accept(score)
-                    })
-                }
-            }).disposed(by: disposeBag)
-        
-        let _ = stateManager.timeCount
-            .subscribe(onNext: { element in
-                //表示用に整えたStringを流す
-                _timeCountString.accept(
-                    TimeCountUtil.twoDigitTimeCount(element)
-                )
-                //0.2秒ごとにプレーヤーアニメーションを更新させる
-                if (-(element - _checkPlayerAnimation.value) >= GameConst.playerAnimationUpdateInterval) {
-                    _checkPlayerAnimation.accept(element)
-                }
-            }).disposed(by: disposeBag)
-        
-        let _ = stateManager.weaponSwitchingResult
-            .withLatestFrom(stateManager.gameStatusChanged) { switchingResult, gameStatus in
-                return (switchingResult, gameStatus)
-            }
-            .subscribe(onNext: { switchingResult, gameStatus in
-                _showWeapon.accept(switchingResult.weapon)
-                switch switchingResult.weapon {
-                case .pistol:
-                    _sightImage.accept(GameConst.pistolSightImage)
-                    _sightImageColor.accept(GameConst.pistolSightImageColor)
-                    _bulletsCountImage.accept(GameConst.pistolBulletsCountImage(switchingResult.bulletsCount))
-                    //同じ武器が選択された時は鳴らさない
-                    //プレイ中以外は鳴らさない（初回ロード時に鳴らすタイミングを制御するため）
-                    if switchingResult.switched && gameStatus == .playing {
-                        AudioUtil.playSound(of: .pistolSet)
-                    }
-                    
-                case .bazooka:
-                    _sightImage.accept(GameConst.bazookaSightImage)
-                    _sightImageColor.accept(GameConst.bazookaSightImageColor)
-                    _bulletsCountImage.accept(GameConst.bazookaBulletsCountImage(switchingResult.bulletsCount))
-                    //同じ武器が選択された時は鳴らさない
-                    if switchingResult.switched {
-                        AudioUtil.playSound(of: .bazookaSet)
-                    }
-                }
-            }).disposed(by: disposeBag)
-        
-        let _ = stateManager.weaponFiringResult
-            .subscribe(onNext: { element in
-                switch element.weapon {
-                case .pistol:
-                    switch element.result {
-                    case .fired:
-                        _fireWeapon.accept(Void())
-                        AudioUtil.playSound(of: .pistolShoot)
-                        _bulletsCountImage.accept(GameConst.pistolBulletsCountImage(element.remainingBulletsCount))
-                        
-                    case .canceled:
-                        break
-                        
-                    case .noBullets:
-                        AudioUtil.playSound(of: .pistolOutBullets)
-                    }
-                    
-                case .bazooka:
-                    if element.result == .fired {
-                        _fireWeapon.accept(Void())
-                        AudioUtil.playSound(of: .bazookaShoot)
-                        AudioUtil.playSound(of: .bazookaReload)
-                        _bulletsCountImage.accept(GameConst.bazookaBulletsCountImage(element.remainingBulletsCount))
-                    }
-                }
-            }).disposed(by: disposeBag)
-        
-        let _ = stateManager.weaponReloadingResult
-            .subscribe(onNext: { element in
-                if element.result != .completed {
-                    return
-                }
-                switch element.weapon {
-                case .pistol:
-                    AudioUtil.playSound(of: .pistolReload)
-                    _bulletsCountImage.accept(GameConst.pistolBulletsCountImage(GameConst.pistolBulletsCapacity))
-                    
-                case .bazooka:
-                    _bulletsCountImage.accept(GameConst.bazookaBulletsCountImage(GameConst.bazookaBulletsCapacity))
-                }
-            }).disposed(by: disposeBag)
-
-        
-        //MARK: - input
-        self.tutorialEnded = AnyObserver<Void>() { _ in
-            stateManager.changeGameStatus.onNext(.playing)
-        }
-        
-        self.userShookDevide = AnyObserver<Void>() { _ in
-            stateManager.requestFiringWeapon.onNext(Void())
-        }
-        
-        self.userRotateDevice = AnyObserver<Void>() { _ in
-            stateManager.requestReloadingWeapon.onNext(Void())
-        }
-        
-        self.userRotateDevice20Times = AnyObserver<Void>() { _ in
-            _excuteSecretEvent.accept(Void())
-            AudioUtil.playSound(of: .kyuiin)
-        }
-        
-        self.switchWeaponButtonTapped = AnyObserver<Void>() { _ in
-            stateManager.changeGameStatus.onNext(.pause)
-            _showSwitchWeaponVC.accept(Void())
-        }
-        
-        self.weaponItemTapped = AnyObserver<Int>() { event in
-            guard let index = event.element else {return}
-            stateManager.requestSwitchingWeapon.onNext(WeaponTypes.allCases[index])
-        }
-        
-        self.targetHit = AnyObserver<Void>() { _ in
-            stateManager.addScore.onNext(Void())
-        }
+    struct Input {
+        let viewDidAppear: Observable<Void>
+        let targetHit: Observable<Void>
+        let switchWeaponButtonTapped: Observable<Void>
     }
     
+    struct Dependency {
+        let tutorialSeenChecker: TutorialSeenChecker
+        let motionDetector: MotionDetector
+        let currentWeapon: CurrentWeapon
+        let timeCounter: TimeCounter
+        let scoreCounter: ScoreCounter
+    }
     
+    init(input: Input,
+         dependency: Dependency) {
+
+        input.viewDidAppear
+            .take(1)
+            .subscribe(onNext: { _ in
+                dependency.tutorialSeenChecker.checkTutorialSeen()
+            }).disposed(by: disposeBag)
+        
+        let showTutorialViewRelay = PublishRelay<TutorialVCDelegate>()
+        self.showTutorialView = showTutorialViewRelay.asObservable()
+            
+        dependency.tutorialSeenChecker.isSeen
+            .subscribe(onNext: { element in
+                if element {
+                    AudioUtil.playSound(of: .pistolSet)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                        AudioUtil.playSound(of: .startWhistle)
+                        dependency.timeCounter.startTimer()
+                    }
+                }else {
+                    showTutorialViewRelay.accept(dependency.tutorialSeenChecker)
+                }
+            }).disposed(by: disposeBag)
+        
+        self.sightImage = dependency.currentWeapon.weaponTypeChanged
+            .map({$0.sightImage})
+        
+        self.sightImageColor = dependency.currentWeapon.weaponTypeChanged
+            .map({$0.sightImageColor})
+        
+        self.timeCountText = dependency.timeCounter.countChanged
+            .map({TimeCountUtil.twoDigitTimeCount($0)})
+        
+        self.bulletsCountImage = dependency.currentWeapon.bulletsCountChanged
+            .map({dependency.currentWeapon.weaponType.bulletsCountImage(at: $0)})
+        
+        self.weaponTypeChanged = dependency.currentWeapon.weaponTypeChanged
+        
+        self.weaponFired = dependency.currentWeapon.fired
+        
+        self.showSwitchWeaponView = input.switchWeaponButtonTapped
+        
+        let showResultViewRelay = PublishRelay<Double>()
+        self.showResultView = showResultViewRelay.asObservable()
+        
+        dependency.timeCounter.countChanged
+            .filter({$0 <= 0})
+            .subscribe(onNext: { _ in
+                AudioUtil.playSound(of: .endWhistle)
+                dependency.timeCounter.disposeTimer()
+                dependency.motionDetector.stopUpdate()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
+                    showResultViewRelay.accept(dependency.scoreCounter.totalScore)
+                })
+            }).disposed(by: disposeBag)
+        
+        dependency.motionDetector.firingMotionDetected
+            .subscribe(onNext: { _ in
+                dependency.currentWeapon.fire()
+            }).disposed(by: disposeBag)
+        
+        dependency.motionDetector.reloadingMotionDetected
+            .subscribe(onNext: { _ in
+                dependency.currentWeapon.reload()
+            }).disposed(by: disposeBag)
+        
+        dependency.motionDetector.secretEventMotionDetected
+            .subscribe(onNext: { _ in
+                
+            }).disposed(by: disposeBag)
+                
+        input.targetHit
+            .subscribe(onNext: { _ in
+                AudioUtil.playSound(of: dependency.currentWeapon.weaponType.hitSound)
+                dependency.scoreCounter.addScore(weaponType: dependency.currentWeapon.weaponType)
+            }).disposed(by: disposeBag)
+    }
 }

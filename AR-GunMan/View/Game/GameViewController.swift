@@ -13,7 +13,7 @@ import RxSwift
 import RxCocoa
 
 class GameViewController: UIViewController {
-    var viewModel: GameViewModel2!
+    var viewModel: GameViewModel!
     let sceneManager = GameSceneManager()
     let disposeBag = DisposeBag()
     
@@ -26,19 +26,19 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         
         //MARK: - input
-        let vmInput = GameViewModel2
+        let vmInput = GameViewModel
             .Input(viewDidAppear: rx.viewDidAppear,
                    targetHit: sceneManager.targetHit,
                    switchWeaponButtonTapped: switchWeaponButton.rx.tap.asObservable())
         
-        let vmDependency = GameViewModel2
+        let vmDependency = GameViewModel
             .Dependency(tutorialSeenChecker: TutorialSeenChecker(),
                         motionDetector: MotionDetector(),
                         currentWeapon: CurrentWeapon(type: .pistol),
                         timeCounter: TimeCounter(),
                         scoreCounter: ScoreCounter())
         
-        viewModel = GameViewModel2(input: vmInput, dependency: vmDependency)
+        viewModel = GameViewModel(input: vmInput, dependency: vmDependency)
         
         //MARK: - output
         viewModel.sightImage
