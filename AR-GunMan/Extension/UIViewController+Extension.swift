@@ -8,6 +8,15 @@
 import UIKit
 import PanModal
 
+extension UIViewController {
+    func insertBlurEffectView() {
+        let blurEffect = UIBlurEffect(style: .dark)
+        let visualEffectView = UIVisualEffectView(effect: blurEffect)
+        visualEffectView.frame = view.frame
+        view.insertSubview(visualEffectView, at: 0)
+    }
+}
+
 extension UIViewController : PanModalPresentable {
     public var panScrollable: UIScrollView? {
         nil

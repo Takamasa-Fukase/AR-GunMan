@@ -81,6 +81,7 @@
 		866675D4275215AF007CB4D6 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866675D3275215AF007CB4D6 /* UIViewController+Extension.swift */; };
 		BC2B116129772D72009F4DC4 /* TopPageButtonIconChanger.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2B116029772D72009F4DC4 /* TopPageButtonIconChanger.swift */; };
 		BC2B11632977373F009F4DC4 /* TopPageButtonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2B11622977373F009F4DC4 /* TopPageButtonType.swift */; };
+		BC2B11672977F90C009F4DC4 /* UIScrollView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2B11662977F90C009F4DC4 /* UIScrollView+Extension.swift */; };
 		BC3866A9296DF8C2005573CC /* CurrentWeapon.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3866A8296DF8C2005573CC /* CurrentWeapon.swift */; };
 		BC3866AB296DF8D4005573CC /* TimeCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3866AA296DF8D4005573CC /* TimeCounter.swift */; };
 		BC3866AD296DF8E4005573CC /* ScoreCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3866AC296DF8E4005573CC /* ScoreCounter.swift */; };
@@ -92,6 +93,7 @@
 		BC92C85C2973614000E49BD5 /* MotionDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C85B2973614000E49BD5 /* MotionDetector.swift */; };
 		BC92C85E297420CD00E49BD5 /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C85D297420CD00E49BD5 /* UserDefaults+Extension.swift */; };
 		BC92C8602975A2A800E49BD5 /* UIViewController+RxLifeCycleEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C85F2975A2A800E49BD5 /* UIViewController+RxLifeCycleEvents.swift */; };
+		BCD9675E2979E55400E33587 /* ImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD9675D2979E55400E33587 /* ImageView+Extension.swift */; };
 		D54734259EA1C7BF11A28908 /* Pods_AR_GunMan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4280580740F2443B66781090 /* Pods_AR_GunMan.framework */; };
 /* End PBXBuildFile section */
 
@@ -201,6 +203,7 @@
 		90D4D1AD42BB6A3A0192887F /* Pods-AR-GunManTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-GunManTests.release.xcconfig"; path = "Target Support Files/Pods-AR-GunManTests/Pods-AR-GunManTests.release.xcconfig"; sourceTree = "<group>"; };
 		BC2B116029772D72009F4DC4 /* TopPageButtonIconChanger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopPageButtonIconChanger.swift; sourceTree = "<group>"; };
 		BC2B11622977373F009F4DC4 /* TopPageButtonType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopPageButtonType.swift; sourceTree = "<group>"; };
+		BC2B11662977F90C009F4DC4 /* UIScrollView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Extension.swift"; sourceTree = "<group>"; };
 		BC3866A8296DF8C2005573CC /* CurrentWeapon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeapon.swift; sourceTree = "<group>"; };
 		BC3866AA296DF8D4005573CC /* TimeCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCounter.swift; sourceTree = "<group>"; };
 		BC3866AC296DF8E4005573CC /* ScoreCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCounter.swift; sourceTree = "<group>"; };
@@ -212,6 +215,7 @@
 		BC92C85B2973614000E49BD5 /* MotionDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionDetector.swift; sourceTree = "<group>"; };
 		BC92C85D297420CD00E49BD5 /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
 		BC92C85F2975A2A800E49BD5 /* UIViewController+RxLifeCycleEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+RxLifeCycleEvents.swift"; sourceTree = "<group>"; };
+		BCD9675D2979E55400E33587 /* ImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageView+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -263,6 +267,8 @@
 				866675D3275215AF007CB4D6 /* UIViewController+Extension.swift */,
 				BC92C85D297420CD00E49BD5 /* UserDefaults+Extension.swift */,
 				BC92C85F2975A2A800E49BD5 /* UIViewController+RxLifeCycleEvents.swift */,
+				BC2B11662977F90C009F4DC4 /* UIScrollView+Extension.swift */,
+				BCD9675D2979E55400E33587 /* ImageView+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -830,7 +836,9 @@
 				BC2B11632977373F009F4DC4 /* TopPageButtonType.swift in Sources */,
 				5921A208255D6A4E001D8C39 /* WorldRankingCell.swift in Sources */,
 				677DF1F127A7C096007512F6 /* RankingRepository.swift in Sources */,
+				BCD9675E2979E55400E33587 /* ImageView+Extension.swift in Sources */,
 				BC92C854297061FE00E49BD5 /* WeaponType.swift in Sources */,
+				BC2B11672977F90C009F4DC4 /* UIScrollView+Extension.swift in Sources */,
 				67DB2C5727BFD01900B8CB3C /* SceneNodeUtil.swift in Sources */,
 				59945100256AD55900560202 /* TutorialViewController.swift in Sources */,
 				86627DE6273FD5E30044A980 /* WorldRankingViewController.swift in Sources */,

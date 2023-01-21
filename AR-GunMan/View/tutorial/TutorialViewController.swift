@@ -36,16 +36,7 @@ class TutorialViewController: UIViewController {
     //MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        scrollView.delegate = self
-        pageControl.isUserInteractionEnabled = false
         
-        animateFirstImageView()
-        animateSecondImageView()
-        
-        if transitionType == .gamePage {
-            setupBlurEffect()
-        }
         
         //input
         let _ = bottomButton.rx.tap
@@ -82,44 +73,19 @@ class TutorialViewController: UIViewController {
         super.viewDidDisappear(animated)
         UserDefaults.isTutorialAlreadySeen = transitionType == .gamePage
         self.delegate?.tutorialEnded()
+        
+        setupUI()
     }
     
-    private func setupBlurEffect() {
-        //背景をぼかし処理
-        let blurEffect = UIBlurEffect(style: .dark)
-        let visualEffectView = UIVisualEffectView(effect: blurEffect)
-        visualEffectView.frame = self.view.frame
-        self.view.insertSubview(visualEffectView, at: 0)
+    private func setupUI() {
+        if viewModel.transitionType == .gamePage {
+            insertBlurEffectView()
+        }
+        firstImageView.setupAnimationImages(
+            imageNames: [Int](0...1).map({"howToShoot\($0)"}),
+            duration: 0.8)
+        secondImageView.setupAnimationImages(
+            imageNames: [Int](0...1).map({"howToReload\($0)"}),
+            duration: 0.8)
     }
-    
-    private func getCurrentScrollViewIndex() -> Int {
-        let contentsOffSetX: CGFloat = scrollView.contentOffset.x
-        let pageIndex = Int(round(contentsOffSetX / scrollView.frame.width))
-        return pageIndex
-    }
-    
-    private func animateFirstImageView() {
-        let images = [UIImage(named: "howToShoot0")!, UIImage(named: "howToShoot1")!]
-        firstImageView.animationImages = images
-        firstImageView.animationDuration = 0.8
-        firstImageView.animationRepeatCount = 0
-        firstImageView.startAnimating()
-    }
-    
-    private func animateSecondImageView() {
-        let images = [UIImage(named: "howToReload0")!, UIImage(named: "howToReload1")!]
-        secondImageView.animationImages = images
-        secondImageView.animationDuration = 0.8
-        secondImageView.animationRepeatCount = 0
-        secondImageView.startAnimating()
-    }
-    
-}
-
-extension TutorialViewController: UIScrollViewDelegate {
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        viewModel.currentScrollViewIndex.onNext(getCurrentScrollViewIndex())
-    }
-    
 }
