@@ -9,22 +9,11 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-protocol TutorialVCDelegate: AnyObject {
-    func tutorialEnded()
-}
-
 class TutorialViewController: UIViewController {
     
-    enum TransitType {
-        case topPage
-        case gamePage
-    }
-    
-    //MARK: - Properties
-    let viewModel = TutorialViewModel()
+    var viewModel: TutorialViewModel!
     let disposeBag = DisposeBag()
-    var transitionType: TransitType = .topPage
-    weak var delegate: TutorialVCDelegate?
+    var vmDependency: TutorialViewModel.Dependency!
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var firstImageView: UIImageView!
@@ -33,46 +22,39 @@ class TutorialViewController: UIViewController {
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var bottomButton: UIButton!
     
-    //MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // MARK: - input
+        let horizontalPageIndexObservable = scrollView.rx.didScroll
+            .map({_ in self.scrollView.horizontalPageIndex})
+            .asObservable()
+        viewModel = TutorialViewModel(
+            input: .init(viewDidDisappear: rx.viewDidDisappear,
+                         horizontalPageIndex: horizontalPageIndexObservable,
+                         bottomButtonTapped: bottomButton.rx.tap.asObservable()),
+            dependency: vmDependency)
         
-        //input
-        let _ = bottomButton.rx.tap
-            .bind(to: viewModel.bottomButtonTapped)
-            .disposed(by: disposeBag)
-        
-        //output
-        let _ = viewModel.pageControlValue
-            .bind(to: pageControl.rx.currentPage)
-            .disposed(by: disposeBag)
-        
-        let _ = viewModel.buttonText
+        // MARK: - output
+        viewModel.buttonText
             .bind(to: bottomButton.rx.title(for: .normal))
             .disposed(by: disposeBag)
         
-        let _ = viewModel.scrollPage
+        viewModel.pageControllIndex
+            .bind(to: pageControl.rx.currentPage)
+            .disposed(by: disposeBag)
+        
+        viewModel.scrollToNextPage
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else {return}
-                guard !self.scrollView.isDecelerating else {return}
-                let frameWidth = self.scrollView.frame.width
-                let targetContentOffsetX = frameWidth * CGFloat(min(self.getCurrentScrollViewIndex() + 1, 2))
-                let targetCGPoint = CGPoint(x: targetContentOffsetX, y: 0)
-                self.scrollView.setContentOffset(targetCGPoint, animated: true)
+                self.scrollView.scrollHorizontallyToNextPage()
             }).disposed(by: disposeBag)
         
-        let _ = viewModel.dismiss
+        viewModel.dismiss
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else {return}
                 self.dismiss(animated: true, completion: nil)
             }).disposed(by: disposeBag)
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        UserDefaults.isTutorialAlreadySeen = transitionType == .gamePage
-        self.delegate?.tutorialEnded()
         
         setupUI()
     }

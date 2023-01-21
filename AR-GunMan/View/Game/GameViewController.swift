@@ -76,8 +76,8 @@ class GameViewController: UIViewController {
                 guard let self = self else {return}
                 let storyboard: UIStoryboard = UIStoryboard(name: "TutorialViewController", bundle: nil)
                 let vc = storyboard.instantiateViewController(withIdentifier: "TutorialViewController") as! TutorialViewController
-                vc.delegate = element
-                vc.transitionType = .gamePage
+                vc.vmDependency = .init(transitionType: .gamePage,
+                                        delegate: element)
                 self.presentPanModal(vc)
             }).disposed(by: disposeBag)
         

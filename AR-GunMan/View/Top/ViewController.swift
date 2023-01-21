@@ -96,7 +96,7 @@ class ViewController: UIViewController {
     func presentHowToPlayVC() {
         let storyboard: UIStoryboard = UIStoryboard(name: "TutorialViewController", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "TutorialViewController") as! TutorialViewController
-        vc.transitionType = .topPage
+        vc.vmDependency = .init(transitionType: .topPage)
         self.presentPanModal(vc)
     }
     

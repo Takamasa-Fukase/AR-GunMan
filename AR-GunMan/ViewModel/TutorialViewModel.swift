@@ -9,61 +9,61 @@ import Foundation
 import RxSwift
 import RxCocoa
 
+protocol TutorialVCDelegate: AnyObject {
+    func tutorialEnded()
+}
+
 class TutorialViewModel {
-    
-    //input
-    let currentScrollViewIndex: AnyObserver<Int>
-    let bottomButtonTapped: AnyObserver<Void>
-    
-    //output
-    let pageControlValue: Observable<Int>
     let buttonText: Observable<String>
-    let scrollPage: Observable<Void>
+    let pageControllIndex: Observable<Int>
+    let scrollToNextPage: Observable<Void>
     let dismiss: Observable<Void>
-    
-    //other
+    let transitionType: TransitType
+
     private let disposeBag = DisposeBag()
     
-    init() {
-        
-        //output
-        let _pageControlValue = BehaviorRelay<Int>(value: 0)
-        self.pageControlValue = _pageControlValue.asObservable()
-        
-        let _buttonText = BehaviorRelay<String>(value: "NEXT")
-        self.buttonText = _buttonText.asObservable()
-        
-        let _scrollPage = PublishRelay<Void>()
-        self.scrollPage = _scrollPage.asObservable()
-        
-        let _dismiss = PublishRelay<Void>()
-        self.dismiss = _dismiss.asObservable()
-        
-        //input
-        let _currentScrollViewIndex = BehaviorRelay<Int>(value: 0)
-        self.currentScrollViewIndex = AnyObserver<Int>() { event in
-            guard let element = event.element else {return}
-            _currentScrollViewIndex.accept(element)
-        }
-        let _ = _currentScrollViewIndex
-            .subscribe(onNext: { element in
-                _pageControlValue.accept(element)
-                if element != 2 {
-                    _buttonText.accept("NEXT")
-                }else {
-                    _buttonText.accept("OK")
-                }
-            }).disposed(by: disposeBag)
-        
-        self.bottomButtonTapped = AnyObserver<Void>() { _ in
-            if _currentScrollViewIndex.value != 2 {
-                _scrollPage.accept(Void())
-            }else {
-                _dismiss.accept(Void())
-            }
-        }
-        
+    enum TransitType {
+        case topPage
+        case gamePage
     }
     
+    struct Input {
+        let viewDidDisappear: Observable<Void>
+        let horizontalPageIndex: Observable<Int>
+        let bottomButtonTapped: Observable<Void>
+    }
     
+    struct Dependency {
+        let transitionType: TransitType
+        var delegate: TutorialVCDelegate?
+    }
+    
+    init(input: Input, dependency: Dependency) {
+        let horizontalPageIndexRelay = BehaviorRelay<Int>(value: 0)
+        
+        input.horizontalPageIndex
+            .bind(to: horizontalPageIndexRelay)
+            .disposed(by: disposeBag)
+        
+        self.buttonText = horizontalPageIndexRelay
+            .map({($0 < 2) ? "NEXT" : "OK"})
+        
+        self.pageControllIndex = horizontalPageIndexRelay.asObservable()
+        
+        self.scrollToNextPage = input.bottomButtonTapped
+            .filter({_ in horizontalPageIndexRelay.value < 2})
+        
+        self.dismiss = input.bottomButtonTapped
+            .filter({_ in horizontalPageIndexRelay.value >= 2})
+        
+        self.transitionType = dependency.transitionType
+        
+        input.viewDidDisappear
+            .subscribe(onNext: { element in
+                if dependency.transitionType == .gamePage {
+                    UserDefaults.isTutorialAlreadySeen = true
+                }
+                dependency.delegate?.tutorialEnded()
+            }).disposed(by: disposeBag)
+    }
 }
