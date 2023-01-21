@@ -1,5 +1,5 @@
 //
-//  RegisterNameViewController.swift
+//  NameRegisterViewController.swift
 //  AR-GunMan
 //
 //  Created by 深瀬 貴将 on 2020/11/05.
@@ -10,11 +10,11 @@ import Firebase
 import RxSwift
 import RxCocoa
 
-protocol RegisterNameVCDelegate: AnyObject {
+protocol NameRegisterVCDelegate: AnyObject {
     func showRightButtons()
 }
 
-class RegisterNameViewController: UIViewController {
+class NameRegisterViewController: UIViewController {
     
     //MARK: - Properties
     let disposeBag = DisposeBag()
@@ -25,7 +25,7 @@ class RegisterNameViewController: UIViewController {
     var rankingCount = Int()
     var db: Firestore!
     
-    weak var registerNameVCDelegate: RegisterNameVCDelegate?
+    weak var delegate: NameRegisterVCDelegate?
     
     @IBOutlet weak var displayRankLabel: UILabel!
     @IBOutlet weak var totalScoreLabel: UILabel!
@@ -36,7 +36,7 @@ class RegisterNameViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        self.registerNameVCDelegate?.showRightButtons()
+        self.delegate?.showRightButtons()
     }
     
     override func viewDidLoad() {
@@ -103,13 +103,13 @@ class RegisterNameViewController: UIViewController {
         ]) { (error) in
             print("error: \(String(describing: error))")
         }
-        self.registerNameVCDelegate?.showRightButtons()
+        self.delegate?.showRightButtons()
         self.presentingViewController?.dismiss(animated: true, completion: nil)
 
     }
     @IBAction func tappedNoRegisterButton(_ sender: Any) {
 
-        self.registerNameVCDelegate?.showRightButtons()
+        self.delegate?.showRightButtons()
         self.presentingViewController?.dismiss(animated: true, completion: nil)
 
     }
@@ -144,7 +144,7 @@ class RegisterNameViewController: UIViewController {
     
 }
 
-extension RegisterNameViewController: UITextFieldDelegate {
+extension NameRegisterViewController: UITextFieldDelegate {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
               self.view.endEditing(true)

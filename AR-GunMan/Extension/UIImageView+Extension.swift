@@ -1,5 +1,5 @@
 //
-//  ImageView+Extension.swift
+//  UIImageView+Extension.swift
 //  AR-GunMan
 //
 //  Created by ウルトラ深瀬 on 19/1/23.

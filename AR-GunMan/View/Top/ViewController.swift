@@ -82,27 +82,27 @@ class ViewController: UIViewController {
         startButtonIcon.image = TopConst.targetIcon
         
         let storyboard: UIStoryboard = UIStoryboard(name: "GameViewController", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "GameViewController") as! GameViewController
+        let vc = storyboard.instantiateInitialViewController() as! GameViewController
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: animated)
     }
     
     func presentRankingVC() {
-        let storyboard: UIStoryboard = UIStoryboard(name: "WorldRankingViewController", bundle: nil)
-        let vc = storyboard.instantiateInitialViewController() as! WorldRankingViewController
+        let storyboard: UIStoryboard = UIStoryboard(name: "RankingViewController", bundle: nil)
+        let vc = storyboard.instantiateInitialViewController() as! RankingViewController
         self.presentPanModal(vc)
     }
     
     func presentHowToPlayVC() {
         let storyboard: UIStoryboard = UIStoryboard(name: "TutorialViewController", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "TutorialViewController") as! TutorialViewController
+        let vc = storyboard.instantiateInitialViewController() as! TutorialViewController
         vc.vmDependency = .init(transitionType: .topPage)
         self.presentPanModal(vc)
     }
     
     func presentSettingsVC() {
         let storyboard: UIStoryboard = UIStoryboard(name: "SettingsViewController", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "SettingsViewController") as! SettingsViewController
+        let vc = storyboard.instantiateInitialViewController() as! SettingsViewController
         self.presentPanModal(vc)
     }
 }

@@ -1,5 +1,5 @@
 //
-//  WorldRankingViewController.swift
+//  RankingViewController.swift
 //  AR-GunMan
 //
 //  Created by Takahiro Fukase on 2021/11/13.
@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class WorldRankingViewController: UIViewController {
+class RankingViewController: UIViewController {
     
     //MARK: - Properties
     let viewModel = RankingViewModel()
@@ -66,18 +66,18 @@ class WorldRankingViewController: UIViewController {
     private func setupTableView() {
         worldRankingTableView.contentInset.top = 10
         worldRankingTableView.dataSource = self
-        worldRankingTableView.register(UINib(nibName: "WorldRankingCell", bundle: nil), forCellReuseIdentifier: "WorldRankingCell")
+        worldRankingTableView.register(UINib(nibName: "RankingCell", bundle: nil), forCellReuseIdentifier: "RankingCell")
     }
 }
 
-extension WorldRankingViewController: UITableViewDataSource {
+extension RankingViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return rankingList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "WorldRankingCell") as? WorldRankingCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "RankingCell") as? RankingCell else {
             return UITableViewCell()
         }
         cell.nameLabel.text = rankingList[indexPath.row].userName
@@ -87,9 +87,7 @@ extension WorldRankingViewController: UITableViewDataSource {
     }
 }
 
-
-
-extension WorldRankingViewController: UIGestureRecognizerDelegate {
+extension RankingViewController: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         if touch.view == self.view {
             return true

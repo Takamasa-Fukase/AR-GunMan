@@ -1,5 +1,5 @@
 //
-//  SwitchWeaponCell.swift
+//  WeaponChangeCell.swift
 //  AR-GunMan
 //
 //  Created by 深瀬 貴将 on 2020/11/03.
@@ -9,7 +9,7 @@
 import UIKit
 import FSPagerView
 
-class SwitchWeaponCell: FSPagerViewCell {
+class WeaponChangeCell: FSPagerViewCell {
     
     @IBOutlet weak var weaponImageView: UIImageView!
     @IBOutlet weak var commingSoonLabel: UILabel!

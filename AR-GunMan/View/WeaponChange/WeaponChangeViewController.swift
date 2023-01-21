@@ -1,5 +1,5 @@
 //
-//  SwitchWeaponViewController.swift
+//  WeaponChangeViewController.swift
 //  AR-GunMan
 //
 //  Created by 深瀬 貴将 on 2020/11/03.
@@ -11,7 +11,7 @@ import FSPagerView
 import RxSwift
 import RxCocoa
 
-class SwitchWeaponViewController: UIViewController {
+class WeaponChangeViewController: UIViewController {
        
     //MARK: - Properties
     var viewModel: GameViewModel!
@@ -19,8 +19,8 @@ class SwitchWeaponViewController: UIViewController {
     
     @IBOutlet weak var pagerView: FSPagerView! {
         didSet{
-            let nib = UINib(nibName: "SwitchWeaponCell", bundle: nil)
-            self.pagerView.register(nib, forCellWithReuseIdentifier: "SwitchWeaponCell")
+            let nib = UINib(nibName: "WeaponChangeCell", bundle: nil)
+            self.pagerView.register(nib, forCellWithReuseIdentifier: "WeaponChangeCell")
         }
     }
     
@@ -56,14 +56,14 @@ class SwitchWeaponViewController: UIViewController {
     }
 }
 
-extension SwitchWeaponViewController: FSPagerViewDelegate, FSPagerViewDataSource {
+extension WeaponChangeViewController: FSPagerViewDelegate, FSPagerViewDataSource {
     
     func numberOfItems(in pagerView: FSPagerView) -> Int {
         return WeaponTypes.allCases.count
     }
     
     func pagerView(_ pagerView: FSPagerView, cellForItemAt index: Int) -> FSPagerViewCell {
-        guard let cell = pagerView.dequeueReusableCell(withReuseIdentifier: "SwitchWeaponCell", at: index) as? SwitchWeaponCell else {
+        guard let cell = pagerView.dequeueReusableCell(withReuseIdentifier: "WeaponChangeCell", at: index) as? WeaponChangeCell else {
             return FSPagerViewCell()
         }
         cell.weaponImageView.image = UIImage(named: WeaponTypes.allCases[index].rawValue)

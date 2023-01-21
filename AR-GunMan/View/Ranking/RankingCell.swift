@@ -1,5 +1,5 @@
 //
-//  WorldRankingCell.swift
+//  RankingCell.swift
 //  AR-GunMan
 //
 //  Created by 深瀬 貴将 on 2020/11/12.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WorldRankingCell: UITableViewCell {
+class RankingCell: UITableViewCell {
     
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!

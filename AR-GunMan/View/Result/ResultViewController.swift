@@ -1,5 +1,5 @@
 //
-//  GameResultViewController.swift
+//  ResultViewController.swift
 //  AR-GunMan
 //
 //  Created by 深瀬 貴将 on 2020/11/11.
@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import PanModal
 
-class GameResultViewController: UIViewController {
+class ResultViewController: UIViewController {
 
     //MARK: - Properties
     let viewModel = RankingViewModel()
@@ -76,7 +76,7 @@ class GameResultViewController: UIViewController {
     
     private func setupTableView() {
         tableView.contentInset.top = 10
-        tableView.register(UINib(nibName: "WorldRankingCell", bundle: nil), forCellReuseIdentifier: "WorldRankingCell")
+        tableView.register(UINib(nibName: "RankingCell", bundle: nil), forCellReuseIdentifier: "RankingCell")
     }
     
     private func setupBlurEffect() {
@@ -89,8 +89,8 @@ class GameResultViewController: UIViewController {
     
     private func showRegisterNameVC() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            let storyboard: UIStoryboard = UIStoryboard(name: "RegisterNameViewController", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "RegisterNameViewController") as! RegisterNameViewController
+            let storyboard: UIStoryboard = UIStoryboard(name: "NameRegisterViewController", bundle: nil)
+            let vc = storyboard.instantiateInitialViewController() as! NameRegisterViewController
             vc.totalScore = self.totalScore
             vc.rankingCount = self.rankingList.count
             vc.modalPresentationStyle = .overCurrentContext
@@ -101,7 +101,7 @@ class GameResultViewController: UIViewController {
                 $0.score < threeDigitsScore
             })
             vc.tentativeRank = limitRankIndex ?? 0 + 1 + 1
-            vc.registerNameVCDelegate = self
+            vc.delegate = self
             
             self.presentPanModal(vc)
         }
@@ -114,7 +114,7 @@ class GameResultViewController: UIViewController {
     }
 }
 
-extension GameResultViewController: RegisterNameVCDelegate {
+extension ResultViewController: NameRegisterVCDelegate {
     
     func showRightButtons() {
         UIView.animate(withDuration: 0.6, delay: 0.1) {
@@ -130,14 +130,14 @@ extension GameResultViewController: RegisterNameVCDelegate {
     
 }
 
-extension GameResultViewController: UITableViewDelegate, UITableViewDataSource {
+extension ResultViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return rankingList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "WorldRankingCell") as? WorldRankingCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "RankingCell") as? RankingCell else {
             return UITableViewCell()
         }
         cell.nameLabel.text = rankingList[indexPath.row].userName

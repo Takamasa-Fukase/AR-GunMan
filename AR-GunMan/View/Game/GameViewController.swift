@@ -75,7 +75,7 @@ class GameViewController: UIViewController {
             .subscribe(onNext: { [weak self] element in
                 guard let self = self else {return}
                 let storyboard: UIStoryboard = UIStoryboard(name: "TutorialViewController", bundle: nil)
-                let vc = storyboard.instantiateViewController(withIdentifier: "TutorialViewController") as! TutorialViewController
+                let vc = storyboard.instantiateInitialViewController() as! TutorialViewController
                 vc.vmDependency = .init(transitionType: .gamePage,
                                         delegate: element)
                 self.presentPanModal(vc)
@@ -84,8 +84,8 @@ class GameViewController: UIViewController {
         viewModel.showSwitchWeaponView
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else {return}
-                let storyboard: UIStoryboard = UIStoryboard(name: "SwitchWeaponViewController", bundle: nil)
-                let vc = storyboard.instantiateViewController(withIdentifier: "SwitchWeaponViewController") as! SwitchWeaponViewController
+                let storyboard: UIStoryboard = UIStoryboard(name: "WeaponChangeViewController", bundle: nil)
+                let vc = storyboard.instantiateInitialViewController() as! WeaponChangeViewController
                 //                vc.viewModel = self.viewModel
                 self.present(vc, animated: true)
             }).disposed(by: disposeBag)
@@ -93,8 +93,8 @@ class GameViewController: UIViewController {
         viewModel.showResultView
             .subscribe(onNext: { [weak self] element in
                 guard let self = self else {return}
-                let storyboard: UIStoryboard = UIStoryboard(name: "GameResultViewController", bundle: nil)
-                let vc = storyboard.instantiateViewController(withIdentifier: "GameResultViewController") as! GameResultViewController
+                let storyboard: UIStoryboard = UIStoryboard(name: "ResultViewController", bundle: nil)
+                let vc = storyboard.instantiateInitialViewController() as! ResultViewController
                 vc.totalScore = element
                 self.present(vc, animated: true)
             }).disposed(by: disposeBag)
