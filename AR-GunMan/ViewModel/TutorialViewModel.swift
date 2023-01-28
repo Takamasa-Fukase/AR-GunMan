@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-protocol TutorialVCDelegate: AnyObject {
+protocol TutorialDelegate: AnyObject {
     func tutorialEnded()
 }
 
@@ -35,7 +35,7 @@ class TutorialViewModel {
     
     struct Dependency {
         let transitionType: TransitType
-        var delegate: TutorialVCDelegate?
+        var delegate: TutorialDelegate?
     }
     
     init(input: Input, dependency: Dependency) {

@@ -20,7 +20,7 @@ class TutorialSeenChecker {
     }
 }
 
-extension TutorialSeenChecker: TutorialVCDelegate {
+extension TutorialSeenChecker: TutorialDelegate {
     func tutorialEnded() {
         isSeenRelay.accept(true)
     }

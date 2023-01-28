@@ -9,7 +9,7 @@ import RxSwift
 import RxCocoa
 
 class GameViewModel {
-    let showTutorialView: Observable<TutorialVCDelegate>
+    let showTutorialView: Observable<TutorialDelegate>
     let sightImage: Observable<UIImage?>
     let sightImageColor: Observable<UIColor>
     let timeCountText: Observable<String>
@@ -44,7 +44,7 @@ class GameViewModel {
                 dependency.tutorialSeenChecker.checkTutorialSeen()
             }).disposed(by: disposeBag)
         
-        let showTutorialViewRelay = PublishRelay<TutorialVCDelegate>()
+        let showTutorialViewRelay = PublishRelay<TutorialDelegate>()
         self.showTutorialView = showTutorialViewRelay.asObservable()
             
         dependency.tutorialSeenChecker.isSeen
