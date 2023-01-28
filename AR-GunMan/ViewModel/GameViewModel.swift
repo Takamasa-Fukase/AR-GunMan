@@ -16,7 +16,7 @@ class GameViewModel {
     let bulletsCountImage: Observable<UIImage?>
     let weaponTypeChanged: Observable<WeaponType>
     let weaponFired: Observable<Void>
-    let showSwitchWeaponView: Observable<Void>
+    let showWeaponChangeView: Observable<WeaponChangeDelegate>
     let showResultView: Observable<Double>
     
     private let disposeBag = DisposeBag()
@@ -24,7 +24,7 @@ class GameViewModel {
     struct Input {
         let viewDidAppear: Observable<Void>
         let targetHit: Observable<Void>
-        let switchWeaponButtonTapped: Observable<Void>
+        let weaponChangeButtonTapped: Observable<Void>
     }
     
     struct Dependency {
@@ -76,7 +76,8 @@ class GameViewModel {
         
         self.weaponFired = dependency.currentWeapon.fired
         
-        self.showSwitchWeaponView = input.switchWeaponButtonTapped
+        self.showWeaponChangeView = input.weaponChangeButtonTapped
+            .map({_ in dependency.currentWeapon})
         
         let showResultViewRelay = PublishRelay<Double>()
         self.showResultView = showResultViewRelay.asObservable()

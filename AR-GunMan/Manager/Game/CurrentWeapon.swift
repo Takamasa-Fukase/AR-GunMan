@@ -31,12 +31,6 @@ class CurrentWeapon {
         self.bulletsHolder = BulletsHolder(type: type)
     }
     
-    func changeWeaponType(to newType: WeaponType) {
-        typeRelay.accept(newType)
-        AudioUtil.playSound(of: newType.weaponChangingSound)
-        bulletsHolder = BulletsHolder(type: newType)
-    }
-    
     func fire() {
         guard bulletsHolder.canFire else {
             if weaponType != .bazooka {
@@ -59,5 +53,17 @@ class CurrentWeapon {
             AudioUtil.playSound(of: .pistolReload)
         }
         bulletsHolder.refillBulletsCount()
+    }
+    
+    private func changeWeaponType(to newType: WeaponType) {
+        typeRelay.accept(newType)
+        AudioUtil.playSound(of: newType.weaponChangingSound)
+        bulletsHolder = BulletsHolder(type: newType)
+    }
+}
+
+extension CurrentWeapon: WeaponChangeDelegate {
+    func weaponSelected(_ index: Int) {
+        changeWeaponType(to: WeaponType.allCases[index])
     }
 }

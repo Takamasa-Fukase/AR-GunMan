@@ -86,6 +86,7 @@
 		BC92C85C2973614000E49BD5 /* MotionDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C85B2973614000E49BD5 /* MotionDetector.swift */; };
 		BC92C85E297420CD00E49BD5 /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C85D297420CD00E49BD5 /* UserDefaults+Extension.swift */; };
 		BC92C8602975A2A800E49BD5 /* UIViewController+RxLifeCycleEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C85F2975A2A800E49BD5 /* UIViewController+RxLifeCycleEvents.swift */; };
+		BCAB8A7A297C779C00F81E73 /* WeaponChangeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAB8A79297C779C00F81E73 /* WeaponChangeViewModel.swift */; };
 		BCD9675E2979E55400E33587 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD9675D2979E55400E33587 /* UIImageView+Extension.swift */; };
 		BCD96C03297C757600E33587 /* RankingViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BCD96C02297C757600E33587 /* RankingViewController.storyboard */; };
 		D54734259EA1C7BF11A28908 /* Pods_AR_GunMan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4280580740F2443B66781090 /* Pods_AR_GunMan.framework */; };
@@ -202,6 +203,7 @@
 		BC92C85B2973614000E49BD5 /* MotionDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionDetector.swift; sourceTree = "<group>"; };
 		BC92C85D297420CD00E49BD5 /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
 		BC92C85F2975A2A800E49BD5 /* UIViewController+RxLifeCycleEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+RxLifeCycleEvents.swift"; sourceTree = "<group>"; };
+		BCAB8A79297C779C00F81E73 /* WeaponChangeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponChangeViewModel.swift; sourceTree = "<group>"; };
 		BCD9675D2979E55400E33587 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		BCD96C02297C757600E33587 /* RankingViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RankingViewController.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -399,6 +401,7 @@
 				5952F62725E94D1000ADB85B /* TopViewModel.swift */,
 				67200F5427A000AC00AD92EC /* TutorialViewModel.swift */,
 				BC3866AE296EA6CB005573CC /* GameViewModel.swift */,
+				BCAB8A79297C779C00F81E73 /* WeaponChangeViewModel.swift */,
 				67200F5627A0020B00AD92EC /* RankingViewModel.swift */,
 				67200F5827A0026000AD92EC /* NameRegisterViewModel.swift */,
 				67200F5A27A0028700AD92EC /* SettingsViewModel.swift */,
@@ -850,6 +853,7 @@
 				BC3866AD296DF8E4005573CC /* ScoreCounter.swift in Sources */,
 				5952F62D25E94D9200ADB85B /* CameraAuthUtil.swift in Sources */,
 				5952F63225E9C62100ADB85B /* AudioUtil.swift in Sources */,
+				BCAB8A7A297C779C00F81E73 /* WeaponChangeViewModel.swift in Sources */,
 				5952F64025EA0E1900ADB85B /* Font+Extension.swift in Sources */,
 				59D2D5932552E718006DDB70 /* WeaponChangeCell.swift in Sources */,
 				67B685EF27AAD8B300D7F413 /* TimeCountUtil.swift in Sources */,

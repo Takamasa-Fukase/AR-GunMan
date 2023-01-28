@@ -29,7 +29,7 @@ class GameViewController: UIViewController {
         let vmInput = GameViewModel
             .Input(viewDidAppear: rx.viewDidAppear,
                    targetHit: sceneManager.targetHit,
-                   switchWeaponButtonTapped: switchWeaponButton.rx.tap.asObservable())
+                   weaponChangeButtonTapped: switchWeaponButton.rx.tap.asObservable())
         
         let vmDependency = GameViewModel
             .Dependency(tutorialSeenChecker: TutorialSeenChecker(),
@@ -81,12 +81,12 @@ class GameViewController: UIViewController {
                 self.presentPanModal(vc)
             }).disposed(by: disposeBag)
         
-        viewModel.showSwitchWeaponView
-            .subscribe(onNext: { [weak self] _ in
+        viewModel.showWeaponChangeView
+            .subscribe(onNext: { [weak self] element in
                 guard let self = self else {return}
                 let storyboard: UIStoryboard = UIStoryboard(name: "WeaponChangeViewController", bundle: nil)
                 let vc = storyboard.instantiateInitialViewController() as! WeaponChangeViewController
-                //                vc.viewModel = self.viewModel
+                vc.delegate = element
                 self.present(vc, animated: true)
             }).disposed(by: disposeBag)
         

@@ -14,7 +14,8 @@ import RxCocoa
 class WeaponChangeViewController: UIViewController {
        
     //MARK: - Properties
-    var viewModel: GameViewModel!
+    var viewModel: WeaponChangeViewModel!
+    weak var delegate: WeaponChangeDelegate?
     let disposeBag = DisposeBag()
     
     @IBOutlet weak var pagerView: FSPagerView! {
@@ -30,13 +31,14 @@ class WeaponChangeViewController: UIViewController {
 
         setupFSPagerView()
         
-        //output
-//        let _ = viewModel.dismissSwitchWeaponVC
-//            .subscribe(onNext: { [weak self] element in
-//                guard let self = self else {return}
-//                print("SwitchWeaponVC dismissSelfを通知受け取ったのでdismissします")
-//                self.dismiss(animated: false, completion: nil)
-//            }).disposed(by: disposeBag)
+        viewModel = WeaponChangeViewModel(dependency: delegate)
+        
+        // MARK: - output
+        viewModel.dismiss
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else {return}
+                self.dismiss(animated: false)
+            }).disposed(by: disposeBag)
         
     }
 
@@ -72,7 +74,6 @@ extension WeaponChangeViewController: FSPagerViewDelegate, FSPagerViewDataSource
     }
     
     func pagerView(_ pagerView: FSPagerView, didSelectItemAt index: Int) {
-//        viewModel.weaponItemTapped.onNext(index)
-        self.dismiss(animated: true, completion: nil)
+        viewModel.weaponItemTapped.onNext(index)
     }
 }
