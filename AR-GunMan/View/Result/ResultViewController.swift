@@ -11,11 +11,8 @@ import RxCocoa
 import PanModal
 
 class ResultViewController: UIViewController {
-
-    //MARK: - Properties
-    let viewModel = RankingViewModel()
+    var viewModel: ResultViewModel!
     let disposeBag = DisposeBag()
-    
     var totalScore: Double = 0.000
     var limitRankIndex = Int()
     var rankingList: [Ranking] = []
@@ -26,33 +23,17 @@ class ResultViewController: UIViewController {
     @IBOutlet weak var replayButton: UIButton!
     @IBOutlet weak var homeButton: UIButton!
     
-    //MARK: - Methods
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        //input
-        viewModel.getRanking.onNext(Void())
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupInitialUI()
-        setupTableView()
-        setupBlurEffect()
-        showRegisterNameVC()
+        // MARK: - input
+        viewModel = ResultViewModel(
+            input: .init(viewWillAppear: rx.viewWillAppear,
+                         replayButtonTapped: replayButton.rx.tap.asObservable(),
+                         toHomeButtonTapped: homeButton.rx.tap.asObservable()))
         
-        //input
-        let _ = replayButton.rx.tap
-            .bind(to: viewModel.replayButtonTapped)
-            .disposed(by: disposeBag)
-        
-        let _ = homeButton.rx.tap
-            .bind(to: viewModel.toHomeButtonTapped)
-            .disposed(by: disposeBag)
-        
-        //output
-        let _ = viewModel.rankingList
+        // MARK: - output
+        viewModel.rankingList
             .subscribe(onNext: { [weak self] element in
                 guard let self = self else {return}
                 guard let element = element else {return}
@@ -60,63 +41,56 @@ class ResultViewController: UIViewController {
                 self.tableView.reloadData()
             }).disposed(by: disposeBag)
         
-        let _ = viewModel.backToTopPageWithReplay
+        viewModel.showNameRegisterView
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else {return}
+                self.showNameRegisterVC()
+            }).disposed(by: disposeBag)
+        
+        viewModel.showButtons
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else {return}
+                self.showButtons()
+            }).disposed(by: disposeBag)
+        
+        viewModel.backToTopPageViewWithReplay
             .subscribe(onNext: { [weak self] element in
                 guard let self = self else {return}
                 self.dismissToTopVC(isReplay: element)
             }).disposed(by: disposeBag)
+        
+        setupUI()
     }
     
-    private func setupInitialUI() {
+    private func setupUI() {
+        insertBlurEffectView()
         rightButtonsStackView.isHidden = true
         replayButton.alpha = 0
         homeButton.alpha = 0
         totalScoreLabel.text = String(format: "%.3f", totalScore)
-    }
-    
-    private func setupTableView() {
         tableView.contentInset.top = 10
         tableView.register(UINib(nibName: "RankingCell", bundle: nil), forCellReuseIdentifier: "RankingCell")
     }
     
-    private func setupBlurEffect() {
-        //背景をぼかし処理
-        let blurEffect = UIBlurEffect(style: .dark)
-        let visualEffectView = UIVisualEffectView(effect: blurEffect)
-        visualEffectView.frame = self.view.frame
-        self.view.insertSubview(visualEffectView, at: 0)
+    private func showNameRegisterVC() {
+        let storyboard: UIStoryboard = UIStoryboard(name: "NameRegisterViewController", bundle: nil)
+        let vc = storyboard.instantiateInitialViewController() as! NameRegisterViewController
+        vc.totalScore = self.totalScore
+        vc.rankingCount = self.rankingList.count
+        vc.modalPresentationStyle = .overCurrentContext
+        
+        let threeDigitsScore = Double(round(1000 * self.totalScore)/1000)
+        
+        let limitRankIndex = self.rankingList.firstIndex(where: {
+            $0.score < threeDigitsScore
+        })
+        vc.tentativeRank = limitRankIndex ?? 0 + 1 + 1
+        vc.delegate = viewModel
+        
+        self.presentPanModal(vc)
     }
     
-    private func showRegisterNameVC() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            let storyboard: UIStoryboard = UIStoryboard(name: "NameRegisterViewController", bundle: nil)
-            let vc = storyboard.instantiateInitialViewController() as! NameRegisterViewController
-            vc.totalScore = self.totalScore
-            vc.rankingCount = self.rankingList.count
-            vc.modalPresentationStyle = .overCurrentContext
-            
-            let threeDigitsScore = Double(round(1000 * self.totalScore)/1000)
-            
-            let limitRankIndex = self.rankingList.firstIndex(where: {
-                $0.score < threeDigitsScore
-            })
-            vc.tentativeRank = limitRankIndex ?? 0 + 1 + 1
-            vc.delegate = self
-            
-            self.presentPanModal(vc)
-        }
-    }
-    
-    private func dismissToTopVC(isReplay: Bool = false) {
-        let topVC = self.presentingViewController?.presentingViewController as! ViewController
-        UserDefaults.isReplay = isReplay
-        topVC.dismiss(animated: false, completion: nil)
-    }
-}
-
-extension ResultViewController: NameRegisterVCDelegate {
-    
-    func showRightButtons() {
+    private func showButtons() {
         UIView.animate(withDuration: 0.6, delay: 0.1) {
             self.rightButtonsStackView.isHidden = false
             
@@ -128,10 +102,14 @@ extension ResultViewController: NameRegisterVCDelegate {
         }
     }
     
+    private func dismissToTopVC(isReplay: Bool = false) {
+        let topVC = self.presentingViewController?.presentingViewController as! ViewController
+        UserDefaults.isReplay = isReplay
+        topVC.dismiss(animated: false, completion: nil)
+    }
 }
 
 extension ResultViewController: UITableViewDelegate, UITableViewDataSource {
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return rankingList.count
     }
@@ -145,5 +123,4 @@ extension ResultViewController: UITableViewDelegate, UITableViewDataSource {
         cell.rankLabel.text = String(indexPath.row + 1)
         return cell
     }
-    
 }
