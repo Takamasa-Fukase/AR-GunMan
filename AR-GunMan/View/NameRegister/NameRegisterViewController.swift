@@ -114,34 +114,25 @@ class NameRegisterViewController: UIViewController {
 
     }
     
-    
-    func customAttributedString() -> NSMutableAttributedString {
-        let stringAttributes1: [NSAttributedString.Key : Any] = [
-            .foregroundColor : UIColor(red: 239/255, green: 239/255, blue: 239/255, alpha: 1),
-            .font : UIFont(name: "Copperplate", size: 21.0) ?? UIFont.systemFont(ofSize: 21.0),
-        ]
-        let string1 = NSAttributedString(string: "You're ranked at ", attributes: stringAttributes1)
-
-        let stringAttributes2: [NSAttributedString.Key : Any] = [
-            .foregroundColor : UIColor(red: 85/255, green: 78/255, blue: 72/255, alpha: 1),
-            .font : UIFont(name: "Copperplate", size: 25.0) ?? UIFont.systemFont(ofSize: 25.0),
-        ]
-        let string2 = NSAttributedString(string: "\(tentativeRank) / \(rankingCount)", attributes: stringAttributes2)
-        
-        let stringAttributes3: [NSAttributedString.Key : Any] = [
-            .foregroundColor : UIColor(red: 239/255, green: 239/255, blue: 239/255, alpha: 1),
-            .font : UIFont(name: "Copperplate", size: 21.0) ?? UIFont.systemFont(ofSize: 21.0),
-        ]
-        let string3 = NSAttributedString(string: " in the world!", attributes:stringAttributes3)
-
+    private func customAttributedString() -> NSMutableAttributedString {
         let mutableAttributedString = NSMutableAttributedString()
-        mutableAttributedString.append(string1)
-        mutableAttributedString.append(string2)
-        mutableAttributedString.append(string3)
-        
+        [
+            UIFont.attributedString("You're ranked at ",
+                                    fontName: "Copperplate",
+                                    fontSize: 21,
+                                    textColor: .init(red: 239/255, green: 239/255, blue: 239/255, alpha: 1)),
+            UIFont.attributedString("\(tentativeRank) / \(rankingCount)",
+                                    fontName: "Copperplate",
+                                    fontSize: 25,
+                                    textColor: .init(red: 85/255, green: 78/255, blue: 72/255, alpha: 1)),
+            UIFont.attributedString(" in the world!",
+                                    fontName: "Copperplate",
+                                    fontSize: 21,
+                                    textColor: .init(red: 239/255, green: 239/255, blue: 239/255, alpha: 1)),
+        ]
+            .forEach({ mutableAttributedString.append($0) })
         return mutableAttributedString
     }
-    
 }
 
 extension NameRegisterViewController: UITextFieldDelegate {
