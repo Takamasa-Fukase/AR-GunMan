@@ -10,6 +10,7 @@ import UserNotifications
 import Firebase
 import Photos
 import AVFoundation
+import FirebaseMessaging
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -170,48 +171,13 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
 
 extension AppDelegate : MessagingDelegate {
     // [START refresh_token]
-    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         print("Firebase registration token: \(String(describing: fcmToken))")
         
-        let dataDict:[String: String] = ["token": fcmToken ]
+        let dataDict:[String: String] = ["token": fcmToken ?? ""]
         NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)
         // TODO: If necessary send token to application server.
         // Note: This callback is fired at each app startup and whenever a new token is generated.
     }
     // [END refresh_token]
 }
-
-
-
-
-//カメラ・フォトライブラリ
-//extension AppDelegate: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-//
-//    func checkCameraAuthorization() {
-//        switch AVCaptureDevice.authorizationStatus(for: .video) {
-//        case .authorized:
-//            //既に許可済みなのでカメラを表示
-//            print("既に許可済み")
-//
-//        case .notDetermined:
-//            //まだ認証をしてないのでアクセスを求める
-//            print("まだ認証をしてないのでアクセスを求める")
-//            AVCaptureDevice.requestAccess(for: .video) { status in
-//                if status {
-//                    print("許可された")
-//
-//                }else {
-//                    print("拒否されたのでトップ画面にて再設定用のダイアログを表示")
-//                }
-//            }
-//        case .denied:
-//            //拒否されているので再設定用のダイアログを表示
-//            print("拒否されているのでトップ画面にて再設定用のダイアログを表示")
-//        case .restricted:
-//            //システムによって拒否された、もしくはカメラが存在しない
-//            print("システムによって拒否された、もしくはカメラが存在しない")
-//        default:
-//            print("何らかのエラー")
-//        }
-//    }
-//}
