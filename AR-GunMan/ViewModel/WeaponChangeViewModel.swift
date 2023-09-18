@@ -7,26 +7,33 @@
 
 import RxSwift
 import RxCocoa
+import FSPagerView
 
 protocol WeaponChangeDelegate: AnyObject {
     func weaponSelected(_ index: Int)
 }
 
-class WeaponChangeViewModel {
-    // input
-    let weaponItemTapped: AnyObserver<Int>
-    
-    // output
+class WeaponChangeViewModel: NSObject {
     let dismiss: Observable<Void>
+    
+    private let weaponItemTappedRelay = PublishRelay<Int>()
+    private let dismissRelay = PublishRelay<Void>()
+    private let disposeBag = DisposeBag()
             
     init(dependency delegate: WeaponChangeDelegate?) {
         let dismissRelay = PublishRelay<Void>()
         self.dismiss = dismissRelay.asObservable()
-        
-        self.weaponItemTapped = AnyObserver<Int>() { event in
-            guard let index = event.element else { return }
-            delegate?.weaponSelected(index)
-            dismissRelay.accept(Void())
-        }
+
+        weaponItemTappedRelay
+            .subscribe(onNext: { element in
+                delegate?.weaponSelected(element)
+                dismissRelay.accept(Void())
+            }).disposed(by: disposeBag)
+    }
+}
+
+extension WeaponChangeViewModel: FSPagerViewDelegate {
+    func pagerView(_ pagerView: FSPagerView, didSelectItemAt index: Int) {
+        weaponItemTappedRelay.accept(index)
     }
 }

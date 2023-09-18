@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -72,6 +72,7 @@
 		67DB2C6127C17F8D00B8CB3C /* GameConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DB2C6027C17F8D00B8CB3C /* GameConst.swift */; };
 		86627DE6273FD5E30044A980 /* RankingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86627DE5273FD5E30044A980 /* RankingViewController.swift */; };
 		866675D4275215AF007CB4D6 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866675D3275215AF007CB4D6 /* UIViewController+Extension.swift */; };
+		86C5AB982AB8819C00CB161D /* UIAlertController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C5AB972AB8819C00CB161D /* UIAlertController+Extension.swift */; };
 		BC1795BC2985D01300D91A19 /* ResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1795BB2985D01300D91A19 /* ResultViewModel.swift */; };
 		BC2B116129772D72009F4DC4 /* TopPageButtonIconChanger.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2B116029772D72009F4DC4 /* TopPageButtonIconChanger.swift */; };
 		BC2B11632977373F009F4DC4 /* TopPageButtonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2B11622977373F009F4DC4 /* TopPageButtonType.swift */; };
@@ -189,6 +190,7 @@
 		82CB4F049BB35C36EAA5A632 /* Pods_AR_GunManTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_GunManTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		86627DE5273FD5E30044A980 /* RankingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingViewController.swift; sourceTree = "<group>"; };
 		866675D3275215AF007CB4D6 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
+		86C5AB972AB8819C00CB161D /* UIAlertController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extension.swift"; sourceTree = "<group>"; };
 		90D4D1AD42BB6A3A0192887F /* Pods-AR-GunManTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-GunManTests.release.xcconfig"; path = "Target Support Files/Pods-AR-GunManTests/Pods-AR-GunManTests.release.xcconfig"; sourceTree = "<group>"; };
 		BC1795BB2985D01300D91A19 /* ResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewModel.swift; sourceTree = "<group>"; };
 		BC2B116029772D72009F4DC4 /* TopPageButtonIconChanger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopPageButtonIconChanger.swift; sourceTree = "<group>"; };
@@ -261,6 +263,7 @@
 				BC92C85F2975A2A800E49BD5 /* UIViewController+RxLifeCycleEvents.swift */,
 				BC2B11662977F90C009F4DC4 /* UIScrollView+Extension.swift */,
 				BCD9675D2979E55400E33587 /* UIImageView+Extension.swift */,
+				86C5AB972AB8819C00CB161D /* UIAlertController+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -841,6 +844,7 @@
 				59D2D5952552E718006DDB70 /* WeaponChangeViewController.swift in Sources */,
 				59D2D5852552E6B2006DDB70 /* GameViewController.swift in Sources */,
 				677DF1EE27A710A8007512F6 /* SafariViewUtil.swift in Sources */,
+				86C5AB982AB8819C00CB161D /* UIAlertController+Extension.swift in Sources */,
 				67200F5927A0026000AD92EC /* NameRegisterViewModel.swift in Sources */,
 				BC92C85629709EF600E49BD5 /* BulletsHolder.swift in Sources */,
 				67200F5527A000AC00AD92EC /* TutorialViewModel.swift in Sources */,

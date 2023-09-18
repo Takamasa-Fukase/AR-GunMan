@@ -48,7 +48,7 @@ class WeaponChangeViewController: UIViewController {
     }
     
     private func setupFSPagerView() {
-        pagerView.delegate = self
+        pagerView.delegate = viewModel
         pagerView.dataSource = self
         pagerView.automaticSlidingInterval = 0
         pagerView.isInfinite = true
@@ -58,8 +58,7 @@ class WeaponChangeViewController: UIViewController {
     }
 }
 
-extension WeaponChangeViewController: FSPagerViewDelegate, FSPagerViewDataSource {
-    
+extension WeaponChangeViewController: FSPagerViewDataSource {
     func numberOfItems(in pagerView: FSPagerView) -> Int {
         return WeaponType.allCases.count
     }
@@ -71,9 +70,5 @@ extension WeaponChangeViewController: FSPagerViewDelegate, FSPagerViewDataSource
         cell.weaponImageView.image = UIImage(named: WeaponType.allCases[index].name)
         cell.commingSoonLabel.isHidden = true
         return cell
-    }
-    
-    func pagerView(_ pagerView: FSPagerView, didSelectItemAt index: Int) {
-        viewModel.weaponItemTapped.onNext(index)
     }
 }

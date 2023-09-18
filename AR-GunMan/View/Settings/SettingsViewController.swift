@@ -13,7 +13,7 @@ import SafariServices
 class SettingsViewController: UIViewController {
     
     //MARK: - Properties
-    let viewModel = SettingsViewModel()
+    var viewModel: SettingsViewModel!
     let disposeBag = DisposeBag()
     
     @IBOutlet weak var developerContactButton: UIButton!
@@ -24,27 +24,19 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //input
-        let _ = developerContactButton.rx.tap
-            .bind(to: viewModel.developerConctactButtonTapped)
-            .disposed(by: disposeBag)
-        
-        let _ = privacyPolicyButton.rx.tap
-            .bind(to: viewModel.privacyPolicyButtonTapped)
-            .disposed(by: disposeBag)
-        
-        let _ = backButton.rx.tap
-            .bind(to: viewModel.backButtonTapped)
-            .disposed(by: disposeBag)
+        viewModel = SettingsViewModel(
+            input: .init(developerConctactButtonTapped: developerContactButton.rx.tap.asObservable(),
+                         privacyPolicyButtonTapped: privacyPolicyButton.rx.tap.asObservable(),
+                         backButtonTapped: backButton.rx.tap.asObservable()))
         
         //output
-        let _ = viewModel.openSafariView
+        viewModel.openSafariView
             .subscribe(onNext: { [weak self] element in
                 guard let self = self else {return}
                 SafariViewUtil.openSafariView(urlString: element, vc: self)
             }).disposed(by: disposeBag)
         
-        let _ = viewModel.dismiss
+        viewModel.dismiss
             .subscribe(onNext: { [weak self] element in
                 guard let self = self else {return}
                 self.dismiss(animated: true, completion: nil)

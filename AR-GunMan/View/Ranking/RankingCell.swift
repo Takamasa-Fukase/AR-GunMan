@@ -23,4 +23,9 @@ class RankingCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    func configureCell(ranking: Ranking, row: Int) {
+        nameLabel.text = ranking.userName
+        scoreLabel.text = String(ranking.score)
+        rankLabel.text = String(row + 1)
+    }
 }

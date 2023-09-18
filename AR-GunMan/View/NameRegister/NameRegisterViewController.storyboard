@@ -76,9 +76,6 @@
                                                         <color key="textColor" red="0.79046171899999995" green="0.69538801910000003" blue="0.53327715399999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="30"/>
                                                         <textInputTraits key="textInputTraits"/>
-                                                        <connections>
-                                                            <action selector="changeRegisterButtonOnOff:" destination="Wkb-Mh-0K5" eventType="editingChanged" id="9ya-Zd-b9L"/>
-                                                        </connections>
                                                     </textField>
                                                 </subviews>
                                             </stackView>
@@ -94,9 +91,6 @@
                                         <state key="normal" title="No, thanks">
                                             <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
-                                        <connections>
-                                            <action selector="tappedNoRegisterButton:" destination="Wkb-Mh-0K5" eventType="touchUpInside" id="SHl-4t-HwY"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q8t-oZ-HM7">
                                         <rect key="frame" x="205.5" y="173" width="206.5" height="46"/>
@@ -105,12 +99,9 @@
                                             <constraint firstAttribute="height" constant="46" id="qmy-9i-JVl"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Copperplate-Bold" family="Copperplate" pointSize="28"/>
-                                        <state key="normal" title="OK!">
+                                        <state key="normal" title="Register!">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
-                                        <connections>
-                                            <action selector="yesRegisterButton:" destination="Wkb-Mh-0K5" eventType="touchUpInside" id="HD5-kE-bNF"/>
-                                        </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fd0-nx-EUz">
                                         <rect key="frame" x="205.5" y="173" width="1" height="46"/>
@@ -178,8 +169,9 @@
                     <connections>
                         <outlet property="displayRankLabel" destination="UzT-s3-C44" id="h8B-mj-gYD"/>
                         <outlet property="nameTextField" destination="fjQ-Lx-pol" id="Ao9-hW-VNV"/>
+                        <outlet property="noButton" destination="ndR-3H-Jf9" id="DnT-VK-5ss"/>
+                        <outlet property="registerButton" destination="q8t-oZ-HM7" id="cfq-36-imU"/>
                         <outlet property="totalScoreLabel" destination="ZFZ-99-WcG" id="HFG-FC-uvm"/>
-                        <outlet property="yesRegisterButton" destination="q8t-oZ-HM7" id="fqP-AL-K7f"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6kZ-rW-PrW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

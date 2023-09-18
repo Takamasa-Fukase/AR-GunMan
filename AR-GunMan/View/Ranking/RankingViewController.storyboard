@@ -122,7 +122,7 @@
                     <connections>
                         <outlet property="activityIndicatorView" destination="Zqh-BY-GdJ" id="Sq5-u6-Ubw"/>
                         <outlet property="closeButton" destination="Ts5-ZF-D0U" id="gnT-oa-aj6"/>
-                        <outlet property="worldRankingTableView" destination="w9q-6v-Nmu" id="jXb-I4-5NG"/>
+                        <outlet property="tableView" destination="w9q-6v-Nmu" id="CVm-NQ-f9c"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A7s-Ma-d4m" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

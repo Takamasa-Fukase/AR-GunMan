@@ -8,24 +8,26 @@
 import Foundation
 import Firebase
 import RxSwift
+import FirebaseFirestoreSwift
 
 class RankingRepository {
-    private static let firestoreDataBase = Firestore.firestore()
+    private let firestoreDataBase = Firestore.firestore()
     
-    static func getRanking() async -> [Ranking]? {
-        do {
-            let snapshot = try await firestoreDataBase
-                .collection("worldRanking")
-                .order(by: "score", descending: true)
-                .getDocuments()
-            return snapshot.documents.map { data -> Ranking in
-                return Ranking(score: data.data()["score"] as? Double ?? 0.000,
-                               userName: data.data()["user_name"] as? String ?? "NO NAME")
-            }
-            
-        } catch {
-            print("RankingRepository.getRanking_error: \(error)")
-            return nil
-        }
+    func getRanking() async throws -> [Ranking] {
+        return try await firestoreDataBase
+            .collection("worldRanking")
+            .order(by: "score", descending: true)
+            .getDocuments()
+            .documents
+            .compactMap({ queryDocSnapshot in
+                return try? queryDocSnapshot.data(as: Ranking.self)
+            })
+    }
+    
+    func registerRanking(_ ranking: Ranking) throws {
+        try firestoreDataBase
+            .collection("worldRanking")
+            .document()
+            .setData(from: ranking)
     }
 }

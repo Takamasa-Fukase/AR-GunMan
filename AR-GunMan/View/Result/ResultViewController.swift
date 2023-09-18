@@ -12,12 +12,11 @@ import PanModal
 
 class ResultViewController: UIViewController {
     var viewModel: ResultViewModel!
+    var vmDependency: ResultViewModel.Dependency!
     let disposeBag = DisposeBag()
-    var totalScore: Double = 0.000
-    var limitRankIndex = Int()
-    var rankingList: [Ranking] = []
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     @IBOutlet weak var totalScoreLabel: UILabel!
     @IBOutlet weak var rightButtonsStackView: UIStackView!
     @IBOutlet weak var replayButton: UIButton!
@@ -26,25 +25,32 @@ class ResultViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupUI()
+        
         // MARK: - input
         viewModel = ResultViewModel(
             input: .init(viewWillAppear: rx.viewWillAppear,
                          replayButtonTapped: replayButton.rx.tap.asObservable(),
-                         toHomeButtonTapped: homeButton.rx.tap.asObservable()))
+                         toHomeButtonTapped: homeButton.rx.tap.asObservable()),
+            dependency: vmDependency)
         
         // MARK: - output
         viewModel.rankingList
+            .bind(to: tableView.rx.items(
+                cellIdentifier: "RankingCell",
+                cellType: RankingCell.self
+            )) { row, element, cell in
+                cell.configureCell(ranking: element, row: row)
+            }.disposed(by: disposeBag)
+        
+        viewModel.totalScoreText
+            .bind(to: totalScoreLabel.rx.text)
+            .disposed(by: disposeBag)
+
+        viewModel.showNameRegisterView
             .subscribe(onNext: { [weak self] element in
                 guard let self = self else {return}
-                guard let element = element else {return}
-                self.rankingList = element
-                self.tableView.reloadData()
-            }).disposed(by: disposeBag)
-        
-        viewModel.showNameRegisterView
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else {return}
-                self.showNameRegisterVC()
+                self.showNameRegisterVC(vmDependency: element)
             }).disposed(by: disposeBag)
         
         viewModel.showButtons
@@ -59,7 +65,21 @@ class ResultViewController: UIViewController {
                 self.dismissToTopVC(isReplay: element)
             }).disposed(by: disposeBag)
         
-        setupUI()
+        viewModel.isLoading
+            .subscribe(onNext: { [weak self] element in
+                guard let self = self else { return }
+                if element {
+                    self.activityIndicatorView.startAnimating()
+                }else {
+                    self.activityIndicatorView.stopAnimating()
+                }
+            }).disposed(by: disposeBag)
+        
+        viewModel.error
+            .subscribe(onNext: { [weak self] element in
+                guard let self = self else { return }
+                self.present(UIAlertController.errorAlert(element), animated: true)
+            }).disposed(by: disposeBag)
     }
     
     private func setupUI() {
@@ -67,26 +87,15 @@ class ResultViewController: UIViewController {
         rightButtonsStackView.isHidden = true
         replayButton.alpha = 0
         homeButton.alpha = 0
-        totalScoreLabel.text = String(format: "%.3f", totalScore)
         tableView.contentInset.top = 10
         tableView.register(UINib(nibName: "RankingCell", bundle: nil), forCellReuseIdentifier: "RankingCell")
     }
     
-    private func showNameRegisterVC() {
+    private func showNameRegisterVC(vmDependency: NameRegisterViewModel.Dependency) {
         let storyboard: UIStoryboard = UIStoryboard(name: "NameRegisterViewController", bundle: nil)
         let vc = storyboard.instantiateInitialViewController() as! NameRegisterViewController
-        vc.totalScore = self.totalScore
-        vc.rankingCount = self.rankingList.count
         vc.modalPresentationStyle = .overCurrentContext
-        
-        let threeDigitsScore = Double(round(1000 * self.totalScore)/1000)
-        
-        let limitRankIndex = self.rankingList.firstIndex(where: {
-            $0.score < threeDigitsScore
-        })
-        vc.tentativeRank = limitRankIndex ?? 0 + 1 + 1
-        vc.delegate = viewModel
-        
+        vc.vmDependency = vmDependency
         self.presentPanModal(vc)
     }
     
@@ -106,21 +115,5 @@ class ResultViewController: UIViewController {
         let topVC = self.presentingViewController?.presentingViewController as! ViewController
         UserDefaults.isReplay = isReplay
         topVC.dismiss(animated: false, completion: nil)
-    }
-}
-
-extension ResultViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return rankingList.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "RankingCell") as? RankingCell else {
-            return UITableViewCell()
-        }
-        cell.nameLabel.text = rankingList[indexPath.row].userName
-        cell.scoreLabel.text = String(rankingList[indexPath.row].score)
-        cell.rankLabel.text = String(indexPath.row + 1)
-        return cell
     }
 }

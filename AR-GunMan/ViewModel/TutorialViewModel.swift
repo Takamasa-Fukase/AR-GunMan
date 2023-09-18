@@ -35,7 +35,7 @@ class TutorialViewModel {
     
     struct Dependency {
         let transitionType: TransitType
-        var delegate: TutorialDelegate?
+        weak var delegate: TutorialDelegate?
     }
     
     init(input: Input, dependency: Dependency) {

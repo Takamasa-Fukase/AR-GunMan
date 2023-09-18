@@ -10,42 +10,50 @@ import RxSwift
 import RxCocoa
 
 class RankingViewModel {
-
-    //input
-    let getRanking: AnyObserver<Void>
-    let replayButtonTapped: AnyObserver<Void>
-    let toHomeButtonTapped: AnyObserver<Void>
-
-    //output
-    let rankingList: Observable<[Ranking]?>
-    let backToTopPageWithReplay: Observable<Bool>
+    let rankingList: Observable<[Ranking]>
+    let dismiss: Observable<Void>
+    let isLoading: Observable<Bool>
+    let error: Observable<Error>
     
-    //other
     private let disposeBag = DisposeBag()
     
-    init() {
-        
+    struct Input {
+        let viewWillAppear: Observable<Void>
+        let closeButtonTapped: Observable<Void>
+    }
+    
+    init(input: Input,
+         dependency rankingRepository: RankingRepository) {        
         //output
-        let _rankingList = BehaviorRelay<[Ranking]?>(value: nil)
-        self.rankingList = _rankingList.asObservable()
+        let rankingListRelay = BehaviorRelay<[Ranking]>(value: [])
+        self.rankingList = rankingListRelay.asObservable()
         
-        let _backToTopPageWithReplay = PublishRelay<Bool>()
-        self.backToTopPageWithReplay = _backToTopPageWithReplay.asObservable()
+        let dismissRelay = PublishRelay<Void>()
+        self.dismiss = dismissRelay.asObservable()
         
-        //input
-        self.getRanking = AnyObserver<Void>() { _ in
-            Task { @MainActor in
-                await _rankingList.accept(RankingRepository.getRanking())
-            }
-        }
+        let isLoadingRelay = BehaviorRelay<Bool>(value: false)
+        self.isLoading = isLoadingRelay.asObservable()
         
-        self.replayButtonTapped = AnyObserver<Void>() { _ in
-            _backToTopPageWithReplay.accept(true)
-        }
+        let errorRelay = PublishRelay<Error>()
+        self.error = errorRelay.asObservable()
+
+        input.viewWillAppear
+            .subscribe(onNext: { _ in
+                Task { @MainActor in
+                    isLoadingRelay.accept(true)
+                    do {
+                        let rankingList = try await rankingRepository.getRanking()
+                        rankingListRelay.accept(rankingList)
+                    } catch {
+                        errorRelay.accept(error)
+                    }
+                    isLoadingRelay.accept(false)
+                }
+            }).disposed(by: disposeBag)
         
-        self.toHomeButtonTapped = AnyObserver<Void>() { _ in
-            _backToTopPageWithReplay.accept(false)
-        }
+        input.closeButtonTapped
+            .bind(to: dismissRelay)
+            .disposed(by: disposeBag)
     }
     
 }

@@ -12,43 +12,55 @@ import RxCocoa
 class RankingViewController: UIViewController {
     
     //MARK: - Properties
-    let viewModel = RankingViewModel()
+    var viewModel: RankingViewModel!
     let disposeBag = DisposeBag()
-    var rankingList: [Ranking] = []
 
     @IBOutlet weak var closeButton: UIButton!
-    @IBOutlet weak var worldRankingTableView: UITableView!
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     
     //MARK: - Methods
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        //input
-        viewModel.getRanking.onNext(Void())
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupTapDismiss()
         setupTableView()
         
-        //output
-        let _ = viewModel.rankingList
-            .subscribe(onNext: { [weak self] element in
-                guard let self = self else {return}
-                guard let element = element else {return}
-                self.rankingList = element
-                self.activityIndicatorView.stopAnimating()
-                self.worldRankingTableView.reloadData()
-            }).disposed(by: disposeBag)
+        // input
+        viewModel = RankingViewModel(
+            input: .init(viewWillAppear: rx.viewWillAppear,
+                         closeButtonTapped: closeButton.rx.tap.asObservable()),
+            dependency: RankingRepository())
         
-        //other
-        let _ = closeButton.rx.tap
+        // output
+        viewModel.rankingList
+            .bind(to: tableView.rx.items(
+                cellIdentifier: "RankingCell",
+                cellType: RankingCell.self
+            )) { row, element, cell in
+                cell.configureCell(ranking: element, row: row)
+            }.disposed(by: disposeBag)
+        
+        viewModel.dismiss
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else {return}
                 self.dismiss(animated: true)
+            }).disposed(by: disposeBag)
+        
+        viewModel.isLoading
+            .subscribe(onNext: { [weak self] element in
+                guard let self = self else { return }
+                if element {
+                    self.activityIndicatorView.startAnimating()
+                }else {
+                    self.activityIndicatorView.stopAnimating()
+                }
+            }).disposed(by: disposeBag)
+        
+        viewModel.error
+            .subscribe(onNext: { [weak self] element in
+                guard let self = self else { return }
+                self.present(UIAlertController.errorAlert(element), animated: true)
             }).disposed(by: disposeBag)
     }
     
@@ -64,26 +76,8 @@ class RankingViewController: UIViewController {
     }
     
     private func setupTableView() {
-        worldRankingTableView.contentInset.top = 10
-        worldRankingTableView.dataSource = self
-        worldRankingTableView.register(UINib(nibName: "RankingCell", bundle: nil), forCellReuseIdentifier: "RankingCell")
-    }
-}
-
-extension RankingViewController: UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return rankingList.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "RankingCell") as? RankingCell else {
-            return UITableViewCell()
-        }
-        cell.nameLabel.text = rankingList[indexPath.row].userName
-        cell.scoreLabel.text = String(rankingList[indexPath.row].score)
-        cell.rankLabel.text = String(indexPath.row + 1)
-        return cell
+        tableView.contentInset.top = 10
+        tableView.register(UINib(nibName: "RankingCell", bundle: nil), forCellReuseIdentifier: "RankingCell")
     }
 }
 

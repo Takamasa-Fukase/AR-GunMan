@@ -25,6 +25,10 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        addSceneView()
+        // - 等幅フォントにして高速で動くタイムカウントの横振れを防止
+        timeCountLabel.font = timeCountLabel.font.monospacedDigitFont
+        
         //MARK: - input
         let vmInput = GameViewModel
             .Input(viewDidAppear: rx.viewDidAppear,
@@ -95,14 +99,10 @@ class GameViewController: UIViewController {
                 guard let self = self else {return}
                 let storyboard: UIStoryboard = UIStoryboard(name: "ResultViewController", bundle: nil)
                 let vc = storyboard.instantiateInitialViewController() as! ResultViewController
-                vc.totalScore = element
+                vc.vmDependency = .init(rankingRepository: RankingRepository(),
+                                        totalScore: element)
                 self.present(vc, animated: true)
             }).disposed(by: disposeBag)
-        
-        //MARK: - other
-        addSceneView()
-        // - 等幅フォントにして高速で動くタイムカウントの横振れを防止
-        timeCountLabel.font = timeCountLabel.font.monospacedDigitFont
     }
     
     override func viewWillAppear(_ animated: Bool) {

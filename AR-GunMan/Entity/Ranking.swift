@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Ranking {
+struct Ranking: Codable {
     let score: Double
     let userName: String
 }
