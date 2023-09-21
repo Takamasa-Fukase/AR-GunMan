@@ -10,4 +10,9 @@ import Foundation
 struct Ranking: Codable {
     let score: Double
     let userName: String
+    
+    enum CodingKeys: String, CodingKey {
+        case score
+        case userName = "user_name"
+    }
 }

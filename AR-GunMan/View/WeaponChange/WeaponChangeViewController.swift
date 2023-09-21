@@ -28,8 +28,6 @@ class WeaponChangeViewController: UIViewController {
     //MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        setupFSPagerView()
         
         viewModel = WeaponChangeViewModel(dependency: delegate)
         
@@ -40,6 +38,7 @@ class WeaponChangeViewController: UIViewController {
                 self.dismiss(animated: false)
             }).disposed(by: disposeBag)
         
+        setupFSPagerView()
     }
 
     override func viewDidLayoutSubviews() {
