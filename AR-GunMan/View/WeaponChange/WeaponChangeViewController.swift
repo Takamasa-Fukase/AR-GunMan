@@ -15,7 +15,7 @@ class WeaponChangeViewController: UIViewController {
        
     //MARK: - Properties
     var viewModel: WeaponChangeViewModel!
-    weak var delegate: WeaponChangeDelegate?
+    var vmDependency: WeaponChangeViewModel.Dependency!
     let disposeBag = DisposeBag()
     
     @IBOutlet weak var pagerView: FSPagerView! {
@@ -29,7 +29,7 @@ class WeaponChangeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        viewModel = WeaponChangeViewModel(dependency: delegate)
+        viewModel = WeaponChangeViewModel(dependency: vmDependency)
         
         // MARK: - output
         viewModel.dismiss

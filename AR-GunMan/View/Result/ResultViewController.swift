@@ -59,10 +59,10 @@ class ResultViewController: UIViewController {
                 self.showButtons()
             }).disposed(by: disposeBag)
         
-        viewModel.backToTopPageViewWithReplay
-            .subscribe(onNext: { [weak self] element in
+        viewModel.backToTopPageView
+            .subscribe(onNext: { [weak self] _ in
                 guard let self = self else {return}
-                self.dismissToTopVC(isReplay: element)
+                self.dismissToTopVC()
             }).disposed(by: disposeBag)
         
         viewModel.isLoading
@@ -111,9 +111,8 @@ class ResultViewController: UIViewController {
         }
     }
     
-    private func dismissToTopVC(isReplay: Bool = false) {
+    private func dismissToTopVC() {
         let topVC = self.presentingViewController?.presentingViewController as! ViewController
-        UserDefaults.isReplay = isReplay
         topVC.dismiss(animated: false, completion: nil)
     }
 }

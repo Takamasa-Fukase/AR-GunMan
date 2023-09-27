@@ -55,15 +55,9 @@ class CurrentWeapon {
         bulletsHolder.refillBulletsCount()
     }
     
-    private func changeWeaponType(to newType: WeaponType) {
+    func changeWeaponType(to newType: WeaponType) {
         typeRelay.accept(newType)
         AudioUtil.playSound(of: newType.weaponChangingSound)
         bulletsHolder = BulletsHolder(type: newType)
-    }
-}
-
-extension CurrentWeapon: WeaponChangeDelegate {
-    func weaponSelected(_ index: Int) {
-        changeWeaponType(to: WeaponType.allCases[index])
     }
 }

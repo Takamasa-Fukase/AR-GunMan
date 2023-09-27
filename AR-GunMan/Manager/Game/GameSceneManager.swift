@@ -12,9 +12,12 @@ import RxSwift
 import RxCocoa
 
 class GameSceneManager: NSObject {
-    
-    //MARK: - Properties
-    var sceneView = ARSCNView()
+    var targetHit: Observable<Void> {
+        return targetHitRelay.asObservable()
+    }
+
+    private let sceneView: ARSCNView
+    private let targetHitRelay = PublishRelay<Void>()
 
     // - node
     private var originalBulletNode = SCNNode()
@@ -28,25 +31,12 @@ class GameSceneManager: NSObject {
     private var isPlayerRunning = false
     private var lastPlayerStatus = false
     
-    // - notification
-    private let _targetHit = PublishRelay<Void>()
-    var targetHit: Observable<Void> {
-        return _targetHit.asObservable()
-    }
-    
     //MARK: - Methods
-    override init() {
+    init(sceneView: ARSCNView) {
+        self.sceneView = sceneView
         super.init()
-        
-        //SceneViewをセットアップ
-        SceneViewSettingUtil.setupSceneView(sceneView, sceneViewDelegate: self, physicContactDelegate: self)
-        //各武器をセットアップ
-        pistolParentNode = setupWeaponNode(type: .pistol)
-        bazookaParentNode = setupWeaponNode(type: .bazooka)
-        originalBulletNode = createOriginalBulletNode()
-        originalBazookaHitExplosionParticle = createOriginalParticleSystem(type: .bazookaExplosion)
-        //ターゲットをランダムな位置に配置
-        addTarget()
+
+        setupSceneViewAndNodes()
     }
     
     //指定された武器を表示
@@ -97,6 +87,18 @@ class GameSceneManager: NSObject {
     }
     
     //MARK: - Private Methods
+    private func setupSceneViewAndNodes() {
+        //SceneViewをセットアップ
+        SceneViewSettingUtil.setupSceneView(sceneView, sceneViewDelegate: self, physicContactDelegate: self)
+        //各武器をセットアップ
+        pistolParentNode = setupWeaponNode(type: .pistol)
+        bazookaParentNode = setupWeaponNode(type: .bazooka)
+        originalBulletNode = createOriginalBulletNode()
+        originalBazookaHitExplosionParticle = createOriginalParticleSystem(type: .bazookaExplosion)
+        //ターゲットをランダムな位置に配置
+        addTarget()
+    }
+    
     private func setupWeaponNode(type: WeaponType) -> SCNNode {
         let weaponParentNode = SceneNodeUtil.loadScnFile(of: GameConst.getWeaponScnAssetsPath(type), nodeName: "\(type.name)Parent")
         SceneNodeUtil.addBillboardConstraint(weaponParentNode)
@@ -246,7 +248,7 @@ extension GameSceneManager: SCNPhysicsContactDelegate {
             executeTargetHitParticle(contactPoint: contact.contactPoint)
             
             //ヒットしたという通知をVC経由でsubscribeさせ、statusManagerに伝達する
-            _targetHit.accept(Void())
+            targetHitRelay.accept(Void())
         }
     }
 }

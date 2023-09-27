@@ -9,12 +9,25 @@ import RxSwift
 import RxCocoa
 
 class TimeCounter {
-    let countChangedRelay = BehaviorRelay<Double>(value: GameConst.timeCount)
     var countChanged: Observable<Double> {
         return countChangedRelay.asObservable()
     }
-    
+    let countEnded: Observable<Void>
+
+    private let countChangedRelay = BehaviorRelay<Double>(value: GameConst.timeCount)
     private var timerObservable: Disposable?
+    private let disposeBag = DisposeBag()
+    
+    init() {
+        let countEndedRelay = PublishRelay<Void>()
+        self.countEnded = countEndedRelay.asObservable()
+
+        countChanged
+            .filter({$0 <= 0})
+            .subscribe(onNext: { _ in
+                countEndedRelay.accept(Void())
+            }).disposed(by: disposeBag)
+    }
 
     func startTimer() {
         timerObservable = TimeCountUtil.createRxTimer(.milliseconds(10))

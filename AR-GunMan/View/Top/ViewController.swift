@@ -32,7 +32,7 @@ class ViewController: UIViewController {
                          rankingButtonTapped: rankingButton.rx.tap.asObservable(),
                          howToPlayButtonTapped: howToPlayButton.rx.tap.asObservable(),
                          settingsButtonTapped: settingsButton.rx.tap.asObservable()),
-            dependency: TopPageButtonImageSwitcher())
+            dependency: .init(buttonImageSwitcher: TopPageButtonImageSwitcher()))
         
         //MARK: - output
         viewModel.startButtonImage
@@ -51,12 +51,11 @@ class ViewController: UIViewController {
             .bind(to: settingsButton.rx.image())
             .disposed(by: disposeBag)
         
-        Observable
-            .combineLatest(viewModel.showGame, viewModel.isReplay)
-            .subscribe(onNext: { [weak self] (_, isReplay) in
+        viewModel.showGame
+            .subscribe(onNext: { [weak self] _ in
                 guard let self = self else {return}
                 CameraAuthUtil.checkCameraAuthorization(vc: self)
-                self.presentGameVC(animated: !isReplay)
+                self.presentGameVC()
             }).disposed(by: disposeBag)
         
         viewModel.showRanking
@@ -78,13 +77,11 @@ class ViewController: UIViewController {
             }).disposed(by: disposeBag)
     }
 
-    func presentGameVC(animated: Bool = true) {
-        startButtonIcon.image = TopConst.targetIcon
-        
+    func presentGameVC() {
         let storyboard: UIStoryboard = UIStoryboard(name: "GameViewController", bundle: nil)
         let vc = storyboard.instantiateInitialViewController() as! GameViewController
         vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: animated)
+        self.present(vc, animated: true)
     }
     
     func presentRankingVC() {

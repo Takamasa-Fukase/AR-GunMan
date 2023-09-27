@@ -15,7 +15,7 @@ class ResultViewModel {
     var showButtons: Observable<Void> {
         return showButtonsRelay.asObservable()
     }
-    let backToTopPageViewWithReplay: Observable<Bool>
+    let backToTopPageView: Observable<Void>
     let isLoading: Observable<Bool>
     let error: Observable<Error>
     
@@ -45,8 +45,8 @@ class ResultViewModel {
         let showNameRegisterViewRelay = PublishRelay<NameRegisterViewModel.Dependency>()
         self.showNameRegisterView = showNameRegisterViewRelay.asObservable()
         
-        let backToTopPageViewWithReplayRelay = PublishRelay<Bool>()
-        self.backToTopPageViewWithReplay = backToTopPageViewWithReplayRelay.asObservable()
+        let backToTopPageViewRelay = PublishRelay<Void>()
+        self.backToTopPageView = backToTopPageViewRelay.asObservable()
         
         let isLoadingRelay = BehaviorRelay<Bool>(value: false)
         self.isLoading = isLoadingRelay.asObservable()
@@ -54,36 +54,43 @@ class ResultViewModel {
         let errorRelay = PublishRelay<Error>()
         self.error = errorRelay.asObservable()
         
+        input.viewWillAppear
+            .take(1)
+            .subscribe(onNext: { _ in
+                fetchRanking()
+            }).disposed(by: disposeBag)
+        
         input.replayButtonTapped
-            .map({_ in true})
-            .bind(to: backToTopPageViewWithReplayRelay)
-            .disposed(by: disposeBag)
+            .subscribe(onNext: { _ in
+                UserDefaults.isReplay = true
+                backToTopPageViewRelay.accept(Void())
+            }).disposed(by: disposeBag)
         
         input.toHomeButtonTapped
-            .map({_ in false})
-            .bind(to: backToTopPageViewWithReplayRelay)
-            .disposed(by: disposeBag)
-        
-        input.viewWillAppear
             .subscribe(onNext: { _ in
-                Task { @MainActor in
-                    isLoadingRelay.accept(true)
-                    do {
-                        let rankingList = try await dependency.rankingRepository.getRanking()
-                        rankingListRelay.accept(rankingList)
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                            showNameRegisterViewRelay.accept(
-                                createNameRegisterViewModelDependency()
-                            )
-                        }
-                    }catch {
-                        errorRelay.accept(error)
-                    }
-                    isLoadingRelay.accept(false)
-                }
+                backToTopPageViewRelay.accept(Void())
             }).disposed(by: disposeBag)
+        
+        func fetchRanking() {
+            Task { @MainActor in
+                isLoadingRelay.accept(true)
+                do {
+                    let rankingList = try await dependency.rankingRepository.getRanking()
+                    rankingListRelay.accept(rankingList)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        showNameRegisterViewRelay.accept(
+                            createNameRegisterViewModelDependency()
+                        )
+                    }
+                }catch {
+                    errorRelay.accept(error)
+                }
+                isLoadingRelay.accept(false)
+            }
+        }
 
-        @Sendable func createNameRegisterViewModelDependency() -> NameRegisterViewModel.Dependency {
+        @Sendable
+        func createNameRegisterViewModelDependency() -> NameRegisterViewModel.Dependency {
             let threeDigitsScore = Double(round(1000 * dependency.totalScore) / 1000)
             let limitRankIndex = rankingListRelay.value.firstIndex(where: {
                 $0.score < threeDigitsScore
