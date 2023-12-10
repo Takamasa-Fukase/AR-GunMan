@@ -38,9 +38,16 @@ class SceneNodeUtil {
         let randomZthird = Float.random(in: -3...3)
         var randomZ: Float?
         
+        // 原点0（プレーヤーの初期位置）の超至近距離に的を集中させずに、
+        // なるべくばらけさせることができる様に制御する
         if randomX < -0.5 || randomX > 0.5 || randomY < -0.5 || randomY > 0.5 {
+            // XとYのどちらかが原点0から0.5より離れている場合は、
+            // 原点0に近い値（-0.5 ~ 0.5）も含めてユーザーの近くも遠くも両方含めた範囲のZのランダム値を渡す
             randomZ = randomZthird
+            
         }else {
+            // それに対し、XもYも両方原点0に近い値（-0.5 ~ 0.5）になった場合はZだけは、
+            // （-0.5 ~ 0.5）の範囲を除外した値から選ばせて、最低でもユーザーから0.5より離れさせる
             randomZ = [randomZfirst, randomZsecond].randomElement()
         }
         return SCNVector3(x: randomX, y: randomY, z: randomZ ?? 0)
