@@ -15,11 +15,10 @@ class ViewController: UIViewController {
     let disposeBag = DisposeBag()
     
     @IBOutlet weak var startButton: UIButton!
-    @IBOutlet weak var rankingButton: UIButton!
-    @IBOutlet weak var howToPlayButton: UIButton!
     @IBOutlet weak var settingsButton: UIButton!
+    @IBOutlet weak var howToPlayButton: UIButton!
     @IBOutlet weak var startButtonIcon: UIImageView!
-    @IBOutlet weak var rankingButtonIcon: UIImageView!
+    @IBOutlet weak var settingsButtonIcon: UIImageView!
     @IBOutlet weak var howToPlayButtonIcon: UIImageView!
     
     override func viewDidLoad() {
@@ -27,20 +26,24 @@ class ViewController: UIViewController {
 
         //MARK: - input
         viewModel = TopViewModel(
-            input: .init(viewDidAppear: rx.viewDidAppear,
-                         startButtonTapped: startButton.rx.tap.asObservable(),
-                         rankingButtonTapped: rankingButton.rx.tap.asObservable(),
-                         howToPlayButtonTapped: howToPlayButton.rx.tap.asObservable(),
-                         settingsButtonTapped: settingsButton.rx.tap.asObservable()),
-            dependency: .init(buttonImageSwitcher: TopPageButtonImageSwitcher()))
+            input: .init(
+                viewDidAppear: rx.viewDidAppear,
+                startButtonTapped: startButton.rx.tap.asObservable(),
+                settingsButtonTapped: settingsButton.rx.tap.asObservable(),
+                howToPlayButtonTapped: howToPlayButton.rx.tap.asObservable()
+            ),
+            dependency: .init(
+                buttonImageSwitcher: TopPageButtonImageSwitcher()
+            )
+        )
         
         //MARK: - output
         viewModel.startButtonImage
             .bind(to: startButtonIcon.rx.image)
             .disposed(by: disposeBag)
         
-        viewModel.rankingButtonImage
-            .bind(to: rankingButtonIcon.rx.image)
+        viewModel.settingsButtonImage
+            .bind(to: settingsButtonIcon.rx.image)
             .disposed(by: disposeBag)
         
         viewModel.howToPlayButtonImage
@@ -54,22 +57,16 @@ class ViewController: UIViewController {
                 self.presentGameVC()
             }).disposed(by: disposeBag)
         
-        viewModel.showRanking
+        viewModel.showSettings
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else {return}
-                self.presentRankingVC()
+                self.presentSettingsVC()
             }).disposed(by: disposeBag)
         
         viewModel.showTutorial
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else {return}
                 self.presentHowToPlayVC()
-            }).disposed(by: disposeBag)
-        
-        viewModel.showSettings
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else {return}
-                self.presentSettingsVC()
             }).disposed(by: disposeBag)
     }
 
@@ -80,22 +77,16 @@ class ViewController: UIViewController {
         self.present(vc, animated: true)
     }
     
-    func presentRankingVC() {
-        let storyboard: UIStoryboard = UIStoryboard(name: "RankingViewController", bundle: nil)
-        let vc = storyboard.instantiateInitialViewController() as! RankingViewController
+    func presentSettingsVC() {
+        let storyboard: UIStoryboard = UIStoryboard(name: "SettingsViewController", bundle: nil)
+        let vc = storyboard.instantiateInitialViewController() as! SettingsViewController
         self.presentPanModal(vc)
     }
-    
+
     func presentHowToPlayVC() {
         let storyboard: UIStoryboard = UIStoryboard(name: "TutorialViewController", bundle: nil)
         let vc = storyboard.instantiateInitialViewController() as! TutorialViewController
         vc.vmDependency = .init(transitionType: .topPage)
-        self.presentPanModal(vc)
-    }
-    
-    func presentSettingsVC() {
-        let storyboard: UIStoryboard = UIStoryboard(name: "SettingsViewController", bundle: nil)
-        let vc = storyboard.instantiateInitialViewController() as! SettingsViewController
         self.presentPanModal(vc)
     }
 }

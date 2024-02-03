@@ -11,13 +11,15 @@ import RxCocoa
 
 class SettingsViewModel {
     let openSafariView: Observable<String>
+    let showRanking: Observable<Void>
     let dismiss: Observable<Void>
     
     private let disposeBag = DisposeBag()
     
     struct Input {
-        let developerConctactButtonTapped: Observable<Void>
+        let worldRankingButtonTapped: Observable<Void>
         let privacyPolicyButtonTapped: Observable<Void>
+        let developerConctactButtonTapped: Observable<Void>
         let backButtonTapped: Observable<Void>
     }
     
@@ -25,23 +27,21 @@ class SettingsViewModel {
         let _openSafariView = PublishRelay<String>()
         self.openSafariView = _openSafariView.asObservable()
         
-        let _dismiss = PublishRelay<Void>()
-        self.dismiss = _dismiss.asObservable()
-        
-        input.developerConctactButtonTapped
-            .subscribe(onNext: { _ in
-                _openSafariView.accept(SettingsConst.developerContactURL)
-            }).disposed(by: disposeBag)
+        self.showRanking = input.worldRankingButtonTapped
+            .map({_ in})
         
         input.privacyPolicyButtonTapped
             .subscribe(onNext: { _ in
                 _openSafariView.accept(SettingsConst.privacyPolicyURL)
             }).disposed(by: disposeBag)
         
-        input.backButtonTapped
+        input.developerConctactButtonTapped
             .subscribe(onNext: { _ in
-                _dismiss.accept(Void())
+                _openSafariView.accept(SettingsConst.developerContactURL)
             }).disposed(by: disposeBag)
+        
+        self.dismiss = input.backButtonTapped
+            .map({_ in})
     }
 }
 

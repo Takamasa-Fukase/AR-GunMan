@@ -16,41 +16,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="844" height="390"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TTQ-YW-ozx">
-                                <rect key="frame" x="87" y="44.666666666666657" width="128" height="60"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="128" id="50a-J7-HNp"/>
-                                    <constraint firstAttribute="height" constant="60" id="GI2-hO-HB7"/>
-                                </constraints>
-                                <color key="tintColor" red="0.027436967940000001" green="0.027523037050000001" blue="0.019605956970000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <state key="normal">
-                                    <attributedString key="attributedTitle">
-                                        <fragment content="Settings">
-                                            <attributes>
-                                                <color key="NSColor" red="0.027436967940000001" green="0.027523037050000001" blue="0.019605956970000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                <font key="NSFont" size="28" name="Copperplate-Bold"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                <integer key="NSUnderline" value="1"/>
-                                            </attributes>
-                                        </fragment>
-                                    </attributedString>
-                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="26" scale="large" weight="black"/>
-                                </state>
-                            </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ar_gunman_title_image" translatesAutoresizingMaskIntoConstraints="NO" id="AHr-zD-9NT">
-                                <rect key="frame" x="279" y="39" width="478" height="71"/>
+                                <rect key="frame" x="248" y="39" width="509" height="71"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="509" id="Qad-vO-FyC"/>
+                                    <constraint firstAttribute="width" constant="509" id="Qad-vO-FyC"/>
                                     <constraint firstAttribute="height" constant="71" id="REb-9f-QUt"/>
                                 </constraints>
                             </imageView>
-                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S56-Y5-xWC">
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S56-Y5-xWC" userLabel="HorizontalContentsStackView">
                                 <rect key="frame" x="87" y="122" width="697" height="232"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="8aZ-dX-j1e">
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="8aZ-dX-j1e" userLabel="ButtonsStackView">
                                         <rect key="frame" x="0.0" y="0.0" width="388" height="232"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WKs-OM-I1y">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WKs-OM-I1y" userLabel="StartButtonBaseView">
                                                 <rect key="frame" x="0.0" y="0.0" width="203" height="77.333333333333329"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ybM-iC-l3r">
@@ -96,11 +75,11 @@
                                                     <constraint firstItem="ybM-iC-l3r" firstAttribute="top" secondItem="WKs-OM-I1y" secondAttribute="top" id="yLe-Ow-PEc"/>
                                                 </constraints>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XRa-wG-R0A">
-                                                <rect key="frame" x="0.0" y="77.333333333333343" width="264" height="77.333333333333343"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XRa-wG-R0A" userLabel="SettingsButtonBaseView">
+                                                <rect key="frame" x="0.0" y="77.333333333333343" width="278" height="77.333333333333343"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="68H-Do-dng">
-                                                        <rect key="frame" x="0.0" y="0.0" width="264" height="77.333333333333329"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="278" height="77.333333333333329"/>
                                                         <color key="tintColor" red="0.027436967940000001" green="0.027523037050000001" blue="0.019605956970000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         <state key="normal">
                                                             <attributedString key="attributedTitle">
@@ -111,7 +90,7 @@
                                                                         <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                                     </attributes>
                                                                 </fragment>
-                                                                <fragment content="Ranking">
+                                                                <fragment content="Settings">
                                                                     <attributes>
                                                                         <color key="NSColor" red="0.027436967940000001" green="0.027523037050000001" blue="0.019605956970000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                         <font key="NSFont" size="50" name="Copperplate-Bold"/>
@@ -140,7 +119,7 @@
                                                     <constraint firstItem="TDP-3M-EL3" firstAttribute="centerY" secondItem="XRa-wG-R0A" secondAttribute="centerY" constant="4" id="sas-Wq-wVG"/>
                                                 </constraints>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ecx-CT-X2n">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ecx-CT-X2n" userLabel="HowToPlayButtonBaseView">
                                                 <rect key="frame" x="0.0" y="154.66666666666669" width="348" height="77.333333333333314"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aDv-ZE-dSr">
@@ -222,30 +201,26 @@
                         <color key="backgroundColor" red="0.79046171899999995" green="0.69538801910000003" blue="0.53327715399999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="S56-Y5-xWC" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" constant="40" id="1Ow-Fi-EjX"/>
-                            <constraint firstItem="AHr-zD-9NT" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="TTQ-YW-ozx" secondAttribute="trailing" constant="64" id="5ki-XH-LlU"/>
                             <constraint firstItem="fQZ-KI-GVf" firstAttribute="trailing" secondItem="AHr-zD-9NT" secondAttribute="trailing" constant="40" id="Ja2-dW-qTJ"/>
                             <constraint firstItem="8aZ-dX-j1e" firstAttribute="width" secondItem="fQZ-KI-GVf" secondAttribute="width" multiplier="0.517327" id="SsP-tF-h3Z"/>
                             <constraint firstItem="GaB-ef-sev" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" id="TdV-Nb-MgY"/>
                             <constraint firstItem="GaB-ef-sev" firstAttribute="top" secondItem="fQZ-KI-GVf" secondAttribute="top" id="cDk-P0-2hu"/>
-                            <constraint firstItem="TTQ-YW-ozx" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" constant="40" id="d3l-eC-ka0"/>
                             <constraint firstItem="S56-Y5-xWC" firstAttribute="top" secondItem="AHr-zD-9NT" secondAttribute="bottom" constant="12" id="egz-xc-Btq"/>
                             <constraint firstItem="GaB-ef-sev" firstAttribute="height" secondItem="U0K-SW-4ec" secondAttribute="height" multiplier="0.1" id="euM-OS-FTx"/>
                             <constraint firstItem="fQZ-KI-GVf" firstAttribute="trailing" secondItem="GaB-ef-sev" secondAttribute="trailing" id="hat-Ef-AiX"/>
                             <constraint firstAttribute="trailing" secondItem="S56-Y5-xWC" secondAttribute="trailing" constant="60" id="kSk-qW-8lM"/>
-                            <constraint firstItem="TTQ-YW-ozx" firstAttribute="centerY" secondItem="AHr-zD-9NT" secondAttribute="centerY" id="mJQ-Qv-qzc"/>
                             <constraint firstItem="AHr-zD-9NT" firstAttribute="top" secondItem="GaB-ef-sev" secondAttribute="bottom" id="ssp-3h-bkV"/>
                             <constraint firstItem="fQZ-KI-GVf" firstAttribute="trailing" secondItem="AHr-zD-9NT" secondAttribute="trailing" constant="40" id="tn2-dS-biB"/>
                             <constraint firstItem="fQZ-KI-GVf" firstAttribute="bottom" secondItem="S56-Y5-xWC" secondAttribute="bottom" constant="15" id="yPD-vB-031"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="howToPlayButton" destination="aDv-ZE-dSr" id="BJd-fq-D2E"/>
-                        <outlet property="howToPlayButtonIcon" destination="8cQ-Eo-5C8" id="pfv-Xq-UXf"/>
-                        <outlet property="rankingButton" destination="68H-Do-dng" id="Y0g-UV-7S2"/>
-                        <outlet property="rankingButtonIcon" destination="TDP-3M-EL3" id="Tea-Co-rch"/>
-                        <outlet property="settingsButton" destination="TTQ-YW-ozx" id="gAZ-Fm-aSb"/>
-                        <outlet property="startButton" destination="ybM-iC-l3r" id="mrr-qY-wPD"/>
-                        <outlet property="startButtonIcon" destination="Hbr-yd-pBE" id="pqb-x1-Xto"/>
+                        <outlet property="howToPlayButton" destination="aDv-ZE-dSr" id="fVP-bx-Cm4"/>
+                        <outlet property="howToPlayButtonIcon" destination="8cQ-Eo-5C8" id="GUQ-Y0-gIF"/>
+                        <outlet property="settingsButton" destination="68H-Do-dng" id="33y-ii-yXG"/>
+                        <outlet property="settingsButtonIcon" destination="TDP-3M-EL3" id="9yd-B9-b29"/>
+                        <outlet property="startButton" destination="ybM-iC-l3r" id="ZCa-9X-9RF"/>
+                        <outlet property="startButtonIcon" destination="Hbr-yd-pBE" id="ry2-Pg-9b5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>

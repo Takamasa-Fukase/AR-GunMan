@@ -10,21 +10,19 @@ import RxCocoa
 
 class TopViewModel {
     let startButtonImage: Observable<UIImage?>
-    let rankingButtonImage: Observable<UIImage?>
+    let settingsButtonImage: Observable<UIImage?>
     let howToPlayButtonImage: Observable<UIImage?>
     let showGame: Observable<Void>
-    let showRanking: Observable<Void>
-    let showTutorial: Observable<Void>
     let showSettings: Observable<Void>
+    let showTutorial: Observable<Void>
 
     private let disposeBag = DisposeBag()
     
     struct Input {
         let viewDidAppear: Observable<Void>
         let startButtonTapped: Observable<Void>
-        let rankingButtonTapped: Observable<Void>
-        let howToPlayButtonTapped: Observable<Void>
         let settingsButtonTapped: Observable<Void>
+        let howToPlayButtonTapped: Observable<Void>
     }
     
     struct Dependency {
@@ -48,8 +46,8 @@ class TopViewModel {
             .filter({$0.type == .start})
             .map({$0.type.targetIcon(isSwitched: $0.isSwitched)})
         
-        self.rankingButtonImage = dependency.buttonImageSwitcher.image
-            .filter({$0.type == .ranking})
+        self.settingsButtonImage = dependency.buttonImageSwitcher.image
+            .filter({$0.type == .settings})
             .map({$0.type.targetIcon(isSwitched: $0.isSwitched)})
         
         self.howToPlayButtonImage = dependency.buttonImageSwitcher.image
@@ -62,36 +60,27 @@ class TopViewModel {
             .bind(to: showGameRelay)
             .disposed(by: disposeBag)
         
-        self.showRanking = dependency.buttonImageSwitcher.image
-            .filter({$0.type == .ranking && !$0.isSwitched})
+        self.showSettings = dependency.buttonImageSwitcher.image
+            .filter({$0.type == .settings && !$0.isSwitched})
             .map({_ in})
         
         self.showTutorial = dependency.buttonImageSwitcher.image
             .filter({$0.type == .howToPlay && !$0.isSwitched})
             .map({_ in})
-        
-        self.showSettings = dependency.buttonImageSwitcher.image
-            .filter({$0.type == .settings && !$0.isSwitched})
-            .map({_ in})
-        
+
         input.startButtonTapped
             .subscribe(onNext: { _ in
                 dependency.buttonImageSwitcher.switchAndRevert(of: .start)
             }).disposed(by: disposeBag)
         
-        input.rankingButtonTapped
+        input.settingsButtonTapped
             .subscribe(onNext: { _ in
-                dependency.buttonImageSwitcher.switchAndRevert(of: .ranking)
+                dependency.buttonImageSwitcher.switchAndRevert(of: .settings)
             }).disposed(by: disposeBag)
         
         input.howToPlayButtonTapped
             .subscribe(onNext: { _ in
                 dependency.buttonImageSwitcher.switchAndRevert(of: .howToPlay)
-            }).disposed(by: disposeBag)
-        
-        input.settingsButtonTapped
-            .subscribe(onNext: { _ in
-                dependency.buttonImageSwitcher.switchAndRevert(of: .settings)
             }).disposed(by: disposeBag)
     }
 }
