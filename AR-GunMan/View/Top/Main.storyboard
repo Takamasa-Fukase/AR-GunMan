@@ -208,7 +208,6 @@
                             <constraint firstItem="fQZ-KI-GVf" firstAttribute="trailing" secondItem="GaB-ef-sev" secondAttribute="trailing" id="hat-Ef-AiX"/>
                             <constraint firstAttribute="trailing" secondItem="S56-Y5-xWC" secondAttribute="trailing" constant="60" id="kSk-qW-8lM"/>
                             <constraint firstItem="AHr-zD-9NT" firstAttribute="top" secondItem="GaB-ef-sev" secondAttribute="bottom" id="ssp-3h-bkV"/>
-                            <constraint firstItem="fQZ-KI-GVf" firstAttribute="trailing" secondItem="AHr-zD-9NT" secondAttribute="trailing" constant="40" id="tn2-dS-biB"/>
                             <constraint firstItem="fQZ-KI-GVf" firstAttribute="bottom" secondItem="S56-Y5-xWC" secondAttribute="bottom" constant="15" id="yPD-vB-031"/>
                         </constraints>
                     </view>
