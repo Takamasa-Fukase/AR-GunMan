@@ -79,7 +79,7 @@
                                 </constraints>
                                 <state key="normal">
                                     <attributedString key="attributedTitle">
-                                        <fragment content="BACK">
+                                        <fragment content="Back">
                                             <attributes>
                                                 <color key="NSColor" red="0.027436967940000001" green="0.027523037050000001" blue="0.019605956970000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <font key="NSFont" size="36" name="Copperplate-Bold"/>
