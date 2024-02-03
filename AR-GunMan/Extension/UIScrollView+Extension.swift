@@ -13,7 +13,7 @@ extension UIScrollView {
     }
     
     func scrollHorizontallyToNextPage(animated: Bool = true) {
-        let maxPageIndex = Int((contentSize.width / frame.width) - 1)
+        let maxPageIndex = Int((Int(contentSize.width) / Int(frame.width)) - 1)
         let targetIndex = CGFloat(min(horizontalPageIndex + 1, maxPageIndex))
         let targetContentOffsetX = frame.width * targetIndex
         let targetCGPoint = CGPoint(x: targetContentOffsetX, y: 0)
