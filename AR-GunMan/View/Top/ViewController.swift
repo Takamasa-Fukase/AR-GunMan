@@ -46,11 +46,7 @@ class ViewController: UIViewController {
         viewModel.howToPlayButtonImage
             .bind(to: howToPlayButtonIcon.rx.image)
             .disposed(by: disposeBag)
-        
-        viewModel.settingsButtonImage
-            .bind(to: settingsButton.rx.image())
-            .disposed(by: disposeBag)
-        
+
         viewModel.showGame
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else {return}

@@ -12,7 +12,6 @@ class TopViewModel {
     let startButtonImage: Observable<UIImage?>
     let rankingButtonImage: Observable<UIImage?>
     let howToPlayButtonImage: Observable<UIImage?>
-    let settingsButtonImage: Observable<UIImage?>
     let showGame: Observable<Void>
     let showRanking: Observable<Void>
     let showTutorial: Observable<Void>
@@ -56,10 +55,6 @@ class TopViewModel {
         self.howToPlayButtonImage = dependency.buttonImageSwitcher.image
             .filter({$0.type == .howToPlay})
             .map({$0.type.targetIcon(isSwitched: $0.isSwitched)})
-        
-        self.settingsButtonImage = dependency.buttonImageSwitcher.image
-            .filter({$0.type == .settings})
-            .map({$0.type.toolBoxIcon(isSwitched: $0.isSwitched)})
 
         dependency.buttonImageSwitcher.image
             .filter({$0.type == .start && !$0.isSwitched})
