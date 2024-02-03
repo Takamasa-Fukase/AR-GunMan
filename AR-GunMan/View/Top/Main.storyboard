@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
-    <device id="retina6_0" orientation="landscape" appearance="light"/>
+    <device id="retina4_7" orientation="landscape" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
@@ -13,27 +13,27 @@
             <objects>
                 <viewController id="BV1-FR-VrT" customClass="ViewController" customModule="AR_GunMan" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="U0K-SW-4ec">
-                        <rect key="frame" x="0.0" y="0.0" width="844" height="390"/>
+                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ar_gunman_title_image" translatesAutoresizingMaskIntoConstraints="NO" id="AHr-zD-9NT">
-                                <rect key="frame" x="248" y="39" width="509" height="71"/>
+                                <rect key="frame" x="118" y="37.5" width="509" height="71"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="509" id="Qad-vO-FyC"/>
                                     <constraint firstAttribute="height" constant="71" id="REb-9f-QUt"/>
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S56-Y5-xWC" userLabel="HorizontalContentsStackView">
-                                <rect key="frame" x="87" y="122" width="697" height="232"/>
+                                <rect key="frame" x="40" y="120.5" width="567" height="239.5"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="8aZ-dX-j1e" userLabel="ButtonsStackView">
-                                        <rect key="frame" x="0.0" y="0.0" width="388" height="232"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="345" height="239.5"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WKs-OM-I1y" userLabel="StartButtonBaseView">
-                                                <rect key="frame" x="0.0" y="0.0" width="203" height="77.333333333333329"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="203" height="80"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ybM-iC-l3r">
-                                                        <rect key="frame" x="0.0" y="0.0" width="203" height="77.333333333333329"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="203" height="80"/>
                                                         <color key="tintColor" red="0.027436967940000001" green="0.027523037050000001" blue="0.019605956970000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         <state key="normal">
                                                             <attributedString key="attributedTitle">
@@ -59,9 +59,10 @@
                                                         </state>
                                                     </button>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="target" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Hbr-yd-pBE">
-                                                        <rect key="frame" x="0.0" y="21.333333333333343" width="45" height="43.666666666666671"/>
+                                                        <rect key="frame" x="0.0" y="22" width="45" height="44"/>
                                                         <color key="tintColor" red="0.027436967940000001" green="0.027523037050000001" blue="0.019605956970000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         <constraints>
+                                                            <constraint firstAttribute="width" constant="45" id="Nla-zl-fn5"/>
                                                             <constraint firstAttribute="height" constant="45" id="ay8-cP-390"/>
                                                         </constraints>
                                                     </imageView>
@@ -76,10 +77,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XRa-wG-R0A" userLabel="SettingsButtonBaseView">
-                                                <rect key="frame" x="0.0" y="77.333333333333343" width="278" height="77.333333333333343"/>
+                                                <rect key="frame" x="0.0" y="80" width="278" height="79.5"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="68H-Do-dng">
-                                                        <rect key="frame" x="0.0" y="0.0" width="278" height="77.333333333333329"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="278" height="79.5"/>
                                                         <color key="tintColor" red="0.027436967940000001" green="0.027523037050000001" blue="0.019605956970000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         <state key="normal">
                                                             <attributedString key="attributedTitle">
@@ -103,10 +104,11 @@
                                                         </state>
                                                     </button>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="target" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="TDP-3M-EL3">
-                                                        <rect key="frame" x="0.0" y="21.333333333333314" width="45" height="43.666666666666671"/>
+                                                        <rect key="frame" x="0.0" y="22" width="45" height="44"/>
                                                         <color key="tintColor" red="0.027436967940000001" green="0.027523037050000001" blue="0.019605956970000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="45" id="NWl-w0-b2J"/>
+                                                            <constraint firstAttribute="width" constant="45" id="amr-WI-qU6"/>
                                                         </constraints>
                                                     </imageView>
                                                 </subviews>
@@ -120,10 +122,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ecx-CT-X2n" userLabel="HowToPlayButtonBaseView">
-                                                <rect key="frame" x="0.0" y="154.66666666666669" width="348" height="77.333333333333314"/>
+                                                <rect key="frame" x="0.0" y="159.5" width="345" height="80"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aDv-ZE-dSr">
-                                                        <rect key="frame" x="0.0" y="0.0" width="348" height="77.333333333333329"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="345" height="80"/>
                                                         <color key="tintColor" red="0.027436967940000001" green="0.027523037050000001" blue="0.019605956970000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         <state key="normal">
                                                             <attributedString key="attributedTitle">
@@ -149,9 +151,10 @@
                                                         </state>
                                                     </button>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="target" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="8cQ-Eo-5C8">
-                                                        <rect key="frame" x="0.0" y="21.333333333333314" width="45" height="43.666666666666671"/>
+                                                        <rect key="frame" x="0.0" y="22" width="45" height="44"/>
                                                         <color key="tintColor" red="0.027436967940000001" green="0.027523037050000001" blue="0.019605956970000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         <constraints>
+                                                            <constraint firstAttribute="width" constant="45" id="Oz3-gy-4KR"/>
                                                             <constraint firstAttribute="height" constant="45" id="nlM-6Z-2cP"/>
                                                         </constraints>
                                                     </imageView>
@@ -166,14 +169,9 @@
                                                 </constraints>
                                             </view>
                                         </subviews>
-                                        <constraints>
-                                            <constraint firstItem="8cQ-Eo-5C8" firstAttribute="width" secondItem="8aZ-dX-j1e" secondAttribute="width" multiplier="0.115979" id="5Ld-DG-a6d"/>
-                                            <constraint firstItem="TDP-3M-EL3" firstAttribute="width" secondItem="8aZ-dX-j1e" secondAttribute="width" multiplier="0.115979" id="lEF-RD-Wcc"/>
-                                            <constraint firstItem="Hbr-yd-pBE" firstAttribute="width" secondItem="8aZ-dX-j1e" secondAttribute="width" multiplier="0.115979" id="odw-gD-ali"/>
-                                        </constraints>
                                     </stackView>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="topPageGunIcon" translatesAutoresizingMaskIntoConstraints="NO" id="d9e-fg-vyn">
-                                        <rect key="frame" x="388" y="0.0" width="309" height="232"/>
+                                        <rect key="frame" x="345" y="0.0" width="222" height="239.5"/>
                                         <color key="tintColor" red="0.027436967940000001" green="0.027523037050000001" blue="0.019605956970000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
@@ -194,7 +192,7 @@
                                 </constraints>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GaB-ef-sev">
-                                <rect key="frame" x="47" y="0.0" width="750" height="39"/>
+                                <rect key="frame" x="0.0" y="0.0" width="667" height="37.5"/>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="fQZ-KI-GVf"/>
