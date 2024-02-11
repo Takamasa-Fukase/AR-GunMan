@@ -21,6 +21,7 @@ class NameRegisterViewController: UIViewController {
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var registerButton: UIButton!
     @IBOutlet weak var noButton: UIButton!
+    @IBOutlet weak var registerButtonSpinner: UIActivityIndicatorView!
     
     //MARK: - Methods
     override func viewDidLoad() {
@@ -46,12 +47,13 @@ class NameRegisterViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel.isRegisterButtonEnabled
-            .subscribe(onNext: { [weak self] element in
+            .subscribe(onNext: { [weak self] isEnabled in
                 guard let self = self else { return }
-                self.registerButton.isEnabled = element
+                self.registerButton.isEnabled = isEnabled
                 self.registerButton.setTitleColor(
-                    element ? .black : .lightGray,
-                    for: .normal)
+                    isEnabled ? .black : .black.withAlphaComponent(0.1),
+                    for: .normal
+                )
             }).disposed(by: disposeBag)
         
         viewModel.dismiss
@@ -60,12 +62,13 @@ class NameRegisterViewController: UIViewController {
                 self.presentingViewController?.dismiss(animated: true, completion: nil)
             }).disposed(by: disposeBag)
         
-        viewModel.isLoading
-            .subscribe(onNext: { element in
-                if element {
-                    HUD.show(.progress)
-                }else {
-                    HUD.hide()
+        viewModel.isRegistering
+            .subscribe(onNext: {  [weak self] isRegistering in
+                guard let self = self else { return }
+                self.registerButton.isHidden = isRegistering
+                self.registerButtonSpinner.isHidden = !isRegistering
+                if isRegistering {
+                    self.registerButtonSpinner.startAnimating()
                 }
             }).disposed(by: disposeBag)
         
@@ -76,7 +79,8 @@ class NameRegisterViewController: UIViewController {
             }).disposed(by: disposeBag)
         
         NotificationCenter.default.rx.notification(UIResponder.keyboardWillShowNotification, object: nil)
-            .subscribe({ (notification) in
+            .subscribe({ [weak self] (notification) in
+                guard let self = self else { return }
                 if let element = notification.element {
                     self.keyboardWillShow(notification: element, textField: self.nameTextField, view: self.view)
                 }
@@ -84,7 +88,8 @@ class NameRegisterViewController: UIViewController {
         .disposed(by: disposeBag)
         
         NotificationCenter.default.rx.notification(UIResponder.keyboardWillHideNotification, object: nil)
-            .subscribe({ (notification) in
+            .subscribe({ [weak self] (notification) in
+                guard let self = self else { return }
                 if let element = notification.element {
                     self.keyboardWillHide(notification: element, view: self.view)
                 }

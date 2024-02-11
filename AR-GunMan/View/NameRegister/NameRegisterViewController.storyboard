@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Wkb-Mh-0K5">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Wkb-Mh-0K5">
     <device id="retina6_1" orientation="landscape" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -117,6 +117,9 @@
                                             <constraint firstAttribute="height" constant="1" id="NZA-mL-GVy"/>
                                         </constraints>
                                     </view>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="KsO-oo-DLL">
+                                        <rect key="frame" x="299" y="186" width="20" height="20"/>
+                                    </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.79046171899999995" green="0.69538801910000003" blue="0.53327715399999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
@@ -132,11 +135,13 @@
                                     <constraint firstItem="ndR-3H-Jf9" firstAttribute="height" secondItem="q8t-oZ-HM7" secondAttribute="height" id="K2Z-EJ-DLd"/>
                                     <constraint firstItem="4T9-Nt-Cax" firstAttribute="top" secondItem="q8t-oZ-HM7" secondAttribute="top" id="Ps2-v2-G64"/>
                                     <constraint firstAttribute="trailing" secondItem="4T9-Nt-Cax" secondAttribute="trailing" id="V8Y-oe-gJu"/>
+                                    <constraint firstItem="KsO-oo-DLL" firstAttribute="centerY" secondItem="q8t-oZ-HM7" secondAttribute="centerY" id="Vgk-Ab-bjk"/>
                                     <constraint firstItem="4T9-Nt-Cax" firstAttribute="leading" secondItem="0y6-K1-qgd" secondAttribute="leading" id="WOn-ou-Tzf"/>
                                     <constraint firstItem="SyC-M2-vgz" firstAttribute="top" secondItem="0y6-K1-qgd" secondAttribute="top" constant="14" id="ZOD-ca-ouH"/>
                                     <constraint firstItem="q8t-oZ-HM7" firstAttribute="top" secondItem="fd0-nx-EUz" secondAttribute="top" id="ebi-mX-NMN"/>
                                     <constraint firstItem="q8t-oZ-HM7" firstAttribute="leading" secondItem="ndR-3H-Jf9" secondAttribute="trailing" constant="-1" id="n9E-6a-LvD"/>
                                     <constraint firstItem="fd0-nx-EUz" firstAttribute="bottom" secondItem="q8t-oZ-HM7" secondAttribute="bottom" id="naI-Zj-zDM"/>
+                                    <constraint firstItem="KsO-oo-DLL" firstAttribute="centerX" secondItem="q8t-oZ-HM7" secondAttribute="centerX" id="u7H-Wf-kl2"/>
                                     <constraint firstItem="ndR-3H-Jf9" firstAttribute="top" secondItem="fd0-nx-EUz" secondAttribute="top" id="xnQ-DH-4zN"/>
                                     <constraint firstAttribute="trailing" secondItem="q8t-oZ-HM7" secondAttribute="trailing" id="zMN-hh-uZ7"/>
                                 </constraints>
@@ -171,6 +176,7 @@
                         <outlet property="nameTextField" destination="fjQ-Lx-pol" id="Ao9-hW-VNV"/>
                         <outlet property="noButton" destination="ndR-3H-Jf9" id="DnT-VK-5ss"/>
                         <outlet property="registerButton" destination="q8t-oZ-HM7" id="cfq-36-imU"/>
+                        <outlet property="registerButtonSpinner" destination="KsO-oo-DLL" id="3j0-11-DWT"/>
                         <outlet property="totalScoreLabel" destination="ZFZ-99-WcG" id="HFG-FC-uvm"/>
                     </connections>
                 </viewController>

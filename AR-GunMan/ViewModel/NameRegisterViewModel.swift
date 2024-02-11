@@ -17,7 +17,7 @@ class NameRegisterViewModel {
     let totalScoreText: Observable<String>
     let isRegisterButtonEnabled: Observable<Bool>
     let dismiss: Observable<Void>
-    let isLoading: Observable<Bool>
+    let isRegistering: Observable<Bool>
     let error: Observable<Error>
     
     private let disposeBag = DisposeBag()
@@ -51,8 +51,8 @@ class NameRegisterViewModel {
         let dismissRelay = PublishRelay<Void>()
         self.dismiss = dismissRelay.asObservable()
         
-        let isLoadingRelay = BehaviorRelay<Bool>(value: false)
-        self.isLoading = isLoadingRelay.asObservable()
+        let isRegisteringRelay = BehaviorRelay<Bool>(value: false)
+        self.isRegistering = isRegisteringRelay.asObservable()
         
         let errorRelay = PublishRelay<Error>()
         self.error = errorRelay.asObservable()
@@ -60,15 +60,17 @@ class NameRegisterViewModel {
         input.registerButtonTapped
             .withLatestFrom(input.nameTextFieldChanged)
             .subscribe(onNext: { element in
-                isLoadingRelay.accept(true)
-                do {
-                    let ranking = Ranking(score: dependency.threeDigitsScore, userName: element)
-                    try dependency.rankingRepository.registerRanking(ranking)
-                    dismissRelay.accept(Void())
-                }catch {
-                    errorRelay.accept(error)
+                Task { @MainActor in
+                    isRegisteringRelay.accept(true)
+                    do {
+                        let ranking = Ranking(score: dependency.threeDigitsScore, userName: element)
+                        try await dependency.rankingRepository.registerRanking(ranking)
+                        dismissRelay.accept(Void())
+                    } catch {
+                        errorRelay.accept(error)
+                    }
+                    isRegisteringRelay.accept(false)
                 }
-                isLoadingRelay.accept(false)
             }).disposed(by: disposeBag)
         
         input.noButtonTapped
