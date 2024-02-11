@@ -24,10 +24,14 @@ class RankingRepository {
             })
     }
     
-    func registerRanking(_ ranking: Ranking) throws {
-        try firestoreDataBase
+    func registerRanking(_ ranking: Ranking) async throws {
+        let data = try JSONEncoder().encode(ranking)
+        guard let dict = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed) as? [String: Any] else {
+            throw NSError()
+        }
+        try await firestoreDataBase
             .collection("worldRanking")
             .document()
-            .setData(from: ranking)
+            .setData(dict)
     }
 }
