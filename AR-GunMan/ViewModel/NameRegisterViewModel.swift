@@ -9,12 +9,12 @@ import RxSwift
 import RxCocoa
 
 protocol NameRegisterDelegate: AnyObject {
-    func showRightButtons()
+    func onClose(registeredRanking: Ranking?)
 }
 
 class NameRegisterViewModel {
-    let rankingDisplayText: Observable<NSAttributedString>
-    let totalScoreText: Observable<String>
+    let rankText: Observable<String>
+    let totalScore: Observable<Double>
     let isRegisterButtonEnabled: Observable<Bool>
     let dismiss: Observable<Void>
     let isRegistering: Observable<Bool>
@@ -26,22 +26,20 @@ class NameRegisterViewModel {
         let nameTextFieldChanged: Observable<String>
         let registerButtonTapped: Observable<Void>
         let noButtonTapped: Observable<Void>
-        let viewDidDisappear: Observable<Void>
     }
     
     struct Dependency {
-        let totalScore: Double
-        let tentativeRank: Int
-        let rankingLength: Int
-        let threeDigitsScore: Double
-        weak var delegate: NameRegisterDelegate?
         let rankingRepository: RankingRepository
+        let totalScore: Double
+        let rankingListObservable: Observable<[Ranking]>
+        weak var delegate: NameRegisterDelegate?
     }
     
     init(input: Input, dependency: Dependency) {
-        self.rankingDisplayText = Observable.just(createRankingDisplayText())
+        let rankTextRelay = BehaviorRelay<String>(value: "  /  ")
+        self.rankText = rankTextRelay.asObservable()
         
-        self.totalScoreText = Observable.just(createTotalScoreText())
+        self.totalScore = Observable.just(dependency.totalScore)
         
         self.isRegisterButtonEnabled = input.nameTextFieldChanged
             .map({ element in
@@ -63,8 +61,9 @@ class NameRegisterViewModel {
                 Task { @MainActor in
                     isRegisteringRelay.accept(true)
                     do {
-                        let ranking = Ranking(score: dependency.threeDigitsScore, userName: element)
+                        let ranking = Ranking(score: dependency.totalScore, userName: element)
                         try await dependency.rankingRepository.registerRanking(ranking)
+                        dependency.delegate?.onClose(registeredRanking: ranking)
                         dismissRelay.accept(Void())
                     } catch {
                         errorRelay.accept(error)
@@ -74,36 +73,20 @@ class NameRegisterViewModel {
             }).disposed(by: disposeBag)
         
         input.noButtonTapped
-            .bind(to: dismissRelay)
-            .disposed(by: disposeBag)
-        
-        input.viewDidDisappear
             .subscribe(onNext: { _ in
-                dependency.delegate?.showRightButtons()
+                dependency.delegate?.onClose(registeredRanking: nil)
+                dismissRelay.accept(Void())
             }).disposed(by: disposeBag)
         
-        func createRankingDisplayText() -> NSMutableAttributedString {
-            let mutableAttributedString = NSMutableAttributedString()
-            [UIFont.attributedString("You're ranked at ",
-                                     fontName: "Copperplate",
-                                     fontSize: 21,
-                                     textColor: .init(red: 239/255, green: 239/255, blue: 239/255, alpha: 1)),
-             UIFont.attributedString("\(dependency.tentativeRank) / \(dependency.rankingLength)",
-                                     fontName: "Copperplate",
-                                     fontSize: 25,
-                                     textColor: .init(red: 85/255, green: 78/255, blue: 72/255, alpha: 1)),
-             UIFont.attributedString(" in the world!",
-                                     fontName: "Copperplate",
-                                     fontSize: 21,
-                                     textColor: .init(red: 239/255, green: 239/255, blue: 239/255, alpha: 1)),
-            ].forEach({ element in
-                mutableAttributedString.append(element)
+        dependency.rankingListObservable
+            .filter({ !$0.isEmpty })
+            .map({ rankingList in
+                return RankingUtil.createTemporaryRankText(
+                    rankingList: rankingList,
+                    score: dependency.totalScore
+                )
             })
-            return mutableAttributedString
-        }
-        
-        func createTotalScoreText() -> String {
-            return "Score: \(String(format: "%.3f", dependency.totalScore))"
-        }
+            .bind(to: rankTextRelay)
+            .disposed(by: disposeBag)
     }
 }

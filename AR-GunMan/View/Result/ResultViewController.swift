@@ -43,7 +43,10 @@ class ResultViewController: UIViewController {
                 cell.configureCell(ranking: element, row: row)
             }.disposed(by: disposeBag)
         
-        viewModel.totalScoreText
+        viewModel.totalScore
+            .map({ totalScore in
+                return String(format: "%.3f", totalScore)
+            })
             .bind(to: totalScoreLabel.rx.text)
             .disposed(by: disposeBag)
 
@@ -57,6 +60,13 @@ class ResultViewController: UIViewController {
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else {return}
                 self.showButtons()
+            }).disposed(by: disposeBag)
+        
+        viewModel.scrollAndHightlightCell
+            .subscribe(onNext: { [weak self] indexPath in
+                guard let self = self else {return}
+                self.scrollCellToCenterVertically(at: indexPath)
+                // TODO: ハイライトさせる
             }).disposed(by: disposeBag)
         
         viewModel.backToTopPageView
@@ -109,6 +119,14 @@ class ResultViewController: UIViewController {
                 self.homeButton.alpha = 1
             }
         }
+    }
+    
+    private func scrollCellToCenterVertically(at indexPath: IndexPath) {
+        self.tableView.scrollToRow(at: indexPath, at: .middle, animated: true)
+    }
+    
+    private func highlightCell(at indexPath: IndexPath) {
+        // TODO: ハイライト実装
     }
     
     private func dismissToTopVC() {

@@ -16,7 +16,7 @@ class NameRegisterViewController: UIViewController {
     var viewModel: NameRegisterViewModel!
     var vmDependency: NameRegisterViewModel.Dependency!
     
-    @IBOutlet weak var displayRankLabel: UILabel!
+    @IBOutlet weak var rankLabel: UILabel!
     @IBOutlet weak var totalScoreLabel: UILabel!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var registerButton: UIButton!
@@ -33,16 +33,18 @@ class NameRegisterViewController: UIViewController {
         viewModel = NameRegisterViewModel(
             input: .init(nameTextFieldChanged: nameTextField.rx.text.orEmpty.asObservable(),
                          registerButtonTapped: registerButton.rx.tap.asObservable(),
-                         noButtonTapped: noButton.rx.tap.asObservable(),
-                         viewDidDisappear: rx.viewDidDisappear),
+                         noButtonTapped: noButton.rx.tap.asObservable()),
             dependency: vmDependency)
 
         // output
-        viewModel.rankingDisplayText
-            .bind(to: displayRankLabel.rx.attributedText)
+        viewModel.rankText
+            .bind(to: rankLabel.rx.text)
             .disposed(by: disposeBag)
         
-        viewModel.totalScoreText
+        viewModel.totalScore
+            .map({ totalScore in
+                return "Score: \(String(format: "%.3f", totalScore))"
+            })
             .bind(to: totalScoreLabel.rx.text)
             .disposed(by: disposeBag)
         

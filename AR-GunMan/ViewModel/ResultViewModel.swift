@@ -9,17 +9,24 @@ import RxSwift
 import RxCocoa
 
 class ResultViewModel {
-    let rankingList: Observable<[Ranking]>
-    let totalScoreText: Observable<String>
+    var rankingList: Observable<[Ranking]> {
+        return rankingListRelay.asObservable()
+    }
+    let totalScore: Observable<Double>
     let showNameRegisterView: Observable<NameRegisterViewModel.Dependency>
     var showButtons: Observable<Void> {
         return showButtonsRelay.asObservable()
+    }
+    var scrollAndHightlightCell: Observable<IndexPath> {
+        return scrollAndHightlightCellRelay.asObservable()
     }
     let backToTopPageView: Observable<Void>
     let isLoading: Observable<Bool>
     let error: Observable<Error>
     
     private let showButtonsRelay = PublishRelay<Void>()
+    private let rankingListRelay = BehaviorRelay<[Ranking]>(value: [])
+    private let scrollAndHightlightCellRelay = PublishRelay<IndexPath>()
     private let disposeBag = DisposeBag()
     
     struct Input {
@@ -35,12 +42,7 @@ class ResultViewModel {
     
     init(input: Input,
          dependency: Dependency) {
-        let rankingListRelay = BehaviorRelay<[Ranking]>(value: [])
-        self.rankingList = rankingListRelay.asObservable()
-        
-        self.totalScoreText = Observable.just(
-            String(format: "%.3f", dependency.totalScore)
-        )
+        self.totalScore = Observable.just(dependency.totalScore)
         
         let showNameRegisterViewRelay = PublishRelay<NameRegisterViewModel.Dependency>()
         self.showNameRegisterView = showNameRegisterViewRelay.asObservable()
@@ -58,6 +60,9 @@ class ResultViewModel {
             .take(1)
             .subscribe(onNext: { _ in
                 fetchRanking()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    showNameRegisterDialog()
+                }
             }).disposed(by: disposeBag)
         
         input.replayButtonTapped
@@ -76,40 +81,42 @@ class ResultViewModel {
                 isLoadingRelay.accept(true)
                 do {
                     let rankingList = try await dependency.rankingRepository.getRanking()
-                    rankingListRelay.accept(rankingList)
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        showNameRegisterViewRelay.accept(
-                            createNameRegisterViewModelDependency()
-                        )
-                    }
+                    self.rankingListRelay.accept(rankingList)
                 }catch {
                     errorRelay.accept(error)
                 }
                 isLoadingRelay.accept(false)
             }
         }
-
-        @Sendable
-        func createNameRegisterViewModelDependency() -> NameRegisterViewModel.Dependency {
-            let threeDigitsScore = Double(round(1000 * dependency.totalScore) / 1000)
-            let limitRankIndex = rankingListRelay.value.firstIndex(where: {
-                $0.score < threeDigitsScore
-            }) ?? 0
-            return .init(
-                totalScore: dependency.totalScore,
-                // TODO: - この+2の意味を思い出して再度確認する
-                tentativeRank: limitRankIndex + 2,
-                rankingLength: rankingListRelay.value.count,
-                threeDigitsScore: threeDigitsScore,
-                delegate: self,
-                rankingRepository: RankingRepository())
+        
+        func showNameRegisterDialog() {
+            showNameRegisterViewRelay.accept(
+                .init(
+                    rankingRepository: RankingRepository(),
+                    totalScore: dependency.totalScore,
+                    rankingListObservable: self.rankingList,
+                    delegate: self
+                )
+            )
         }
     }
 }
 
 extension ResultViewModel: NameRegisterDelegate {
-    func showRightButtons() {
+    func onClose(registeredRanking: Ranking?) {
         showButtonsRelay.accept(Void())
+        if let registeredRanking = registeredRanking {
+            let rankIndex = RankingUtil.getTemporaryRankIndex(
+                rankingList: self.rankingListRelay.value,
+                score: registeredRanking.score
+            )
+            var newRankingList = self.rankingListRelay.value
+            // 登録したランキングが含まれたリストを作成して新しい値として流す
+            newRankingList.insert(registeredRanking, at: rankIndex)
+            self.rankingListRelay.accept(newRankingList)
+            // 登録したランキングが中央に表示されるようにスクロール＆ハイライトさせる
+            scrollAndHightlightCellRelay.accept(IndexPath(row: rankIndex, section: 0))
+        }
     }
 }
 

@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b8Q-O4-LuT">
-                                <rect key="frame" x="237" y="92.5" width="422" height="229"/>
+                                <rect key="frame" x="237" y="90.5" width="422" height="233"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="5"/>
@@ -31,25 +31,73 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0y6-K1-qgd">
-                                <rect key="frame" x="242" y="97" width="412" height="220"/>
+                                <rect key="frame" x="242" y="95" width="412" height="224.5"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="SyC-M2-vgz">
-                                        <rect key="frame" x="4" y="14" width="404" height="143"/>
+                                        <rect key="frame" x="24" y="14" width="364" height="147.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Congratulations!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="xRg-aq-SPL">
-                                                <rect key="frame" x="84" y="0.0" width="236.5" height="25.5"/>
+                                                <rect key="frame" x="64" y="0.0" width="236.5" height="25.5"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="25.5" id="C1S-QT-iTI"/>
+                                                </constraints>
                                                 <fontDescription key="fontDescription" name="Copperplate-Bold" family="Copperplate" pointSize="25"/>
                                                 <color key="textColor" red="0.93726116420000005" green="0.93724352119999998" blue="0.93725550170000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="You're ranked at 12 / 105 in the world!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="UzT-s3-C44">
-                                                <rect key="frame" x="51" y="25.5" width="302" height="42.5"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bPz-le-6cQ">
+                                                <rect key="frame" x="49" y="25.5" width="266" height="25.5"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="You're ranked at " lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="UzT-s3-C44">
+                                                        <rect key="frame" x="0.0" y="0.0" width="185" height="25.5"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="185" id="fFs-QW-deG"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="21"/>
+                                                        <color key="textColor" red="0.93726116420000005" green="0.93724352119999998" blue="0.93725550170000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text=" in" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Ovo-bd-rWB">
+                                                        <rect key="frame" x="242" y="0.0" width="24" height="25.5"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="24" id="ar7-RN-On9"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="21"/>
+                                                        <color key="textColor" red="0.93726116420000005" green="0.93724352119999998" blue="0.93725550170000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="1 / 1" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="1HZ-3i-vZr">
+                                                        <rect key="frame" x="185" y="0.0" width="57" height="25.5"/>
+                                                        <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="25"/>
+                                                        <color key="textColor" red="0.33333333333333331" green="0.30588235294117649" blue="0.28235294117647058" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="UzT-s3-C44" firstAttribute="leading" secondItem="bPz-le-6cQ" secondAttribute="leading" id="2pm-Ls-fAT"/>
+                                                    <constraint firstAttribute="trailing" secondItem="Ovo-bd-rWB" secondAttribute="trailing" id="GXR-3m-Zti"/>
+                                                    <constraint firstItem="Ovo-bd-rWB" firstAttribute="top" secondItem="bPz-le-6cQ" secondAttribute="top" id="IZ8-OE-nK2"/>
+                                                    <constraint firstAttribute="bottom" secondItem="1HZ-3i-vZr" secondAttribute="bottom" id="Rwb-sL-Ya6"/>
+                                                    <constraint firstAttribute="bottom" secondItem="Ovo-bd-rWB" secondAttribute="bottom" id="Tgf-yt-Kvf"/>
+                                                    <constraint firstItem="Ovo-bd-rWB" firstAttribute="leading" secondItem="1HZ-3i-vZr" secondAttribute="trailing" id="bzh-tX-DtW"/>
+                                                    <constraint firstItem="1HZ-3i-vZr" firstAttribute="top" secondItem="bPz-le-6cQ" secondAttribute="top" id="imJ-5N-iVl"/>
+                                                    <constraint firstItem="1HZ-3i-vZr" firstAttribute="leading" secondItem="UzT-s3-C44" secondAttribute="trailing" id="qBW-Vg-rKc"/>
+                                                    <constraint firstAttribute="height" constant="25.5" id="rux-RG-U4m"/>
+                                                    <constraint firstItem="UzT-s3-C44" firstAttribute="top" secondItem="bPz-le-6cQ" secondAttribute="top" id="x98-jm-EXk"/>
+                                                    <constraint firstAttribute="bottom" secondItem="UzT-s3-C44" secondAttribute="bottom" id="zRT-RQ-b2j"/>
+                                                </constraints>
+                                            </view>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="the world!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="zwB-EO-K4K">
+                                                <rect key="frame" x="124" y="51" width="116.5" height="21.5"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="21.5" id="04A-Yq-h64"/>
+                                                </constraints>
                                                 <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="21"/>
                                                 <color key="textColor" red="0.93726116420000005" green="0.93724352119999998" blue="0.93725550170000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 78.753" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ZFZ-99-WcG">
-                                                <rect key="frame" x="67.5" y="68" width="269.5" height="36"/>
+                                                <rect key="frame" x="47.5" y="72.5" width="269.5" height="36"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="36" id="5gM-oK-wUY"/>
                                                 </constraints>
@@ -58,7 +106,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="hbo-rk-1M9">
-                                                <rect key="frame" x="20" y="104" width="364" height="39"/>
+                                                <rect key="frame" x="0.0" y="108.5" width="364" height="39"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Drn-xq-r3n">
                                                         <rect key="frame" x="0.0" y="0.0" width="64" height="39"/>
@@ -81,19 +129,19 @@
                                             </stackView>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstItem="hbo-rk-1M9" firstAttribute="leading" secondItem="SyC-M2-vgz" secondAttribute="leading" constant="20" id="05E-nQ-mfJ"/>
-                                            <constraint firstAttribute="trailing" secondItem="hbo-rk-1M9" secondAttribute="trailing" constant="20" id="ZgX-Th-AwW"/>
+                                            <constraint firstItem="hbo-rk-1M9" firstAttribute="leading" secondItem="SyC-M2-vgz" secondAttribute="leading" id="05E-nQ-mfJ"/>
+                                            <constraint firstAttribute="trailing" secondItem="hbo-rk-1M9" secondAttribute="trailing" id="ZgX-Th-AwW"/>
                                         </constraints>
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ndR-3H-Jf9">
-                                        <rect key="frame" x="0.0" y="173" width="206.5" height="46"/>
+                                        <rect key="frame" x="0.0" y="177.5" width="206.5" height="46"/>
                                         <fontDescription key="fontDescription" name="Copperplate-Bold" family="Copperplate" pointSize="22"/>
                                         <state key="normal" title="No, thanks">
                                             <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q8t-oZ-HM7">
-                                        <rect key="frame" x="205.5" y="173" width="206.5" height="46"/>
+                                        <rect key="frame" x="205.5" y="177.5" width="206.5" height="46"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="206.5" id="YWf-Yr-hmh"/>
                                             <constraint firstAttribute="height" constant="46" id="qmy-9i-JVl"/>
@@ -104,30 +152,29 @@
                                         </state>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fd0-nx-EUz">
-                                        <rect key="frame" x="205.5" y="173" width="1" height="46"/>
+                                        <rect key="frame" x="205.5" y="177.5" width="1" height="46"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="1" id="xMO-Iz-k4o"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4T9-Nt-Cax">
-                                        <rect key="frame" x="0.0" y="173" width="412" height="1"/>
+                                        <rect key="frame" x="0.0" y="177.5" width="412" height="1"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="NZA-mL-GVy"/>
                                         </constraints>
                                     </view>
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="KsO-oo-DLL">
-                                        <rect key="frame" x="299" y="186" width="20" height="20"/>
+                                        <rect key="frame" x="299" y="190.5" width="20" height="20"/>
                                     </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.79046171899999995" green="0.69538801910000003" blue="0.53327715399999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="220" id="2Lb-t1-0Un"/>
                                     <constraint firstAttribute="bottom" secondItem="ndR-3H-Jf9" secondAttribute="bottom" constant="1" id="3sm-MX-MgU"/>
                                     <constraint firstItem="q8t-oZ-HM7" firstAttribute="top" secondItem="SyC-M2-vgz" secondAttribute="bottom" constant="16" id="81C-DE-iFk"/>
-                                    <constraint firstItem="SyC-M2-vgz" firstAttribute="leading" secondItem="0y6-K1-qgd" secondAttribute="leading" constant="4" id="8TQ-b5-san"/>
-                                    <constraint firstAttribute="trailing" secondItem="SyC-M2-vgz" secondAttribute="trailing" constant="4" id="8iA-ID-gK9"/>
+                                    <constraint firstItem="SyC-M2-vgz" firstAttribute="leading" secondItem="0y6-K1-qgd" secondAttribute="leading" constant="24" id="8TQ-b5-san"/>
+                                    <constraint firstAttribute="trailing" secondItem="SyC-M2-vgz" secondAttribute="trailing" constant="24" id="8iA-ID-gK9"/>
                                     <constraint firstItem="ndR-3H-Jf9" firstAttribute="leading" secondItem="4T9-Nt-Cax" secondAttribute="leading" id="AS8-EW-sn8"/>
                                     <constraint firstItem="ndR-3H-Jf9" firstAttribute="width" secondItem="q8t-oZ-HM7" secondAttribute="width" id="EjY-L0-vyH"/>
                                     <constraint firstItem="4T9-Nt-Cax" firstAttribute="centerX" secondItem="fd0-nx-EUz" secondAttribute="centerX" id="Jit-gx-lgm"/>
@@ -172,9 +219,9 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="displayRankLabel" destination="UzT-s3-C44" id="h8B-mj-gYD"/>
                         <outlet property="nameTextField" destination="fjQ-Lx-pol" id="Ao9-hW-VNV"/>
                         <outlet property="noButton" destination="ndR-3H-Jf9" id="DnT-VK-5ss"/>
+                        <outlet property="rankLabel" destination="1HZ-3i-vZr" id="iWH-IO-937"/>
                         <outlet property="registerButton" destination="q8t-oZ-HM7" id="cfq-36-imU"/>
                         <outlet property="registerButtonSpinner" destination="KsO-oo-DLL" id="3j0-11-DWT"/>
                         <outlet property="totalScoreLabel" destination="ZFZ-99-WcG" id="HFG-FC-uvm"/>
