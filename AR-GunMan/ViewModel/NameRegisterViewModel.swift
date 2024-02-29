@@ -13,7 +13,7 @@ protocol NameRegisterDelegate: AnyObject {
 }
 
 class NameRegisterViewModel {
-    let rankText: Observable<String>
+    let rankText: Observable<String?>
     let totalScore: Observable<Double>
     let isRegisterButtonEnabled: Observable<Bool>
     let dismiss: Observable<Void>
@@ -36,7 +36,7 @@ class NameRegisterViewModel {
     }
     
     init(input: Input, dependency: Dependency) {
-        let rankTextRelay = BehaviorRelay<String>(value: "  /  ")
+        let rankTextRelay = BehaviorRelay<String?>(value: nil)
         self.rankText = rankTextRelay.asObservable()
         
         self.totalScore = Observable.just(dependency.totalScore)

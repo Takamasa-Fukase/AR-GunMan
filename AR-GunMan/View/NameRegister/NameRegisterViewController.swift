@@ -17,10 +17,11 @@ class NameRegisterViewController: UIViewController {
     var vmDependency: NameRegisterViewModel.Dependency!
     
     @IBOutlet weak var rankLabel: UILabel!
+    @IBOutlet weak var rankLabelSpinner: UIActivityIndicatorView!
     @IBOutlet weak var totalScoreLabel: UILabel!
     @IBOutlet weak var nameTextField: UITextField!
-    @IBOutlet weak var registerButton: UIButton!
     @IBOutlet weak var noButton: UIButton!
+    @IBOutlet weak var registerButton: UIButton!
     @IBOutlet weak var registerButtonSpinner: UIActivityIndicatorView!
     
     //MARK: - Methods
@@ -38,9 +39,12 @@ class NameRegisterViewController: UIViewController {
 
         // output
         viewModel.rankText
-            .bind(to: rankLabel.rx.text)
-            .disposed(by: disposeBag)
-        
+            .subscribe(onNext: { [weak self] rankText in
+                guard let self = self else { return }
+                self.rankLabel.text = rankText
+                self.rankLabelSpinner.isHidden = rankText != nil
+            }).disposed(by: disposeBag)
+
         viewModel.totalScore
             .map({ totalScore in
                 return "Score: \(String(format: "%.3f", totalScore))"

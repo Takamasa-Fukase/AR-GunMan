@@ -66,23 +66,40 @@
                                                         <color key="textColor" red="0.93726116420000005" green="0.93724352119999998" blue="0.93725550170000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="1 / 1" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="1HZ-3i-vZr">
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c1s-7K-Otd">
                                                         <rect key="frame" x="185" y="0.0" width="57" height="25.5"/>
-                                                        <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="25"/>
-                                                        <color key="textColor" red="0.33333333333333331" green="0.30588235294117649" blue="0.28235294117647058" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="1 / 1" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="1HZ-3i-vZr">
+                                                                <rect key="frame" x="0.0" y="0.0" width="57" height="25.5"/>
+                                                                <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="25"/>
+                                                                <color key="textColor" red="0.33333333333333331" green="0.30588235294117649" blue="0.28235294117647058" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="9uV-1l-n8o">
+                                                                <rect key="frame" x="18.5" y="2.5" width="20" height="20"/>
+                                                            </activityIndicatorView>
+                                                        </subviews>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="57" id="5PE-10-oUE"/>
+                                                            <constraint firstAttribute="trailing" secondItem="1HZ-3i-vZr" secondAttribute="trailing" id="9Rr-5c-HcH"/>
+                                                            <constraint firstItem="9uV-1l-n8o" firstAttribute="centerY" secondItem="c1s-7K-Otd" secondAttribute="centerY" id="BUt-cE-IYc"/>
+                                                            <constraint firstItem="9uV-1l-n8o" firstAttribute="centerX" secondItem="c1s-7K-Otd" secondAttribute="centerX" id="Ba9-af-TrD"/>
+                                                            <constraint firstItem="1HZ-3i-vZr" firstAttribute="leading" secondItem="c1s-7K-Otd" secondAttribute="leading" id="FC2-BG-yWy"/>
+                                                            <constraint firstAttribute="bottom" secondItem="1HZ-3i-vZr" secondAttribute="bottom" id="GoJ-xC-HjQ"/>
+                                                            <constraint firstItem="1HZ-3i-vZr" firstAttribute="top" secondItem="c1s-7K-Otd" secondAttribute="top" id="WSE-nt-etm"/>
+                                                        </constraints>
+                                                    </view>
                                                 </subviews>
                                                 <constraints>
                                                     <constraint firstItem="UzT-s3-C44" firstAttribute="leading" secondItem="bPz-le-6cQ" secondAttribute="leading" id="2pm-Ls-fAT"/>
+                                                    <constraint firstAttribute="bottom" secondItem="c1s-7K-Otd" secondAttribute="bottom" id="Fc2-dc-o0W"/>
                                                     <constraint firstAttribute="trailing" secondItem="Ovo-bd-rWB" secondAttribute="trailing" id="GXR-3m-Zti"/>
                                                     <constraint firstItem="Ovo-bd-rWB" firstAttribute="top" secondItem="bPz-le-6cQ" secondAttribute="top" id="IZ8-OE-nK2"/>
-                                                    <constraint firstAttribute="bottom" secondItem="1HZ-3i-vZr" secondAttribute="bottom" id="Rwb-sL-Ya6"/>
                                                     <constraint firstAttribute="bottom" secondItem="Ovo-bd-rWB" secondAttribute="bottom" id="Tgf-yt-Kvf"/>
-                                                    <constraint firstItem="Ovo-bd-rWB" firstAttribute="leading" secondItem="1HZ-3i-vZr" secondAttribute="trailing" id="bzh-tX-DtW"/>
-                                                    <constraint firstItem="1HZ-3i-vZr" firstAttribute="top" secondItem="bPz-le-6cQ" secondAttribute="top" id="imJ-5N-iVl"/>
-                                                    <constraint firstItem="1HZ-3i-vZr" firstAttribute="leading" secondItem="UzT-s3-C44" secondAttribute="trailing" id="qBW-Vg-rKc"/>
+                                                    <constraint firstItem="c1s-7K-Otd" firstAttribute="leading" secondItem="UzT-s3-C44" secondAttribute="trailing" id="gXU-Ab-U4b"/>
+                                                    <constraint firstItem="c1s-7K-Otd" firstAttribute="top" secondItem="bPz-le-6cQ" secondAttribute="top" id="jxc-l6-gCA"/>
                                                     <constraint firstAttribute="height" constant="25.5" id="rux-RG-U4m"/>
+                                                    <constraint firstItem="Ovo-bd-rWB" firstAttribute="leading" secondItem="c1s-7K-Otd" secondAttribute="trailing" id="u2Y-ha-Pez"/>
                                                     <constraint firstItem="UzT-s3-C44" firstAttribute="top" secondItem="bPz-le-6cQ" secondAttribute="top" id="x98-jm-EXk"/>
                                                     <constraint firstAttribute="bottom" secondItem="UzT-s3-C44" secondAttribute="bottom" id="zRT-RQ-b2j"/>
                                                 </constraints>
@@ -222,6 +239,7 @@
                         <outlet property="nameTextField" destination="fjQ-Lx-pol" id="Ao9-hW-VNV"/>
                         <outlet property="noButton" destination="ndR-3H-Jf9" id="DnT-VK-5ss"/>
                         <outlet property="rankLabel" destination="1HZ-3i-vZr" id="iWH-IO-937"/>
+                        <outlet property="rankLabelSpinner" destination="9uV-1l-n8o" id="p5Z-PW-3N4"/>
                         <outlet property="registerButton" destination="q8t-oZ-HM7" id="cfq-36-imU"/>
                         <outlet property="registerButtonSpinner" destination="KsO-oo-DLL" id="3j0-11-DWT"/>
                         <outlet property="totalScoreLabel" destination="ZFZ-99-WcG" id="HFG-FC-uvm"/>
