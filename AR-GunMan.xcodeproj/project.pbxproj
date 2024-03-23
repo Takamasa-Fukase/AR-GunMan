@@ -334,7 +334,6 @@
 				677DF1F227A7C0EE007512F6 /* Entity */,
 				677DF1EF27A7C07A007512F6 /* Repository */,
 				67B6860127AB0BF300D7F413 /* Manager */,
-				59D2D56E2552E3B8006DDB70 /* Model */,
 				59D2D56F2552E3C0006DDB70 /* ViewModel */,
 				59D2D5702552E3C7006DDB70 /* View */,
 				59D2D5462552E2CC006DDB70 /* Resources */,
@@ -393,13 +392,6 @@
 				5903192E256D82BA005C30EF /* westernPistolShoot.mp3 */,
 			);
 			path = mp3;
-			sourceTree = "<group>";
-		};
-		59D2D56E2552E3B8006DDB70 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		59D2D56F2552E3C0006DDB70 /* ViewModel */ = {
