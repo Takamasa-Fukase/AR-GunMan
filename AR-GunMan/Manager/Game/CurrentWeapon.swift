@@ -58,6 +58,6 @@ class CurrentWeapon {
     func changeWeaponType(to newType: WeaponType) {
         typeRelay.accept(newType)
         AudioUtil.playSound(of: newType.weaponChangingSound)
-        bulletsHolder = BulletsHolder(type: newType)
+        bulletsHolder.resetWithNewWeaponType(newType)
     }
 }

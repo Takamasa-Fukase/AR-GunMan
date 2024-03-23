@@ -40,6 +40,14 @@ class BulletsHolder {
         )
     }
     
+    func resetWithNewWeaponType(_ newType: WeaponType) {
+        type = newType
+        bulletsCount.accept(
+            type.bulletsCapacity
+        )
+        isBazookaReloading = false
+    }
+    
     func startBazookaAutoReloading() {
         isBazookaReloading = true
         // バズーカは自動リロード（3.2秒後に完了）
