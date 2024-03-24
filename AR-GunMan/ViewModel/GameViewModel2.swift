@@ -71,6 +71,11 @@ class GameViewModel2 {
             .subscribe(onNext: { weaponType in
                 state.weaponTypeRelay.accept(weaponType)
                 dismissWeaponChangeViewRelay.accept(Void())
+                AudioUtil.playSound(of: weaponType.weaponChangingSound)
+                state.bulletsCountRelay.accept(
+                    weaponType.bulletsCapacity
+                )
+                state.isBazookaReloading = false
             }).disposed(by: disposeBag)
         
         input.tutorialEnded
@@ -80,11 +85,6 @@ class GameViewModel2 {
         
         state.weaponTypeRelay
             .subscribe(onNext: { weaponType in
-                AudioUtil.playSound(of: weaponType.weaponChangingSound)
-                state.bulletsCountRelay.accept(
-                    weaponType.bulletsCapacity
-                )
-                state.isBazookaReloading = false
                 sceneManager.showWeapon(weaponType)
             }).disposed(by: disposeBag)
         
@@ -137,7 +137,11 @@ class GameViewModel2 {
                 )
             }).disposed(by: disposeBag)
 
-        tutorialRepository.getIsTutorialSeen()
+        input.viewDidAppear
+            .take(1)
+            .flatMapLatest { [unowned self] _ in
+                return self.tutorialRepository.getIsTutorialSeen()
+            }
             .subscribe(onNext: { isSeen in
                 if isSeen {
                     startGame()

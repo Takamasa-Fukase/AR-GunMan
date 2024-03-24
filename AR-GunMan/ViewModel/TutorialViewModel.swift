@@ -9,6 +9,10 @@ import Foundation
 import RxSwift
 import RxCocoa
 
+protocol TutorialDelegate: AnyObject {
+    func tutorialEnded()
+}
+
 class TutorialViewModel {
     let buttonText: Observable<String>
     let pageControllIndex: Observable<Int>
