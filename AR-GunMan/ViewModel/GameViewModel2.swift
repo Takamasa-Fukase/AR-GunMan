@@ -35,6 +35,11 @@ class GameViewModel2 {
     }
     
     private let weaponSelectedRelay = PublishRelay<WeaponType>()
+    private let tutorialRepository: TutorialRepository
+    
+    init(tutorialRepository: TutorialRepository) {
+        self.tutorialRepository = tutorialRepository
+    }
     
     func transform(
         input: Input,
@@ -115,10 +120,9 @@ class GameViewModel2 {
         
         // middle -> output
         var timerObservable: Disposable?
-        let tutorialSeenChecker = TutorialSeenChecker2()
         let showTutorialViewRelay = PublishRelay<TutorialDelegate>()
         
-        tutorialSeenChecker.checkTutorialSeen()
+        tutorialRepository.getIsTutorialSeen()
             .subscribe(onNext: { isSeen in
                 if isSeen {
                     AudioUtil.playSound(of: .pistolSet)
