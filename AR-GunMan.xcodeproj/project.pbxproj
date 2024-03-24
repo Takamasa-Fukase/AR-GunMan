@@ -73,6 +73,8 @@
 		86627DE6273FD5E30044A980 /* RankingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86627DE5273FD5E30044A980 /* RankingViewController.swift */; };
 		866675D4275215AF007CB4D6 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866675D3275215AF007CB4D6 /* UIViewController+Extension.swift */; };
 		86B8A3A62B7E0D1F005ED2F8 /* RankingUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B8A3A52B7E0D1F005ED2F8 /* RankingUtil.swift */; };
+		86C421B32BAFC7BE00EFD791 /* TutorialSeenChecker2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C421B22BAFC7BE00EFD791 /* TutorialSeenChecker2.swift */; };
+		86C421B52BAFDD5800EFD791 /* GameViewModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C421B42BAFDD5800EFD791 /* GameViewModel2.swift */; };
 		86C5AB982AB8819C00CB161D /* UIAlertController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C5AB972AB8819C00CB161D /* UIAlertController+Extension.swift */; };
 		BC1795BC2985D01300D91A19 /* ResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1795BB2985D01300D91A19 /* ResultViewModel.swift */; };
 		BC2B116129772D72009F4DC4 /* TopPageButtonIconChanger.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2B116029772D72009F4DC4 /* TopPageButtonIconChanger.swift */; };
@@ -192,6 +194,8 @@
 		86627DE5273FD5E30044A980 /* RankingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingViewController.swift; sourceTree = "<group>"; };
 		866675D3275215AF007CB4D6 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		86B8A3A52B7E0D1F005ED2F8 /* RankingUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingUtil.swift; sourceTree = "<group>"; };
+		86C421B22BAFC7BE00EFD791 /* TutorialSeenChecker2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialSeenChecker2.swift; sourceTree = "<group>"; };
+		86C421B42BAFDD5800EFD791 /* GameViewModel2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel2.swift; sourceTree = "<group>"; };
 		86C5AB972AB8819C00CB161D /* UIAlertController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extension.swift"; sourceTree = "<group>"; };
 		90D4D1AD42BB6A3A0192887F /* Pods-AR-GunManTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-GunManTests.release.xcconfig"; path = "Target Support Files/Pods-AR-GunManTests/Pods-AR-GunManTests.release.xcconfig"; sourceTree = "<group>"; };
 		BC1795BB2985D01300D91A19 /* ResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewModel.swift; sourceTree = "<group>"; };
@@ -400,6 +404,7 @@
 				5952F62725E94D1000ADB85B /* TopViewModel.swift */,
 				67200F5427A000AC00AD92EC /* TutorialViewModel.swift */,
 				BC3866AE296EA6CB005573CC /* GameViewModel.swift */,
+				86C421B42BAFDD5800EFD791 /* GameViewModel2.swift */,
 				BCAB8A79297C779C00F81E73 /* WeaponChangeViewModel.swift */,
 				BC1795BB2985D01300D91A19 /* ResultViewModel.swift */,
 				67200F5627A0020B00AD92EC /* RankingViewModel.swift */,
@@ -519,6 +524,7 @@
 			children = (
 				67B6860527AB0C9300D7F413 /* GameSceneManager.swift */,
 				BC3866B0296EF1C9005573CC /* TutorialSeenChecker.swift */,
+				86C421B22BAFC7BE00EFD791 /* TutorialSeenChecker2.swift */,
 				BC92C85B2973614000E49BD5 /* MotionDetector.swift */,
 				BC92C85529709EF600E49BD5 /* BulletsHolder.swift */,
 				BC3866A8296DF8C2005573CC /* CurrentWeapon.swift */,
@@ -816,6 +822,7 @@
 				86B8A3A62B7E0D1F005ED2F8 /* RankingUtil.swift in Sources */,
 				67DB2C5927C10E8B00B8CB3C /* SceneAnimationUtil.swift in Sources */,
 				BC2B116129772D72009F4DC4 /* TopPageButtonIconChanger.swift in Sources */,
+				86C421B32BAFC7BE00EFD791 /* TutorialSeenChecker2.swift in Sources */,
 				67DB2C5D27C17EF300B8CB3C /* TopConst.swift in Sources */,
 				BC3866AF296EA6CB005573CC /* GameViewModel.swift in Sources */,
 				BC92C85E297420CD00E49BD5 /* UserDefaults+Extension.swift in Sources */,
@@ -856,6 +863,7 @@
 				595E6987256C0190002B4F3E /* SettingsViewController.swift in Sources */,
 				67DB2C5F27C17F4E00B8CB3C /* SettingsConst.swift in Sources */,
 				59A01134255AF580008996E3 /* ResultViewController.swift in Sources */,
+				86C421B52BAFDD5800EFD791 /* GameViewModel2.swift in Sources */,
 				BC3866AD296DF8E4005573CC /* ScoreCounter.swift in Sources */,
 				5952F62D25E94D9200ADB85B /* CameraAuthUtil.swift in Sources */,
 				5952F63225E9C62100ADB85B /* AudioUtil.swift in Sources */,

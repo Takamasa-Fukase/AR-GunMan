@@ -32,12 +32,6 @@ class WeaponChangeViewController: UIViewController {
         viewModel = WeaponChangeViewModel(dependency: vmDependency)
         
         // MARK: - output
-        viewModel.dismiss
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else {return}
-                self.dismiss(animated: false)
-            }).disposed(by: disposeBag)
-        
         setupFSPagerView()
     }
 
