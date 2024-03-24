@@ -9,10 +9,6 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-protocol TutorialDelegate: AnyObject {
-    func tutorialEnded()
-}
-
 class TutorialViewModel {
     let buttonText: Observable<String>
     let pageControllIndex: Observable<Int>
@@ -35,7 +31,7 @@ class TutorialViewModel {
     
     struct Dependency {
         let transitionType: TransitType
-        weak var delegate: TutorialDelegate?
+        weak var tutorialEndObserver: PublishRelay<Void>?
     }
     
     init(input: Input, dependency: Dependency) {
@@ -63,7 +59,7 @@ class TutorialViewModel {
                 if dependency.transitionType == .gamePage {
                     UserDefaults.isTutorialAlreadySeen = true
                 }
-                dependency.delegate?.tutorialEnded()
+                dependency.tutorialEndObserver?.accept(Void())
             }).disposed(by: disposeBag)
     }
 }

@@ -14,9 +14,11 @@ import RxSwift
 import RxCocoa
 
 class GameViewController: UIViewController {
-    var viewModel = GameViewModel2()
+    var viewModel: GameViewModel2!
     let disposeBag = DisposeBag()
     let sceneView = ARSCNView()
+    private let weaponSelectedRelay = PublishRelay<WeaponType>()
+    private let tutorialEndedRelay = PublishRelay<Void>()
 
     @IBOutlet weak var bulletsCountImageView: UIImageView!
     @IBOutlet weak var sightImageView: UIImageView!
@@ -27,21 +29,21 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         
         setupUI()
+        
+        viewModel = GameViewModel2(tutorialRepository: TutorialRepository())
 
         //MARK: - input
-        let currentWeapon = CurrentWeapon(type: .pistol)
-        let timeCounter = TimeCounter()
-        
         let input: GameViewModel2.Input = .init(
             viewDidAppear: rx.viewDidAppear,
-            weaponChangeButtonTapped: switchWeaponButton.rx.tap.asObservable()
+            tutorialEnded: tutorialEndedRelay.asObservable(),
+            weaponChangeButtonTapped: switchWeaponButton.rx.tap.asObservable(),
+            weaponSelected: weaponSelectedRelay.asObservable()
         )
         let sceneManager = GameSceneManager(sceneView: sceneView)
         
         let output = viewModel.transform(
             input: input,
-            sceneManager: sceneManager,
-            disposeBag: disposeBag
+            sceneManager: sceneManager
         )
         
         //MARK: - output
@@ -64,21 +66,21 @@ class GameViewController: UIViewController {
             .disposed(by: disposeBag)
 
         output.showTutorialView
-            .subscribe(onNext: { [weak self] delegate in
+            .subscribe(onNext: { [weak self] _ in
                 guard let self = self else {return}
                 let storyboard: UIStoryboard = UIStoryboard(name: "TutorialViewController", bundle: nil)
                 let vc = storyboard.instantiateInitialViewController() as! TutorialViewController
                 vc.vmDependency = .init(transitionType: .gamePage,
-                                        delegate: delegate)
+                                        tutorialEndObserver: tutorialEndedRelay)
                 self.presentPanModal(vc)
             }).disposed(by: disposeBag)
         
         output.showWeaponChangeView
-            .subscribe(onNext: { [weak self] delegate in
+            .subscribe(onNext: { [weak self] _ in
                 guard let self = self else {return}
                 let storyboard: UIStoryboard = UIStoryboard(name: "WeaponChangeViewController", bundle: nil)
                 let vc = storyboard.instantiateInitialViewController() as! WeaponChangeViewController
-                vc.vmDependency = .init(delegate: delegate)
+                vc.vmDependency = .init(weaponSelectObserver: weaponSelectedRelay)
                 self.present(vc, animated: true)
             }).disposed(by: disposeBag)
         

@@ -12,16 +12,18 @@ import ARKit
 class GameViewModel2 {
     struct Input {
         let viewDidAppear: Observable<Void>
+        let tutorialEnded: Observable<Void>
         let weaponChangeButtonTapped: Observable<Void>
+        let weaponSelected: Observable<WeaponType>
     }
     
     struct Output {
-        let showTutorialView: Observable<TutorialDelegate>
+        let showTutorialView: Observable<Void>
         let sightImage: Observable<UIImage?>
         let sightImageColor: Observable<UIColor>
         let timeCountText: Observable<String>
         let bulletsCountImage: Observable<UIImage?>
-        let showWeaponChangeView: Observable<WeaponChangeDelegate>
+        let showWeaponChangeView: Observable<Void>
         let dismissWeaponChangeView: Observable<Void>
         let showResultView: Observable<Double>
     }
@@ -34,8 +36,8 @@ class GameViewModel2 {
         var score: Double = 0
     }
     
-    private let weaponSelectedRelay = PublishRelay<WeaponType>()
     private let tutorialRepository: TutorialRepository
+    private let disposeBag = DisposeBag()
     
     init(tutorialRepository: TutorialRepository) {
         self.tutorialRepository = tutorialRepository
@@ -43,21 +45,38 @@ class GameViewModel2 {
     
     func transform(
         input: Input,
-        sceneManager: GameSceneManager,
-        disposeBag: DisposeBag
+        sceneManager: GameSceneManager
     ) -> Output {
         var state = State()
+        let motionDetector = MotionDetector()
+        var timerObservable: Disposable?
         let dismissWeaponChangeViewRelay = PublishRelay<Void>()
         let showResultViewRelay = PublishRelay<Double>()
+        let showTutorialViewRelay = PublishRelay<Void>()
         
-        // middle
-        weaponSelectedRelay
+        // 仮置き
+        func startGame() {
+            AudioUtil.playSound(of: .pistolSet)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                AudioUtil.playSound(of: .startWhistle)
+                timerObservable = TimeCountUtil.createRxTimer(.milliseconds(10))
+                    .map({ _ in
+                        TimeCountUtil.decreaseGameTimeCount(lastValue: state.timeCountRelay.value)
+                    })
+                    .bind(to: state.timeCountRelay)
+            }
+        }
+        
+        input.weaponSelected
             .subscribe(onNext: { weaponType in
                 state.weaponTypeRelay.accept(weaponType)
                 dismissWeaponChangeViewRelay.accept(Void())
             }).disposed(by: disposeBag)
         
-        let motionDetector = MotionDetector()
+        input.tutorialEnded
+            .subscribe(onNext: { _ in
+                startGame()
+            }).disposed(by: disposeBag)
         
         state.weaponTypeRelay
             .subscribe(onNext: { weaponType in
@@ -117,30 +136,16 @@ class GameViewModel2 {
                     state.weaponTypeRelay.value.bulletsCapacity
                 )
             }).disposed(by: disposeBag)
-        
-        // middle -> output
-        var timerObservable: Disposable?
-        let showTutorialViewRelay = PublishRelay<TutorialDelegate>()
-        
+
         tutorialRepository.getIsTutorialSeen()
             .subscribe(onNext: { isSeen in
                 if isSeen {
-                    AudioUtil.playSound(of: .pistolSet)
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                        AudioUtil.playSound(of: .startWhistle)
-                        timerObservable = TimeCountUtil.createRxTimer(.milliseconds(10))
-                            .map({ _ in
-                                TimeCountUtil.decreaseGameTimeCount(lastValue: state.timeCountRelay.value)
-                            })
-                            .bind(to: state.timeCountRelay)
-                    }
+                    startGame()
                 }else {
-                    showTutorialViewRelay.accept(tutorialSeenChecker)
+                    showTutorialViewRelay.accept(Void())
                 }
             }).disposed(by: disposeBag)
         
-        
-        // output
         let sightImage = state.weaponTypeRelay
             .map({$0.sightImage})
         
@@ -153,8 +158,7 @@ class GameViewModel2 {
         let bulletsCountImage = state.bulletsCountRelay
             .map({state.weaponTypeRelay.value.bulletsCountImage(at: $0)})
         
-        let showWeaponChangeView: Observable<WeaponChangeDelegate> = input.weaponChangeButtonTapped
-            .map({_ in self})
+        let showWeaponChangeView = input.weaponChangeButtonTapped
         
         state.timeCountRelay
             .filter({$0 <= 0})
@@ -189,10 +193,3 @@ class GameViewModel2 {
         return bulletsCount <= 0 && !isBazookaReloading
     }
 }
-
-extension GameViewModel2: WeaponChangeDelegate {
-    func weaponSelected(_ weaponType: WeaponType) {
-        weaponSelectedRelay.accept(weaponType)
-    }
-}
-
