@@ -14,7 +14,6 @@ import RxSwift
 import RxCocoa
 
 class GameViewController: UIViewController {
-//    var viewModel: GameViewModel!
     var viewModel = GameViewModel2()
     let disposeBag = DisposeBag()
     let sceneView = ARSCNView()
@@ -100,83 +99,7 @@ class GameViewController: UIViewController {
                 self.present(vc, animated: true)
             }).disposed(by: disposeBag)
     }
-    
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        
-//        setupUI()
-//
-//        //MARK: - input
-//        let currentWeapon = CurrentWeapon(type: .pistol)
-//        let timeCounter = TimeCounter()
-//        
-//        viewModel = GameViewModel(
-//            input: .init(
-//                viewDidAppear: rx.viewDidAppear,
-//                weaponChangeButtonTapped: switchWeaponButton.rx.tap.asObservable()
-//            ),
-//            dependency: .init(
-//                tutorialSeenChecker: TutorialSeenChecker(),
-//                motionDetector: MotionDetector(),
-//                currentWeapon: currentWeapon,
-//                timeCounter: timeCounter,
-//                scoreCounter: ScoreCounter(),
-//                sceneManager: GameSceneManager(sceneView: sceneView)
-//            )
-//        )
-//        
-//        //MARK: - output
-//        viewModel.sightImage
-//            .bind(to: sightImageView.rx.image)
-//            .disposed(by: disposeBag)
-//        
-//        viewModel.sightImageColor
-//            .subscribe(onNext: { [weak self] element in
-//                guard let self = self else {return}
-//                self.sightImageView.tintColor = element
-//            }).disposed(by: disposeBag)
-//        
-//        viewModel.bulletsCountImage
-//            .bind(to: bulletsCountImageView.rx.image)
-//            .disposed(by: disposeBag)
-//        
-//        viewModel.timeCountText
-//            .bind(to: timeCountLabel.rx.text)
-//            .disposed(by: disposeBag)
-//
-//        viewModel.showTutorialView
-//            .subscribe(onNext: { [weak self] element in
-//                guard let self = self else {return}
-//                let storyboard: UIStoryboard = UIStoryboard(name: "TutorialViewController", bundle: nil)
-//                let vc = storyboard.instantiateInitialViewController() as! TutorialViewController
-//                vc.vmDependency = .init(transitionType: .gamePage,
-//                                        delegate: element)
-//                self.presentPanModal(vc)
-//            }).disposed(by: disposeBag)
-//        
-//        viewModel.showWeaponChangeView
-//            .subscribe(onNext: { [weak self] element in
-//                guard let self = self else {return}
-//                let storyboard: UIStoryboard = UIStoryboard(name: "WeaponChangeViewController", bundle: nil)
-//                let vc = storyboard.instantiateInitialViewController() as! WeaponChangeViewController
-//                vc.vmDependency = .init(
-//                    currentWeapon: currentWeapon,
-//                    timeCounter: timeCounter
-//                )
-//                self.present(vc, animated: true)
-//            }).disposed(by: disposeBag)
-//        
-//        viewModel.showResultView
-//            .subscribe(onNext: { [weak self] element in
-//                guard let self = self else {return}
-//                let storyboard: UIStoryboard = UIStoryboard(name: "ResultViewController", bundle: nil)
-//                let vc = storyboard.instantiateInitialViewController() as! ResultViewController
-//                vc.vmDependency = .init(rankingRepository: RankingRepository(),
-//                                        totalScore: element)
-//                self.present(vc, animated: true)
-//            }).disposed(by: disposeBag)
-//    }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         SceneViewSettingUtil.startSession(sceneView)
