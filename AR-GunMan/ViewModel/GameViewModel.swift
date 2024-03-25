@@ -43,9 +43,13 @@ class GameViewModel {
         input: Input,
         sceneManager: GameSceneManager
     ) -> Output {
+        // 画面が持つ状態
         var state = State()
+        
         let motionDetector = MotionDetector()
         var timerObservable: Disposable?
+        
+        // 遷移先画面から受け取る通知
         let tutorialEndObserver = PublishRelay<Void>()
         let weaponSelectObserver = PublishRelay<WeaponType>()
         
@@ -61,6 +65,30 @@ class GameViewModel {
                     .bind(to: state.timeCountRelay)
             }
         }
+        
+        input.viewDidAppear
+            .take(1)
+            .flatMapLatest { [unowned self] _ in
+                return self.tutorialRepository.getIsTutorialSeen()
+            }
+            .subscribe(onNext: { [weak self] isSeen in
+                guard let self = self else { return }
+                if isSeen {
+                    startGame()
+                }else {
+                    self.navigator.showTutorialView(
+                        tutorialEndObserver: tutorialEndObserver
+                    )
+                }
+            }).disposed(by: disposeBag)
+        
+        input.weaponChangeButtonTapped
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.navigator.showWeaponChangeView(
+                    weaponSelectObserver: weaponSelectObserver
+                )
+            }).disposed(by: disposeBag)
         
         tutorialEndObserver
             .subscribe(onNext: { _ in
@@ -82,6 +110,20 @@ class GameViewModel {
         state.weaponTypeRelay
             .subscribe(onNext: { weaponType in
                 sceneManager.showWeapon(weaponType)
+            }).disposed(by: disposeBag)
+        
+        state.timeCountRelay
+            .filter({$0 <= 0})
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                AudioUtil.playSound(of: .endWhistle)
+                timerObservable?.dispose()
+                motionDetector.stopUpdate()
+                self.navigator.dismissWeaponChangeView()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
+                    AudioUtil.playSound(of: .rankingAppear)
+                    self.navigator.showResultView(totalScore: state.score)
+                })
             }).disposed(by: disposeBag)
         
         sceneManager.targetHit
@@ -139,22 +181,7 @@ class GameViewModel {
                 AudioUtil.playSound(of: .kyuiin)
             }).disposed(by: disposeBag)
         
-        input.viewDidAppear
-            .take(1)
-            .flatMapLatest { [unowned self] _ in
-                return self.tutorialRepository.getIsTutorialSeen()
-            }
-            .subscribe(onNext: { [weak self] isSeen in
-                guard let self = self else { return }
-                if isSeen {
-                    startGame()
-                }else {
-                    self.navigator.showTutorialView(
-                        tutorialEndObserver: tutorialEndObserver
-                    )
-                }
-            }).disposed(by: disposeBag)
-        
+        // MARK: Outputの作成
         let sightImage = state.weaponTypeRelay
             .map({$0.sightImage})
         
@@ -166,28 +193,6 @@ class GameViewModel {
         
         let bulletsCountImage = state.bulletsCountRelay
             .map({state.weaponTypeRelay.value.bulletsCountImage(at: $0)})
-        
-        input.weaponChangeButtonTapped
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                self.navigator.showWeaponChangeView(
-                    weaponSelectObserver: weaponSelectObserver
-                )
-            }).disposed(by: disposeBag)
-        
-        state.timeCountRelay
-            .filter({$0 <= 0})
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                AudioUtil.playSound(of: .endWhistle)
-                timerObservable?.dispose()
-                motionDetector.stopUpdate()
-                self.navigator.dismissWeaponChangeView()
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
-                    AudioUtil.playSound(of: .rankingAppear)
-                    self.navigator.showResultView(totalScore: state.score)
-                })
-            }).disposed(by: disposeBag)
         
         return Output(
             sightImage: sightImage,
