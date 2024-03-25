@@ -17,9 +17,7 @@ class GameViewController: UIViewController {
     var viewModel: GameViewModel2!
     let disposeBag = DisposeBag()
     let sceneView = ARSCNView()
-    private let weaponSelectedRelay = PublishRelay<WeaponType>()
-    private let tutorialEndedRelay = PublishRelay<Void>()
-
+    
     @IBOutlet weak var bulletsCountImageView: UIImageView!
     @IBOutlet weak var sightImageView: UIImageView!
     @IBOutlet weak var timeCountLabel: UILabel!
@@ -30,14 +28,15 @@ class GameViewController: UIViewController {
         
         setupUI()
         
-        viewModel = GameViewModel2(tutorialRepository: TutorialRepository())
-
+        viewModel = GameViewModel2(
+            tutorialRepository: TutorialRepository(),
+            navigator: GameNavigator(viewController: self)
+        )
+        
         //MARK: - input
         let input: GameViewModel2.Input = .init(
             viewDidAppear: rx.viewDidAppear,
-            tutorialEnded: tutorialEndedRelay.asObservable(),
-            weaponChangeButtonTapped: switchWeaponButton.rx.tap.asObservable(),
-            weaponSelected: weaponSelectedRelay.asObservable()
+            weaponChangeButtonTapped: switchWeaponButton.rx.tap.asObservable()
         )
         let sceneManager = GameSceneManager(sceneView: sceneView)
         
@@ -64,44 +63,8 @@ class GameViewController: UIViewController {
         output.timeCountText
             .bind(to: timeCountLabel.rx.text)
             .disposed(by: disposeBag)
-
-        output.showTutorialView
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else {return}
-                let storyboard: UIStoryboard = UIStoryboard(name: "TutorialViewController", bundle: nil)
-                let vc = storyboard.instantiateInitialViewController() as! TutorialViewController
-                vc.vmDependency = .init(transitionType: .gamePage,
-                                        tutorialEndObserver: tutorialEndedRelay)
-                self.presentPanModal(vc)
-            }).disposed(by: disposeBag)
-        
-        output.showWeaponChangeView
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else {return}
-                let storyboard: UIStoryboard = UIStoryboard(name: "WeaponChangeViewController", bundle: nil)
-                let vc = storyboard.instantiateInitialViewController() as! WeaponChangeViewController
-                vc.vmDependency = .init(weaponSelectObserver: weaponSelectedRelay)
-                self.present(vc, animated: true)
-            }).disposed(by: disposeBag)
-        
-        output.dismissWeaponChangeView
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else {return}
-                print("dismissWeaponChangeView")
-                self.presentedViewController?.dismiss(animated: true)
-            }).disposed(by: disposeBag)
-        
-        output.showResultView
-            .subscribe(onNext: { [weak self] element in
-                guard let self = self else {return}
-                let storyboard: UIStoryboard = UIStoryboard(name: "ResultViewController", bundle: nil)
-                let vc = storyboard.instantiateInitialViewController() as! ResultViewController
-                vc.vmDependency = .init(rankingRepository: RankingRepository(),
-                                        totalScore: element)
-                self.present(vc, animated: true)
-            }).disposed(by: disposeBag)
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         SceneViewSettingUtil.startSession(sceneView)
@@ -111,7 +74,7 @@ class GameViewController: UIViewController {
         super.viewWillDisappear(animated)
         SceneViewSettingUtil.pauseSession(sceneView)
     }
-
+    
     private func setupUI() {
         // - 等幅フォントにして高速で動くタイムカウントの横振れを防止
         timeCountLabel.font = timeCountLabel.font.monospacedDigitFont

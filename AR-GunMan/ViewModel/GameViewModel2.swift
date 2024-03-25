@@ -12,20 +12,14 @@ import ARKit
 class GameViewModel2 {
     struct Input {
         let viewDidAppear: Observable<Void>
-        let tutorialEnded: Observable<Void>
         let weaponChangeButtonTapped: Observable<Void>
-        let weaponSelected: Observable<WeaponType>
     }
     
     struct Output {
-        let showTutorialView: Observable<Void>
         let sightImage: Observable<UIImage?>
         let sightImageColor: Observable<UIColor>
         let timeCountText: Observable<String>
         let bulletsCountImage: Observable<UIImage?>
-        let showWeaponChangeView: Observable<Void>
-        let dismissWeaponChangeView: Observable<Void>
-        let showResultView: Observable<Double>
     }
     
     struct State {
@@ -37,10 +31,13 @@ class GameViewModel2 {
     }
     
     private let tutorialRepository: TutorialRepository
+    private let navigator: GameNavigatorInterface
     private let disposeBag = DisposeBag()
     
-    init(tutorialRepository: TutorialRepository) {
+    init(tutorialRepository: TutorialRepository,
+         navigator: GameNavigatorInterface) {
         self.tutorialRepository = tutorialRepository
+        self.navigator = navigator
     }
     
     func transform(
@@ -50,9 +47,8 @@ class GameViewModel2 {
         var state = State()
         let motionDetector = MotionDetector()
         var timerObservable: Disposable?
-        let dismissWeaponChangeViewRelay = PublishRelay<Void>()
-        let showResultViewRelay = PublishRelay<Double>()
-        let showTutorialViewRelay = PublishRelay<Void>()
+        let tutorialEndObserver = PublishRelay<Void>()
+        let weaponSelectObserver = PublishRelay<WeaponType>()
         
         // 仮置き
         func startGame() {
@@ -67,20 +63,21 @@ class GameViewModel2 {
             }
         }
         
-        input.weaponSelected
-            .subscribe(onNext: { weaponType in
+        tutorialEndObserver
+            .subscribe(onNext: { _ in
+                startGame()
+            }).disposed(by: disposeBag)
+        
+        weaponSelectObserver
+            .subscribe(onNext: { [weak self] weaponType in
+                guard let self = self else { return }
                 state.weaponTypeRelay.accept(weaponType)
-                dismissWeaponChangeViewRelay.accept(Void())
+                self.navigator.dismissWeaponChangeView()
                 AudioUtil.playSound(of: weaponType.weaponChangingSound)
                 state.bulletsCountRelay.accept(
                     weaponType.bulletsCapacity
                 )
                 state.isBazookaReloading = false
-            }).disposed(by: disposeBag)
-        
-        input.tutorialEnded
-            .subscribe(onNext: { _ in
-                startGame()
             }).disposed(by: disposeBag)
         
         state.weaponTypeRelay
@@ -136,17 +133,20 @@ class GameViewModel2 {
                     state.weaponTypeRelay.value.bulletsCapacity
                 )
             }).disposed(by: disposeBag)
-
+        
         input.viewDidAppear
             .take(1)
             .flatMapLatest { [unowned self] _ in
                 return self.tutorialRepository.getIsTutorialSeen()
             }
-            .subscribe(onNext: { isSeen in
+            .subscribe(onNext: { [weak self] isSeen in
+                guard let self = self else { return }
                 if isSeen {
                     startGame()
                 }else {
-                    showTutorialViewRelay.accept(Void())
+                    self.navigator.showTutorialView(
+                        tutorialEndObserver: tutorialEndObserver
+                    )
                 }
             }).disposed(by: disposeBag)
         
@@ -162,30 +162,33 @@ class GameViewModel2 {
         let bulletsCountImage = state.bulletsCountRelay
             .map({state.weaponTypeRelay.value.bulletsCountImage(at: $0)})
         
-        let showWeaponChangeView = input.weaponChangeButtonTapped
+        input.weaponChangeButtonTapped
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.navigator.showWeaponChangeView(
+                    weaponSelectObserver: weaponSelectObserver
+                )
+            }).disposed(by: disposeBag)
         
         state.timeCountRelay
             .filter({$0 <= 0})
-            .subscribe(onNext: { _ in
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
                 AudioUtil.playSound(of: .endWhistle)
                 timerObservable?.dispose()
                 motionDetector.stopUpdate()
-                dismissWeaponChangeViewRelay.accept(Void())
+                self.navigator.dismissWeaponChangeView()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
                     AudioUtil.playSound(of: .rankingAppear)
-                    showResultViewRelay.accept(state.score)
+                    self.navigator.showResultView(totalScore: state.score)
                 })
             }).disposed(by: disposeBag)
         
         return Output(
-            showTutorialView: showTutorialViewRelay.asObservable(),
             sightImage: sightImage,
             sightImageColor: sightImageColor,
             timeCountText: timeCountText,
-            bulletsCountImage: bulletsCountImage,
-            showWeaponChangeView: showWeaponChangeView,
-            dismissWeaponChangeView: dismissWeaponChangeViewRelay.asObservable(),
-            showResultView: showResultViewRelay.asObservable()
+            bulletsCountImage: bulletsCountImage
         )
     }
     
