@@ -133,6 +133,12 @@ class GameViewModel {
                 )
             }).disposed(by: disposeBag)
         
+        motionDetector.secretEventMotionDetected
+            .subscribe(onNext: { _ in
+                sceneManager.changeTargetsToTaimeisan()
+                AudioUtil.playSound(of: .kyuiin)
+            }).disposed(by: disposeBag)
+        
         input.viewDidAppear
             .take(1)
             .flatMapLatest { [unowned self] _ in
