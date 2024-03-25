@@ -14,7 +14,7 @@ import RxSwift
 import RxCocoa
 
 class GameViewController: UIViewController {
-    var viewModel: GameViewModel2!
+    var viewModel: GameViewModel!
     let disposeBag = DisposeBag()
     let sceneView = ARSCNView()
     
@@ -28,13 +28,13 @@ class GameViewController: UIViewController {
         
         setupUI()
         
-        viewModel = GameViewModel2(
+        viewModel = GameViewModel(
             tutorialRepository: TutorialRepository(),
             navigator: GameNavigator(viewController: self)
         )
         
         //MARK: - input
-        let input: GameViewModel2.Input = .init(
+        let input: GameViewModel.Input = .init(
             viewDidAppear: rx.viewDidAppear,
             weaponChangeButtonTapped: switchWeaponButton.rx.tap.asObservable()
         )
