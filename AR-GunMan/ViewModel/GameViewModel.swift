@@ -7,7 +7,6 @@
 
 import RxSwift
 import RxCocoa
-import CoreMotion
 
 class GameViewModel {
     struct Input {
@@ -30,14 +29,21 @@ class GameViewModel {
         var score: Double = 0
     }
     
+    struct Dependency {
+        let tutorialRepository: TutorialRepository
+        let useCase: GameUseCase
+        let navigator: GameNavigatorInterface
+    }
+    
     private let tutorialRepository: TutorialRepository
+    private let useCase: GameUseCase
     private let navigator: GameNavigatorInterface
     private let disposeBag = DisposeBag()
     
-    init(tutorialRepository: TutorialRepository,
-         navigator: GameNavigatorInterface) {
-        self.tutorialRepository = tutorialRepository
-        self.navigator = navigator
+    init(dependency: Dependency) {
+        self.tutorialRepository = dependency.tutorialRepository
+        self.useCase = dependency.useCase
+        self.navigator = dependency.navigator
     }
     
     func transform(
@@ -48,10 +54,6 @@ class GameViewModel {
         var state = State()
         
         var timerObservable: Disposable?
-        
-        let coreMotionManager = CMMotionManager()
-        let coreMotionRepository = CoreMotionRepository(coreMotionManager: coreMotionManager)
-        let useCase = GameUseCase(coreMotionRepository: coreMotionRepository)
         
         // 遷移先画面から受け取る通知
         let tutorialEndObserver = PublishRelay<Void>()
@@ -67,7 +69,7 @@ class GameViewModel {
                         TimeCountUtil.decreaseGameTimeCount(lastValue: state.timeCountRelay.value)
                     })
                     .bind(to: state.timeCountRelay)
-                useCase.startAcceletometerAndGyroUpdate()
+                self.useCase.startAcceletometerAndGyroUpdate()
             }
         }
         

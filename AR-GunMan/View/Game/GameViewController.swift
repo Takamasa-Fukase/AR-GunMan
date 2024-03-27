@@ -28,11 +28,6 @@ class GameViewController: UIViewController {
         
         setupUI()
         
-        viewModel = GameViewModel(
-            tutorialRepository: TutorialRepository(),
-            navigator: GameNavigator(viewController: self)
-        )
-        
         //MARK: - input
         let input: GameViewModel.Input = .init(
             viewDidAppear: rx.viewDidAppear,

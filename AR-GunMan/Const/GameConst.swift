@@ -21,7 +21,7 @@ enum ParticleSystemTypes: String {
 class GameConst {
     static let targetCount = 50 //ゲームの的の数
     
-    static let timeCount: Double = 3.00 //ゲームのタイムカウント
+    static let timeCount: Double = 30.00 //ゲームのタイムカウント
     
     static let playerAnimationUpdateInterval: Double = 0.2
 

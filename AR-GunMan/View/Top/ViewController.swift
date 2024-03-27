@@ -71,9 +71,7 @@ class ViewController: UIViewController {
     }
 
     func presentGameVC() {
-        let storyboard: UIStoryboard = UIStoryboard(name: "GameViewController", bundle: nil)
-        let vc = storyboard.instantiateInitialViewController() as! GameViewController
-        vc.modalPresentationStyle = .fullScreen
+        let vc = GameNavigator.assembleModules()
         self.present(vc, animated: true)
     }
     

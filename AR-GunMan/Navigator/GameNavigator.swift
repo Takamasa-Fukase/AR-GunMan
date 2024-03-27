@@ -8,6 +8,7 @@
 import Foundation
 import PanModal
 import RxCocoa
+import CoreMotion
 
 protocol GameNavigatorInterface: AnyObject {
     func showTutorialView(tutorialEndObserver: PublishRelay<Void>)
@@ -21,6 +22,24 @@ class GameNavigator: GameNavigatorInterface {
     
     init(viewController: GameViewController) {
         self.viewController = viewController
+    }
+    
+    static func assembleModules() -> UIViewController {
+        let storyboard: UIStoryboard = UIStoryboard(name: "GameViewController", bundle: nil)
+        let vc = storyboard.instantiateInitialViewController() as! GameViewController
+        vc.modalPresentationStyle = .fullScreen
+        
+        let coreMotionManager = CMMotionManager()
+        let coreMotionRepository = CoreMotionRepository(coreMotionManager: coreMotionManager)
+        let useCase = GameUseCase(coreMotionRepository: coreMotionRepository)
+        let navigator = GameNavigator(viewController: vc)
+        let vmDependency = GameViewModel.Dependency(
+            tutorialRepository: TutorialRepository(),
+            useCase: useCase,
+            navigator: navigator
+        )
+        vc.viewModel = GameViewModel(dependency: vmDependency)
+        return vc
     }
     
     func showTutorialView(tutorialEndObserver: PublishRelay<Void>) {
