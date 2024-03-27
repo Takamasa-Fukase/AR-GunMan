@@ -7,6 +7,7 @@
 
 import RxSwift
 import RxCocoa
+import CoreMotion
 
 class GameViewModel {
     struct Input {
@@ -46,8 +47,11 @@ class GameViewModel {
         // 画面が持つ状態
         var state = State()
         
-        let motionDetector = MotionDetector()
         var timerObservable: Disposable?
+        
+        let coreMotionManager = CMMotionManager()
+        let coreMotionRepository = CoreMotionRepository(coreMotionManager: coreMotionManager)
+        let useCase = GameUseCase(coreMotionRepository: coreMotionRepository)
         
         // 遷移先画面から受け取る通知
         let tutorialEndObserver = PublishRelay<Void>()
@@ -63,6 +67,7 @@ class GameViewModel {
                         TimeCountUtil.decreaseGameTimeCount(lastValue: state.timeCountRelay.value)
                     })
                     .bind(to: state.timeCountRelay)
+                useCase.startAcceletometerAndGyroUpdate()
             }
         }
         
@@ -118,7 +123,7 @@ class GameViewModel {
                 guard let self = self else { return }
                 AudioUtil.playSound(of: .endWhistle)
                 timerObservable?.dispose()
-                motionDetector.stopUpdate()
+                useCase.stopAcceletometerAndGyroUpdate()
                 self.navigator.dismissWeaponChangeView()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
                     AudioUtil.playSound(of: .rankingAppear)
@@ -135,8 +140,9 @@ class GameViewModel {
                 )
             }).disposed(by: disposeBag)
         
-        motionDetector.firingMotionDetected
-            .subscribe(onNext: { _ in
+        useCase.getFiringMotionStream()
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
                 guard self.canFire(bulletsCount: state.bulletsCountRelay.value) else {
                     if state.weaponTypeRelay.value != .bazooka {
                         AudioUtil.playSound(of: .pistolOutBullets)
@@ -162,9 +168,10 @@ class GameViewModel {
                     }
                 }
             }).disposed(by: disposeBag)
-        
-        motionDetector.reloadingMotionDetected
-            .subscribe(onNext: { _ in
+
+        useCase.getReloadingMotionStream()
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
                 guard self.canReload(bulletsCount: state.bulletsCountRelay.value,
                                      isBazookaReloading: state.isBazookaReloading) else { return }
                 if state.weaponTypeRelay.value != .bazooka {
@@ -175,11 +182,11 @@ class GameViewModel {
                 )
             }).disposed(by: disposeBag)
         
-        motionDetector.secretEventMotionDetected
-            .subscribe(onNext: { _ in
-                sceneManager.changeTargetsToTaimeisan()
-                AudioUtil.playSound(of: .kyuiin)
-            }).disposed(by: disposeBag)
+//        motionDetector.secretEventMotionDetected
+//            .subscribe(onNext: { _ in
+//                sceneManager.changeTargetsToTaimeisan()
+//                AudioUtil.playSound(of: .kyuiin)
+//            }).disposed(by: disposeBag)
         
         // MARK: Outputの作成
         let sightImage = state.weaponTypeRelay
