@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import ARKit
 import FSPagerView
 import PanModal
 import RxSwift
@@ -16,7 +15,6 @@ import RxCocoa
 class GameViewController: UIViewController {
     var viewModel: GameViewModel!
     let disposeBag = DisposeBag()
-    let sceneView = ARSCNView()
     
     @IBOutlet weak var bulletsCountImageView: UIImageView!
     @IBOutlet weak var sightImageView: UIImageView!
@@ -30,15 +28,13 @@ class GameViewController: UIViewController {
         
         //MARK: - input
         let input: GameViewModel.Input = .init(
+            viewDidLoad: Observable.just(Void()),
+            viewWillAppear: rx.viewWillAppear,
             viewDidAppear: rx.viewDidAppear,
+            viewWillDisappear: rx.viewWillDisappear,
             weaponChangeButtonTapped: switchWeaponButton.rx.tap.asObservable()
         )
-        let sceneManager = GameSceneManager(sceneView: sceneView)
-        
-        let output = viewModel.transform(
-            input: input,
-            sceneManager: sceneManager
-        )
+        let output = viewModel.transform(input: input)
         
         //MARK: - output
         output.sightImage
@@ -60,20 +56,15 @@ class GameViewController: UIViewController {
             .disposed(by: disposeBag)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        SceneViewSettingUtil.startSession(sceneView)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        SceneViewSettingUtil.pauseSession(sceneView)
-    }
-    
     private func setupUI() {
         // - 等幅フォントにして高速で動くタイムカウントの横振れを防止
         timeCountLabel.font = timeCountLabel.font.monospacedDigitFont
-        sceneView.frame = view.frame
-        view.insertSubview(sceneView, at: 0)
+    }
+}
+
+extension GameViewController: GameSceneManagerDelegate {
+    func injectSceneView(_ sceneView: UIView) {
+        sceneView.frame = self.view.frame
+        self.view.insertSubview(sceneView, at: 0)
     }
 }

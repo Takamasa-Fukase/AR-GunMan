@@ -33,10 +33,12 @@ class GameNavigator: GameNavigatorInterface {
         let coreMotionRepository = CoreMotionRepository(coreMotionManager: coreMotionManager)
         let useCase = GameUseCase(coreMotionRepository: coreMotionRepository)
         let navigator = GameNavigator(viewController: vc)
+        let sceneManager = GameSceneManager(delegate: vc)
         let vmDependency = GameViewModel.Dependency(
             tutorialRepository: TutorialRepository(),
             useCase: useCase,
-            navigator: navigator
+            navigator: navigator,
+            sceneManager: sceneManager
         )
         vc.viewModel = GameViewModel(dependency: vmDependency)
         return vc

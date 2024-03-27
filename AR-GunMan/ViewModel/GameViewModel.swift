@@ -10,7 +10,10 @@ import RxCocoa
 
 class GameViewModel {
     struct Input {
+        let viewDidLoad: Observable<Void>
+        let viewWillAppear: Observable<Void>
         let viewDidAppear: Observable<Void>
+        let viewWillDisappear: Observable<Void>
         let weaponChangeButtonTapped: Observable<Void>
     }
     
@@ -33,23 +36,23 @@ class GameViewModel {
         let tutorialRepository: TutorialRepository
         let useCase: GameUseCase
         let navigator: GameNavigatorInterface
+        let sceneManager: GameSceneManager
     }
     
     private let tutorialRepository: TutorialRepository
     private let useCase: GameUseCase
     private let navigator: GameNavigatorInterface
+    private let sceneManager: GameSceneManager
     private let disposeBag = DisposeBag()
     
     init(dependency: Dependency) {
         self.tutorialRepository = dependency.tutorialRepository
         self.useCase = dependency.useCase
         self.navigator = dependency.navigator
+        self.sceneManager = dependency.sceneManager
     }
     
-    func transform(
-        input: Input,
-        sceneManager: GameSceneManager
-    ) -> Output {
+    func transform(input: Input) -> Output {
         // 画面が持つ状態
         var state = State()
         
@@ -72,6 +75,24 @@ class GameViewModel {
                 self.useCase.startAcceletometerAndGyroUpdate()
             }
         }
+        
+        input.viewDidLoad
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.sceneManager.injectSceneViewIntoVC()
+            }).disposed(by: disposeBag)
+        
+        input.viewWillAppear
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.sceneManager.startSession()
+            }).disposed(by: disposeBag)
+        
+        input.viewWillDisappear
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.sceneManager.pauseSession()
+            }).disposed(by: disposeBag)
         
         input.viewDidAppear
             .take(1)
@@ -115,8 +136,9 @@ class GameViewModel {
             }).disposed(by: disposeBag)
         
         state.weaponTypeRelay
-            .subscribe(onNext: { weaponType in
-                sceneManager.showWeapon(weaponType)
+            .subscribe(onNext: { [weak self] weaponType in
+                guard let self = self else { return }
+                self.sceneManager.showWeapon(weaponType)
             }).disposed(by: disposeBag)
         
         state.timeCountRelay
@@ -156,7 +178,7 @@ class GameViewModel {
                     state.bulletsCountRelay.value - 1
                 )
                 
-                sceneManager.fireWeapon()
+                self.sceneManager.fireWeapon()
                 
                 if state.weaponTypeRelay.value == .bazooka {
                     AudioUtil.playSound(of: .bazookaReload)

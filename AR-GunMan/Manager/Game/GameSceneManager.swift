@@ -11,12 +11,17 @@ import SceneKit
 import RxSwift
 import RxCocoa
 
+protocol GameSceneManagerDelegate: AnyObject {
+    func injectSceneView(_ sceneView: UIView)
+}
+
 class GameSceneManager: NSObject {
     var targetHit: Observable<Void> {
         return targetHitRelay.asObservable()
     }
 
-    private let sceneView: ARSCNView
+    private let sceneView = ARSCNView()
+    private weak var delegate: GameSceneManagerDelegate?
     private let targetHitRelay = PublishRelay<Void>()
 
     // - node
@@ -32,11 +37,22 @@ class GameSceneManager: NSObject {
     private var lastPlayerStatus = false
     
     //MARK: - Methods
-    init(sceneView: ARSCNView) {
-        self.sceneView = sceneView
+    init(delegate: GameSceneManagerDelegate?) {
         super.init()
-
+        self.delegate = delegate
         setupSceneViewAndNodes()
+    }
+    
+    func injectSceneViewIntoVC() {
+        delegate?.injectSceneView(sceneView)
+    }
+    
+    func startSession() {
+        SceneViewSettingUtil.startSession(sceneView)
+    }
+    
+    func pauseSession() {
+        SceneViewSettingUtil.pauseSession(sceneView)
     }
     
     //指定された武器を表示
