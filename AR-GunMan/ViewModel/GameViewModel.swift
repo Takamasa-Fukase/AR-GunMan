@@ -125,10 +125,8 @@ class GameViewModel {
             }).disposed(by: disposeBag)
         
         weaponSelectObserver
-            .subscribe(onNext: { [weak self] weaponType in
-                guard let self = self else { return }
+            .subscribe(onNext: { weaponType in
                 state.weaponTypeRelay.accept(weaponType)
-                self.navigator.dismissWeaponChangeView()
                 AudioUtil.playSound(of: weaponType.weaponChangingSound)
                 state.bulletsCountRelay.accept(
                     weaponType.bulletsCapacity

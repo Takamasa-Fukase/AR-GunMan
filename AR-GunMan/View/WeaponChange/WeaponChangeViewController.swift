@@ -28,11 +28,19 @@ class WeaponChangeViewController: UIViewController {
     //MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         viewModel = WeaponChangeViewModel(dependency: vmDependency)
         
+        setupFSPagerView(delegate: viewModel)
+        
         // MARK: - output
-        setupFSPagerView()
+        let output = viewModel.transform(input: .init())
+        
+        output.dismiss
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.dismiss(animated: true)
+            }).disposed(by: disposeBag)
     }
 
     override func viewDidLayoutSubviews() {
@@ -40,8 +48,8 @@ class WeaponChangeViewController: UIViewController {
         self.pagerView.itemSize = CGSize(width: self.view.frame.width * 0.5, height: self.view.frame.height * 0.8)
     }
     
-    private func setupFSPagerView() {
-        pagerView.delegate = viewModel
+    private func setupFSPagerView(delegate: FSPagerViewDelegate) {
+        pagerView.delegate = delegate
         pagerView.dataSource = self
         pagerView.automaticSlidingInterval = 0
         pagerView.isInfinite = true
