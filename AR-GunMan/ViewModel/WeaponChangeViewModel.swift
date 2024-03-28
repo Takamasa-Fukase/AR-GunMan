@@ -5,12 +5,13 @@
 //  Created by ウルトラ深瀬 on 21/1/23.
 //
 
-import FSPagerView
 import RxSwift
 import RxCocoa
 
 class WeaponChangeViewModel: NSObject {
-    struct Input {}
+    struct Input {
+        let itemSelected: Observable<Int>
+    }
     
     struct Output {
         let dismiss: Observable<Void>
@@ -21,20 +22,18 @@ class WeaponChangeViewModel: NSObject {
     }
     
     private let dependency: Dependency
-    private let dismissRelay = PublishRelay<Void>()
             
     init(dependency: Dependency) {
         self.dependency = dependency
     }
     
     func transform(input: Input) -> Output {
-        return Output(dismiss: dismissRelay.asObservable())
-    }
-}
-
-extension WeaponChangeViewModel: FSPagerViewDelegate {
-    func pagerView(_ pagerView: FSPagerView, didSelectItemAt index: Int) {
-        dependency.weaponSelectObserver?.accept(WeaponType.allCases[index])
-        dismissRelay.accept(Void())
+        let dismiss = input.itemSelected
+            .map({ [weak self] index in
+                guard let self = self else { return }
+                self.dependency.weaponSelectObserver?.accept(WeaponType.allCases[index])
+            })
+        
+        return Output(dismiss: dismiss)
     }
 }

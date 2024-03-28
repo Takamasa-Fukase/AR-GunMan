@@ -17,6 +17,7 @@ class WeaponChangeViewController: UIViewController {
     var viewModel: WeaponChangeViewModel!
     var vmDependency: WeaponChangeViewModel.Dependency!
     let disposeBag = DisposeBag()
+    let itemSelectedRelay = PublishRelay<Int>()
     
     @IBOutlet weak var pagerView: FSPagerView! {
         didSet{
@@ -28,13 +29,18 @@ class WeaponChangeViewController: UIViewController {
     //MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupFSPagerView()
                 
         viewModel = WeaponChangeViewModel(dependency: vmDependency)
         
-        setupFSPagerView(delegate: viewModel)
-        
+        // MARK: - input
+        let input = WeaponChangeViewModel.Input(
+            itemSelected: itemSelectedRelay.asObservable()
+        )
+                
         // MARK: - output
-        let output = viewModel.transform(input: .init())
+        let output = viewModel.transform(input: input)
         
         output.dismiss
             .subscribe(onNext: { [weak self] _ in
@@ -48,14 +54,20 @@ class WeaponChangeViewController: UIViewController {
         self.pagerView.itemSize = CGSize(width: self.view.frame.width * 0.5, height: self.view.frame.height * 0.8)
     }
     
-    private func setupFSPagerView(delegate: FSPagerViewDelegate) {
-        pagerView.delegate = delegate
+    private func setupFSPagerView() {
+        pagerView.delegate = self
         pagerView.dataSource = self
         pagerView.automaticSlidingInterval = 0
         pagerView.isInfinite = true
         pagerView.decelerationDistance = 1
         pagerView.interitemSpacing = 8
         pagerView.transformer = FSPagerViewTransformer(type: .ferrisWheel)
+    }
+}
+
+extension WeaponChangeViewController: FSPagerViewDelegate {
+    func pagerView(_ pagerView: FSPagerView, didSelectItemAt index: Int) {
+        itemSelectedRelay.accept(index)
     }
 }
 
