@@ -30,6 +30,7 @@ class GameViewModel {
         var isBazookaReloading: Bool = false
         let timeCountRelay = BehaviorRelay<Double>(value: GameConst.timeCount)
         var score: Double = 0
+        var reloadingMotionDetectedCountRelay = BehaviorRelay<Int>(value: 0)
     }
     
     struct Dependency {
@@ -196,6 +197,9 @@ class GameViewModel {
         useCase.getReloadingMotionStream()
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
+                state.reloadingMotionDetectedCountRelay.accept(
+                    state.reloadingMotionDetectedCountRelay.value + 1
+                )
                 guard self.canReload(bulletsCount: state.bulletsCountRelay.value,
                                      isBazookaReloading: state.isBazookaReloading) else { return }
                 if state.weaponTypeRelay.value != .bazooka {
@@ -206,11 +210,13 @@ class GameViewModel {
                 )
             }).disposed(by: disposeBag)
         
-//        motionDetector.secretEventMotionDetected
-//            .subscribe(onNext: { _ in
-//                sceneManager.changeTargetsToTaimeisan()
-//                AudioUtil.playSound(of: .kyuiin)
-//            }).disposed(by: disposeBag)
+        state.reloadingMotionDetectedCountRelay
+            .filter({ $0 == 20 })
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.sceneManager.changeTargetsToTaimeisan()
+                AudioUtil.playSound(of: .kyuiin)
+            }).disposed(by: disposeBag)
         
         // MARK: Outputの作成
         let sightImage = state.weaponTypeRelay
