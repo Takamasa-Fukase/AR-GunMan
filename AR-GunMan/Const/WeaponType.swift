@@ -11,6 +11,11 @@ enum WeaponType: CaseIterable {
     case pistol
     case bazooka
     
+    enum ReloadType {
+        case manual
+        case auto
+    }
+    
     var name: String {
         switch self {
         case .pistol:
@@ -35,6 +40,24 @@ enum WeaponType: CaseIterable {
             return 5
         case .bazooka:
             return 12
+        }
+    }
+    
+    var reloadDuration: DispatchTime {
+        switch self {
+        case .pistol:
+            return .now()
+        case .bazooka:
+            return .now() + 3.2
+        }
+    }
+    
+    var reloadType: ReloadType {
+        switch self {
+        case .pistol:
+            return .manual
+        case .bazooka:
+            return .auto
         }
     }
     
@@ -80,6 +103,15 @@ enum WeaponType: CaseIterable {
             return .pistolShoot
         case .bazooka:
             return .bazookaShoot
+        }
+    }
+    
+    var reloadingSound: Sounds {
+        switch self {
+        case .pistol:
+            return .pistolReload
+        case .bazooka:
+            return .bazookaReload
         }
     }
 

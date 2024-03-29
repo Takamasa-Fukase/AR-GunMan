@@ -27,7 +27,7 @@ class GameViewModel {
     struct State {
         let weaponTypeRelay = BehaviorRelay<WeaponType>(value: .pistol)
         let bulletsCountRelay = BehaviorRelay<Int>(value: WeaponType.pistol.bulletsCapacity)
-        var isBazookaReloading: Bool = false
+        var isWeaponReloading: Bool = false
         let timeCountRelay = BehaviorRelay<Double>(value: GameConst.timeCount)
         var score: Double = 0
         var reloadingMotionDetectedCountRelay = BehaviorRelay<Int>(value: 0)
@@ -63,6 +63,8 @@ class GameViewModel {
         let tutorialEndObserver = PublishRelay<Void>()
         let weaponSelectObserver = PublishRelay<WeaponType>()
         
+        let autoReloadRelay = BehaviorRelay<Void>(value: Void())
+        
         // 仮置き
         func startGame() {
             AudioUtil.playSound(of: .pistolSet)
@@ -75,6 +77,13 @@ class GameViewModel {
                     .bind(to: state.timeCountRelay)
                 self.useCase.startAcceletometerAndGyroUpdate()
             }
+        }
+        
+        func countReloadingMotion() {
+            // リロードモーションの検知回数をインクリメントする
+            state.reloadingMotionDetectedCountRelay.accept(
+                state.reloadingMotionDetectedCountRelay.value + 1
+            )
         }
         
         input.viewDidLoad
@@ -131,7 +140,7 @@ class GameViewModel {
                 state.bulletsCountRelay.accept(
                     weaponType.bulletsCapacity
                 )
-                state.isBazookaReloading = false
+                state.isWeaponReloading = false
             }).disposed(by: disposeBag)
         
         state.weaponTypeRelay
@@ -167,45 +176,40 @@ class GameViewModel {
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 guard self.canFire(bulletsCount: state.bulletsCountRelay.value) else {
-                    if state.weaponTypeRelay.value != .bazooka {
+                    if state.weaponTypeRelay.value.reloadType == .manual {
                         AudioUtil.playSound(of: .pistolOutBullets)
                     }
                     return
                 }
                 AudioUtil.playSound(of: state.weaponTypeRelay.value.firingSound)
+                self.sceneManager.fireWeapon()
                 state.bulletsCountRelay.accept(
                     state.bulletsCountRelay.value - 1
                 )
-                
-                self.sceneManager.fireWeapon()
-                
-                if state.weaponTypeRelay.value == .bazooka {
-                    AudioUtil.playSound(of: .bazookaReload)
-                    state.isBazookaReloading = true
-                    // バズーカは自動リロード（3.2秒後に完了）
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 3.2) {
-                        state.bulletsCountRelay.accept(
-                            state.weaponTypeRelay.value.bulletsCapacity
-                        )
-                        state.isBazookaReloading = false
-                    }
+                if state.weaponTypeRelay.value.reloadType == .auto {
+                    autoReloadRelay.accept(Void())
                 }
             }).disposed(by: disposeBag)
 
-        useCase.getReloadingMotionStream()
+        // 自動リロードトリガーとモーション検知のどちらでも発火させる為combineしている
+        Observable
+            .combineLatest(
+                autoReloadRelay.asObservable(),
+                useCase.getReloadingMotionStream().map({ _ in countReloadingMotion() })
+            )
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
-                state.reloadingMotionDetectedCountRelay.accept(
-                    state.reloadingMotionDetectedCountRelay.value + 1
-                )
                 guard self.canReload(bulletsCount: state.bulletsCountRelay.value,
-                                     isBazookaReloading: state.isBazookaReloading) else { return }
-                if state.weaponTypeRelay.value != .bazooka {
-                    AudioUtil.playSound(of: .pistolReload)
-                }
-                state.bulletsCountRelay.accept(
-                    state.weaponTypeRelay.value.bulletsCapacity
-                )
+                                     isWeaponReloading: state.isWeaponReloading) else { return }
+                state.isWeaponReloading = true
+                AudioUtil.playSound(of: state.weaponTypeRelay.value.reloadingSound)
+                DispatchQueue.main.asyncAfter(deadline: state.weaponTypeRelay.value.reloadDuration,
+                                              execute: {
+                    state.bulletsCountRelay.accept(
+                        state.weaponTypeRelay.value.bulletsCapacity
+                    )
+                    state.isWeaponReloading = false
+                })
             }).disposed(by: disposeBag)
         
         state.reloadingMotionDetectedCountRelay
@@ -241,7 +245,7 @@ class GameViewModel {
         return bulletsCount > 0
     }
     
-    private func canReload(bulletsCount: Int, isBazookaReloading: Bool) -> Bool {
-        return bulletsCount <= 0 && !isBazookaReloading
+    private func canReload(bulletsCount: Int, isWeaponReloading: Bool) -> Bool {
+        return bulletsCount <= 0 && !isWeaponReloading
     }
 }
