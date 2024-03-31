@@ -9,9 +9,12 @@ import RxSwift
 
 class GameUseCase {
     private let coreMotionRepository: CoreMotionRepository
+    private let tutorialRepository: TutorialRepository
     
-    init(coreMotionRepository: CoreMotionRepository) {
+    init(coreMotionRepository: CoreMotionRepository,
+         tutorialRepository: TutorialRepository) {
         self.coreMotionRepository = coreMotionRepository
+        self.tutorialRepository = tutorialRepository
     }
     
     func startAccelerometerAndGyroUpdate() {
@@ -46,6 +49,10 @@ class GameUseCase {
                 gyroCompositeValue >= 10
             }
             .map({_ in})
+    }
+    
+    func getIsTutorialSeen() -> Observable<Bool> {
+        return tutorialRepository.getIsTutorialSeen()
     }
 
     private func getCompositeValue(x: Double, y: Double, z: Double) -> Double {

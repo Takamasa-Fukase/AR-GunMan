@@ -34,20 +34,17 @@ class GameViewModel {
     }
     
     struct Dependency {
-        let tutorialRepository: TutorialRepository
         let useCase: GameUseCase
         let navigator: GameNavigatorInterface
         let sceneManager: GameSceneManager
     }
     
-    private let tutorialRepository: TutorialRepository
     private let useCase: GameUseCase
     private let navigator: GameNavigatorInterface
     private let sceneManager: GameSceneManager
     private let disposeBag = DisposeBag()
     
     init(dependency: Dependency) {
-        self.tutorialRepository = dependency.tutorialRepository
         self.useCase = dependency.useCase
         self.navigator = dependency.navigator
         self.sceneManager = dependency.sceneManager
@@ -107,7 +104,7 @@ class GameViewModel {
         input.viewDidAppear
             .take(1)
             .flatMapLatest { [unowned self] _ in
-                return self.tutorialRepository.getIsTutorialSeen()
+                return self.useCase.getIsTutorialSeen()
             }
             .subscribe(onNext: { [weak self] isSeen in
                 guard let self = self else { return }
