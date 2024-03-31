@@ -5,7 +5,6 @@
 //  Created by 深瀬 on 2024/03/25.
 //
 
-import CoreMotion
 import RxSwift
 
 class GameUseCase {

@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import FSPagerView
-import PanModal
 import RxSwift
 import RxCocoa
 
