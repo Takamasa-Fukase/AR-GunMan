@@ -75,7 +75,7 @@ class GameViewModel {
                         TimeCountUtil.decreaseGameTimeCount(lastValue: state.timeCountRelay.value)
                     })
                     .bind(to: state.timeCountRelay)
-                self.useCase.startAcceletometerAndGyroUpdate()
+                self.useCase.startAccelerometerAndGyroUpdate()
             }
         }
         
@@ -155,7 +155,7 @@ class GameViewModel {
                 guard let self = self else { return }
                 AudioUtil.playSound(of: .endWhistle)
                 timerObservable?.dispose()
-                useCase.stopAcceletometerAndGyroUpdate()
+                useCase.stopAccelerometerAndGyroUpdate()
                 self.navigator.dismissWeaponChangeView()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
                     AudioUtil.playSound(of: .rankingAppear)

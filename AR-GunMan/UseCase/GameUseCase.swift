@@ -14,11 +14,11 @@ class GameUseCase {
         self.coreMotionRepository = coreMotionRepository
     }
     
-    func startAcceletometerAndGyroUpdate() {
+    func startAccelerometerAndGyroUpdate() {
         self.coreMotionRepository.startUpdate()
     }
     
-    func stopAcceletometerAndGyroUpdate() {
+    func stopAccelerometerAndGyroUpdate() {
         self.coreMotionRepository.stopUpdate()
     }
 
