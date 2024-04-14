@@ -20,86 +20,79 @@ class TopViewModel {
         let startButtonImage: Observable<UIImage?>
         let settingsButtonImage: Observable<UIImage?>
         let howToPlayButtonImage: Observable<UIImage?>
-        let showGame: Observable<Void>
-        let showSettings: Observable<Void>
-        let showTutorial: Observable<Void>
     }
     
     struct Dependency {
+        let navigator: TopNavigator
         let buttonImageSwitcher: TopPageButtonImageSwitcher
     }
     
-    private let dependency: Dependency
+    private let navigator: TopNavigator
+    private let buttonImageSwitcher: TopPageButtonImageSwitcher
     private let disposeBag = DisposeBag()
     
     init(dependency: Dependency) {
-        self.dependency = dependency
+        self.navigator = dependency.navigator
+        self.buttonImageSwitcher = dependency.buttonImageSwitcher
     }
 
     func transform(input: Input) -> Output {
-        let showGameRelay = PublishRelay<Void>()
-        
-        dependency.buttonImageSwitcher.image
-            .filter({$0.type == .start && !$0.isSwitched})
-            .map({ _ in})
-            .bind(to: showGameRelay)
-            .disposed(by: disposeBag)
-        
+//        input.viewDidAppear
+//            .subscribe(onNext: { element in
+//                if UserDefaults.isReplay {
+//                    UserDefaults.isReplay = false
+//                    showGameRelay.accept(Void())
+//                }
+//            }).disposed(by: disposeBag)
+
         input.startButtonTapped
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
-                self.dependency.buttonImageSwitcher.switchAndRevert(of: .start)
+                self.buttonImageSwitcher.switchAndRevert(of: .start)
             }).disposed(by: disposeBag)
         
         input.settingsButtonTapped
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
-                self.dependency.buttonImageSwitcher.switchAndRevert(of: .settings)
+                self.buttonImageSwitcher.switchAndRevert(of: .settings)
             }).disposed(by: disposeBag)
         
         input.howToPlayButtonTapped
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
-                self.dependency.buttonImageSwitcher.switchAndRevert(of: .howToPlay)
+                self.buttonImageSwitcher.switchAndRevert(of: .howToPlay)
             }).disposed(by: disposeBag)
-                
-        input.viewDidAppear
-            .subscribe(onNext: { element in
-                if UserDefaults.isReplay {
-                    UserDefaults.isReplay = false
-                    showGameRelay.accept(Void())
+         
+        buttonImageSwitcher.image
+            .subscribe(onNext: { [weak self] element in
+                guard let self = self else { return }
+                switch element.type {
+                case .start:
+                    // TODO: ButtonImageSwitcherを見直す時にreplay時の遷移の考慮を再度追加する
+                    self.navigator.showGame()
+                case .settings:
+                    self.navigator.showSettings()
+                case .howToPlay:
+                    self.navigator.showTutorial()
                 }
             }).disposed(by: disposeBag)
         
-        let startButtonImage = dependency.buttonImageSwitcher.image
+        let startButtonImage = buttonImageSwitcher.image
             .filter({$0.type == .start})
             .map({$0.type.targetIcon(isSwitched: $0.isSwitched)})
         
-        let settingsButtonImage = dependency.buttonImageSwitcher.image
+        let settingsButtonImage = buttonImageSwitcher.image
             .filter({$0.type == .settings})
             .map({$0.type.targetIcon(isSwitched: $0.isSwitched)})
         
-        let howToPlayButtonImage = dependency.buttonImageSwitcher.image
+        let howToPlayButtonImage = buttonImageSwitcher.image
             .filter({$0.type == .howToPlay})
             .map({$0.type.targetIcon(isSwitched: $0.isSwitched)})
-        
-        let showGame = showGameRelay.asObservable()
-
-        let showSettings = dependency.buttonImageSwitcher.image
-            .filter({$0.type == .settings && !$0.isSwitched})
-            .map({_ in})
-        
-        let showTutorial = dependency.buttonImageSwitcher.image
-            .filter({$0.type == .howToPlay && !$0.isSwitched})
-            .map({_ in})
 
         return Output(
             startButtonImage: startButtonImage,
             settingsButtonImage: settingsButtonImage,
-            howToPlayButtonImage: howToPlayButtonImage,
-            showGame: showGame,
-            showSettings: showSettings,
-            showTutorial: showTutorial
+            howToPlayButtonImage: howToPlayButtonImage
         )
     }
 }

@@ -24,10 +24,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        viewModel = TopViewModel(
-            dependency: .init(buttonImageSwitcher: TopPageButtonImageSwitcher())
-        )
-
         //MARK: - input
         let input = TopViewModel.Input(
             viewDidAppear: rx.viewDidAppear,
@@ -50,43 +46,5 @@ class ViewController: UIViewController {
         output.howToPlayButtonImage
             .bind(to: howToPlayButtonIcon.rx.image)
             .disposed(by: disposeBag)
-
-        output.showGame
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else {return}
-                CameraAuthUtil.checkCameraAuthorization(vc: self)
-                self.presentGameVC()
-            }).disposed(by: disposeBag)
-        
-        output.showSettings
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else {return}
-                self.presentSettingsVC()
-            }).disposed(by: disposeBag)
-        
-        output.showTutorial
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else {return}
-                self.presentHowToPlayVC()
-            }).disposed(by: disposeBag)
-    }
-
-    func presentGameVC() {
-        let vc = GameNavigator.assembleModules()
-        self.present(vc, animated: true)
-    }
-    
-    func presentSettingsVC() {
-        let storyboard: UIStoryboard = UIStoryboard(name: "SettingsViewController", bundle: nil)
-        let vc = storyboard.instantiateInitialViewController() as! SettingsViewController
-        self.presentPanModal(vc)
-    }
-
-    func presentHowToPlayVC() {
-        let storyboard: UIStoryboard = UIStoryboard(name: "TutorialViewController", bundle: nil)
-        let vc = storyboard.instantiateInitialViewController() as! TutorialViewController
-        let dependency = TutorialViewModel.Dependency(transitionType: .topPage)
-        vc.viewModel = TutorialViewModel(dependency: dependency)
-        self.presentPanModal(vc)
     }
 }

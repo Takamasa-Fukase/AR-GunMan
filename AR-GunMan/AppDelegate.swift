@@ -55,6 +55,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             AudioUtil.initAudioPlayers()
         }
         
+        window?.rootViewController = TopNavigator.assembleModules()
+        
         return true
     }
     
