@@ -10,14 +10,6 @@ import RxSwift
 import RxCocoa
 
 class TutorialViewModel {
-    let buttonText: Observable<String>
-    let pageControllIndex: Observable<Int>
-    let scrollToNextPage: Observable<Void>
-    let dismiss: Observable<Void>
-    let transitionType: TransitType
-
-    private let disposeBag = DisposeBag()
-    
     enum TransitType {
         case topPage
         case gamePage
@@ -29,37 +21,58 @@ class TutorialViewModel {
         let bottomButtonTapped: Observable<Void>
     }
     
+    struct Output {
+        let buttonText: Observable<String>
+        let pageControllIndex: Observable<Int>
+        let scrollToNextPage: Observable<Void>
+        let dismiss: Observable<Void>
+    }
+    
     struct Dependency {
         let transitionType: TransitType
         weak var tutorialEndObserver: PublishRelay<Void>?
     }
     
-    init(input: Input, dependency: Dependency) {
+    let transitionType: TransitType
+    private let dependency: Dependency
+    private let disposeBag = DisposeBag()
+    
+    init(dependency: Dependency) {
+        self.dependency = dependency
+        self.transitionType = dependency.transitionType
+    }
+    
+    func transform(input: Input) -> Output {
         let horizontalPageIndexRelay = BehaviorRelay<Int>(value: 0)
         
         input.horizontalPageIndex
             .bind(to: horizontalPageIndexRelay)
             .disposed(by: disposeBag)
         
-        self.buttonText = horizontalPageIndexRelay
+        let buttonText = horizontalPageIndexRelay
             .map({($0 < 2) ? "NEXT" : "OK"})
         
-        self.pageControllIndex = horizontalPageIndexRelay.asObservable()
+        let pageControllIndex = horizontalPageIndexRelay.asObservable()
         
-        self.scrollToNextPage = input.bottomButtonTapped
+        let scrollToNextPage = input.bottomButtonTapped
             .filter({_ in horizontalPageIndexRelay.value < 2})
         
-        self.dismiss = input.bottomButtonTapped
+        let dismiss = input.bottomButtonTapped
             .filter({_ in horizontalPageIndexRelay.value >= 2})
-        
-        self.transitionType = dependency.transitionType
-        
+                
         input.viewDidDisappear
-            .subscribe(onNext: { element in
-                if dependency.transitionType == .gamePage {
+            .subscribe(onNext: { [weak self] element in
+                if self?.dependency.transitionType == .gamePage {
                     UserDefaults.isTutorialAlreadySeen = true
                 }
-                dependency.tutorialEndObserver?.accept(Void())
+                self?.dependency.tutorialEndObserver?.accept(Void())
             }).disposed(by: disposeBag)
+        
+        return Output(
+            buttonText: buttonText,
+            pageControllIndex: pageControllIndex,
+            scrollToNextPage: scrollToNextPage,
+            dismiss: dismiss
+        )
     }
 }

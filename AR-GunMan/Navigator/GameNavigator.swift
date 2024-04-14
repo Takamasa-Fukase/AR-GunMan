@@ -50,8 +50,11 @@ class GameNavigator: GameNavigatorInterface {
     func showTutorialView(tutorialEndObserver: PublishRelay<Void>) {
         let storyboard = UIStoryboard(name: "TutorialViewController", bundle: nil)
         let vc = storyboard.instantiateInitialViewController() as! TutorialViewController
-        vc.vmDependency = .init(transitionType: .gamePage,
-                                tutorialEndObserver: tutorialEndObserver)
+        let dependency = TutorialViewModel.Dependency(
+            transitionType: .gamePage,
+            tutorialEndObserver: tutorialEndObserver
+        )
+        vc.viewModel = TutorialViewModel(dependency: dependency)
         viewController?.presentPanModal(vc)
     }
     

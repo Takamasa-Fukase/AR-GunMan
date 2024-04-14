@@ -25,7 +25,7 @@ class GameViewController: UIViewController {
         setupUI()
         
         //MARK: - input
-        let input: GameViewModel.Input = .init(
+        let input = GameViewModel.Input(
             viewDidLoad: Observable.just(Void()),
             viewWillAppear: rx.viewWillAppear,
             viewDidAppear: rx.viewDidAppear,

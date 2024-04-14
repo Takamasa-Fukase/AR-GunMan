@@ -10,10 +10,8 @@ import RxSwift
 import RxCocoa
 
 class TutorialViewController: UIViewController {
-    
     var viewModel: TutorialViewModel!
     let disposeBag = DisposeBag()
-    var vmDependency: TutorialViewModel.Dependency!
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var firstImageView: UIImageView!
@@ -29,28 +27,30 @@ class TutorialViewController: UIViewController {
         let horizontalPageIndexObservable = scrollView.rx.didScroll
             .map({_ in self.scrollView.horizontalPageIndex})
             .asObservable()
-        viewModel = TutorialViewModel(
-            input: .init(viewDidDisappear: rx.viewDidDisappear,
-                         horizontalPageIndex: horizontalPageIndexObservable,
-                         bottomButtonTapped: bottomButton.rx.tap.asObservable()),
-            dependency: vmDependency)
+        let input = TutorialViewModel.Input(
+            viewDidDisappear: rx.viewDidDisappear,
+            horizontalPageIndex: horizontalPageIndexObservable,
+            bottomButtonTapped: bottomButton.rx.tap.asObservable()
+        )
         
         // MARK: - output
-        viewModel.buttonText
+        let output = viewModel.transform(input: input)
+        
+        output.buttonText
             .bind(to: bottomButton.rx.title(for: .normal))
             .disposed(by: disposeBag)
         
-        viewModel.pageControllIndex
+        output.pageControllIndex
             .bind(to: pageControl.rx.currentPage)
             .disposed(by: disposeBag)
         
-        viewModel.scrollToNextPage
+        output.scrollToNextPage
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else {return}
                 self.scrollView.scrollHorizontallyToNextPage()
             }).disposed(by: disposeBag)
         
-        viewModel.dismiss
+        output.dismiss
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else {return}
                 self.dismiss(animated: true, completion: nil)
