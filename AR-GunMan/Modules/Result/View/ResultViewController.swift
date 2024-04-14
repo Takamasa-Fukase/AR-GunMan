@@ -130,7 +130,7 @@ class ResultViewController: UIViewController {
     }
     
     private func dismissToTopVC() {
-        let topVC = self.presentingViewController?.presentingViewController as! ViewController
+        let topVC = self.presentingViewController?.presentingViewController as! TopViewController
         topVC.dismiss(animated: false, completion: nil)
     }
 }

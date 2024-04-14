@@ -45,8 +45,8 @@
 		59D2D55E2552E2CC006DDB70 /* headShot.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 59D2D5532552E2CC006DDB70 /* headShot.mp3 */; };
 		59D2D55F2552E2CC006DDB70 /* pistol-reload.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 59D2D5542552E2CC006DDB70 /* pistol-reload.mp3 */; };
 		59D2D56A2552E31E006DDB70 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59D2D5692552E31D006DDB70 /* Assets.xcassets */; };
-		59D2D57A2552E536006DDB70 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59D2D5782552E536006DDB70 /* Main.storyboard */; };
-		59D2D57B2552E536006DDB70 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2D5792552E536006DDB70 /* ViewController.swift */; };
+		59D2D57A2552E536006DDB70 /* TopViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59D2D5782552E536006DDB70 /* TopViewController.storyboard */; };
+		59D2D57B2552E536006DDB70 /* TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2D5792552E536006DDB70 /* TopViewController.swift */; };
 		59D2D5842552E6B2006DDB70 /* GameViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59D2D5822552E6B2006DDB70 /* GameViewController.storyboard */; };
 		59D2D5852552E6B2006DDB70 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2D5832552E6B2006DDB70 /* GameViewController.swift */; };
 		59D2D5932552E718006DDB70 /* WeaponChangeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2D58F2552E717006DDB70 /* WeaponChangeCell.swift */; };
@@ -160,8 +160,8 @@
 		59D2D5532552E2CC006DDB70 /* headShot.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = headShot.mp3; sourceTree = "<group>"; };
 		59D2D5542552E2CC006DDB70 /* pistol-reload.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "pistol-reload.mp3"; sourceTree = "<group>"; };
 		59D2D5692552E31D006DDB70 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		59D2D5782552E536006DDB70 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		59D2D5792552E536006DDB70 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		59D2D5782552E536006DDB70 /* TopViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TopViewController.storyboard; sourceTree = "<group>"; };
+		59D2D5792552E536006DDB70 /* TopViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopViewController.swift; sourceTree = "<group>"; };
 		59D2D5822552E6B2006DDB70 /* GameViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = GameViewController.storyboard; sourceTree = "<group>"; };
 		59D2D5832552E6B2006DDB70 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		59D2D58F2552E717006DDB70 /* WeaponChangeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeaponChangeCell.swift; sourceTree = "<group>"; };
@@ -552,8 +552,8 @@
 		86A6CB242BCC0E4200628C61 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				59D2D5792552E536006DDB70 /* ViewController.swift */,
-				59D2D5782552E536006DDB70 /* Main.storyboard */,
+				59D2D5792552E536006DDB70 /* TopViewController.swift */,
+				59D2D5782552E536006DDB70 /* TopViewController.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -928,7 +928,7 @@
 				59D2D5962552E718006DDB70 /* WeaponChangeViewController.storyboard in Resources */,
 				59D2D55E2552E2CC006DDB70 /* headShot.mp3 in Resources */,
 				59484C8525664E7400F9C6A8 /* bazookaShoot.mp3 in Resources */,
-				59D2D57A2552E536006DDB70 /* Main.storyboard in Resources */,
+				59D2D57A2552E536006DDB70 /* TopViewController.storyboard in Resources */,
 				59D2D56A2552E31E006DDB70 /* Assets.xcassets in Resources */,
 				59D2D55C2552E2CC006DDB70 /* pistol-slide.mp3 in Resources */,
 			);
@@ -1087,7 +1087,7 @@
 				67200F5927A0026000AD92EC /* NameRegisterViewModel.swift in Sources */,
 				86C421B82BB040C300EFD791 /* TutorialRepository.swift in Sources */,
 				67200F5527A000AC00AD92EC /* TutorialViewModel.swift in Sources */,
-				59D2D57B2552E536006DDB70 /* ViewController.swift in Sources */,
+				59D2D57B2552E536006DDB70 /* TopViewController.swift in Sources */,
 				67B6860627AB0C9300D7F413 /* GameSceneManager.swift in Sources */,
 				5952F62825E94D1000ADB85B /* TopViewModel.swift in Sources */,
 				59D2D4D92552DE66006DDB70 /* AppDelegate.swift in Sources */,

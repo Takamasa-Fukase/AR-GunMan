@@ -15,15 +15,15 @@ protocol TopNavigatorInterface: AnyObject {
 }
 
 class TopNavigator: TopNavigatorInterface {
-    private weak var viewController: ViewController?
+    private weak var viewController: TopViewController?
     
-    init(viewController: ViewController) {
+    init(viewController: TopViewController) {
         self.viewController = viewController
     }
     
     static func assembleModules() -> UIViewController {
-        let storyboard = UIStoryboard(name: "ViewController", bundle: nil)
-        let vc = storyboard.instantiateInitialViewController() as! ViewController
+        let storyboard = UIStoryboard(name: "TopViewController", bundle: nil)
+        let vc = storyboard.instantiateInitialViewController() as! TopViewController
         let navigator = TopNavigator(viewController: vc)
         let dependency = TopViewModel.Dependency(
             navigator: navigator,

@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  TopViewController.swift
 //  AR-GunMan
 //
 //  Created by 深瀬 貴将 on 2020/11/04.
@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class ViewController: UIViewController {
+class TopViewController: UIViewController {
     var viewModel: TopViewModel!
     let disposeBag = DisposeBag()
     
