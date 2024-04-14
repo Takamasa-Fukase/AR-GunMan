@@ -23,47 +23,48 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        viewModel = TopViewModel(
+            dependency: .init(buttonImageSwitcher: TopPageButtonImageSwitcher())
+        )
 
         //MARK: - input
-        viewModel = TopViewModel(
-            input: .init(
-                viewDidAppear: rx.viewDidAppear,
-                startButtonTapped: startButton.rx.tap.asObservable(),
-                settingsButtonTapped: settingsButton.rx.tap.asObservable(),
-                howToPlayButtonTapped: howToPlayButton.rx.tap.asObservable()
-            ),
-            dependency: .init(
-                buttonImageSwitcher: TopPageButtonImageSwitcher()
-            )
+        let input = TopViewModel.Input(
+            viewDidAppear: rx.viewDidAppear,
+            startButtonTapped: startButton.rx.tap.asObservable(),
+            settingsButtonTapped: settingsButton.rx.tap.asObservable(),
+            howToPlayButtonTapped: howToPlayButton.rx.tap.asObservable()
         )
         
         //MARK: - output
-        viewModel.startButtonImage
+        let output = viewModel.transform(input: input)
+        
+        output.startButtonImage
             .bind(to: startButtonIcon.rx.image)
             .disposed(by: disposeBag)
         
-        viewModel.settingsButtonImage
+        output.settingsButtonImage
             .bind(to: settingsButtonIcon.rx.image)
             .disposed(by: disposeBag)
         
-        viewModel.howToPlayButtonImage
+        output.howToPlayButtonImage
             .bind(to: howToPlayButtonIcon.rx.image)
             .disposed(by: disposeBag)
 
-        viewModel.showGame
+        output.showGame
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else {return}
                 CameraAuthUtil.checkCameraAuthorization(vc: self)
                 self.presentGameVC()
             }).disposed(by: disposeBag)
         
-        viewModel.showSettings
+        output.showSettings
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else {return}
                 self.presentSettingsVC()
             }).disposed(by: disposeBag)
         
-        viewModel.showTutorial
+        output.showTutorial
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else {return}
                 self.presentHowToPlayVC()
