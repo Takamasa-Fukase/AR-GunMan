@@ -64,6 +64,7 @@ class TopViewModel {
             }).disposed(by: disposeBag)
          
         buttonImageSwitcher.image
+            .filter({ !$0.isSwitched })
             .subscribe(onNext: { [weak self] element in
                 guard let self = self else { return }
                 switch element.type {
