@@ -15,7 +15,6 @@ class WeaponChangeViewController: UIViewController {
        
     //MARK: - Properties
     var viewModel: WeaponChangeViewModel!
-    var vmDependency: WeaponChangeViewModel.Dependency!
     let disposeBag = DisposeBag()
     let itemSelectedRelay = PublishRelay<Int>()
     
@@ -31,8 +30,6 @@ class WeaponChangeViewController: UIViewController {
         super.viewDidLoad()
         
         setupFSPagerView()
-                
-        viewModel = WeaponChangeViewModel(dependency: vmDependency)
         
         // MARK: - input
         let input = WeaponChangeViewModel.Input(

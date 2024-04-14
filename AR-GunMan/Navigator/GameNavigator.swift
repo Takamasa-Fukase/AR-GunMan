@@ -61,7 +61,10 @@ class GameNavigator: GameNavigatorInterface {
     func showWeaponChangeView(weaponSelectObserver: PublishRelay<WeaponType>) {
         let storyboard = UIStoryboard(name: "WeaponChangeViewController", bundle: nil)
         let vc = storyboard.instantiateInitialViewController() as! WeaponChangeViewController
-        vc.vmDependency = .init(weaponSelectObserver: weaponSelectObserver)
+        let dependency = WeaponChangeViewModel.Dependency(
+            weaponSelectObserver: weaponSelectObserver
+        )
+        vc.viewModel = WeaponChangeViewModel(dependency: dependency)
         viewController?.present(vc, animated: true)
     }
     
