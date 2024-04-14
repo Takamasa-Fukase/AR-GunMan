@@ -43,6 +43,9 @@ class GameViewModel {
     private let navigator: GameNavigatorInterface
     private let sceneManager: GameSceneManager
     private let disposeBag = DisposeBag()
+    // 遷移先画面から受け取る通知
+    private let tutorialEndObserver = PublishRelay<Void>()
+    private let weaponSelectObserver = PublishRelay<WeaponType>()
     
     init(dependency: Dependency) {
         self.useCase = dependency.useCase
@@ -55,11 +58,6 @@ class GameViewModel {
         var state = State()
         
         var timerObservable: Disposable?
-        
-        // 遷移先画面から受け取る通知
-        let tutorialEndObserver = PublishRelay<Void>()
-        let weaponSelectObserver = PublishRelay<WeaponType>()
-        
         let autoReloadRelay = BehaviorRelay<Void>(value: Void())
         
         // 仮置き
