@@ -40,6 +40,18 @@ class TopViewModel {
         let startButtonImageRelay = PublishRelay<UIImage?>()
         let settingsButtonImageRelay = PublishRelay<UIImage?>()
         let howToPlayButtonImageRelay = PublishRelay<UIImage?>()
+        
+        input.viewDidAppear
+            .flatMapLatest({ [weak self] in
+                return self?.useCase.getNeedsReplay() ?? Observable.just(false)
+            })
+            .subscribe(onNext: { [weak self] needsReplay in
+                guard let self = self else { return }
+                if needsReplay {
+                    self.useCase.setNeedsReplay(false)
+                    self.navigator.showGame()
+                }
+            }).disposed(by: disposeBag)
 
         input.startButtonTapped
             .flatMapLatest({ [weak self] in
@@ -51,7 +63,6 @@ class TopViewModel {
                     self.switchAndRevertButtonImage(
                         buttonImageRelay: startButtonImageRelay,
                         onReverted: {
-                            // TODO: ButtonImageSwitcherを見直す時にreplay時の遷移の考慮を再度追加する
                             self.navigator.showGame()
                         })
                 }else {

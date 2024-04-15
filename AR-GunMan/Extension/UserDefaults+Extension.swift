@@ -12,7 +12,7 @@ extension UserDefaults {
 
     private enum Keys {
         static let isTutorialAlreadySeen = "tutorialAlreadySeen"
-        static let isReplay = "isReplay"
+        static let needsReplay = "needsReplay"
     }
 
     class var isTutorialAlreadySeen: Bool {
@@ -24,12 +24,12 @@ extension UserDefaults {
         }
     }
     
-    class var isReplay: Bool {
+    class var needsReplay: Bool {
         get {
-            return defaults.bool(forKey: Keys.isReplay)
+            return defaults.bool(forKey: Keys.needsReplay)
         }
         set {
-            defaults.set(newValue, forKey: Keys.isReplay)
+            defaults.set(newValue, forKey: Keys.needsReplay)
         }
     }
 }

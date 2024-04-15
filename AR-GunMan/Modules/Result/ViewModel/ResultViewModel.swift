@@ -67,7 +67,9 @@ class ResultViewModel {
         
         input.replayButtonTapped
             .subscribe(onNext: { _ in
-                UserDefaults.isReplay = true
+                // TODO: あとでUseCaseのアクセスに差し替える
+                let replayRepository = ReplayRepository()
+                replayRepository.setNeedsReplay(true)
                 backToTopPageViewRelay.accept(Void())
             }).disposed(by: disposeBag)
         

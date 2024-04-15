@@ -9,12 +9,25 @@ import RxSwift
 
 class TopUseCase {
     private let avPermissionRepository: AVPermissionRepository
+    private let replayRepository: ReplayRepository
     
-    init(avPermissionRepository: AVPermissionRepository) {
+    init(
+        avPermissionRepository: AVPermissionRepository,
+        replayRepository: ReplayRepository
+    ) {
         self.avPermissionRepository = avPermissionRepository
+        self.replayRepository = replayRepository
     }
     
     func getIsPermittedCameraAccess() -> Observable<Bool> {
         return avPermissionRepository.getIsPermittedCameraAccess()
+    }
+    
+    func getNeedsReplay() -> Observable<Bool> {
+        return replayRepository.getNeedsReplay()
+    }
+    
+    func setNeedsReplay(_ newValue: Bool) {
+        replayRepository.setNeedsReplay(newValue)
     }
 }

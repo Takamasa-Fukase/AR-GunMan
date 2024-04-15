@@ -26,7 +26,10 @@ class TopNavigator: TopNavigatorInterface {
         let storyboard = UIStoryboard(name: "TopViewController", bundle: nil)
         let vc = storyboard.instantiateInitialViewController() as! TopViewController
         let navigator = TopNavigator(viewController: vc)
-        let useCase = TopUseCase(avPermissionRepository: AVPermissionRepository())
+        let useCase = TopUseCase(
+            avPermissionRepository: AVPermissionRepository(),
+            replayRepository: ReplayRepository()
+        )
         let dependency = TopViewModel.Dependency(
             useCase: useCase,
             navigator: navigator
