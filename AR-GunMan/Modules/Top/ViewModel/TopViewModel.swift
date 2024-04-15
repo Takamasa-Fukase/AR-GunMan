@@ -22,18 +22,21 @@ class TopViewModel {
         let howToPlayButtonImage: Observable<UIImage?>
     }
     
+    struct State {
+        let isStartButtonImageSwitched = BehaviorRelay<Bool>(value: false)
+        let isSettingButtonImageSwitched = BehaviorRelay<Bool>(value: false)
+        let isHowToPlayButtonImageSwitched = BehaviorRelay<Bool>(value: false)
+    }
+    
     struct Dependency {
         let navigator: TopNavigator
-        let buttonImageSwitcher: TopPageButtonImageSwitcher
     }
     
     private let navigator: TopNavigator
-    private let buttonImageSwitcher: TopPageButtonImageSwitcher
     private let disposeBag = DisposeBag()
     
     init(dependency: Dependency) {
         self.navigator = dependency.navigator
-        self.buttonImageSwitcher = dependency.buttonImageSwitcher
     }
 
     func transform(input: Input) -> Output {
@@ -44,52 +47,65 @@ class TopViewModel {
 //                    showGameRelay.accept(Void())
 //                }
 //            }).disposed(by: disposeBag)
+        
+        let state = State()
+        
+        func switchAndRevert(of type: TopPageButtonType) {
+            AudioUtil.playSound(of: type.iconChangingSound)
+            changeIcon(of: type, isSwitched: true)
+            DispatchQueue.main.asyncAfter(deadline: .now() + type.iconRevertInterval) {
+                changeIcon(of: type, isSwitched: false)
+                transit(of: type)
+            }
+        }
+        
+        func changeIcon(of type: TopPageButtonType, isSwitched: Bool) {
+            switch type {
+            case .start:
+                state.isStartButtonImageSwitched.accept(isSwitched)
+            case .settings:
+                state.isSettingButtonImageSwitched.accept(isSwitched)
+            case .howToPlay:
+                state.isHowToPlayButtonImageSwitched.accept(isSwitched)
+            }
+        }
+        
+        func transit(of type: TopPageButtonType) {
+            switch type {
+            case .start:
+                // TODO: ButtonImageSwitcherを見直す時にreplay時の遷移の考慮を再度追加する
+                self.navigator.showGame()
+            case .settings:
+                self.navigator.showSettings()
+            case .howToPlay:
+                self.navigator.showTutorial()
+            }
+        }
 
         input.startButtonTapped
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                self.buttonImageSwitcher.switchAndRevert(of: .start)
+            .subscribe(onNext: { _ in
+                switchAndRevert(of: .start)
             }).disposed(by: disposeBag)
         
         input.settingsButtonTapped
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                self.buttonImageSwitcher.switchAndRevert(of: .settings)
+            .subscribe(onNext: { _ in
+                switchAndRevert(of: .settings)
             }).disposed(by: disposeBag)
         
         input.howToPlayButtonTapped
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                self.buttonImageSwitcher.switchAndRevert(of: .howToPlay)
+            .subscribe(onNext: { _ in
+                switchAndRevert(of: .howToPlay)
             }).disposed(by: disposeBag)
-         
-        buttonImageSwitcher.image
-            .filter({ !$0.isSwitched })
-            .subscribe(onNext: { [weak self] element in
-                guard let self = self else { return }
-                switch element.type {
-                case .start:
-                    // TODO: ButtonImageSwitcherを見直す時にreplay時の遷移の考慮を再度追加する
-                    self.navigator.showGame()
-                case .settings:
-                    self.navigator.showSettings()
-                case .howToPlay:
-                    self.navigator.showTutorial()
-                }
-            }).disposed(by: disposeBag)
-        
-        let startButtonImage = buttonImageSwitcher.image
-            .filter({$0.type == .start})
-            .map({$0.type.targetIcon(isSwitched: $0.isSwitched)})
-        
-        let settingsButtonImage = buttonImageSwitcher.image
-            .filter({$0.type == .settings})
-            .map({$0.type.targetIcon(isSwitched: $0.isSwitched)})
-        
-        let howToPlayButtonImage = buttonImageSwitcher.image
-            .filter({$0.type == .howToPlay})
-            .map({$0.type.targetIcon(isSwitched: $0.isSwitched)})
 
+        let startButtonImage = state.isStartButtonImageSwitched
+            .map({ TopPageButtonType.start.targetIcon(isSwitched: $0) })
+        
+        let settingsButtonImage = state.isSettingButtonImageSwitched
+            .map({ TopPageButtonType.settings.targetIcon(isSwitched: $0) })
+        
+        let howToPlayButtonImage = state.isHowToPlayButtonImageSwitched
+            .map({ TopPageButtonType.howToPlay.targetIcon(isSwitched: $0) })
+        
         return Output(
             startButtonImage: startButtonImage,
             settingsButtonImage: settingsButtonImage,

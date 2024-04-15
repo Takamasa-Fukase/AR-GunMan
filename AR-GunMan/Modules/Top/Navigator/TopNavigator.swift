@@ -26,8 +26,7 @@ class TopNavigator: TopNavigatorInterface {
         let vc = storyboard.instantiateInitialViewController() as! TopViewController
         let navigator = TopNavigator(viewController: vc)
         let dependency = TopViewModel.Dependency(
-            navigator: navigator,
-            buttonImageSwitcher: TopPageButtonImageSwitcher()
+            navigator: navigator
         )
         vc.viewModel = TopViewModel(dependency: dependency)
         
