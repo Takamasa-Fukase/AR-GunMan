@@ -47,11 +47,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 UIApplication.shared.registerForRemoteNotifications()
             }
             
-            // TODO: なぜかここに書かれてたのでプッシュ通知権限許可の外に移動する（拒否されるとこれが実行されてなかった）
-            AudioUtil.initAudioPlayers()
         }
         
         AVCaptureDevice.requestAccess(for: .video) { _ in }
+        AudioUtil.initAudioPlayers()
         
         window?.rootViewController = TopNavigator.assembleModules()
         

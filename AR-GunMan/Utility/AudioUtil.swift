@@ -39,18 +39,13 @@ extension AudioUtil {
                 return
             }
             do {
-                
                 let audioPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
                 audioPlayer.prepareToPlay()
-                
                 AudioUtil.audioPlayers[sound] = audioPlayer
-                
-                print("音声追加成功")
                 
             } catch {
                 print("音声セットエラー: \(sound.rawValue)")
             }
-            
         })
         
         forceSoundOn()
