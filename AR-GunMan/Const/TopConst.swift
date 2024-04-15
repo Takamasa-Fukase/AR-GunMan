@@ -9,8 +9,13 @@ import Foundation
 import UIKit
 
 class TopConst {
-    static let targetIcon = UIImage(systemName: "target")
-    static let targetIconShot = UIImage(named: "bulletsHole")
-    static let toolBoxIconClosed = UIImage(named: "tool-box-outlined")
-    static let toolBoxIconOpened = UIImage(named: "tool-box-outlined")
+    private static let targetIcon = UIImage(systemName: "target")
+    private static let targetIconShot = UIImage(named: "bulletsHole")
+    
+    static let iconChangingSound: Sounds = .westernPistolShoot
+    static let iconRevertInterval: Double = 0.5
+    
+    static func targetIcon(isSwitched: Bool) -> UIImage? {
+        return isSwitched ? targetIconShot : targetIcon
+    }
 }

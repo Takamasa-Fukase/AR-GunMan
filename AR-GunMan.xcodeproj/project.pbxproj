@@ -81,7 +81,6 @@
 		86C421B82BB040C300EFD791 /* TutorialRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C421B72BB040C300EFD791 /* TutorialRepository.swift */; };
 		86C5AB982AB8819C00CB161D /* UIAlertController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C5AB972AB8819C00CB161D /* UIAlertController+Extension.swift */; };
 		BC1795BC2985D01300D91A19 /* ResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1795BB2985D01300D91A19 /* ResultViewModel.swift */; };
-		BC2B11632977373F009F4DC4 /* TopPageButtonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2B11622977373F009F4DC4 /* TopPageButtonType.swift */; };
 		BC2B11672977F90C009F4DC4 /* UIScrollView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2B11662977F90C009F4DC4 /* UIScrollView+Extension.swift */; };
 		BC92C854297061FE00E49BD5 /* WeaponType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C853297061FE00E49BD5 /* WeaponType.swift */; };
 		BC92C85A297348D500E49BD5 /* ScoreCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C859297348D500E49BD5 /* ScoreCalculator.swift */; };
@@ -199,7 +198,6 @@
 		86C5AB972AB8819C00CB161D /* UIAlertController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extension.swift"; sourceTree = "<group>"; };
 		90D4D1AD42BB6A3A0192887F /* Pods-AR-GunManTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-GunManTests.release.xcconfig"; path = "Target Support Files/Pods-AR-GunManTests/Pods-AR-GunManTests.release.xcconfig"; sourceTree = "<group>"; };
 		BC1795BB2985D01300D91A19 /* ResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewModel.swift; sourceTree = "<group>"; };
-		BC2B11622977373F009F4DC4 /* TopPageButtonType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopPageButtonType.swift; sourceTree = "<group>"; };
 		BC2B11662977F90C009F4DC4 /* UIScrollView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Extension.swift"; sourceTree = "<group>"; };
 		BC92C853297061FE00E49BD5 /* WeaponType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponType.swift; sourceTree = "<group>"; };
 		BC92C859297348D500E49BD5 /* ScoreCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCalculator.swift; sourceTree = "<group>"; };
@@ -271,7 +269,6 @@
 			children = (
 				67DB2C5A27C17EBE00B8CB3C /* SoundConst.swift */,
 				67DB2C5C27C17EF300B8CB3C /* TopConst.swift */,
-				BC2B11622977373F009F4DC4 /* TopPageButtonType.swift */,
 				67DB2C5E27C17F4E00B8CB3C /* SettingsConst.swift */,
 				67DB2C6027C17F8D00B8CB3C /* GameConst.swift */,
 				BC92C853297061FE00E49BD5 /* WeaponType.swift */,
@@ -1066,7 +1063,6 @@
 				BC92C85A297348D500E49BD5 /* ScoreCalculator.swift in Sources */,
 				8613E28B2BB135B200BF4489 /* GameNavigator.swift in Sources */,
 				BC1795BC2985D01300D91A19 /* ResultViewModel.swift in Sources */,
-				BC2B11632977373F009F4DC4 /* TopPageButtonType.swift in Sources */,
 				5921A208255D6A4E001D8C39 /* RankingCell.swift in Sources */,
 				677DF1F127A7C096007512F6 /* RankingRepository.swift in Sources */,
 				BCD9675E2979E55400E33587 /* UIImageView+Extension.swift in Sources */,
