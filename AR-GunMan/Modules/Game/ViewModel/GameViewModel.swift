@@ -124,7 +124,10 @@ class GameViewModel {
             }).disposed(by: disposeBag)
         
         tutorialEndObserver
-            .subscribe(onNext: { _ in
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                // チュートリアル通過フラグをセットする
+                self.useCase.setTutorialAlreadySeen()
                 startGame()
             }).disposed(by: disposeBag)
         

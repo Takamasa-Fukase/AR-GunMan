@@ -62,9 +62,6 @@ class TutorialViewModel {
                 
         input.viewDidDisappear
             .subscribe(onNext: { [weak self] element in
-                if self?.dependency.transitionType == .gamePage {
-                    UserDefaults.isTutorialAlreadySeen = true
-                }
                 self?.dependency.tutorialEndObserver?.accept(Void())
             }).disposed(by: disposeBag)
         

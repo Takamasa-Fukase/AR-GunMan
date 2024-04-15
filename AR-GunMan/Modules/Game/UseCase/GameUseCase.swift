@@ -54,6 +54,10 @@ class GameUseCase {
     func getIsTutorialSeen() -> Observable<Bool> {
         return tutorialRepository.getIsTutorialSeen()
     }
+    
+    func setTutorialAlreadySeen() {
+        tutorialRepository.setTutorialAlreadySeen()
+    }
 
     private func getCompositeValue(x: Double, y: Double, z: Double) -> Double {
         return (x * x) + (y * y) + (z * z)

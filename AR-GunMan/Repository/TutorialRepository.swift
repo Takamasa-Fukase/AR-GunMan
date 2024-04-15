@@ -11,4 +11,8 @@ class TutorialRepository {
     func getIsTutorialSeen() -> Observable<Bool> {
         return Observable.just(UserDefaults.isTutorialAlreadySeen)
     }
+    
+    func setTutorialAlreadySeen() {
+        UserDefaults.isTutorialAlreadySeen = true
+    }
 }
