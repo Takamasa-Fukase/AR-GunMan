@@ -32,7 +32,8 @@ class NameRegisterViewController: UIViewController {
         
         // input
         viewModel = NameRegisterViewModel(
-            input: .init(nameTextFieldChanged: nameTextField.rx.text.orEmpty.asObservable(),
+            input: .init(viewWillDisappear: rx.viewWillDisappear,
+                         nameTextFieldChanged: nameTextField.rx.text.orEmpty.asObservable(),
                          registerButtonTapped: registerButton.rx.tap.asObservable(),
                          noButtonTapped: noButton.rx.tap.asObservable()),
             dependency: vmDependency)

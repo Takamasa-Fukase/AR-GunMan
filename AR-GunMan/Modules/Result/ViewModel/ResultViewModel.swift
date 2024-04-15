@@ -105,20 +105,21 @@ class ResultViewModel {
 }
 
 extension ResultViewModel: NameRegisterDelegate {
-    func onClose(registeredRanking: Ranking?) {
+    func onRegistered(registeredRanking: Ranking) {
+        let rankIndex = RankingUtil.getTemporaryRankIndex(
+            rankingList: self.rankingListRelay.value,
+            score: registeredRanking.score
+        )
+        var newRankingList = self.rankingListRelay.value
+        // 登録したランキングが含まれたリストを作成して新しい値として流す
+        newRankingList.insert(registeredRanking, at: rankIndex)
+        self.rankingListRelay.accept(newRankingList)
+        // 登録したランキングが中央に表示されるようにスクロール＆ハイライトさせる
+        scrollAndHightlightCellRelay.accept(IndexPath(row: rankIndex, section: 0))
+    }
+    
+    func onClose() {
         showButtonsRelay.accept(Void())
-        if let registeredRanking = registeredRanking {
-            let rankIndex = RankingUtil.getTemporaryRankIndex(
-                rankingList: self.rankingListRelay.value,
-                score: registeredRanking.score
-            )
-            var newRankingList = self.rankingListRelay.value
-            // 登録したランキングが含まれたリストを作成して新しい値として流す
-            newRankingList.insert(registeredRanking, at: rankIndex)
-            self.rankingListRelay.accept(newRankingList)
-            // 登録したランキングが中央に表示されるようにスクロール＆ハイライトさせる
-            scrollAndHightlightCellRelay.accept(IndexPath(row: rankIndex, section: 0))
-        }
     }
 }
 
