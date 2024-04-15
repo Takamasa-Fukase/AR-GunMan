@@ -9,6 +9,7 @@ import UIKit
 import UserNotifications
 import Firebase
 import FirebaseMessaging
+import AVFoundation
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -38,20 +39,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
             guard granted else {
                 print("not granted")
-                
-                CameraAuthUtil.checkCameraAuthorization()
                 return
             }
-            
-            CameraAuthUtil.checkCameraAuthorization()
 
             // MARK: register to APNs
             DispatchQueue.main.async {
                 UIApplication.shared.registerForRemoteNotifications()
             }
             
+            // TODO: なぜかここに書かれてたのでプッシュ通知権限許可の外に移動する（拒否されるとこれが実行されてなかった）
             AudioUtil.initAudioPlayers()
         }
+        
+        AVCaptureDevice.requestAccess(for: .video) { _ in }
         
         window?.rootViewController = TopNavigator.assembleModules()
         

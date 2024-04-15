@@ -12,6 +12,7 @@ protocol TopNavigatorInterface: AnyObject {
     func showGame()
     func showSettings()
     func showTutorial()
+    func showCameraPermissionDescriptionAlert()
 }
 
 class TopNavigator: TopNavigatorInterface {
@@ -25,11 +26,12 @@ class TopNavigator: TopNavigatorInterface {
         let storyboard = UIStoryboard(name: "TopViewController", bundle: nil)
         let vc = storyboard.instantiateInitialViewController() as! TopViewController
         let navigator = TopNavigator(viewController: vc)
+        let useCase = TopUseCase(avPermissionRepository: AVPermissionRepository())
         let dependency = TopViewModel.Dependency(
+            useCase: useCase,
             navigator: navigator
         )
         vc.viewModel = TopViewModel(dependency: dependency)
-        
         return vc
     }
     
@@ -50,5 +52,24 @@ class TopNavigator: TopNavigatorInterface {
         let dependency = TutorialViewModel.Dependency(transitionType: .topPage)
         vc.viewModel = TutorialViewModel(dependency: dependency)
         viewController?.presentPanModal(vc)
+    }
+    
+    func showCameraPermissionDescriptionAlert() {
+        let alert = UIAlertController(
+            title: "Camera Permission Required",
+            message: "Camera Permission is required to play this game.\nDo you want to change your settings?",
+            preferredStyle: .alert
+        )
+        let settingsAction = UIAlertAction(title: "Yes", style: .default) { (UIAlertAction) in
+            guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else {
+                return
+            }
+            // 設定アプリを開く
+            UIApplication.shared.open(settingsURL, options: [:], completionHandler: nil)
+        }
+        let cancelAction = UIAlertAction(title: "Not now", style: .cancel)
+        alert.addAction(settingsAction)
+        alert.addAction(cancelAction)
+        viewController?.present(alert, animated: true)
     }
 }
