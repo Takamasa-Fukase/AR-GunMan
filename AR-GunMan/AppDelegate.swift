@@ -8,8 +8,6 @@
 import UIKit
 import UserNotifications
 import Firebase
-import Photos
-import AVFoundation
 import FirebaseMessaging
 
 @main

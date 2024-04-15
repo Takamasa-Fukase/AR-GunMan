@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import AVFoundation
 
-class CameraAuthUtil: NSObject, UIImagePickerControllerDelegate {
+class CameraAuthUtil {
     
     static func checkCameraAuthorization(vc: UIViewController? = nil) {
         switch AVCaptureDevice.authorizationStatus(for: .video) {
