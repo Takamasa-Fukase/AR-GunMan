@@ -16,12 +16,14 @@ class TutorialViewModel {
     }
     
     struct Input {
+        let viewDidLoad: Observable<Void>
         let viewDidDisappear: Observable<Void>
         let horizontalPageIndex: Observable<Int>
         let bottomButtonTapped: Observable<Void>
     }
     
     struct Output {
+        let setupUI: Observable<TransitType>
         let buttonText: Observable<String>
         let pageControllIndex: Observable<Int>
         let scrollToNextPage: Observable<Void>
@@ -34,7 +36,7 @@ class TutorialViewModel {
     }
     
     let navigator: TutorialNavigatorInterface
-    let transitionType: TransitType
+    private let transitionType: TransitType
     private let dependency: Dependency
     private let disposeBag = DisposeBag()
     
@@ -63,17 +65,21 @@ class TutorialViewModel {
                 self.navigator.dismiss()
             }).disposed(by: disposeBag)
         
+        let setupUI = input.viewDidLoad
+            .map({ [weak self] _ in
+                return self?.transitionType ?? .topPage
+            })
+        
         let buttonText = horizontalPageIndexRelay
             .map({($0 < 2) ? "NEXT" : "OK"})
-        
-        let pageControllIndex = horizontalPageIndexRelay.asObservable()
         
         let scrollToNextPage = input.bottomButtonTapped
             .filter({_ in horizontalPageIndexRelay.value < 2})
         
         return Output(
+            setupUI: setupUI,
             buttonText: buttonText,
-            pageControllIndex: pageControllIndex,
+            pageControllIndex: horizontalPageIndexRelay.asObservable(),
             scrollToNextPage: scrollToNextPage
         )
     }

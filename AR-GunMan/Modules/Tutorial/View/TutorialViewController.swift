@@ -23,13 +23,12 @@ class TutorialViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupUI()
-        
         // MARK: - input
         let horizontalPageIndexObservable = scrollView.rx.didScroll
             .map({_ in self.scrollView.horizontalPageIndex})
             .asObservable()
         let input = TutorialViewModel.Input(
+            viewDidLoad: Observable.just(Void()),
             viewDidDisappear: rx.viewDidDisappear,
             horizontalPageIndex: horizontalPageIndexObservable,
             bottomButtonTapped: bottomButton.rx.tap.asObservable()
@@ -37,6 +36,12 @@ class TutorialViewController: UIViewController {
         
         // MARK: - output
         let output = viewModel.transform(input: input)
+        
+        output.setupUI
+            .subscribe(onNext: { [weak self] transitionType in
+                guard let self = self else { return }
+                setupUI(transitionType: transitionType)
+            }).disposed(by: disposeBag)
         
         output.buttonText
             .bind(to: bottomButton.rx.title(for: .normal))
@@ -53,8 +58,8 @@ class TutorialViewController: UIViewController {
             }).disposed(by: disposeBag)
     }
     
-    private func setupUI() {
-        if viewModel.transitionType == .gamePage {
+    private func setupUI(transitionType: TutorialViewModel.TransitType) {
+        if transitionType == .gamePage {
             insertBlurEffectView()
         }
         firstImageView.setupAnimationImages(
