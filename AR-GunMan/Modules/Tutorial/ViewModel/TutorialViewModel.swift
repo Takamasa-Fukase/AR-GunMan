@@ -29,21 +29,20 @@ class TutorialViewModel {
         let scrollToNextPage: Observable<Void>
     }
     
-    struct Dependency {
-        let navigator: TutorialNavigatorInterface
-        let transitionType: TransitType
-        weak var tutorialEndObserver: PublishRelay<Void>?
-    }
-    
-    let navigator: TutorialNavigatorInterface
+    private let navigator: TutorialNavigatorInterface
     private let transitionType: TransitType
-    private let dependency: Dependency
+    private weak var tutorialEndObserver: PublishRelay<Void>?
+    
     private let disposeBag = DisposeBag()
     
-    init(dependency: Dependency) {
-        self.navigator = dependency.navigator
-        self.transitionType = dependency.transitionType
-        self.dependency = dependency
+    init(
+        navigator: TutorialNavigatorInterface,
+        transitionType: TransitType,
+        tutorialEndObserver: PublishRelay<Void>?
+    ) {
+        self.navigator = navigator
+        self.transitionType = transitionType
+        self.tutorialEndObserver = tutorialEndObserver
     }
     
     func transform(input: Input) -> Output {
@@ -51,7 +50,7 @@ class TutorialViewModel {
         
         input.viewDidDisappear
             .subscribe(onNext: { [weak self] element in
-                self?.dependency.tutorialEndObserver?.accept(Void())
+                self?.tutorialEndObserver?.accept(Void())
             }).disposed(by: disposeBag)
         
         input.horizontalPageIndex

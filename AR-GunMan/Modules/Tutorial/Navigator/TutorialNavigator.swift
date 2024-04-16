@@ -26,12 +26,12 @@ class TutorialNavigator {
         let storyboard: UIStoryboard = UIStoryboard(name: "TutorialViewController", bundle: nil)
         let vc = storyboard.instantiateInitialViewController() as! TutorialViewController
         let navigator = TutorialNavigator(viewController: vc)
-        let dependency = TutorialViewModel.Dependency(
+        let viewModel = TutorialViewModel(
             navigator: navigator,
             transitionType: transitionType,
             tutorialEndObserver: tutorialEndObserver
         )
-        vc.viewModel = TutorialViewModel(dependency: dependency)
+        vc.viewModel = viewModel
         return vc
     }
 }

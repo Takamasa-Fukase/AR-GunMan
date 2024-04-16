@@ -33,24 +33,23 @@ class GameViewModel {
         var reloadingMotionDetectedCountRelay = BehaviorRelay<Int>(value: 0)
     }
     
-    struct Dependency {
-        let useCase: GameUseCase
-        let navigator: GameNavigatorInterface
-        let sceneManager: GameSceneManager
-    }
-    
     private let useCase: GameUseCase
     private let navigator: GameNavigatorInterface
     private let sceneManager: GameSceneManager
+    
     private let disposeBag = DisposeBag()
     // 遷移先画面から受け取る通知
     private let tutorialEndObserver = PublishRelay<Void>()
     private let weaponSelectObserver = PublishRelay<WeaponType>()
     
-    init(dependency: Dependency) {
-        self.useCase = dependency.useCase
-        self.navigator = dependency.navigator
-        self.sceneManager = dependency.sceneManager
+    init(
+        useCase: GameUseCase,
+        navigator: GameNavigatorInterface,
+        sceneManager: GameSceneManager
+    ) {
+        self.useCase = useCase
+        self.navigator = navigator
+        self.sceneManager = sceneManager
     }
     
     func transform(input: Input) -> Output {

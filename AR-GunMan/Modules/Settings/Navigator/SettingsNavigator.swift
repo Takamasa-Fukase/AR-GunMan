@@ -26,8 +26,8 @@ class SettingsNavigator: SettingsNavigatorInterface {
         let storyboard: UIStoryboard = UIStoryboard(name: "SettingsViewController", bundle: nil)
         let vc = storyboard.instantiateInitialViewController() as! SettingsViewController
         let navigator = SettingsNavigator(viewController: vc)
-        let dependency = SettingsViewModel.Dependency(navigator: navigator)
-        vc.viewModel = SettingsViewModel(dependency: dependency)
+        let viewModel = SettingsViewModel(navigator: navigator)
+        vc.viewModel = viewModel
         return vc
     }
     

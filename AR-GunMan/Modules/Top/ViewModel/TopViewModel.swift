@@ -22,18 +22,17 @@ class TopViewModel {
         let howToPlayButtonImage: Observable<UIImage?>
     }
 
-    struct Dependency {
-        let useCase: TopUseCase
-        let navigator: TopNavigatorInterface
-    }
-    
     private let useCase: TopUseCase
     private let navigator: TopNavigatorInterface
+    
     private let disposeBag = DisposeBag()
     
-    init(dependency: Dependency) {
-        self.useCase = dependency.useCase
-        self.navigator = dependency.navigator
+    init(
+        useCase: TopUseCase,
+        navigator: TopNavigatorInterface
+    ) {
+        self.useCase = useCase
+        self.navigator = navigator
     }
 
     func transform(input: Input) -> Output {

@@ -38,12 +38,12 @@ class GameNavigator: GameNavigatorInterface {
         )
         let navigator = GameNavigator(viewController: vc)
         let sceneManager = GameSceneManager(delegate: vc)
-        let vmDependency = GameViewModel.Dependency(
+        let viewModel = GameViewModel(
             useCase: useCase,
             navigator: navigator,
             sceneManager: sceneManager
         )
-        vc.viewModel = GameViewModel(dependency: vmDependency)
+        vc.viewModel = viewModel
         return vc
     }
     

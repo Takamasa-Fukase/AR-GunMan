@@ -17,16 +17,12 @@ class SettingsViewModel {
         let backButtonTapped: Observable<Void>
     }
     
-    struct Dependency {
-        let navigator: SettingsNavigatorInterface
-    }
-    
-    init(dependency: Dependency) {
-        self.navigator = dependency.navigator
-    }
-    
     private let navigator: SettingsNavigatorInterface
     private let disposeBag = DisposeBag()
+    
+    init(navigator: SettingsNavigatorInterface) {
+        self.navigator = navigator
+    }
     
     func transform(input: Input) {
         input.worldRankingButtonTapped
