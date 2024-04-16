@@ -40,7 +40,7 @@ class TutorialViewController: UIViewController {
         output.setupUI
             .subscribe(onNext: { [weak self] transitionType in
                 guard let self = self else { return }
-                setupUI(transitionType: transitionType)
+                self.setupUI(transitionType: transitionType)
             }).disposed(by: disposeBag)
         
         output.buttonText
