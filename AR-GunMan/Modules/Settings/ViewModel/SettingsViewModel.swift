@@ -28,7 +28,6 @@ class SettingsViewModel {
         self.openSafariView = _openSafariView.asObservable()
         
         self.showRanking = input.worldRankingButtonTapped
-            .map({_ in})
         
         input.privacyPolicyButtonTapped
             .subscribe(onNext: { _ in
@@ -41,7 +40,6 @@ class SettingsViewModel {
             }).disposed(by: disposeBag)
         
         self.dismiss = input.backButtonTapped
-            .map({_ in})
     }
 }
 
