@@ -47,9 +47,21 @@ class TutorialViewModel {
     func transform(input: Input) -> Output {
         let horizontalPageIndexRelay = BehaviorRelay<Int>(value: 0)
         
+        input.viewDidDisappear
+            .subscribe(onNext: { [weak self] element in
+                self?.dependency.tutorialEndObserver?.accept(Void())
+            }).disposed(by: disposeBag)
+        
         input.horizontalPageIndex
             .bind(to: horizontalPageIndexRelay)
             .disposed(by: disposeBag)
+        
+        input.bottomButtonTapped
+            .filter({_ in horizontalPageIndexRelay.value >= 2})
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.navigator.dismiss()
+            }).disposed(by: disposeBag)
         
         let buttonText = horizontalPageIndexRelay
             .map({($0 < 2) ? "NEXT" : "OK"})
@@ -58,18 +70,6 @@ class TutorialViewModel {
         
         let scrollToNextPage = input.bottomButtonTapped
             .filter({_ in horizontalPageIndexRelay.value < 2})
-        
-        input.bottomButtonTapped
-            .filter({_ in horizontalPageIndexRelay.value >= 2})
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                self.navigator.dismiss()
-            }).disposed(by: disposeBag)
-                
-        input.viewDidDisappear
-            .subscribe(onNext: { [weak self] element in
-                self?.dependency.tutorialEndObserver?.accept(Void())
-            }).disposed(by: disposeBag)
         
         return Output(
             buttonText: buttonText,
