@@ -25,29 +25,31 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        viewModel = SettingsViewModel(
-            input: .init(
-                worldRankingButtonTapped: worldRankingButton.rx.tap.asObservable(),
-                privacyPolicyButtonTapped: privacyPolicyButton.rx.tap.asObservable(),
-                developerConctactButtonTapped: developerContactButton.rx.tap.asObservable(),
-                backButtonTapped: backButton.rx.tap.asObservable()
-            )
+        viewModel = SettingsViewModel()
+        
+        let input = SettingsViewModel.Input(
+            worldRankingButtonTapped: worldRankingButton.rx.tap.asObservable(),
+            privacyPolicyButtonTapped: privacyPolicyButton.rx.tap.asObservable(),
+            developerConctactButtonTapped: developerContactButton.rx.tap.asObservable(),
+            backButtonTapped: backButton.rx.tap.asObservable()
         )
         
         //output
-        viewModel.showRanking
+        let output = viewModel.transform(input: input)
+        
+        output.showRanking
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 presentRankingVC()
             }).disposed(by: disposeBag)
         
-        viewModel.openSafariView
+        output.openSafariView
             .subscribe(onNext: { [weak self] element in
                 guard let self = self else {return}
                 SafariViewUtil.openSafariView(urlString: element, vc: self)
             }).disposed(by: disposeBag)
         
-        viewModel.dismiss
+        output.dismiss
             .subscribe(onNext: { [weak self] element in
                 guard let self = self else {return}
                 self.dismiss(animated: true, completion: nil)

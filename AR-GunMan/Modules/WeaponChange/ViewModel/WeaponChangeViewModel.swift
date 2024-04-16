@@ -8,7 +8,7 @@
 import RxSwift
 import RxCocoa
 
-class WeaponChangeViewModel: NSObject {
+class WeaponChangeViewModel {
     struct Input {
         let itemSelected: Observable<Int>
     }
