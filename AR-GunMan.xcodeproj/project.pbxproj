@@ -74,6 +74,7 @@
 		8613E2902BB1BFC400BF4489 /* GameUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8613E28F2BB1BFC400BF4489 /* GameUseCase.swift */; };
 		8627F6302BCDFEB40003D374 /* SettingsNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8627F62F2BCDFEB40003D374 /* SettingsNavigator.swift */; };
 		8627F6322BCE454C0003D374 /* TutorialNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8627F6312BCE454C0003D374 /* TutorialNavigator.swift */; };
+		8627F6352BCE83F30003D374 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8627F6342BCE83F30003D374 /* ViewModelType.swift */; };
 		86594DC82BCD50F100971D1A /* TopUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86594DC72BCD50F100971D1A /* TopUseCase.swift */; };
 		86594DCA2BCD558E00971D1A /* AVPermissionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86594DC92BCD558E00971D1A /* AVPermissionRepository.swift */; };
 		86594DCC2BCD75E100971D1A /* ReplayRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86594DCB2BCD75E100971D1A /* ReplayRepository.swift */; };
@@ -194,6 +195,7 @@
 		8613E28F2BB1BFC400BF4489 /* GameUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameUseCase.swift; sourceTree = "<group>"; };
 		8627F62F2BCDFEB40003D374 /* SettingsNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsNavigator.swift; sourceTree = "<group>"; };
 		8627F6312BCE454C0003D374 /* TutorialNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialNavigator.swift; sourceTree = "<group>"; };
+		8627F6342BCE83F30003D374 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		86594DC72BCD50F100971D1A /* TopUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopUseCase.swift; sourceTree = "<group>"; };
 		86594DC92BCD558E00971D1A /* AVPermissionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPermissionRepository.swift; sourceTree = "<group>"; };
 		86594DCB2BCD75E100971D1A /* ReplayRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplayRepository.swift; sourceTree = "<group>"; };
@@ -520,9 +522,18 @@
 			path = UseCase;
 			sourceTree = "<group>";
 		};
+		8627F6332BCE83E60003D374 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				8627F6342BCE83F30003D374 /* ViewModelType.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		86A6CB212BCC0D9F00628C61 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				8627F6332BCE83E60003D374 /* Common */,
 				59D2D5712552E448006DDB70 /* Top */,
 				599450FE256AD53A00560202 /* Tutorial */,
 				59D2D5722552E458006DDB70 /* Game */,
@@ -1090,6 +1101,7 @@
 				59D2D5952552E718006DDB70 /* WeaponChangeViewController.swift in Sources */,
 				59D2D5852552E6B2006DDB70 /* GameViewController.swift in Sources */,
 				677DF1EE27A710A8007512F6 /* SafariViewUtil.swift in Sources */,
+				8627F6352BCE83F30003D374 /* ViewModelType.swift in Sources */,
 				86C5AB982AB8819C00CB161D /* UIAlertController+Extension.swift in Sources */,
 				67200F5927A0026000AD92EC /* NameRegisterViewModel.swift in Sources */,
 				86C421B82BB040C300EFD791 /* TutorialRepository.swift in Sources */,

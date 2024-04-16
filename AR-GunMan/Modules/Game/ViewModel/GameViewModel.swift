@@ -8,7 +8,7 @@
 import RxSwift
 import RxCocoa
 
-class GameViewModel {
+class GameViewModel: ViewModelType {
     struct Input {
         let viewDidLoad: Observable<Void>
         let viewWillAppear: Observable<Void>

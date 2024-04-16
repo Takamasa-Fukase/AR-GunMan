@@ -8,7 +8,7 @@
 import RxSwift
 import RxCocoa
 
-class TopViewModel {
+class TopViewModel: ViewModelType {
     struct Input {
         let viewDidAppear: Observable<Void>
         let startButtonTapped: Observable<Void>
@@ -20,6 +20,10 @@ class TopViewModel {
         let startButtonImage: Observable<UIImage?>
         let settingsButtonImage: Observable<UIImage?>
         let howToPlayButtonImage: Observable<UIImage?>
+    }
+    
+    struct State {
+
     }
 
     private let useCase: TopUseCase

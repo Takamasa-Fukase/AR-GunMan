@@ -8,7 +8,7 @@
 import RxSwift
 import RxCocoa
 
-class WeaponChangeViewModel {
+final class WeaponChangeViewModel: ViewModelType {
     struct Input {
         let itemSelected: Observable<Int>
     }
@@ -17,21 +17,21 @@ class WeaponChangeViewModel {
         let dismiss: Observable<Void>
     }
     
-    struct Dependency {
-        weak var weaponSelectObserver: PublishRelay<WeaponType>?
+    struct State {
+        
     }
     
-    private let dependency: Dependency
+    private weak var weaponSelectObserver: PublishRelay<WeaponType>?
             
-    init(dependency: Dependency) {
-        self.dependency = dependency
+    init(weaponSelectObserver: PublishRelay<WeaponType>?) {
+        self.weaponSelectObserver = weaponSelectObserver
     }
     
     func transform(input: Input) -> Output {
         let dismiss = input.itemSelected
             .map({ [weak self] index in
                 guard let self = self else { return }
-                self.dependency.weaponSelectObserver?.accept(WeaponType.allCases[index])
+                self.weaponSelectObserver?.accept(WeaponType.allCases[index])
             })
         
         return Output(dismiss: dismiss)

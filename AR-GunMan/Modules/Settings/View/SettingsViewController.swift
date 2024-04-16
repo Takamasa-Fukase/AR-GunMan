@@ -32,6 +32,6 @@ class SettingsViewController: UIViewController {
             backButtonTapped: backButton.rx.tap.asObservable()
         )
         
-        viewModel.transform(input: input)
+        _ = viewModel.transform(input: input)
     }
 }

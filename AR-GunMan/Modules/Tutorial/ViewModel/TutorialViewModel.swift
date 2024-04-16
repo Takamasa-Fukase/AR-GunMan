@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class TutorialViewModel {
+class TutorialViewModel: ViewModelType {
     enum TransitType {
         case topPage
         case gamePage
@@ -27,6 +27,10 @@ class TutorialViewModel {
         let buttonText: Observable<String>
         let pageControllIndex: Observable<Int>
         let scrollToNextPage: Observable<Void>
+    }
+    
+    struct State {
+        
     }
     
     private let navigator: TutorialNavigatorInterface

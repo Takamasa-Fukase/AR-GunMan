@@ -9,12 +9,20 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class SettingsViewModel {
+class SettingsViewModel: ViewModelType {
     struct Input {
         let worldRankingButtonTapped: Observable<Void>
         let privacyPolicyButtonTapped: Observable<Void>
         let developerConctactButtonTapped: Observable<Void>
         let backButtonTapped: Observable<Void>
+    }
+    
+    struct Output {
+        
+    }
+    
+    struct State {
+        
     }
     
     private let navigator: SettingsNavigatorInterface
@@ -24,7 +32,7 @@ class SettingsViewModel {
         self.navigator = navigator
     }
     
-    func transform(input: Input) {
+    func transform(input: Input) -> Output {
         input.worldRankingButtonTapped
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
@@ -48,6 +56,8 @@ class SettingsViewModel {
                 guard let self = self else { return }
                 self.navigator.dismiss()
             }).disposed(by: disposeBag)
+        
+        return Output()
     }
 }
 
