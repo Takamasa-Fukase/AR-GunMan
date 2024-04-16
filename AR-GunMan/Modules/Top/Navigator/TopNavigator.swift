@@ -49,10 +49,7 @@ class TopNavigator: TopNavigatorInterface {
     }
     
     func showTutorial() {
-        let storyboard: UIStoryboard = UIStoryboard(name: "TutorialViewController", bundle: nil)
-        let vc = storyboard.instantiateInitialViewController() as! TutorialViewController
-        let dependency = TutorialViewModel.Dependency(transitionType: .topPage)
-        vc.viewModel = TutorialViewModel(dependency: dependency)
+        let vc = TutorialNavigator.assembleModules(transitionType: .topPage)
         viewController?.presentPanModal(vc)
     }
     

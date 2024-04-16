@@ -25,21 +25,23 @@ class TutorialViewModel {
         let buttonText: Observable<String>
         let pageControllIndex: Observable<Int>
         let scrollToNextPage: Observable<Void>
-        let dismiss: Observable<Void>
     }
     
     struct Dependency {
+        let navigator: TutorialNavigatorInterface
         let transitionType: TransitType
         weak var tutorialEndObserver: PublishRelay<Void>?
     }
     
+    let navigator: TutorialNavigatorInterface
     let transitionType: TransitType
     private let dependency: Dependency
     private let disposeBag = DisposeBag()
     
     init(dependency: Dependency) {
-        self.dependency = dependency
+        self.navigator = dependency.navigator
         self.transitionType = dependency.transitionType
+        self.dependency = dependency
     }
     
     func transform(input: Input) -> Output {
@@ -57,8 +59,12 @@ class TutorialViewModel {
         let scrollToNextPage = input.bottomButtonTapped
             .filter({_ in horizontalPageIndexRelay.value < 2})
         
-        let dismiss = input.bottomButtonTapped
+        input.bottomButtonTapped
             .filter({_ in horizontalPageIndexRelay.value >= 2})
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.navigator.dismiss()
+            }).disposed(by: disposeBag)
                 
         input.viewDidDisappear
             .subscribe(onNext: { [weak self] element in
@@ -68,8 +74,7 @@ class TutorialViewModel {
         return Output(
             buttonText: buttonText,
             pageControllIndex: pageControllIndex,
-            scrollToNextPage: scrollToNextPage,
-            dismiss: dismiss
+            scrollToNextPage: scrollToNextPage
         )
     }
 }

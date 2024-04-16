@@ -23,6 +23,8 @@ class TutorialViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupUI()
+        
         // MARK: - input
         let horizontalPageIndexObservable = scrollView.rx.didScroll
             .map({_ in self.scrollView.horizontalPageIndex})
@@ -49,14 +51,6 @@ class TutorialViewController: UIViewController {
                 guard let self = self else {return}
                 self.scrollView.scrollHorizontallyToNextPage()
             }).disposed(by: disposeBag)
-        
-        output.dismiss
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else {return}
-                self.dismiss(animated: true, completion: nil)
-            }).disposed(by: disposeBag)
-        
-        setupUI()
     }
     
     private func setupUI() {
