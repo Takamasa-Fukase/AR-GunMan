@@ -25,7 +25,7 @@ class TutorialViewController: UIViewController {
         
         // MARK: - input
         let horizontalPageIndexObservable = scrollView.rx.didScroll
-            .map({_ in self.scrollView.horizontalPageIndex})
+            .map({ [weak self] _ in self?.scrollView.horizontalPageIndex ?? 0})
             .asObservable()
         let input = TutorialViewModel.Input(
             viewDidLoad: Observable.just(Void()),
