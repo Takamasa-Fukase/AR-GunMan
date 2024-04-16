@@ -13,27 +13,31 @@ final class WeaponChangeViewModel: ViewModelType {
         let itemSelected: Observable<Int>
     }
     
-    struct Output {
-        let dismiss: Observable<Void>
-    }
+    struct Output {}
     
-    struct State {
-        
-    }
+    struct State {}
     
+    private let navigator: WeaponChangeNavigatorInterface
     private weak var weaponSelectObserver: PublishRelay<WeaponType>?
+    
+    private let disposeBag = DisposeBag()
             
-    init(weaponSelectObserver: PublishRelay<WeaponType>?) {
+    init(
+        navigator: WeaponChangeNavigatorInterface,
+        weaponSelectObserver: PublishRelay<WeaponType>?
+    ) {
+        self.navigator = navigator
         self.weaponSelectObserver = weaponSelectObserver
     }
     
     func transform(input: Input) -> Output {
-        let dismiss = input.itemSelected
-            .map({ [weak self] index in
+        input.itemSelected
+            .subscribe(onNext: { [weak self] index in
                 guard let self = self else { return }
                 self.weaponSelectObserver?.accept(WeaponType.allCases[index])
-            })
+                self.navigator.dismiss()
+            }).disposed(by: disposeBag)
         
-        return Output(dismiss: dismiss)
+        return Output()
     }
 }

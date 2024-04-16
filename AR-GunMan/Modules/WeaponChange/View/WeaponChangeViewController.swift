@@ -15,7 +15,6 @@ class WeaponChangeViewController: UIViewController {
        
     //MARK: - Properties
     var viewModel: WeaponChangeViewModel!
-    let disposeBag = DisposeBag()
     let itemSelectedRelay = PublishRelay<Int>()
     
     @IBOutlet weak var pagerView: FSPagerView! {
@@ -37,13 +36,7 @@ class WeaponChangeViewController: UIViewController {
         )
                 
         // MARK: - output
-        let output = viewModel.transform(input: input)
-        
-        output.dismiss
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                self.dismiss(animated: true)
-            }).disposed(by: disposeBag)
+        _ = viewModel.transform(input: input)
     }
 
     override func viewDidLayoutSubviews() {

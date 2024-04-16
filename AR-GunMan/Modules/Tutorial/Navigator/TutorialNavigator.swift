@@ -5,14 +5,13 @@
 //  Created by 深瀬 on 2024/04/16.
 //
 
-import Foundation
 import RxCocoa
 
 protocol TutorialNavigatorInterface: AnyObject {
     func dismiss()
 }
 
-class TutorialNavigator {
+class TutorialNavigator: TutorialNavigatorInterface {
     private weak var viewController: UIViewController?
     
     init(viewController: UIViewController) {
@@ -34,9 +33,7 @@ class TutorialNavigator {
         vc.viewModel = viewModel
         return vc
     }
-}
-
-extension TutorialNavigator: TutorialNavigatorInterface {
+    
     func dismiss() {
         viewController?.dismiss(animated: true)
     }
