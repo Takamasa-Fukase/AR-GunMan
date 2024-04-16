@@ -12,7 +12,6 @@ import PanModal
 
 class ResultViewController: UIViewController {
     var viewModel: ResultViewModel!
-    var vmDependency: ResultViewModel.Dependency!
     let disposeBag = DisposeBag()
     
     @IBOutlet weak var tableView: UITableView!
@@ -28,14 +27,16 @@ class ResultViewController: UIViewController {
         setupUI()
         
         // MARK: - input
-        viewModel = ResultViewModel(
-            input: .init(viewWillAppear: rx.viewWillAppear,
-                         replayButtonTapped: replayButton.rx.tap.asObservable(),
-                         toHomeButtonTapped: homeButton.rx.tap.asObservable()),
-            dependency: vmDependency)
+        let input = ResultViewModel.Input(
+            viewWillAppear: rx.viewWillAppear,
+            replayButtonTapped: replayButton.rx.tap.asObservable(),
+            toHomeButtonTapped: homeButton.rx.tap.asObservable()
+        )
         
         // MARK: - output
-        viewModel.rankingList
+        let output = viewModel.transform(input: input)
+        
+        output.rankingList
             .bind(to: tableView.rx.items(
                 cellIdentifier: "RankingCell",
                 cellType: RankingCell.self
@@ -43,39 +44,39 @@ class ResultViewController: UIViewController {
                 cell.configureCell(ranking: element, row: row)
             }.disposed(by: disposeBag)
         
-        viewModel.totalScore
+        output.totalScore
             .map({ totalScore in
                 return String(format: "%.3f", totalScore)
             })
             .bind(to: totalScoreLabel.rx.text)
             .disposed(by: disposeBag)
 
-        viewModel.showNameRegisterView
+        output.showNameRegisterView
             .subscribe(onNext: { [weak self] element in
                 guard let self = self else {return}
                 self.showNameRegisterVC(vmDependency: element)
             }).disposed(by: disposeBag)
         
-        viewModel.showButtons
+        output.showButtons
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else {return}
                 self.showButtons()
             }).disposed(by: disposeBag)
         
-        viewModel.scrollAndHightlightCell
+        output.scrollAndHightlightCell
             .subscribe(onNext: { [weak self] indexPath in
                 guard let self = self else {return}
                 self.scrollCellToCenterVertically(at: indexPath)
                 // TODO: ハイライトさせる
             }).disposed(by: disposeBag)
         
-        viewModel.backToTopPageView
+        output.backToTopPageView
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else {return}
                 self.dismissToTopVC()
             }).disposed(by: disposeBag)
         
-        viewModel.isLoading
+        output.isLoading
             .subscribe(onNext: { [weak self] element in
                 guard let self = self else { return }
                 if element {
@@ -85,7 +86,7 @@ class ResultViewController: UIViewController {
                 }
             }).disposed(by: disposeBag)
         
-        viewModel.error
+        output.error
             .subscribe(onNext: { [weak self] element in
                 guard let self = self else { return }
                 self.present(UIAlertController.errorAlert(element), animated: true)

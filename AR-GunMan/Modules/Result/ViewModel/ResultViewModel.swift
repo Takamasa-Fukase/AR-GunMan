@@ -8,53 +8,74 @@
 import RxSwift
 import RxCocoa
 
-class ResultViewModel {
-    var rankingList: Observable<[Ranking]> {
-        return rankingListRelay.asObservable()
-    }
-    let totalScore: Observable<Double>
-    let showNameRegisterView: Observable<NameRegisterViewModel.Dependency>
-    var showButtons: Observable<Void> {
-        return showButtonsRelay.asObservable()
-    }
-    var scrollAndHightlightCell: Observable<IndexPath> {
-        return scrollAndHightlightCellRelay.asObservable()
-    }
-    let backToTopPageView: Observable<Void>
-    let isLoading: Observable<Bool>
-    let error: Observable<Error>
-    
-    private let showButtonsRelay = PublishRelay<Void>()
-    private let rankingListRelay = BehaviorRelay<[Ranking]>(value: [])
-    private let scrollAndHightlightCellRelay = PublishRelay<IndexPath>()
-    private let disposeBag = DisposeBag()
-    
+class ResultViewModel: ViewModelType {
     struct Input {
         let viewWillAppear: Observable<Void>
         let replayButtonTapped: Observable<Void>
         let toHomeButtonTapped: Observable<Void>
     }
     
-    struct Dependency {
-        let rankingRepository: RankingRepository
-        let totalScore: Double
+    struct Output {
+        let rankingList: Observable<[Ranking]>
+        let totalScore: Observable<Double>
+        let showNameRegisterView: Observable<NameRegisterViewModel.Dependency>
+        let showButtons: Observable<Void>
+        let scrollAndHightlightCell: Observable<IndexPath>
+        let backToTopPageView: Observable<Void>
+        let isLoading: Observable<Bool>
+        let error: Observable<Error>
     }
     
-    init(input: Input,
-         dependency: Dependency) {
-        self.totalScore = Observable.just(dependency.totalScore)
+    struct State {
         
+    }
+    
+    private let rankingRepository: RankingRepository
+    private let totalScore: Double
+    
+    private let disposeBag = DisposeBag()
+    private let nameRegisterEventObserver = NameRegisterEventObserver()
+    
+    init(
+        rankingRepository: RankingRepository,
+        totalScore: Double
+    ) {
+        self.rankingRepository = rankingRepository
+        self.totalScore = totalScore
+    }
+    
+    func transform(input: Input) -> Output {
+        let showButtonsRelay = PublishRelay<Void>()
+        let rankingListRelay = BehaviorRelay<[Ranking]>(value: [])
+        let scrollAndHightlightCellRelay = PublishRelay<IndexPath>()
         let showNameRegisterViewRelay = PublishRelay<NameRegisterViewModel.Dependency>()
-        self.showNameRegisterView = showNameRegisterViewRelay.asObservable()
-        
         let backToTopPageViewRelay = PublishRelay<Void>()
-        self.backToTopPageView = backToTopPageViewRelay.asObservable()
-        
         let isLoadingRelay = BehaviorRelay<Bool>(value: false)
-        self.isLoading = isLoadingRelay.asObservable()
-        
         let errorRelay = PublishRelay<Error>()
-        self.error = errorRelay.asObservable()
+        
+        func fetchRanking() {
+            Task { @MainActor in
+                isLoadingRelay.accept(true)
+                do {
+                    let rankingList = try await rankingRepository.getRanking()
+                    rankingListRelay.accept(rankingList)
+                }catch {
+                    errorRelay.accept(error)
+                }
+                isLoadingRelay.accept(false)
+            }
+        }
+        
+        func showNameRegisterDialog() {
+            showNameRegisterViewRelay.accept(
+                .init(
+                    rankingRepository: rankingRepository,
+                    totalScore: totalScore,
+                    rankingListObservable: rankingListRelay.asObservable(),
+                    observer: nameRegisterEventObserver
+                )
+            )
+        }
         
         input.viewWillAppear
             .take(1)
@@ -78,50 +99,29 @@ class ResultViewModel {
                 backToTopPageViewRelay.accept(Void())
             }).disposed(by: disposeBag)
         
-        func fetchRanking() {
-            Task { @MainActor in
-                isLoadingRelay.accept(true)
-                do {
-                    let rankingList = try await dependency.rankingRepository.getRanking()
-                    self.rankingListRelay.accept(rankingList)
-                }catch {
-                    errorRelay.accept(error)
-                }
-                isLoadingRelay.accept(false)
-            }
-        }
-        
-        func showNameRegisterDialog() {
-            showNameRegisterViewRelay.accept(
-                .init(
-                    rankingRepository: RankingRepository(),
-                    totalScore: dependency.totalScore,
-                    rankingListObservable: self.rankingList,
-                    delegate: self
+        nameRegisterEventObserver.onRegister
+            .subscribe(onNext: { registeredRanking in
+                let rankIndex = RankingUtil.getTemporaryRankIndex(
+                    rankingList: rankingListRelay.value,
+                    score: registeredRanking.score
                 )
-            )
-        }
-    }
-}
+                var newRankingList = rankingListRelay.value
+                // 登録したランキングが含まれたリストを作成して新しい値として流す
+                newRankingList.insert(registeredRanking, at: rankIndex)
+                rankingListRelay.accept(newRankingList)
+                // 登録したランキングが中央に表示されるようにスクロール＆ハイライトさせる
+                scrollAndHightlightCellRelay.accept(IndexPath(row: rankIndex, section: 0))
+            }).disposed(by: disposeBag)
 
-extension ResultViewModel: NameRegisterDelegate {
-    func onRegistered(registeredRanking: Ranking) {
-        let rankIndex = RankingUtil.getTemporaryRankIndex(
-            rankingList: self.rankingListRelay.value,
-            score: registeredRanking.score
+        return Output(
+            rankingList: rankingListRelay.asObservable(),
+            totalScore: Observable.just(totalScore),
+            showNameRegisterView: showNameRegisterViewRelay.asObservable(),
+            showButtons: nameRegisterEventObserver.onClose.asObservable(),
+            scrollAndHightlightCell: scrollAndHightlightCellRelay.asObservable(),
+            backToTopPageView: backToTopPageViewRelay.asObservable(),
+            isLoading: isLoadingRelay.asObservable(),
+            error: errorRelay.asObservable()
         )
-        var newRankingList = self.rankingListRelay.value
-        // 登録したランキングが含まれたリストを作成して新しい値として流す
-        newRankingList.insert(registeredRanking, at: rankIndex)
-        self.rankingListRelay.accept(newRankingList)
-        // 登録したランキングが中央に表示されるようにスクロール＆ハイライトさせる
-        scrollAndHightlightCellRelay.accept(IndexPath(row: rankIndex, section: 0))
-    }
-    
-    func onClose() {
-        showButtonsRelay.accept(Void())
     }
 }
-
-
-

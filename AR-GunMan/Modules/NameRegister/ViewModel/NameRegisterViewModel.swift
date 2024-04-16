@@ -8,9 +8,9 @@
 import RxSwift
 import RxCocoa
 
-protocol NameRegisterDelegate: AnyObject {
-    func onRegistered(registeredRanking: Ranking)
-    func onClose()
+class NameRegisterEventObserver {
+    let onRegister = PublishRelay<Ranking>()
+    let onClose = PublishRelay<Void>()
 }
 
 class NameRegisterViewModel {
@@ -34,7 +34,7 @@ class NameRegisterViewModel {
         let rankingRepository: RankingRepository
         let totalScore: Double
         let rankingListObservable: Observable<[Ranking]>
-        weak var delegate: NameRegisterDelegate?
+        weak var observer: NameRegisterEventObserver?
     }
     
     init(input: Input, dependency: Dependency) {
@@ -59,7 +59,7 @@ class NameRegisterViewModel {
         
         input.viewWillDisappear
             .subscribe(onNext: { _ in
-                dependency.delegate?.onClose()
+                dependency.observer?.onClose.accept(Void())
             }).disposed(by: disposeBag)
         
         input.registerButtonTapped
@@ -70,7 +70,7 @@ class NameRegisterViewModel {
                     do {
                         let ranking = Ranking(score: dependency.totalScore, userName: element)
                         try await dependency.rankingRepository.registerRanking(ranking)
-                        dependency.delegate?.onRegistered(registeredRanking: ranking)
+                        dependency.observer?.onRegister.accept(ranking)
                         dismissRelay.accept(Void())
                     } catch {
                         errorRelay.accept(error)
