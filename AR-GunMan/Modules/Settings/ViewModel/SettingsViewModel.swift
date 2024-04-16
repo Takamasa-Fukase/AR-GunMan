@@ -17,32 +17,41 @@ class SettingsViewModel {
         let backButtonTapped: Observable<Void>
     }
     
-    struct Output {
-        let showRanking: Observable<Void>
-        let openSafariView: Observable<String>
-        let dismiss: Observable<Void>
+    struct Dependency {
+        let navigator: SettingsNavigatorInterface
     }
     
+    init(dependency: Dependency) {
+        self.navigator = dependency.navigator
+    }
+    
+    private let navigator: SettingsNavigatorInterface
     private let disposeBag = DisposeBag()
     
-    func transform(input: Input) -> Output {
-        let openSafariViewRelay = PublishRelay<String>()
+    func transform(input: Input) {
+        input.worldRankingButtonTapped
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.navigator.showRanking()
+            }).disposed(by: disposeBag)
         
         input.privacyPolicyButtonTapped
-            .subscribe(onNext: { _ in
-                openSafariViewRelay.accept(SettingsConst.privacyPolicyURL)
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.navigator.showPrivacyPolicy()
             }).disposed(by: disposeBag)
         
         input.developerConctactButtonTapped
-            .subscribe(onNext: { _ in
-                openSafariViewRelay.accept(SettingsConst.developerContactURL)
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.navigator.showDeveloperContact()
             }).disposed(by: disposeBag)
         
-        return Output(
-            showRanking: input.worldRankingButtonTapped,
-            openSafariView: openSafariViewRelay.asObservable(),
-            dismiss: input.backButtonTapped
-        )
+        input.backButtonTapped
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.navigator.dismiss()
+            }).disposed(by: disposeBag)
     }
 }
 

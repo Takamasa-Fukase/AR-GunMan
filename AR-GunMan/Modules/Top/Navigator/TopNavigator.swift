@@ -44,8 +44,7 @@ class TopNavigator: TopNavigatorInterface {
     }
     
     func showSettings() {
-        let storyboard: UIStoryboard = UIStoryboard(name: "SettingsViewController", bundle: nil)
-        let vc = storyboard.instantiateInitialViewController() as! SettingsViewController
+        let vc = SettingsNavigator.assembleModules()
         viewController?.presentPanModal(vc)
     }
     

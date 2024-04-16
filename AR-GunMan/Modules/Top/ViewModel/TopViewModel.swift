@@ -24,11 +24,11 @@ class TopViewModel {
 
     struct Dependency {
         let useCase: TopUseCase
-        let navigator: TopNavigator
+        let navigator: TopNavigatorInterface
     }
     
     private let useCase: TopUseCase
-    private let navigator: TopNavigator
+    private let navigator: TopNavigatorInterface
     private let disposeBag = DisposeBag()
     
     init(dependency: Dependency) {
