@@ -45,7 +45,6 @@ class ResultViewModel: ViewModelType {
     }
     
     func transform(input: Input) -> Output {
-        let showButtonsRelay = PublishRelay<Void>()
         let rankingListRelay = BehaviorRelay<[Ranking]>(value: [])
         let scrollAndHightlightCellRelay = PublishRelay<IndexPath>()
         let showNameRegisterViewRelay = PublishRelay<NameRegisterViewModel.Dependency>()
