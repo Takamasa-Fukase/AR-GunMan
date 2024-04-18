@@ -16,9 +16,9 @@ protocol SettingsNavigatorInterface: AnyObject {
 }
 
 class SettingsNavigator: SettingsNavigatorInterface {
-    private weak var viewController: SettingsViewController?
+    private unowned let viewController: UIViewController
     
-    init(viewController: SettingsViewController) {
+    init(viewController: UIViewController) {
         self.viewController = viewController
     }
     
@@ -34,7 +34,7 @@ class SettingsNavigator: SettingsNavigatorInterface {
     func showRanking() {
         let storyboard: UIStoryboard = UIStoryboard(name: "RankingViewController", bundle: nil)
         let vc = storyboard.instantiateInitialViewController() as! RankingViewController
-        viewController?.presentPanModal(vc)
+        viewController.presentPanModal(vc)
     }
     
     func showPrivacyPolicy() {
@@ -52,6 +52,6 @@ class SettingsNavigator: SettingsNavigatorInterface {
     }
     
     func dismiss() {
-        viewController?.dismiss(animated: true)
+        viewController.dismiss(animated: true)
     }
 }

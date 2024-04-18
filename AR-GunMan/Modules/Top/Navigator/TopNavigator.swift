@@ -16,9 +16,9 @@ protocol TopNavigatorInterface: AnyObject {
 }
 
 class TopNavigator: TopNavigatorInterface {
-    private weak var viewController: TopViewController?
+    private unowned let viewController: UIViewController
     
-    init(viewController: TopViewController) {
+    init(viewController: UIViewController) {
         self.viewController = viewController
     }
     
@@ -40,17 +40,17 @@ class TopNavigator: TopNavigatorInterface {
     
     func showGame() {
         let vc = GameNavigator.assembleModules()
-        viewController?.present(vc, animated: true)
+        viewController.present(vc, animated: true)
     }
     
     func showSettings() {
         let vc = SettingsNavigator.assembleModules()
-        viewController?.presentPanModal(vc)
+        viewController.presentPanModal(vc)
     }
     
     func showTutorial() {
         let vc = TutorialNavigator.assembleModules(transitionType: .topPage)
-        viewController?.presentPanModal(vc)
+        viewController.presentPanModal(vc)
     }
     
     func showCameraPermissionDescriptionAlert() {
@@ -69,6 +69,6 @@ class TopNavigator: TopNavigatorInterface {
         let cancelAction = UIAlertAction(title: "Not now", style: .cancel)
         alert.addAction(settingsAction)
         alert.addAction(cancelAction)
-        viewController?.present(alert, animated: true)
+        viewController.present(alert, animated: true)
     }
 }

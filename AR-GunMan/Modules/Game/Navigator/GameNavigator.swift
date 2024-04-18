@@ -18,9 +18,9 @@ protocol GameNavigatorInterface: AnyObject {
 }
 
 class GameNavigator: GameNavigatorInterface {
-    private weak var viewController: GameViewController?
+    private unowned let viewController: UIViewController
     
-    init(viewController: GameViewController) {
+    init(viewController: UIViewController) {
         self.viewController = viewController
     }
     
@@ -52,18 +52,18 @@ class GameNavigator: GameNavigatorInterface {
             transitionType: .gamePage,
             tutorialEndObserver: tutorialEndObserver
         )
-        viewController?.presentPanModal(vc)
+        viewController.presentPanModal(vc)
     }
     
     func showWeaponChangeView(weaponSelectObserver: PublishRelay<WeaponType>) {
         let vc = WeaponChangeNavigator.assembleModules(
             weaponSelectObserver: weaponSelectObserver
         )
-        viewController?.present(vc, animated: true)
+        viewController.present(vc, animated: true)
     }
     
     func dismissWeaponChangeView() {
-        viewController?.presentedViewController?.dismiss(animated: true)
+        viewController.presentedViewController?.dismiss(animated: true)
     }
     
     func showResultView(totalScore: Double) {
@@ -74,6 +74,6 @@ class GameNavigator: GameNavigatorInterface {
             totalScore: totalScore
         )
         vc.viewModel = viewModel
-        viewController?.present(vc, animated: true)
+        viewController.present(vc, animated: true)
     }
 }
