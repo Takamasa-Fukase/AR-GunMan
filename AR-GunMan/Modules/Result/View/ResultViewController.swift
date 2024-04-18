@@ -8,7 +8,6 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import PanModal
 
 class ResultViewController: UIViewController {
     var viewModel: ResultViewModel!
@@ -50,12 +49,6 @@ class ResultViewController: UIViewController {
             })
             .bind(to: totalScoreLabel.rx.text)
             .disposed(by: disposeBag)
-
-        output.showNameRegisterView
-            .subscribe(onNext: { [weak self] element in
-                guard let self = self else {return}
-                self.showNameRegisterVC(vmDependency: element)
-            }).disposed(by: disposeBag)
         
         output.showButtons
             .subscribe(onNext: { [weak self] _ in
@@ -70,12 +63,6 @@ class ResultViewController: UIViewController {
                 // TODO: ハイライトさせる
             }).disposed(by: disposeBag)
         
-        output.backToTopPageView
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else {return}
-                self.dismissToTopVC()
-            }).disposed(by: disposeBag)
-        
         output.isLoading
             .subscribe(onNext: { [weak self] element in
                 guard let self = self else { return }
@@ -84,12 +71,6 @@ class ResultViewController: UIViewController {
                 }else {
                     self.activityIndicatorView.stopAnimating()
                 }
-            }).disposed(by: disposeBag)
-        
-        output.error
-            .subscribe(onNext: { [weak self] element in
-                guard let self = self else { return }
-                self.present(UIAlertController.errorAlert(element), animated: true)
             }).disposed(by: disposeBag)
     }
     
@@ -101,15 +82,7 @@ class ResultViewController: UIViewController {
         tableView.contentInset.top = 10
         tableView.register(UINib(nibName: "RankingCell", bundle: nil), forCellReuseIdentifier: "RankingCell")
     }
-    
-    private func showNameRegisterVC(vmDependency: NameRegisterViewModel.Dependency) {
-        let storyboard: UIStoryboard = UIStoryboard(name: "NameRegisterViewController", bundle: nil)
-        let vc = storyboard.instantiateInitialViewController() as! NameRegisterViewController
-        vc.modalPresentationStyle = .overCurrentContext
-        vc.vmDependency = vmDependency
-        self.presentPanModal(vc)
-    }
-    
+
     private func showButtons() {
         UIView.animate(withDuration: 0.6, delay: 0.1) {
             self.rightButtonsStackView.isHidden = false
@@ -128,10 +101,5 @@ class ResultViewController: UIViewController {
     
     private func highlightCell(at indexPath: IndexPath) {
         // TODO: ハイライト実装
-    }
-    
-    private func dismissToTopVC() {
-        let topVC = self.presentingViewController?.presentingViewController as! TopViewController
-        topVC.dismiss(animated: false, completion: nil)
     }
 }

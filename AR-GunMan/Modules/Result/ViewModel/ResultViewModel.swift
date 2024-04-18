@@ -18,18 +18,16 @@ class ResultViewModel: ViewModelType {
     struct Output {
         let rankingList: Observable<[Ranking]>
         let totalScore: Observable<Double>
-        let showNameRegisterView: Observable<NameRegisterViewModel.Dependency>
         let showButtons: Observable<Void>
         let scrollAndHightlightCell: Observable<IndexPath>
-        let backToTopPageView: Observable<Void>
         let isLoading: Observable<Bool>
-        let error: Observable<Error>
     }
     
     struct State {
         
     }
     
+    private let navigator: ResultNavigatorInterface
     private let rankingRepository: RankingRepository
     private let totalScore: Double
     
@@ -37,9 +35,11 @@ class ResultViewModel: ViewModelType {
     private let nameRegisterEventObserver = NameRegisterEventObserver()
     
     init(
+        navigator: ResultNavigatorInterface,
         rankingRepository: RankingRepository,
         totalScore: Double
     ) {
+        self.navigator = navigator
         self.rankingRepository = rankingRepository
         self.totalScore = totalScore
     }
@@ -47,10 +47,7 @@ class ResultViewModel: ViewModelType {
     func transform(input: Input) -> Output {
         let rankingListRelay = BehaviorRelay<[Ranking]>(value: [])
         let scrollAndHightlightCellRelay = PublishRelay<IndexPath>()
-        let showNameRegisterViewRelay = PublishRelay<NameRegisterViewModel.Dependency>()
-        let backToTopPageViewRelay = PublishRelay<Void>()
         let isLoadingRelay = BehaviorRelay<Bool>(value: false)
-        let errorRelay = PublishRelay<Error>()
         
         func fetchRanking() {
             Task { @MainActor in
@@ -59,43 +56,41 @@ class ResultViewModel: ViewModelType {
                     let rankingList = try await rankingRepository.getRanking()
                     rankingListRelay.accept(rankingList)
                 }catch {
-                    errorRelay.accept(error)
+                    navigator.showErrorAlert(error)
                 }
                 isLoadingRelay.accept(false)
             }
         }
         
-        func showNameRegisterDialog() {
-            showNameRegisterViewRelay.accept(
-                .init(
+        input.viewWillAppear
+            .take(1)
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                fetchRanking()
+                let vmDependency = NameRegisterViewModel.Dependency(
                     rankingRepository: rankingRepository,
                     totalScore: totalScore,
                     rankingListObservable: rankingListRelay.asObservable(),
                     observer: nameRegisterEventObserver
                 )
-            )
-        }
-        
-        input.viewWillAppear
-            .take(1)
-            .subscribe(onNext: { _ in
-                fetchRanking()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    showNameRegisterDialog()
+                    self.navigator.showNameRegister(vmDependency: vmDependency)
                 }
             }).disposed(by: disposeBag)
         
         input.replayButtonTapped
-            .subscribe(onNext: { _ in
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
                 // TODO: あとでUseCaseのアクセスに差し替える
                 let replayRepository = ReplayRepository()
                 replayRepository.setNeedsReplay(true)
-                backToTopPageViewRelay.accept(Void())
+                self.navigator.backToTop()
             }).disposed(by: disposeBag)
         
         input.toHomeButtonTapped
-            .subscribe(onNext: { _ in
-                backToTopPageViewRelay.accept(Void())
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.navigator.backToTop()
             }).disposed(by: disposeBag)
         
         nameRegisterEventObserver.onRegister
@@ -115,12 +110,9 @@ class ResultViewModel: ViewModelType {
         return Output(
             rankingList: rankingListRelay.asObservable(),
             totalScore: Observable.just(totalScore),
-            showNameRegisterView: showNameRegisterViewRelay.asObservable(),
             showButtons: nameRegisterEventObserver.onClose.asObservable(),
             scrollAndHightlightCell: scrollAndHightlightCellRelay.asObservable(),
-            backToTopPageView: backToTopPageViewRelay.asObservable(),
-            isLoading: isLoadingRelay.asObservable(),
-            error: errorRelay.asObservable()
+            isLoading: isLoadingRelay.asObservable()
         )
     }
 }

@@ -67,13 +67,7 @@ class GameNavigator: GameNavigatorInterface {
     }
     
     func showResultView(totalScore: Double) {
-        let storyboard = UIStoryboard(name: "ResultViewController", bundle: nil)
-        let vc = storyboard.instantiateInitialViewController() as! ResultViewController
-        let viewModel = ResultViewModel(
-            rankingRepository: RankingRepository(),
-            totalScore: totalScore
-        )
-        vc.viewModel = viewModel
+        let vc = ResultNavigator.assembleModules(totalScore: totalScore)
         viewController.present(vc, animated: true)
     }
 }

@@ -76,6 +76,7 @@
 		8627F6322BCE454C0003D374 /* TutorialNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8627F6312BCE454C0003D374 /* TutorialNavigator.swift */; };
 		8627F6352BCE83F30003D374 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8627F6342BCE83F30003D374 /* ViewModelType.swift */; };
 		8627F6372BCE86850003D374 /* WeaponChangeNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8627F6362BCE86850003D374 /* WeaponChangeNavigator.swift */; };
+		8627F6392BD0A4280003D374 /* ResultNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8627F6382BD0A4280003D374 /* ResultNavigator.swift */; };
 		86594DC82BCD50F100971D1A /* TopUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86594DC72BCD50F100971D1A /* TopUseCase.swift */; };
 		86594DCA2BCD558E00971D1A /* AVPermissionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86594DC92BCD558E00971D1A /* AVPermissionRepository.swift */; };
 		86594DCC2BCD75E100971D1A /* ReplayRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86594DCB2BCD75E100971D1A /* ReplayRepository.swift */; };
@@ -198,6 +199,7 @@
 		8627F6312BCE454C0003D374 /* TutorialNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialNavigator.swift; sourceTree = "<group>"; };
 		8627F6342BCE83F30003D374 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		8627F6362BCE86850003D374 /* WeaponChangeNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponChangeNavigator.swift; sourceTree = "<group>"; };
+		8627F6382BD0A4280003D374 /* ResultNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultNavigator.swift; sourceTree = "<group>"; };
 		86594DC72BCD50F100971D1A /* TopUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopUseCase.swift; sourceTree = "<group>"; };
 		86594DC92BCD558E00971D1A /* AVPermissionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPermissionRepository.swift; sourceTree = "<group>"; };
 		86594DCB2BCD75E100971D1A /* ReplayRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplayRepository.swift; sourceTree = "<group>"; };
@@ -684,6 +686,7 @@
 		86A6CB322BCC0F5300628C61 /* Navigator */ = {
 			isa = PBXGroup;
 			children = (
+				8627F6382BD0A4280003D374 /* ResultNavigator.swift */,
 			);
 			path = Navigator;
 			sourceTree = "<group>";
@@ -1096,6 +1099,7 @@
 				BCD9675E2979E55400E33587 /* UIImageView+Extension.swift in Sources */,
 				BC92C854297061FE00E49BD5 /* WeaponType.swift in Sources */,
 				BC2B11672977F90C009F4DC4 /* UIScrollView+Extension.swift in Sources */,
+				8627F6392BD0A4280003D374 /* ResultNavigator.swift in Sources */,
 				67DB2C5727BFD01900B8CB3C /* SceneNodeUtil.swift in Sources */,
 				86594DC82BCD50F100971D1A /* TopUseCase.swift in Sources */,
 				59945100256AD55900560202 /* TutorialViewController.swift in Sources */,
