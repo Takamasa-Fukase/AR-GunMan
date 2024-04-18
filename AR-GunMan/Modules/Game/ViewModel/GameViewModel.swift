@@ -60,7 +60,8 @@ class GameViewModel: ViewModelType {
         let autoReloadRelay = BehaviorRelay<Void>(value: Void())
         
         // 仮置き
-        func startGame() {
+        // TODO: メモリリーク対策でweak selfを引数で受け取る様にしたが、別の方法がないか探りたい
+        func startGame(weakSelf: GameViewModel?) {
             AudioUtil.playSound(of: .pistolSet)
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                 AudioUtil.playSound(of: .startWhistle)
@@ -69,7 +70,7 @@ class GameViewModel: ViewModelType {
                         TimeCountUtil.decreaseGameTimeCount(lastValue: state.timeCountRelay.value)
                     })
                     .bind(to: state.timeCountRelay)
-                self.useCase.startAccelerometerAndGyroUpdate()
+                weakSelf?.useCase.startAccelerometerAndGyroUpdate()
             }
         }
         
@@ -106,10 +107,10 @@ class GameViewModel: ViewModelType {
             .subscribe(onNext: { [weak self] isSeen in
                 guard let self = self else { return }
                 if isSeen {
-                    startGame()
+                    startGame(weakSelf: self)
                 }else {
                     self.navigator.showTutorialView(
-                        tutorialEndObserver: tutorialEndObserver
+                        tutorialEndObserver: self.tutorialEndObserver
                     )
                 }
             }).disposed(by: disposeBag)
@@ -118,7 +119,7 @@ class GameViewModel: ViewModelType {
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 self.navigator.showWeaponChangeView(
-                    weaponSelectObserver: weaponSelectObserver
+                    weaponSelectObserver: self.weaponSelectObserver
                 )
             }).disposed(by: disposeBag)
         
@@ -127,7 +128,7 @@ class GameViewModel: ViewModelType {
                 guard let self = self else { return }
                 // チュートリアル通過フラグをセットする
                 self.useCase.setTutorialAlreadySeen()
-                startGame()
+                startGame(weakSelf: self)
             }).disposed(by: disposeBag)
         
         weaponSelectObserver
