@@ -34,7 +34,7 @@ class NameRegisterViewModel {
         let rankingRepository: RankingRepository
         let totalScore: Double
         let rankingListObservable: Observable<[Ranking]>
-        weak var observer: NameRegisterEventObserver?
+        weak var eventObserver: NameRegisterEventObserver?
     }
     
     init(input: Input, dependency: Dependency) {
@@ -59,7 +59,7 @@ class NameRegisterViewModel {
         
         input.viewWillDisappear
             .subscribe(onNext: { _ in
-                dependency.observer?.onClose.accept(Void())
+                dependency.eventObserver?.onClose.accept(Void())
             }).disposed(by: disposeBag)
         
         input.registerButtonTapped
@@ -70,7 +70,7 @@ class NameRegisterViewModel {
                     do {
                         let ranking = Ranking(score: dependency.totalScore, userName: element)
                         try await dependency.rankingRepository.registerRanking(ranking)
-                        dependency.observer?.onRegister.accept(ranking)
+                        dependency.eventObserver?.onRegister.accept(ranking)
                         dismissRelay.accept(Void())
                     } catch {
                         errorRelay.accept(error)

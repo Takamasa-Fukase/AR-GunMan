@@ -67,14 +67,12 @@ class ResultViewModel: ViewModelType {
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 fetchRanking()
-                let vmDependency = NameRegisterViewModel.Dependency(
-                    rankingRepository: rankingRepository,
-                    totalScore: totalScore,
-                    rankingListObservable: rankingListRelay.asObservable(),
-                    observer: nameRegisterEventObserver
-                )
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    self.navigator.showNameRegister(vmDependency: vmDependency)
+                    self.navigator.showNameRegister(
+                        totalScore: self.totalScore,
+                        rankingListObservable: rankingListRelay.asObservable(),
+                        eventObserver: self.nameRegisterEventObserver
+                    )
                 }
             }).disposed(by: disposeBag)
         
