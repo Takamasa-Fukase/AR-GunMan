@@ -77,6 +77,8 @@
 		8627F6352BCE83F30003D374 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8627F6342BCE83F30003D374 /* ViewModelType.swift */; };
 		8627F6372BCE86850003D374 /* WeaponChangeNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8627F6362BCE86850003D374 /* WeaponChangeNavigator.swift */; };
 		8627F6392BD0A4280003D374 /* ResultNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8627F6382BD0A4280003D374 /* ResultNavigator.swift */; };
+		8627F63B2BD0B1340003D374 /* ResultUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8627F63A2BD0B1340003D374 /* ResultUseCase.swift */; };
+		8627F6432BD16BB60003D374 /* ObservableActivityTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8627F6422BD16BB60003D374 /* ObservableActivityTracker.swift */; };
 		86594DC82BCD50F100971D1A /* TopUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86594DC72BCD50F100971D1A /* TopUseCase.swift */; };
 		86594DCA2BCD558E00971D1A /* AVPermissionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86594DC92BCD558E00971D1A /* AVPermissionRepository.swift */; };
 		86594DCC2BCD75E100971D1A /* ReplayRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86594DCB2BCD75E100971D1A /* ReplayRepository.swift */; };
@@ -200,6 +202,8 @@
 		8627F6342BCE83F30003D374 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		8627F6362BCE86850003D374 /* WeaponChangeNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponChangeNavigator.swift; sourceTree = "<group>"; };
 		8627F6382BD0A4280003D374 /* ResultNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultNavigator.swift; sourceTree = "<group>"; };
+		8627F63A2BD0B1340003D374 /* ResultUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultUseCase.swift; sourceTree = "<group>"; };
+		8627F6422BD16BB60003D374 /* ObservableActivityTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableActivityTracker.swift; sourceTree = "<group>"; };
 		86594DC72BCD50F100971D1A /* TopUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopUseCase.swift; sourceTree = "<group>"; };
 		86594DC92BCD558E00971D1A /* AVPermissionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPermissionRepository.swift; sourceTree = "<group>"; };
 		86594DCB2BCD75E100971D1A /* ReplayRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplayRepository.swift; sourceTree = "<group>"; };
@@ -470,6 +474,7 @@
 				86B8A3A52B7E0D1F005ED2F8 /* RankingUtil.swift */,
 				67DB2C5627BFD01900B8CB3C /* SceneNodeUtil.swift */,
 				67DB2C5827C10E8B00B8CB3C /* SceneAnimationUtil.swift */,
+				8627F6422BD16BB60003D374 /* ObservableActivityTracker.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -694,6 +699,7 @@
 		86A6CB332BCC0F5900628C61 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
+				8627F63A2BD0B1340003D374 /* ResultUseCase.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -1100,10 +1106,12 @@
 				BC92C854297061FE00E49BD5 /* WeaponType.swift in Sources */,
 				BC2B11672977F90C009F4DC4 /* UIScrollView+Extension.swift in Sources */,
 				8627F6392BD0A4280003D374 /* ResultNavigator.swift in Sources */,
+				8627F63B2BD0B1340003D374 /* ResultUseCase.swift in Sources */,
 				67DB2C5727BFD01900B8CB3C /* SceneNodeUtil.swift in Sources */,
 				86594DC82BCD50F100971D1A /* TopUseCase.swift in Sources */,
 				59945100256AD55900560202 /* TutorialViewController.swift in Sources */,
 				8613E2902BB1BFC400BF4489 /* GameUseCase.swift in Sources */,
+				8627F6432BD16BB60003D374 /* ObservableActivityTracker.swift in Sources */,
 				86627DE6273FD5E30044A980 /* RankingViewController.swift in Sources */,
 				59D2D5952552E718006DDB70 /* WeaponChangeViewController.swift in Sources */,
 				59D2D5852552E6B2006DDB70 /* GameViewController.swift in Sources */,

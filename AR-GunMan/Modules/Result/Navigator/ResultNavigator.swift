@@ -30,10 +30,14 @@ final class ResultNavigator: ResultNavigatorInterface {
         let storyboard = UIStoryboard(name: "ResultViewController", bundle: nil)
         let vc = storyboard.instantiateInitialViewController() as! ResultViewController
         vc.modalPresentationStyle = .fullScreen
+        let useCase = ResultUseCase(
+            rankingRepository: RankingRepository(),
+            replayRepository: ReplayRepository()
+        )
         let navigator = ResultNavigator(viewController: vc)
         let viewModel = ResultViewModel(
+            useCase: useCase,
             navigator: navigator,
-            rankingRepository: RankingRepository(),
             totalScore: totalScore
         )
         vc.viewModel = viewModel
@@ -56,7 +60,7 @@ final class ResultNavigator: ResultNavigatorInterface {
             rankingListObservable: rankingListObservable,
             eventObserver: eventObserver
         )
-        vc.vmDependency = vmDependency
+        vc.vmDependency = dependency
         viewController.presentPanModal(vc)
     }
     

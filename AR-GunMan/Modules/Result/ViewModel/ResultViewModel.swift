@@ -26,54 +26,48 @@ class ResultViewModel: ViewModelType {
     struct State {
         
     }
-    
+
+    private let useCase: ResultUseCase
     private let navigator: ResultNavigatorInterface
-    private let rankingRepository: RankingRepository
     private let totalScore: Double
     
     private let disposeBag = DisposeBag()
     private let nameRegisterEventObserver = NameRegisterEventObserver()
     
     init(
+        useCase: ResultUseCase,
         navigator: ResultNavigatorInterface,
-        rankingRepository: RankingRepository,
         totalScore: Double
     ) {
+        self.useCase = useCase
         self.navigator = navigator
-        self.rankingRepository = rankingRepository
         self.totalScore = totalScore
     }
     
     func transform(input: Input) -> Output {
         let rankingListRelay = BehaviorRelay<[Ranking]>(value: [])
         let scrollAndHightlightCellRelay = PublishRelay<IndexPath>()
-        let isLoadingRelay = BehaviorRelay<Bool>(value: false)
-        
-        func fetchRanking() {
-            Task { @MainActor in
-                isLoadingRelay.accept(true)
-                do {
-                    let rankingList = try await rankingRepository.getRanking()
-                    rankingListRelay.accept(rankingList)
-                }catch {
-                    navigator.showErrorAlert(error)
-                }
-                isLoadingRelay.accept(false)
-            }
-        }
-        
+        let loadingTracker = ObservableActivityTracker()
+
         input.viewWillAppear
             .take(1)
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                fetchRanking()
+            .map({ [weak self] _ in
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    self.navigator.showNameRegister(
-                        totalScore: self.totalScore,
+                    self?.navigator.showNameRegister(
+                        totalScore: self?.totalScore ?? 0.0,
                         rankingListObservable: rankingListRelay.asObservable(),
-                        eventObserver: self.nameRegisterEventObserver
+                        eventObserver: self?.nameRegisterEventObserver ?? NameRegisterEventObserver()
                     )
                 }
+            })
+            .flatMapLatest({ [weak self] in
+                return (self?.useCase.getRanking() ?? Single.just([]))
+                    .trackActivity(loadingTracker)
+            })
+            .subscribe(onNext: { ranking in
+                rankingListRelay.accept(ranking)
+            }, onError: { [weak self] error in
+                self?.navigator.showErrorAlert(error)
             }).disposed(by: disposeBag)
         
         input.replayButtonTapped
@@ -110,7 +104,7 @@ class ResultViewModel: ViewModelType {
             totalScore: Observable.just(totalScore),
             showButtons: nameRegisterEventObserver.onClose.asObservable(),
             scrollAndHightlightCell: scrollAndHightlightCellRelay.asObservable(),
-            isLoading: isLoadingRelay.asObservable()
+            isLoading: loadingTracker.asObservable()
         )
     }
 }
