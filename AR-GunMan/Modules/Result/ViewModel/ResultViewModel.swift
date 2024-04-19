@@ -73,9 +73,7 @@ class ResultViewModel: ViewModelType {
         input.replayButtonTapped
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
-                // TODO: あとでUseCaseのアクセスに差し替える
-                let replayRepository = ReplayRepository()
-                replayRepository.setNeedsReplay(true)
+                self.useCase.setNeedsReplay(true)
                 self.navigator.backToTop()
             }).disposed(by: disposeBag)
         

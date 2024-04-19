@@ -23,4 +23,8 @@ class ResultUseCase {
     func registerRanking(_ ranking: Ranking) -> Single<Void> {
         return rankingRepository.registerRanking2(ranking)
     }
+    
+    func setNeedsReplay(_ newValue: Bool) {
+        return replayRepository.setNeedsReplay(newValue)
+    }
 }
