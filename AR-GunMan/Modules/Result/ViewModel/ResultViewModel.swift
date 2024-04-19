@@ -17,7 +17,7 @@ class ResultViewModel: ViewModelType {
     
     struct Output {
         let rankingList: Observable<[Ranking]>
-        let totalScore: Observable<Double>
+        let totalScore: Observable<String>
         let showButtons: Observable<Void>
         let scrollAndHightlightCell: Observable<IndexPath>
         let isLoading: Observable<Bool>
@@ -96,10 +96,12 @@ class ResultViewModel: ViewModelType {
                 // 登録したランキングが中央に表示されるようにスクロール＆ハイライトさせる
                 scrollAndHightlightCellRelay.accept(IndexPath(row: rankIndex, section: 0))
             }).disposed(by: disposeBag)
+        
+        let totalScore = Observable.just(String(format: "%.3f", totalScore))
 
         return Output(
             rankingList: rankingListRelay.asObservable(),
-            totalScore: Observable.just(totalScore),
+            totalScore: totalScore,
             showButtons: nameRegisterEventObserver.onClose.asObservable(),
             scrollAndHightlightCell: scrollAndHightlightCellRelay.asObservable(),
             isLoading: loadingTracker.asObservable()

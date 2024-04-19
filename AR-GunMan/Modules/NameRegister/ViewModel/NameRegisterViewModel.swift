@@ -15,7 +15,7 @@ class NameRegisterEventObserver {
 
 class NameRegisterViewModel {
     let rankText: Observable<String?>
-    let totalScore: Observable<Double>
+    let totalScore: Observable<String>
     let isRegisterButtonEnabled: Observable<Bool>
     let dismiss: Observable<Void>
     let isRegistering: Observable<Bool>
@@ -41,7 +41,9 @@ class NameRegisterViewModel {
         let rankTextRelay = BehaviorRelay<String?>(value: nil)
         self.rankText = rankTextRelay.asObservable()
         
-        self.totalScore = Observable.just(dependency.totalScore)
+        self.totalScore = Observable.just(
+            "Score: \(String(format: "%.3f", dependency.totalScore))"
+        )
         
         self.isRegisterButtonEnabled = input.nameTextFieldChanged
             .map({ element in

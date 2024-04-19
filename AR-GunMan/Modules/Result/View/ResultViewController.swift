@@ -44,9 +44,6 @@ class ResultViewController: UIViewController {
             }.disposed(by: disposeBag)
         
         output.totalScore
-            .map({ totalScore in
-                return String(format: "%.3f", totalScore)
-            })
             .bind(to: totalScoreLabel.rx.text)
             .disposed(by: disposeBag)
         

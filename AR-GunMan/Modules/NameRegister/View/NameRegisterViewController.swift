@@ -47,9 +47,6 @@ class NameRegisterViewController: UIViewController {
             }).disposed(by: disposeBag)
 
         viewModel.totalScore
-            .map({ totalScore in
-                return "Score: \(String(format: "%.3f", totalScore))"
-            })
             .bind(to: totalScoreLabel.rx.text)
             .disposed(by: disposeBag)
         
