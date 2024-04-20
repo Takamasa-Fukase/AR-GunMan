@@ -64,11 +64,14 @@ class ResultViewModel: ViewModelType {
                 return (self?.useCase.getRanking() ?? Single.just([]))
                     .trackActivity(loadingTracker)
             })
-            .subscribe(onNext: { ranking in
-                rankingListRelay.accept(ranking)
-            }, onError: { [weak self] error in
-                self?.navigator.showErrorAlert(error)
-            }).disposed(by: disposeBag)
+            .subscribe(
+                onNext: { ranking in
+                    rankingListRelay.accept(ranking)
+                },
+                onError: { [weak self] error in
+                    self?.navigator.showErrorAlert(error)
+                }
+            ).disposed(by: disposeBag)
         
         input.replayButtonTapped
             .subscribe(onNext: { [weak self] _ in

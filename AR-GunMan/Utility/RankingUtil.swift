@@ -12,7 +12,8 @@ class RankingUtil {
     static func createTemporaryRankText(
         rankingList: [Ranking],
         score: Double
-    ) -> String {
+    ) -> String? {
+        guard !rankingList.isEmpty else { return nil }
         // スコア表示は1から始まるので＋1する
         let temporaryRankNumber = getTemporaryRankIndex(rankingList: rankingList, score: score)
         return "\(temporaryRankNumber) / \(rankingList.count)"

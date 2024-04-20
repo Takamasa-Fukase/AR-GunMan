@@ -13,16 +13,7 @@ class NameRegisterEventObserver {
     let onClose = PublishRelay<Void>()
 }
 
-class NameRegisterViewModel {
-    let rankText: Observable<String?>
-    let totalScore: Observable<String>
-    let isRegisterButtonEnabled: Observable<Bool>
-    let dismiss: Observable<Void>
-    let isRegistering: Observable<Bool>
-    let error: Observable<Error>
-    
-    private let disposeBag = DisposeBag()
-    
+class NameRegisterViewModel: ViewModelType {
     struct Input {
         let viewWillDisappear: Observable<Void>
         let nameTextFieldChanged: Observable<String>
@@ -30,71 +21,89 @@ class NameRegisterViewModel {
         let noButtonTapped: Observable<Void>
     }
     
-    struct Dependency {
-        let rankingRepository: RankingRepository
-        let totalScore: Double
-        let rankingListObservable: Observable<[Ranking]>
-        weak var eventObserver: NameRegisterEventObserver?
+    struct Output {
+        let rankText: Observable<String?>
+        let totalScore: Observable<String>
+        let isRegisterButtonEnabled: Observable<Bool>
+        let dismiss: Observable<Void>
+        let isRegistering: Observable<Bool>
     }
     
-    init(input: Input, dependency: Dependency) {
-        let rankTextRelay = BehaviorRelay<String?>(value: nil)
-        self.rankText = rankTextRelay.asObservable()
-        
-        self.totalScore = Observable.just(
-            "Score: \(String(format: "%.3f", dependency.totalScore))"
-        )
-        
-        self.isRegisterButtonEnabled = input.nameTextFieldChanged
-            .map({ element in
-                return !element.isEmpty
-            })
-        
+    struct State {}
+    
+    private let rankingRepository: RankingRepository
+    private let totalScore: Double
+    private let rankingListObservable: Observable<[Ranking]>
+    private weak var eventObserver: NameRegisterEventObserver?
+    
+    private let disposeBag = DisposeBag()
+    
+    init(
+        rankingRepository: RankingRepository,
+        totalScore: Double,
+        rankingListObservable: Observable<[Ranking]>,
+        eventObserver: NameRegisterEventObserver?
+    ) {
+        self.rankingRepository = rankingRepository
+        self.totalScore = totalScore
+        self.rankingListObservable = rankingListObservable
+        self.eventObserver = eventObserver
+    }
+    
+    func transform(input: Input) -> Output {
         let dismissRelay = PublishRelay<Void>()
-        self.dismiss = dismissRelay.asObservable()
-        
-        let isRegisteringRelay = BehaviorRelay<Bool>(value: false)
-        self.isRegistering = isRegisteringRelay.asObservable()
-        
-        let errorRelay = PublishRelay<Error>()
-        self.error = errorRelay.asObservable()
+        let registeringTracker = ObservableActivityTracker()
         
         input.viewWillDisappear
-            .subscribe(onNext: { _ in
-                dependency.eventObserver?.onClose.accept(Void())
-            }).disposed(by: disposeBag)
+            .bind(to: eventObserver?.onClose ?? PublishRelay())
+            .disposed(by: disposeBag)
         
         input.registerButtonTapped
             .withLatestFrom(input.nameTextFieldChanged)
-            .subscribe(onNext: { element in
-                Task { @MainActor in
-                    isRegisteringRelay.accept(true)
-                    do {
-                        let ranking = Ranking(score: dependency.totalScore, userName: element)
-                        try await dependency.rankingRepository.registerRanking(ranking)
-                        dependency.eventObserver?.onRegister.accept(ranking)
-                        dismissRelay.accept(Void())
-                    } catch {
-                        errorRelay.accept(error)
-                    }
-                    isRegisteringRelay.accept(false)
+            .flatMapLatest({ [weak self] userName in
+                let ranking = Ranking(score: self?.totalScore ?? 0.0, userName: userName)
+                return (self?.rankingRepository.registerRanking2(ranking) ?? Single.just(ranking))
+                    .trackActivity(registeringTracker)
+            })
+            .subscribe(
+                onNext: { [weak self] registeredRanking in
+                    self?.eventObserver?.onRegister.accept(registeredRanking)
+                    dismissRelay.accept(Void())
+                },
+                onError: { [weak self] error in
+                    // TODO: navigator経由でエラーアラートを表示
                 }
-            }).disposed(by: disposeBag)
+            ).disposed(by: disposeBag)
         
         input.noButtonTapped
             .subscribe(onNext: { _ in
                 dismissRelay.accept(Void())
             }).disposed(by: disposeBag)
         
-        dependency.rankingListObservable
+        let rankText = rankingListObservable
             .filter({ !$0.isEmpty })
-            .map({ rankingList in
+            .map({ [weak self] rankingList in
                 return RankingUtil.createTemporaryRankText(
                     rankingList: rankingList,
-                    score: dependency.totalScore
+                    score: self?.totalScore ?? 0.0
                 )
             })
-            .bind(to: rankTextRelay)
-            .disposed(by: disposeBag)
+        
+        let totalScore = Observable.just(
+            "Score: \(String(format: "%.3f", totalScore))"
+        )
+        
+        let isRegisterButtonEnabled = input.nameTextFieldChanged
+            .map({ element in
+                return !element.isEmpty
+            })
+        
+        return Output(
+            rankText: rankText,
+            totalScore: totalScore,
+            isRegisterButtonEnabled: isRegisterButtonEnabled,
+            dismiss: dismissRelay.asObservable(),
+            isRegistering: registeringTracker.asObservable()
+        )
     }
 }

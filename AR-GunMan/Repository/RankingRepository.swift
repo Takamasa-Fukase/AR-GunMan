@@ -56,7 +56,7 @@ class RankingRepository {
         }
     }
     
-    func registerRanking2(_ ranking: Ranking) -> Single<Void> {
+    func registerRanking2(_ ranking: Ranking) -> Single<Ranking> {
         // TODO: 何とかもう少し綺麗にしたい
         return Single.create { [weak self] observer in
             do {
@@ -69,7 +69,7 @@ class RankingRepository {
                             if let error = error {
                                 observer(.failure(error))
                             }else {
-                                observer(.success(Void()))
+                                observer(.success(ranking))
                             }
                         }
                 }else {
