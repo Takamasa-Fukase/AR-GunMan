@@ -31,7 +31,7 @@ class NameRegisterViewModel: ViewModelType {
     struct State {}
     
     private let navigator: NameRegisterNavigatorInterface
-    private let rankingRepository: RankingRepository
+    private let useCase: NameRegisterUseCase
     private let totalScore: Double
     private let rankingListObservable: Observable<[Ranking]>
     private weak var eventObserver: NameRegisterEventObserver?
@@ -40,13 +40,13 @@ class NameRegisterViewModel: ViewModelType {
     
     init(
         navigator: NameRegisterNavigatorInterface,
-        rankingRepository: RankingRepository,
+        useCase: NameRegisterUseCase,
         totalScore: Double,
         rankingListObservable: Observable<[Ranking]>,
         eventObserver: NameRegisterEventObserver?
     ) {
         self.navigator = navigator
-        self.rankingRepository = rankingRepository
+        self.useCase = useCase
         self.totalScore = totalScore
         self.rankingListObservable = rankingListObservable
         self.eventObserver = eventObserver
@@ -63,7 +63,7 @@ class NameRegisterViewModel: ViewModelType {
             .withLatestFrom(input.nameTextFieldChanged)
             .flatMapLatest({ [weak self] userName in
                 let ranking = Ranking(score: self?.totalScore ?? 0.0, userName: userName)
-                return (self?.rankingRepository.registerRanking2(ranking) ?? Single.just(ranking))
+                return (self?.useCase.registerRanking(ranking) ?? Single.just(ranking))
                     .trackActivity(registeringTracker)
             })
             .subscribe(

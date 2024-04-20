@@ -28,10 +28,10 @@ final class NameRegisterNavigator: NameRegisterNavigatorInterface {
         let vc = storyboard.instantiateInitialViewController() as! NameRegisterViewController
         vc.modalPresentationStyle = .overCurrentContext
         let navigator = NameRegisterNavigator(viewController: vc)
-        let rankingRepository = RankingRepository()
+        let useCase = NameRegisterUseCase(rankingRepository: RankingRepository())
         let viewModel = NameRegisterViewModel(
             navigator: navigator,
-            rankingRepository: rankingRepository,
+            useCase: useCase,
             totalScore: totalScore,
             rankingListObservable: rankingListObservable,
             eventObserver: eventObserver

@@ -23,18 +23,7 @@ class RankingRepository {
                 return try? queryDocSnapshot.data(as: Ranking.self)
             })
     }
-    
-    func registerRanking(_ ranking: Ranking) async throws {
-        let data = try JSONEncoder().encode(ranking)
-        guard let dict = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed) as? [String: Any] else {
-            throw NSError()
-        }
-        try await firestoreDataBase
-            .collection("worldRanking")
-            .document()
-            .setData(dict)
-    }
-    
+
     func getRanking2() -> Single<[Ranking]> {
         return Single.create { [weak self] observer in
             self?.firestoreDataBase
@@ -56,7 +45,7 @@ class RankingRepository {
         }
     }
     
-    func registerRanking2(_ ranking: Ranking) -> Single<Ranking> {
+    func registerRanking(_ ranking: Ranking) -> Single<Ranking> {
         // TODO: 何とかもう少し綺麗にしたい
         return Single.create { [weak self] observer in
             do {
