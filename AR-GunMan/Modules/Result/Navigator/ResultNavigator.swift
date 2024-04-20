@@ -49,18 +49,11 @@ final class ResultNavigator: ResultNavigatorInterface {
         rankingListObservable: Observable<[Ranking]>,
         eventObserver: NameRegisterEventObserver
     ) {
-        let storyboard: UIStoryboard = UIStoryboard(name: "NameRegisterViewController", bundle: nil)
-        let vc = storyboard.instantiateInitialViewController() as! NameRegisterViewController
-        vc.modalPresentationStyle = .overCurrentContext
-        // TODO: Dependencyを廃止して直がきにする
-        let dependency = NameRegisterViewModel.Dependency(
-            // TODO: RepoをUseCaseに差し替える
-            rankingRepository: RankingRepository(),
+        let vc = NameRegisterNavigator.assembleModules(
             totalScore: totalScore,
             rankingListObservable: rankingListObservable,
             eventObserver: eventObserver
         )
-        vc.vmDependency = dependency
         viewController.presentPanModal(vc)
     }
     

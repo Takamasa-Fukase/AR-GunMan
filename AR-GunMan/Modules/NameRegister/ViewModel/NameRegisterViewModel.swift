@@ -25,12 +25,12 @@ class NameRegisterViewModel: ViewModelType {
         let rankText: Observable<String?>
         let totalScore: Observable<String>
         let isRegisterButtonEnabled: Observable<Bool>
-        let dismiss: Observable<Void>
         let isRegistering: Observable<Bool>
     }
     
     struct State {}
     
+    private let navigator: NameRegisterNavigatorInterface
     private let rankingRepository: RankingRepository
     private let totalScore: Double
     private let rankingListObservable: Observable<[Ranking]>
@@ -39,11 +39,13 @@ class NameRegisterViewModel: ViewModelType {
     private let disposeBag = DisposeBag()
     
     init(
+        navigator: NameRegisterNavigatorInterface,
         rankingRepository: RankingRepository,
         totalScore: Double,
         rankingListObservable: Observable<[Ranking]>,
         eventObserver: NameRegisterEventObserver?
     ) {
+        self.navigator = navigator
         self.rankingRepository = rankingRepository
         self.totalScore = totalScore
         self.rankingListObservable = rankingListObservable
@@ -51,7 +53,6 @@ class NameRegisterViewModel: ViewModelType {
     }
     
     func transform(input: Input) -> Output {
-        let dismissRelay = PublishRelay<Void>()
         let registeringTracker = ObservableActivityTracker()
         
         input.viewWillDisappear
@@ -68,16 +69,16 @@ class NameRegisterViewModel: ViewModelType {
             .subscribe(
                 onNext: { [weak self] registeredRanking in
                     self?.eventObserver?.onRegister.accept(registeredRanking)
-                    dismissRelay.accept(Void())
+                    self?.navigator.dismiss()
                 },
                 onError: { [weak self] error in
-                    // TODO: navigator経由でエラーアラートを表示
+                    self?.navigator.showErrorAlert(error)
                 }
             ).disposed(by: disposeBag)
         
         input.noButtonTapped
-            .subscribe(onNext: { _ in
-                dismissRelay.accept(Void())
+            .subscribe(onNext: { [weak self] _ in
+                self?.navigator.dismiss()
             }).disposed(by: disposeBag)
         
         let rankText = rankingListObservable
@@ -102,7 +103,6 @@ class NameRegisterViewModel: ViewModelType {
             rankText: rankText,
             totalScore: totalScore,
             isRegisterButtonEnabled: isRegisterButtonEnabled,
-            dismiss: dismissRelay.asObservable(),
             isRegistering: registeringTracker.asObservable()
         )
     }
