@@ -7,7 +7,7 @@
 
 import RxSwift
 
-class ResultUseCase {
+final class ResultUseCase {
     private let rankingRepository: RankingRepository
     private let replayRepository: ReplayRepository
     

@@ -15,7 +15,7 @@ protocol TopNavigatorInterface: AnyObject {
     func showCameraPermissionDescriptionAlert()
 }
 
-class TopNavigator: TopNavigatorInterface {
+final class TopNavigator: TopNavigatorInterface {
     private unowned let viewController: UIViewController
     
     init(viewController: UIViewController) {

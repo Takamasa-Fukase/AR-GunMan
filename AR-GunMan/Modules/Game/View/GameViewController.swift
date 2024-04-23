@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class GameViewController: UIViewController {
+final class GameViewController: UIViewController {
     var viewModel: GameViewModel!
     let disposeBag = DisposeBag()
     
@@ -24,7 +24,6 @@ class GameViewController: UIViewController {
         
         setupUI()
         
-        //MARK: - input
         let input = GameViewModel.Input(
             viewDidLoad: Observable.just(Void()),
             viewWillAppear: rx.viewWillAppear,
@@ -32,9 +31,9 @@ class GameViewController: UIViewController {
             viewWillDisappear: rx.viewWillDisappear,
             weaponChangeButtonTapped: switchWeaponButton.rx.tap.asObservable()
         )
+        
         let output = viewModel.transform(input: input)
         
-        //MARK: - output
         output.sightImage
             .bind(to: sightImageView.rx.image)
             .disposed(by: disposeBag)

@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class TutorialViewController: UIViewController {
+final class TutorialViewController: UIViewController {
     var viewModel: TutorialViewModel!
     let disposeBag = DisposeBag()
     
@@ -23,10 +23,10 @@ class TutorialViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // MARK: - input
         let horizontalPageIndexObservable = scrollView.rx.didScroll
             .map({ [weak self] _ in self?.scrollView.horizontalPageIndex ?? 0})
             .asObservable()
+        
         let input = TutorialViewModel.Input(
             viewDidLoad: Observable.just(Void()),
             viewDidDisappear: rx.viewDidDisappear,
@@ -34,7 +34,6 @@ class TutorialViewController: UIViewController {
             bottomButtonTapped: bottomButton.rx.tap.asObservable()
         )
         
-        // MARK: - output
         let output = viewModel.transform(input: input)
         
         output.setupUI

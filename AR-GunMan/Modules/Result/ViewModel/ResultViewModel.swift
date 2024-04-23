@@ -8,7 +8,7 @@
 import RxSwift
 import RxCocoa
 
-class ResultViewModel: ViewModelType {
+final class ResultViewModel: ViewModelType {
     struct Input {
         let viewWillAppear: Observable<Void>
         let replayButtonTapped: Observable<Void>
@@ -23,9 +23,7 @@ class ResultViewModel: ViewModelType {
         let isLoading: Observable<Bool>
     }
     
-    struct State {
-        
-    }
+    struct State {}
 
     private let useCase: ResultUseCase
     private let navigator: ResultNavigatorInterface

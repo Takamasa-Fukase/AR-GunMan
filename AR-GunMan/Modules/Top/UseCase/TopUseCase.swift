@@ -7,7 +7,7 @@
 
 import RxSwift
 
-class TopUseCase {
+final class TopUseCase {
     private let avPermissionRepository: AVPermissionRepository
     private let replayRepository: ReplayRepository
     

@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class RankingViewModel: ViewModelType {
+final class RankingViewModel: ViewModelType {
     struct Input {
         let viewWillAppear: Observable<Void>
         let closeButtonTapped: Observable<Void>

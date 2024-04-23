@@ -10,9 +10,7 @@ import RxSwift
 import RxCocoa
 import SafariServices
 
-class SettingsViewController: UIViewController {
-    
-    //MARK: - Properties
+final class SettingsViewController: UIViewController {
     var viewModel: SettingsViewModel!
     let disposeBag = DisposeBag()
 
@@ -21,7 +19,6 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var developerContactButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
     
-    //MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         

@@ -17,7 +17,7 @@ protocol GameNavigatorInterface: AnyObject {
     func showResultView(totalScore: Double)
 }
 
-class GameNavigator: GameNavigatorInterface {
+final class GameNavigator: GameNavigatorInterface {
     private unowned let viewController: UIViewController
     
     init(viewController: UIViewController) {

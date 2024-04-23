@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class SettingsViewModel: ViewModelType {
+final class SettingsViewModel: ViewModelType {
     struct Input {
         let worldRankingButtonTapped: Observable<Void>
         let privacyPolicyButtonTapped: Observable<Void>
@@ -17,13 +17,9 @@ class SettingsViewModel: ViewModelType {
         let backButtonTapped: Observable<Void>
     }
     
-    struct Output {
-        
-    }
+    struct Output {}
     
-    struct State {
-        
-    }
+    struct State {}
     
     private let navigator: SettingsNavigatorInterface
     private let disposeBag = DisposeBag()

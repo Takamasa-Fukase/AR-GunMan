@@ -15,7 +15,7 @@ protocol SettingsNavigatorInterface: AnyObject {
     func dismiss()
 }
 
-class SettingsNavigator: SettingsNavigatorInterface {
+final class SettingsNavigator: SettingsNavigatorInterface {
     private unowned let viewController: UIViewController
     
     init(viewController: UIViewController) {

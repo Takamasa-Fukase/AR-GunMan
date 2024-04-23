@@ -7,7 +7,7 @@
 
 import RxSwift
 
-class RankingUseCase {
+final class RankingUseCase {
     private let rankingRepository: RankingRepository
     
     init(rankingRepository: RankingRepository) {

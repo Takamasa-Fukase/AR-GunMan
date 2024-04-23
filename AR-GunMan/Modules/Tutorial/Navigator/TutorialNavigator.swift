@@ -11,7 +11,7 @@ protocol TutorialNavigatorInterface: AnyObject {
     func dismiss()
 }
 
-class TutorialNavigator: TutorialNavigatorInterface {
+final class TutorialNavigator: TutorialNavigatorInterface {
     private weak var viewController: UIViewController?
     
     init(viewController: UIViewController) {

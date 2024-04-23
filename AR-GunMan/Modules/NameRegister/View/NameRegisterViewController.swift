@@ -10,8 +10,7 @@ import RxSwift
 import RxCocoa
 import PKHUD
 
-class NameRegisterViewController: UIViewController {
-    //MARK: - Properties
+final class NameRegisterViewController: UIViewController {
     let disposeBag = DisposeBag()
     var viewModel: NameRegisterViewModel!
     
@@ -23,14 +22,12 @@ class NameRegisterViewController: UIViewController {
     @IBOutlet weak var registerButton: UIButton!
     @IBOutlet weak var registerButtonSpinner: UIActivityIndicatorView!
     
-    //MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
         nameTextField.delegate = self
         rankLabel.text = nil
         
-        // input
         let input = NameRegisterViewModel.Input(
             viewWillDisappear: rx.viewWillDisappear,
             nameTextFieldChanged: nameTextField.rx.text.orEmpty.asObservable(),
@@ -38,7 +35,6 @@ class NameRegisterViewController: UIViewController {
             noButtonTapped: noButton.rx.tap.asObservable()
         )
 
-        // output
         let output = viewModel.transform(input: input)
         
         output.rankText

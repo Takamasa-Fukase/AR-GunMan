@@ -9,14 +9,11 @@
 import UIKit
 import FSPagerView
 
-class WeaponChangeCell: FSPagerViewCell {
-    
+final class WeaponChangeCell: FSPagerViewCell {
     @IBOutlet weak var weaponImageView: UIImageView!
     @IBOutlet weak var commingSoonLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
-
 }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RankingCell: UITableViewCell {
+final class RankingCell: UITableViewCell {
     
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
@@ -15,12 +15,10 @@ class RankingCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        // Configure the view for the selected state
     }
     
     func configureCell(ranking: Ranking, row: Int) {

@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class TopViewController: UIViewController {
+final class TopViewController: UIViewController {
     var viewModel: TopViewModel!
     let disposeBag = DisposeBag()
     
@@ -24,7 +24,6 @@ class TopViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //MARK: - input
         let input = TopViewModel.Input(
             viewDidAppear: rx.viewDidAppear,
             startButtonTapped: startButton.rx.tap.asObservable(),
@@ -32,7 +31,6 @@ class TopViewController: UIViewController {
             howToPlayButtonTapped: howToPlayButton.rx.tap.asObservable()
         )
         
-        //MARK: - output
         let output = viewModel.transform(input: input)
         
         output.startButtonImage

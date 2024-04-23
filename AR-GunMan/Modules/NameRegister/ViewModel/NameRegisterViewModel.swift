@@ -8,12 +8,12 @@
 import RxSwift
 import RxCocoa
 
-class NameRegisterEventObserver {
+final class NameRegisterEventObserver {
     let onRegister = PublishRelay<Ranking>()
     let onClose = PublishRelay<Void>()
 }
 
-class NameRegisterViewModel: ViewModelType {
+final class NameRegisterViewModel: ViewModelType {
     struct Input {
         let viewWillDisappear: Observable<Void>
         let nameTextFieldChanged: Observable<String>

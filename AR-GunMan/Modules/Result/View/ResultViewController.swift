@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class ResultViewController: UIViewController {
+final class ResultViewController: UIViewController {
     var viewModel: ResultViewModel!
     let disposeBag = DisposeBag()
     
@@ -25,14 +25,12 @@ class ResultViewController: UIViewController {
         
         setupUI()
         
-        // MARK: - input
         let input = ResultViewModel.Input(
             viewWillAppear: rx.viewWillAppear,
             replayButtonTapped: replayButton.rx.tap.asObservable(),
             toHomeButtonTapped: homeButton.rx.tap.asObservable()
         )
         
-        // MARK: - output
         let output = viewModel.transform(input: input)
         
         output.rankingList

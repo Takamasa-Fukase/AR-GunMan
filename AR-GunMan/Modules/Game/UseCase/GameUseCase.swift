@@ -7,7 +7,7 @@
 
 import RxSwift
 
-class GameUseCase {
+final class GameUseCase {
     private let coreMotionRepository: CoreMotionRepository
     private let tutorialRepository: TutorialRepository
     

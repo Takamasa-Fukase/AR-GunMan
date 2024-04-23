@@ -11,9 +11,7 @@ import FSPagerView
 import RxSwift
 import RxCocoa
 
-class WeaponChangeViewController: UIViewController {
-       
-    //MARK: - Properties
+final class WeaponChangeViewController: UIViewController {
     var viewModel: WeaponChangeViewModel!
     let itemSelectedRelay = PublishRelay<Int>()
     
@@ -24,18 +22,15 @@ class WeaponChangeViewController: UIViewController {
         }
     }
     
-    //MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupFSPagerView()
         
-        // MARK: - input
         let input = WeaponChangeViewModel.Input(
             itemSelected: itemSelectedRelay.asObservable()
         )
                 
-        // MARK: - output
         _ = viewModel.transform(input: input)
     }
 

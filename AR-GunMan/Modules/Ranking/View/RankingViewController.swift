@@ -9,9 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class RankingViewController: UIViewController {
-    
-    //MARK: - Properties
+final class RankingViewController: UIViewController {
     var viewModel: RankingViewModel!
     let disposeBag = DisposeBag()
 
@@ -19,20 +17,17 @@ class RankingViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     
-    //MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupTapDismiss()
         setupTableView()
         
-        // input
         let input = RankingViewModel.Input(
             viewWillAppear: rx.viewWillAppear,
             closeButtonTapped: closeButton.rx.tap.asObservable()
         )
         
-        // output
         let output = viewModel.transform(input: input)
         
         output.rankingList
