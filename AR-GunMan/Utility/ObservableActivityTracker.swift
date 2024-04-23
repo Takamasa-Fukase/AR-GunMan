@@ -8,7 +8,7 @@
 import RxSwift
 import RxCocoa
 
-class ObservableActivityTracker: ObservableConvertibleType {
+final class ObservableActivityTracker: ObservableConvertibleType {
     typealias Element = Bool
     
     private let isLoading = BehaviorRelay<Bool>(value: false)

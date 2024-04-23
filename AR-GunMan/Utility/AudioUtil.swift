@@ -8,8 +8,7 @@
 import Foundation
 import AVFoundation
 
-class AudioUtil {
-    
+final class AudioUtil {
     static var audioPlayers: [Sounds: AVAudioPlayer] = [:]
     
     static func playSound(of sound: Sounds) {

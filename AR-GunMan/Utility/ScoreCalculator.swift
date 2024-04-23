@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ScoreCalculator {
+final class ScoreCalculator {
     static func getTotalScore(currentScore: Double,
                               weaponType: WeaponType) -> Double {
         let totalScore = min(currentScore + weaponType.hitPoint, 100.0)

@@ -15,7 +15,7 @@ extension UserDefaults {
         static let needsReplay = "needsReplay"
     }
 
-    class var isTutorialAlreadySeen: Bool {
+    static var isTutorialAlreadySeen: Bool {
         get {
             return defaults.bool(forKey: Keys.isTutorialAlreadySeen)
         }
@@ -24,7 +24,7 @@ extension UserDefaults {
         }
     }
     
-    class var needsReplay: Bool {
+    static var needsReplay: Bool {
         get {
             return defaults.bool(forKey: Keys.needsReplay)
         }

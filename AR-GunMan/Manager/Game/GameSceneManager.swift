@@ -15,7 +15,7 @@ protocol GameSceneManagerDelegate: AnyObject {
     func injectSceneView(_ sceneView: UIView)
 }
 
-class GameSceneManager: NSObject {
+final class GameSceneManager: NSObject {
     var targetHit: Observable<Void> {
         return targetHitRelay.asObservable()
     }

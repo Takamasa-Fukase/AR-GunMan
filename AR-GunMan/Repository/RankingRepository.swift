@@ -10,7 +10,7 @@ import Firebase
 import RxSwift
 import FirebaseFirestoreSwift
 
-class RankingRepository {
+final class RankingRepository {
     private let firestoreDataBase = Firestore.firestore()
     
     func getRanking() -> Single<[Ranking]> {

@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class TopConst {
+final class TopConst {
     private static let targetIcon = UIImage(systemName: "target")
     private static let targetIconShot = UIImage(named: "bulletsHole")
     

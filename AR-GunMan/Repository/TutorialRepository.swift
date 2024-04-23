@@ -7,7 +7,7 @@
 
 import RxSwift
 
-class TutorialRepository {
+final class TutorialRepository {
     func getIsTutorialSeen() -> Observable<Bool> {
         return Observable.just(UserDefaults.isTutorialAlreadySeen)
     }

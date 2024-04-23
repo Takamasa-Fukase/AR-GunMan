@@ -9,8 +9,7 @@ import Foundation
 import ARKit
 import SceneKit
 
-class SceneViewSettingUtil {
-    
+final class SceneViewSettingUtil {
     static func setupSceneView(_ sceneView: ARSCNView,
                                sceneViewDelegate: ARSCNViewDelegate,
                                physicContactDelegate: SCNPhysicsContactDelegate) {

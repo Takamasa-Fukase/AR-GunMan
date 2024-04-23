@@ -8,8 +8,7 @@
 import Foundation
 import SceneKit
 
-class SceneNodeUtil {
-    
+final class SceneNodeUtil {
     //常にカメラを向く制約
     static func addBillboardConstraint(_ node: SCNNode) {
         node.constraints = [SCNBillboardConstraint()]

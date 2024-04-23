@@ -7,7 +7,7 @@
 
 import Foundation
 
-class RankingUtil {
+final class RankingUtil {
     // 何位中/何位の表示テキストを作成
     static func createTemporaryRankText(
         rankingList: [Ranking],

@@ -8,8 +8,7 @@
 import Foundation
 import SceneKit
 
-class SceneAnimationUtil {
-    
+final class SceneAnimationUtil {
     //プレーヤーの銃を持つ手の緩やかな揺れを再現するアニメーション
     static func gunnerShakeAnimationNormal() -> SCNAction {
         //銃の先端が上に跳ね上がる回転のアニメーション

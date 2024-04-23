@@ -7,7 +7,7 @@
 
 import Foundation
 
-class SettingsConst {
+final class SettingsConst {
     static let developerContactURL = "https://www.instagram.com/takamasa_fukase/"
     static let privacyPolicyURL = "https://takamasa-fukase.github.io/AR-GunMan/PrivacyPolicy"
 }

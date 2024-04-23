@@ -16,7 +16,7 @@ extension UIFont {
         return UIFont(descriptor: newFontDescriptor, size: 0)
     }
     
-    static func attributedString(_ text: String,
+    func attributedString(_ text: String,
                           fontName: String,
                           fontSize: CGFloat,
                           textColor: UIColor) -> NSAttributedString {

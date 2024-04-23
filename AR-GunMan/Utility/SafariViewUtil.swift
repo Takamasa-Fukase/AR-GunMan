@@ -8,7 +8,7 @@
 import Foundation
 import SafariServices
 
-class SafariViewUtil {
+final class SafariViewUtil {
     static func openSafariView(urlString: String, vc: UIViewController?) {
         let safariVC = SFSafariViewController(url: NSURL(string: urlString)! as URL)
         vc?.present(safariVC, animated: true, completion: nil)

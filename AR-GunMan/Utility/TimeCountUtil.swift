@@ -8,8 +8,7 @@
 import Foundation
 import RxSwift
 
-class TimeCountUtil {
-    
+final class TimeCountUtil {
     //Rxタイマーを生成
     static func createRxTimer(_ interval: RxTimeInterval) -> Observable<Int> {
         return Observable<Int>.interval(interval, scheduler: MainScheduler.instance)

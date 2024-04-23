@@ -9,7 +9,7 @@ import CoreMotion
 import RxSwift
 import RxCocoa
 
-class CoreMotionRepository {
+final class CoreMotionRepository {
     private let coreMotionManager: CMMotionManager
     private let accelerationRelay = PublishRelay<CMAcceleration>()
     private let rotationRateRelay = PublishRelay<CMRotationRate>()
