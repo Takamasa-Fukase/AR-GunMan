@@ -17,47 +17,51 @@ class RankingViewModel: ViewModelType {
     
     struct Output {
         let rankingList: Observable<[Ranking]>
-        let dismiss: Observable<Void>
         let isLoading: Observable<Bool>
-        let error: Observable<Error>
     }
     
     struct State {}
     
     private let rankingRepository: RankingRepository
+    private let navigator: RankingNavigatorInterface
     private let disposeBag = DisposeBag()
     
     init(
-        rankingRepository: RankingRepository
+        rankingRepository: RankingRepository,
+        navigator: RankingNavigatorInterface
     ) {
         self.rankingRepository = rankingRepository
+        self.navigator = navigator
     }
 
     func transform(input: Input) -> Output {
         let rankingListRelay = BehaviorRelay<[Ranking]>(value: [])
-        let isLoadingRelay = BehaviorRelay<Bool>(value: false)
-        let errorRelay = PublishRelay<Error>()
+        let loadingTracker = ObservableActivityTracker()
 
         input.viewWillAppear
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 Task { @MainActor in
-                    isLoadingRelay.accept(true)
+//                    isLoadingRelay.accept(true)
                     do {
                         let rankingList = try await self.rankingRepository.getRanking()
                         rankingListRelay.accept(rankingList)
                     } catch {
-                        errorRelay.accept(error)
+//                        errorRelay.accept(error)
                     }
-                    isLoadingRelay.accept(false)
+//                    isLoadingRelay.accept(false)
                 }
+            }).disposed(by: disposeBag)
+        
+        input.closeButtonTapped
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.navigator.dismiss()
             }).disposed(by: disposeBag)
         
         return Output(
             rankingList: rankingListRelay.asObservable(),
-            dismiss: input.closeButtonTapped,
-            isLoading: isLoadingRelay.asObservable(),
-            error: errorRelay.asObservable()
+            isLoading: loadingTracker.asObservable()
         )
     }
 }

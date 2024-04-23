@@ -32,8 +32,7 @@ class SettingsNavigator: SettingsNavigatorInterface {
     }
     
     func showRanking() {
-        let storyboard: UIStoryboard = UIStoryboard(name: "RankingViewController", bundle: nil)
-        let vc = storyboard.instantiateInitialViewController() as! RankingViewController
+        let vc = RankingNavigator.assembleModules()
         viewController.presentPanModal(vc)
     }
     

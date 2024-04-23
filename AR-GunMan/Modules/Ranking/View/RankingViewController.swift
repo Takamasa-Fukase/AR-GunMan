@@ -26,8 +26,6 @@ class RankingViewController: UIViewController {
         setupTapDismiss()
         setupTableView()
         
-        viewModel = RankingViewModel(rankingRepository: RankingRepository())
-        
         // input
         let input = RankingViewModel.Input(
             viewWillAppear: rx.viewWillAppear,
@@ -44,13 +42,7 @@ class RankingViewController: UIViewController {
             )) { row, element, cell in
                 cell.configureCell(ranking: element, row: row)
             }.disposed(by: disposeBag)
-        
-        output.dismiss
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else {return}
-                self.dismiss(animated: true)
-            }).disposed(by: disposeBag)
-        
+
         output.isLoading
             .subscribe(onNext: { [weak self] element in
                 guard let self = self else { return }
@@ -59,12 +51,6 @@ class RankingViewController: UIViewController {
                 }else {
                     self.activityIndicatorView.stopAnimating()
                 }
-            }).disposed(by: disposeBag)
-        
-        output.error
-            .subscribe(onNext: { [weak self] element in
-                guard let self = self else { return }
-                self.present(UIAlertController.errorAlert(element), animated: true)
             }).disposed(by: disposeBag)
     }
     
