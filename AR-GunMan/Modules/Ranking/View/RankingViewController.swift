@@ -26,14 +26,18 @@ class RankingViewController: UIViewController {
         setupTapDismiss()
         setupTableView()
         
+        viewModel = RankingViewModel(rankingRepository: RankingRepository())
+        
         // input
-        viewModel = RankingViewModel(
-            input: .init(viewWillAppear: rx.viewWillAppear,
-                         closeButtonTapped: closeButton.rx.tap.asObservable()),
-            dependency: RankingRepository())
+        let input = RankingViewModel.Input(
+            viewWillAppear: rx.viewWillAppear,
+            closeButtonTapped: closeButton.rx.tap.asObservable()
+        )
         
         // output
-        viewModel.rankingList
+        let output = viewModel.transform(input: input)
+        
+        output.rankingList
             .bind(to: tableView.rx.items(
                 cellIdentifier: "RankingCell",
                 cellType: RankingCell.self
@@ -41,13 +45,13 @@ class RankingViewController: UIViewController {
                 cell.configureCell(ranking: element, row: row)
             }.disposed(by: disposeBag)
         
-        viewModel.dismiss
+        output.dismiss
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else {return}
                 self.dismiss(animated: true)
             }).disposed(by: disposeBag)
         
-        viewModel.isLoading
+        output.isLoading
             .subscribe(onNext: { [weak self] element in
                 guard let self = self else { return }
                 if element {
@@ -57,7 +61,7 @@ class RankingViewController: UIViewController {
                 }
             }).disposed(by: disposeBag)
         
-        viewModel.error
+        output.error
             .subscribe(onNext: { [weak self] element in
                 guard let self = self else { return }
                 self.present(UIAlertController.errorAlert(element), animated: true)

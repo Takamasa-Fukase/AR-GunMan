@@ -9,40 +9,42 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class RankingViewModel {
-    let rankingList: Observable<[Ranking]>
-    let dismiss: Observable<Void>
-    let isLoading: Observable<Bool>
-    let error: Observable<Error>
-    
-    private let disposeBag = DisposeBag()
-    
+class RankingViewModel: ViewModelType {
     struct Input {
         let viewWillAppear: Observable<Void>
         let closeButtonTapped: Observable<Void>
     }
     
-    init(input: Input,
-         dependency rankingRepository: RankingRepository) {        
-        //output
+    struct Output {
+        let rankingList: Observable<[Ranking]>
+        let dismiss: Observable<Void>
+        let isLoading: Observable<Bool>
+        let error: Observable<Error>
+    }
+    
+    struct State {}
+    
+    private let rankingRepository: RankingRepository
+    private let disposeBag = DisposeBag()
+    
+    init(
+        rankingRepository: RankingRepository
+    ) {
+        self.rankingRepository = rankingRepository
+    }
+
+    func transform(input: Input) -> Output {
         let rankingListRelay = BehaviorRelay<[Ranking]>(value: [])
-        self.rankingList = rankingListRelay.asObservable()
-        
-        let dismissRelay = PublishRelay<Void>()
-        self.dismiss = dismissRelay.asObservable()
-        
         let isLoadingRelay = BehaviorRelay<Bool>(value: false)
-        self.isLoading = isLoadingRelay.asObservable()
-        
         let errorRelay = PublishRelay<Error>()
-        self.error = errorRelay.asObservable()
 
         input.viewWillAppear
-            .subscribe(onNext: { _ in
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
                 Task { @MainActor in
                     isLoadingRelay.accept(true)
                     do {
-                        let rankingList = try await rankingRepository.getRanking()
+                        let rankingList = try await self.rankingRepository.getRanking()
                         rankingListRelay.accept(rankingList)
                     } catch {
                         errorRelay.accept(error)
@@ -51,11 +53,13 @@ class RankingViewModel {
                 }
             }).disposed(by: disposeBag)
         
-        input.closeButtonTapped
-            .bind(to: dismissRelay)
-            .disposed(by: disposeBag)
+        return Output(
+            rankingList: rankingListRelay.asObservable(),
+            dismiss: input.closeButtonTapped,
+            isLoading: isLoadingRelay.asObservable(),
+            error: errorRelay.asObservable()
+        )
     }
-    
 }
 
 
