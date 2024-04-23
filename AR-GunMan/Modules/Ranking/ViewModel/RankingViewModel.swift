@@ -22,15 +22,15 @@ class RankingViewModel: ViewModelType {
     
     struct State {}
     
-    private let rankingRepository: RankingRepository
+    private let useCase: RankingUseCase
     private let navigator: RankingNavigatorInterface
     private let disposeBag = DisposeBag()
     
     init(
-        rankingRepository: RankingRepository,
+        useCase: RankingUseCase,
         navigator: RankingNavigatorInterface
     ) {
-        self.rankingRepository = rankingRepository
+        self.useCase = useCase
         self.navigator = navigator
     }
 
@@ -39,20 +39,19 @@ class RankingViewModel: ViewModelType {
         let loadingTracker = ObservableActivityTracker()
 
         input.viewWillAppear
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                Task { @MainActor in
-//                    isLoadingRelay.accept(true)
-                    do {
-                        let rankingList = try await self.rankingRepository.getRanking()
-                        rankingListRelay.accept(rankingList)
-                    } catch {
-//                        errorRelay.accept(error)
-                    }
-//                    isLoadingRelay.accept(false)
+            .flatMapLatest({ [weak self] in
+                return (self?.useCase.getRanking() ?? Single.just([]))
+                    .trackActivity(loadingTracker)
+            })
+            .subscribe(
+                onNext: { ranking in
+                    rankingListRelay.accept(ranking)
+                },
+                onError: { [weak self] error in
+                    self?.navigator.showErrorAlert(error)
                 }
-            }).disposed(by: disposeBag)
-        
+            ).disposed(by: disposeBag)
+
         input.closeButtonTapped
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }

@@ -13,18 +13,7 @@ import FirebaseFirestoreSwift
 class RankingRepository {
     private let firestoreDataBase = Firestore.firestore()
     
-    func getRanking() async throws -> [Ranking] {
-        return try await firestoreDataBase
-            .collection("worldRanking")
-            .order(by: "score", descending: true)
-            .getDocuments()
-            .documents
-            .compactMap({ queryDocSnapshot in
-                return try? queryDocSnapshot.data(as: Ranking.self)
-            })
-    }
-
-    func getRanking2() -> Single<[Ranking]> {
+    func getRanking() -> Single<[Ranking]> {
         return Single.create { [weak self] observer in
             self?.firestoreDataBase
                 .collection("worldRanking")

@@ -17,7 +17,7 @@ class ResultUseCase {
     }
     
     func getRanking() -> Single<[Ranking]> {
-        return rankingRepository.getRanking2()
+        return rankingRepository.getRanking()
     }
     
     func setNeedsReplay(_ newValue: Bool) {
