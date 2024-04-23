@@ -11,11 +11,11 @@ import RxCocoa
 
 final class RankingViewController: UIViewController {
     var viewModel: RankingViewModel!
-    let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
 
-    @IBOutlet weak var closeButton: UIButton!
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
+    @IBOutlet private weak var closeButton: UIButton!
+    @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet private weak var activityIndicatorView: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +35,7 @@ final class RankingViewController: UIViewController {
                 cellIdentifier: "RankingCell",
                 cellType: RankingCell.self
             )) { row, element, cell in
-                cell.configureCell(ranking: element, row: row)
+                cell.configure(ranking: element, row: row)
             }.disposed(by: disposeBag)
 
         output.isLoading
@@ -56,7 +56,7 @@ final class RankingViewController: UIViewController {
         self.view.addGestureRecognizer(tapRecognizer)
     }
     
-    @objc func dismissByTap() {
+    @objc private func dismissByTap() {
         self.dismiss(animated: true)
     }
     

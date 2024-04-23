@@ -11,14 +11,14 @@ import RxCocoa
 
 final class TutorialViewController: UIViewController {
     var viewModel: TutorialViewModel!
-    let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
-    @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var firstImageView: UIImageView!
-    @IBOutlet weak var secondImageView: UIImageView!
-    @IBOutlet weak var thirdImageView: UIImageView!
-    @IBOutlet weak var pageControl: UIPageControl!
-    @IBOutlet weak var bottomButton: UIButton!
+    @IBOutlet private weak var scrollView: UIScrollView!
+    @IBOutlet private weak var firstImageView: UIImageView!
+    @IBOutlet private weak var secondImageView: UIImageView!
+    @IBOutlet private weak var thirdImageView: UIImageView!
+    @IBOutlet private weak var pageControl: UIPageControl!
+    @IBOutlet private weak var bottomButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()

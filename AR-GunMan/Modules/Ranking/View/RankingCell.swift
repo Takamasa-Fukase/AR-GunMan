@@ -9,9 +9,9 @@ import UIKit
 
 final class RankingCell: UITableViewCell {
     
-    @IBOutlet weak var scoreLabel: UILabel!
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var rankLabel: UILabel!
+    @IBOutlet private weak var scoreLabel: UILabel!
+    @IBOutlet private weak var nameLabel: UILabel!
+    @IBOutlet private weak var rankLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -21,7 +21,7 @@ final class RankingCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    func configureCell(ranking: Ranking, row: Int) {
+    func configure(ranking: Ranking, row: Int) {
         nameLabel.text = ranking.userName
         scoreLabel.text = String(format: "%.3f", ranking.score)
         rankLabel.text = String(row + 1)

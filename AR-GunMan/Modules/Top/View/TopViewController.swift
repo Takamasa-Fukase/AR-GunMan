@@ -12,14 +12,14 @@ import RxCocoa
 
 final class TopViewController: UIViewController {
     var viewModel: TopViewModel!
-    let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
-    @IBOutlet weak var startButton: UIButton!
-    @IBOutlet weak var settingsButton: UIButton!
-    @IBOutlet weak var howToPlayButton: UIButton!
-    @IBOutlet weak var startButtonIcon: UIImageView!
-    @IBOutlet weak var settingsButtonIcon: UIImageView!
-    @IBOutlet weak var howToPlayButtonIcon: UIImageView!
+    @IBOutlet private weak var startButton: UIButton!
+    @IBOutlet private weak var settingsButton: UIButton!
+    @IBOutlet private weak var howToPlayButton: UIButton!
+    @IBOutlet private weak var startButtonIcon: UIImageView!
+    @IBOutlet private weak var settingsButtonIcon: UIImageView!
+    @IBOutlet private weak var howToPlayButtonIcon: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()

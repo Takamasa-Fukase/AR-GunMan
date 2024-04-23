@@ -12,12 +12,12 @@ import RxCocoa
 
 final class GameViewController: UIViewController {
     var viewModel: GameViewModel!
-    let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
-    @IBOutlet weak var bulletsCountImageView: UIImageView!
-    @IBOutlet weak var sightImageView: UIImageView!
-    @IBOutlet weak var timeCountLabel: UILabel!
-    @IBOutlet weak var switchWeaponButton: UIButton!
+    @IBOutlet private weak var bulletsCountImageView: UIImageView!
+    @IBOutlet private weak var sightImageView: UIImageView!
+    @IBOutlet private weak var timeCountLabel: UILabel!
+    @IBOutlet private weak var switchWeaponButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()

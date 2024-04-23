@@ -10,10 +10,18 @@ import UIKit
 import FSPagerView
 
 final class WeaponChangeCell: FSPagerViewCell {
-    @IBOutlet weak var weaponImageView: UIImageView!
-    @IBOutlet weak var commingSoonLabel: UILabel!
+    @IBOutlet private weak var weaponImageView: UIImageView!
+    @IBOutlet private weak var commingSoonLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
+    }
+    
+    func configure(
+        weaponImage: UIImage?,
+        isHiddenCommingSoonLabel: Bool
+    ) {
+        weaponImageView.image = weaponImage
+        commingSoonLabel.isHidden = isHiddenCommingSoonLabel
     }
 }

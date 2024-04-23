@@ -12,12 +12,12 @@ import SafariServices
 
 final class SettingsViewController: UIViewController {
     var viewModel: SettingsViewModel!
-    let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
 
-    @IBOutlet weak var worldRankingButton: UIButton!
-    @IBOutlet weak var privacyPolicyButton: UIButton!
-    @IBOutlet weak var developerContactButton: UIButton!
-    @IBOutlet weak var backButton: UIButton!
+    @IBOutlet private weak var worldRankingButton: UIButton!
+    @IBOutlet private weak var privacyPolicyButton: UIButton!
+    @IBOutlet private weak var developerContactButton: UIButton!
+    @IBOutlet private weak var backButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()

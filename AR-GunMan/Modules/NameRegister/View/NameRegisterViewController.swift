@@ -11,16 +11,16 @@ import RxCocoa
 import PKHUD
 
 final class NameRegisterViewController: UIViewController {
-    let disposeBag = DisposeBag()
     var viewModel: NameRegisterViewModel!
+    private let disposeBag = DisposeBag()
     
-    @IBOutlet weak var rankLabel: UILabel!
-    @IBOutlet weak var rankLabelSpinner: UIActivityIndicatorView!
-    @IBOutlet weak var totalScoreLabel: UILabel!
-    @IBOutlet weak var nameTextField: UITextField!
-    @IBOutlet weak var noButton: UIButton!
-    @IBOutlet weak var registerButton: UIButton!
-    @IBOutlet weak var registerButtonSpinner: UIActivityIndicatorView!
+    @IBOutlet private weak var rankLabel: UILabel!
+    @IBOutlet private weak var rankLabelSpinner: UIActivityIndicatorView!
+    @IBOutlet private weak var totalScoreLabel: UILabel!
+    @IBOutlet private weak var nameTextField: UITextField!
+    @IBOutlet private weak var noButton: UIButton!
+    @IBOutlet private weak var registerButton: UIButton!
+    @IBOutlet private weak var registerButtonSpinner: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -98,7 +98,7 @@ extension NameRegisterViewController: UITextFieldDelegate {
         return true
     }
     
-    func keyboardWillShow(notification: Notification, textField: UIView?, view: UIView) {
+    private func keyboardWillShow(notification: Notification, textField: UIView?, view: UIView) {
         guard let rect = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue,
               let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval,
               let activeTextField = textField else {return}
@@ -122,7 +122,7 @@ extension NameRegisterViewController: UITextFieldDelegate {
         }
     }
     
-    func keyboardWillHide(notification: Notification, view: UIView) {
+    private func keyboardWillHide(notification: Notification, view: UIView) {
         guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval else {return}
         UIView.animate(withDuration: duration) {
             view.transform = CGAffineTransform.identity

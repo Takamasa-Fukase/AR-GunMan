@@ -11,14 +11,14 @@ import RxCocoa
 
 final class ResultViewController: UIViewController {
     var viewModel: ResultViewModel!
-    let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
-    @IBOutlet weak var totalScoreLabel: UILabel!
-    @IBOutlet weak var rightButtonsStackView: UIStackView!
-    @IBOutlet weak var replayButton: UIButton!
-    @IBOutlet weak var homeButton: UIButton!
+    @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet private weak var activityIndicatorView: UIActivityIndicatorView!
+    @IBOutlet private weak var totalScoreLabel: UILabel!
+    @IBOutlet private weak var rightButtonsStackView: UIStackView!
+    @IBOutlet private weak var replayButton: UIButton!
+    @IBOutlet private weak var homeButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +38,7 @@ final class ResultViewController: UIViewController {
                 cellIdentifier: "RankingCell",
                 cellType: RankingCell.self
             )) { row, element, cell in
-                cell.configureCell(ranking: element, row: row)
+                cell.configure(ranking: element, row: row)
             }.disposed(by: disposeBag)
         
         output.totalScore

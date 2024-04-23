@@ -13,9 +13,9 @@ import RxCocoa
 
 final class WeaponChangeViewController: UIViewController {
     var viewModel: WeaponChangeViewModel!
-    let itemSelectedRelay = PublishRelay<Int>()
+    private let itemSelectedRelay = PublishRelay<Int>()
     
-    @IBOutlet weak var pagerView: FSPagerView! {
+    @IBOutlet private weak var pagerView: FSPagerView! {
         didSet{
             let nib = UINib(nibName: "WeaponChangeCell", bundle: nil)
             self.pagerView.register(nib, forCellWithReuseIdentifier: "WeaponChangeCell")
@@ -65,8 +65,10 @@ extension WeaponChangeViewController: FSPagerViewDataSource {
         guard let cell = pagerView.dequeueReusableCell(withReuseIdentifier: "WeaponChangeCell", at: index) as? WeaponChangeCell else {
             return FSPagerViewCell()
         }
-        cell.weaponImageView.image = UIImage(named: WeaponType.allCases[index].name)
-        cell.commingSoonLabel.isHidden = true
+        cell.configure(
+            weaponImage: UIImage(named: WeaponType.allCases[index].name),
+            isHiddenCommingSoonLabel: true
+        )
         return cell
     }
 }
