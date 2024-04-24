@@ -93,6 +93,7 @@
 		86C5AB982AB8819C00CB161D /* UIAlertController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C5AB972AB8819C00CB161D /* UIAlertController+Extension.swift */; };
 		86F1573B2BD7B71E00BE979C /* RankingNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86F1573A2BD7B71E00BE979C /* RankingNavigator.swift */; };
 		86F1573D2BD7BBA200BE979C /* RankingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86F1573C2BD7BBA200BE979C /* RankingUseCase.swift */; };
+		86F1573F2BD9329600BE979C /* CustomError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86F1573E2BD9329600BE979C /* CustomError.swift */; };
 		BC1795BC2985D01300D91A19 /* ResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1795BB2985D01300D91A19 /* ResultViewModel.swift */; };
 		BC2B11672977F90C009F4DC4 /* UIScrollView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2B11662977F90C009F4DC4 /* UIScrollView+Extension.swift */; };
 		BC92C854297061FE00E49BD5 /* WeaponType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C853297061FE00E49BD5 /* WeaponType.swift */; };
@@ -222,6 +223,7 @@
 		86C5AB972AB8819C00CB161D /* UIAlertController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extension.swift"; sourceTree = "<group>"; };
 		86F1573A2BD7B71E00BE979C /* RankingNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingNavigator.swift; sourceTree = "<group>"; };
 		86F1573C2BD7BBA200BE979C /* RankingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingUseCase.swift; sourceTree = "<group>"; };
+		86F1573E2BD9329600BE979C /* CustomError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomError.swift; sourceTree = "<group>"; };
 		90D4D1AD42BB6A3A0192887F /* Pods-AR-GunManTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-GunManTests.release.xcconfig"; path = "Target Support Files/Pods-AR-GunManTests/Pods-AR-GunManTests.release.xcconfig"; sourceTree = "<group>"; };
 		BC1795BB2985D01300D91A19 /* ResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewModel.swift; sourceTree = "<group>"; };
 		BC2B11662977F90C009F4DC4 /* UIScrollView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Extension.swift"; sourceTree = "<group>"; };
@@ -351,6 +353,7 @@
 			children = (
 				59F79E5F256BE7B0006EC1B3 /* AR-GunMan.entitlements */,
 				59D2D4D82552DE66006DDB70 /* AppDelegate.swift */,
+				86F1573E2BD9329600BE979C /* CustomError.swift */,
 				5952F63E25EA0DE900ADB85B /* Extension */,
 				677DF1EC27A71086007512F6 /* Utility */,
 				5952F64A25EA104D00ADB85B /* Const */,
@@ -1113,6 +1116,7 @@
 				BC92C8602975A2A800E49BD5 /* UIViewController+RxLifeCycleEvents.swift in Sources */,
 				677DF1F427A7C100007512F6 /* Ranking.swift in Sources */,
 				BC92C85A297348D500E49BD5 /* ScoreCalculator.swift in Sources */,
+				86F1573F2BD9329600BE979C /* CustomError.swift in Sources */,
 				8613E28B2BB135B200BF4489 /* GameNavigator.swift in Sources */,
 				BC1795BC2985D01300D91A19 /* ResultViewModel.swift in Sources */,
 				8627F6322BCE454C0003D374 /* TutorialNavigator.swift in Sources */,
