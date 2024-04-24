@@ -20,7 +20,11 @@ final class RankingRepository {
                 .order(by: "score", descending: true)
                 .getDocuments { querySnapshot, error in
                     guard let querySnapshot = querySnapshot else {
-                        observer(.failure(error ?? NSError()))
+                        if let error = error {
+                            observer(.failure(CustomError.apiClientError(error)))
+                        }else {
+                            observer(.failure(CustomError.manualError(ErrorConst.unknownErrorMessage)))
+                        }
                         return
                     }
                     let rankings = querySnapshot
@@ -45,16 +49,17 @@ final class RankingRepository {
                         .document()
                         .setData(dict) { error in
                             if let error = error {
-                                observer(.failure(error))
+                                observer(.failure(CustomError.apiClientError(error)))
                             }else {
                                 observer(.success(ranking))
                             }
                         }
                 }else {
-                    observer(.failure(NSError()))
+                    observer(.failure(CustomError.manualError(ErrorConst.unknownErrorMessage)))
                 }
             } catch {
-                observer(.failure(error))
+                // TODO: ネットワークエラーとサーバーエラーのハンドリング
+                observer(.failure(CustomError.apiClientError(error)))
             }
             return Disposables.create()
         }
