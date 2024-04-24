@@ -23,7 +23,7 @@ enum CustomError: Error {
     private var title: String {
         switch self {
         default:
-            return "WHOOPS, SOMETHING WENT WRONG!"
+            return ErrorConst.defaultAlertTitle
         }
     }
     
@@ -39,7 +39,7 @@ enum CustomError: Error {
     private var alertActions: [UIAlertAction] {
         switch self {
         default:
-            return [.init(title: "CLOSE", style: .default)]
+            return [.init(title: ErrorConst.defaultCloseButtonTitle, style: .default)]
         }
     }
 }

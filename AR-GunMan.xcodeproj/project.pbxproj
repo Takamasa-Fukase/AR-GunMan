@@ -94,6 +94,7 @@
 		86F1573B2BD7B71E00BE979C /* RankingNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86F1573A2BD7B71E00BE979C /* RankingNavigator.swift */; };
 		86F1573D2BD7BBA200BE979C /* RankingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86F1573C2BD7BBA200BE979C /* RankingUseCase.swift */; };
 		86F1573F2BD9329600BE979C /* CustomError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86F1573E2BD9329600BE979C /* CustomError.swift */; };
+		86F157412BD93C1E00BE979C /* ErrorConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86F157402BD93C1E00BE979C /* ErrorConst.swift */; };
 		BC1795BC2985D01300D91A19 /* ResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1795BB2985D01300D91A19 /* ResultViewModel.swift */; };
 		BC2B11672977F90C009F4DC4 /* UIScrollView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2B11662977F90C009F4DC4 /* UIScrollView+Extension.swift */; };
 		BC92C854297061FE00E49BD5 /* WeaponType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C853297061FE00E49BD5 /* WeaponType.swift */; };
@@ -224,6 +225,7 @@
 		86F1573A2BD7B71E00BE979C /* RankingNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingNavigator.swift; sourceTree = "<group>"; };
 		86F1573C2BD7BBA200BE979C /* RankingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingUseCase.swift; sourceTree = "<group>"; };
 		86F1573E2BD9329600BE979C /* CustomError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomError.swift; sourceTree = "<group>"; };
+		86F157402BD93C1E00BE979C /* ErrorConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorConst.swift; sourceTree = "<group>"; };
 		90D4D1AD42BB6A3A0192887F /* Pods-AR-GunManTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-GunManTests.release.xcconfig"; path = "Target Support Files/Pods-AR-GunManTests/Pods-AR-GunManTests.release.xcconfig"; sourceTree = "<group>"; };
 		BC1795BB2985D01300D91A19 /* ResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewModel.swift; sourceTree = "<group>"; };
 		BC2B11662977F90C009F4DC4 /* UIScrollView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Extension.swift"; sourceTree = "<group>"; };
@@ -300,6 +302,7 @@
 				67DB2C5E27C17F4E00B8CB3C /* SettingsConst.swift */,
 				67DB2C6027C17F8D00B8CB3C /* GameConst.swift */,
 				BC92C853297061FE00E49BD5 /* WeaponType.swift */,
+				86F157402BD93C1E00BE979C /* ErrorConst.swift */,
 			);
 			path = Const;
 			sourceTree = "<group>";
@@ -1162,6 +1165,7 @@
 				86A6CB412BCC116D00628C61 /* TopNavigator.swift in Sources */,
 				8627F6372BCE86850003D374 /* WeaponChangeNavigator.swift in Sources */,
 				59D2D5932552E718006DDB70 /* WeaponChangeCell.swift in Sources */,
+				86F157412BD93C1E00BE979C /* ErrorConst.swift in Sources */,
 				67B685EF27AAD8B300D7F413 /* TimeCountUtil.swift in Sources */,
 				59940BAC2552FAA600EC20C1 /* NameRegisterViewController.swift in Sources */,
 				67200F5B27A0028700AD92EC /* SettingsViewModel.swift in Sources */,
