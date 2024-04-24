@@ -10,4 +10,5 @@ import Foundation
 final class ErrorConst {
     static let defaultAlertTitle = "WHOOPS, SOMETHING WENT WRONG!"
     static let defaultCloseButtonTitle = "CLOSE"
+    static let unknownErrorMessage = "UNKNOWN ERROR OCCURRED"
 }
