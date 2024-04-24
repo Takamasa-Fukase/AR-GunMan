@@ -7,7 +7,7 @@
 
 import RxSwift
 
-protocol NameRegisterNavigatorInterface: AnyObject {
+protocol NameRegisterNavigatorInterface {
     func dismiss()
     func showErrorAlert(_ error: Error)
 }

@@ -8,7 +8,7 @@
 import Foundation
 import PanModal
 
-protocol SettingsNavigatorInterface: AnyObject {
+protocol SettingsNavigatorInterface {
     func showRanking()
     func showPrivacyPolicy()
     func showDeveloperContact()

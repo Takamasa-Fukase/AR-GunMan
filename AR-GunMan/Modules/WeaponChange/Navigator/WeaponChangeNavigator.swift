@@ -7,7 +7,7 @@
 
 import RxCocoa
 
-protocol WeaponChangeNavigatorInterface: AnyObject {
+protocol WeaponChangeNavigatorInterface {
     func dismiss()
 }
 

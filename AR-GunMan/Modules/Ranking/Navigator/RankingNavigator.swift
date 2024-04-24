@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol RankingNavigatorInterface: AnyObject {
+protocol RankingNavigatorInterface {
     func dismiss()
     func showErrorAlert(_ error: Error)
 }

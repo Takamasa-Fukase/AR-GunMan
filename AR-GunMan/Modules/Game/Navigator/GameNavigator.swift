@@ -10,7 +10,7 @@ import PanModal
 import RxCocoa
 import CoreMotion
 
-protocol GameNavigatorInterface: AnyObject {
+protocol GameNavigatorInterface {
     func showTutorialView(tutorialEndObserver: PublishRelay<Void>)
     func showWeaponChangeView(weaponSelectObserver: PublishRelay<WeaponType>)
     func dismissWeaponChangeView()

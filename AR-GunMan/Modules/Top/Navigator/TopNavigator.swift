@@ -8,7 +8,7 @@
 import UIKit
 import PanModal
 
-protocol TopNavigatorInterface: AnyObject {
+protocol TopNavigatorInterface {
     func showGame()
     func showSettings()
     func showTutorial()

@@ -9,7 +9,7 @@ import UIKit
 import PanModal
 import RxSwift
 
-protocol ResultNavigatorInterface: AnyObject {
+protocol ResultNavigatorInterface {
     func showNameRegister(
         totalScore: Double,
         rankingListObservable: Observable<[Ranking]>,

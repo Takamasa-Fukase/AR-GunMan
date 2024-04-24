@@ -7,7 +7,7 @@
 
 import RxCocoa
 
-protocol TutorialNavigatorInterface: AnyObject {
+protocol TutorialNavigatorInterface {
     func dismiss()
 }
 
