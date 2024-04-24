@@ -9,11 +9,14 @@ import UIKit
 
 extension UIAlertController {
     static func errorAlert(_ error: Error) -> UIAlertController {
-        let alert = UIAlertController(title: "エラーが発生しました",
-                                      message: error.localizedDescription,
-                                      preferredStyle: .alert)
-        alert.addAction(.init(title: "閉じる",
-                              style: .default))
-        return alert
+        if let customError = error as? CustomError {
+            return customError.alert
+        }else {
+            let alert = UIAlertController(title: ErrorConst.defaultAlertTitle,
+                                          message: error.localizedDescription,
+                                          preferredStyle: .alert)
+            alert.addAction(.init(title: ErrorConst.defaultCloseButtonTitle, style: .default))
+            return alert
+        }
     }
 }
