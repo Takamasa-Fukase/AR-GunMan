@@ -22,12 +22,12 @@ final class RankingViewModel: ViewModelType {
     
     struct State {}
     
-    private let useCase: RankingUseCase
+    private let useCase: RankingUseCaseInterface
     private let navigator: RankingNavigatorInterface
     private let disposeBag = DisposeBag()
     
     init(
-        useCase: RankingUseCase,
+        useCase: RankingUseCaseInterface,
         navigator: RankingNavigatorInterface
     ) {
         self.useCase = useCase
