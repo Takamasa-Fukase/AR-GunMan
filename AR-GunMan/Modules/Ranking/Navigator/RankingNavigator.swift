@@ -22,7 +22,7 @@ final class RankingNavigator: RankingNavigatorInterface {
     static func assembleModules() -> UIViewController {
         let storyboard: UIStoryboard = UIStoryboard(name: "RankingViewController", bundle: nil)
         let vc = storyboard.instantiateInitialViewController() as! RankingViewController
-        let useCase = RankingUseCase(rankingRepository: RankingRepository())
+        let useCase = RankingUseCase(rankingRepository: MockRankingRepository())
         let navigator = RankingNavigator(viewController: vc)
         let viewModel = RankingViewModel(
             useCase: useCase,

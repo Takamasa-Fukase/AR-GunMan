@@ -10,7 +10,12 @@ import Firebase
 import RxSwift
 import FirebaseFirestoreSwift
 
-final class RankingRepository {
+protocol RankingRepositoryInterface {
+    func getRanking() -> Single<[Ranking]>
+    func registerRanking(_ ranking: Ranking) -> Single<Ranking>
+}
+
+final class RankingRepository: RankingRepositoryInterface {
     private let firestoreDataBase = Firestore.firestore()
     
     func getRanking() -> Single<[Ranking]> {
@@ -63,5 +68,28 @@ final class RankingRepository {
             }
             return Disposables.create()
         }
+    }
+}
+
+final class MockRankingRepository: RankingRepositoryInterface {
+    func getRanking() -> Single<[Ranking]> {
+        let dummyRankingList = Array<Int>(1...100).map({ index in
+            return Ranking(score: Double(101 - index), userName: "ダミーユーザー\(index)")
+        })
+        return Single.create(subscribe: { observer in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+                observer(.success(dummyRankingList))
+            })
+            return Disposables.create()
+        })
+    }
+    
+    func registerRanking(_ ranking: Ranking) -> Single<Ranking> {
+        return Single.create(subscribe: { observer in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+                return observer(.success(ranking))
+            })
+            return Disposables.create()
+        })
     }
 }

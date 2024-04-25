@@ -8,9 +8,9 @@
 import RxSwift
 
 final class NameRegisterUseCase {
-    private let rankingRepository: RankingRepository
+    private let rankingRepository: RankingRepositoryInterface
     
-    init(rankingRepository: RankingRepository) {
+    init(rankingRepository: RankingRepositoryInterface) {
         self.rankingRepository = rankingRepository
     }
     
