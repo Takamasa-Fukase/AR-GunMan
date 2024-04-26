@@ -8,12 +8,12 @@
 import RxSwift
 
 final class TopUseCase {
-    private let avPermissionRepository: AVPermissionRepository
-    private let replayRepository: ReplayRepository
+    private let avPermissionRepository: AVPermissionRepositoryInterface
+    private let replayRepository: ReplayRepositoryInterface
     
     init(
-        avPermissionRepository: AVPermissionRepository,
-        replayRepository: ReplayRepository
+        avPermissionRepository: AVPermissionRepositoryInterface,
+        replayRepository: ReplayRepositoryInterface
     ) {
         self.avPermissionRepository = avPermissionRepository
         self.replayRepository = replayRepository

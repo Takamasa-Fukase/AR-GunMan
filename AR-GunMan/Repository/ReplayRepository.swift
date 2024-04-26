@@ -7,7 +7,12 @@
 
 import RxSwift
 
-final class ReplayRepository {
+protocol ReplayRepositoryInterface {
+    func getNeedsReplay() -> Observable<Bool>
+    func setNeedsReplay(_ newValue: Bool)
+}
+
+final class ReplayRepository: ReplayRepositoryInterface {
     func getNeedsReplay() -> Observable<Bool> {
         return Observable.just(UserDefaults.needsReplay)
     }

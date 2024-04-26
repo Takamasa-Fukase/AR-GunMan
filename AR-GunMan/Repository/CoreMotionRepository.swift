@@ -9,7 +9,14 @@ import CoreMotion
 import RxSwift
 import RxCocoa
 
-final class CoreMotionRepository {
+protocol CoreMotionRepositoryInterface {
+    func startUpdate()
+    func stopUpdate()
+    func getAccelerationStream() -> Observable<CMAcceleration>
+    func getGyroStream() -> Observable<CMRotationRate>
+}
+
+final class CoreMotionRepository: CoreMotionRepositoryInterface {
     private let coreMotionManager: CMMotionManager
     private let accelerationRelay = PublishRelay<CMAcceleration>()
     private let rotationRateRelay = PublishRelay<CMRotationRate>()

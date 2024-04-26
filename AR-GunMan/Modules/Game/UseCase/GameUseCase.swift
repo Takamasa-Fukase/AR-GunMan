@@ -8,11 +8,13 @@
 import RxSwift
 
 final class GameUseCase {
-    private let coreMotionRepository: CoreMotionRepository
-    private let tutorialRepository: TutorialRepository
+    private let coreMotionRepository: CoreMotionRepositoryInterface
+    private let tutorialRepository: TutorialRepositoryInterface
     
-    init(coreMotionRepository: CoreMotionRepository,
-         tutorialRepository: TutorialRepository) {
+    init(
+        coreMotionRepository: CoreMotionRepositoryInterface,
+        tutorialRepository: TutorialRepositoryInterface
+    ) {
         self.coreMotionRepository = coreMotionRepository
         self.tutorialRepository = tutorialRepository
     }

@@ -9,9 +9,12 @@ import RxSwift
 
 final class ResultUseCase {
     private let rankingRepository: RankingRepositoryInterface
-    private let replayRepository: ReplayRepository
+    private let replayRepository: ReplayRepositoryInterface
     
-    init(rankingRepository: RankingRepositoryInterface, replayRepository: ReplayRepository) {
+    init(
+        rankingRepository: RankingRepositoryInterface,
+        replayRepository: ReplayRepositoryInterface
+    ) {
         self.rankingRepository = rankingRepository
         self.replayRepository = replayRepository
     }
