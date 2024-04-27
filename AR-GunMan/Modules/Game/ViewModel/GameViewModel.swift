@@ -74,12 +74,6 @@ final class GameViewModel: ViewModelType {
             }
         }
         
-        func countReloadingMotion() {
-            // リロードモーションの検知回数をインクリメントする
-            state.reloadingMotionDetectedCountRelay.accept(
-                state.reloadingMotionDetectedCountRelay.value + 1
-            )
-        }
         
         input.viewDidLoad
             .subscribe(onNext: { [weak self] _ in
@@ -195,7 +189,13 @@ final class GameViewModel: ViewModelType {
         Observable
             .combineLatest(
                 autoReloadRelay.asObservable(),
-                useCase.getReloadingMotionStream().map({ _ in countReloadingMotion() })
+                useCase.getReloadingMotionStream()
+                    .map({ _ in
+                        // リロードモーションの検知回数をインクリメントする
+                        state.reloadingMotionDetectedCountRelay.accept(
+                            state.reloadingMotionDetectedCountRelay.value + 1
+                        )
+                    })
             )
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
