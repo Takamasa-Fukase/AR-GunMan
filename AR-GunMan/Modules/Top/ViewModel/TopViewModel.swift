@@ -24,13 +24,13 @@ final class TopViewModel: ViewModelType {
     
     struct State {}
 
-    private let useCase: TopUseCase
+    private let useCase: TopUseCaseInterface
     private let navigator: TopNavigatorInterface
     
     private let disposeBag = DisposeBag()
     
     init(
-        useCase: TopUseCase,
+        useCase: TopUseCaseInterface,
         navigator: TopNavigatorInterface
     ) {
         self.useCase = useCase

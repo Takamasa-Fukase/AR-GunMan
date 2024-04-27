@@ -25,7 +25,7 @@ final class ResultViewModel: ViewModelType {
     
     struct State {}
 
-    private let useCase: ResultUseCase
+    private let useCase: ResultUseCaseInterface
     private let navigator: ResultNavigatorInterface
     private let totalScore: Double
     
@@ -33,7 +33,7 @@ final class ResultViewModel: ViewModelType {
     private let nameRegisterEventObserver = NameRegisterEventObserver()
     
     init(
-        useCase: ResultUseCase,
+        useCase: ResultUseCaseInterface,
         navigator: ResultNavigatorInterface,
         totalScore: Double
     ) {

@@ -7,7 +7,12 @@
 
 import RxSwift
 
-final class ResultUseCase {
+protocol ResultUseCaseInterface {
+    func getRanking() -> Single<[Ranking]>
+    func setNeedsReplay(_ newValue: Bool)
+}
+
+final class ResultUseCase: ResultUseCaseInterface {
     private let rankingRepository: RankingRepositoryInterface
     private let replayRepository: ReplayRepositoryInterface
     

@@ -7,7 +7,13 @@
 
 import RxSwift
 
-final class TopUseCase {
+protocol TopUseCaseInterface {
+    func getIsPermittedCameraAccess() -> Observable<Bool>
+    func getNeedsReplay() -> Observable<Bool>
+    func setNeedsReplay(_ newValue: Bool)
+}
+
+final class TopUseCase: TopUseCaseInterface {
     private let avPermissionRepository: AVPermissionRepositoryInterface
     private let replayRepository: ReplayRepositoryInterface
     

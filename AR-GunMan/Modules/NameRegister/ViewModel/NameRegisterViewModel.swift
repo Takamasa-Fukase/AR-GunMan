@@ -31,7 +31,7 @@ final class NameRegisterViewModel: ViewModelType {
     struct State {}
     
     private let navigator: NameRegisterNavigatorInterface
-    private let useCase: NameRegisterUseCase
+    private let useCase: NameRegisterUseCaseInterface
     private let totalScore: Double
     private let rankingListObservable: Observable<[Ranking]>
     private weak var eventObserver: NameRegisterEventObserver?
@@ -40,7 +40,7 @@ final class NameRegisterViewModel: ViewModelType {
     
     init(
         navigator: NameRegisterNavigatorInterface,
-        useCase: NameRegisterUseCase,
+        useCase: NameRegisterUseCaseInterface,
         totalScore: Double,
         rankingListObservable: Observable<[Ranking]>,
         eventObserver: NameRegisterEventObserver?

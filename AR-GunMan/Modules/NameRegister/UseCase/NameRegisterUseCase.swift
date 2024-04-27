@@ -7,7 +7,11 @@
 
 import RxSwift
 
-final class NameRegisterUseCase {
+protocol NameRegisterUseCaseInterface {
+    func registerRanking(_ ranking: Ranking) -> Single<Ranking>
+}
+
+final class NameRegisterUseCase: NameRegisterUseCaseInterface {
     private let rankingRepository: RankingRepositoryInterface
     
     init(rankingRepository: RankingRepositoryInterface) {

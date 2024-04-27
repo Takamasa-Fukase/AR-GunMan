@@ -33,7 +33,7 @@ final class GameViewModel: ViewModelType {
         var reloadingMotionDetectedCountRelay = BehaviorRelay<Int>(value: 0)
     }
     
-    private let useCase: GameUseCase
+    private let useCase: GameUseCaseInterface
     private let navigator: GameNavigatorInterface
     private let sceneManager: GameSceneManager
     
@@ -43,7 +43,7 @@ final class GameViewModel: ViewModelType {
     private let weaponSelectObserver = PublishRelay<WeaponType>()
     
     init(
-        useCase: GameUseCase,
+        useCase: GameUseCaseInterface,
         navigator: GameNavigatorInterface,
         sceneManager: GameSceneManager
     ) {

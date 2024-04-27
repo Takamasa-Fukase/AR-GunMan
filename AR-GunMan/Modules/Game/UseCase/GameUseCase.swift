@@ -7,7 +7,16 @@
 
 import RxSwift
 
-final class GameUseCase {
+protocol GameUseCaseInterface {
+    func startAccelerometerAndGyroUpdate()
+    func stopAccelerometerAndGyroUpdate()
+    func getFiringMotionStream() -> Observable<Void>
+    func getReloadingMotionStream() -> Observable<Void>
+    func getIsTutorialSeen() -> Observable<Bool>
+    func setTutorialAlreadySeen()
+}
+
+final class GameUseCase: GameUseCaseInterface {
     private let coreMotionRepository: CoreMotionRepositoryInterface
     private let tutorialRepository: TutorialRepositoryInterface
     
