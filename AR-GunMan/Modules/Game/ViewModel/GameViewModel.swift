@@ -58,23 +58,23 @@ final class GameViewModel: ViewModelType {
         
         var timerObservable: Disposable?
         let autoReloadRelay = BehaviorRelay<Void>(value: Void())
+        let startGameRelay = PublishRelay<Void>()
         
-        // 仮置き
-        // TODO: メモリリーク対策でweak selfを引数で受け取る様にしたが、別の方法がないか探りたい
-        func startGame(weakSelf: GameViewModel?) {
-            AudioUtil.playSound(of: .pistolSet)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                AudioUtil.playSound(of: .startWhistle)
-                timerObservable = TimeCountUtil.createRxTimer(.milliseconds(10))
-                    .map({ _ in
-                        TimeCountUtil.decreaseGameTimeCount(lastValue: state.timeCountRelay.value)
-                    })
-                    .bind(to: state.timeCountRelay)
-                weakSelf?.useCase.startAccelerometerAndGyroUpdate()
-            }
-        }
-        
-        
+        startGameRelay
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else {return}
+                AudioUtil.playSound(of: .pistolSet)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                    AudioUtil.playSound(of: .startWhistle)
+                    timerObservable = TimeCountUtil.createRxTimer(.milliseconds(10))
+                        .map({ _ in
+                            TimeCountUtil.decreaseGameTimeCount(lastValue: state.timeCountRelay.value)
+                        })
+                        .bind(to: state.timeCountRelay)
+                    self.useCase.startAccelerometerAndGyroUpdate()
+                }
+            }).disposed(by: disposeBag)
+
         input.viewDidLoad
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
@@ -101,7 +101,7 @@ final class GameViewModel: ViewModelType {
             .subscribe(onNext: { [weak self] isSeen in
                 guard let self = self else { return }
                 if isSeen {
-                    startGame(weakSelf: self)
+                    startGameRelay.accept(Void())
                 }else {
                     self.navigator.showTutorialView(
                         tutorialEndObserver: self.tutorialEndObserver
@@ -124,7 +124,7 @@ final class GameViewModel: ViewModelType {
             })
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
-                startGame(weakSelf: self)
+                startGameRelay.accept(Void())
             }).disposed(by: disposeBag)
         
         weaponSelectObserver
