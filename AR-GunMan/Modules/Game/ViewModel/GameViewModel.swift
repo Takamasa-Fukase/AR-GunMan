@@ -149,7 +149,7 @@ final class GameViewModel: ViewModelType {
                 guard let self = self else { return }
                 AudioUtil.playSound(of: .endWhistle)
                 timerObservable?.dispose()
-                useCase.stopAccelerometerAndGyroUpdate()
+                self.useCase.stopAccelerometerAndGyroUpdate()
                 self.navigator.dismissWeaponChangeView()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
                     AudioUtil.playSound(of: .rankingAppear)
