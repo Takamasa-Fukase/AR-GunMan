@@ -8,8 +8,8 @@
 import RxSwift
 
 protocol GameUseCaseInterface {
-    func startAccelerometerAndGyroUpdate()
-    func stopAccelerometerAndGyroUpdate()
+    func startAccelerometerAndGyroUpdate() -> Observable<Void>
+    func stopAccelerometerAndGyroUpdate() -> Observable<Void>
     func getFiringMotionStream() -> Observable<Void>
     func getReloadingMotionStream() -> Observable<Void>
     func getIsTutorialSeen() -> Observable<Bool>
@@ -28,12 +28,12 @@ final class GameUseCase: GameUseCaseInterface {
         self.tutorialRepository = tutorialRepository
     }
     
-    func startAccelerometerAndGyroUpdate() {
-        self.coreMotionRepository.startUpdate()
+    func startAccelerometerAndGyroUpdate() -> Observable<Void> {
+        return self.coreMotionRepository.startUpdate()
     }
     
-    func stopAccelerometerAndGyroUpdate() {
-        self.coreMotionRepository.stopUpdate()
+    func stopAccelerometerAndGyroUpdate() -> Observable<Void> {
+        return self.coreMotionRepository.stopUpdate()
     }
 
     func getFiringMotionStream() -> Observable<Void> {

@@ -31,6 +31,9 @@ final class GameViewModel: ViewModelType {
         let timeCountRelay = BehaviorRelay<Double>(value: GameConst.timeCount)
         var score: Double = 0
         var reloadingMotionDetectedCountRelay = BehaviorRelay<Int>(value: 0)
+        var isPlaying: Bool {
+            return timeCountRelay.value < GameConst.timeCount && timeCountRelay.value <= 0
+        }
     }
     
     private let useCase: GameUseCaseInterface
@@ -61,6 +64,9 @@ final class GameViewModel: ViewModelType {
         let startGameRelay = PublishRelay<Void>()
         
         startGameRelay
+            .flatMapLatest({ [unowned self] in
+                return self.useCase.startAccelerometerAndGyroUpdate()
+            })
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else {return}
                 AudioUtil.playSound(of: .pistolSet)
@@ -71,7 +77,6 @@ final class GameViewModel: ViewModelType {
                             TimeCountUtil.decreaseGameTimeCount(lastValue: state.timeCountRelay.value)
                         })
                         .bind(to: state.timeCountRelay)
-                    self.useCase.startAccelerometerAndGyroUpdate()
                 }
             }).disposed(by: disposeBag)
 
@@ -145,11 +150,13 @@ final class GameViewModel: ViewModelType {
         
         state.timeCountRelay
             .filter({$0 <= 0})
+            .flatMapLatest({ [unowned self] _ in
+                return self.useCase.stopAccelerometerAndGyroUpdate()
+            })
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 AudioUtil.playSound(of: .endWhistle)
                 timerObservable?.dispose()
-                self.useCase.stopAccelerometerAndGyroUpdate()
                 self.navigator.dismissWeaponChangeView()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
                     AudioUtil.playSound(of: .rankingAppear)
@@ -167,6 +174,7 @@ final class GameViewModel: ViewModelType {
             }).disposed(by: disposeBag)
         
         useCase.getFiringMotionStream()
+            .filter({ _ in state.isPlaying })
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 guard self.canFire(bulletsCount: state.bulletsCountRelay.value) else {
@@ -213,7 +221,7 @@ final class GameViewModel: ViewModelType {
             }).disposed(by: disposeBag)
         
         state.reloadingMotionDetectedCountRelay
-            .filter({ $0 == 20 })
+            .filter({ $0 == 20 && state.isPlaying })
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 self.sceneManager.changeTargetsToTaimeisan()

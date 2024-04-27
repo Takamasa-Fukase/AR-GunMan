@@ -10,8 +10,8 @@ import RxSwift
 import RxCocoa
 
 protocol CoreMotionRepositoryInterface {
-    func startUpdate()
-    func stopUpdate()
+    func startUpdate() -> Observable<Void>
+    func stopUpdate() -> Observable<Void>
     func getAccelerationStream() -> Observable<CMAcceleration>
     func getGyroStream() -> Observable<CMRotationRate>
 }
@@ -25,7 +25,7 @@ final class CoreMotionRepository: CoreMotionRepositoryInterface {
         self.coreMotionManager = coreMotionManager
     }
 
-    func startUpdate() {
+    func startUpdate() -> Observable<Void> {
         if !coreMotionManager.isAccelerometerActive {
             coreMotionManager.accelerometerUpdateInterval = 0.2
             coreMotionManager.startAccelerometerUpdates(to: OperationQueue.current!) {
@@ -44,11 +44,13 @@ final class CoreMotionRepository: CoreMotionRepositoryInterface {
                 )
             }
         }
+        return Observable.just(Void())
     }
     
-    func stopUpdate() {
+    func stopUpdate() -> Observable<Void> {
         coreMotionManager.stopAccelerometerUpdates()
         coreMotionManager.stopGyroUpdates()
+        return Observable.just(Void())
     }
     
     func getAccelerationStream() -> Observable<CMAcceleration> {
