@@ -115,6 +115,7 @@ final class GameViewModel: ViewModelType {
             }).disposed(by: disposeBag)
         
         input.weaponChangeButtonTapped
+            .filter({ _ in state.isPlaying })
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 self.navigator.showWeaponChangeView(
