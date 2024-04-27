@@ -9,7 +9,7 @@ import RxSwift
 
 protocol ReplayRepositoryInterface {
     func getNeedsReplay() -> Observable<Bool>
-    func setNeedsReplay(_ newValue: Bool)
+    func setNeedsReplay(_ newValue: Bool) -> Observable<Void>
 }
 
 final class ReplayRepository: ReplayRepositoryInterface {
@@ -17,7 +17,8 @@ final class ReplayRepository: ReplayRepositoryInterface {
         return Observable.just(UserDefaults.needsReplay)
     }
     
-    func setNeedsReplay(_ newValue: Bool) {
+    func setNeedsReplay(_ newValue: Bool) -> Observable<Void> {
         UserDefaults.needsReplay = newValue
+        return Observable.just(Void())
     }
 }

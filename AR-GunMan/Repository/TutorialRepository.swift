@@ -9,7 +9,7 @@ import RxSwift
 
 protocol TutorialRepositoryInterface {
     func getIsTutorialSeen() -> Observable<Bool>
-    func setTutorialAlreadySeen()
+    func setTutorialAlreadySeen() -> Observable<Void>
 }
 
 final class TutorialRepository: TutorialRepositoryInterface {
@@ -17,7 +17,8 @@ final class TutorialRepository: TutorialRepositoryInterface {
         return Observable.just(UserDefaults.isTutorialAlreadySeen)
     }
     
-    func setTutorialAlreadySeen() {
+    func setTutorialAlreadySeen() -> Observable<Void> {
         UserDefaults.isTutorialAlreadySeen = true
+        return Observable.just(Void())
     }
 }

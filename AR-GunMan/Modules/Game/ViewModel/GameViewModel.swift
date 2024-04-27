@@ -124,10 +124,12 @@ final class GameViewModel: ViewModelType {
             }).disposed(by: disposeBag)
         
         tutorialEndObserver
+            .flatMapLatest({ [unowned self] in
+                // チュートリアル通過フラグをセットする
+                return self.useCase.setTutorialAlreadySeen()
+            })
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
-                // チュートリアル通過フラグをセットする
-                self.useCase.setTutorialAlreadySeen()
                 startGame(weakSelf: self)
             }).disposed(by: disposeBag)
         

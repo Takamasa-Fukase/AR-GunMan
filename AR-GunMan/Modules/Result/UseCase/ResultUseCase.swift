@@ -9,7 +9,7 @@ import RxSwift
 
 protocol ResultUseCaseInterface {
     func getRanking() -> Single<[Ranking]>
-    func setNeedsReplay(_ newValue: Bool)
+    func setNeedsReplay(_ newValue: Bool) -> Observable<Void>
 }
 
 final class ResultUseCase: ResultUseCaseInterface {
@@ -28,7 +28,7 @@ final class ResultUseCase: ResultUseCaseInterface {
         return rankingRepository.getRanking()
     }
     
-    func setNeedsReplay(_ newValue: Bool) {
+    func setNeedsReplay(_ newValue: Bool) -> Observable<Void> {
         return replayRepository.setNeedsReplay(newValue)
     }
 }

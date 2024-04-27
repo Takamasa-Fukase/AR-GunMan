@@ -13,7 +13,7 @@ protocol GameUseCaseInterface {
     func getFiringMotionStream() -> Observable<Void>
     func getReloadingMotionStream() -> Observable<Void>
     func getIsTutorialSeen() -> Observable<Bool>
-    func setTutorialAlreadySeen()
+    func setTutorialAlreadySeen() -> Observable<Void>
 }
 
 final class GameUseCase: GameUseCaseInterface {
@@ -66,8 +66,8 @@ final class GameUseCase: GameUseCaseInterface {
         return tutorialRepository.getIsTutorialSeen()
     }
     
-    func setTutorialAlreadySeen() {
-        tutorialRepository.setTutorialAlreadySeen()
+    func setTutorialAlreadySeen() -> Observable<Void> {
+        return tutorialRepository.setTutorialAlreadySeen()
     }
 
     private func getCompositeValue(x: Double, y: Double, z: Double) -> Double {

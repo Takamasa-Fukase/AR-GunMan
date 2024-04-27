@@ -72,9 +72,11 @@ final class ResultViewModel: ViewModelType {
             ).disposed(by: disposeBag)
         
         input.replayButtonTapped
+            .flatMapLatest({ [unowned self] in
+                return self.useCase.setNeedsReplay(true)
+            })
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
-                self.useCase.setNeedsReplay(true)
                 self.navigator.backToTop()
             }).disposed(by: disposeBag)
         
