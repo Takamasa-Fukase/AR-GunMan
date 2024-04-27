@@ -205,6 +205,7 @@ final class GameViewModel: ViewModelType {
                         )
                     })
             )
+            .filter({ _ in state.isPlaying })
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 guard self.canReload(bulletsCount: state.bulletsCountRelay.value,
