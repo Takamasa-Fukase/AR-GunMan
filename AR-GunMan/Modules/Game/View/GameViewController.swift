@@ -65,10 +65,3 @@ final class GameViewController: UIViewController {
         timeCountLabel.font = timeCountLabel.font.monospacedDigitFont
     }
 }
-
-//extension GameViewController: GameSceneManagerDelegate {
-//    func injectSceneView(_ sceneView: UIView) {
-//        sceneView.frame = self.view.frame
-//        self.view.insertSubview(sceneView, at: 0)
-//    }
-//}
