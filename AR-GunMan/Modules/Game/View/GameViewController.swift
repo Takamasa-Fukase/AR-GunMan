@@ -34,6 +34,13 @@ final class GameViewController: UIViewController {
         
         let output = viewModel.transform(input: input)
         
+        output.sceneView
+            .subscribe(onNext: { [weak self] sceneView in
+                guard let self = self else {return}
+                sceneView.frame = self.view.frame
+                self.view.insertSubview(sceneView, at: 0)
+            }).disposed(by: disposeBag)
+        
         output.sightImage
             .bind(to: sightImageView.rx.image)
             .disposed(by: disposeBag)
@@ -59,9 +66,9 @@ final class GameViewController: UIViewController {
     }
 }
 
-extension GameViewController: GameSceneManagerDelegate {
-    func injectSceneView(_ sceneView: UIView) {
-        sceneView.frame = self.view.frame
-        self.view.insertSubview(sceneView, at: 0)
-    }
-}
+//extension GameViewController: GameSceneManagerDelegate {
+//    func injectSceneView(_ sceneView: UIView) {
+//        sceneView.frame = self.view.frame
+//        self.view.insertSubview(sceneView, at: 0)
+//    }
+//}

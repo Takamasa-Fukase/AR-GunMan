@@ -1,50 +1,47 @@
 //
-//  GameSceneManager.swift
+//  GameSceneRepository.swift
 //  AR-GunMan
 //
-//  Created by ウルトラ深瀬 on 2022/02/02.
+//  Created by ウルトラ深瀬 on 3/5/24.
 //
-//
+
 import Foundation
 import ARKit
 import SceneKit
 import RxSwift
 import RxCocoa
 
-protocol GameSceneManagerDelegate: AnyObject {
-    func injectSceneView(_ sceneView: UIView)
+protocol GameSceneRepositoryInterface {
+    func getSceneView() -> Observable<UIView>
+    func startSession()
+    func pauseSession()
+    func showWeapon(_ type: WeaponType)
+    func fireWeapon()
+    func changeTargetsToTaimeisan()
+    func getTargetHitStream() -> Observable<Void>
 }
 
-final class GameSceneManager: NSObject {
-    var targetHit: Observable<Void> {
-        return targetHitRelay.asObservable()
-    }
-
+final class GameSceneRepository: NSObject, GameSceneRepositoryInterface {
     private let sceneView = ARSCNView()
-    private weak var delegate: GameSceneManagerDelegate?
     private let targetHitRelay = PublishRelay<Void>()
-
-    // - node
+    
     private var originalBulletNode = SCNNode()
     private var originalBazookaHitExplosionParticle = SCNParticleSystem()
     private var pistolParentNode = SCNNode()
     private var bazookaParentNode = SCNNode()
     private var currentWeapon: WeaponType = .pistol
 
-    // - nodeAnimation
     private var lastCameraPos = SCNVector3()
     private var isPlayerRunning = false
     private var lastPlayerStatus = false
     
-    //MARK: - Methods
-    init(delegate: GameSceneManagerDelegate?) {
+    override init() {
         super.init()
-        self.delegate = delegate
         setupSceneViewAndNodes()
     }
     
-    func injectSceneViewIntoVC() {
-        delegate?.injectSceneView(sceneView)
+    func getSceneView() -> Observable<UIView> {
+        return Observable.just(sceneView)
     }
     
     func startSession() {
@@ -55,13 +52,11 @@ final class GameSceneManager: NSObject {
         SceneViewSettingUtil.pauseSession(sceneView)
     }
     
-    //指定された武器を表示
     func showWeapon(_ type: WeaponType) {
         currentWeapon = type
         switchWeapon()
     }
     
-    //現在選択中の武器の発砲に関わるアニメーション処理などを実行
     func fireWeapon() {
         shootBullet()
         pistolNode().runAction(SceneAnimationUtil.shootingMotion())
@@ -80,29 +75,10 @@ final class GameSceneManager: NSObject {
         })
     }
     
-    func handlePlayerAnimation() {
-        //前回チェック時(0.2秒毎)からの端末の移動距離が15cm以上であれば走っていると判定し、武器を激しく揺らす
-        let currentPos = SceneNodeUtil.getCameraPosition(sceneView)
-        isPlayerRunning = SceneNodeUtil.isPlayerRunning(pos1: currentPos, pos2: lastCameraPos)
-                
-        if isPlayerRunning != lastPlayerStatus {
-            
-            pistolNode().removeAllActions()
-            //一度初期状態に戻す
-            pistolNode().position = SCNVector3(0.17, -0.197, -0.584)
-            pistolNode().eulerAngles = SCNVector3(-1.4382625, 1.3017014, -2.9517007)
-            
-            if isPlayerRunning {
-                pistolNode().runAction(SceneAnimationUtil.gunnerShakeAnimationRunning())
-            }else {
-                pistolNode().runAction(SceneAnimationUtil.gunnerShakeAnimationNormal())
-            }
-        }
-        lastCameraPos = SceneNodeUtil.getCameraPosition(sceneView)
-        lastPlayerStatus = isPlayerRunning
+    func getTargetHitStream() -> Observable<Void> {
+        return targetHitRelay.asObservable()
     }
     
-    //MARK: - Private Methods
     private func setupSceneViewAndNodes() {
         //SceneViewをセットアップ
         SceneViewSettingUtil.setupSceneView(sceneView, sceneViewDelegate: self, physicContactDelegate: self)
@@ -244,7 +220,7 @@ final class GameSceneManager: NSObject {
     }
 }
 
-extension GameSceneManager: ARSCNViewDelegate {
+extension GameSceneRepository: ARSCNViewDelegate {
     //常に更新され続けるdelegateメソッド
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         //現在表示中の武器をラップしている空のオブジェクトを常にカメラと同じPositionに移動させ続ける（それにより武器が常にFPS位置に保たれる）
@@ -252,7 +228,7 @@ extension GameSceneManager: ARSCNViewDelegate {
     }
 }
 
-extension GameSceneManager: SCNPhysicsContactDelegate {
+extension GameSceneRepository: SCNPhysicsContactDelegate {
     //衝突検知時に呼ばれる
     //MEMO: - このメソッド内でUIの更新を行いたい場合はmainThreadで行う
     func physicsWorld(_ world: SCNPhysicsWorld, didEnd contact: SCNPhysicsContact) {
@@ -268,3 +244,4 @@ extension GameSceneManager: SCNPhysicsContactDelegate {
         }
     }
 }
+

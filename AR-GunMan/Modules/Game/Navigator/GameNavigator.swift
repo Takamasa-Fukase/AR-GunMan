@@ -32,16 +32,16 @@ final class GameNavigator: GameNavigatorInterface {
         let coreMotionManager = CMMotionManager()
         let coreMotionRepository = CoreMotionRepository(coreMotionManager: coreMotionManager)
         let tutorialRepository = TutorialRepository()
+        let gameSceneRepository = GameSceneRepository()
         let useCase = GameUseCase(
             coreMotionRepository: coreMotionRepository,
-            tutorialRepository: tutorialRepository
+            tutorialRepository: tutorialRepository,
+            gameSceneRepository: gameSceneRepository
         )
         let navigator = GameNavigator(viewController: vc)
-        let sceneManager = GameSceneManager(delegate: vc)
         let viewModel = GameViewModel(
             useCase: useCase,
-            navigator: navigator,
-            sceneManager: sceneManager
+            navigator: navigator
         )
         vc.viewModel = viewModel
         return vc

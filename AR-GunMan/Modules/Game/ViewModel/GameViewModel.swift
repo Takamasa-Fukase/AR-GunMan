@@ -18,6 +18,7 @@ final class GameViewModel: ViewModelType {
     }
     
     struct Output {
+        let sceneView: Observable<UIView>
         let sightImage: Observable<UIImage?>
         let sightImageColor: Observable<UIColor>
         let timeCountText: Observable<String>
@@ -32,13 +33,12 @@ final class GameViewModel: ViewModelType {
         var score: Double = 0
         var reloadingMotionDetectedCountRelay = BehaviorRelay<Int>(value: 0)
         var isPlaying: Bool {
-            return timeCountRelay.value < GameConst.timeCount && timeCountRelay.value <= 0
+            return timeCountRelay.value < GameConst.timeCount && timeCountRelay.value > 0
         }
     }
     
     private let useCase: GameUseCaseInterface
     private let navigator: GameNavigatorInterface
-    private let sceneManager: GameSceneManager
     
     private let disposeBag = DisposeBag()
     // 遷移先画面から受け取る通知
@@ -47,12 +47,10 @@ final class GameViewModel: ViewModelType {
     
     init(
         useCase: GameUseCaseInterface,
-        navigator: GameNavigatorInterface,
-        sceneManager: GameSceneManager
+        navigator: GameNavigatorInterface
     ) {
         self.useCase = useCase
         self.navigator = navigator
-        self.sceneManager = sceneManager
     }
     
     func transform(input: Input) -> Output {
@@ -67,8 +65,7 @@ final class GameViewModel: ViewModelType {
             .flatMapLatest({ [unowned self] in
                 return self.useCase.startAccelerometerAndGyroUpdate()
             })
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else {return}
+            .subscribe(onNext: { _ in
                 AudioUtil.playSound(of: .pistolSet)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                     AudioUtil.playSound(of: .startWhistle)
@@ -80,22 +77,16 @@ final class GameViewModel: ViewModelType {
                 }
             }).disposed(by: disposeBag)
 
-        input.viewDidLoad
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                self.sceneManager.injectSceneViewIntoVC()
-            }).disposed(by: disposeBag)
-        
         input.viewWillAppear
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
-                self.sceneManager.startSession()
+                self.useCase.startSession()
             }).disposed(by: disposeBag)
         
         input.viewWillDisappear
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
-                self.sceneManager.pauseSession()
+                self.useCase.pauseSession()
             }).disposed(by: disposeBag)
         
         input.viewDidAppear
@@ -128,8 +119,7 @@ final class GameViewModel: ViewModelType {
                 // チュートリアル通過フラグをセットする
                 return self.useCase.setTutorialAlreadySeen()
             })
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
+            .subscribe(onNext: { _ in
                 startGameRelay.accept(Void())
             }).disposed(by: disposeBag)
         
@@ -146,7 +136,7 @@ final class GameViewModel: ViewModelType {
         state.weaponTypeRelay
             .subscribe(onNext: { [weak self] weaponType in
                 guard let self = self else { return }
-                self.sceneManager.showWeapon(weaponType)
+                self.useCase.showWeapon(weaponType)
             }).disposed(by: disposeBag)
         
         state.timeCountRelay
@@ -164,8 +154,8 @@ final class GameViewModel: ViewModelType {
                     self.navigator.showResultView(totalScore: state.score)
                 })
             }).disposed(by: disposeBag)
-        
-        sceneManager.targetHit
+
+        useCase.getTargetHitStream()
             .subscribe(onNext: { _ in
                 AudioUtil.playSound(of: state.weaponTypeRelay.value.hitSound)
                 state.score = ScoreCalculator.getTotalScore(
@@ -185,7 +175,7 @@ final class GameViewModel: ViewModelType {
                     return
                 }
                 AudioUtil.playSound(of: state.weaponTypeRelay.value.firingSound)
-                self.sceneManager.fireWeapon()
+                self.useCase.fireWeapon()
                 state.bulletsCountRelay.accept(
                     state.bulletsCountRelay.value - 1
                 )
@@ -226,7 +216,7 @@ final class GameViewModel: ViewModelType {
             .filter({ $0 == 20 && state.isPlaying })
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
-                self.sceneManager.changeTargetsToTaimeisan()
+                self.useCase.executeSecretEvent()
                 AudioUtil.playSound(of: .kyuiin)
             }).disposed(by: disposeBag)
         
@@ -244,6 +234,7 @@ final class GameViewModel: ViewModelType {
             .map({state.weaponTypeRelay.value.bulletsCountImage(at: $0)})
         
         return Output(
+            sceneView: useCase.getSceneView(),
             sightImage: sightImage,
             sightImageColor: sightImageColor,
             timeCountText: timeCountText,

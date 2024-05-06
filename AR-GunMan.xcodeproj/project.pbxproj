@@ -62,7 +62,6 @@
 		677DF1F127A7C096007512F6 /* RankingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 677DF1F027A7C096007512F6 /* RankingRepository.swift */; };
 		677DF1F427A7C100007512F6 /* Ranking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 677DF1F327A7C100007512F6 /* Ranking.swift */; };
 		67B685EF27AAD8B300D7F413 /* TimeCountUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B685EE27AAD8B300D7F413 /* TimeCountUtil.swift */; };
-		67B6860627AB0C9300D7F413 /* GameSceneManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B6860527AB0C9300D7F413 /* GameSceneManager.swift */; };
 		67DB2C5727BFD01900B8CB3C /* SceneNodeUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DB2C5627BFD01900B8CB3C /* SceneNodeUtil.swift */; };
 		67DB2C5927C10E8B00B8CB3C /* SceneAnimationUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DB2C5827C10E8B00B8CB3C /* SceneAnimationUtil.swift */; };
 		67DB2C5B27C17EBE00B8CB3C /* SoundConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DB2C5A27C17EBE00B8CB3C /* SoundConst.swift */; };
@@ -102,6 +101,7 @@
 		BC92C85E297420CD00E49BD5 /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C85D297420CD00E49BD5 /* UserDefaults+Extension.swift */; };
 		BC92C8602975A2A800E49BD5 /* UIViewController+RxLifeCycleEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C85F2975A2A800E49BD5 /* UIViewController+RxLifeCycleEvents.swift */; };
 		BCAB8A7A297C779C00F81E73 /* WeaponChangeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAB8A79297C779C00F81E73 /* WeaponChangeViewModel.swift */; };
+		BCB852AF2BE4F7FB0027F060 /* GameSceneRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB852AE2BE4F7FB0027F060 /* GameSceneRepository.swift */; };
 		BCD9675E2979E55400E33587 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD9675D2979E55400E33587 /* UIImageView+Extension.swift */; };
 		BCD96C03297C757600E33587 /* RankingViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BCD96C02297C757600E33587 /* RankingViewController.storyboard */; };
 		D54734259EA1C7BF11A28908 /* Pods_AR_GunMan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4280580740F2443B66781090 /* Pods_AR_GunMan.framework */; };
@@ -192,7 +192,6 @@
 		677DF1F027A7C096007512F6 /* RankingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingRepository.swift; sourceTree = "<group>"; };
 		677DF1F327A7C100007512F6 /* Ranking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ranking.swift; sourceTree = "<group>"; };
 		67B685EE27AAD8B300D7F413 /* TimeCountUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCountUtil.swift; sourceTree = "<group>"; };
-		67B6860527AB0C9300D7F413 /* GameSceneManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneManager.swift; sourceTree = "<group>"; };
 		67DB2C5627BFD01900B8CB3C /* SceneNodeUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneNodeUtil.swift; sourceTree = "<group>"; };
 		67DB2C5827C10E8B00B8CB3C /* SceneAnimationUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneAnimationUtil.swift; sourceTree = "<group>"; };
 		67DB2C5A27C17EBE00B8CB3C /* SoundConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundConst.swift; sourceTree = "<group>"; };
@@ -234,6 +233,7 @@
 		BC92C85D297420CD00E49BD5 /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
 		BC92C85F2975A2A800E49BD5 /* UIViewController+RxLifeCycleEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+RxLifeCycleEvents.swift"; sourceTree = "<group>"; };
 		BCAB8A79297C779C00F81E73 /* WeaponChangeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponChangeViewModel.swift; sourceTree = "<group>"; };
+		BCB852AE2BE4F7FB0027F060 /* GameSceneRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneRepository.swift; sourceTree = "<group>"; };
 		BCD9675D2979E55400E33587 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		BCD96C02297C757600E33587 /* RankingViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RankingViewController.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -362,7 +362,6 @@
 				5952F64A25EA104D00ADB85B /* Const */,
 				677DF1F227A7C0EE007512F6 /* Entity */,
 				677DF1EF27A7C07A007512F6 /* Repository */,
-				67B6860127AB0BF300D7F413 /* Manager */,
 				86A6CB212BCC0D9F00628C61 /* Modules */,
 				59D2D5462552E2CC006DDB70 /* Resources */,
 				59D2D5412552E24D006DDB70 /* art.scnassets */,
@@ -501,6 +500,7 @@
 				86594DCB2BCD75E100971D1A /* ReplayRepository.swift */,
 				8613E28C2BB1B0C600BF4489 /* CoreMotionRepository.swift */,
 				86594DC92BCD558E00971D1A /* AVPermissionRepository.swift */,
+				BCB852AE2BE4F7FB0027F060 /* GameSceneRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -511,22 +511,6 @@
 				677DF1F327A7C100007512F6 /* Ranking.swift */,
 			);
 			path = Entity;
-			sourceTree = "<group>";
-		};
-		67B6860127AB0BF300D7F413 /* Manager */ = {
-			isa = PBXGroup;
-			children = (
-				67B6860227AB0C0700D7F413 /* Game */,
-			);
-			path = Manager;
-			sourceTree = "<group>";
-		};
-		67B6860227AB0C0700D7F413 /* Game */ = {
-			isa = PBXGroup;
-			children = (
-				67B6860527AB0C9300D7F413 /* GameSceneManager.swift */,
-			);
-			path = Game;
 			sourceTree = "<group>";
 		};
 		8613E2892BB1357D00BF4489 /* Navigator */ = {
@@ -1126,6 +1110,7 @@
 				5921A208255D6A4E001D8C39 /* RankingCell.swift in Sources */,
 				677DF1F127A7C096007512F6 /* RankingRepository.swift in Sources */,
 				BCD9675E2979E55400E33587 /* UIImageView+Extension.swift in Sources */,
+				BCB852AF2BE4F7FB0027F060 /* GameSceneRepository.swift in Sources */,
 				BC92C854297061FE00E49BD5 /* WeaponType.swift in Sources */,
 				BC2B11672977F90C009F4DC4 /* UIScrollView+Extension.swift in Sources */,
 				8627F6392BD0A4280003D374 /* ResultNavigator.swift in Sources */,
@@ -1145,7 +1130,6 @@
 				86C421B82BB040C300EFD791 /* TutorialRepository.swift in Sources */,
 				67200F5527A000AC00AD92EC /* TutorialViewModel.swift in Sources */,
 				59D2D57B2552E536006DDB70 /* TopViewController.swift in Sources */,
-				67B6860627AB0C9300D7F413 /* GameSceneManager.swift in Sources */,
 				5952F62825E94D1000ADB85B /* TopViewModel.swift in Sources */,
 				59D2D4D92552DE66006DDB70 /* AppDelegate.swift in Sources */,
 				866675D4275215AF007CB4D6 /* UIViewController+Extension.swift in Sources */,
@@ -1339,10 +1323,8 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "AR-GunMan/AR-GunMan.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 37MFDT4LMQ;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 37MFDT4LMQ;
 				INFOPLIST_FILE = "AR-GunMan/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1352,7 +1334,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.takamasafuksae.AR-GunMan";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "AR-GunMan_Development";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1366,10 +1347,8 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "AR-GunMan/AR-GunMan.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 37MFDT4LMQ;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 37MFDT4LMQ;
 				INFOPLIST_FILE = "AR-GunMan/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1379,7 +1358,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.takamasafuksae.AR-GunMan";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "AR-GunMan_Development";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

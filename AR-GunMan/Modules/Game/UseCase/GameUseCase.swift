@@ -14,18 +14,28 @@ protocol GameUseCaseInterface {
     func getReloadingMotionStream() -> Observable<Void>
     func getIsTutorialSeen() -> Observable<Bool>
     func setTutorialAlreadySeen() -> Observable<Void>
+    func getSceneView() -> Observable<UIView>
+    func startSession()
+    func pauseSession()
+    func showWeapon(_ type: WeaponType)
+    func fireWeapon()
+    func executeSecretEvent()
+    func getTargetHitStream() -> Observable<Void>
 }
 
 final class GameUseCase: GameUseCaseInterface {
     private let coreMotionRepository: CoreMotionRepositoryInterface
     private let tutorialRepository: TutorialRepositoryInterface
+    private let gameSceneRepository: GameSceneRepositoryInterface
     
     init(
         coreMotionRepository: CoreMotionRepositoryInterface,
-        tutorialRepository: TutorialRepositoryInterface
+        tutorialRepository: TutorialRepositoryInterface,
+        gameSceneRepository: GameSceneRepositoryInterface
     ) {
         self.coreMotionRepository = coreMotionRepository
         self.tutorialRepository = tutorialRepository
+        self.gameSceneRepository = gameSceneRepository
     }
     
     func startAccelerometerAndGyroUpdate() -> Observable<Void> {
@@ -69,7 +79,35 @@ final class GameUseCase: GameUseCaseInterface {
     func setTutorialAlreadySeen() -> Observable<Void> {
         return tutorialRepository.setTutorialAlreadySeen()
     }
-
+    
+    func getSceneView() -> Observable<UIView> {
+        return gameSceneRepository.getSceneView()
+    }
+    
+    func startSession() {
+        gameSceneRepository.startSession()
+    }
+    
+    func pauseSession() {
+        gameSceneRepository.pauseSession()
+    }
+    
+    func showWeapon(_ type: WeaponType) {
+        gameSceneRepository.showWeapon(type)
+    }
+    
+    func fireWeapon() {
+        gameSceneRepository.fireWeapon()
+    }
+    
+    func executeSecretEvent() {
+        gameSceneRepository.changeTargetsToTaimeisan()
+    }
+    
+    func getTargetHitStream() -> Observable<Void> {
+        return gameSceneRepository.getTargetHitStream()
+    }
+    
     private func getCompositeValue(x: Double, y: Double, z: Double) -> Double {
         return (x * x) + (y * y) + (z * z)
     }
