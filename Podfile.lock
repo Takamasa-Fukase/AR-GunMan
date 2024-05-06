@@ -823,12 +823,12 @@ PODS:
   - PanModal (1.2.7)
   - PKHUD (5.3.0)
   - PromisesObjC (2.3.1)
-  - RxCocoa (6.5.0):
-    - RxRelay (= 6.5.0)
-    - RxSwift (= 6.5.0)
-  - RxRelay (6.5.0):
-    - RxSwift (= 6.5.0)
-  - RxSwift (6.5.0)
+  - RxCocoa (6.7.0):
+    - RxRelay (= 6.7.0)
+    - RxSwift (= 6.7.0)
+  - RxRelay (6.7.0):
+    - RxSwift (= 6.7.0)
+  - RxSwift (6.7.0)
   - SideMenu (6.5.0)
   - TextFieldEffects (1.6.0)
   - TransitionButton (0.5.3)
@@ -845,8 +845,8 @@ DEPENDENCIES:
   - LTMorphingLabel
   - PanModal
   - PKHUD
-  - RxCocoa
-  - RxSwift
+  - RxCocoa (~> 6.7.0)
+  - RxSwift (~> 6.7.0)
   - SideMenu
   - TextFieldEffects
   - TransitionButton
@@ -913,13 +913,13 @@ SPEC CHECKSUMS:
   PanModal: 3e16ead1a907fb06f4df3f13492fd00149fa4974
   PKHUD: 98f3e4bc904b9c916f1c5bb6d765365b5357291b
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
-  RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
-  RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
-  RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
+  RxCocoa: fb0aefb9e7229c8ab057acde714136d19117f102
+  RxRelay: 5d39f4d8da150ad47a71b9ce11915e3eae2a8f4d
+  RxSwift: 6ee35684dc3f7a63938758f4b7708199517dfa97
   SideMenu: f583187d21c5b1dd04c72002be544b555a2627a2
   TextFieldEffects: 529b8aff706fb40f82c41c780c0777941a893796
   TransitionButton: 36283346e17c64775a1b3bc3a7a72940a367de1f
 
-PODFILE CHECKSUM: a828d9bd04582da575661a6a078da3130a631b36
+PODFILE CHECKSUM: f5601083f03daa159a84a0eaa86f60675e665da7
 
 COCOAPODS: 1.15.2

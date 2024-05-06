@@ -19,8 +19,8 @@ target 'AR-GunMan' do
  pod 'SideMenu'
  pod 'TextFieldEffects'
  pod 'Gecco'
- pod 'RxSwift'
- pod 'RxCocoa'
+ pod 'RxSwift', '~> 6.7.0'
+ pod 'RxCocoa', '~> 6.7.0'
  pod 'PanModal'
 
   target 'AR-GunManTests' do
