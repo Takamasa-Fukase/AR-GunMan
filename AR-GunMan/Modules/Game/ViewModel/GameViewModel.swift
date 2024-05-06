@@ -63,18 +63,19 @@ final class GameViewModel: ViewModelType {
         
         startGameRelay
             .flatMapLatest({ [unowned self] in
+                AudioUtil.playSound(of: .pistolSet)
                 return self.useCase.startAccelerometerAndGyroUpdate()
             })
+            .flatMapLatest({ [unowned self] in
+                return self.useCase.awaitGameStartSignal()
+            })
             .subscribe(onNext: { _ in
-                AudioUtil.playSound(of: .pistolSet)
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                    AudioUtil.playSound(of: .startWhistle)
-                    timerObservable = TimeCountUtil.createRxTimer(.milliseconds(10))
-                        .map({ _ in
-                            TimeCountUtil.decreaseGameTimeCount(lastValue: state.timeCountRelay.value)
-                        })
-                        .bind(to: state.timeCountRelay)
-                }
+                AudioUtil.playSound(of: .startWhistle)
+                timerObservable = TimeCountUtil.createRxTimer(.milliseconds(10))
+                    .map({ _ in
+                        TimeCountUtil.decreaseGameTimeCount(lastValue: state.timeCountRelay.value)
+                    })
+                    .bind(to: state.timeCountRelay)
             }).disposed(by: disposeBag)
 
         input.viewWillAppear

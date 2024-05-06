@@ -17,6 +17,7 @@ protocol GameUseCaseInterface {
     func getSceneView() -> Observable<UIView>
     func startSession()
     func pauseSession()
+    func awaitGameStartSignal() -> Observable<Void>
     func showWeapon(_ type: WeaponType)
     func fireWeapon()
     func executeSecretEvent()
@@ -92,6 +93,10 @@ final class GameUseCase: GameUseCaseInterface {
         gameSceneRepository.pauseSession()
     }
     
+    func awaitGameStartSignal() -> Observable<Void> {
+        return gameSceneRepository.awaitGameStartSignal()
+    }
+
     func showWeapon(_ type: WeaponType) {
         gameSceneRepository.showWeapon(type)
     }
