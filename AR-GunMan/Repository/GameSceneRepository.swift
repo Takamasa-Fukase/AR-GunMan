@@ -16,6 +16,7 @@ protocol GameSceneRepositoryInterface {
     func startSession()
     func pauseSession()
     func awaitGameStartSignal() -> Observable<Void>
+    func awaitShowResultSignal() -> Observable<Void>
     func showWeapon(_ type: WeaponType)
     func fireWeapon()
     func changeTargetsToTaimeisan()
@@ -54,6 +55,12 @@ final class GameSceneRepository: NSObject, GameSceneRepositoryInterface {
     }
     
     func awaitGameStartSignal() -> Observable<Void> {
+        return Observable<Int>
+            .timer(.milliseconds(1500), scheduler: MainScheduler.instance)
+            .map({ _ in })
+    }
+    
+    func awaitShowResultSignal() -> Observable<Void> {
         return Observable<Int>
             .timer(.milliseconds(1500), scheduler: MainScheduler.instance)
             .map({ _ in })

@@ -143,17 +143,18 @@ final class GameViewModel: ViewModelType {
         state.timeCountRelay
             .filter({$0 <= 0})
             .flatMapLatest({ [unowned self] _ in
-                return self.useCase.stopAccelerometerAndGyroUpdate()
-            })
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
                 AudioUtil.playSound(of: .endWhistle)
                 timerObservable?.dispose()
                 self.navigator.dismissWeaponChangeView()
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
-                    AudioUtil.playSound(of: .rankingAppear)
-                    self.navigator.showResultView(totalScore: state.score)
-                })
+                return self.useCase.stopAccelerometerAndGyroUpdate()
+            })
+            .flatMapLatest({ [unowned self] in
+                return self.useCase.awaitShowResultSignal()
+            })
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                AudioUtil.playSound(of: .rankingAppear)
+                self.navigator.showResultView(totalScore: state.score)
             }).disposed(by: disposeBag)
 
         useCase.getTargetHitStream()
