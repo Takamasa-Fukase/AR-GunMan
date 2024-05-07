@@ -35,6 +35,12 @@ final class GameViewModel: ViewModelType {
         var isPlaying: Bool {
             return timeCountRelay.value < GameConst.timeCount && timeCountRelay.value > 0
         }
+        var canFire: Bool {
+            return bulletsCountRelay.value > 0
+        }
+        var canReload: Bool {
+            return bulletsCountRelay.value <= 0 && !isWeaponReloading
+        }
     }
     
     private let useCase: GameUseCaseInterface
@@ -168,14 +174,17 @@ final class GameViewModel: ViewModelType {
         
         useCase.getFiringMotionStream()
             .filter({ _ in state.isPlaying })
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                guard self.canFire(bulletsCount: state.bulletsCountRelay.value) else {
+            .filter({ _ in
+                guard state.canFire else {
                     if state.weaponTypeRelay.value.reloadType == .manual {
                         AudioUtil.playSound(of: .pistolOutBullets)
                     }
-                    return
+                    return false
                 }
+                return true
+            })
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
                 AudioUtil.playSound(of: state.weaponTypeRelay.value.firingSound)
                 self.useCase.fireWeapon()
                 state.bulletsCountRelay.accept(
@@ -198,11 +207,8 @@ final class GameViewModel: ViewModelType {
                         )
                     })
             )
-            .filter({ [unowned self] _ in
-                return state.isPlaying && self.canReload(
-                    bulletsCount: state.bulletsCountRelay.value,
-                    isWeaponReloading: state.isWeaponReloading
-                )
+            .filter({ _ in
+                return state.isPlaying && state.canReload
             })
             .flatMapLatest({ [unowned self] _ in
                 state.isWeaponReloading = true
@@ -244,13 +250,5 @@ final class GameViewModel: ViewModelType {
             timeCountText: timeCountText,
             bulletsCountImage: bulletsCountImage
         )
-    }
-    
-    private func canFire(bulletsCount: Int) -> Bool {
-        return bulletsCount > 0
-    }
-    
-    private func canReload(bulletsCount: Int, isWeaponReloading: Bool) -> Bool {
-        return bulletsCount <= 0 && !isWeaponReloading
     }
 }
