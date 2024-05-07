@@ -19,6 +19,7 @@ protocol GameUseCaseInterface {
     func pauseSession()
     func awaitGameStartSignal() -> Observable<Void>
     func awaitShowResultSignal() -> Observable<Void>
+    func awaitWeaponReloadEnds(currentWeapon: WeaponType) -> Observable<Void>
     func showWeapon(_ type: WeaponType)
     func fireWeapon()
     func executeSecretEvent()
@@ -103,6 +104,10 @@ final class GameUseCase: GameUseCaseInterface {
 
     func awaitShowResultSignal() -> Observable<Void> {
         return delayRepository.awaitShowResultSignal()
+    }
+    
+    func awaitWeaponReloadEnds(currentWeapon: WeaponType) -> Observable<Void> {
+        return delayRepository.awaitWeaponReloadEnds(currentWeapon: currentWeapon)
     }
     
     func showWeapon(_ type: WeaponType) {

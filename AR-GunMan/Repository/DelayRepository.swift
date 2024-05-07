@@ -10,6 +10,7 @@ import RxSwift
 protocol DelayRepositoryInterface {
     func awaitGameStartSignal() -> Observable<Void>
     func awaitShowResultSignal() -> Observable<Void>
+    func awaitWeaponReloadEnds(currentWeapon: WeaponType) -> Observable<Void>
 }
 
 final class DelayRepository: DelayRepositoryInterface {
@@ -22,6 +23,12 @@ final class DelayRepository: DelayRepositoryInterface {
     func awaitShowResultSignal() -> Observable<Void> {
         return Observable<Int>
             .timer(.milliseconds(1500), scheduler: MainScheduler.instance)
+            .map({ _ in })
+    }
+    
+    func awaitWeaponReloadEnds(currentWeapon: WeaponType) -> Observable<Void> {
+        return Observable<Int>
+            .timer(.milliseconds(currentWeapon.reloadDurationMillisec), scheduler: MainScheduler.instance)
             .map({ _ in })
     }
 }

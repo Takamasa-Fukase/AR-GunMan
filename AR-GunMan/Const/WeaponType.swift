@@ -43,12 +43,12 @@ enum WeaponType: CaseIterable {
         }
     }
     
-    var reloadDuration: DispatchTime {
+    var reloadDurationMillisec: Int {
         switch self {
         case .pistol:
-            return .now()
+            return 0
         case .bazooka:
-            return .now() + 3.2
+            return 3200
         }
     }
     

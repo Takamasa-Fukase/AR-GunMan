@@ -198,20 +198,22 @@ final class GameViewModel: ViewModelType {
                         )
                     })
             )
-            .filter({ _ in state.isPlaying })
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                guard self.canReload(bulletsCount: state.bulletsCountRelay.value,
-                                     isWeaponReloading: state.isWeaponReloading) else { return }
+            .filter({ [unowned self] _ in
+                return state.isPlaying && self.canReload(
+                    bulletsCount: state.bulletsCountRelay.value,
+                    isWeaponReloading: state.isWeaponReloading
+                )
+            })
+            .flatMapLatest({ [unowned self] _ in
                 state.isWeaponReloading = true
                 AudioUtil.playSound(of: state.weaponTypeRelay.value.reloadingSound)
-                DispatchQueue.main.asyncAfter(deadline: state.weaponTypeRelay.value.reloadDuration,
-                                              execute: {
-                    state.bulletsCountRelay.accept(
-                        state.weaponTypeRelay.value.bulletsCapacity
-                    )
-                    state.isWeaponReloading = false
-                })
+                return self.useCase.awaitWeaponReloadEnds(currentWeapon: state.weaponTypeRelay.value)
+            })
+            .subscribe(onNext: { _ in
+                state.bulletsCountRelay.accept(
+                    state.weaponTypeRelay.value.bulletsCapacity
+                )
+                state.isWeaponReloading = false
             }).disposed(by: disposeBag)
         
         state.reloadingMotionDetectedCountRelay
