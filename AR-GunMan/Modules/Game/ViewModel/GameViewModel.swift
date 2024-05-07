@@ -131,6 +131,9 @@ final class GameViewModel: ViewModelType {
             }).disposed(by: disposeBag)
         
         weaponSelectObserver
+            .flatMapLatest({ [unowned self] weaponType in
+                return self.useCase.showWeapon(weaponType)
+            })
             .subscribe(onNext: { weaponType in
                 state.weaponTypeRelay.accept(weaponType)
                 AudioUtil.playSound(of: weaponType.weaponChangingSound)
@@ -138,12 +141,6 @@ final class GameViewModel: ViewModelType {
                     weaponType.bulletsCapacity
                 )
                 state.isWeaponReloading = false
-            }).disposed(by: disposeBag)
-        
-        state.weaponTypeRelay
-            .subscribe(onNext: { [weak self] weaponType in
-                guard let self = self else { return }
-                self.useCase.showWeapon(weaponType)
             }).disposed(by: disposeBag)
         
         state.timeCountRelay

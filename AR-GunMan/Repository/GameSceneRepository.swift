@@ -15,7 +15,7 @@ protocol GameSceneRepositoryInterface {
     func getSceneView() -> Observable<UIView>
     func startSession()
     func pauseSession()
-    func showWeapon(_ type: WeaponType)
+    func showWeapon(_ type: WeaponType) -> Observable<WeaponType>
     func fireWeapon() -> Observable<Void>
     func changeTargetsToTaimeisan()
     func getTargetHitStream() -> Observable<Void>
@@ -52,9 +52,10 @@ final class GameSceneRepository: NSObject, GameSceneRepositoryInterface {
         SceneViewSettingUtil.pauseSession(sceneView)
     }
 
-    func showWeapon(_ type: WeaponType) {
+    func showWeapon(_ type: WeaponType) -> Observable<WeaponType> {
         currentWeapon = type
         switchWeapon()
+        return Observable.just(type)
     }
     
     func fireWeapon() -> Observable<Void> {
