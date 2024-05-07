@@ -8,27 +8,16 @@
 import RxSwift
 
 protocol TimerRepositoryInterface {
-    func awaitGameStartSignal() -> Observable<Void>
-    func awaitShowResultSignal() -> Observable<Void>
-    func awaitWeaponReloadEnds(currentWeapon: WeaponType) -> Observable<Void>
+    func getTimerStream(milliSec: Int, isRepeatd: Bool) -> Observable<Int>
 }
 
 final class TimerRepository: TimerRepositoryInterface {
-    func awaitGameStartSignal() -> Observable<Void> {
+    func getTimerStream(milliSec: Int, isRepeatd: Bool) -> Observable<Int> {
         return Observable<Int>
-            .timer(.milliseconds(1500), scheduler: MainScheduler.instance)
-            .map({ _ in })
-    }
-    
-    func awaitShowResultSignal() -> Observable<Void> {
-        return Observable<Int>
-            .timer(.milliseconds(1500), scheduler: MainScheduler.instance)
-            .map({ _ in })
-    }
-    
-    func awaitWeaponReloadEnds(currentWeapon: WeaponType) -> Observable<Void> {
-        return Observable<Int>
-            .timer(.milliseconds(currentWeapon.reloadDurationMillisec), scheduler: MainScheduler.instance)
-            .map({ _ in })
+            .timer(
+                .milliseconds(milliSec),
+                period: isRepeatd ? .milliseconds(milliSec) : nil,
+                scheduler: MainScheduler.instance
+            )
     }
 }

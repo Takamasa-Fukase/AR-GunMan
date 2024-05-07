@@ -99,15 +99,24 @@ final class GameUseCase: GameUseCaseInterface {
     }
     
     func awaitGameStartSignal() -> Observable<Void> {
-        return timerRepository.awaitGameStartSignal()
+        return timerRepository
+            .getTimerStream(milliSec: 1500, isRepeatd: false)
+            .map({ _ in })
     }
 
     func awaitShowResultSignal() -> Observable<Void> {
-        return timerRepository.awaitShowResultSignal()
+        return timerRepository
+            .getTimerStream(milliSec: 1500, isRepeatd: false)
+            .map({ _ in })
     }
     
     func awaitWeaponReloadEnds(currentWeapon: WeaponType) -> Observable<Void> {
-        return timerRepository.awaitWeaponReloadEnds(currentWeapon: currentWeapon)
+        return timerRepository
+            .getTimerStream(
+                milliSec: currentWeapon.reloadDurationMillisec,
+                isRepeatd: false
+            )
+            .map({ _ in })
     }
     
     func showWeapon(_ type: WeaponType) -> Observable<WeaponType> {
