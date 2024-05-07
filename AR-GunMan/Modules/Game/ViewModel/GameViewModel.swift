@@ -67,22 +67,19 @@ final class GameViewModel: ViewModelType {
         let autoReloadRelay = BehaviorRelay<Void>(value: Void())
         let startGameRelay = PublishRelay<Void>()
         
-        startGameRelay
+        timerObservable = startGameRelay
             .flatMapLatest({ [unowned self] in
-                AudioUtil.playSound(of: .pistolSet)
                 return self.useCase.startAccelerometerAndGyroUpdate()
             })
             .flatMapLatest({ [unowned self] in
+                AudioUtil.playSound(of: .pistolSet)
                 return self.useCase.awaitGameStartSignal()
             })
-            .subscribe(onNext: { _ in
+            .flatMapLatest({ [unowned self] in
                 AudioUtil.playSound(of: .startWhistle)
-                timerObservable = TimeCountUtil.createRxTimer(.milliseconds(10))
-                    .map({ _ in
-                        TimeCountUtil.decreaseGameTimeCount(lastValue: state.timeCountRelay.value)
-                    })
-                    .bind(to: state.timeCountRelay)
-            }).disposed(by: disposeBag)
+                return self.useCase.getTimeCountStream()
+            })
+            .bind(to: state.timeCountRelay)
         
         input.viewDidLoad
             .flatMapLatest({ [unowned self] in

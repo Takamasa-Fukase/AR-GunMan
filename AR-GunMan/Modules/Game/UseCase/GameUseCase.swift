@@ -21,6 +21,7 @@ protocol GameUseCaseInterface {
     func awaitGameStartSignal() -> Observable<Void>
     func awaitShowResultSignal() -> Observable<Void>
     func awaitWeaponReloadEnds(currentWeapon: WeaponType) -> Observable<Void>
+    func getTimeCountStream() -> Observable<Double>
     func showWeapon(_ type: WeaponType) -> Observable<WeaponType>
     func fireWeapon() -> Observable<Void>
     func executeSecretEvent() -> Observable<Void>
@@ -122,6 +123,15 @@ final class GameUseCase: GameUseCaseInterface {
                 isRepeatd: false
             )
             .map({ _ in })
+    }
+    
+    func getTimeCountStream() -> Observable<Double> {
+        return timerRepository
+            .getTimerStream(milliSec: 10, isRepeatd: true)
+            .map({ timerUpdatedCount in // タイマーが更新された回数を表すInt
+                // 例: 30.00 - (1 / 100) => 29.99
+                return max(GameConst.timeCount - (Double(timerUpdatedCount) / 100), 0)
+            })
     }
     
     func showWeapon(_ type: WeaponType) -> Observable<WeaponType> {
