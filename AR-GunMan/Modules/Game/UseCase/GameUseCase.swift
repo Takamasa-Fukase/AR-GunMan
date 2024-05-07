@@ -106,13 +106,19 @@ final class GameUseCase: GameUseCaseInterface {
     
     func awaitGameStartSignal() -> Observable<Void> {
         return timerRepository
-            .getTimerStream(milliSec: 1500, isRepeatd: false)
+            .getTimerStream(
+                milliSec: GameConst.gameStartWaitingTimeMillisec,
+                isRepeatd: false
+            )
             .map({ _ in })
     }
 
     func awaitShowResultSignal() -> Observable<Void> {
         return timerRepository
-            .getTimerStream(milliSec: 1500, isRepeatd: false)
+            .getTimerStream(
+                milliSec: GameConst.showResultWaitingTimeMillisec,
+                isRepeatd: false
+            )
             .map({ _ in })
     }
     
@@ -127,7 +133,10 @@ final class GameUseCase: GameUseCaseInterface {
     
     func getTimeCountStream() -> Observable<Double> {
         return timerRepository
-            .getTimerStream(milliSec: 10, isRepeatd: true)
+            .getTimerStream(
+                milliSec: GameConst.timeCountUpdateDurationMillisec,
+                isRepeatd: true
+            )
             .map({ timerUpdatedCount in // タイマーが更新された回数を表すInt
                 // 例: 30.00 - (1 / 100) => 29.99
                 return max(GameConst.timeCount - (Double(timerUpdatedCount) / 100), 0)

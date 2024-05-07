@@ -19,16 +19,19 @@ enum ParticleSystemTypes: String {
 }
 
 final class GameConst {
-    static let targetCount = 50 //ゲームの的の数
-    
-    static let timeCount: Double = 30.00 //ゲームのタイムカウント
-    
+    // ゲームの的の数
+    static let targetCount = 50
+    // ゲームのタイムカウント
+    static let timeCount: Double = 30.00
+    // ゲーム開始までの待ち時間
+    static let gameStartWaitingTimeMillisec: Int = 1500
+    // ゲーム終了後に結果画面へ遷移するまでの待ち時間
+    static let showResultWaitingTimeMillisec: Int = 1500
+    // ゲームのタイムカウントをアップデートする間隔
+    static let timeCountUpdateDurationMillisec: Int = 10
     static let playerAnimationUpdateInterval: Double = 0.2
-
     static let targetNodeName = "target"
-    
     static let bulletNodeName = "bullet"
-
     static let taimeiSanImage = UIImage(named: "taimei-san.jpg")
 
     static func getWeaponScnAssetsPath(_ weapon: WeaponType) -> String {
