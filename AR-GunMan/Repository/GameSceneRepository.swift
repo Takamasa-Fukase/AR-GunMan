@@ -12,6 +12,7 @@ import RxSwift
 import RxCocoa
 
 protocol GameSceneRepositoryInterface {
+    func setupSceneViewAndNodes() -> Observable<Void>
     func getSceneView() -> Observable<UIView>
     func startSession()
     func pauseSession()
@@ -35,11 +36,19 @@ final class GameSceneRepository: NSObject, GameSceneRepositoryInterface {
     private var isPlayerRunning = false
     private var lastPlayerStatus = false
     
-    override init() {
-        super.init()
-        setupSceneViewAndNodes()
+    func setupSceneViewAndNodes() -> Observable<Void> {
+        //SceneViewをセットアップ
+        SceneViewSettingUtil.setupSceneView(sceneView, sceneViewDelegate: self, physicContactDelegate: self)
+        //各武器をセットアップ
+        pistolParentNode = setupWeaponNode(type: .pistol)
+        bazookaParentNode = setupWeaponNode(type: .bazooka)
+        originalBulletNode = createOriginalBulletNode()
+        originalBazookaHitExplosionParticle = createOriginalParticleSystem(type: .bazookaExplosion)
+        //ターゲットをランダムな位置に配置
+        addTarget()
+        return Observable.just(Void())
     }
-    
+
     func getSceneView() -> Observable<UIView> {
         return Observable.just(sceneView)
     }
@@ -79,18 +88,6 @@ final class GameSceneRepository: NSObject, GameSceneRepositoryInterface {
     
     func getTargetHitStream() -> Observable<Void> {
         return targetHitRelay.asObservable()
-    }
-    
-    private func setupSceneViewAndNodes() {
-        //SceneViewをセットアップ
-        SceneViewSettingUtil.setupSceneView(sceneView, sceneViewDelegate: self, physicContactDelegate: self)
-        //各武器をセットアップ
-        pistolParentNode = setupWeaponNode(type: .pistol)
-        bazookaParentNode = setupWeaponNode(type: .bazooka)
-        originalBulletNode = createOriginalBulletNode()
-        originalBazookaHitExplosionParticle = createOriginalParticleSystem(type: .bazookaExplosion)
-        //ターゲットをランダムな位置に配置
-        addTarget()
     }
     
     private func setupWeaponNode(type: WeaponType) -> SCNNode {

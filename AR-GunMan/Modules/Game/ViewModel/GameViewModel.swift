@@ -83,6 +83,16 @@ final class GameViewModel: ViewModelType {
                     })
                     .bind(to: state.timeCountRelay)
             }).disposed(by: disposeBag)
+        
+        input.viewDidLoad
+            .map({ _ in
+                return Observable.concat(
+                    self.useCase.setupSceneViewAndNodes(),
+                    self.useCase.showWeapon(.pistol).map({ _ in })
+                )
+            })
+            .subscribe()
+            .disposed(by: disposeBag)
 
         input.viewWillAppear
             .subscribe(onNext: { [weak self] _ in

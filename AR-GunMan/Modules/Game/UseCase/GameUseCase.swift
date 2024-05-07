@@ -14,6 +14,7 @@ protocol GameUseCaseInterface {
     func getReloadingMotionStream() -> Observable<Void>
     func getIsTutorialSeen() -> Observable<Bool>
     func setTutorialAlreadySeen() -> Observable<Void>
+    func setupSceneViewAndNodes() -> Observable<Void>
     func getSceneView() -> Observable<UIView>
     func startSession()
     func pauseSession()
@@ -86,6 +87,10 @@ final class GameUseCase: GameUseCaseInterface {
         return tutorialRepository.setTutorialAlreadySeen()
     }
     
+    func setupSceneViewAndNodes() -> Observable<Void> {
+        return gameSceneRepository.setupSceneViewAndNodes()
+    }
+
     func getSceneView() -> Observable<UIView> {
         return gameSceneRepository.getSceneView()
     }
