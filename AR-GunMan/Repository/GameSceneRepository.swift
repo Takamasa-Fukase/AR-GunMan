@@ -18,7 +18,7 @@ protocol GameSceneRepositoryInterface {
     func pauseSession() -> Observable<Void>
     func showWeapon(_ type: WeaponType) -> Observable<WeaponType>
     func fireWeapon() -> Observable<Void>
-    func changeTargetsToTaimeisan()
+    func changeTargetsToTaimeisan() -> Observable<Void>
     func getTargetHitStream() -> Observable<Void>
 }
 
@@ -75,7 +75,7 @@ final class GameSceneRepository: NSObject, GameSceneRepositoryInterface {
         return Observable.just(Void())
     }
 
-    func changeTargetsToTaimeisan() {
+    func changeTargetsToTaimeisan() -> Observable<Void> {
         sceneView.scene.rootNode.childNodes.forEach({ node in
             if node.name == GameConst.targetNodeName {
                 while node.childNode(withName: "torus", recursively: false) != nil {
@@ -86,6 +86,7 @@ final class GameSceneRepository: NSObject, GameSceneRepositoryInterface {
                 node.childNode(withName: "sphere", recursively: false)?.geometry?.firstMaterial?.diffuse.contents = GameConst.taimeiSanImage
             }
         })
+        return Observable.just(Void())
     }
     
     func getTargetHitStream() -> Observable<Void> {

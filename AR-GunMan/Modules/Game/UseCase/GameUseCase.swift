@@ -23,7 +23,7 @@ protocol GameUseCaseInterface {
     func awaitWeaponReloadEnds(currentWeapon: WeaponType) -> Observable<Void>
     func showWeapon(_ type: WeaponType) -> Observable<WeaponType>
     func fireWeapon() -> Observable<Void>
-    func executeSecretEvent()
+    func executeSecretEvent() -> Observable<Void>
     func getTargetHitStream() -> Observable<Void>
 }
 
@@ -132,8 +132,8 @@ final class GameUseCase: GameUseCaseInterface {
         return gameSceneRepository.fireWeapon()
     }
     
-    func executeSecretEvent() {
-        gameSceneRepository.changeTargetsToTaimeisan()
+    func executeSecretEvent() -> Observable<Void> {
+        return gameSceneRepository.changeTargetsToTaimeisan()
     }
     
     func getTargetHitStream() -> Observable<Void> {

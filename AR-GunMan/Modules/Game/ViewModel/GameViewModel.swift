@@ -234,9 +234,10 @@ final class GameViewModel: ViewModelType {
         
         state.reloadingMotionDetectedCountRelay
             .filter({ $0 == 20 && state.isPlaying })
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                self.useCase.executeSecretEvent()
+            .flatMapLatest({ [unowned self] _ in
+                return self.useCase.executeSecretEvent()
+            })
+            .subscribe(onNext: { _ in
                 AudioUtil.playSound(of: .kyuiin)
             }).disposed(by: disposeBag)
         
