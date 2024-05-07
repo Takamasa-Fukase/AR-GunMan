@@ -21,8 +21,8 @@ final class RankingRepository: RankingRepositoryInterface {
     func getRanking() -> Single<[Ranking]> {
         return Single.create { [weak self] observer in
             self?.firestoreDataBase
-                .collection("worldRanking")
-                .order(by: "score", descending: true)
+                .collection(FirebaseConst.rankingListCollectionName)
+                .order(by: FirebaseConst.scoreFieldName, descending: true)
                 .getDocuments { querySnapshot, error in
                     guard let querySnapshot = querySnapshot else {
                         if let error = error {
@@ -50,7 +50,7 @@ final class RankingRepository: RankingRepositoryInterface {
                 let data = try JSONEncoder().encode(ranking)
                 if let dict = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed) as? [String: Any] {
                     self?.firestoreDataBase
-                        .collection("worldRanking")
+                        .collection(FirebaseConst.rankingListCollectionName)
                         .document()
                         .setData(dict) { error in
                             if let error = error {

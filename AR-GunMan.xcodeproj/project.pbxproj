@@ -80,6 +80,7 @@
 		8627F6392BD0A4280003D374 /* ResultNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8627F6382BD0A4280003D374 /* ResultNavigator.swift */; };
 		8627F63B2BD0B1340003D374 /* ResultUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8627F63A2BD0B1340003D374 /* ResultUseCase.swift */; };
 		8627F6432BD16BB60003D374 /* ObservableActivityTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8627F6422BD16BB60003D374 /* ObservableActivityTracker.swift */; };
+		863FE7EE2BEA6D8D00E104F5 /* FirebaseConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 863FE7ED2BEA6D8D00E104F5 /* FirebaseConst.swift */; };
 		86594DC82BCD50F100971D1A /* TopUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86594DC72BCD50F100971D1A /* TopUseCase.swift */; };
 		86594DCA2BCD558E00971D1A /* AVPermissionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86594DC92BCD558E00971D1A /* AVPermissionRepository.swift */; };
 		86594DCC2BCD75E100971D1A /* ReplayRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86594DCB2BCD75E100971D1A /* ReplayRepository.swift */; };
@@ -212,6 +213,7 @@
 		8627F6382BD0A4280003D374 /* ResultNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultNavigator.swift; sourceTree = "<group>"; };
 		8627F63A2BD0B1340003D374 /* ResultUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultUseCase.swift; sourceTree = "<group>"; };
 		8627F6422BD16BB60003D374 /* ObservableActivityTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableActivityTracker.swift; sourceTree = "<group>"; };
+		863FE7ED2BEA6D8D00E104F5 /* FirebaseConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseConst.swift; sourceTree = "<group>"; };
 		86594DC72BCD50F100971D1A /* TopUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopUseCase.swift; sourceTree = "<group>"; };
 		86594DC92BCD558E00971D1A /* AVPermissionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPermissionRepository.swift; sourceTree = "<group>"; };
 		86594DCB2BCD75E100971D1A /* ReplayRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplayRepository.swift; sourceTree = "<group>"; };
@@ -305,6 +307,7 @@
 				67DB2C6027C17F8D00B8CB3C /* GameConst.swift */,
 				BC92C853297061FE00E49BD5 /* WeaponType.swift */,
 				86F157402BD93C1E00BE979C /* ErrorConst.swift */,
+				863FE7ED2BEA6D8D00E104F5 /* FirebaseConst.swift */,
 			);
 			path = Const;
 			sourceTree = "<group>";
@@ -1120,6 +1123,7 @@
 				8627F63B2BD0B1340003D374 /* ResultUseCase.swift in Sources */,
 				67DB2C5727BFD01900B8CB3C /* SceneNodeUtil.swift in Sources */,
 				86594DC82BCD50F100971D1A /* TopUseCase.swift in Sources */,
+				863FE7EE2BEA6D8D00E104F5 /* FirebaseConst.swift in Sources */,
 				59945100256AD55900560202 /* TutorialViewController.swift in Sources */,
 				8613E2902BB1BFC400BF4489 /* GameUseCase.swift in Sources */,
 				8627F6432BD16BB60003D374 /* ObservableActivityTracker.swift in Sources */,
