@@ -1,5 +1,5 @@
 //
-//  DelayRepository.swift
+//  TimerRepository.swift
 //  AR-GunMan
 //
 //  Created by 深瀬 on 2024/05/07.
@@ -7,13 +7,13 @@
 
 import RxSwift
 
-protocol DelayRepositoryInterface {
+protocol TimerRepositoryInterface {
     func awaitGameStartSignal() -> Observable<Void>
     func awaitShowResultSignal() -> Observable<Void>
     func awaitWeaponReloadEnds(currentWeapon: WeaponType) -> Observable<Void>
 }
 
-final class DelayRepository: DelayRepositoryInterface {
+final class TimerRepository: TimerRepositoryInterface {
     func awaitGameStartSignal() -> Observable<Void> {
         return Observable<Int>
             .timer(.milliseconds(1500), scheduler: MainScheduler.instance)

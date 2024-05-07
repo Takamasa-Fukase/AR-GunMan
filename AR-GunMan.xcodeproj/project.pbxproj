@@ -90,7 +90,7 @@
 		86C421B52BAFDD5800EFD791 /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C421B42BAFDD5800EFD791 /* GameViewModel.swift */; };
 		86C421B82BB040C300EFD791 /* TutorialRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C421B72BB040C300EFD791 /* TutorialRepository.swift */; };
 		86C5AB982AB8819C00CB161D /* UIAlertController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C5AB972AB8819C00CB161D /* UIAlertController+Extension.swift */; };
-		86F044272BEA0A60005D8D14 /* DelayRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86F044262BEA0A60005D8D14 /* DelayRepository.swift */; };
+		86F044272BEA0A60005D8D14 /* TimerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86F044262BEA0A60005D8D14 /* TimerRepository.swift */; };
 		86F1573B2BD7B71E00BE979C /* RankingNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86F1573A2BD7B71E00BE979C /* RankingNavigator.swift */; };
 		86F1573D2BD7BBA200BE979C /* RankingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86F1573C2BD7BBA200BE979C /* RankingUseCase.swift */; };
 		86F1573F2BD9329600BE979C /* CustomError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86F1573E2BD9329600BE979C /* CustomError.swift */; };
@@ -222,7 +222,7 @@
 		86C421B42BAFDD5800EFD791 /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
 		86C421B72BB040C300EFD791 /* TutorialRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialRepository.swift; sourceTree = "<group>"; };
 		86C5AB972AB8819C00CB161D /* UIAlertController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extension.swift"; sourceTree = "<group>"; };
-		86F044262BEA0A60005D8D14 /* DelayRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelayRepository.swift; sourceTree = "<group>"; };
+		86F044262BEA0A60005D8D14 /* TimerRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerRepository.swift; sourceTree = "<group>"; };
 		86F1573A2BD7B71E00BE979C /* RankingNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingNavigator.swift; sourceTree = "<group>"; };
 		86F1573C2BD7BBA200BE979C /* RankingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingUseCase.swift; sourceTree = "<group>"; };
 		86F1573E2BD9329600BE979C /* CustomError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomError.swift; sourceTree = "<group>"; };
@@ -503,7 +503,7 @@
 				8613E28C2BB1B0C600BF4489 /* CoreMotionRepository.swift */,
 				86594DC92BCD558E00971D1A /* AVPermissionRepository.swift */,
 				BCB852AE2BE4F7FB0027F060 /* GameSceneRepository.swift */,
-				86F044262BEA0A60005D8D14 /* DelayRepository.swift */,
+				86F044262BEA0A60005D8D14 /* TimerRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -1136,7 +1136,7 @@
 				5952F62825E94D1000ADB85B /* TopViewModel.swift in Sources */,
 				59D2D4D92552DE66006DDB70 /* AppDelegate.swift in Sources */,
 				866675D4275215AF007CB4D6 /* UIViewController+Extension.swift in Sources */,
-				86F044272BEA0A60005D8D14 /* DelayRepository.swift in Sources */,
+				86F044272BEA0A60005D8D14 /* TimerRepository.swift in Sources */,
 				59D2D53A2552E1D2006DDB70 /* Storyboard+Extension.swift in Sources */,
 				67200F5727A0020B00AD92EC /* RankingViewModel.swift in Sources */,
 				67684E6D27B988C0000B2B5C /* SceneViewSettingUtil.swift in Sources */,

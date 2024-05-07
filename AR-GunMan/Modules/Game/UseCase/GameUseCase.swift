@@ -30,18 +30,18 @@ final class GameUseCase: GameUseCaseInterface {
     private let coreMotionRepository: CoreMotionRepositoryInterface
     private let tutorialRepository: TutorialRepositoryInterface
     private let gameSceneRepository: GameSceneRepositoryInterface
-    private let delayRepository: DelayRepositoryInterface
+    private let timerRepository: TimerRepositoryInterface
     
     init(
         coreMotionRepository: CoreMotionRepositoryInterface,
         tutorialRepository: TutorialRepositoryInterface,
         gameSceneRepository: GameSceneRepositoryInterface,
-        delayRepository: DelayRepositoryInterface
+        timerRepository: TimerRepositoryInterface
     ) {
         self.coreMotionRepository = coreMotionRepository
         self.tutorialRepository = tutorialRepository
         self.gameSceneRepository = gameSceneRepository
-        self.delayRepository = delayRepository
+        self.timerRepository = timerRepository
     }
     
     func startAccelerometerAndGyroUpdate() -> Observable<Void> {
@@ -99,15 +99,15 @@ final class GameUseCase: GameUseCaseInterface {
     }
     
     func awaitGameStartSignal() -> Observable<Void> {
-        return delayRepository.awaitGameStartSignal()
+        return timerRepository.awaitGameStartSignal()
     }
 
     func awaitShowResultSignal() -> Observable<Void> {
-        return delayRepository.awaitShowResultSignal()
+        return timerRepository.awaitShowResultSignal()
     }
     
     func awaitWeaponReloadEnds(currentWeapon: WeaponType) -> Observable<Void> {
-        return delayRepository.awaitWeaponReloadEnds(currentWeapon: currentWeapon)
+        return timerRepository.awaitWeaponReloadEnds(currentWeapon: currentWeapon)
     }
     
     func showWeapon(_ type: WeaponType) -> Observable<WeaponType> {
