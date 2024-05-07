@@ -173,8 +173,8 @@ final class GameViewModel: ViewModelType {
             }).disposed(by: disposeBag)
         
         useCase.getFiringMotionStream()
-            .filter({ _ in state.isPlaying })
             .filter({ _ in
+                guard state.isPlaying else { return false }
                 guard state.canFire else {
                     if state.weaponTypeRelay.value.reloadType == .manual {
                         AudioUtil.playSound(of: .pistolOutBullets)
