@@ -183,10 +183,11 @@ final class GameViewModel: ViewModelType {
                 }
                 return true
             })
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
+            .flatMapLatest({ [unowned self] _ in
+                return self.useCase.fireWeapon()
+            })
+            .subscribe(onNext: { _ in
                 AudioUtil.playSound(of: state.weaponTypeRelay.value.firingSound)
-                self.useCase.fireWeapon()
                 state.bulletsCountRelay.accept(
                     state.bulletsCountRelay.value - 1
                 )

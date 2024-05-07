@@ -16,7 +16,7 @@ protocol GameSceneRepositoryInterface {
     func startSession()
     func pauseSession()
     func showWeapon(_ type: WeaponType)
-    func fireWeapon()
+    func fireWeapon() -> Observable<Void>
     func changeTargetsToTaimeisan()
     func getTargetHitStream() -> Observable<Void>
 }
@@ -57,9 +57,10 @@ final class GameSceneRepository: NSObject, GameSceneRepositoryInterface {
         switchWeapon()
     }
     
-    func fireWeapon() {
+    func fireWeapon() -> Observable<Void> {
         shootBullet()
         pistolNode().runAction(SceneAnimationUtil.shootingMotion())
+        return Observable.just(Void())
     }
 
     func changeTargetsToTaimeisan() {
