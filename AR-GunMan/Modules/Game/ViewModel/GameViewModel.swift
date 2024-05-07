@@ -85,7 +85,7 @@ final class GameViewModel: ViewModelType {
             }).disposed(by: disposeBag)
         
         input.viewDidLoad
-            .map({ _ in
+            .flatMapLatest({ [unowned self] in
                 return Observable.concat(
                     self.useCase.setupSceneViewAndNodes(),
                     self.useCase.showWeapon(.pistol).map({ _ in })
@@ -95,16 +95,18 @@ final class GameViewModel: ViewModelType {
             .disposed(by: disposeBag)
 
         input.viewWillAppear
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                self.useCase.startSession()
-            }).disposed(by: disposeBag)
+            .flatMapLatest({ [unowned self] in
+                return self.useCase.startSession()
+            })
+            .subscribe()
+            .disposed(by: disposeBag)
         
         input.viewWillDisappear
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                self.useCase.pauseSession()
-            }).disposed(by: disposeBag)
+            .flatMapLatest({ [unowned self] in
+                return self.useCase.pauseSession()
+            })
+            .subscribe()
+            .disposed(by: disposeBag)
         
         input.viewDidAppear
             .take(1)

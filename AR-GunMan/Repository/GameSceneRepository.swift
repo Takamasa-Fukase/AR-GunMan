@@ -14,8 +14,8 @@ import RxCocoa
 protocol GameSceneRepositoryInterface {
     func setupSceneViewAndNodes() -> Observable<Void>
     func getSceneView() -> Observable<UIView>
-    func startSession()
-    func pauseSession()
+    func startSession() -> Observable<Void>
+    func pauseSession() -> Observable<Void>
     func showWeapon(_ type: WeaponType) -> Observable<WeaponType>
     func fireWeapon() -> Observable<Void>
     func changeTargetsToTaimeisan()
@@ -53,12 +53,14 @@ final class GameSceneRepository: NSObject, GameSceneRepositoryInterface {
         return Observable.just(sceneView)
     }
     
-    func startSession() {
+    func startSession() -> Observable<Void> {
         SceneViewSettingUtil.startSession(sceneView)
+        return Observable.just(Void())
     }
     
-    func pauseSession() {
+    func pauseSession() -> Observable<Void> {
         SceneViewSettingUtil.pauseSession(sceneView)
+        return Observable.just(Void())
     }
 
     func showWeapon(_ type: WeaponType) -> Observable<WeaponType> {

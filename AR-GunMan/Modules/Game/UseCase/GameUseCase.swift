@@ -16,8 +16,8 @@ protocol GameUseCaseInterface {
     func setTutorialAlreadySeen() -> Observable<Void>
     func setupSceneViewAndNodes() -> Observable<Void>
     func getSceneView() -> Observable<UIView>
-    func startSession()
-    func pauseSession()
+    func startSession() -> Observable<Void>
+    func pauseSession() -> Observable<Void>
     func awaitGameStartSignal() -> Observable<Void>
     func awaitShowResultSignal() -> Observable<Void>
     func awaitWeaponReloadEnds(currentWeapon: WeaponType) -> Observable<Void>
@@ -95,12 +95,12 @@ final class GameUseCase: GameUseCaseInterface {
         return gameSceneRepository.getSceneView()
     }
     
-    func startSession() {
-        gameSceneRepository.startSession()
+    func startSession() -> Observable<Void> {
+        return gameSceneRepository.startSession()
     }
     
-    func pauseSession() {
-        gameSceneRepository.pauseSession()
+    func pauseSession() -> Observable<Void> {
+        return gameSceneRepository.pauseSession()
     }
     
     func awaitGameStartSignal() -> Observable<Void> {
