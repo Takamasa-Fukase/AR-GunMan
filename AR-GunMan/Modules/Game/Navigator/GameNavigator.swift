@@ -33,10 +33,12 @@ final class GameNavigator: GameNavigatorInterface {
         let coreMotionRepository = CoreMotionRepository(coreMotionManager: coreMotionManager)
         let tutorialRepository = TutorialRepository()
         let gameSceneRepository = GameSceneRepository()
+        let delayRepository = DelayRepository()
         let useCase = GameUseCase(
             coreMotionRepository: coreMotionRepository,
             tutorialRepository: tutorialRepository,
-            gameSceneRepository: gameSceneRepository
+            gameSceneRepository: gameSceneRepository,
+            delayRepository: delayRepository
         )
         let navigator = GameNavigator(viewController: vc)
         let viewModel = GameViewModel(

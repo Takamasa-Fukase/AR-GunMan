@@ -29,15 +29,18 @@ final class GameUseCase: GameUseCaseInterface {
     private let coreMotionRepository: CoreMotionRepositoryInterface
     private let tutorialRepository: TutorialRepositoryInterface
     private let gameSceneRepository: GameSceneRepositoryInterface
+    private let delayRepository: DelayRepositoryInterface
     
     init(
         coreMotionRepository: CoreMotionRepositoryInterface,
         tutorialRepository: TutorialRepositoryInterface,
-        gameSceneRepository: GameSceneRepositoryInterface
+        gameSceneRepository: GameSceneRepositoryInterface,
+        delayRepository: DelayRepositoryInterface
     ) {
         self.coreMotionRepository = coreMotionRepository
         self.tutorialRepository = tutorialRepository
         self.gameSceneRepository = gameSceneRepository
+        self.delayRepository = delayRepository
     }
     
     func startAccelerometerAndGyroUpdate() -> Observable<Void> {
@@ -95,11 +98,11 @@ final class GameUseCase: GameUseCaseInterface {
     }
     
     func awaitGameStartSignal() -> Observable<Void> {
-        return gameSceneRepository.awaitGameStartSignal()
+        return delayRepository.awaitGameStartSignal()
     }
 
     func awaitShowResultSignal() -> Observable<Void> {
-        return gameSceneRepository.awaitShowResultSignal()
+        return delayRepository.awaitShowResultSignal()
     }
     
     func showWeapon(_ type: WeaponType) {
