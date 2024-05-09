@@ -19,23 +19,24 @@ protocol GameSceneRepositoryInterface {
     func showWeapon(_ type: WeaponType) -> Observable<WeaponType>
     func fireWeapon() -> Observable<Void>
     func changeTargetsToTaimeisan() -> Observable<Void>
-    func getTargetHitStream() -> Observable<Void>
+    func getRendererUpdateStream() -> Observable<Void>
+    func getCollisionOccurrenceStream() -> Observable<SCNPhysicsContact>
+    func moveWeaponToFPSPosition(currentWeapon: WeaponType) -> Observable<Void>
+    func checkTargetHit(contact: SCNPhysicsContact) -> Observable<(Bool, SCNPhysicsContact)>
+    func removeContactedNodes(nodeA: SCNNode, nodeB: SCNNode) -> Observable<Void>
+    func showTargetHitParticleToContactPoint(currentWeapon: WeaponType, contactPoint: SCNVector3) -> Observable<Void>
 }
 
 final class GameSceneRepository: NSObject, GameSceneRepositoryInterface {
     private let sceneView = ARSCNView()
-    private let targetHitRelay = PublishRelay<Void>()
+    private let rendererUpdatedRelay = PublishRelay<Void>()
+    private let collisionOccurredRelay = PublishRelay<SCNPhysicsContact>()
     
     private var originalBulletNode = SCNNode()
     private var originalBazookaHitExplosionParticle = SCNParticleSystem()
     private var pistolParentNode = SCNNode()
     private var bazookaParentNode = SCNNode()
-    private var currentWeapon: WeaponType = .pistol
 
-    private var lastCameraPos = SCNVector3()
-    private var isPlayerRunning = false
-    private var lastPlayerStatus = false
-    
     func setupSceneViewAndNodes() -> Observable<Void> {
         //SceneViewをセットアップ
         SceneViewSettingUtil.setupSceneView(sceneView, sceneViewDelegate: self, physicContactDelegate: self)
@@ -64,8 +65,7 @@ final class GameSceneRepository: NSObject, GameSceneRepositoryInterface {
     }
 
     func showWeapon(_ type: WeaponType) -> Observable<WeaponType> {
-        currentWeapon = type
-        switchWeapon()
+        switchWeapon(to: type)
         return Observable.just(type)
     }
     
@@ -88,9 +88,52 @@ final class GameSceneRepository: NSObject, GameSceneRepositoryInterface {
         })
         return Observable.just(Void())
     }
+
+    func getRendererUpdateStream() -> Observable<Void> {
+        return rendererUpdatedRelay.asObservable()
+    }
     
-    func getTargetHitStream() -> Observable<Void> {
-        return targetHitRelay.asObservable()
+    func getCollisionOccurrenceStream() -> Observable<SCNPhysicsContact> {
+        return collisionOccurredRelay.asObservable()
+    }
+    
+    //現在表示中の武器をラップしている空のオブジェクトを常にカメラと同じPositionに移動させ続ける（それにより武器が常にFPS位置に保たれる）
+    func moveWeaponToFPSPosition(currentWeapon: WeaponType) -> Observable<Void> {
+        var weaponParentNode: SCNNode {
+            switch currentWeapon {
+            case .pistol:
+                return pistolParentNode
+            case .bazooka:
+                return bazookaParentNode
+            }
+        }
+        weaponParentNode.position = SceneNodeUtil.getCameraPosition(sceneView)
+        return Observable.just(Void())
+    }
+
+    func checkTargetHit(contact: SCNPhysicsContact) -> Observable<(Bool, SCNPhysicsContact)> {
+        let isTargetHit = (contact.nodeA.name == GameConst.bulletNodeName && contact.nodeB.name == GameConst.targetNodeName)
+        || (contact.nodeB.name == GameConst.bulletNodeName && contact.nodeA.name == GameConst.targetNodeName)
+        return Observable.just((isTargetHit, contact))
+    }
+    
+    func removeContactedNodes(nodeA: SCNNode, nodeB: SCNNode) -> Observable<Void> {
+        nodeA.removeFromParentNode()
+        nodeB.removeFromParentNode()
+        return Observable.just(Void())
+    }
+    
+    func showTargetHitParticleToContactPoint(currentWeapon: WeaponType, contactPoint: SCNVector3) -> Observable<Void> {
+        guard let targetHitParticleType = currentWeapon.targetHitParticleType else {
+            // TODO: もう少しどうにか綺麗にする
+            return Observable.just(Void())
+        }
+        let targetHitParticleNode = createTargetHitParticleNode(type: targetHitParticleType)
+        targetHitParticleNode.position = contactPoint
+        sceneView.scene.rootNode.addChildNode(targetHitParticleNode)
+        targetHitParticleNode.particleSystems?.first?.birthRate = targetHitParticleType.birthRate
+        targetHitParticleNode.particleSystems?.first?.loops = false
+        return Observable.just(Void())
     }
     
     private func setupWeaponNode(type: WeaponType) -> SCNNode {
@@ -104,9 +147,9 @@ final class GameSceneRepository: NSObject, GameSceneRepositoryInterface {
         return pistolParentNode.childNode(withName: WeaponType.pistol.name, recursively: false) ?? SCNNode()
     }
     
-    private func switchWeapon() {
-        SceneNodeUtil.removeOtherWeapon(except: currentWeapon, scnView: sceneView)
-        switch currentWeapon {
+    private func switchWeapon(to nextWeapon: WeaponType) {
+        SceneNodeUtil.removeOtherWeapon(except: nextWeapon, scnView: sceneView)
+        switch nextWeapon {
         case .pistol:
             sceneView.scene.rootNode.addChildNode(pistolParentNode)
             pistolNode().runAction(SceneAnimationUtil.gunnerShakeAnimationNormal())
@@ -194,39 +237,12 @@ final class GameSceneRepository: NSObject, GameSceneRepositoryInterface {
             }
         }
     }
-    
-    private func keepWeaponInFPSPosition() {
-        var weaponParentNode: SCNNode {
-            switch currentWeapon {
-            case .pistol:
-                return pistolParentNode
-            case .bazooka:
-                return bazookaParentNode
-            }
-        }
-        weaponParentNode.position = SceneNodeUtil.getCameraPosition(sceneView)
-    }
-    
-    private func isTargetHit(contact: SCNPhysicsContact) -> Bool {
-        return (contact.nodeA.name == GameConst.bulletNodeName && contact.nodeB.name == GameConst.targetNodeName) ||
-            (contact.nodeB.name == GameConst.bulletNodeName && contact.nodeA.name == GameConst.targetNodeName)
-    }
-    
-    private func executeTargetHitParticle(contactPoint: SCNVector3) {
-        guard let targetHitParticleType = currentWeapon.targetHitParticleType else { return }
-        let targetHitParticleNode = createTargetHitParticleNode(type: targetHitParticleType)
-        targetHitParticleNode.position = contactPoint
-        sceneView.scene.rootNode.addChildNode(targetHitParticleNode)
-        targetHitParticleNode.particleSystems?.first?.birthRate = targetHitParticleType.birthRate
-        targetHitParticleNode.particleSystems?.first?.loops = false
-    }
 }
 
 extension GameSceneRepository: ARSCNViewDelegate {
     //常に更新され続けるdelegateメソッド
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
-        //現在表示中の武器をラップしている空のオブジェクトを常にカメラと同じPositionに移動させ続ける（それにより武器が常にFPS位置に保たれる）
-        keepWeaponInFPSPosition()
+        rendererUpdatedRelay.accept(Void())
     }
 }
 
@@ -234,16 +250,7 @@ extension GameSceneRepository: SCNPhysicsContactDelegate {
     //衝突検知時に呼ばれる
     //MEMO: - このメソッド内でUIの更新を行いたい場合はmainThreadで行う
     func physicsWorld(_ world: SCNPhysicsWorld, didEnd contact: SCNPhysicsContact) {
-        if isTargetHit(contact: contact) {
-            contact.nodeA.removeFromParentNode()
-            contact.nodeB.removeFromParentNode()
-            
-            // ターゲットヒット座標に武器に応じたParticleを発火させる
-            executeTargetHitParticle(contactPoint: contact.contactPoint)
-            
-            //ヒットしたという通知をVC経由でsubscribeさせ、statusManagerに伝達する
-            targetHitRelay.accept(Void())
-        }
+        collisionOccurredRelay.accept(contact)
     }
 }
 

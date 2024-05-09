@@ -6,6 +6,7 @@
 //
 
 import RxSwift
+import SceneKit
 
 protocol GameUseCaseInterface {
     func startAccelerometerAndGyroUpdate() -> Observable<Void>
@@ -25,7 +26,12 @@ protocol GameUseCaseInterface {
     func showWeapon(_ type: WeaponType) -> Observable<WeaponType>
     func fireWeapon() -> Observable<Void>
     func executeSecretEvent() -> Observable<Void>
-    func getTargetHitStream() -> Observable<Void>
+    func getRendererUpdateStream() -> Observable<Void>
+    func getCollisionOccurrenceStream() -> Observable<SCNPhysicsContact>
+    func moveWeaponToFPSPosition(currentWeapon: WeaponType) -> Observable<Void>
+    func checkTargetHit(contact: SCNPhysicsContact) -> Observable<(Bool, SCNPhysicsContact)>
+    func removeContactedNodes(contact: SCNPhysicsContact) -> Observable<Void>
+    func showTargetHitParticleToContactPoint(currentWeapon: WeaponType, contact: SCNPhysicsContact) -> Observable<Void>
 }
 
 final class GameUseCase: GameUseCaseInterface {
@@ -155,10 +161,37 @@ final class GameUseCase: GameUseCaseInterface {
         return gameSceneRepository.changeTargetsToTaimeisan()
     }
     
-    func getTargetHitStream() -> Observable<Void> {
-        return gameSceneRepository.getTargetHitStream()
+
+    func getRendererUpdateStream() -> Observable<Void> {
+        return gameSceneRepository.getRendererUpdateStream()
     }
     
+    func getCollisionOccurrenceStream() -> Observable<SCNPhysicsContact> {
+        return gameSceneRepository.getCollisionOccurrenceStream()
+    }
+    
+    func moveWeaponToFPSPosition(currentWeapon: WeaponType) -> Observable<Void> {
+        return gameSceneRepository.moveWeaponToFPSPosition(currentWeapon: currentWeapon)
+    }
+    
+    func checkTargetHit(contact: SCNPhysicsContact) -> Observable<(Bool, SCNPhysicsContact)> {
+        return gameSceneRepository.checkTargetHit(contact: contact)
+    }
+    
+    func removeContactedNodes(contact: SCNPhysicsContact) -> Observable<Void> {
+        return gameSceneRepository.removeContactedNodes(
+            nodeA: contact.nodeA, 
+            nodeB: contact.nodeB
+        )
+    }
+    
+    func showTargetHitParticleToContactPoint(currentWeapon: WeaponType, contact: SCNPhysicsContact) -> Observable<Void> {
+        return gameSceneRepository.showTargetHitParticleToContactPoint(
+            currentWeapon: currentWeapon,
+            contactPoint: contact.contactPoint
+        )
+    }
+        
     private func getCompositeValue(x: Double, y: Double, z: Double) -> Double {
         return (x * x) + (y * y) + (z * z)
     }

@@ -169,7 +169,31 @@ final class GameViewModel: ViewModelType {
                 self.navigator.showResultView(totalScore: state.score)
             }).disposed(by: disposeBag)
 
-        useCase.getTargetHitStream()
+        useCase.getRendererUpdateStream()
+            .flatMapLatest({ [unowned self] in
+                return self.useCase.moveWeaponToFPSPosition(
+                    currentWeapon: state.weaponTypeRelay.value
+                )
+            })
+            .subscribe()
+            .disposed(by: disposeBag)
+            
+        useCase.getCollisionOccurrenceStream()
+            .flatMapLatest({ [unowned self] contact in
+                return self.useCase.checkTargetHit(contact: contact)
+            })
+            .filter({ (isTargetHit, _) in
+                return isTargetHit
+            })
+            .flatMapLatest({ [unowned self] (_, contact) in
+                return Observable.merge(
+                    self.useCase.removeContactedNodes(contact: contact),
+                    self.useCase.showTargetHitParticleToContactPoint(
+                        currentWeapon: state.weaponTypeRelay.value,
+                        contact: contact
+                    )
+                )
+            })
             .subscribe(onNext: { _ in
                 AudioUtil.playSound(of: state.weaponTypeRelay.value.hitSound)
                 state.score = ScoreCalculator.getTotalScore(
