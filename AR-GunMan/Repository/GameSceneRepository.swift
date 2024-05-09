@@ -32,7 +32,6 @@ final class GameSceneRepository: NSObject, GameSceneRepositoryInterface {
     private let rendererUpdatedRelay = PublishRelay<Void>()
     private let collisionOccurredRelay = PublishRelay<SCNPhysicsContact>()
     
-    private var originalBulletNode = SCNNode()
     private var originalBazookaHitExplosionParticle = SCNParticleSystem()
     private var pistolParentNode = SCNNode()
     private var bazookaParentNode = SCNNode()
@@ -43,7 +42,6 @@ final class GameSceneRepository: NSObject, GameSceneRepositoryInterface {
         //各武器をセットアップ
         pistolParentNode = setupWeaponNode(type: .pistol)
         bazookaParentNode = setupWeaponNode(type: .bazooka)
-        originalBulletNode = createOriginalBulletNode()
         originalBazookaHitExplosionParticle = createOriginalParticleSystem(type: .bazookaExplosion)
         //ターゲットをランダムな位置に配置
         addTarget()
@@ -157,24 +155,7 @@ final class GameSceneRepository: NSObject, GameSceneRepositoryInterface {
             sceneView.scene.rootNode.addChildNode(bazookaParentNode)
         }
     }
-
-    private func createOriginalBulletNode() -> SCNNode {
-        let sphere: SCNGeometry = SCNSphere(radius: 0.05)
-        let customYellow = UIColor(red: 253/255, green: 202/255, blue: 119/255, alpha: 1)
-        
-        sphere.firstMaterial?.diffuse.contents = customYellow
-        originalBulletNode = SCNNode(geometry: sphere)
-        originalBulletNode.name = GameConst.bulletNodeName
-        originalBulletNode.scale = SCNVector3(x: 1, y: 1, z: 1)
-        
-        //当たり判定用のphysicBodyを追加
-        let shape = SCNPhysicsShape(geometry: sphere, options: nil)
-        originalBulletNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: shape)
-        originalBulletNode.physicsBody?.contactTestBitMask = 1
-        originalBulletNode.physicsBody?.isAffectedByGravity = false
-        return originalBulletNode
-    }
-
+    
     //ロケラン名中時の爆発をセットアップ
     private func createOriginalParticleSystem(type: ParticleSystemTypes) -> SCNParticleSystem {
         let originalExplosionNode = SceneNodeUtil.loadScnFile(of: GameConst.getParticleSystemScnAssetsPath(type), nodeName: type.rawValue)
@@ -195,7 +176,7 @@ final class GameSceneRepository: NSObject, GameSceneRepositoryInterface {
     //弾ノードを発射
     private func shootBullet() {
         //メモリ節約のため、オリジナルをクローンして使う
-        let clonedBulletNode = originalBulletNode.clone()
+        let clonedBulletNode = GameSceneConst.bulletNode.clone()
         clonedBulletNode.position = SceneNodeUtil.getCameraPosition(sceneView)
         sceneView.scene.rootNode.addChildNode(clonedBulletNode)
         clonedBulletNode.runAction(
