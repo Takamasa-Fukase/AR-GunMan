@@ -116,13 +116,13 @@ final class GameViewModel2: ViewModelType {
         let autoReloadRelay = BehaviorRelay<Void>(value: Void())
         let startGameRelay = PublishRelay<Void>()
         
-        let awaitTimerStartSignal = startGameRelay
+        let timerStartTrigger = startGameRelay
             .flatMapLatest({ [unowned self] in
                 AudioUtil.playSound(of: .pistolSet)
                 return self.useCase.awaitTimerStartSignal()
             })
 
-        let timerDisposable = awaitTimerStartSignal
+        let timerDisposable = timerStartTrigger
             .flatMapLatest({ [unowned self] in
                 AudioUtil.playSound(of: .startWhistle)
                 return self.useCase.getTimeCountStream()
