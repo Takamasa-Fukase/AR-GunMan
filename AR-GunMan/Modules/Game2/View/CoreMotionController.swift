@@ -44,7 +44,7 @@ final class CoreMotionController {
         if !coreMotionManager.isGyroActive {
             coreMotionManager.gyroUpdateInterval = 0.2
             coreMotionManager.startGyroUpdates(to: OperationQueue.current!) { (data, _) in
-                guard let rotationRate = data?.acceleration else { return }
+                guard let rotationRate = data?.rotationRate else { return }
                 self.gyroUpdatedRelay.accept(rotationRate)
             }
         }

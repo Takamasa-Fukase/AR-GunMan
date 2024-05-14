@@ -201,7 +201,7 @@ extension GameSceneController: SCNPhysicsContactDelegate {
     //衝突検知時に呼ばれる
     //MEMO: - このメソッド内でUIの更新を行いたい場合はmainThreadで行う
     func physicsWorld(_ world: SCNPhysicsWorld, didEnd contact: SCNPhysicsContact) {
-        if isTargetHit(nodeAName: contact.nodeA.name, nodeBName: contact.nodeB.name) {
+        if isTargetHit(nodeAName: contact.nodeA.name ?? "", nodeBName: contact.nodeB.name ?? "") {
             removeContactedNodes(nodeA: contact.nodeA, nodeB: contact.nodeB)
             // TODO: ここのweaponTypeも後でVMからの指示に含まれたtypeの値に変える
             showTargetHitParticleToContactPoint(currentWeapon: .bazooka, contactPoint: contact.contactPoint)

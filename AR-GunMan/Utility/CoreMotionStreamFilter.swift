@@ -16,8 +16,8 @@ final class CoreMotionStreamFilter {
             .withLatestFrom(gyroStream) { ($0, $1) }
             .map{ (acceleration, gyro) in
                 return (
-                    self.getCompositeValue(x: 0, y: acceleration.y, z: acceleration.z),
-                    self.getCompositeValue(x: 0, y: 0, z: gyro.z)
+                    getCompositeValue(x: 0, y: acceleration.y, z: acceleration.z),
+                    getCompositeValue(x: 0, y: 0, z: gyro.z)
                 )
             }
             .filter { (accelerationCompositeValue, gyroCompositeValue) in
@@ -31,7 +31,7 @@ final class CoreMotionStreamFilter {
     ) -> Observable<Void> {
         return gyroStream
             .map{ gyro in
-                return self.getCompositeValue(x: 0, y: 0, z: gyro.z)
+                return getCompositeValue(x: 0, y: 0, z: gyro.z)
             }
             .filter { gyroCompositeValue in
                 gyroCompositeValue >= 10
@@ -39,7 +39,7 @@ final class CoreMotionStreamFilter {
             .map({_ in})
     }
         
-    private func getCompositeValue(x: Double, y: Double, z: Double) -> Double {
+    private static func getCompositeValue(x: Double, y: Double, z: Double) -> Double {
         return (x * x) + (y * y) + (z * z)
     }
 }

@@ -1,8 +1,8 @@
 //
-//  GameNavigator.swift
+//  GameNavigator2.swift
 //  AR-GunMan
 //
-//  Created by 深瀬 on 2024/03/25.
+//  Created by 深瀬 on 2024/05/14.
 //
 
 import Foundation
@@ -10,42 +10,41 @@ import PanModal
 import RxCocoa
 import CoreMotion
 
-protocol GameNavigatorInterface {
+protocol GameNavigator2Interface {
     func showTutorialView(tutorialEndObserver: PublishRelay<Void>)
     func showWeaponChangeView(weaponSelectObserver: PublishRelay<WeaponType>)
     func dismissWeaponChangeView()
     func showResultView(totalScore: Double)
 }
 
-final class GameNavigator: GameNavigatorInterface {
+final class GameNavigator2: GameNavigator2Interface {
     private unowned let viewController: UIViewController
     
     init(viewController: UIViewController) {
         self.viewController = viewController
     }
-    
+
     static func assembleModules() -> UIViewController {
-        let storyboard: UIStoryboard = UIStoryboard(name: "GameViewController", bundle: nil)
-        let vc = storyboard.instantiateInitialViewController() as! GameViewController
+        let storyboard: UIStoryboard = UIStoryboard(name: "GameViewController2", bundle: nil)
+        let vc = storyboard.instantiateInitialViewController() as! GameViewController2
         vc.modalPresentationStyle = .fullScreen
         
-        let coreMotionManager = CMMotionManager()
-        let coreMotionRepository = CoreMotionRepository(coreMotionManager: coreMotionManager)
         let tutorialRepository = TutorialRepository()
-        let gameSceneRepository = GameSceneRepository()
         let timerRepository = TimerRepository()
-        let useCase = GameUseCase(
-            coreMotionRepository: coreMotionRepository,
+        let useCase = GameUseCase2(
             tutorialRepository: tutorialRepository,
-            gameSceneRepository: gameSceneRepository,
             timerRepository: timerRepository
         )
         let navigator = GameNavigator(viewController: vc)
-        let viewModel = GameViewModel(
+        let viewModel = GameViewModel2(
             useCase: useCase,
             navigator: navigator
         )
+        let gameSceneController = GameSceneController(sceneView: vc.view)
+        let coreMotionController = CoreMotionController(coreMotionManager: CMMotionManager())
         vc.viewModel = viewModel
+        vc.gameSceneController = gameSceneController
+        vc.coreMotionController = coreMotionController
         return vc
     }
     
@@ -73,3 +72,4 @@ final class GameNavigator: GameNavigatorInterface {
         viewController.present(vc, animated: true)
     }
 }
+

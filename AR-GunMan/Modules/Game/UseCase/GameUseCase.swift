@@ -113,7 +113,7 @@ final class GameUseCase: GameUseCaseInterface {
     func awaitGameStartSignal() -> Observable<Void> {
         return timerRepository
             .getTimerStream(
-                milliSec: GameConst.gameStartWaitingTimeMillisec,
+                milliSec: GameConst.timerStartWaitingTimeMillisec,
                 isRepeatd: false
             )
             .map({ _ in })

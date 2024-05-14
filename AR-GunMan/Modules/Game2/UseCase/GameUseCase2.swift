@@ -11,9 +11,9 @@ import SceneKit
 protocol GameUseCase2Interface {
     func getIsTutorialSeen() -> Observable<Bool>
     func setTutorialAlreadySeen() -> Observable<Void>
-    func awaitGameStartSignal() -> Observable<Void>
+    func awaitTimerStartSignal() -> Observable<Void>
     func awaitShowResultSignal() -> Observable<Void>
-    func awaitWeaponReloadEnds(currentWeapon: WeaponType) -> Observable<Void>
+    func awaitWeaponReloadEnds(currentWeapon: WeaponType) -> Observable<WeaponType>
     func getTimeCountStream() -> Observable<Double>
 }
 
@@ -37,10 +37,10 @@ final class GameUseCase2: GameUseCase2Interface {
         return tutorialRepository.setTutorialAlreadySeen()
     }
     
-    func awaitGameStartSignal() -> Observable<Void> {
+    func awaitTimerStartSignal() -> Observable<Void> {
         return timerRepository
             .getTimerStream(
-                milliSec: GameConst.gameStartWaitingTimeMillisec,
+                milliSec: GameConst.timerStartWaitingTimeMillisec,
                 isRepeatd: false
             )
             .map({ _ in })
@@ -55,13 +55,13 @@ final class GameUseCase2: GameUseCase2Interface {
             .map({ _ in })
     }
     
-    func awaitWeaponReloadEnds(currentWeapon: WeaponType) -> Observable<Void> {
+    func awaitWeaponReloadEnds(currentWeapon: WeaponType) -> Observable<WeaponType> {
         return timerRepository
             .getTimerStream(
                 milliSec: currentWeapon.reloadDurationMillisec,
                 isRepeatd: false
             )
-            .map({ _ in })
+            .map({ _ in currentWeapon })
     }
     
     func getTimeCountStream() -> Observable<Double> {
