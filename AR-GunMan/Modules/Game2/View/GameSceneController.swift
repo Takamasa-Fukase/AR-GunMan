@@ -44,13 +44,13 @@ final class GameSceneController: NSObject {
     // 的ノードをランダムな座標に設置
     func showTargets(count: Int) {
         let originalTargetNode = createOriginalTargetNode()
-        Array(0..<count).forEach { index in
-            //メモリ節約のためにクローンして使う
-            let clonedTargetNode = originalTargetNode.clone()
-            clonedTargetNode.position = SceneNodeUtil.getRandomTargetPosition()
-            // TODO: nameにindexを混ぜてnode0,node1...みたいにして一意に判別可能にする
-            SceneNodeUtil.addBillboardConstraint(clonedTargetNode)
-            DispatchQueue.main.async {
+        DispatchQueue.main.async {
+            Array(0..<count).forEach { index in
+                //メモリ節約のためにクローンして使う
+                let clonedTargetNode = originalTargetNode.clone()
+                clonedTargetNode.position = SceneNodeUtil.getRandomTargetPosition()
+                // TODO: nameにindexを混ぜてnode0,node1...みたいにして一意に判別可能にする
+                SceneNodeUtil.addBillboardConstraint(clonedTargetNode)
                 self.sceneView.scene.rootNode.addChildNode(clonedTargetNode)
             }
         }
