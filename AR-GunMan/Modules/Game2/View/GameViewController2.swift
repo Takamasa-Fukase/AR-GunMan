@@ -52,11 +52,11 @@ final class GameViewController2: UIViewController {
     }
     
     private func setupUI() {
-        // - 等幅フォントにして高速で動くタイムカウントの横振れを防止
+        // 等幅フォントにして高速で動くタイムカウントの横振れを防止
         timeCountLabel.font = timeCountLabel.font.monospacedDigitFont
-    }
-    
-    private func injectSceneViewIntoVC(_ sceneView: UIView) {
+        
+        // sceneViewをViewにインサートして表示
+        let sceneView = gameSceneController.getSceneView()
         sceneView.frame = self.view.frame
         self.view.insertSubview(sceneView, at: 0)
     }
@@ -86,8 +86,7 @@ final class GameViewController2: UIViewController {
             output.setupSceneView
                 .subscribe(onNext: { [weak self] _ in
                     guard let self = self else { return }
-                    let sceneView = self.gameSceneController.setupSceneViewAndEject()
-                    self.injectSceneViewIntoVC(sceneView)
+                    self.gameSceneController.setupSceneView()
                 })
             output.renderAllTargets
                 .subscribe(onNext: { [weak self] count in

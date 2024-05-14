@@ -27,17 +27,20 @@ final class GameSceneController: NSObject {
     private var originalBazookaHitExplosionParticle = SCNParticleSystem()
     private var pistolParentNode = SCNNode()
     private var bazookaParentNode = SCNNode()
-
-    func setupSceneViewAndEject() -> UIView {
+    
+    func getSceneView() -> UIView {
+        return sceneView
+    }
+    
+    func setupSceneView() {
         //SceneViewをセットアップ
         SceneViewSettingUtil.setupSceneView(sceneView, sceneViewDelegate: self, physicContactDelegate: self)
         //各武器をセットアップ
         pistolParentNode = setupWeaponNode(type: .pistol)
         bazookaParentNode = setupWeaponNode(type: .bazooka)
         originalBazookaHitExplosionParticle = createOriginalParticleSystem(type: .bazookaExplosion)
-        return sceneView
     }
-    
+
     // 的ノードをランダムな座標に設置
     func showTargets(count: Int) {
         let originalTargetNode = createOriginalTargetNode()
