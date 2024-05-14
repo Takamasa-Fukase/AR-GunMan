@@ -56,6 +56,11 @@ final class GameViewController2: UIViewController {
         timeCountLabel.font = timeCountLabel.font.monospacedDigitFont
     }
     
+    private func injectSceneViewIntoVC(_ sceneView: UIView) {
+        sceneView.frame = self.view.frame
+        self.view.insertSubview(sceneView, at: 0)
+    }
+    
     private func bindOutputToViewComponents(
         _ output: GameViewModel2.Output.OutputToView
     ) {        
@@ -78,10 +83,11 @@ final class GameViewController2: UIViewController {
         _ output: GameViewModel2.Output.OutputToGameScene
     ) {
         disposeBag.insert {
-            output.setupSceneViewAndNodes
+            output.setupSceneView
                 .subscribe(onNext: { [weak self] _ in
                     guard let self = self else { return }
-                    self.gameSceneController.setupSceneViewAndNodes()
+                    let sceneView = self.gameSceneController.setupSceneViewAndEject()
+                    self.injectSceneViewIntoVC(sceneView)
                 })
             output.renderAllTargets
                 .subscribe(onNext: { [weak self] count in

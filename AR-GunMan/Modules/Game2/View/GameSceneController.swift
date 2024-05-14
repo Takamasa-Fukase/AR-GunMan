@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 
 final class GameSceneController: NSObject {
-    private let sceneView: ARSCNView
+    private let sceneView = ARSCNView()
     private let rendererUpdatedRelay = PublishRelay<Void>()
     private let targetHitRelay = PublishRelay<Void>()
     
@@ -27,18 +27,15 @@ final class GameSceneController: NSObject {
     private var originalBazookaHitExplosionParticle = SCNParticleSystem()
     private var pistolParentNode = SCNNode()
     private var bazookaParentNode = SCNNode()
-    
-    init(sceneView: UIView) {
-        self.sceneView = sceneView as! ARSCNView
-    }
 
-    func setupSceneViewAndNodes() {
+    func setupSceneViewAndEject() -> UIView {
         //SceneViewをセットアップ
         SceneViewSettingUtil.setupSceneView(sceneView, sceneViewDelegate: self, physicContactDelegate: self)
         //各武器をセットアップ
         pistolParentNode = setupWeaponNode(type: .pistol)
         bazookaParentNode = setupWeaponNode(type: .bazooka)
         originalBazookaHitExplosionParticle = createOriginalParticleSystem(type: .bazookaExplosion)
+        return sceneView
     }
     
     // 的ノードをランダムな座標に設置

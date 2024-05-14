@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
     <device id="retina6_12" orientation="landscape" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -75,6 +75,12 @@
                             <constraint firstItem="hkW-ab-8nW" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="30" id="pX0-IM-RS7"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="bulletsCountImageView" destination="SK0-oV-aLU" id="IWf-WG-WOx"/>
+                        <outlet property="sightImageView" destination="7my-Yd-Dlj" id="vlz-XC-0RS"/>
+                        <outlet property="switchWeaponButton" destination="6KH-pE-9Dr" id="D1m-Cm-9YJ"/>
+                        <outlet property="timeCountLabel" destination="hkW-ab-8nW" id="ICe-pu-TDI"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -85,7 +91,7 @@
         <image name="pistolSight" width="1500" height="1500"/>
         <image name="weaponSwitch" width="2048" height="2048"/>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -47,7 +47,7 @@ final class GameViewModel2: ViewModelType {
         }
         
         struct OutputToGameScene {
-            let setupSceneViewAndNodes: Observable<Void>
+            let setupSceneView: Observable<Void>
             let renderAllTargets: Observable<Int>
             let startSceneSession: Observable<Void>
             let pauseSceneSession: Observable<Void>
@@ -195,7 +195,7 @@ final class GameViewModel2: ViewModelType {
         
         
         // MARK: OutputToGameScene
-        let setupSceneViewAndNodes = input.inputFromView.viewDidLoad
+        let setupSceneView = input.inputFromView.viewDidLoad
         
         let renderAllTargets = input.inputFromView.viewDidLoad
             .map({ _ in GameConst.targetCount })
@@ -326,7 +326,7 @@ final class GameViewModel2: ViewModelType {
                 bulletsCountImage: bulletsCountImage
             ),
             outputToGameScene: Output.OutputToGameScene(
-                setupSceneViewAndNodes: setupSceneViewAndNodes,
+                setupSceneView: setupSceneView,
                 renderAllTargets: renderAllTargets,
                 startSceneSession: startSceneSession,
                 pauseSceneSession: pauseSceneSession,

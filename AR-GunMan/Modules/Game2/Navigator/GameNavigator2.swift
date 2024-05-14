@@ -40,7 +40,7 @@ final class GameNavigator2: GameNavigator2Interface {
             useCase: useCase,
             navigator: navigator
         )
-        let gameSceneController = GameSceneController(sceneView: vc.view)
+        let gameSceneController = GameSceneController()
         let coreMotionController = CoreMotionController(coreMotionManager: CMMotionManager())
         vc.viewModel = viewModel
         vc.gameSceneController = gameSceneController
