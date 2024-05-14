@@ -50,17 +50,12 @@ final class GameViewController2: UIViewController {
         bindOutputToCoreMotionController(output.outputToCoreMotion)
         subscribeViewModelAction(output.viewModelAction)
     }
-    
+
     private func setupUI() {
         // 等幅フォントにして高速で動くタイムカウントの横振れを防止
         timeCountLabel.font = timeCountLabel.font.monospacedDigitFont
-        
-        // sceneViewをViewにインサートして表示
-        let sceneView = gameSceneController.getSceneView()
-        sceneView.frame = self.view.frame
-        self.view.insertSubview(sceneView, at: 0)
     }
-    
+
     private func bindOutputToViewComponents(
         _ output: GameViewModel2.Output.OutputToView
     ) {        
@@ -86,7 +81,8 @@ final class GameViewController2: UIViewController {
             output.setupSceneView
                 .subscribe(onNext: { [weak self] _ in
                     guard let self = self else { return }
-                    self.gameSceneController.setupSceneView()
+                    let sceneView = self.gameSceneController.setupSceneView(with: self.view.frame)
+                    self.view.insertSubview(sceneView, at: 0)
                 })
             output.renderAllTargets
                 .subscribe(onNext: { [weak self] count in
