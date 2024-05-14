@@ -169,7 +169,7 @@ final class GameSceneController: NSObject {
     
     private func isTargetHit(nodeAName: String, nodeBName: String) -> Bool {
         return (nodeAName == GameConst.bulletNodeName && nodeBName == GameConst.targetNodeName)
-        || (nodeAName == GameConst.bulletNodeName && nodeBName == GameConst.targetNodeName)
+        || (nodeBName == GameConst.bulletNodeName && nodeAName == GameConst.targetNodeName)
     }
     
     private func removeContactedNodes(nodeA: SCNNode, nodeB: SCNNode) {
