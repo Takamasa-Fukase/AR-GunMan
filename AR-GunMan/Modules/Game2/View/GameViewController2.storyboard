@@ -26,7 +26,7 @@
                                 </constraints>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SK0-oV-aLU">
-                                <rect key="frame" x="79" y="302" width="210" height="70"/>
+                                <rect key="frame" x="59" y="302" width="210" height="70"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="210" id="2eW-cl-aAB"/>
                                     <constraint firstAttribute="height" constant="70" id="X3Z-L5-NTT"/>
@@ -69,7 +69,7 @@
                             <constraint firstItem="6KH-pE-9Dr" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="30" id="6TP-Fp-Cio"/>
                             <constraint firstAttribute="trailing" secondItem="6KH-pE-9Dr" secondAttribute="trailing" constant="60" id="CUO-mj-uwL"/>
                             <constraint firstItem="7my-Yd-Dlj" firstAttribute="centerY" secondItem="5EZ-qb-Rvc" secondAttribute="centerY" id="NQX-bU-pYF"/>
-                            <constraint firstItem="SK0-oV-aLU" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="20" id="ReP-7O-YCi"/>
+                            <constraint firstItem="SK0-oV-aLU" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="ReP-7O-YCi"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="SK0-oV-aLU" secondAttribute="bottom" id="Rtp-ow-3yx"/>
                             <constraint firstItem="hkW-ab-8nW" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="20" id="nuI-Zl-4kv"/>
                             <constraint firstItem="7my-Yd-Dlj" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="pLc-eG-PYh"/>
@@ -85,7 +85,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="40" y="-2"/>
+            <point key="canvasLocation" x="39.436619718309863" y="-2.2900763358778624"/>
         </scene>
     </scenes>
     <resources>
