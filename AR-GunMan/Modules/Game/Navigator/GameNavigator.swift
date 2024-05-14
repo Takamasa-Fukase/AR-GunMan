@@ -49,6 +49,30 @@ final class GameNavigator: GameNavigatorInterface {
         return vc
     }
     
+    static func assembleModules2() -> UIViewController {
+        let storyboard: UIStoryboard = UIStoryboard(name: "GameViewController2", bundle: nil)
+        let vc = storyboard.instantiateInitialViewController() as! GameViewController2
+        vc.modalPresentationStyle = .fullScreen
+        
+        let tutorialRepository = TutorialRepository()
+        let timerRepository = TimerRepository()
+        let useCase = GameUseCase2(
+            tutorialRepository: tutorialRepository,
+            timerRepository: timerRepository
+        )
+        let navigator = GameNavigator(viewController: vc)
+        let viewModel = GameViewModel2(
+            useCase: useCase,
+            navigator: navigator
+        )
+        let gameSceneController = GameSceneController(sceneView: vc.view)
+        let coreMotionController = CoreMotionController(coreMotionManager: CMMotionManager())
+        vc.viewModel = viewModel
+        vc.gameSceneController = gameSceneController
+        vc.coreMotionController = coreMotionController
+        return vc
+    }
+    
     func showTutorialView(tutorialEndObserver: PublishRelay<Void>) {
         let vc = TutorialNavigator.assembleModules(
             transitionType: .gamePage,

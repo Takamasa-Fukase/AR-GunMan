@@ -68,6 +68,8 @@
 		67DB2C5D27C17EF300B8CB3C /* TopConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DB2C5C27C17EF300B8CB3C /* TopConst.swift */; };
 		67DB2C5F27C17F4E00B8CB3C /* SettingsConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DB2C5E27C17F4E00B8CB3C /* SettingsConst.swift */; };
 		67DB2C6127C17F8D00B8CB3C /* GameConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DB2C6027C17F8D00B8CB3C /* GameConst.swift */; };
+		860191742BEDDF2A00382749 /* CoreMotionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860191732BEDDF2A00382749 /* CoreMotionController.swift */; };
+		860191762BEDE03D00382749 /* CoreMotionStreamFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860191752BEDE03D00382749 /* CoreMotionStreamFilter.swift */; };
 		860C94972BD3CDAC0042D52C /* NameRegisterNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860C94962BD3CDAC0042D52C /* NameRegisterNavigator.swift */; };
 		860C94992BD3D2980042D52C /* NameRegisterUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860C94982BD3D2980042D52C /* NameRegisterUseCase.swift */; };
 		8613E28B2BB135B200BF4489 /* GameNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8613E28A2BB135B200BF4489 /* GameNavigator.swift */; };
@@ -81,6 +83,11 @@
 		8627F63B2BD0B1340003D374 /* ResultUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8627F63A2BD0B1340003D374 /* ResultUseCase.swift */; };
 		8627F6432BD16BB60003D374 /* ObservableActivityTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8627F6422BD16BB60003D374 /* ObservableActivityTracker.swift */; };
 		86299BA02BEC7E9600BAA2B3 /* GameSceneConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86299B9F2BEC7E9600BAA2B3 /* GameSceneConst.swift */; };
+		8629E0FD2BF21F16004FFEBD /* GameViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8629E0FC2BF21F16004FFEBD /* GameViewController2.swift */; };
+		8629E0FF2BF21F1E004FFEBD /* GameViewController2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8629E0FE2BF21F1E004FFEBD /* GameViewController2.storyboard */; };
+		8629E1012BF21F36004FFEBD /* GameViewModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8629E1002BF21F36004FFEBD /* GameViewModel2.swift */; };
+		8629E1032BF22916004FFEBD /* GameSceneController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8629E1022BF22916004FFEBD /* GameSceneController.swift */; };
+		8629E1052BF2E56E004FFEBD /* GameUseCase2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8629E1042BF2E56E004FFEBD /* GameUseCase2.swift */; };
 		863FE7EE2BEA6D8D00E104F5 /* FirebaseConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 863FE7ED2BEA6D8D00E104F5 /* FirebaseConst.swift */; };
 		86594DC82BCD50F100971D1A /* TopUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86594DC72BCD50F100971D1A /* TopUseCase.swift */; };
 		86594DCA2BCD558E00971D1A /* AVPermissionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86594DC92BCD558E00971D1A /* AVPermissionRepository.swift */; };
@@ -202,6 +209,8 @@
 		67DB2C5E27C17F4E00B8CB3C /* SettingsConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsConst.swift; sourceTree = "<group>"; };
 		67DB2C6027C17F8D00B8CB3C /* GameConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameConst.swift; sourceTree = "<group>"; };
 		82CB4F049BB35C36EAA5A632 /* Pods_AR_GunManTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_GunManTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		860191732BEDDF2A00382749 /* CoreMotionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreMotionController.swift; sourceTree = "<group>"; };
+		860191752BEDE03D00382749 /* CoreMotionStreamFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreMotionStreamFilter.swift; sourceTree = "<group>"; };
 		860C94962BD3CDAC0042D52C /* NameRegisterNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameRegisterNavigator.swift; sourceTree = "<group>"; };
 		860C94982BD3D2980042D52C /* NameRegisterUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameRegisterUseCase.swift; sourceTree = "<group>"; };
 		8613E28A2BB135B200BF4489 /* GameNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameNavigator.swift; sourceTree = "<group>"; };
@@ -215,6 +224,11 @@
 		8627F63A2BD0B1340003D374 /* ResultUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultUseCase.swift; sourceTree = "<group>"; };
 		8627F6422BD16BB60003D374 /* ObservableActivityTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableActivityTracker.swift; sourceTree = "<group>"; };
 		86299B9F2BEC7E9600BAA2B3 /* GameSceneConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneConst.swift; sourceTree = "<group>"; };
+		8629E0FC2BF21F16004FFEBD /* GameViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController2.swift; sourceTree = "<group>"; };
+		8629E0FE2BF21F1E004FFEBD /* GameViewController2.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = GameViewController2.storyboard; sourceTree = "<group>"; };
+		8629E1002BF21F36004FFEBD /* GameViewModel2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel2.swift; sourceTree = "<group>"; };
+		8629E1022BF22916004FFEBD /* GameSceneController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneController.swift; sourceTree = "<group>"; };
+		8629E1042BF2E56E004FFEBD /* GameUseCase2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameUseCase2.swift; sourceTree = "<group>"; };
 		863FE7ED2BEA6D8D00E104F5 /* FirebaseConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseConst.swift; sourceTree = "<group>"; };
 		86594DC72BCD50F100971D1A /* TopUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopUseCase.swift; sourceTree = "<group>"; };
 		86594DC92BCD558E00971D1A /* AVPermissionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPermissionRepository.swift; sourceTree = "<group>"; };
@@ -370,6 +384,7 @@
 				5952F64A25EA104D00ADB85B /* Const */,
 				677DF1F227A7C0EE007512F6 /* Entity */,
 				677DF1EF27A7C07A007512F6 /* Repository */,
+				8629E1062BF2E63D004FFEBD /* Model */,
 				86A6CB212BCC0D9F00628C61 /* Modules */,
 				59D2D5462552E2CC006DDB70 /* Resources */,
 				59D2D5412552E24D006DDB70 /* art.scnassets */,
@@ -496,6 +511,7 @@
 				67DB2C5627BFD01900B8CB3C /* SceneNodeUtil.swift */,
 				67DB2C5827C10E8B00B8CB3C /* SceneAnimationUtil.swift */,
 				8627F6422BD16BB60003D374 /* ObservableActivityTracker.swift */,
+				860191752BEDE03D00382749 /* CoreMotionStreamFilter.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -534,6 +550,7 @@
 			isa = PBXGroup;
 			children = (
 				8613E28F2BB1BFC400BF4489 /* GameUseCase.swift */,
+				8629E1042BF2E56E004FFEBD /* GameUseCase2.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -544,6 +561,13 @@
 				8627F6342BCE83F30003D374 /* ViewModelType.swift */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		8629E1062BF2E63D004FFEBD /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		86A6CB212BCC0D9F00628C61 /* Modules */ = {
@@ -567,6 +591,10 @@
 			children = (
 				59D2D5832552E6B2006DDB70 /* GameViewController.swift */,
 				59D2D5822552E6B2006DDB70 /* GameViewController.storyboard */,
+				8629E0FC2BF21F16004FFEBD /* GameViewController2.swift */,
+				8629E0FE2BF21F1E004FFEBD /* GameViewController2.storyboard */,
+				860191732BEDDF2A00382749 /* CoreMotionController.swift */,
+				8629E1022BF22916004FFEBD /* GameSceneController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -575,6 +603,7 @@
 			isa = PBXGroup;
 			children = (
 				86C421B42BAFDD5800EFD791 /* GameViewModel.swift */,
+				8629E1002BF21F36004FFEBD /* GameViewModel2.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -948,6 +977,7 @@
 				59484C7D256584B000F9C6A8 /* startWhistle.mp3 in Resources */,
 				59D2D55D2552E2CC006DDB70 /* pistol-fire.mp3 in Resources */,
 				59484C8A25664FEC00F9C6A8 /* bazookaHit.mp3 in Resources */,
+				8629E0FF2BF21F1E004FFEBD /* GameViewController2.storyboard in Resources */,
 				59940BB12552FAAF00EC20C1 /* NameRegisterViewController.storyboard in Resources */,
 				59D2D5942552E718006DDB70 /* WeaponChangeCell.xib in Resources */,
 				5961B6D5256EC44700B6D736 /* taimei-san.jpg in Resources */,
@@ -1131,9 +1161,13 @@
 				8613E2902BB1BFC400BF4489 /* GameUseCase.swift in Sources */,
 				8627F6432BD16BB60003D374 /* ObservableActivityTracker.swift in Sources */,
 				86627DE6273FD5E30044A980 /* RankingViewController.swift in Sources */,
+				8629E0FD2BF21F16004FFEBD /* GameViewController2.swift in Sources */,
 				59D2D5952552E718006DDB70 /* WeaponChangeViewController.swift in Sources */,
 				59D2D5852552E6B2006DDB70 /* GameViewController.swift in Sources */,
+				8629E1052BF2E56E004FFEBD /* GameUseCase2.swift in Sources */,
 				677DF1EE27A710A8007512F6 /* SafariViewUtil.swift in Sources */,
+				860191762BEDE03D00382749 /* CoreMotionStreamFilter.swift in Sources */,
+				860191742BEDDF2A00382749 /* CoreMotionController.swift in Sources */,
 				8627F6352BCE83F30003D374 /* ViewModelType.swift in Sources */,
 				86C5AB982AB8819C00CB161D /* UIAlertController+Extension.swift in Sources */,
 				67200F5927A0026000AD92EC /* NameRegisterViewModel.swift in Sources */,
@@ -1150,6 +1184,8 @@
 				595E6987256C0190002B4F3E /* SettingsViewController.swift in Sources */,
 				67DB2C5F27C17F4E00B8CB3C /* SettingsConst.swift in Sources */,
 				8613E28D2BB1B0C600BF4489 /* CoreMotionRepository.swift in Sources */,
+				8629E1012BF21F36004FFEBD /* GameViewModel2.swift in Sources */,
+				8629E1032BF22916004FFEBD /* GameSceneController.swift in Sources */,
 				59A01134255AF580008996E3 /* ResultViewController.swift in Sources */,
 				86C421B52BAFDD5800EFD791 /* GameViewModel.swift in Sources */,
 				86594DCA2BCD558E00971D1A /* AVPermissionRepository.swift in Sources */,
