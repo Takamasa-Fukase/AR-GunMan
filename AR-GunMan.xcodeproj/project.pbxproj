@@ -70,6 +70,7 @@
 		67DB2C6127C17F8D00B8CB3C /* GameConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DB2C6027C17F8D00B8CB3C /* GameConst.swift */; };
 		860191742BEDDF2A00382749 /* CoreMotionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860191732BEDDF2A00382749 /* CoreMotionController.swift */; };
 		860191762BEDE03D00382749 /* CoreMotionStreamFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860191752BEDE03D00382749 /* CoreMotionStreamFilter.swift */; };
+		860645EC2BF4CD5F00906DA0 /* SimpleGameViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860645EB2BF4CD5F00906DA0 /* SimpleGameViewModelTests.swift */; };
 		860C94972BD3CDAC0042D52C /* NameRegisterNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860C94962BD3CDAC0042D52C /* NameRegisterNavigator.swift */; };
 		860C94992BD3D2980042D52C /* NameRegisterUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860C94982BD3D2980042D52C /* NameRegisterUseCase.swift */; };
 		8613E28B2BB135B200BF4489 /* GameNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8613E28A2BB135B200BF4489 /* GameNavigator.swift */; };
@@ -216,6 +217,7 @@
 		82CB4F049BB35C36EAA5A632 /* Pods_AR_GunManTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_GunManTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		860191732BEDDF2A00382749 /* CoreMotionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreMotionController.swift; sourceTree = "<group>"; };
 		860191752BEDE03D00382749 /* CoreMotionStreamFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreMotionStreamFilter.swift; sourceTree = "<group>"; };
+		860645EB2BF4CD5F00906DA0 /* SimpleGameViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleGameViewModelTests.swift; sourceTree = "<group>"; };
 		860C94962BD3CDAC0042D52C /* NameRegisterNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameRegisterNavigator.swift; sourceTree = "<group>"; };
 		860C94982BD3D2980042D52C /* NameRegisterUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameRegisterUseCase.swift; sourceTree = "<group>"; };
 		8613E28A2BB135B200BF4489 /* GameNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameNavigator.swift; sourceTree = "<group>"; };
@@ -409,6 +411,7 @@
 			isa = PBXGroup;
 			children = (
 				59D2D4EF2552DE67006DDB70 /* AR_GunManTests.swift */,
+				860645EB2BF4CD5F00906DA0 /* SimpleGameViewModelTests.swift */,
 				59D2D4F12552DE67006DDB70 /* Info.plist */,
 			);
 			path = "AR-GunManTests";
@@ -1268,6 +1271,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				860645EC2BF4CD5F00906DA0 /* SimpleGameViewModelTests.swift in Sources */,
 				59D2D4F02552DE67006DDB70 /* AR_GunManTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
