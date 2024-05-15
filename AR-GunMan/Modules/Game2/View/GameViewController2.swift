@@ -63,10 +63,7 @@ final class GameViewController2: UIViewController {
             output.sightImage
                 .bind(to: sightImageView.rx.image)
             output.sightImageColor
-                .subscribe(onNext: { [weak self] element in
-                    guard let self = self else {return}
-                    self.sightImageView.tintColor = element
-                })
+                .bind(to: sightImageView.rx.tintColor)
             output.timeCountText
                 .bind(to: timeCountLabel.rx.text)
             output.bulletsCountImage
