@@ -204,7 +204,7 @@ extension GameSceneController: SCNPhysicsContactDelegate {
         if isTargetHit(nodeAName: contact.nodeA.name ?? "", nodeBName: contact.nodeB.name ?? "") {
             removeContactedNodes(nodeA: contact.nodeA, nodeB: contact.nodeB)
             // TODO: ここのweaponTypeも後でVMからの指示に含まれたtypeの値に変える
-            showTargetHitParticleToContactPoint(currentWeapon: .bazooka, contactPoint: contact.contactPoint)
+//            showTargetHitParticleToContactPoint(currentWeapon: .bazooka, contactPoint: contact.contactPoint)
             targetHitRelay.accept(Void())
         }
     }
