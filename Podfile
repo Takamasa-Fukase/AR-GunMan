@@ -21,6 +21,7 @@ target 'AR-GunMan' do
  pod 'Gecco'
  pod 'RxSwift', '~> 6.7.0'
  pod 'RxCocoa', '~> 6.7.0'
+ pod 'RxTest', '~> 6.7.0'
  pod 'PanModal'
 
   target 'AR-GunManTests' do

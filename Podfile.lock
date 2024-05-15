@@ -829,6 +829,8 @@ PODS:
   - RxRelay (6.7.0):
     - RxSwift (= 6.7.0)
   - RxSwift (6.7.0)
+  - RxTest (6.7.0):
+    - RxSwift (= 6.7.0)
   - SideMenu (6.5.0)
   - TextFieldEffects (1.6.0)
   - TransitionButton (0.5.3)
@@ -847,6 +849,7 @@ DEPENDENCIES:
   - PKHUD
   - RxCocoa (~> 6.7.0)
   - RxSwift (~> 6.7.0)
+  - RxTest (~> 6.7.0)
   - SideMenu
   - TextFieldEffects
   - TransitionButton
@@ -882,6 +885,7 @@ SPEC REPOS:
     - RxCocoa
     - RxRelay
     - RxSwift
+    - RxTest
     - SideMenu
     - TextFieldEffects
     - TransitionButton
@@ -916,10 +920,11 @@ SPEC CHECKSUMS:
   RxCocoa: fb0aefb9e7229c8ab057acde714136d19117f102
   RxRelay: 5d39f4d8da150ad47a71b9ce11915e3eae2a8f4d
   RxSwift: 6ee35684dc3f7a63938758f4b7708199517dfa97
+  RxTest: b1e1f2dca4849fd09a79c8f240db4ee2830b919e
   SideMenu: f583187d21c5b1dd04c72002be544b555a2627a2
   TextFieldEffects: 529b8aff706fb40f82c41c780c0777941a893796
   TransitionButton: 36283346e17c64775a1b3bc3a7a72940a367de1f
 
-PODFILE CHECKSUM: f5601083f03daa159a84a0eaa86f60675e665da7
+PODFILE CHECKSUM: b0bd6feedb059c19fc9725fe05bc33278bb3ba9b
 
 COCOAPODS: 1.15.2
