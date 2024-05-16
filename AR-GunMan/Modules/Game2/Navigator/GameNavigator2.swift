@@ -53,7 +53,9 @@ final class GameNavigator2: GameNavigator2Interface {
             transitionType: .gamePage,
             tutorialEndObserver: tutorialEndObserver
         )
-        viewController.presentPanModal(vc)
+        // TODO: 後でiOS16からの公式ハーフモーダルに変える
+        viewController.present(vc, animated: true)
+//        viewController.presentPanModal(vc)
     }
     
     func showWeaponChangeView(weaponSelectObserver: PublishRelay<WeaponType>) {

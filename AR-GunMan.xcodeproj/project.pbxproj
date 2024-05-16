@@ -34,8 +34,6 @@
 		59A01139255AF588008996E3 /* ResultViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59A01138255AF588008996E3 /* ResultViewController.storyboard */; };
 		59D2D4D92552DE66006DDB70 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2D4D82552DE66006DDB70 /* AppDelegate.swift */; };
 		59D2D4E52552DE67006DDB70 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59D2D4E32552DE67006DDB70 /* LaunchScreen.storyboard */; };
-		59D2D4F02552DE67006DDB70 /* AR_GunManTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2D4EF2552DE67006DDB70 /* AR_GunManTests.swift */; };
-		59D2D4FB2552DE67006DDB70 /* AR_GunManUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2D4FA2552DE67006DDB70 /* AR_GunManUITests.swift */; };
 		59D2D53A2552E1D2006DDB70 /* Storyboard+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2D5392552E1D2006DDB70 /* Storyboard+Extension.swift */; };
 		59D2D5422552E24D006DDB70 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 59D2D5412552E24D006DDB70 /* art.scnassets */; };
 		59D2D55B2552E2CC006DDB70 /* pistol-out-bullets.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 59D2D5502552E2CC006DDB70 /* pistol-out-bullets.mp3 */; };
@@ -83,8 +81,6 @@
 		860645F62BF5994900906DA0 /* Storyboard+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2D5392552E1D2006DDB70 /* Storyboard+Extension.swift */; };
 		860645F72BF5994C00906DA0 /* Font+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5952F63F25EA0E1800ADB85B /* Font+Extension.swift */; };
 		860645F82BF5994D00906DA0 /* Font+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5952F63F25EA0E1800ADB85B /* Font+Extension.swift */; };
-		860645F92BF5994F00906DA0 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866675D3275215AF007CB4D6 /* UIViewController+Extension.swift */; };
-		860645FA2BF5995000906DA0 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866675D3275215AF007CB4D6 /* UIViewController+Extension.swift */; };
 		860645FB2BF5995200906DA0 /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C85D297420CD00E49BD5 /* UserDefaults+Extension.swift */; };
 		860645FC2BF5995300906DA0 /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C85D297420CD00E49BD5 /* UserDefaults+Extension.swift */; };
 		860645FD2BF5995800906DA0 /* UIAlertController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C5AB972AB8819C00CB161D /* UIAlertController+Extension.swift */; };
@@ -334,6 +330,8 @@
 		BCB852AF2BE4F7FB0027F060 /* GameSceneRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB852AE2BE4F7FB0027F060 /* GameSceneRepository.swift */; };
 		BCD9675E2979E55400E33587 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD9675D2979E55400E33587 /* UIImageView+Extension.swift */; };
 		BCD96C03297C757600E33587 /* RankingViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BCD96C02297C757600E33587 /* RankingViewController.storyboard */; };
+		BCF1C2842BF611F200ACD841 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866675D3275215AF007CB4D6 /* UIViewController+Extension.swift */; };
+		BCF1C2852BF611F300ACD841 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866675D3275215AF007CB4D6 /* UIViewController+Extension.swift */; };
 		D54734259EA1C7BF11A28908 /* Pods_AR_GunMan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4280580740F2443B66781090 /* Pods_AR_GunMan.framework */; };
 /* End PBXBuildFile section */
 
@@ -389,10 +387,8 @@
 		59D2D4E42552DE67006DDB70 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		59D2D4E62552DE67006DDB70 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		59D2D4EB2552DE67006DDB70 /* AR-GunManTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AR-GunManTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		59D2D4EF2552DE67006DDB70 /* AR_GunManTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AR_GunManTests.swift; sourceTree = "<group>"; };
 		59D2D4F12552DE67006DDB70 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		59D2D4F62552DE67006DDB70 /* AR-GunManUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AR-GunManUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		59D2D4FA2552DE67006DDB70 /* AR_GunManUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AR_GunManUITests.swift; sourceTree = "<group>"; };
 		59D2D4FC2552DE67006DDB70 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		59D2D5392552E1D2006DDB70 /* Storyboard+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Storyboard+Extension.swift"; sourceTree = "<group>"; };
 		59D2D5412552E24D006DDB70 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -624,7 +620,6 @@
 		59D2D4EE2552DE67006DDB70 /* AR-GunManTests */ = {
 			isa = PBXGroup;
 			children = (
-				59D2D4EF2552DE67006DDB70 /* AR_GunManTests.swift */,
 				860645EB2BF4CD5F00906DA0 /* SimpleGameViewModelTests.swift */,
 				59D2D4F12552DE67006DDB70 /* Info.plist */,
 			);
@@ -634,7 +629,6 @@
 		59D2D4F92552DE67006DDB70 /* AR-GunManUITests */ = {
 			isa = PBXGroup;
 			children = (
-				59D2D4FA2552DE67006DDB70 /* AR_GunManUITests.swift */,
 				59D2D4FC2552DE67006DDB70 /* Info.plist */,
 			);
 			path = "AR-GunManUITests";
@@ -1558,7 +1552,6 @@
 				860646782BF599D500906DA0 /* ResultViewModel.swift in Sources */,
 				860646142BF5996200906DA0 /* ObservableActivityTracker.swift in Sources */,
 				860646CA2BF59CF100906DA0 /* WeaponType.swift in Sources */,
-				860645F92BF5994F00906DA0 /* UIViewController+Extension.swift in Sources */,
 				860646132BF5996200906DA0 /* SceneAnimationUtil.swift in Sources */,
 				860646292BF5996E00906DA0 /* Ranking.swift in Sources */,
 				8606468C2BF599DF00906DA0 /* RankingCell.swift in Sources */,
@@ -1582,7 +1575,6 @@
 				860646632BF599B000906DA0 /* SimpleGameViewController.swift in Sources */,
 				8606466E2BF599BC00906DA0 /* WeaponChangeCell.swift in Sources */,
 				860645EC2BF4CD5F00906DA0 /* SimpleGameViewModelTests.swift in Sources */,
-				59D2D4F02552DE67006DDB70 /* AR_GunManTests.swift in Sources */,
 				860645F52BF5994900906DA0 /* Storyboard+Extension.swift in Sources */,
 				8606464F2BF5999600906DA0 /* GameViewModel.swift in Sources */,
 				8606469A2BF599E900906DA0 /* SettingsViewModel.swift in Sources */,
@@ -1596,6 +1588,7 @@
 				860646592BF5999F00906DA0 /* CoreMotionController.swift in Sources */,
 				860646582BF5999F00906DA0 /* GameUseCase2.swift in Sources */,
 				8606460F2BF5996200906DA0 /* RankingUtil.swift in Sources */,
+				BCF1C2842BF611F200ACD841 /* UIViewController+Extension.swift in Sources */,
 				860646452BF5998F00906DA0 /* TutorialNavigator.swift in Sources */,
 				8606464C2BF5999600906DA0 /* GameUseCase.swift in Sources */,
 				8606468F2BF599DF00906DA0 /* RankingViewModel.swift in Sources */,
@@ -1636,7 +1629,6 @@
 				8606469C2BF599EA00906DA0 /* SettingsNavigator.swift in Sources */,
 				860646232BF5996800906DA0 /* SettingsConst.swift in Sources */,
 				8606465D2BF599A000906DA0 /* GameViewModel2.swift in Sources */,
-				860645FA2BF5995000906DA0 /* UIViewController+Extension.swift in Sources */,
 				860646962BF599E000906DA0 /* RankingViewModel.swift in Sources */,
 				860645F42BF5994500906DA0 /* CustomError.swift in Sources */,
 				860646862BF599D600906DA0 /* ResultUseCase.swift in Sources */,
@@ -1670,7 +1662,6 @@
 				860646702BF599BD00906DA0 /* WeaponChangeNavigator.swift in Sources */,
 				8606462A2BF5996E00906DA0 /* Ranking.swift in Sources */,
 				8606467F2BF599D600906DA0 /* ResultNavigator.swift in Sources */,
-				59D2D4FB2552DE67006DDB70 /* AR_GunManUITests.swift in Sources */,
 				860646382BF5997300906DA0 /* TimerRepository.swift in Sources */,
 				860646542BF5999600906DA0 /* GameViewModel.swift in Sources */,
 				860646CB2BF59D0A00906DA0 /* AudioUtil.swift in Sources */,
@@ -1698,6 +1689,7 @@
 				860645F82BF5994D00906DA0 /* Font+Extension.swift in Sources */,
 				860646882BF599D600906DA0 /* NameRegisterViewModel.swift in Sources */,
 				860646932BF599E000906DA0 /* RankingCell.swift in Sources */,
+				BCF1C2852BF611F300ACD841 /* UIViewController+Extension.swift in Sources */,
 				860646022BF5995900906DA0 /* UIViewController+RxLifeCycleEvents.swift in Sources */,
 				860646812BF599D600906DA0 /* NameRegisterUseCase.swift in Sources */,
 				8606465F2BF599A000906DA0 /* GameUseCase2.swift in Sources */,
