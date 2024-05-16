@@ -13,23 +13,23 @@ import RxTest
 final class SimpleGameViewModelTests: XCTestCase {
     var scheduler: TestScheduler!
     var disposeBag: DisposeBag!
-    var viewModel: SimpleGameViewModel!
 
     override func setUp() {
         super.setUp()
         scheduler = TestScheduler(initialClock: 0)
         disposeBag = DisposeBag()
-        viewModel = SimpleGameViewModel()
     }
     
     override func tearDown() {
         scheduler = nil
         disposeBag = nil
-        viewModel = nil
         super.tearDown()
     }
     
     func test_pistolを7発撃った後に撃とうとしてもrenderWeaponFiringのイベントが流れなければ成功() {
+        let state = SimpleGameViewModel.State()
+        let viewModel = SimpleGameViewModel(state: state)
+        
         // pistolの装弾数（7発）を超えて撃つイベントを作成
         let fire10times = scheduler.createHotObservable([
             .next(100, ()),
@@ -59,7 +59,7 @@ final class SimpleGameViewModelTests: XCTestCase {
         output.outputToGameScene.renderWeaponFiring
             .subscribe(renderWeaponFiringObserver)
             .disposed(by: disposeBag)
-        
+
         scheduler.start()
         
         let expectedEvents: [Recorded] = [
@@ -73,5 +73,21 @@ final class SimpleGameViewModelTests: XCTestCase {
         ]
         
         XCTAssertEqual(expectedEvents, renderWeaponFiringObserver.events)
+    }
+    
+    private func subscribeAllVMActionEvents(
+        _ viewModelAction: SimpleGameViewModel.Output.ViewModelAction
+    ) {
+        viewModelAction.fireWeapon
+            .subscribe()
+            .disposed(by: disposeBag)
+        
+        viewModelAction.reloadWeapon
+            .subscribe()
+            .disposed(by: disposeBag)
+        
+        viewModelAction.addScore
+            .subscribe()
+            .disposed(by: disposeBag)
     }
 }
