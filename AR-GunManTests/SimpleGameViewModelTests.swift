@@ -6,30 +6,72 @@
 //
 
 import XCTest
+import RxSwift
+import RxTest
+@testable import AR_GunMan
 
 final class SimpleGameViewModelTests: XCTestCase {
+    var scheduler: TestScheduler!
+    var disposeBag: DisposeBag!
+    var viewModel: SimpleGameViewModel!
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    override func setUp() {
+        super.setUp()
+        scheduler = TestScheduler(initialClock: 0)
+        disposeBag = DisposeBag()
+        viewModel = SimpleGameViewModel()
     }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    
+    override func tearDown() {
+        scheduler = nil
+        disposeBag = nil
+        viewModel = nil
+        super.tearDown()
     }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+    
+    func test_pistolを7発撃った後に撃とうとしてもrenderWeaponFiringのイベントが流れなければ成功() {
+        // pistolの装弾数（7発）を超えて撃つイベントを作成
+        let fire10times = scheduler.createHotObservable([
+            .next(100, ()),
+            .next(200, ()),
+            .next(300, ()),
+            .next(400, ()),
+            .next(500, ()),
+            .next(600, ()),
+            .next(700, ()),
+            .next(800, ()),
+            .next(900, ()),
+            .next(1000, ()),
+        ])
+        
+        let input = SimpleGameViewModel.Input(
+            inputFromGameScene: SimpleGameViewModel.Input.InputFromGameScene(
+                targetHit: Observable.empty()
+            ),
+            inputFromCoreMotion: SimpleGameViewModel.Input.InputFromCoreMotion(
+                firingMotionDetected: fire10times.asObservable(),
+                reloadingMotionDetected: Observable.empty()
+            )
+        )
+        let output = viewModel.transform(input: input)
+        
+        let renderWeaponFiringObserver = scheduler.createObserver(WeaponType.self)
+        output.outputToGameScene.renderWeaponFiring
+            .subscribe(renderWeaponFiringObserver)
+            .disposed(by: disposeBag)
+        
+        scheduler.start()
+        
+        let expectedEvents: [Recorded] = [
+            .next(100, WeaponType.pistol),
+            .next(200, WeaponType.pistol),
+            .next(300, WeaponType.pistol),
+            .next(400, WeaponType.pistol),
+            .next(500, WeaponType.pistol),
+            .next(600, WeaponType.pistol),
+            .next(700, WeaponType.pistol)
+        ]
+        
+        XCTAssertEqual(expectedEvents, renderWeaponFiringObserver.events)
     }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-
 }
