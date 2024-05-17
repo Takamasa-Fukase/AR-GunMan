@@ -45,7 +45,7 @@ final class SimpleGameViewModel: ViewModelType {
     
     class State {
         let bulletsCountRelay = BehaviorRelay<Int>(value: WeaponType.pistol.bulletsCapacity)
-        var score: Double = 0
+        let score = BehaviorRelay<Double>(value: 0)
         var canFire: Bool {
 //            print("vm canFire: \(bulletsCountRelay.value > 0), bulletsCountRelay.value: \(bulletsCountRelay.value)")
             return bulletsCountRelay.value > 0
@@ -96,7 +96,9 @@ final class SimpleGameViewModel: ViewModelType {
             .do(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 AudioUtil.playSound(of: WeaponType.pistol.hitSound)
-                self.state.score += 1
+                self.state.score.accept(
+                    self.state.score.value + 1
+                )
             })
         
         
