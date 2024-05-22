@@ -13,16 +13,19 @@ import RxTest
 final class SimpleGameViewModelTests: XCTestCase {
     var scheduler: TestScheduler!
     var disposeBag: DisposeBag!
+    var soundPlayer: SoundPlayerMock!
 
     override func setUp() {
         super.setUp()
         scheduler = TestScheduler(initialClock: 0)
         disposeBag = DisposeBag()
+        soundPlayer = SoundPlayerMock()
     }
     
     override func tearDown() {
         scheduler = nil
         disposeBag = nil
+        soundPlayer = nil
         super.tearDown()
     }
     
@@ -91,11 +94,34 @@ final class SimpleGameViewModelTests: XCTestCase {
             // bulletsCountRelayはBehaviorRelayな為subscribe時に現在値が一回流れるのでそれも含める
             .next(0, 0),
         ]
-        
-        print("実際のイベント: \(bulletsCountObserver.events)")
-        print("期待値: \(expectedEvents)")
-        
+
         XCTAssertEqual(bulletsCountObserver.events, expectedEvents)
+    }
+    
+    func test_pistolの残弾数が0の時に撃とうとしてpistolOutBulletsの音声再生処理が呼ばれれば成功() {
+        let state = SimpleGameViewModel.State()
+        // 残弾数を0にする
+        state.bulletsCountRelay.accept(0)
+        let viewModel = SimpleGameViewModel(state: state, soundPlayer: soundPlayer)
+        
+        let tryFiring = scheduler.createHotObservable([
+            .next(0, ()),
+        ])
+        let input = SimpleGameViewModel.Input(
+            inputFromGameScene: .init(targetHit: .empty()),
+            inputFromCoreMotion: .init(
+                firingMotionDetected: tryFiring.asObservable(),
+                reloadingMotionDetected: .empty()
+            )
+        )
+        let output = viewModel.transform(input: input)
+        // subscribeしないと動かないVM内部の処理を通常通り動かす為に一括でsubscribe
+        subscribeAllVMActionEvents(output.viewModelAction)
+        
+        scheduler.start()
+        
+        XCTAssertTrue(soundPlayer.isPlayCalled)
+        XCTAssertEqual(soundPlayer.playedSound, .pistolOutBullets)
     }
     
     func test_pistolの残弾数がMAXの7発の時に10回撃とうとしてもrenderWeaponFiringのイベントが7回しか流れなければ成功() {
@@ -149,6 +175,39 @@ final class SimpleGameViewModelTests: XCTestCase {
         ]
         
         XCTAssertEqual(expectedEvents, renderWeaponFiringObserver.events)
+    }
+    
+    func test_pistolの残弾数がMAXの7発の時に7回撃とうとしてpistolShootの音声再生処理が7回呼ばれれば成功() {
+        let state = SimpleGameViewModel.State()
+        // 残弾数をMAXの7発にする
+        state.bulletsCountRelay.accept(7)
+        let viewModel = SimpleGameViewModel(state: state, soundPlayer: soundPlayer)
+        
+        let tryFiring7Times = scheduler.createHotObservable([
+            .next(100, ()),
+            .next(200, ()),
+            .next(300, ()),
+            .next(400, ()),
+            .next(500, ()),
+            .next(600, ()),
+            .next(700, ()),
+        ])
+        let input = SimpleGameViewModel.Input(
+            inputFromGameScene: .init(targetHit: .empty()),
+            inputFromCoreMotion: .init(
+                firingMotionDetected: tryFiring7Times.asObservable(),
+                reloadingMotionDetected: .empty()
+            )
+        )
+        let output = viewModel.transform(input: input)
+        // subscribeしないと動かないVM内部の処理を通常通り動かす為に一括でsubscribe
+        subscribeAllVMActionEvents(output.viewModelAction)
+        
+        scheduler.start()
+        
+        XCTAssertTrue(soundPlayer.isPlayCalled)
+        XCTAssertEqual(soundPlayer.playedSound, WeaponType.pistol.firingSound)
+        XCTAssertEqual(soundPlayer.playCalledCount, 7)
     }
     
     private func subscribeAllVMActionEvents(
