@@ -521,7 +521,7 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		5952F63E25EA0DE900ADB85B /* Extension */ = {
+		5952F63E25EA0DE900ADB85B /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				59D2D5392552E1D2006DDB70 /* Storyboard+Extension.swift */,
@@ -533,10 +533,10 @@
 				BCD9675D2979E55400E33587 /* UIImageView+Extension.swift */,
 				86C5AB972AB8819C00CB161D /* UIAlertController+Extension.swift */,
 			);
-			path = Extension;
+			path = Extensions;
 			sourceTree = "<group>";
 		};
-		5952F64A25EA104D00ADB85B /* Const */ = {
+		5952F64A25EA104D00ADB85B /* Constants */ = {
 			isa = PBXGroup;
 			children = (
 				67DB2C5A27C17EBE00B8CB3C /* SoundConst.swift */,
@@ -548,7 +548,7 @@
 				863FE7ED2BEA6D8D00E104F5 /* FirebaseConst.swift */,
 				86299B9F2BEC7E9600BAA2B3 /* GameSceneConst.swift */,
 			);
-			path = Const;
+			path = Constants;
 			sourceTree = "<group>";
 		};
 		595E6985256C0169002B4F3E /* Settings */ = {
@@ -601,11 +601,12 @@
 				59F79E5F256BE7B0006EC1B3 /* AR-GunMan.entitlements */,
 				59D2D4D82552DE66006DDB70 /* AppDelegate.swift */,
 				86F1573E2BD9329600BE979C /* CustomError.swift */,
-				5952F63E25EA0DE900ADB85B /* Extension */,
-				677DF1EC27A71086007512F6 /* Utility */,
-				5952F64A25EA104D00ADB85B /* Const */,
-				677DF1F227A7C0EE007512F6 /* Entity */,
-				677DF1EF27A7C07A007512F6 /* Repository */,
+				5952F63E25EA0DE900ADB85B /* Extensions */,
+				677DF1EC27A71086007512F6 /* Utilities */,
+				5952F64A25EA104D00ADB85B /* Constants */,
+				677DF1F227A7C0EE007512F6 /* Entities */,
+				677DF1EF27A7C07A007512F6 /* Repositories */,
+				86DA33112BFDCCDB00186C04 /* Models */,
 				86A6CB212BCC0D9F00628C61 /* Modules */,
 				59D2D5462552E2CC006DDB70 /* Resources */,
 				59D2D5412552E24D006DDB70 /* art.scnassets */,
@@ -719,7 +720,7 @@
 			path = WeaponChange;
 			sourceTree = "<group>";
 		};
-		677DF1EC27A71086007512F6 /* Utility */ = {
+		677DF1EC27A71086007512F6 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
 				5952F63125E9C62100ADB85B /* AudioUtil.swift */,
@@ -733,10 +734,10 @@
 				8627F6422BD16BB60003D374 /* ObservableActivityTracker.swift */,
 				860191752BEDE03D00382749 /* CoreMotionStreamFilter.swift */,
 			);
-			path = Utility;
+			path = Utilities;
 			sourceTree = "<group>";
 		};
-		677DF1EF27A7C07A007512F6 /* Repository */ = {
+		677DF1EF27A7C07A007512F6 /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
 				677DF1F027A7C096007512F6 /* RankingRepository.swift */,
@@ -747,15 +748,15 @@
 				BCB852AE2BE4F7FB0027F060 /* GameSceneRepository.swift */,
 				86F044262BEA0A60005D8D14 /* TimerRepository.swift */,
 			);
-			path = Repository;
+			path = Repositories;
 			sourceTree = "<group>";
 		};
-		677DF1F227A7C0EE007512F6 /* Entity */ = {
+		677DF1F227A7C0EE007512F6 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
 				677DF1F327A7C100007512F6 /* Ranking.swift */,
 			);
-			path = Entity;
+			path = Entities;
 			sourceTree = "<group>";
 		};
 		8613E2892BB1357D00BF4489 /* Navigator */ = {
@@ -1104,6 +1105,13 @@
 			children = (
 			);
 			path = UseCase;
+			sourceTree = "<group>";
+		};
+		86DA33112BFDCCDB00186C04 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		9181646D3CDAAE6BA576903B /* Frameworks */ = {
