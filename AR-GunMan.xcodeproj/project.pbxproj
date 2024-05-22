@@ -596,9 +596,9 @@
 			children = (
 				59F79E5F256BE7B0006EC1B3 /* AR-GunMan.entitlements */,
 				86DA33182BFDDD6D00186C04 /* Application */,
-				86DA33172BFDDD5500186C04 /* Data */,
-				86DA33192BFDE0F200186C04 /* Domain */,
 				86A6CB212BCC0D9F00628C61 /* Presentation */,
+				86DA33192BFDE0F200186C04 /* Domain */,
+				86DA33172BFDDD5500186C04 /* Data */,
 				677DF1EC27A71086007512F6 /* Utilities */,
 				5952F64A25EA104D00ADB85B /* Constants */,
 				86DA33122BFDD68800186C04 /* Common */,
@@ -808,16 +808,8 @@
 		86A6CB212BCC0D9F00628C61 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				59D2D5712552E448006DDB70 /* Top */,
-				599450FE256AD53A00560202 /* Tutorial */,
-				59D2D5722552E458006DDB70 /* Game */,
-				8629E1072BF34B60004FFEBD /* Game2 */,
-				861469002BF4B78D007BF1B6 /* SimpleGame */,
-				59EF28EB256E93A600F63C74 /* WeaponChange */,
-				BCD96C01297C6F4000E33587 /* Result */,
-				59D2D5732552E4A9006DDB70 /* NameRegister */,
-				59D2D5742552E4D1006DDB70 /* Ranking */,
-				595E6985256C0169002B4F3E /* Settings */,
+				86DA331C2BFE0B6600186C04 /* Screens */,
+				86DA331B2BFE0AE100186C04 /* Common */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -1073,6 +1065,30 @@
 				86F1573C2BD7BBA200BE979C /* RankingUseCase.swift */,
 			);
 			path = UseCase;
+			sourceTree = "<group>";
+		};
+		86DA331B2BFE0AE100186C04 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		86DA331C2BFE0B6600186C04 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				59D2D5712552E448006DDB70 /* Top */,
+				599450FE256AD53A00560202 /* Tutorial */,
+				59D2D5722552E458006DDB70 /* Game */,
+				8629E1072BF34B60004FFEBD /* Game2 */,
+				861469002BF4B78D007BF1B6 /* SimpleGame */,
+				59EF28EB256E93A600F63C74 /* WeaponChange */,
+				BCD96C01297C6F4000E33587 /* Result */,
+				59D2D5732552E4A9006DDB70 /* NameRegister */,
+				59D2D5742552E4D1006DDB70 /* Ranking */,
+				595E6985256C0169002B4F3E /* Settings */,
+			);
+			path = Screens;
 			sourceTree = "<group>";
 		};
 		9181646D3CDAAE6BA576903B /* Frameworks */ = {
