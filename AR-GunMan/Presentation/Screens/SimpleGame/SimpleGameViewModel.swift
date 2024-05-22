@@ -56,9 +56,14 @@ final class SimpleGameViewModel: ViewModelType {
     }
     
     private var state: State
+    private var soundPlayer: SoundPlayerInterface
     
-    init(state: State = State()) {
+    init(
+        state: State = State(),
+        soundPlayer: SoundPlayerInterface = SoundPlayer.shared
+    ) {
         self.state = state
+        self.soundPlayer = soundPlayer
     }
     
     func transform(input: Input) -> Output {
@@ -66,11 +71,16 @@ final class SimpleGameViewModel: ViewModelType {
         let fireWeapon = input.inputFromCoreMotion.firingMotionDetected
             .filter({ [weak self] _ in
                 guard let self = self else { return false }
-                return self.state.canFire
+                if self.state.canFire {
+                    return true
+                }else {
+                    self.soundPlayer.play(.pistolOutBullets)
+                    return false
+                }
             })
             .do(onNext: { [weak self] _ in
                 guard let self = self else { return }
-                AudioUtil.playSound(of: WeaponType.pistol.firingSound)
+                self.soundPlayer.play(WeaponType.pistol.firingSound)
                 self.state.bulletsCountRelay.accept(
                     self.state.bulletsCountRelay.value - 1
                 )
@@ -85,7 +95,7 @@ final class SimpleGameViewModel: ViewModelType {
             })
             .do(onNext: { [weak self] _ in
                 guard let self = self else { return }
-                AudioUtil.playSound(of: WeaponType.pistol.reloadingSound)
+                self.soundPlayer.play(WeaponType.pistol.reloadingSound)
                 self.state.bulletsCountRelay.accept(
                     WeaponType.pistol.bulletsCapacity
                 )
@@ -95,7 +105,7 @@ final class SimpleGameViewModel: ViewModelType {
         let addScore = input.inputFromGameScene.targetHit
             .do(onNext: { [weak self] _ in
                 guard let self = self else { return }
-                AudioUtil.playSound(of: WeaponType.pistol.hitSound)
+                self.soundPlayer.play(WeaponType.pistol.hitSound)
                 self.state.score.accept(
                     self.state.score.value + 1
                 )

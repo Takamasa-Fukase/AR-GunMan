@@ -22,4 +22,8 @@ enum Sounds: String, CaseIterable {
     case rankingAppear = "rankingAppear"
     case kyuiin = "kyuiin"
     case westernPistolShoot = "westernPistolShoot"
+    
+    var needsPlayVibration: Bool {
+        return self == .pistolShoot || self == .bazookaShoot
+    }
 }
