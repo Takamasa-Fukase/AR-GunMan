@@ -9,9 +9,9 @@ import Foundation
 import AVFoundation
 
 final class AudioUtil {
-    static var audioPlayers: [Sounds: AVAudioPlayer] = [:]
+    static var audioPlayers: [SoundType: AVAudioPlayer] = [:]
     
-    static func playSound(of sound: Sounds) {
+    static func playSound(of sound: SoundType) {
         audioPlayers[sound]?.currentTime = 0
         audioPlayers[sound]?.play()
         
@@ -32,7 +32,7 @@ final class AudioUtil {
 extension AudioUtil {
     
     static func initAudioPlayers() {
-        Sounds.allCases.forEach({ sound in
+        SoundType.allCases.forEach({ sound in
             guard let path = Bundle.main.path(forResource: sound.rawValue, ofType: "mp3") else {
                 print("音源\(sound.rawValue)が見つかりません")
                 return

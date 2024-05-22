@@ -8,13 +8,13 @@
 import AVFoundation
 
 protocol SoundPlayerInterface {
-    func play(_ sound: Sounds)
+    func play(_ sound: SoundType)
 }
 
 final class SoundPlayer {
     static let shared = SoundPlayer()
     
-    private var audioPlayers: [Sounds: AVAudioPlayer] = [:]
+    private var audioPlayers: [SoundType: AVAudioPlayer] = [:]
     
     private init() {
         initAudioPlayers()
@@ -22,7 +22,7 @@ final class SoundPlayer {
     }
     
     private func initAudioPlayers() {
-        Sounds.allCases.forEach({ sound in
+        SoundType.allCases.forEach({ sound in
             guard let path = Bundle.main.path(forResource: sound.rawValue, ofType: "mp3") else {
                 print("音源\(sound.rawValue)が見つかりません")
                 return
@@ -37,7 +37,7 @@ final class SoundPlayer {
         })
     }
     
-    private func playSound(of sound: Sounds) {
+    private func playSound(of sound: SoundType) {
         audioPlayers[sound]?.currentTime = 0
         audioPlayers[sound]?.play()
     }
@@ -58,7 +58,7 @@ final class SoundPlayer {
 }
 
 extension SoundPlayer: SoundPlayerInterface {
-    func play(_ sound: Sounds) {
+    func play(_ sound: SoundType) {
         playSound(of: sound)
         if sound.needsPlayVibration {
             playVibration()

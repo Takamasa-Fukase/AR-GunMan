@@ -9,10 +9,10 @@ import Foundation
 
 final class SoundPlayerMock: SoundPlayerInterface {
     var isPlayCalled = false
-    var playedSound: Sounds?
+    var playedSound: SoundType?
     var playCalledCount = 0
     
-    func play(_ sound: Sounds) {
+    func play(_ sound: SoundType) {
         isPlayCalled = true
         playedSound = sound
         playCalledCount += 1

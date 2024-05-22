@@ -88,7 +88,7 @@ enum WeaponType: CaseIterable {
         }
     }
     
-    var hitSound: Sounds {
+    var hitSound: SoundType {
         switch self {
         case .pistol:
             return .headShot
@@ -97,7 +97,7 @@ enum WeaponType: CaseIterable {
         }
     }
     
-    var firingSound: Sounds {
+    var firingSound: SoundType {
         switch self {
         case .pistol:
             return .pistolShoot
@@ -106,7 +106,7 @@ enum WeaponType: CaseIterable {
         }
     }
     
-    var reloadingSound: Sounds {
+    var reloadingSound: SoundType {
         switch self {
         case .pistol:
             return .pistolReload
@@ -115,7 +115,7 @@ enum WeaponType: CaseIterable {
         }
     }
 
-    var weaponChangingSound: Sounds {
+    var weaponChangingSound: SoundType {
         switch self {
         case .pistol:
             return .pistolSet

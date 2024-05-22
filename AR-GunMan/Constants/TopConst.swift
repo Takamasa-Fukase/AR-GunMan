@@ -12,7 +12,7 @@ final class TopConst {
     private static let targetIcon = UIImage(systemName: "target")
     private static let targetIconShot = UIImage(named: "bulletsHole")
     
-    static let iconChangingSound: Sounds = .westernPistolShoot
+    static let iconChangingSound: SoundType = .westernPistolShoot
     static let iconRevertInterval: Double = 0.5
     
     static func targetIcon(isSwitched: Bool) -> UIImage? {

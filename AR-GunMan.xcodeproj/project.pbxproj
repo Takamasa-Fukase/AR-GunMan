@@ -62,7 +62,7 @@
 		67B685EF27AAD8B300D7F413 /* TimeCountUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B685EE27AAD8B300D7F413 /* TimeCountUtil.swift */; };
 		67DB2C5727BFD01900B8CB3C /* SceneNodeUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DB2C5627BFD01900B8CB3C /* SceneNodeUtil.swift */; };
 		67DB2C5927C10E8B00B8CB3C /* SceneAnimationUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DB2C5827C10E8B00B8CB3C /* SceneAnimationUtil.swift */; };
-		67DB2C5B27C17EBE00B8CB3C /* SoundConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DB2C5A27C17EBE00B8CB3C /* SoundConst.swift */; };
+		67DB2C5B27C17EBE00B8CB3C /* SoundType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DB2C5A27C17EBE00B8CB3C /* SoundType.swift */; };
 		67DB2C5D27C17EF300B8CB3C /* TopConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DB2C5C27C17EF300B8CB3C /* TopConst.swift */; };
 		67DB2C5F27C17F4E00B8CB3C /* SettingsConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DB2C5E27C17F4E00B8CB3C /* SettingsConst.swift */; };
 		67DB2C6127C17F8D00B8CB3C /* GameConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DB2C6027C17F8D00B8CB3C /* GameConst.swift */; };
@@ -111,14 +111,14 @@
 		860646182BF5996200906DA0 /* CoreMotionStreamFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860191752BEDE03D00382749 /* CoreMotionStreamFilter.swift */; };
 		8606461A2BF5996700906DA0 /* GameConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DB2C6027C17F8D00B8CB3C /* GameConst.swift */; };
 		8606461B2BF5996700906DA0 /* SettingsConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DB2C5E27C17F4E00B8CB3C /* SettingsConst.swift */; };
-		8606461C2BF5996700906DA0 /* SoundConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DB2C5A27C17EBE00B8CB3C /* SoundConst.swift */; };
+		8606461C2BF5996700906DA0 /* SoundType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DB2C5A27C17EBE00B8CB3C /* SoundType.swift */; };
 		8606461D2BF5996700906DA0 /* ErrorConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86F157402BD93C1E00BE979C /* ErrorConst.swift */; };
 		8606461E2BF5996700906DA0 /* TopConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DB2C5C27C17EF300B8CB3C /* TopConst.swift */; };
 		8606461F2BF5996700906DA0 /* FirebaseConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 863FE7ED2BEA6D8D00E104F5 /* FirebaseConst.swift */; };
 		860646202BF5996700906DA0 /* GameSceneConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86299B9F2BEC7E9600BAA2B3 /* GameSceneConst.swift */; };
 		860646222BF5996800906DA0 /* GameConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DB2C6027C17F8D00B8CB3C /* GameConst.swift */; };
 		860646232BF5996800906DA0 /* SettingsConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DB2C5E27C17F4E00B8CB3C /* SettingsConst.swift */; };
-		860646242BF5996800906DA0 /* SoundConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DB2C5A27C17EBE00B8CB3C /* SoundConst.swift */; };
+		860646242BF5996800906DA0 /* SoundType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DB2C5A27C17EBE00B8CB3C /* SoundType.swift */; };
 		860646252BF5996800906DA0 /* ErrorConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86F157402BD93C1E00BE979C /* ErrorConst.swift */; };
 		860646262BF5996800906DA0 /* TopConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DB2C5C27C17EF300B8CB3C /* TopConst.swift */; };
 		860646272BF5996800906DA0 /* FirebaseConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 863FE7ED2BEA6D8D00E104F5 /* FirebaseConst.swift */; };
@@ -424,7 +424,7 @@
 		67B685EE27AAD8B300D7F413 /* TimeCountUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCountUtil.swift; sourceTree = "<group>"; };
 		67DB2C5627BFD01900B8CB3C /* SceneNodeUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneNodeUtil.swift; sourceTree = "<group>"; };
 		67DB2C5827C10E8B00B8CB3C /* SceneAnimationUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneAnimationUtil.swift; sourceTree = "<group>"; };
-		67DB2C5A27C17EBE00B8CB3C /* SoundConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundConst.swift; sourceTree = "<group>"; };
+		67DB2C5A27C17EBE00B8CB3C /* SoundType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundType.swift; sourceTree = "<group>"; };
 		67DB2C5C27C17EF300B8CB3C /* TopConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopConst.swift; sourceTree = "<group>"; };
 		67DB2C5E27C17F4E00B8CB3C /* SettingsConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsConst.swift; sourceTree = "<group>"; };
 		67DB2C6027C17F8D00B8CB3C /* GameConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameConst.swift; sourceTree = "<group>"; };
@@ -1030,7 +1030,7 @@
 			isa = PBXGroup;
 			children = (
 				86F1573E2BD9329600BE979C /* CustomError.swift */,
-				67DB2C5A27C17EBE00B8CB3C /* SoundConst.swift */,
+				67DB2C5A27C17EBE00B8CB3C /* SoundType.swift */,
 				BC92C853297061FE00E49BD5 /* WeaponType.swift */,
 			);
 			path = Enums;
@@ -1456,7 +1456,7 @@
 				BC92C85E297420CD00E49BD5 /* UserDefaults+Extension.swift in Sources */,
 				67DB2C6127C17F8D00B8CB3C /* GameConst.swift in Sources */,
 				860C94992BD3D2980042D52C /* NameRegisterUseCase.swift in Sources */,
-				67DB2C5B27C17EBE00B8CB3C /* SoundConst.swift in Sources */,
+				67DB2C5B27C17EBE00B8CB3C /* SoundType.swift in Sources */,
 				86F1573B2BD7B71E00BE979C /* RankingNavigator.swift in Sources */,
 				BC92C8602975A2A800E49BD5 /* UIViewController+RxLifeCycleEvents.swift in Sources */,
 				677DF1F427A7C100007512F6 /* Ranking.swift in Sources */,
@@ -1598,7 +1598,7 @@
 				8606462B2BF5997200906DA0 /* GameSceneRepository.swift in Sources */,
 				8606462D2BF5997200906DA0 /* RankingRepository.swift in Sources */,
 				860646442BF5998F00906DA0 /* TutorialViewController.swift in Sources */,
-				8606461C2BF5996700906DA0 /* SoundConst.swift in Sources */,
+				8606461C2BF5996700906DA0 /* SoundType.swift in Sources */,
 				8606466D2BF599BC00906DA0 /* WeaponChangeViewModel.swift in Sources */,
 				8606467A2BF599D500906DA0 /* NameRegisterViewController.swift in Sources */,
 				8606461D2BF5996700906DA0 /* ErrorConst.swift in Sources */,
@@ -1673,7 +1673,7 @@
 				860646602BF599A000906DA0 /* CoreMotionController.swift in Sources */,
 				861B87772BFE1E4900D0882D /* SoundPlayer.swift in Sources */,
 				860646032BF5995900906DA0 /* UIScrollView+Extension.swift in Sources */,
-				860646242BF5996800906DA0 /* SoundConst.swift in Sources */,
+				860646242BF5996800906DA0 /* SoundType.swift in Sources */,
 				860646682BF599B100906DA0 /* SimpleGameNavigator.swift in Sources */,
 				860646372BF5997300906DA0 /* AVPermissionRepository.swift in Sources */,
 				860646802BF599D600906DA0 /* ResultViewController.swift in Sources */,
