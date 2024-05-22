@@ -290,6 +290,10 @@
 		861469052BF4B806007BF1B6 /* SimpleGameViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 861469042BF4B805007BF1B6 /* SimpleGameViewController.storyboard */; };
 		861469072BF4B811007BF1B6 /* SimpleGameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 861469062BF4B811007BF1B6 /* SimpleGameViewModel.swift */; };
 		861469092BF4C041007BF1B6 /* SimpleGameNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 861469082BF4C041007BF1B6 /* SimpleGameNavigator.swift */; };
+		861B87752BFE0F6100D0882D /* SoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 861B87742BFE0F6100D0882D /* SoundPlayer.swift */; };
+		861B87762BFE1E4700D0882D /* SoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 861B87742BFE0F6100D0882D /* SoundPlayer.swift */; };
+		861B87772BFE1E4900D0882D /* SoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 861B87742BFE0F6100D0882D /* SoundPlayer.swift */; };
+		861B87792BFE258100D0882D /* SoundPlayerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 861B87782BFE258100D0882D /* SoundPlayerMock.swift */; };
 		8627F6302BCDFEB40003D374 /* SettingsNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8627F62F2BCDFEB40003D374 /* SettingsNavigator.swift */; };
 		8627F6322BCE454C0003D374 /* TutorialNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8627F6312BCE454C0003D374 /* TutorialNavigator.swift */; };
 		8627F6352BCE83F30003D374 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8627F6342BCE83F30003D374 /* ViewModelType.swift */; };
@@ -437,6 +441,8 @@
 		861469042BF4B805007BF1B6 /* SimpleGameViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SimpleGameViewController.storyboard; sourceTree = "<group>"; };
 		861469062BF4B811007BF1B6 /* SimpleGameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleGameViewModel.swift; sourceTree = "<group>"; };
 		861469082BF4C041007BF1B6 /* SimpleGameNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleGameNavigator.swift; sourceTree = "<group>"; };
+		861B87742BFE0F6100D0882D /* SoundPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundPlayer.swift; sourceTree = "<group>"; };
+		861B87782BFE258100D0882D /* SoundPlayerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundPlayerMock.swift; sourceTree = "<group>"; };
 		8627F62F2BCDFEB40003D374 /* SettingsNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsNavigator.swift; sourceTree = "<group>"; };
 		8627F6312BCE454C0003D374 /* TutorialNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialNavigator.swift; sourceTree = "<group>"; };
 		8627F6342BCE83F30003D374 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
@@ -616,6 +622,7 @@
 			isa = PBXGroup;
 			children = (
 				860645EB2BF4CD5F00906DA0 /* SimpleGameViewModelTests.swift */,
+				861B87782BFE258100D0882D /* SoundPlayerMock.swift */,
 				59D2D4F12552DE67006DDB70 /* Info.plist */,
 			);
 			path = "AR-GunManTests";
@@ -1070,6 +1077,7 @@
 		86DA331B2BFE0AE100186C04 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				861B87742BFE0F6100D0882D /* SoundPlayer.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1491,6 +1499,7 @@
 				5952F62825E94D1000ADB85B /* TopViewModel.swift in Sources */,
 				59D2D4D92552DE66006DDB70 /* AppDelegate.swift in Sources */,
 				866675D4275215AF007CB4D6 /* UIViewController+Extension.swift in Sources */,
+				861B87752BFE0F6100D0882D /* SoundPlayer.swift in Sources */,
 				86F044272BEA0A60005D8D14 /* TimerRepository.swift in Sources */,
 				59D2D53A2552E1D2006DDB70 /* Storyboard+Extension.swift in Sources */,
 				67200F5727A0020B00AD92EC /* RankingViewModel.swift in Sources */,
@@ -1539,6 +1548,7 @@
 				860646132BF5996200906DA0 /* SceneAnimationUtil.swift in Sources */,
 				860646292BF5996E00906DA0 /* Ranking.swift in Sources */,
 				8606468C2BF599DF00906DA0 /* RankingCell.swift in Sources */,
+				861B87792BFE258100D0882D /* SoundPlayerMock.swift in Sources */,
 				860646112BF5996200906DA0 /* SceneNodeUtil.swift in Sources */,
 				860646392BF5998100906DA0 /* TopViewModel.swift in Sources */,
 				860646122BF5996200906DA0 /* SafariViewUtil.swift in Sources */,
@@ -1579,6 +1589,7 @@
 				860646102BF5996200906DA0 /* SceneViewSettingUtil.swift in Sources */,
 				860646182BF5996200906DA0 /* CoreMotionStreamFilter.swift in Sources */,
 				860646652BF599B000906DA0 /* SimpleGameNavigator.swift in Sources */,
+				861B87762BFE1E4700D0882D /* SoundPlayer.swift in Sources */,
 				860645FF2BF5995800906DA0 /* UIScrollView+Extension.swift in Sources */,
 				860645ED2BF598D600906DA0 /* SimpleGameViewModel.swift in Sources */,
 				860646162BF5996200906DA0 /* TimeCountUtil.swift in Sources */,
@@ -1660,6 +1671,7 @@
 				860646262BF5996800906DA0 /* TopConst.swift in Sources */,
 				860646612BF599A000906DA0 /* GameSceneController.swift in Sources */,
 				860646602BF599A000906DA0 /* CoreMotionController.swift in Sources */,
+				861B87772BFE1E4900D0882D /* SoundPlayer.swift in Sources */,
 				860646032BF5995900906DA0 /* UIScrollView+Extension.swift in Sources */,
 				860646242BF5996800906DA0 /* SoundConst.swift in Sources */,
 				860646682BF599B100906DA0 /* SimpleGameNavigator.swift in Sources */,
