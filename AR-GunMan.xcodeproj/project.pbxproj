@@ -314,6 +314,10 @@
 		86594DCC2BCD75E100971D1A /* ReplayRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86594DCB2BCD75E100971D1A /* ReplayRepository.swift */; };
 		86627DE6273FD5E30044A980 /* RankingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86627DE5273FD5E30044A980 /* RankingViewController.swift */; };
 		866675D4275215AF007CB4D6 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866675D3275215AF007CB4D6 /* UIViewController+Extension.swift */; };
+		867B855D2BFF3199004F6D56 /* GameNavigator3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867B855C2BFF3199004F6D56 /* GameNavigator3.swift */; };
+		867B855F2BFF31A2004F6D56 /* GameViewModel3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867B855E2BFF31A2004F6D56 /* GameViewModel3.swift */; };
+		867B85612BFF31C1004F6D56 /* GameViewController3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867B85602BFF31C1004F6D56 /* GameViewController3.swift */; };
+		867B85632BFF31D7004F6D56 /* GameViewController3.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 867B85622BFF31D7004F6D56 /* GameViewController3.storyboard */; };
 		86A6CB412BCC116D00628C61 /* TopNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A6CB402BCC116D00628C61 /* TopNavigator.swift */; };
 		86B8A3A62B7E0D1F005ED2F8 /* RankingUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B8A3A52B7E0D1F005ED2F8 /* RankingUtil.swift */; };
 		86C421B52BAFDD5800EFD791 /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C421B42BAFDD5800EFD791 /* GameViewModel.swift */; };
@@ -463,6 +467,10 @@
 		86594DCB2BCD75E100971D1A /* ReplayRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplayRepository.swift; sourceTree = "<group>"; };
 		86627DE5273FD5E30044A980 /* RankingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingViewController.swift; sourceTree = "<group>"; };
 		866675D3275215AF007CB4D6 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
+		867B855C2BFF3199004F6D56 /* GameNavigator3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameNavigator3.swift; sourceTree = "<group>"; };
+		867B855E2BFF31A2004F6D56 /* GameViewModel3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel3.swift; sourceTree = "<group>"; };
+		867B85602BFF31C1004F6D56 /* GameViewController3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController3.swift; sourceTree = "<group>"; };
+		867B85622BFF31D7004F6D56 /* GameViewController3.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = GameViewController3.storyboard; sourceTree = "<group>"; };
 		86A6CB402BCC116D00628C61 /* TopNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopNavigator.swift; sourceTree = "<group>"; };
 		86B8A3A52B7E0D1F005ED2F8 /* RankingUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingUtil.swift; sourceTree = "<group>"; };
 		86C421B42BAFDD5800EFD791 /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
@@ -812,6 +820,17 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		867B855A2BFF3173004F6D56 /* Game3 */ = {
+			isa = PBXGroup;
+			children = (
+				867B855C2BFF3199004F6D56 /* GameNavigator3.swift */,
+				867B855E2BFF31A2004F6D56 /* GameViewModel3.swift */,
+				867B85602BFF31C1004F6D56 /* GameViewController3.swift */,
+				867B85622BFF31D7004F6D56 /* GameViewController3.storyboard */,
+			);
+			path = Game3;
+			sourceTree = "<group>";
+		};
 		86A6CB212BCC0D9F00628C61 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
@@ -1089,6 +1108,7 @@
 				599450FE256AD53A00560202 /* Tutorial */,
 				59D2D5722552E458006DDB70 /* Game */,
 				8629E1072BF34B60004FFEBD /* Game2 */,
+				867B855A2BFF3173004F6D56 /* Game3 */,
 				861469002BF4B78D007BF1B6 /* SimpleGame */,
 				59EF28EB256E93A600F63C74 /* WeaponChange */,
 				BCD96C01297C6F4000E33587 /* Result */,
@@ -1230,6 +1250,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				59484C7025657E2B00F9C6A8 /* rankingAppear.mp3 in Resources */,
+				867B85632BFF31D7004F6D56 /* GameViewController3.storyboard in Resources */,
 				59945108256AD57300560202 /* TutorialViewController.storyboard in Resources */,
 				59A01139255AF588008996E3 /* ResultViewController.storyboard in Resources */,
 				59484C7D256584B000F9C6A8 /* startWhistle.mp3 in Resources */,
@@ -1455,11 +1476,13 @@
 				86594DCC2BCD75E100971D1A /* ReplayRepository.swift in Sources */,
 				BC92C85E297420CD00E49BD5 /* UserDefaults+Extension.swift in Sources */,
 				67DB2C6127C17F8D00B8CB3C /* GameConst.swift in Sources */,
+				867B855F2BFF31A2004F6D56 /* GameViewModel3.swift in Sources */,
 				860C94992BD3D2980042D52C /* NameRegisterUseCase.swift in Sources */,
 				67DB2C5B27C17EBE00B8CB3C /* SoundType.swift in Sources */,
 				86F1573B2BD7B71E00BE979C /* RankingNavigator.swift in Sources */,
 				BC92C8602975A2A800E49BD5 /* UIViewController+RxLifeCycleEvents.swift in Sources */,
 				677DF1F427A7C100007512F6 /* Ranking.swift in Sources */,
+				867B855D2BFF3199004F6D56 /* GameNavigator3.swift in Sources */,
 				BC92C85A297348D500E49BD5 /* ScoreCalculator.swift in Sources */,
 				86F1573F2BD9329600BE979C /* CustomError.swift in Sources */,
 				8613E28B2BB135B200BF4489 /* GameNavigator.swift in Sources */,
@@ -1471,6 +1494,7 @@
 				BCD9675E2979E55400E33587 /* UIImageView+Extension.swift in Sources */,
 				BCB852AF2BE4F7FB0027F060 /* GameSceneRepository.swift in Sources */,
 				BC92C854297061FE00E49BD5 /* WeaponType.swift in Sources */,
+				867B85612BFF31C1004F6D56 /* GameViewController3.swift in Sources */,
 				861469072BF4B811007BF1B6 /* SimpleGameViewModel.swift in Sources */,
 				BC2B11672977F90C009F4DC4 /* UIScrollView+Extension.swift in Sources */,
 				8627F6392BD0A4280003D374 /* ResultNavigator.swift in Sources */,
