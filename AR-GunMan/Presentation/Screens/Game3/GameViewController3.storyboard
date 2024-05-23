@@ -76,6 +76,12 @@
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="eyL-0z-kog" secondAttribute="bottom" id="nIw-jY-KHj"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="bulletsCountImageView" destination="eyL-0z-kog" id="D9e-pq-Zg9"/>
+                        <outlet property="sightImageView" destination="0wJ-R5-Jcd" id="31e-Ff-TM7"/>
+                        <outlet property="switchWeaponButton" destination="KXa-iL-ROH" id="ol8-cq-fZJ"/>
+                        <outlet property="timeCountLabel" destination="bS0-Db-TCs" id="NeR-nq-CgJ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
