@@ -47,7 +47,6 @@ final class SimpleGameViewModel: ViewModelType {
         let bulletsCountRelay = BehaviorRelay<Int>(value: WeaponType.pistol.bulletsCapacity)
         let score = BehaviorRelay<Double>(value: 0)
         var canFire: Bool {
-//            print("vm canFire: \(bulletsCountRelay.value > 0), bulletsCountRelay.value: \(bulletsCountRelay.value)")
             return bulletsCountRelay.value > 0
         }
         var canReload: Bool {

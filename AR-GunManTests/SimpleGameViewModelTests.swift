@@ -99,19 +99,20 @@ final class SimpleGameViewModelTests: XCTestCase {
         XCTAssertEqual(bulletsCountObserver.events, expectedEvents)
     }
     
-    func test_pistolの残弾数が0の時に撃とうとしてpistolOutBulletsの音声再生処理が呼ばれれば成功() {
-        let state = SimpleGameViewModel.State()
+    func test_pistolの残弾数が0の時に3回撃とうとしてpistolOutBulletsの音声再生処理が3回呼ばれれば成功() {
         // 残弾数を0にする
         state.bulletsCountRelay.accept(0)
         let viewModel = SimpleGameViewModel(state: state, soundPlayer: soundPlayer)
         
-        let tryFiring = scheduler.createHotObservable([
-            .next(0, ()),
+        let tryFiring3Times = scheduler.createHotObservable([
+            .next(100, ()),
+            .next(200, ()),
+            .next(300, ())
         ])
         let input = SimpleGameViewModel.Input(
             inputFromGameScene: .init(targetHit: .empty()),
             inputFromCoreMotion: .init(
-                firingMotionDetected: tryFiring.asObservable(),
+                firingMotionDetected: tryFiring3Times.asObservable(),
                 reloadingMotionDetected: .empty()
             )
         )
@@ -123,10 +124,10 @@ final class SimpleGameViewModelTests: XCTestCase {
         
         XCTAssertTrue(soundPlayer.isPlayCalled)
         XCTAssertEqual(soundPlayer.playedSound, .pistolOutBullets)
+        XCTAssertEqual(soundPlayer.playCalledCount, 3)
     }
     
     func test_pistolの残弾数がMAXの7発の時に10回撃とうとしてもrenderWeaponFiringのイベントが7回しか流れなければ成功() {
-        let state = SimpleGameViewModel.State()
         // 残弾数をMAXの7発にする
         state.bulletsCountRelay.accept(7)
         let viewModel = SimpleGameViewModel(state: state)
