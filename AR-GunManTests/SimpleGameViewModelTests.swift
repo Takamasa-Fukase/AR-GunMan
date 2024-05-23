@@ -13,24 +13,26 @@ import RxTest
 final class SimpleGameViewModelTests: XCTestCase {
     var scheduler: TestScheduler!
     var disposeBag: DisposeBag!
+    var state: SimpleGameViewModel.State!
     var soundPlayer: SoundPlayerMock!
 
     override func setUp() {
         super.setUp()
         scheduler = TestScheduler(initialClock: 0)
         disposeBag = DisposeBag()
+        state = SimpleGameViewModel.State()
         soundPlayer = SoundPlayerMock()
     }
     
     override func tearDown() {
         scheduler = nil
         disposeBag = nil
+        state = nil
         soundPlayer = nil
         super.tearDown()
     }
     
     func test_pistolの残弾数が0の時に3回撃とうとしてもrenderWeaponFiringイベントが流れなければ成功() {
-        let state = SimpleGameViewModel.State()
         // 残弾数を0にする
         state.bulletsCountRelay.accept(0)
         let viewModel = SimpleGameViewModel(state: state)
@@ -62,7 +64,6 @@ final class SimpleGameViewModelTests: XCTestCase {
     }
     
     func test_pistolの残弾数が0の時に3回撃とうとしても0のまま変わらなければ成功() {
-        let state = SimpleGameViewModel.State()
         // 残弾数を0にする
         state.bulletsCountRelay.accept(0)
         let viewModel = SimpleGameViewModel(state: state)
@@ -178,7 +179,6 @@ final class SimpleGameViewModelTests: XCTestCase {
     }
     
     func test_pistolの残弾数がMAXの7発の時に7回撃とうとしてpistolShootの音声再生処理が7回呼ばれれば成功() {
-        let state = SimpleGameViewModel.State()
         // 残弾数をMAXの7発にする
         state.bulletsCountRelay.accept(7)
         let viewModel = SimpleGameViewModel(state: state, soundPlayer: soundPlayer)
