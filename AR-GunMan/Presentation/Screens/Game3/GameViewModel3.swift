@@ -79,10 +79,10 @@ final class GameViewModel3: ViewModelType {
     struct State {
         let weaponTypeRelay = BehaviorRelay<WeaponType>(value: .pistol)
         let bulletsCountRelay = BehaviorRelay<Int>(value: WeaponType.pistol.bulletsCapacity)
-        var isWeaponReloading: Bool = false
+        let isWeaponReloadingRelay = BehaviorRelay<Bool>(value: false)
         let timeCountRelay = BehaviorRelay<Double>(value: GameConst.timeCount)
-        var score: Double = 0
-        var reloadingMotionDetectedCountRelay = BehaviorRelay<Int>(value: 0)
+        let scoreRelay = BehaviorRelay<Double>(value: 0)
+        let reloadingMotionDetectedCountRelay = BehaviorRelay<Int>(value: 0)
         var isPlaying: Bool {
             return timeCountRelay.value < GameConst.timeCount && timeCountRelay.value > 0
         }
@@ -96,23 +96,28 @@ final class GameViewModel3: ViewModelType {
     
     private let useCase: GameUseCase3Interface
     private let navigator: GameNavigator3Interface
-    
-    // 遷移先画面から受け取る通知
-    private let tutorialEndObserver = PublishRelay<Void>()
-    private let weaponSelectObserver = PublishRelay<WeaponType>()
+    private let state: State
+    private let soundPlayer: SoundPlayerInterface
+    private let tutorialEndObserver: PublishRelay<Void>
+    private let weaponSelectObserver: PublishRelay<WeaponType>
     
     init(
         useCase: GameUseCase3Interface,
-        navigator: GameNavigator3Interface
+        navigator: GameNavigator3Interface,
+        state: State = State(),
+        soundPlayer: SoundPlayerInterface = SoundPlayer.shared,
+        tutorialEndObserver: PublishRelay<Void> = PublishRelay<Void>(),
+        weaponSelectObserver: PublishRelay<WeaponType> = PublishRelay<WeaponType>()
     ) {
         self.useCase = useCase
         self.navigator = navigator
+        self.state = state
+        self.soundPlayer = soundPlayer
+        self.tutorialEndObserver = tutorialEndObserver
+        self.weaponSelectObserver = weaponSelectObserver
     }
     
     func transform(input: Input) -> Output {
-        // 画面が持つ状態
-        var state = State()
-        
         let autoReloadRelay = BehaviorRelay<Void>(value: Void())
         let startGameRelay = PublishRelay<Void>()
         
