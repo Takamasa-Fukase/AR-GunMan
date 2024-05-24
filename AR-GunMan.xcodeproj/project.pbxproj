@@ -319,6 +319,23 @@
 		867B85612BFF31C1004F6D56 /* GameViewController3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867B85602BFF31C1004F6D56 /* GameViewController3.swift */; };
 		867B85632BFF31D7004F6D56 /* GameViewController3.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 867B85622BFF31D7004F6D56 /* GameViewController3.storyboard */; };
 		86A6CB412BCC116D00628C61 /* TopNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A6CB402BCC116D00628C61 /* TopNavigator.swift */; };
+		86B112412BFF36B2006D464A /* DeviceMotionEventTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B112402BFF36B2006D464A /* DeviceMotionEventTransformer.swift */; };
+		86B112442BFF3DB6006D464A /* GameNavigator3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867B855C2BFF3199004F6D56 /* GameNavigator3.swift */; };
+		86B112452BFF3DB7006D464A /* GameNavigator3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867B855C2BFF3199004F6D56 /* GameNavigator3.swift */; };
+		86B112462BFF3DBB006D464A /* GameViewModel3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867B855E2BFF31A2004F6D56 /* GameViewModel3.swift */; };
+		86B112472BFF3DBC006D464A /* GameViewModel3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867B855E2BFF31A2004F6D56 /* GameViewModel3.swift */; };
+		86B112482BFF3DBE006D464A /* GameViewController3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867B85602BFF31C1004F6D56 /* GameViewController3.swift */; };
+		86B112492BFF3DBF006D464A /* GameViewController3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867B85602BFF31C1004F6D56 /* GameViewController3.swift */; };
+		86B1124A2BFF3DC3006D464A /* GameViewController3.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 867B85622BFF31D7004F6D56 /* GameViewController3.storyboard */; };
+		86B1124B2BFF3DC4006D464A /* GameViewController3.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 867B85622BFF31D7004F6D56 /* GameViewController3.storyboard */; };
+		86B1124C2BFF3DC7006D464A /* DeviceMotionEventTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B112402BFF36B2006D464A /* DeviceMotionEventTransformer.swift */; };
+		86B1124D2BFF3DC7006D464A /* DeviceMotionEventTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B112402BFF36B2006D464A /* DeviceMotionEventTransformer.swift */; };
+		86B112512C0080AA006D464A /* WeaponFiringEventTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B112502C0080AA006D464A /* WeaponFiringEventTransformer.swift */; };
+		86B112522C0080AA006D464A /* WeaponFiringEventTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B112502C0080AA006D464A /* WeaponFiringEventTransformer.swift */; };
+		86B112532C0080AA006D464A /* WeaponFiringEventTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B112502C0080AA006D464A /* WeaponFiringEventTransformer.swift */; };
+		86B112552C0085B7006D464A /* WeaponReloadingEventTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B112542C0085B7006D464A /* WeaponReloadingEventTransformer.swift */; };
+		86B112562C0085B7006D464A /* WeaponReloadingEventTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B112542C0085B7006D464A /* WeaponReloadingEventTransformer.swift */; };
+		86B112572C0085B7006D464A /* WeaponReloadingEventTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B112542C0085B7006D464A /* WeaponReloadingEventTransformer.swift */; };
 		86B8A3A62B7E0D1F005ED2F8 /* RankingUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B8A3A52B7E0D1F005ED2F8 /* RankingUtil.swift */; };
 		86C421B52BAFDD5800EFD791 /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C421B42BAFDD5800EFD791 /* GameViewModel.swift */; };
 		86C421B82BB040C300EFD791 /* TutorialRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C421B72BB040C300EFD791 /* TutorialRepository.swift */; };
@@ -472,6 +489,9 @@
 		867B85602BFF31C1004F6D56 /* GameViewController3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController3.swift; sourceTree = "<group>"; };
 		867B85622BFF31D7004F6D56 /* GameViewController3.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = GameViewController3.storyboard; sourceTree = "<group>"; };
 		86A6CB402BCC116D00628C61 /* TopNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopNavigator.swift; sourceTree = "<group>"; };
+		86B112402BFF36B2006D464A /* DeviceMotionEventTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMotionEventTransformer.swift; sourceTree = "<group>"; };
+		86B112502C0080AA006D464A /* WeaponFiringEventTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponFiringEventTransformer.swift; sourceTree = "<group>"; };
+		86B112542C0085B7006D464A /* WeaponReloadingEventTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponReloadingEventTransformer.swift; sourceTree = "<group>"; };
 		86B8A3A52B7E0D1F005ED2F8 /* RankingUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingUtil.swift; sourceTree = "<group>"; };
 		86C421B42BAFDD5800EFD791 /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
 		86C421B72BB040C300EFD791 /* TutorialRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialRepository.swift; sourceTree = "<group>"; };
@@ -827,6 +847,9 @@
 				867B855E2BFF31A2004F6D56 /* GameViewModel3.swift */,
 				867B85602BFF31C1004F6D56 /* GameViewController3.swift */,
 				867B85622BFF31D7004F6D56 /* GameViewController3.storyboard */,
+				86B112402BFF36B2006D464A /* DeviceMotionEventTransformer.swift */,
+				86B112502C0080AA006D464A /* WeaponFiringEventTransformer.swift */,
+				86B112542C0085B7006D464A /* WeaponReloadingEventTransformer.swift */,
 			);
 			path = Game3;
 			sourceTree = "<group>";
@@ -1306,6 +1329,7 @@
 				860646AD2BF599FB00906DA0 /* headShot.mp3 in Resources */,
 				8606466C2BF599BC00906DA0 /* WeaponChangeViewController.storyboard in Resources */,
 				860646A62BF599FB00906DA0 /* westernPistolShoot.mp3 in Resources */,
+				86B1124A2BFF3DC3006D464A /* GameViewController3.storyboard in Resources */,
 				860646BD2BF59A0A00906DA0 /* art.scnassets in Resources */,
 				8606468B2BF599DF00906DA0 /* RankingCell.xib in Resources */,
 				860646792BF599D500906DA0 /* ResultViewController.storyboard in Resources */,
@@ -1343,6 +1367,7 @@
 				860646BC2BF599FB00906DA0 /* headShot.mp3 in Resources */,
 				860646722BF599BD00906DA0 /* WeaponChangeViewController.storyboard in Resources */,
 				860646B52BF599FB00906DA0 /* westernPistolShoot.mp3 in Resources */,
+				86B1124B2BFF3DC4006D464A /* GameViewController3.storyboard in Resources */,
 				860646BE2BF59A0B00906DA0 /* art.scnassets in Resources */,
 				860646922BF599E000906DA0 /* RankingCell.xib in Resources */,
 				860646832BF599D600906DA0 /* ResultViewController.storyboard in Resources */,
@@ -1508,6 +1533,7 @@
 				8627F6432BD16BB60003D374 /* ObservableActivityTracker.swift in Sources */,
 				86627DE6273FD5E30044A980 /* RankingViewController.swift in Sources */,
 				8629E0FD2BF21F16004FFEBD /* GameViewController2.swift in Sources */,
+				86B112412BFF36B2006D464A /* DeviceMotionEventTransformer.swift in Sources */,
 				59D2D5952552E718006DDB70 /* WeaponChangeViewController.swift in Sources */,
 				59D2D5852552E6B2006DDB70 /* GameViewController.swift in Sources */,
 				8629E1052BF2E56E004FFEBD /* GameUseCase2.swift in Sources */,
@@ -1518,6 +1544,7 @@
 				86C5AB982AB8819C00CB161D /* UIAlertController+Extension.swift in Sources */,
 				67200F5927A0026000AD92EC /* NameRegisterViewModel.swift in Sources */,
 				86C421B82BB040C300EFD791 /* TutorialRepository.swift in Sources */,
+				86B112512C0080AA006D464A /* WeaponFiringEventTransformer.swift in Sources */,
 				67200F5527A000AC00AD92EC /* TutorialViewModel.swift in Sources */,
 				59D2D57B2552E536006DDB70 /* TopViewController.swift in Sources */,
 				5952F62825E94D1000ADB85B /* TopViewModel.swift in Sources */,
@@ -1547,6 +1574,7 @@
 				59D2D5932552E718006DDB70 /* WeaponChangeCell.swift in Sources */,
 				86F157412BD93C1E00BE979C /* ErrorConst.swift in Sources */,
 				67B685EF27AAD8B300D7F413 /* TimeCountUtil.swift in Sources */,
+				86B112552C0085B7006D464A /* WeaponReloadingEventTransformer.swift in Sources */,
 				59940BAC2552FAA600EC20C1 /* NameRegisterViewController.swift in Sources */,
 				67200F5B27A0028700AD92EC /* SettingsViewModel.swift in Sources */,
 			);
@@ -1570,6 +1598,8 @@
 				860646142BF5996200906DA0 /* ObservableActivityTracker.swift in Sources */,
 				860646CA2BF59CF100906DA0 /* WeaponType.swift in Sources */,
 				860646132BF5996200906DA0 /* SceneAnimationUtil.swift in Sources */,
+				86B112462BFF3DBB006D464A /* GameViewModel3.swift in Sources */,
+				86B112562C0085B7006D464A /* WeaponReloadingEventTransformer.swift in Sources */,
 				860646292BF5996E00906DA0 /* Ranking.swift in Sources */,
 				8606468C2BF599DF00906DA0 /* RankingCell.swift in Sources */,
 				861B87792BFE258100D0882D /* SoundPlayerMock.swift in Sources */,
@@ -1591,6 +1621,7 @@
 				8606463D2BF5998100906DA0 /* TopUseCase.swift in Sources */,
 				860646752BF599D500906DA0 /* ResultNavigator.swift in Sources */,
 				860646632BF599B000906DA0 /* SimpleGameViewController.swift in Sources */,
+				86B1124C2BFF3DC7006D464A /* DeviceMotionEventTransformer.swift in Sources */,
 				8606466E2BF599BC00906DA0 /* WeaponChangeCell.swift in Sources */,
 				860645EC2BF4CD5F00906DA0 /* SimpleGameViewModelTests.swift in Sources */,
 				860645F52BF5994900906DA0 /* Storyboard+Extension.swift in Sources */,
@@ -1605,12 +1636,15 @@
 				8606463B2BF5998100906DA0 /* TopNavigator.swift in Sources */,
 				860646592BF5999F00906DA0 /* CoreMotionController.swift in Sources */,
 				860646582BF5999F00906DA0 /* GameUseCase2.swift in Sources */,
+				86B112522C0080AA006D464A /* WeaponFiringEventTransformer.swift in Sources */,
 				8606460F2BF5996200906DA0 /* RankingUtil.swift in Sources */,
 				BCF1C2842BF611F200ACD841 /* UIViewController+Extension.swift in Sources */,
+				86B112442BFF3DB6006D464A /* GameNavigator3.swift in Sources */,
 				860646452BF5998F00906DA0 /* TutorialNavigator.swift in Sources */,
 				8606464C2BF5999600906DA0 /* GameUseCase.swift in Sources */,
 				8606468F2BF599DF00906DA0 /* RankingViewModel.swift in Sources */,
 				860646102BF5996200906DA0 /* SceneViewSettingUtil.swift in Sources */,
+				86B112482BFF3DBE006D464A /* GameViewController3.swift in Sources */,
 				860646182BF5996200906DA0 /* CoreMotionStreamFilter.swift in Sources */,
 				860646652BF599B000906DA0 /* SimpleGameNavigator.swift in Sources */,
 				861B87762BFE1E4700D0882D /* SoundPlayer.swift in Sources */,
@@ -1651,11 +1685,13 @@
 				860646962BF599E000906DA0 /* RankingViewModel.swift in Sources */,
 				860645F42BF5994500906DA0 /* CustomError.swift in Sources */,
 				860646862BF599D600906DA0 /* ResultUseCase.swift in Sources */,
+				86B112472BFF3DBC006D464A /* GameViewModel3.swift in Sources */,
 				860646042BF5995900906DA0 /* UIImageView+Extension.swift in Sources */,
 				860646412BF5998200906DA0 /* TopViewController.swift in Sources */,
 				860646082BF5996100906DA0 /* SafariViewUtil.swift in Sources */,
 				860646872BF599D600906DA0 /* NameRegisterNavigator.swift in Sources */,
 				860646532BF5999600906DA0 /* GameNavigator.swift in Sources */,
+				86B112452BFF3DB7006D464A /* GameNavigator3.swift in Sources */,
 				860645F22BF5994100906DA0 /* AppDelegate.swift in Sources */,
 				860646342BF5997300906DA0 /* RankingRepository.swift in Sources */,
 				860646492BF5998F00906DA0 /* TutorialNavigator.swift in Sources */,
@@ -1667,6 +1703,7 @@
 				860646662BF599B100906DA0 /* SimpleGameViewController.swift in Sources */,
 				8606463E2BF5998200906DA0 /* TopViewModel.swift in Sources */,
 				860645EE2BF598D800906DA0 /* SimpleGameViewModel.swift in Sources */,
+				86B112492BFF3DBF006D464A /* GameViewController3.swift in Sources */,
 				860646712BF599BD00906DA0 /* WeaponChangeViewController.swift in Sources */,
 				860646252BF5996800906DA0 /* ErrorConst.swift in Sources */,
 				860646282BF5996800906DA0 /* GameSceneConst.swift in Sources */,
@@ -1680,6 +1717,7 @@
 				860646842BF599D600906DA0 /* NameRegisterViewController.swift in Sources */,
 				860646702BF599BD00906DA0 /* WeaponChangeNavigator.swift in Sources */,
 				8606462A2BF5996E00906DA0 /* Ranking.swift in Sources */,
+				86B1124D2BFF3DC7006D464A /* DeviceMotionEventTransformer.swift in Sources */,
 				8606467F2BF599D600906DA0 /* ResultNavigator.swift in Sources */,
 				860646382BF5997300906DA0 /* TimerRepository.swift in Sources */,
 				860646542BF5999600906DA0 /* GameViewModel.swift in Sources */,
@@ -1690,6 +1728,7 @@
 				8606464A2BF5998F00906DA0 /* TutorialViewModel.swift in Sources */,
 				8606469E2BF599EA00906DA0 /* SettingsViewModel.swift in Sources */,
 				8606460E2BF5996100906DA0 /* CoreMotionStreamFilter.swift in Sources */,
+				86B112532C0080AA006D464A /* WeaponFiringEventTransformer.swift in Sources */,
 				860646222BF5996800906DA0 /* GameConst.swift in Sources */,
 				860646332BF5997300906DA0 /* CoreMotionRepository.swift in Sources */,
 				860646262BF5996800906DA0 /* TopConst.swift in Sources */,
@@ -1719,6 +1758,7 @@
 				860645F02BF5992200906DA0 /* ViewModelType.swift in Sources */,
 				860646952BF599E000906DA0 /* RankingNavigator.swift in Sources */,
 				860646402BF5998200906DA0 /* TopNavigator.swift in Sources */,
+				86B112572C0085B7006D464A /* WeaponReloadingEventTransformer.swift in Sources */,
 				860646482BF5998F00906DA0 /* TutorialViewController.swift in Sources */,
 				860646422BF5998200906DA0 /* TopUseCase.swift in Sources */,
 			);

@@ -76,7 +76,7 @@ final class GameViewModel3: ViewModelType {
         }
     }
     
-    struct State {
+    class State {
         let weaponTypeRelay = BehaviorRelay<WeaponType>(value: .pistol)
         let bulletsCountRelay = BehaviorRelay<Int>(value: WeaponType.pistol.bulletsCapacity)
         let isWeaponReloadingRelay = BehaviorRelay<Bool>(value: false)
@@ -118,7 +118,7 @@ final class GameViewModel3: ViewModelType {
     }
     
     func transform(input: Input) -> Output {
-        let autoReloadRelay = BehaviorRelay<Void>(value: Void())
+//        let autoReloadRelay = BehaviorRelay<Void>(value: Void())
         let startGameRelay = PublishRelay<Void>()
         
         let timerStartTrigger = startGameRelay
@@ -138,44 +138,44 @@ final class GameViewModel3: ViewModelType {
             .take(1)
             .flatMapLatest { [unowned self] _ in self.useCase.getIsTutorialSeen() }
         
-        let firingMotionDetected = CoreMotionStreamFilter
-            .filterFiringMotionStream(
-                accelerationStream: input.inputFromCoreMotion.accelerationUpdated,
-                gyroStream: input.inputFromCoreMotion.gyroUpdated
-            )
+//        let firingMotionDetected = CoreMotionStreamFilter
+//            .filterFiringMotionStream(
+//                accelerationStream: input.inputFromCoreMotion.accelerationUpdated,
+//                gyroStream: input.inputFromCoreMotion.gyroUpdated
+//            )
         
-        let weaponFiringTrigger = firingMotionDetected
-            .map({ _ in state.weaponTypeRelay.value })
-            .filter({ weaponType in
-                guard state.isPlaying else { return false }
-                guard state.canFire else {
-                    if weaponType.reloadType == .manual {
-                        AudioUtil.playSound(of: .pistolOutBullets)
-                    }
-                    return false
-                }
-                return true
-            })
+//        let weaponFiringTrigger = firingMotionDetected
+//            .map({ _ in state.weaponTypeRelay.value })
+//            .filter({ weaponType in
+//                guard state.isPlaying else { return false }
+//                guard state.canFire else {
+//                    if weaponType.reloadType == .manual {
+//                        AudioUtil.playSound(of: .pistolOutBullets)
+//                    }
+//                    return false
+//                }
+//                return true
+//            })
         
-        let reloadingMotionDetected = CoreMotionStreamFilter
-            .filterReloadingMotionStream(
-                gyroStream: input.inputFromCoreMotion.gyroUpdated
-            )
-            .map({ _ in
-                // リロードモーションの検知回数をインクリメントする
-                state.reloadingMotionDetectedCountRelay.accept(
-                    state.reloadingMotionDetectedCountRelay.value + 1
-                )
-            })
+//        let reloadingMotionDetected = CoreMotionStreamFilter
+//            .filterReloadingMotionStream(
+//                gyroStream: input.inputFromCoreMotion.gyroUpdated
+//            )
+//            .map({ _ in
+//                // リロードモーションの検知回数をインクリメントする
+//                state.reloadingMotionDetectedCountRelay.accept(
+//                    state.reloadingMotionDetectedCountRelay.value + 1
+//                )
+//            })
         
         // 自動リロードトリガーとモーション検知のどちらでも発火させる為combineしている
-        let weaponReloadingTrigger = Observable
-            .combineLatest(
-                autoReloadRelay.asObservable(),
-                reloadingMotionDetected
-            )
-            .map({ _ in state.weaponTypeRelay.value })
-            .filter({ _ in state.isPlaying && state.canReload })
+//        let weaponReloadingTrigger = Observable
+//            .combineLatest(
+//                autoReloadRelay.asObservable(),
+//                reloadingMotionDetected
+//            )
+//            .map({ _ in state.weaponTypeRelay.value })
+//            .filter({ _ in state.isPlaying && state.canReload })
 
         let timeCountEnded = state.timeCountRelay
             .filter({$0 <= 0})
@@ -183,6 +183,16 @@ final class GameViewModel3: ViewModelType {
                 AudioUtil.playSound(of: .endWhistle)
                 timerDisposable.dispose()
             })
+        
+        let deviceMotionOutput = DeviceMotionEventTransformer()
+            .transform(input: .init(
+                timeCountStarted: timerStartTrigger,
+                timeCountEnded: timeCountEnded,
+                accelerationUpdated: input.inputFromCoreMotion.accelerationUpdated,
+                gyroUpdated: input.inputFromCoreMotion.gyroUpdated)
+            )
+        
+        
         
         
         // MARK: OutputToView
@@ -223,9 +233,9 @@ final class GameViewModel3: ViewModelType {
         
         
         // MARK: OutputToCoreMotion
-        let startMotionDetection = startGameRelay.asObservable()
-
-        let stopMotionDetection = timeCountEnded
+//        let startMotionDetection = startGameRelay.asObservable()
+//
+//        let stopMotionDetection = timeCountEnded
         
         
         // MARK: ViewModelAction
