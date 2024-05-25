@@ -17,18 +17,23 @@ final class WeaponFiringEventTransformer {
         let weaponFired: Observable<WeaponType>
     }
     
+    class State {
+        let bulletsCountRelay: BehaviorRelay<Int>
+        
+        init(bulletsCountRelay: BehaviorRelay<Int>) {
+            self.bulletsCountRelay = bulletsCountRelay
+        }
+    }
+    
     private let soundPlayer: SoundPlayerInterface
     
     init(soundPlayer: SoundPlayerInterface = SoundPlayer.shared) {
         self.soundPlayer = soundPlayer
     }
     
-    func transform(
-        input: Input,
-        bulletsCountRelay: BehaviorRelay<Int>
-    ) -> Output {
+    func transform(input: Input, state: State) -> Output {
         var canFire: Bool {
-            return bulletsCountRelay.value > 0
+            return state.bulletsCountRelay.value > 0
         }
 
         let weaponFired = input.weaponFiringTrigger
@@ -45,11 +50,10 @@ final class WeaponFiringEventTransformer {
             .do(onNext: { [weak self] weaponType in
                 guard let self = self else { return }
                 self.soundPlayer.play(weaponType.firingSound)
-                bulletsCountRelay.accept(
-                    bulletsCountRelay.value - 1
+                state.bulletsCountRelay.accept(
+                    state.bulletsCountRelay.value - 1
                 )
             })
-//            .share()
         
         return Output(
             weaponFired: weaponFired
