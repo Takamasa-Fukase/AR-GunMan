@@ -27,7 +27,11 @@ final class SimpleGameNavigator2: SimpleGameNavigator2Interface {
         vc.modalPresentationStyle = .fullScreen
         
         let navigator = SimpleGameNavigator2(viewController: vc)
-        let viewModel = SimpleGameViewModel2()
+        let useCase = GameUseCase2(
+            tutorialRepository: TutorialRepository(),
+            timerRepository: TimerRepository()
+        )
+        let viewModel = SimpleGameViewModel2(useCase: useCase)
         let gameSceneController = GameSceneController()
         let coreMotionController = CoreMotionController(coreMotionManager: CMMotionManager())
         vc.viewModel = viewModel

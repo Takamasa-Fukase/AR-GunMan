@@ -10,10 +10,13 @@ import RxSwift
 import RxCocoa
 
 class SimpleGameViewController2: UIViewController {
-    var viewModel: GameViewModel2!
+    var viewModel: SimpleGameViewModel2!
     var gameSceneController: GameSceneController!
     var coreMotionController: CoreMotionController!
     private let disposeBag = DisposeBag()
+    
+    private let firingMotionDetected = PublishRelay<Void>()
+    private let reloadingMotionDetected = PublishRelay<Void>()
     
     @IBOutlet private weak var bulletsCountImageView: UIImageView!
     @IBOutlet private weak var sightImageView: UIImageView!
@@ -24,132 +27,92 @@ class SimpleGameViewController2: UIViewController {
         super.viewDidLoad()
         
         setupUI()
+        
+        let sceneView = gameSceneController.setupSceneView(with: view.frame)
+        view.insertSubview(sceneView, at: 0)
+        gameSceneController.showTargets(count: 50)
+        gameSceneController.showWeapon(.pistol)
 
-        let input = GameViewModel2.Input(
-            inputFromView: GameViewModel2.Input.InputFromView(
-                viewDidLoad: Observable.just(Void()),
-                viewWillAppear: rx.viewWillAppear,
-                viewDidAppear: rx.viewDidAppear,
-                viewWillDisappear: rx.viewWillDisappear,
+        let input = SimpleGameViewModel2.Input(
+            inputFromView: SimpleGameViewModel2.Input.InputFromView(
                 weaponChangeButtonTapped: switchWeaponButton.rx.tap.asObservable()
             ),
-            inputFromGameScene: GameViewModel2.Input.InputFromGameScene(
-                rendererUpdated: gameSceneController.rendererUpdated,
+            inputFromGameScene: SimpleGameViewModel2.Input.InputFromGameScene(
                 targetHit: gameSceneController.targetHit
             ),
-            inputFromCoreMotion: GameViewModel2.Input.InputFromCoreMotion(
-                accelerationUpdated: coreMotionController.accelerationUpdated,
-                gyroUpdated: coreMotionController.gyroUpdated
+            inputFromCoreMotion: SimpleGameViewModel2.Input.InputFromCoreMotion(
+                firingMotionDetected: firingMotionDetected.asObservable(),
+                reloadingMotionDetected: reloadingMotionDetected.asObservable()
             )
         )
 
         let output = viewModel.transform(input: input)
         
-        bindOutputToViewComponents(output.outputToView)
-        bindOutputToGameSceneController(output.outputToGameScene)
-        bindOutputToCoreMotionController(output.outputToCoreMotion)
-        subscribeViewModelAction(output.viewModelAction)
+        output.outputToView.bulletsCountImage
+            .bind(to: bulletsCountImageView.rx.image)
+            .disposed(by: disposeBag)
+        
+        output.outputToGameScene.renderSelectedWeapon
+            .subscribe(onNext: { [weak self] type in
+                guard let self = self else { return }
+                self.gameSceneController.showWeapon(type)
+            }).disposed(by: disposeBag)
+        
+        output.outputToGameScene.renderWeaponFiring
+            .subscribe(onNext: { [weak self] type in
+                guard let self = self else { return }
+                self.gameSceneController.fireWeapon(type)
+            }).disposed(by: disposeBag)
+        
+        output.viewModelAction.weaponSelected
+            .subscribe()
+            .disposed(by: disposeBag)
+        
+        output.viewModelAction.weaponFired
+            .subscribe()
+            .disposed(by: disposeBag)
+        
+        output.viewModelAction.weaponReloaded
+            .subscribe()
+            .disposed(by: disposeBag)
+        
+        // other
+        gameSceneController.rendererUpdated
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.gameSceneController.moveWeaponToFPSPosition(currentWeapon: .pistol)
+            }).disposed(by: disposeBag)
+        
+        CoreMotionStreamFilter
+            .filterFiringMotionStream(
+                accelerationStream: coreMotionController.accelerationUpdated,
+                gyroStream: coreMotionController.gyroUpdated
+            )
+            .bind(to: firingMotionDetected)
+            .disposed(by: disposeBag)
+        
+        CoreMotionStreamFilter
+            .filterReloadingMotionStream(
+                gyroStream: coreMotionController.gyroUpdated
+            )
+            .bind(to: reloadingMotionDetected)
+            .disposed(by: disposeBag)
     }
 
     private func setupUI() {
         // 等幅フォントにして高速で動くタイムカウントの横振れを防止
         timeCountLabel.font = timeCountLabel.font.monospacedDigitFont
     }
-
-    private func bindOutputToViewComponents(
-        _ output: GameViewModel2.Output.OutputToView
-    ) {
-        disposeBag.insert {
-            output.sightImage
-                .bind(to: sightImageView.rx.image)
-            output.sightImageColor
-                .bind(to: sightImageView.rx.tintColor)
-            output.timeCountText
-                .bind(to: timeCountLabel.rx.text)
-            output.bulletsCountImage
-                .bind(to: bulletsCountImageView.rx.image)
-        }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.gameSceneController.startSession()
+        self.coreMotionController.startUpdate()
     }
     
-    private func bindOutputToGameSceneController(
-        _ output: GameViewModel2.Output.OutputToGameScene
-    ) {
-        disposeBag.insert {
-            output.setupSceneView
-                .subscribe(onNext: { [weak self] _ in
-                    guard let self = self else { return }
-                    let sceneView = self.gameSceneController.setupSceneView(with: self.view.frame)
-                    self.view.insertSubview(sceneView, at: 0)
-                })
-            output.renderAllTargets
-                .subscribe(onNext: { [weak self] count in
-                    guard let self = self else { return }
-                    self.gameSceneController.showTargets(count: count)
-                })
-            output.startSceneSession
-                .subscribe(onNext: { [weak self] _ in
-                    guard let self = self else { return }
-                    self.gameSceneController.startSession()
-                })
-            output.pauseSceneSession
-                .subscribe(onNext: { [weak self] _ in
-                    guard let self = self else { return }
-                    self.gameSceneController.pauseSession()
-                })
-            output.renderSelectedWeapon
-                .subscribe(onNext: { [weak self] type in
-                    guard let self = self else { return }
-                    self.gameSceneController.showWeapon(type)
-                })
-            output.renderWeaponFiring
-                .subscribe(onNext: { [weak self] type in
-                    guard let self = self else { return }
-                    self.gameSceneController.fireWeapon(type)
-                })
-            output.renderTargetsAppearanceChanging
-                .subscribe(onNext: { [weak self] _ in
-                    guard let self = self else { return }
-                    self.gameSceneController.changeTargetsToTaimeisan()
-                })
-            output.moveWeaponToFPSPosition
-                .subscribe(onNext: { [weak self] type in
-                    guard let self = self else { return }
-                    self.gameSceneController.moveWeaponToFPSPosition(currentWeapon: type)
-                })
-        }
-    }
-    
-    private func bindOutputToCoreMotionController(
-        _ output: GameViewModel2.Output.OutputToCoreMotion
-    ) {
-        disposeBag.insert {
-            output.startMotionDetection
-                .subscribe(onNext: { [weak self] _ in
-                    guard let self = self else { return }
-                    self.coreMotionController.startUpdate()
-                })
-            output.stopMotionDetection
-                .subscribe(onNext: { [weak self] _ in
-                    guard let self = self else { return }
-                    self.coreMotionController.stopUpdate()
-                })
-        }
-    }
-    
-    private func subscribeViewModelAction(
-        _ viewModelAction: GameViewModel2.Output.ViewModelAction
-    ) {
-        disposeBag.insert {
-            viewModelAction.startGame.subscribe()
-            viewModelAction.showTutorialView.subscribe()
-            viewModelAction.startGameAfterTutorial.subscribe()
-            viewModelAction.fireWeapon.subscribe()
-            viewModelAction.reloadWeapon.subscribe()
-            viewModelAction.changeWeapon.subscribe()
-            viewModelAction.countScore.subscribe()
-            viewModelAction.showWeaponChangeView.subscribe()
-            viewModelAction.dismissWeaponChangeView.subscribe()
-            viewModelAction.showResultView.subscribe()
-        }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.gameSceneController.pauseSession()
+        self.coreMotionController.stopUpdate()
     }
 }

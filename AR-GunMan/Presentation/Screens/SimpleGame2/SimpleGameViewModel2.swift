@@ -10,9 +10,14 @@ import RxCocoa
 
 final class SimpleGameViewModel2: ViewModelType {
     struct Input {
+        let inputFromView: InputFromView
         let inputFromGameScene: InputFromGameScene
         let inputFromCoreMotion: InputFromCoreMotion
 
+        struct InputFromView {
+            let weaponChangeButtonTapped: Observable<Void>
+        }
+        
         struct InputFromGameScene {
             let targetHit: Observable<Void>
         }
@@ -29,9 +34,9 @@ final class SimpleGameViewModel2: ViewModelType {
         let outputToGameScene: OutputToGameScene
         
         struct ViewModelAction {
+            let weaponSelected: Observable<WeaponType>
             let weaponFired: Observable<WeaponType>
             let weaponReloaded: Observable<WeaponType>
-            let scoreAdded: Observable<Void>
         }
         
         struct OutputToView {
@@ -39,82 +44,90 @@ final class SimpleGameViewModel2: ViewModelType {
         }
         
         struct OutputToGameScene {
+            let renderSelectedWeapon: Observable<WeaponType>
             let renderWeaponFiring: Observable<WeaponType>
         }
     }
     
     class State {
+        let weaponTypeRelay = BehaviorRelay<WeaponType>(value: .pistol)
         let bulletsCountRelay = BehaviorRelay<Int>(value: WeaponType.pistol.bulletsCapacity)
-        let score = BehaviorRelay<Double>(value: 0)
+        var isWeaponReloadingRelay = BehaviorRelay<Bool>(value: false)
+        let scoreRelay = BehaviorRelay<Double>(value: 0)
     }
-    
+
+    private let useCase: GameUseCase2Interface
     private var state: State
     private var soundPlayer: SoundPlayerInterface
     
     init(
+        useCase: GameUseCase2Interface,
         state: State = State(),
         soundPlayer: SoundPlayerInterface = SoundPlayer.shared
     ) {
+        self.useCase = useCase
         self.state = state
         self.soundPlayer = soundPlayer
     }
     
     func transform(input: Input) -> Output {
         // MARK: ViewModelAction
+        let weaponSelected = input.inputFromView.weaponChangeButtonTapped
+            .do(onNext: {[weak self] _ in
+                guard let self = self else { return }
+                let selectedWeapon: WeaponType = {
+                    if self.state.weaponTypeRelay.value == .pistol {
+                        return .bazooka
+                    }else {
+                        return .pistol
+                    }
+                }()
+                self.state.weaponTypeRelay.accept(selectedWeapon)
+                self.soundPlayer.play(selectedWeapon.weaponChangingSound)
+                self.state.bulletsCountRelay.accept(selectedWeapon.bulletsCapacity)
+                self.state.isWeaponReloadingRelay.accept(false)
+            })
+            .map({[weak self] _ in self?.state.weaponTypeRelay.value ?? .pistol })
+        
         let weaponFired = WeaponFiringEventTransformer()
             .transform(
-                input: .init(
-                    weaponFiringTrigger: input.inputFromCoreMotion.firingMotionDetected
-                        .map({ _ in WeaponType.pistol })
-                ),
-                bulletsCountRelay: state.bulletsCountRelay
+                input: .init(weaponFiringTrigger: input.inputFromCoreMotion.firingMotionDetected
+                    .map({ [weak self] _ in self?.state.weaponTypeRelay.value ?? .pistol })),
+                state: .init(bulletsCountRelay: state.bulletsCountRelay)
             )
             .weaponFired
-                
-        let reloadWeapon = input.inputFromCoreMotion.reloadingMotionDetected
-            .filter({ [weak self] _ in
-                guard let self = self else { return false }
-                return self.state.canReload
-            })
-            .do(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                self.soundPlayer.play(WeaponType.pistol.reloadingSound)
-                self.state.bulletsCountRelay.accept(
-                    WeaponType.pistol.bulletsCapacity
-                )
-            })
-            .map({ _ in })
         
-        let addScore = input.inputFromGameScene.targetHit
-            .do(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                self.soundPlayer.play(WeaponType.pistol.hitSound)
-                self.state.score.accept(
-                    self.state.score.value + 1
-                )
-            })
-        
+        let weaponReloaded = WeaponReloadingEventTransformer(gameUseCase: useCase)
+            .transform(
+                input: .init(weaponReloadingTrigger: input.inputFromCoreMotion.reloadingMotionDetected
+                    .map({ [weak self] _ in self?.state.weaponTypeRelay.value ?? .pistol })),
+                state: .init(bulletsCountRelay: state.bulletsCountRelay,
+                             isWeaponReloadingRelay: state.isWeaponReloadingRelay)
+            )
+            .weaponReloaded
         
         // MARK: OutputToView
         let bulletsCountImage = state.bulletsCountRelay
-            .map({ WeaponType.pistol.bulletsCountImage(at: $0) })
+            .map({ [weak self] in self?.state.weaponTypeRelay.value.bulletsCountImage(at: $0) })
         
         
         // MARK: OutputToGameScene
-        let renderWeaponFiring = fireWeapon
-            .map({ _ in WeaponType.pistol })
+        let renderSelectedWeapon = weaponSelected
+
+        let renderWeaponFiring = weaponFired
 
         
         return Output(
             viewModelAction: Output.ViewModelAction(
-                fireWeapon: fireWeapon,
-                reloadWeapon: reloadWeapon,
-                addScore: addScore
+                weaponSelected: weaponSelected,
+                weaponFired: weaponFired,
+                weaponReloaded: weaponReloaded
             ),
             outputToView: Output.OutputToView(
                 bulletsCountImage: bulletsCountImage
             ),
             outputToGameScene: Output.OutputToGameScene(
+                renderSelectedWeapon: renderSelectedWeapon,
                 renderWeaponFiring: renderWeaponFiring
             )
         )
