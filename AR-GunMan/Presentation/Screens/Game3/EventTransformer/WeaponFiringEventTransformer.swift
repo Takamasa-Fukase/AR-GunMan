@@ -55,9 +55,7 @@ final class WeaponFiringEventTransformer {
                 )
             })
         
-        return Output(
-            weaponFired: weaponFired
-        )
+        return Output(weaponFired: weaponFired)
     }
 }
 
