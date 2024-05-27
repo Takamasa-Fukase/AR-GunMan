@@ -57,15 +57,21 @@ final class SimpleGameViewModel2: ViewModelType {
     }
 
     private let useCase: GameUseCase2Interface
+    private let weaponFiringEventTransformer: WeaponFiringEventTransformer
+    private let weaponReloadingEventTransformer: WeaponReloadingEventTransformer
     private var state: State
     private var soundPlayer: SoundPlayerInterface
     
     init(
         useCase: GameUseCase2Interface,
+        weaponFiringEventTransformer: WeaponFiringEventTransformer,
+        weaponReloadingEventTransformer: WeaponReloadingEventTransformer,
         state: State = State(),
         soundPlayer: SoundPlayerInterface = SoundPlayer.shared
     ) {
         self.useCase = useCase
+        self.weaponFiringEventTransformer = weaponFiringEventTransformer
+        self.weaponReloadingEventTransformer = weaponReloadingEventTransformer
         self.state = state
         self.soundPlayer = soundPlayer
     }
@@ -89,16 +95,18 @@ final class SimpleGameViewModel2: ViewModelType {
                 self.state.isWeaponReloadingRelay.accept(false)
             })
             .map({[weak self] _ in self?.state.weaponTypeRelay.value ?? .pistol })
+            .share()
         
-        let weaponFired = WeaponFiringEventTransformer()
+        let weaponFired = weaponFiringEventTransformer
             .transform(
                 input: .init(weaponFiringTrigger: input.inputFromCoreMotion.firingMotionDetected
                     .map({ [weak self] _ in self?.state.weaponTypeRelay.value ?? .pistol })),
                 state: .init(bulletsCountRelay: state.bulletsCountRelay)
             )
             .weaponFired
-        
-        let weaponReloaded = WeaponReloadingEventTransformer(gameUseCase: useCase)
+            .share()
+
+        let weaponReloaded = weaponReloadingEventTransformer
             .transform(
                 input: .init(weaponReloadingTrigger: input.inputFromCoreMotion.reloadingMotionDetected
                     .map({ [weak self] _ in self?.state.weaponTypeRelay.value ?? .pistol })),

@@ -31,7 +31,11 @@ final class SimpleGameNavigator2: SimpleGameNavigator2Interface {
             tutorialRepository: TutorialRepository(),
             timerRepository: TimerRepository()
         )
-        let viewModel = SimpleGameViewModel2(useCase: useCase)
+        let viewModel = SimpleGameViewModel2(
+            useCase: useCase,
+            weaponFiringEventTransformer: WeaponFiringEventTransformer(),
+            weaponReloadingEventTransformer: WeaponReloadingEventTransformer(gameUseCase: useCase)
+        )
         let gameSceneController = GameSceneController()
         let coreMotionController = CoreMotionController(coreMotionManager: CMMotionManager())
         vc.viewModel = viewModel
