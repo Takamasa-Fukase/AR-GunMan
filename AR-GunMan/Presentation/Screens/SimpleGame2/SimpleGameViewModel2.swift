@@ -73,15 +73,16 @@ final class SimpleGameViewModel2: ViewModelType {
     func transform(input: Input) -> Output {
         // MARK: ViewModelAction
         let weaponSelected = input.inputFromView.weaponChangeButtonTapped
-            .do(onNext: {[weak self] _ in
+            .map({[weak self] _ -> WeaponType in
+                guard let self = self else { return .pistol }
+                if self.state.weaponTypeRelay.value == .pistol {
+                    return .bazooka
+                }else {
+                    return .pistol
+                }
+            })
+            .do(onNext: {[weak self] selectedWeapon in
                 guard let self = self else { return }
-                let selectedWeapon: WeaponType = {
-                    if self.state.weaponTypeRelay.value == .pistol {
-                        return .bazooka
-                    }else {
-                        return .pistol
-                    }
-                }()
                 self.state.weaponTypeRelay.accept(selectedWeapon)
                 self.soundPlayer.play(selectedWeapon.weaponChangingSound)
                 self.state.bulletsCountRelay.accept(selectedWeapon.bulletsCapacity)
