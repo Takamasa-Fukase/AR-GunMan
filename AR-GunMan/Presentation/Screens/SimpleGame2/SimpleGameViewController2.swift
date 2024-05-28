@@ -72,6 +72,18 @@ class SimpleGameViewController2: UIViewController {
             .subscribe()
             .disposed(by: disposeBag)
         
+        output.viewModelAction.bulletsCountRefilled
+            .subscribe()
+            .disposed(by: disposeBag)
+        
+        output.viewModelAction.weaponReloadingFlagChanged
+            .subscribe()
+            .disposed(by: disposeBag)
+        
+        output.viewModelAction.reloadingSoundPlayed
+            .subscribe()
+            .disposed(by: disposeBag)
+        
         output.viewModelAction.weaponReloaded
             .subscribe()
             .disposed(by: disposeBag)

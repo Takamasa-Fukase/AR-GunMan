@@ -36,6 +36,9 @@ final class SimpleGameViewModel2: ViewModelType {
         struct ViewModelAction {
             let weaponSelected: Observable<WeaponType>
             let weaponFired: Observable<WeaponType>
+            let bulletsCountRefilled: Observable<Int>
+            let weaponReloadingFlagChanged: Observable<Bool>
+            let reloadingSoundPlayed: Observable<SoundType>
             let weaponReloaded: Observable<WeaponType>
         }
         
@@ -59,7 +62,7 @@ final class SimpleGameViewModel2: ViewModelType {
     private let useCase: GameUseCase2Interface
     private let weaponFireHandler: WeaponFireHandler
     private let weaponAutoReloadHandler: WeaponAutoReloadHandler
-    private let weaponReloadHandler: WeaponReloadHandler
+    private let weaponReloadHandler: WeaponReloadHandler2
     private var state: State
     private var soundPlayer: SoundPlayerInterface
     
@@ -67,7 +70,7 @@ final class SimpleGameViewModel2: ViewModelType {
         useCase: GameUseCase2Interface,
         weaponFireHandler: WeaponFireHandler,
         weaponAutoReloadHandler: WeaponAutoReloadHandler,
-        weaponReloadHandler: WeaponReloadHandler,
+        weaponReloadHandler: WeaponReloadHandler2,
         state: State = State(),
         soundPlayer: SoundPlayerInterface = SoundPlayer.shared
     ) {
@@ -123,13 +126,33 @@ final class SimpleGameViewModel2: ViewModelType {
                 weaponAutoReloadTrigger
             )
 
-        let weaponReloaded = weaponReloadHandler
-            .transform(
-                input: .init(weaponReloadingTrigger: weaponReloadingTrigger),
-                state: .init(bulletsCountRelay: state.bulletsCountRelay,
-                             isWeaponReloadingRelay: state.isWeaponReloadingRelay)
+        let weaponReloadHandlerOutput = weaponReloadHandler
+            .transform(input: .init(
+                weaponReloadingTrigger: weaponReloadingTrigger,
+                currentBulletsCount: state.bulletsCountRelay.asObservable(),
+                currentWeaponReloadingFlag: state.isWeaponReloadingRelay.asObservable())
             )
-            .weaponReloaded
+        
+        let bulletsCountRefilled = weaponReloadHandlerOutput.bulletsCount
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.state.bulletsCountRelay.accept($0)
+            })
+        
+        let weaponReloadingFlagChanged = weaponReloadHandlerOutput.isWeaponReloading
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.state.isWeaponReloadingRelay.accept($0)
+            })
+        
+        let reloadingSoundPlayed = weaponReloadHandlerOutput.playReloadingSound
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.soundPlayer.play($0)
+            })
+        
+        let weaponReloaded = weaponReloadHandlerOutput.weaponReloaded
+            
         
         // MARK: OutputToView
         let bulletsCountImage = state.bulletsCountRelay
@@ -146,6 +169,9 @@ final class SimpleGameViewModel2: ViewModelType {
             viewModelAction: Output.ViewModelAction(
                 weaponSelected: weaponSelected,
                 weaponFired: weaponFired,
+                bulletsCountRefilled: bulletsCountRefilled,
+                weaponReloadingFlagChanged: weaponReloadingFlagChanged,
+                reloadingSoundPlayed: reloadingSoundPlayed,
                 weaponReloaded: weaponReloaded
             ),
             outputToView: Output.OutputToView(
