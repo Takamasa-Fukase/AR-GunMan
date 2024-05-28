@@ -51,7 +51,7 @@ final class WeaponReloadingEventTransformer {
                 self.soundPlayer.play(weaponType.reloadingSound)
             })
             .flatMapLatest({ [weak self] weaponType -> Observable<WeaponType> in
-                guard let self = self else { return Observable.empty() }
+                guard let self = self else { return .empty() }
                 return self.gameUseCase.awaitWeaponReloadEnds(currentWeapon: weaponType)
             })
             .filter({ _ in state.isWeaponReloadingRelay.value })

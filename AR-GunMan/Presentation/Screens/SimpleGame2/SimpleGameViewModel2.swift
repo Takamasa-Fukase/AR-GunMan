@@ -58,6 +58,7 @@ final class SimpleGameViewModel2: ViewModelType {
 
     private let useCase: GameUseCase2Interface
     private let weaponFiringEventTransformer: WeaponFiringEventTransformer
+    private let weaponAutoReloadEventTransformer: WeaponAutoReloadEventTransformer
     private let weaponReloadingEventTransformer: WeaponReloadingEventTransformer
     private var state: State
     private var soundPlayer: SoundPlayerInterface
@@ -65,12 +66,14 @@ final class SimpleGameViewModel2: ViewModelType {
     init(
         useCase: GameUseCase2Interface,
         weaponFiringEventTransformer: WeaponFiringEventTransformer,
+        weaponAutoReloadEventTransformer: WeaponAutoReloadEventTransformer,
         weaponReloadingEventTransformer: WeaponReloadingEventTransformer,
         state: State = State(),
         soundPlayer: SoundPlayerInterface = SoundPlayer.shared
     ) {
         self.useCase = useCase
         self.weaponFiringEventTransformer = weaponFiringEventTransformer
+        self.weaponAutoReloadEventTransformer = weaponAutoReloadEventTransformer
         self.weaponReloadingEventTransformer = weaponReloadingEventTransformer
         self.state = state
         self.soundPlayer = soundPlayer
@@ -105,11 +108,24 @@ final class SimpleGameViewModel2: ViewModelType {
             )
             .weaponFired
             .share()
+        
+        let weaponAutoReloadTrigger = weaponAutoReloadEventTransformer
+            .transform(
+                input: .init(weaponFired: weaponFired
+                    .withLatestFrom(state.bulletsCountRelay) { ($0, $1) })
+            )
+            .weaponAutoReloadTrigger
+        
+        let weaponReloadingTrigger = Observable
+            .combineLatest(
+                input.inputFromCoreMotion.reloadingMotionDetected,
+                weaponAutoReloadTrigger
+            )
+            .map({ [weak self] _ in self?.state.weaponTypeRelay.value ?? .pistol })
 
         let weaponReloaded = weaponReloadingEventTransformer
             .transform(
-                input: .init(weaponReloadingTrigger: input.inputFromCoreMotion.reloadingMotionDetected
-                    .map({ [weak self] _ in self?.state.weaponTypeRelay.value ?? .pistol })),
+                input: .init(weaponReloadingTrigger: weaponReloadingTrigger),
                 state: .init(bulletsCountRelay: state.bulletsCountRelay,
                              isWeaponReloadingRelay: state.isWeaponReloadingRelay)
             )
