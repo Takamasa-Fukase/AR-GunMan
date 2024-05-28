@@ -41,34 +41,25 @@ final class WeaponReloadingEventTransformer {
     
     func transform(input: Input, state: State) -> Output {
         var canReload: Bool {
-            print("canReload: \(state.bulletsCountRelay.value <= 0 && !state.isWeaponReloadingRelay.value)")
             return state.bulletsCountRelay.value <= 0 && !state.isWeaponReloadingRelay.value
         }
         let weaponReloaded = input.weaponReloadingTrigger
             .filter({ _ in canReload })
             .do(onNext: { [weak self] weaponType in
-                print("first do weaponType: \(weaponType)")
                 guard let self = self else { return }
                 state.isWeaponReloadingRelay.accept(true)
-                print("first do isWeaponReloadingRelay.accept(true), state.value: \(state.isWeaponReloadingRelay.value)")
                 self.soundPlayer.play(weaponType.reloadingSound)
-                print("first do soundPlayer.play(weaponType.reloadingSound)")
             })
             .flatMapLatest({ [weak self] weaponType -> Observable<WeaponType> in
-                print("flatMapLatest selfチェック前")
                 guard let self = self else { return Observable.empty() }
-                print("flatMapLatest selfチェック通過後")
                 return self.gameUseCase.awaitWeaponReloadEnds(currentWeapon: weaponType)
             })
             .filter({ _ in state.isWeaponReloadingRelay.value })
             .do(onNext: { weaponType in
-                print("second do weaponType: \(weaponType)")
                 state.bulletsCountRelay.accept(
                     weaponType.bulletsCapacity
                 )
-                print("second do bulletsCountRelay.accept(\(weaponType.bulletsCapacity), state.value:  \(state.bulletsCountRelay.value)")
                 state.isWeaponReloadingRelay.accept(false)
-                print("second do isWeaponReloadingRelay.accept(false), state.value:  \(state.isWeaponReloadingRelay.value)")
             })
         
         return Output(weaponReloaded: weaponReloaded)
