@@ -33,9 +33,9 @@ final class SimpleGameNavigator2: SimpleGameNavigator2Interface {
         )
         let viewModel = SimpleGameViewModel2(
             useCase: useCase,
-            weaponFiringEventTransformer: WeaponFiringEventTransformer(),
-            weaponAutoReloadEventTransformer: WeaponAutoReloadEventTransformer(),
-            weaponReloadingEventTransformer: WeaponReloadingEventTransformer(
+            weaponFireHandler: WeaponFireHandler(),
+            weaponAutoReloadHandler: WeaponAutoReloadHandler(),
+            weaponReloadHandler: WeaponReloadHandler(
                 gameUseCase: useCase
             )
         )

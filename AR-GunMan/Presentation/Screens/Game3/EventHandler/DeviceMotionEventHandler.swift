@@ -1,5 +1,5 @@
 ////
-////  DeviceMotionEventTransformer.swift
+////  DeviceMotionEventHandler.swift
 ////  AR-GunMan
 ////
 ////  Created by 深瀬 on 2024/05/23.
@@ -8,7 +8,7 @@
 //import RxSwift
 //import RxCocoa
 //
-//final class DeviceMotionEventTransformer: ViewModelType {
+//final class DeviceMotionEventHandler: ViewModelType {
 //    struct Input {
 //        let timeCountStarted: Observable<Void>
 //        let timeCountEnded: Observable<Void>

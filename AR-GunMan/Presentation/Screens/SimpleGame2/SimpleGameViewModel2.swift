@@ -57,24 +57,24 @@ final class SimpleGameViewModel2: ViewModelType {
     }
 
     private let useCase: GameUseCase2Interface
-    private let weaponFiringEventTransformer: WeaponFiringEventTransformer
-    private let weaponAutoReloadEventTransformer: WeaponAutoReloadEventTransformer
-    private let weaponReloadingEventTransformer: WeaponReloadingEventTransformer
+    private let weaponFireHandler: WeaponFireHandler
+    private let weaponAutoReloadHandler: WeaponAutoReloadHandler
+    private let weaponReloadHandler: WeaponReloadHandler
     private var state: State
     private var soundPlayer: SoundPlayerInterface
     
     init(
         useCase: GameUseCase2Interface,
-        weaponFiringEventTransformer: WeaponFiringEventTransformer,
-        weaponAutoReloadEventTransformer: WeaponAutoReloadEventTransformer,
-        weaponReloadingEventTransformer: WeaponReloadingEventTransformer,
+        weaponFireHandler: WeaponFireHandler,
+        weaponAutoReloadHandler: WeaponAutoReloadHandler,
+        weaponReloadHandler: WeaponReloadHandler,
         state: State = State(),
         soundPlayer: SoundPlayerInterface = SoundPlayer.shared
     ) {
         self.useCase = useCase
-        self.weaponFiringEventTransformer = weaponFiringEventTransformer
-        self.weaponAutoReloadEventTransformer = weaponAutoReloadEventTransformer
-        self.weaponReloadingEventTransformer = weaponReloadingEventTransformer
+        self.weaponFireHandler = weaponFireHandler
+        self.weaponAutoReloadHandler = weaponAutoReloadHandler
+        self.weaponReloadHandler = weaponReloadHandler
         self.state = state
         self.soundPlayer = soundPlayer
     }
@@ -100,7 +100,7 @@ final class SimpleGameViewModel2: ViewModelType {
             .map({[weak self] _ in self?.state.weaponTypeRelay.value ?? .pistol })
             .share()
         
-        let weaponFired = weaponFiringEventTransformer
+        let weaponFired = weaponFireHandler
             .transform(
                 input: .init(weaponFiringTrigger: input.inputFromCoreMotion.firingMotionDetected
                     .map({ [weak self] _ in self?.state.weaponTypeRelay.value ?? .pistol })),
@@ -109,7 +109,7 @@ final class SimpleGameViewModel2: ViewModelType {
             .weaponFired
             .share()
         
-        let weaponAutoReloadTrigger = weaponAutoReloadEventTransformer
+        let weaponAutoReloadTrigger = weaponAutoReloadHandler
             .transform(
                 input: .init(weaponFired: weaponFired
                     .withLatestFrom(state.bulletsCountRelay) { ($0, $1) })
@@ -123,7 +123,7 @@ final class SimpleGameViewModel2: ViewModelType {
             )
             .map({ [weak self] _ in self?.state.weaponTypeRelay.value ?? .pistol })
 
-        let weaponReloaded = weaponReloadingEventTransformer
+        let weaponReloaded = weaponReloadHandler
             .transform(
                 input: .init(weaponReloadingTrigger: weaponReloadingTrigger),
                 state: .init(bulletsCountRelay: state.bulletsCountRelay,

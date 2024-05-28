@@ -1,5 +1,5 @@
 //
-//  WeaponFiringEventTransformer.swift
+//  WeaponFireHandler.swift
 //  AR-GunMan
 //
 //  Created by 深瀬 on 2024/05/24.
@@ -8,7 +8,7 @@
 import RxSwift
 import RxCocoa
 
-final class WeaponFiringEventTransformer {
+final class WeaponFireHandler {
     struct Input {
         let weaponFiringTrigger: Observable<WeaponType>
     }

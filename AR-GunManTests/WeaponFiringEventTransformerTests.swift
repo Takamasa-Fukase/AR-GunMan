@@ -1,5 +1,5 @@
 //
-//  WeaponFiringEventTransformerTests.swift
+//  WeaponFireHandlerTests.swift
 //  AR-GunManTests
 //
 //  Created by ウルトラ深瀬 on 25/5/24.
@@ -11,17 +11,17 @@ import RxSwift
 import RxCocoa
 @testable import AR_GunMan
 
-final class WeaponFiringEventTransformerTests: XCTestCase {
+final class WeaponFireHandlerTests: XCTestCase {
     var scheduler: TestScheduler!
     var disposeBag: DisposeBag!
-    var state: WeaponFiringEventTransformer.State!
+    var state: WeaponFireHandler.State!
     var soundPlayer: SoundPlayerMock!
 
     override func setUp() {
         super.setUp()
         scheduler = TestScheduler(initialClock: 0)
         disposeBag = DisposeBag()
-        state = WeaponFiringEventTransformer.State(
+        state = .init(
             bulletsCountRelay: BehaviorRelay<Int>(value: 0)
         )
         soundPlayer = SoundPlayerMock()
@@ -38,14 +38,14 @@ final class WeaponFiringEventTransformerTests: XCTestCase {
     func test_pistolの残弾数が0の時に3回撃とうとしてもweaponFiredイベントが流れなければ成功() {
         // 残弾数を0にする
         state.bulletsCountRelay.accept(0)
-        let transformer = WeaponFiringEventTransformer()
+        let transformer = WeaponFireHandler()
         
         let tryFiringPistol3Times = scheduler.createHotObservable([
             .next(0,  WeaponType.pistol),
             .next(100, WeaponType.pistol),
             .next(200, WeaponType.pistol)
         ])
-        let input = WeaponFiringEventTransformer.Input(
+        let input = WeaponFireHandler.Input(
             weaponFiringTrigger: tryFiringPistol3Times.asObservable()
         )
         let output = transformer.transform(
@@ -66,14 +66,14 @@ final class WeaponFiringEventTransformerTests: XCTestCase {
     func test_pistolの残弾数が0の時に3回撃とうとしても0のまま変わらなければ成功() {
         // 残弾数を0にする
         state.bulletsCountRelay.accept(0)
-        let transformer = WeaponFiringEventTransformer()
+        let transformer = WeaponFireHandler()
         
         let tryFiringPistol3Times = scheduler.createHotObservable([
             .next(0, WeaponType.pistol),
             .next(100, WeaponType.pistol),
             .next(200, WeaponType.pistol)
         ])
-        let input = WeaponFiringEventTransformer.Input(
+        let input = WeaponFireHandler.Input(
             weaponFiringTrigger: tryFiringPistol3Times.asObservable()
         )
         let output = transformer.transform(
@@ -102,14 +102,14 @@ final class WeaponFiringEventTransformerTests: XCTestCase {
     func test_pistolの残弾数が0の時に3回撃とうとしてpistolOutBulletsの音声再生処理が3回呼ばれれば成功() {
         // 残弾数を0にする
         state.bulletsCountRelay.accept(0)
-        let transformer = WeaponFiringEventTransformer(soundPlayer: soundPlayer)
+        let transformer = WeaponFireHandler(soundPlayer: soundPlayer)
 
         let tryFiringPistol3Times = scheduler.createHotObservable([
             .next(0, WeaponType.pistol),
             .next(100, WeaponType.pistol),
             .next(200, WeaponType.pistol)
         ])
-        let input = WeaponFiringEventTransformer.Input(
+        let input = WeaponFireHandler.Input(
             weaponFiringTrigger: tryFiringPistol3Times.asObservable()
         )
         let output = transformer.transform(
@@ -130,7 +130,7 @@ final class WeaponFiringEventTransformerTests: XCTestCase {
     func test_pistolの残弾数がMAXの7発の時に10回撃とうとしてもweaponFiredのイベントが7回しか流れなければ成功() {
         // 残弾数をMAXの7発にする
         state.bulletsCountRelay.accept(7)
-        let transformer = WeaponFiringEventTransformer()
+        let transformer = WeaponFireHandler()
 
         // pistolの装弾数（7発）を超えて撃つイベントを作成
         let tryFiringPistol10Times = scheduler.createHotObservable([
@@ -146,7 +146,7 @@ final class WeaponFiringEventTransformerTests: XCTestCase {
             .next(900, WeaponType.pistol)
         ])
         
-        let input = WeaponFiringEventTransformer.Input(
+        let input = WeaponFireHandler.Input(
             weaponFiringTrigger: tryFiringPistol10Times.asObservable()
         )
         let output = transformer.transform(
@@ -177,7 +177,7 @@ final class WeaponFiringEventTransformerTests: XCTestCase {
     func test_pistolの残弾数がMAXの7発の時に7回撃とうとしてpistolShootの音声再生処理が7回呼ばれれば成功() {
         // 残弾数をMAXの7発にする
         state.bulletsCountRelay.accept(7)
-        let transformer = WeaponFiringEventTransformer(soundPlayer: soundPlayer)
+        let transformer = WeaponFireHandler(soundPlayer: soundPlayer)
 
         let tryFiringPistol7Times = scheduler.createHotObservable([
             .next(0, WeaponType.pistol),
@@ -188,7 +188,7 @@ final class WeaponFiringEventTransformerTests: XCTestCase {
             .next(500, WeaponType.pistol),
             .next(600, WeaponType.pistol),
         ])
-        let input = WeaponFiringEventTransformer.Input(
+        let input = WeaponFireHandler.Input(
             weaponFiringTrigger: tryFiringPistol7Times.asObservable()
         )
         let output = transformer.transform(

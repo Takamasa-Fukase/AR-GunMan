@@ -1,5 +1,5 @@
 //
-//  WeaponReloadingEventTransformerTests.swift
+//  WeaponReloadHandlerTests.swift
 //  AR-GunManTests
 //
 //  Created by ウルトラ深瀬 on 27/5/24.
@@ -11,12 +11,12 @@ import RxSwift
 import RxCocoa
 @testable import AR_GunMan
 
-final class WeaponReloadingEventTransformerTests: XCTestCase {
+final class WeaponReloadHandlerTests: XCTestCase {
     var scheduler: TestScheduler!
     var disposeBag: DisposeBag!
-    var state: WeaponReloadingEventTransformer.State!
+    var state: WeaponReloadHandler.State!
     var soundPlayer: SoundPlayerMock!
-    var transformer: WeaponReloadingEventTransformer!
+    var transformer: WeaponReloadHandler!
     
     override func setUp() {
         super.setUp()
@@ -49,7 +49,7 @@ final class WeaponReloadingEventTransformerTests: XCTestCase {
         let tryReload = scheduler.createHotObservable([
             .next(100, WeaponType.pistol)
         ])
-        let input = WeaponReloadingEventTransformer.Input(
+        let input = WeaponReloadHandler.Input(
             weaponReloadingTrigger: tryReload.asObservable()
         )
         let output = transformer.transform(

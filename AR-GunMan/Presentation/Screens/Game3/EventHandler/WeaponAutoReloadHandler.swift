@@ -1,5 +1,5 @@
 //
-//  WeaponAutoReloadEventTransformer.swift
+//  WeaponAutoReloadHandler.swift
 //  AR-GunMan
 //
 //  Created by ウルトラ深瀬 on 28/5/24.
@@ -8,7 +8,7 @@
 import RxSwift
 import RxCocoa
 
-final class WeaponAutoReloadEventTransformer {
+final class WeaponAutoReloadHandler {
     struct Input {
         let weaponFired: Observable<(weaponType: WeaponType, bulletsCount: Int)>
     }
