@@ -117,11 +117,11 @@ final class SimpleGameViewModel2: ViewModelType {
             .weaponAutoReloadTrigger
         
         let weaponReloadingTrigger = Observable
-            .combineLatest(
-                input.inputFromCoreMotion.reloadingMotionDetected,
+            .merge(
+                input.inputFromCoreMotion.reloadingMotionDetected
+                    .map({ [weak self] _ in self?.state.weaponTypeRelay.value ?? .pistol }),
                 weaponAutoReloadTrigger
             )
-            .map({ [weak self] _ in self?.state.weaponTypeRelay.value ?? .pistol })
 
         let weaponReloaded = weaponReloadHandler
             .transform(
