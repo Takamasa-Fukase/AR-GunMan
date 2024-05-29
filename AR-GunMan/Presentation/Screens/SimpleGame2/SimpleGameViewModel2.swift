@@ -62,7 +62,7 @@ final class SimpleGameViewModel2: ViewModelType {
     private let useCase: GameUseCase2Interface
     private let weaponFireHandler: WeaponFireHandler
     private let weaponAutoReloadHandler: WeaponAutoReloadHandler
-    private let weaponReloadHandler: WeaponReloadHandler2
+    private let weaponReloadHandler: WeaponReloadHandler
     private var state: State
     private var soundPlayer: SoundPlayerInterface
     
@@ -70,7 +70,7 @@ final class SimpleGameViewModel2: ViewModelType {
         useCase: GameUseCase2Interface,
         weaponFireHandler: WeaponFireHandler,
         weaponAutoReloadHandler: WeaponAutoReloadHandler,
-        weaponReloadHandler: WeaponReloadHandler2,
+        weaponReloadHandler: WeaponReloadHandler,
         state: State = State(),
         soundPlayer: SoundPlayerInterface = SoundPlayer.shared
     ) {

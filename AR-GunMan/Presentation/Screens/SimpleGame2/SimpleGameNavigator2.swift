@@ -35,7 +35,7 @@ final class SimpleGameNavigator2: SimpleGameNavigator2Interface {
             useCase: useCase,
             weaponFireHandler: WeaponFireHandler(),
             weaponAutoReloadHandler: WeaponAutoReloadHandler(),
-            weaponReloadHandler: WeaponReloadHandler2(
+            weaponReloadHandler: WeaponReloadHandler(
                 gameUseCase: useCase
             )
         )
