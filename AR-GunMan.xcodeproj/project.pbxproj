@@ -379,6 +379,9 @@
 		BCD1C2572C06B60C008975EB /* CompositeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD1C2562C06B60C008975EB /* CompositeCalculator.swift */; };
 		BCD1C2582C06B60C008975EB /* CompositeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD1C2562C06B60C008975EB /* CompositeCalculator.swift */; };
 		BCD1C2592C06B60C008975EB /* CompositeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD1C2562C06B60C008975EB /* CompositeCalculator.swift */; };
+		BCD1C25B2C06B7C8008975EB /* ReloadingMotionFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD1C25A2C06B7C8008975EB /* ReloadingMotionFilter.swift */; };
+		BCD1C25C2C06B7C8008975EB /* ReloadingMotionFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD1C25A2C06B7C8008975EB /* ReloadingMotionFilter.swift */; };
+		BCD1C25D2C06B7C8008975EB /* ReloadingMotionFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD1C25A2C06B7C8008975EB /* ReloadingMotionFilter.swift */; };
 		BCD9675E2979E55400E33587 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD9675D2979E55400E33587 /* UIImageView+Extension.swift */; };
 		BCD96C03297C757600E33587 /* RankingViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BCD96C02297C757600E33587 /* RankingViewController.storyboard */; };
 		BCF1C2842BF611F200ACD841 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866675D3275215AF007CB4D6 /* UIViewController+Extension.swift */; };
@@ -546,6 +549,7 @@
 		BCD1C24E2C0603AF008975EB /* WeaponReloadHandler2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponReloadHandler2.swift; sourceTree = "<group>"; };
 		BCD1C2522C06B353008975EB /* FiringMotionFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiringMotionFilter.swift; sourceTree = "<group>"; };
 		BCD1C2562C06B60C008975EB /* CompositeCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeCalculator.swift; sourceTree = "<group>"; };
+		BCD1C25A2C06B7C8008975EB /* ReloadingMotionFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReloadingMotionFilter.swift; sourceTree = "<group>"; };
 		BCD9675D2979E55400E33587 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		BCD96C02297C757600E33587 /* RankingViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RankingViewController.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1210,6 +1214,7 @@
 				86B112542C0085B7006D464A /* WeaponReloadHandler.swift */,
 				BCD1C24E2C0603AF008975EB /* WeaponReloadHandler2.swift */,
 				BCD1C2522C06B353008975EB /* FiringMotionFilter.swift */,
+				BCD1C25A2C06B7C8008975EB /* ReloadingMotionFilter.swift */,
 			);
 			path = EventHandler;
 			sourceTree = "<group>";
@@ -1613,6 +1618,7 @@
 				860191742BEDDF2A00382749 /* CoreMotionController.swift in Sources */,
 				8627F6352BCE83F30003D374 /* ViewModelType.swift in Sources */,
 				86C5AB982AB8819C00CB161D /* UIAlertController+Extension.swift in Sources */,
+				BCD1C25B2C06B7C8008975EB /* ReloadingMotionFilter.swift in Sources */,
 				67200F5927A0026000AD92EC /* NameRegisterViewModel.swift in Sources */,
 				86C421B82BB040C300EFD791 /* TutorialRepository.swift in Sources */,
 				86B112512C0080AA006D464A /* WeaponFireHandler.swift in Sources */,
@@ -1695,6 +1701,7 @@
 				8606463D2BF5998100906DA0 /* TopUseCase.swift in Sources */,
 				860646752BF599D500906DA0 /* ResultNavigator.swift in Sources */,
 				860646632BF599B000906DA0 /* SimpleGameViewController.swift in Sources */,
+				BCD1C25C2C06B7C8008975EB /* ReloadingMotionFilter.swift in Sources */,
 				86B1124C2BFF3DC7006D464A /* DeviceMotionEventHandler.swift in Sources */,
 				8606466E2BF599BC00906DA0 /* WeaponChangeCell.swift in Sources */,
 				BCD1C2582C06B60C008975EB /* CompositeCalculator.swift in Sources */,
@@ -1813,6 +1820,7 @@
 				8606469B2BF599EA00906DA0 /* SettingsViewController.swift in Sources */,
 				860646012BF5995900906DA0 /* UIAlertController+Extension.swift in Sources */,
 				8606464A2BF5998F00906DA0 /* TutorialViewModel.swift in Sources */,
+				BCD1C25D2C06B7C8008975EB /* ReloadingMotionFilter.swift in Sources */,
 				8606469E2BF599EA00906DA0 /* SettingsViewModel.swift in Sources */,
 				8606460E2BF5996100906DA0 /* CoreMotionStreamFilter.swift in Sources */,
 				86B112532C0080AA006D464A /* WeaponFireHandler.swift in Sources */,
