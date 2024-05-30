@@ -11,51 +11,46 @@ import RxCocoa
 final class WeaponFireHandler {
     struct Input {
         let weaponFiringTrigger: Observable<WeaponType>
+        let bulletsCount: Observable<Int>
     }
     
     struct Output {
+        let playNoBulletsSound: Observable<SoundType>
+        let changeBulletsCount: Observable<Int>
+        let playFiringSound: Observable<SoundType>
         let weaponFired: Observable<WeaponType>
     }
     
-    class State {
-        let bulletsCountRelay: BehaviorRelay<Int>
-        
-        init(bulletsCountRelay: BehaviorRelay<Int>) {
-            self.bulletsCountRelay = bulletsCountRelay
-        }
-    }
-    
-    private let soundPlayer: SoundPlayerInterface
-    
-    init(soundPlayer: SoundPlayerInterface = SoundPlayer.shared) {
-        self.soundPlayer = soundPlayer
-    }
-    
-    func transform(input: Input, state: State) -> Output {
-        var canFire: Bool {
-            return state.bulletsCountRelay.value > 0
-        }
+    func transform(input: Input) -> Output {
+        let playNoBulletsSoundRelay = PublishRelay<SoundType>()
+        let changeBulletsCountRelay = PublishRelay<Int>()
+        let playFiringSoundRelay = PublishRelay<SoundType>()
 
         let weaponFired = input.weaponFiringTrigger
-            .filter({ [weak self] weaponType in
-                guard let self = self else { return false }
-                guard canFire else {
-                    if weaponType.reloadType == .manual {
-                        self.soundPlayer.play(.pistolOutBullets)
+            .withLatestFrom(input.bulletsCount) {
+                return (weaponType: $0, bulletsCount: $1)
+            }
+            .filter({
+                guard $0.bulletsCount > 0 else {
+                    if $0.weaponType.reloadType == .manual {
+                        playNoBulletsSoundRelay.accept(.pistolOutBullets)
                     }
                     return false
                 }
                 return true
             })
-            .do(onNext: { [weak self] weaponType in
-                guard let self = self else { return }
-                self.soundPlayer.play(weaponType.firingSound)
-                state.bulletsCountRelay.accept(
-                    state.bulletsCountRelay.value - 1
-                )
+            .do(onNext: {
+                changeBulletsCountRelay.accept($0.bulletsCount - 1)
+                playFiringSoundRelay.accept($0.weaponType.firingSound)
             })
+            .map({ $0.weaponType })
         
-        return Output(weaponFired: weaponFired)
+        return Output(
+            playNoBulletsSound: playNoBulletsSoundRelay.asObservable(),
+            changeBulletsCount: changeBulletsCountRelay.asObservable(),
+            playFiringSound: playFiringSoundRelay.asObservable(),
+            weaponFired: weaponFired
+        )
     }
 }
 

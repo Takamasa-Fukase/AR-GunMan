@@ -35,6 +35,9 @@ final class SimpleGameViewModel2: ViewModelType {
         
         struct ViewModelAction {
             let weaponSelected: Observable<WeaponType>
+            let noBulletsSoundPlayed: Observable<SoundType>
+            let bulletsCountDecremented: Observable<Int>
+            let firingSoundPlayed: Observable<SoundType>
             let weaponFired: Observable<WeaponType>
             let bulletsCountRefilled: Observable<Int>
             let weaponReloadingFlagChanged: Observable<Bool>
@@ -103,13 +106,32 @@ final class SimpleGameViewModel2: ViewModelType {
             .map({[weak self] _ in self?.state.weaponTypeRelay.value ?? .pistol })
             .share()
         
-        let weaponFired = weaponFireHandler
-            .transform(
-                input: .init(weaponFiringTrigger: input.inputFromCoreMotion.firingMotionDetected
-                    .map({ [weak self] _ in self?.state.weaponTypeRelay.value ?? .pistol })),
-                state: .init(bulletsCountRelay: state.bulletsCountRelay)
-            )
-            .weaponFired
+        let weaponFireHandlerOutput = weaponFireHandler
+            .transform(input: .init(
+                weaponFiringTrigger: input.inputFromCoreMotion.firingMotionDetected
+                    .map({ [weak self] _ in self?.state.weaponTypeRelay.value ?? .pistol }),
+                bulletsCount: state.bulletsCountRelay.asObservable()
+            ))
+        
+        let noBulletsSoundPlayed = weaponFireHandlerOutput.playNoBulletsSound
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.soundPlayer.play($0)
+            })
+        
+        let bulletsCountDecremented = weaponFireHandlerOutput.changeBulletsCount
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.state.bulletsCountRelay.accept($0)
+            })
+        
+        let firingSoundPlayed = weaponFireHandlerOutput.playFiringSound
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.soundPlayer.play($0)
+            })
+        
+        let weaponFired = weaponFireHandlerOutput.weaponFired
             .share()
         
         let weaponAutoReloadTrigger = weaponAutoReloadHandler
@@ -168,6 +190,9 @@ final class SimpleGameViewModel2: ViewModelType {
         return Output(
             viewModelAction: Output.ViewModelAction(
                 weaponSelected: weaponSelected,
+                noBulletsSoundPlayed: noBulletsSoundPlayed,
+                bulletsCountDecremented: bulletsCountDecremented,
+                firingSoundPlayed: firingSoundPlayed,
                 weaponFired: weaponFired,
                 bulletsCountRefilled: bulletsCountRefilled,
                 weaponReloadingFlagChanged: weaponReloadingFlagChanged,
