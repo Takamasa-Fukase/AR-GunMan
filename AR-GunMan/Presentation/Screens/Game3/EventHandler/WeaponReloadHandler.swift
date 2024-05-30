@@ -11,13 +11,13 @@ import RxCocoa
 final class WeaponReloadHandler {
     struct Input {
         let weaponReloadingTrigger: Observable<WeaponType>
-        let currentBulletsCount: Observable<Int>
-        let currentWeaponReloadingFlag: Observable<Bool>
+        let bulletsCount: Observable<Int>
+        let isWeaponReloading: Observable<Bool>
     }
     
     struct Output {
-        let bulletsCount: Observable<Int>
-        let isWeaponReloading: Observable<Bool>
+        let changeBulletsCount: Observable<Int>
+        let changeWeaponReloadingFlag: Observable<Bool>
         let playReloadingSound: Observable<SoundType>
         let weaponReloaded: Observable<WeaponType>
     }
@@ -29,37 +29,37 @@ final class WeaponReloadHandler {
     }
     
     func transform(input: Input) -> Output {
-        let bulletsCountRelay = PublishRelay<Int>()
-        let isWeaponReloadingRelay = PublishRelay<Bool>()
+        let changeBulletsCountRelay = PublishRelay<Int>()
+        let changeWeaponReloadingFlagRelay = PublishRelay<Bool>()
         let playReloadingSoundRelay = PublishRelay<SoundType>()
 
         let weaponReloaded = input.weaponReloadingTrigger
             .withLatestFrom(Observable.combineLatest(
-                input.currentBulletsCount,
-                input.currentWeaponReloadingFlag
+                input.bulletsCount,
+                input.isWeaponReloading
             )) {
                 return (weaponType: $0, bulletsCount: $1.0, isWeaponReloading: $1.1)
             }
             .filter({ $0.bulletsCount <= 0 && !$0.isWeaponReloading })
             .do(onNext: {
-                isWeaponReloadingRelay.accept(true)
+                changeWeaponReloadingFlagRelay.accept(true)
                 playReloadingSoundRelay.accept($0.weaponType.reloadingSound)
             })
             .flatMapLatest({ [weak self] (weaponType, _, _) -> Observable<(weaponType: WeaponType, isWeaponReloading: Bool)> in
                 guard let self = self else { return .empty() }
                 return self.gameUseCase.awaitWeaponReloadEnds(currentWeapon: weaponType)
-                    .withLatestFrom(input.currentWeaponReloadingFlag) { ($0, $1) }
+                    .withLatestFrom(input.isWeaponReloading) { ($0, $1) }
             })
             .filter({ $0.isWeaponReloading })
             .do(onNext: {
-                bulletsCountRelay.accept($0.weaponType.bulletsCapacity)
-                isWeaponReloadingRelay.accept(false)
+                changeBulletsCountRelay.accept($0.weaponType.bulletsCapacity)
+                changeWeaponReloadingFlagRelay.accept(false)
             })
             .map({ $0.weaponType })
         
         return Output(
-            bulletsCount: bulletsCountRelay.asObservable(),
-            isWeaponReloading: isWeaponReloadingRelay.asObservable(),
+            changeBulletsCount: changeBulletsCountRelay.asObservable(),
+            changeWeaponReloadingFlag: changeWeaponReloadingFlagRelay.asObservable(),
             playReloadingSound: playReloadingSoundRelay.asObservable(),
             weaponReloaded: weaponReloaded
         )

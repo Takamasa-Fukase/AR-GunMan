@@ -129,17 +129,17 @@ final class SimpleGameViewModel2: ViewModelType {
         let weaponReloadHandlerOutput = weaponReloadHandler
             .transform(input: .init(
                 weaponReloadingTrigger: weaponReloadingTrigger,
-                currentBulletsCount: state.bulletsCountRelay.asObservable(),
-                currentWeaponReloadingFlag: state.isWeaponReloadingRelay.asObservable())
+                bulletsCount: state.bulletsCountRelay.asObservable(),
+                isWeaponReloading: state.isWeaponReloadingRelay.asObservable())
             )
         
-        let bulletsCountRefilled = weaponReloadHandlerOutput.bulletsCount
+        let bulletsCountRefilled = weaponReloadHandlerOutput.changeBulletsCount
             .do(onNext: { [weak self] in
                 guard let self = self else { return }
                 self.state.bulletsCountRelay.accept($0)
             })
         
-        let weaponReloadingFlagChanged = weaponReloadHandlerOutput.isWeaponReloading
+        let weaponReloadingFlagChanged = weaponReloadHandlerOutput.changeWeaponReloadingFlag
             .do(onNext: { [weak self] in
                 guard let self = self else { return }
                 self.state.isWeaponReloadingRelay.accept($0)
