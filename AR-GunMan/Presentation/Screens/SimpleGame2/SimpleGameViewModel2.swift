@@ -34,7 +34,6 @@ final class SimpleGameViewModel2: ViewModelType {
         let outputToGameScene: OutputToGameScene
         
         struct ViewModelAction {
-            let weaponSelected: Observable<WeaponType>
             let noBulletsSoundPlayed: Observable<SoundType>
             let bulletsCountDecremented: Observable<Int>
             let firingSoundPlayed: Observable<SoundType>
@@ -43,6 +42,11 @@ final class SimpleGameViewModel2: ViewModelType {
             let weaponReloadingFlagChanged: Observable<Bool>
             let reloadingSoundPlayed: Observable<SoundType>
             let weaponReloaded: Observable<WeaponType>
+            let weaponTypeChanged: Observable<WeaponType>
+            let weaponChangingSoundPlayed: Observable<SoundType>
+            let bulletsCountRefilledForNewWeapon: Observable<Int>
+            let weaponReloadingFlagChangedForNewWeapon: Observable<Bool>
+            let weaponChanged: Observable<WeaponType>
         }
         
         struct OutputToView {
@@ -63,49 +67,36 @@ final class SimpleGameViewModel2: ViewModelType {
     }
 
     private let useCase: GameUseCase2Interface
+    private let weaponSelectObserver: PublishRelay<WeaponType>
     private let weaponFireHandler: WeaponFireHandler
     private let weaponAutoReloadHandler: WeaponAutoReloadHandler
     private let weaponReloadHandler: WeaponReloadHandler
+    private let weaponSelectHandler: WeaponSelectHandler
     private let state: State
     private let soundPlayer: SoundPlayerInterface
     
     init(
         useCase: GameUseCase2Interface,
+        weaponSelectObserver: PublishRelay<WeaponType> = PublishRelay<WeaponType>(),
         weaponFireHandler: WeaponFireHandler,
         weaponAutoReloadHandler: WeaponAutoReloadHandler,
         weaponReloadHandler: WeaponReloadHandler,
+        weaponSelectHandler: WeaponSelectHandler,
         state: State = State(),
         soundPlayer: SoundPlayerInterface = SoundPlayer.shared
     ) {
         self.useCase = useCase
+        self.weaponSelectObserver = weaponSelectObserver
         self.weaponFireHandler = weaponFireHandler
         self.weaponAutoReloadHandler = weaponAutoReloadHandler
         self.weaponReloadHandler = weaponReloadHandler
+        self.weaponSelectHandler = weaponSelectHandler
         self.state = state
         self.soundPlayer = soundPlayer
     }
     
     func transform(input: Input) -> Output {
         // MARK: ViewModelAction
-        let weaponSelected = input.inputFromView.weaponChangeButtonTapped
-            .map({[weak self] _ -> WeaponType in
-                guard let self = self else { return .pistol }
-                if self.state.weaponTypeRelay.value == .pistol {
-                    return .bazooka
-                }else {
-                    return .pistol
-                }
-            })
-            .do(onNext: {[weak self] selectedWeapon in
-                guard let self = self else { return }
-                self.state.weaponTypeRelay.accept(selectedWeapon)
-                self.soundPlayer.play(selectedWeapon.weaponChangingSound)
-                self.state.bulletsCountRelay.accept(selectedWeapon.bulletsCapacity)
-                self.state.isWeaponReloadingRelay.accept(false)
-            })
-            .map({[weak self] _ in self?.state.weaponTypeRelay.value ?? .pistol })
-            .share()
-        
         let weaponFireHandlerOutput = weaponFireHandler
             .transform(input: .init(
                 weaponFiringTrigger: input.inputFromCoreMotion.firingMotionDetected
@@ -174,6 +165,36 @@ final class SimpleGameViewModel2: ViewModelType {
             })
         
         let weaponReloaded = weaponReloadHandlerOutput.weaponReloaded
+        
+        let weaponSelectHandlerOutput = weaponSelectHandler
+            .transform(input: .init(weaponSelected: weaponSelectObserver.asObservable()))
+        
+        let weaponTypeChanged = weaponSelectHandlerOutput.changeWeaponType
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.state.weaponTypeRelay.accept($0)
+            })
+        
+        let weaponChangingSoundPlayed = weaponSelectHandlerOutput.playWeaponChangingSound
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.soundPlayer.play($0)
+            })
+        
+        let bulletsCountRefilledForNewWeapon = weaponSelectHandlerOutput.refillBulletsCountForNewWeapon
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.state.bulletsCountRelay.accept($0)
+            })
+        
+        let weaponReloadingFlagChangedForNewWeapon = weaponSelectHandlerOutput.changeWeaponReloadingFlagForNewWeapon
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.state.isWeaponReloadingRelay.accept($0)
+            })
+        
+        let weaponChanged = weaponSelectHandlerOutput.weaponChanged
+            .share()
             
         
         // MARK: OutputToView
@@ -182,14 +203,13 @@ final class SimpleGameViewModel2: ViewModelType {
         
         
         // MARK: OutputToGameScene
-        let renderSelectedWeapon = weaponSelected
+        let renderSelectedWeapon = weaponChanged
 
         let renderWeaponFiring = weaponFired
 
         
         return Output(
             viewModelAction: Output.ViewModelAction(
-                weaponSelected: weaponSelected,
                 noBulletsSoundPlayed: noBulletsSoundPlayed,
                 bulletsCountDecremented: bulletsCountDecremented,
                 firingSoundPlayed: firingSoundPlayed,
@@ -197,7 +217,12 @@ final class SimpleGameViewModel2: ViewModelType {
                 bulletsCountRefilled: bulletsCountRefilled,
                 weaponReloadingFlagChanged: weaponReloadingFlagChanged,
                 reloadingSoundPlayed: reloadingSoundPlayed,
-                weaponReloaded: weaponReloaded
+                weaponReloaded: weaponReloaded,
+                weaponTypeChanged: weaponTypeChanged,
+                weaponChangingSoundPlayed: weaponChangingSoundPlayed,
+                bulletsCountRefilledForNewWeapon: bulletsCountRefilledForNewWeapon,
+                weaponReloadingFlagChangedForNewWeapon: weaponReloadingFlagChangedForNewWeapon,
+                weaponChanged: weaponChanged
             ),
             outputToView: Output.OutputToView(
                 bulletsCountImage: bulletsCountImage

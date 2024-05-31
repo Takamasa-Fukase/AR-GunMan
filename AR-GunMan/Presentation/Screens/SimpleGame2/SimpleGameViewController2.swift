@@ -63,11 +63,7 @@ class SimpleGameViewController2: UIViewController {
                 guard let self = self else { return }
                 self.gameSceneController.fireWeapon(type)
             }).disposed(by: disposeBag)
-        
-        output.viewModelAction.weaponSelected
-            .subscribe()
-            .disposed(by: disposeBag)
-        
+
         output.viewModelAction.noBulletsSoundPlayed
             .subscribe()
             .disposed(by: disposeBag)
@@ -97,6 +93,26 @@ class SimpleGameViewController2: UIViewController {
             .disposed(by: disposeBag)
         
         output.viewModelAction.weaponReloaded
+            .subscribe()
+            .disposed(by: disposeBag)
+        
+        output.viewModelAction.weaponTypeChanged
+            .subscribe()
+            .disposed(by: disposeBag)
+        
+        output.viewModelAction.weaponChangingSoundPlayed
+            .subscribe()
+            .disposed(by: disposeBag)
+        
+        output.viewModelAction.bulletsCountRefilledForNewWeapon
+            .subscribe()
+            .disposed(by: disposeBag)
+        
+        output.viewModelAction.weaponReloadingFlagChangedForNewWeapon
+            .subscribe()
+            .disposed(by: disposeBag)
+        
+        output.viewModelAction.weaponChanged
             .subscribe()
             .disposed(by: disposeBag)
         
