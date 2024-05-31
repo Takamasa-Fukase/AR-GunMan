@@ -66,8 +66,8 @@ final class SimpleGameViewModel2: ViewModelType {
     private let weaponFireHandler: WeaponFireHandler
     private let weaponAutoReloadHandler: WeaponAutoReloadHandler
     private let weaponReloadHandler: WeaponReloadHandler
-    private var state: State
-    private var soundPlayer: SoundPlayerInterface
+    private let state: State
+    private let soundPlayer: SoundPlayerInterface
     
     init(
         useCase: GameUseCase2Interface,
