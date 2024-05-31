@@ -347,6 +347,9 @@
 		BC92C8602975A2A800E49BD5 /* UIViewController+RxLifeCycleEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C85F2975A2A800E49BD5 /* UIViewController+RxLifeCycleEvents.swift */; };
 		BCAB8A7A297C779C00F81E73 /* WeaponChangeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAB8A79297C779C00F81E73 /* WeaponChangeViewModel.swift */; };
 		BCB852AF2BE4F7FB0027F060 /* GameSceneRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB852AE2BE4F7FB0027F060 /* GameSceneRepository.swift */; };
+		BCCD44512C0954B700BF541D /* WeaponSelectHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCD44502C0954B700BF541D /* WeaponSelectHandler.swift */; };
+		BCCD44522C0954B700BF541D /* WeaponSelectHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCD44502C0954B700BF541D /* WeaponSelectHandler.swift */; };
+		BCCD44532C0954B700BF541D /* WeaponSelectHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCD44502C0954B700BF541D /* WeaponSelectHandler.swift */; };
 		BCD1C2252C01B3EA008975EB /* SimpleGameViewModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD1C2242C01B3EA008975EB /* SimpleGameViewModel2.swift */; };
 		BCD1C2262C01B3EA008975EB /* SimpleGameViewModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD1C2242C01B3EA008975EB /* SimpleGameViewModel2.swift */; };
 		BCD1C2272C01B3EA008975EB /* SimpleGameViewModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD1C2242C01B3EA008975EB /* SimpleGameViewModel2.swift */; };
@@ -531,6 +534,7 @@
 		BC92C85F2975A2A800E49BD5 /* UIViewController+RxLifeCycleEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+RxLifeCycleEvents.swift"; sourceTree = "<group>"; };
 		BCAB8A79297C779C00F81E73 /* WeaponChangeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponChangeViewModel.swift; sourceTree = "<group>"; };
 		BCB852AE2BE4F7FB0027F060 /* GameSceneRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneRepository.swift; sourceTree = "<group>"; };
+		BCCD44502C0954B700BF541D /* WeaponSelectHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponSelectHandler.swift; sourceTree = "<group>"; };
 		BCD1C2242C01B3EA008975EB /* SimpleGameViewModel2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleGameViewModel2.swift; sourceTree = "<group>"; };
 		BCD1C2282C01B9E2008975EB /* WeaponFiringEventTransformerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponFiringEventTransformerTests.swift; sourceTree = "<group>"; };
 		BCD1C2372C043924008975EB /* WeaponReloadingEventTransformerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponReloadingEventTransformerTests.swift; sourceTree = "<group>"; };
@@ -1205,6 +1209,7 @@
 				BCD1C24E2C0603AF008975EB /* WeaponReloadHandler.swift */,
 				BCD1C2522C06B353008975EB /* FiringMotionFilter.swift */,
 				BCD1C25A2C06B7C8008975EB /* ReloadingMotionFilter.swift */,
+				BCCD44502C0954B700BF541D /* WeaponSelectHandler.swift */,
 			);
 			path = EventHandler;
 			sourceTree = "<group>";
@@ -1553,6 +1558,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BCCD44512C0954B700BF541D /* WeaponSelectHandler.swift in Sources */,
 				86B8A3A62B7E0D1F005ED2F8 /* RankingUtil.swift in Sources */,
 				67DB2C5927C10E8B00B8CB3C /* SceneAnimationUtil.swift in Sources */,
 				67DB2C5D27C17EF300B8CB3C /* TopConst.swift in Sources */,
@@ -1657,6 +1663,7 @@
 				8606462F2BF5997200906DA0 /* ReplayRepository.swift in Sources */,
 				8606464E2BF5999600906DA0 /* GameNavigator.swift in Sources */,
 				8606462E2BF5997200906DA0 /* TutorialRepository.swift in Sources */,
+				BCCD44522C0954B700BF541D /* WeaponSelectHandler.swift in Sources */,
 				860646552BF5999F00906DA0 /* GameViewController2.swift in Sources */,
 				8606466A2BF599BC00906DA0 /* WeaponChangeNavigator.swift in Sources */,
 				8606467C2BF599D500906DA0 /* ResultUseCase.swift in Sources */,
@@ -1751,6 +1758,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BCCD44532C0954B700BF541D /* WeaponSelectHandler.swift in Sources */,
 				860646072BF5996100906DA0 /* SceneNodeUtil.swift in Sources */,
 				8606460C2BF5996100906DA0 /* TimeCountUtil.swift in Sources */,
 				8606469C2BF599EA00906DA0 /* SettingsNavigator.swift in Sources */,
