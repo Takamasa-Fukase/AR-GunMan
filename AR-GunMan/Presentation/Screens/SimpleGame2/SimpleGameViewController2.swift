@@ -48,73 +48,9 @@ class SimpleGameViewController2: UIViewController {
 
         let output = viewModel.transform(input: input)
         
-        output.outputToView.bulletsCountImage
-            .bind(to: bulletsCountImageView.rx.image)
-            .disposed(by: disposeBag)
-        
-        output.outputToGameScene.renderSelectedWeapon
-            .subscribe(onNext: { [weak self] type in
-                guard let self = self else { return }
-                self.gameSceneController.showWeapon(type)
-            }).disposed(by: disposeBag)
-        
-        output.outputToGameScene.renderWeaponFiring
-            .subscribe(onNext: { [weak self] type in
-                guard let self = self else { return }
-                self.gameSceneController.fireWeapon(type)
-            }).disposed(by: disposeBag)
-
-        output.viewModelAction.noBulletsSoundPlayed
-            .subscribe()
-            .disposed(by: disposeBag)
-        
-        output.viewModelAction.bulletsCountDecremented
-            .subscribe()
-            .disposed(by: disposeBag)
-        
-        output.viewModelAction.firingSoundPlayed
-            .subscribe()
-            .disposed(by: disposeBag)
-        
-        output.viewModelAction.weaponFired
-            .subscribe()
-            .disposed(by: disposeBag)
-        
-        output.viewModelAction.bulletsCountRefilled
-            .subscribe()
-            .disposed(by: disposeBag)
-        
-        output.viewModelAction.weaponReloadingFlagChanged
-            .subscribe()
-            .disposed(by: disposeBag)
-        
-        output.viewModelAction.reloadingSoundPlayed
-            .subscribe()
-            .disposed(by: disposeBag)
-        
-        output.viewModelAction.weaponReloaded
-            .subscribe()
-            .disposed(by: disposeBag)
-        
-        output.viewModelAction.weaponTypeChanged
-            .subscribe()
-            .disposed(by: disposeBag)
-        
-        output.viewModelAction.weaponChangingSoundPlayed
-            .subscribe()
-            .disposed(by: disposeBag)
-        
-        output.viewModelAction.bulletsCountRefilledForNewWeapon
-            .subscribe()
-            .disposed(by: disposeBag)
-        
-        output.viewModelAction.weaponReloadingFlagChangedForNewWeapon
-            .subscribe()
-            .disposed(by: disposeBag)
-        
-        output.viewModelAction.weaponChanged
-            .subscribe()
-            .disposed(by: disposeBag)
+        bindOutputToViewComponents(output.outputToView)
+        bindOutputToGameSceneController(output.outputToGameScene)
+        subscribeViewModelAction(output.viewModelAction)
         
         // other
         gameSceneController.rendererUpdated
@@ -154,5 +90,53 @@ class SimpleGameViewController2: UIViewController {
         super.viewWillDisappear(animated)
         self.gameSceneController.pauseSession()
         self.coreMotionController.stopUpdate()
+    }
+    
+    private func bindOutputToViewComponents(
+        _ outputToView: SimpleGameViewModel2.Output.OutputToView
+    ) {
+        disposeBag.insert {
+            outputToView.bulletsCountImage
+                .bind(to: bulletsCountImageView.rx.image)
+                .disposed(by: disposeBag)
+        }
+    }
+    
+    private func bindOutputToGameSceneController(
+        _ outputToGameScene: GameViewModel2.Output.OutputToGameScene
+    ) {
+        disposeBag.insert {
+            outputToGameScene.renderSelectedWeapon
+                .subscribe(onNext: { [weak self] type in
+                    guard let self = self else { return }
+                    self.gameSceneController.showWeapon(type)
+                }).disposed(by: disposeBag)
+            
+            outputToGameScene.renderWeaponFiring
+                .subscribe(onNext: { [weak self] type in
+                    guard let self = self else { return }
+                    self.gameSceneController.fireWeapon(type)
+                }).disposed(by: disposeBag)
+        }
+    }
+    
+    private func subscribeViewModelAction(
+        _ viewModelAction: GameViewModel2.Output.ViewModelAction
+    ) {
+        disposeBag.insert {
+            viewModelAction.noBulletsSoundPlayed.subscribe()
+            viewModelAction.bulletsCountDecremented.subscribe()
+            viewModelAction.firingSoundPlayed.subscribe()
+            viewModelAction.weaponFired.subscribe()
+            viewModelAction.bulletsCountRefilled.subscribe()
+            viewModelAction.weaponReloadingFlagChanged.subscribe()
+            viewModelAction.reloadingSoundPlayed.subscribe()
+            viewModelAction.weaponReloaded.subscribe()
+            viewModelAction.weaponTypeChanged.subscribe()
+            viewModelAction.weaponChangingSoundPlayed.subscribe()
+            viewModelAction.bulletsCountRefilledForNewWeapon.subscribe()
+            viewModelAction.weaponReloadingFlagChangedForNewWeapon.subscribe()
+            viewModelAction.weaponChanged.subscribe()
+        }
     }
 }
