@@ -33,6 +33,8 @@ final class SimpleGameNavigator2: SimpleGameNavigator2Interface {
         )
         let viewModel = SimpleGameViewModel2(
             useCase: useCase,
+            firingMoitonFilter: FiringMotionFilter(),
+            reloadingMotionFilter: ReloadingMotionFilter(),
             weaponFireHandler: WeaponFireHandler(),
             weaponAutoReloadHandler: WeaponAutoReloadHandler(),
             weaponReloadHandler: WeaponReloadHandler(

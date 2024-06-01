@@ -23,8 +23,8 @@ final class SimpleGameViewModel2: ViewModelType {
         }
         
         struct InputFromCoreMotion {
-            let firingMotionDetected: Observable<Void>
-            let reloadingMotionDetected: Observable<Void>
+            let accelerationUpdated: Observable<(x: Double, y: Double, z: Double)>
+            let gyroUpdated: Observable<(x: Double, y: Double, z: Double)>
         }
     }
     
@@ -68,6 +68,8 @@ final class SimpleGameViewModel2: ViewModelType {
 
     private let useCase: GameUseCase2Interface
     private let weaponSelectObserver: PublishRelay<WeaponType>
+    private let firingMoitonFilter: FiringMotionFilter
+    private let reloadingMotionFilter: ReloadingMotionFilter
     private let weaponFireHandler: WeaponFireHandler
     private let weaponAutoReloadHandler: WeaponAutoReloadHandler
     private let weaponReloadHandler: WeaponReloadHandler
@@ -78,6 +80,8 @@ final class SimpleGameViewModel2: ViewModelType {
     init(
         useCase: GameUseCase2Interface,
         weaponSelectObserver: PublishRelay<WeaponType> = PublishRelay<WeaponType>(),
+        firingMoitonFilter: FiringMotionFilter,
+        reloadingMotionFilter: ReloadingMotionFilter,
         weaponFireHandler: WeaponFireHandler,
         weaponAutoReloadHandler: WeaponAutoReloadHandler,
         weaponReloadHandler: WeaponReloadHandler,
@@ -87,6 +91,8 @@ final class SimpleGameViewModel2: ViewModelType {
     ) {
         self.useCase = useCase
         self.weaponSelectObserver = weaponSelectObserver
+        self.firingMoitonFilter = firingMoitonFilter
+        self.reloadingMotionFilter = reloadingMotionFilter
         self.weaponFireHandler = weaponFireHandler
         self.weaponAutoReloadHandler = weaponAutoReloadHandler
         self.weaponReloadHandler = weaponReloadHandler
@@ -97,9 +103,22 @@ final class SimpleGameViewModel2: ViewModelType {
     
     func transform(input: Input) -> Output {
         // MARK: ViewModelAction
+        let firingMotionDetected = firingMoitonFilter
+            .transform(input: .init(
+                accelerationUpdated: input.inputFromCoreMotion.accelerationUpdated,
+                gyroUpdated: input.inputFromCoreMotion.gyroUpdated)
+            )
+            .firingMotionDetected
+        
+        let reloadingMotionDetected = reloadingMotionFilter
+            .transform(input: .init(
+                gyroUpdated: input.inputFromCoreMotion.gyroUpdated)
+            )
+            .reloadingMotionDetected
+        
         let weaponFireHandlerOutput = weaponFireHandler
             .transform(input: .init(
-                weaponFiringTrigger: input.inputFromCoreMotion.firingMotionDetected
+                weaponFiringTrigger: firingMotionDetected
                     .map({ [weak self] _ in self?.state.weaponTypeRelay.value ?? .pistol }),
                 bulletsCount: state.bulletsCountRelay.asObservable()
             ))
@@ -134,7 +153,7 @@ final class SimpleGameViewModel2: ViewModelType {
         
         let weaponReloadingTrigger = Observable
             .merge(
-                input.inputFromCoreMotion.reloadingMotionDetected
+                reloadingMotionDetected
                     .map({ [weak self] _ in self?.state.weaponTypeRelay.value ?? .pistol }),
                 weaponAutoReloadTrigger
             )

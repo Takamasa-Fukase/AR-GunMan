@@ -15,9 +15,6 @@ class SimpleGameViewController2: UIViewController {
     var coreMotionController: CoreMotionController!
     private let disposeBag = DisposeBag()
     
-    private let firingMotionDetected = PublishRelay<Void>()
-    private let reloadingMotionDetected = PublishRelay<Void>()
-    
     @IBOutlet private weak var bulletsCountImageView: UIImageView!
     @IBOutlet private weak var sightImageView: UIImageView!
     @IBOutlet private weak var timeCountLabel: UILabel!
@@ -41,16 +38,16 @@ class SimpleGameViewController2: UIViewController {
                 targetHit: gameSceneController.targetHit
             ),
             inputFromCoreMotion: SimpleGameViewModel2.Input.InputFromCoreMotion(
-                firingMotionDetected: firingMotionDetected.asObservable(),
-                reloadingMotionDetected: reloadingMotionDetected.asObservable()
+                accelerationUpdated: coreMotionController.accelerationUpdated,
+                gyroUpdated: coreMotionController.gyroUpdated
             )
         )
 
         let output = viewModel.transform(input: input)
-        
+
+        subscribeViewModelActions(output.viewModelAction)
         bindOutputToViewComponents(output.outputToView)
         bindOutputToGameSceneController(output.outputToGameScene)
-        subscribeViewModelAction(output.viewModelAction)
         
         // other
         gameSceneController.rendererUpdated
@@ -58,21 +55,6 @@ class SimpleGameViewController2: UIViewController {
                 guard let self = self else { return }
                 self.gameSceneController.moveWeaponToFPSPosition(currentWeapon: .pistol)
             }).disposed(by: disposeBag)
-        
-        CoreMotionStreamFilter
-            .filterFiringMotionStream(
-                accelerationStream: coreMotionController.accelerationUpdated,
-                gyroStream: coreMotionController.gyroUpdated
-            )
-            .bind(to: firingMotionDetected)
-            .disposed(by: disposeBag)
-        
-        CoreMotionStreamFilter
-            .filterReloadingMotionStream(
-                gyroStream: coreMotionController.gyroUpdated
-            )
-            .bind(to: reloadingMotionDetected)
-            .disposed(by: disposeBag)
     }
 
     private func setupUI() {
@@ -92,36 +74,8 @@ class SimpleGameViewController2: UIViewController {
         self.coreMotionController.stopUpdate()
     }
     
-    private func bindOutputToViewComponents(
-        _ outputToView: SimpleGameViewModel2.Output.OutputToView
-    ) {
-        disposeBag.insert {
-            outputToView.bulletsCountImage
-                .bind(to: bulletsCountImageView.rx.image)
-                .disposed(by: disposeBag)
-        }
-    }
-    
-    private func bindOutputToGameSceneController(
-        _ outputToGameScene: GameViewModel2.Output.OutputToGameScene
-    ) {
-        disposeBag.insert {
-            outputToGameScene.renderSelectedWeapon
-                .subscribe(onNext: { [weak self] type in
-                    guard let self = self else { return }
-                    self.gameSceneController.showWeapon(type)
-                }).disposed(by: disposeBag)
-            
-            outputToGameScene.renderWeaponFiring
-                .subscribe(onNext: { [weak self] type in
-                    guard let self = self else { return }
-                    self.gameSceneController.fireWeapon(type)
-                }).disposed(by: disposeBag)
-        }
-    }
-    
-    private func subscribeViewModelAction(
-        _ viewModelAction: GameViewModel2.Output.ViewModelAction
+    private func subscribeViewModelActions(
+        _ viewModelAction: SimpleGameViewModel2.Output.ViewModelAction
     ) {
         disposeBag.insert {
             viewModelAction.noBulletsSoundPlayed.subscribe()
@@ -137,6 +91,33 @@ class SimpleGameViewController2: UIViewController {
             viewModelAction.bulletsCountRefilledForNewWeapon.subscribe()
             viewModelAction.weaponReloadingFlagChangedForNewWeapon.subscribe()
             viewModelAction.weaponChanged.subscribe()
+        }
+    }
+    
+    private func bindOutputToViewComponents(
+        _ outputToView: SimpleGameViewModel2.Output.OutputToView
+    ) {
+        disposeBag.insert {
+            outputToView.bulletsCountImage
+                .bind(to: bulletsCountImageView.rx.image)
+        }
+    }
+    
+    private func bindOutputToGameSceneController(
+        _ outputToGameScene: SimpleGameViewModel2.Output.OutputToGameScene
+    ) {
+        disposeBag.insert {
+            outputToGameScene.renderSelectedWeapon
+                .subscribe(onNext: { [weak self] type in
+                    guard let self = self else { return }
+                    self.gameSceneController.showWeapon(type)
+                })
+            
+            outputToGameScene.renderWeaponFiring
+                .subscribe(onNext: { [weak self] type in
+                    guard let self = self else { return }
+                    self.gameSceneController.fireWeapon(type)
+                })
         }
     }
 }
