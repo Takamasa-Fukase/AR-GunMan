@@ -91,6 +91,8 @@ class SimpleGameViewController2: UIViewController {
             viewModelAction.bulletsCountRefilledForNewWeapon.subscribe()
             viewModelAction.weaponReloadingFlagChangedForNewWeapon.subscribe()
             viewModelAction.weaponChanged.subscribe()
+            viewModelAction.targetHitSoundPlayed.subscribe()
+            viewModelAction.scoreUpdated.subscribe()
         }
     }
     

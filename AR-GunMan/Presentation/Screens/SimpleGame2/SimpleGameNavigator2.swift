@@ -40,7 +40,8 @@ final class SimpleGameNavigator2: SimpleGameNavigator2Interface {
             weaponReloadHandler: WeaponReloadHandler(
                 gameUseCase: useCase
             ),
-            weaponSelectHandler: WeaponSelectHandler()
+            weaponSelectHandler: WeaponSelectHandler(),
+            targetHitHandler: TargetHitHandler()
         )
         let gameSceneController = GameSceneController()
         let coreMotionController = CoreMotionController(coreMotionManager: CMMotionManager())

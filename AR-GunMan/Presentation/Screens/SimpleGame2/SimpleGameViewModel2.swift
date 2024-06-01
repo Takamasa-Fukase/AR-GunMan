@@ -47,6 +47,8 @@ final class SimpleGameViewModel2: ViewModelType {
             let bulletsCountRefilledForNewWeapon: Observable<Int>
             let weaponReloadingFlagChangedForNewWeapon: Observable<Bool>
             let weaponChanged: Observable<WeaponType>
+            let targetHitSoundPlayed: Observable<SoundType>
+            let scoreUpdated: Observable<Double>
         }
         
         struct OutputToView {
@@ -74,6 +76,7 @@ final class SimpleGameViewModel2: ViewModelType {
     private let weaponAutoReloadHandler: WeaponAutoReloadHandler
     private let weaponReloadHandler: WeaponReloadHandler
     private let weaponSelectHandler: WeaponSelectHandler
+    private let targetHitHandler: TargetHitHandler
     private let state: State
     private let soundPlayer: SoundPlayerInterface
     
@@ -86,6 +89,7 @@ final class SimpleGameViewModel2: ViewModelType {
         weaponAutoReloadHandler: WeaponAutoReloadHandler,
         weaponReloadHandler: WeaponReloadHandler,
         weaponSelectHandler: WeaponSelectHandler,
+        targetHitHandler: TargetHitHandler,
         state: State = State(),
         soundPlayer: SoundPlayerInterface = SoundPlayer.shared
     ) {
@@ -97,6 +101,7 @@ final class SimpleGameViewModel2: ViewModelType {
         self.weaponAutoReloadHandler = weaponAutoReloadHandler
         self.weaponReloadHandler = weaponReloadHandler
         self.weaponSelectHandler = weaponSelectHandler
+        self.targetHitHandler = targetHitHandler
         self.state = state
         self.soundPlayer = soundPlayer
     }
@@ -214,6 +219,26 @@ final class SimpleGameViewModel2: ViewModelType {
         
         let weaponChanged = weaponSelectHandlerOutput.weaponChanged
             .share()
+        
+        let targetHitHandlerOutput = targetHitHandler
+            .transform(input: .init(
+                targetHit: input.inputFromGameScene.targetHit
+                    .map({ [weak self] _ in self?.state.weaponTypeRelay.value ?? .pistol }),
+                currentScore: state.scoreRelay.asObservable())
+            )
+        
+        let targetHitSoundPlayed = targetHitHandlerOutput.playTargetHitSound
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.soundPlayer.play($0)
+            })
+        
+        let scoreUpdated = targetHitHandlerOutput.updateScore
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.state.scoreRelay.accept($0)
+                print("score after updated: \(self.state.scoreRelay.value)")
+            })
             
         
         // MARK: OutputToView
@@ -241,7 +266,9 @@ final class SimpleGameViewModel2: ViewModelType {
                 weaponChangingSoundPlayed: weaponChangingSoundPlayed,
                 bulletsCountRefilledForNewWeapon: bulletsCountRefilledForNewWeapon,
                 weaponReloadingFlagChangedForNewWeapon: weaponReloadingFlagChangedForNewWeapon,
-                weaponChanged: weaponChanged
+                weaponChanged: weaponChanged,
+                targetHitSoundPlayed: targetHitSoundPlayed,
+                scoreUpdated: scoreUpdated
             ),
             outputToView: Output.OutputToView(
                 bulletsCountImage: bulletsCountImage
