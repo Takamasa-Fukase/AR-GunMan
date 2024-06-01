@@ -59,8 +59,10 @@ final class SimpleGameViewModel2: ViewModelType {
         }
         
         struct OutputToView {
-            let bulletsCountImage: Observable<UIImage?>
+            let sightImage: Observable<UIImage?>
+            let sightImageColor: Observable<UIColor>
             let timeCountText: Observable<String>
+            let bulletsCountImage: Observable<UIImage?>
         }
         
         struct OutputToGameScene {
@@ -327,11 +329,18 @@ final class SimpleGameViewModel2: ViewModelType {
             
         
         // MARK: OutputToView
-        let bulletsCountImage = state.bulletsCountRelay
-            .map({ [weak self] in self?.state.weaponTypeRelay.value.bulletsCountImage(at: $0) })
+        let sightImage = state.weaponTypeRelay
+            .map({ $0.sightImage })
+        
+        let sightImageColor = state.weaponTypeRelay
+            .map({ $0.sightImageColor })
         
         let timeCountText = state.timeCountRelay
             .map({ TimeCountUtil.twoDigitTimeCount($0) })
+        
+        let bulletsCountImage = state.bulletsCountRelay
+            .map({ [weak self] in self?.state.weaponTypeRelay.value.bulletsCountImage(at: $0) })
+        
         
         // MARK: OutputToGameScene
         let renderSelectedWeapon = weaponChanged
@@ -367,8 +376,10 @@ final class SimpleGameViewModel2: ViewModelType {
                 timerDisposed: timerDisposed
             ),
             outputToView: Output.OutputToView(
-                bulletsCountImage: bulletsCountImage,
-                timeCountText: timeCountText
+                sightImage: sightImage,
+                sightImageColor: sightImageColor,
+                timeCountText: timeCountText,
+                bulletsCountImage: bulletsCountImage
             ),
             outputToGameScene: Output.OutputToGameScene(
                 renderSelectedWeapon: renderSelectedWeapon,

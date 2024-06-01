@@ -107,11 +107,14 @@ class SimpleGameViewController2: UIViewController {
         _ outputToView: SimpleGameViewModel2.Output.OutputToView
     ) {
         disposeBag.insert {
-            outputToView.bulletsCountImage
-                .bind(to: bulletsCountImageView.rx.image)
-            
+            outputToView.sightImage
+                .bind(to: sightImageView.rx.image)
+            outputToView.sightImageColor
+                .bind(to: sightImageView.rx.tintColor)
             outputToView.timeCountText
                 .bind(to: timeCountLabel.rx.text)
+            outputToView.bulletsCountImage
+                .bind(to: bulletsCountImageView.rx.image)
         }
     }
     
@@ -124,7 +127,6 @@ class SimpleGameViewController2: UIViewController {
                     guard let self = self else { return }
                     self.gameSceneController.showWeapon(type)
                 })
-            
             outputToGameScene.renderWeaponFiring
                 .subscribe(onNext: { [weak self] type in
                     guard let self = self else { return }
