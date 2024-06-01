@@ -15,6 +15,7 @@ final class SimpleGameViewModel2: ViewModelType {
         let inputFromCoreMotion: InputFromCoreMotion
 
         struct InputFromView {
+            let viewDidAppear: Observable<Void>
             let weaponChangeButtonTapped: Observable<Void>
         }
         
@@ -69,7 +70,10 @@ final class SimpleGameViewModel2: ViewModelType {
     }
 
     private let useCase: GameUseCase2Interface
+    private let tutorialEndObserver: PublishRelay<Void>
     private let weaponSelectObserver: PublishRelay<WeaponType>
+    private let tutorialSeenStatusHandler: TutorialSeenStatusHandler
+    private let gameStartHandler: GameStartHandler
     private let firingMoitonFilter: FiringMotionFilter
     private let reloadingMotionFilter: ReloadingMotionFilter
     private let weaponFireHandler: WeaponFireHandler
@@ -82,7 +86,10 @@ final class SimpleGameViewModel2: ViewModelType {
     
     init(
         useCase: GameUseCase2Interface,
+        tutorialEndObserver: PublishRelay<Void> = PublishRelay<Void>(),
         weaponSelectObserver: PublishRelay<WeaponType> = PublishRelay<WeaponType>(),
+        tutorialSeenStatusHandler: TutorialSeenStatusHandler,
+        gameStartHandler: GameStartHandler,
         firingMoitonFilter: FiringMotionFilter,
         reloadingMotionFilter: ReloadingMotionFilter,
         weaponFireHandler: WeaponFireHandler,
@@ -94,7 +101,10 @@ final class SimpleGameViewModel2: ViewModelType {
         soundPlayer: SoundPlayerInterface = SoundPlayer.shared
     ) {
         self.useCase = useCase
+        self.tutorialEndObserver = tutorialEndObserver
         self.weaponSelectObserver = weaponSelectObserver
+        self.tutorialSeenStatusHandler = tutorialSeenStatusHandler
+        self.gameStartHandler = gameStartHandler
         self.firingMoitonFilter = firingMoitonFilter
         self.reloadingMotionFilter = reloadingMotionFilter
         self.weaponFireHandler = weaponFireHandler
@@ -108,6 +118,31 @@ final class SimpleGameViewModel2: ViewModelType {
     
     func transform(input: Input) -> Output {
         // MARK: ViewModelAction
+        let tutorialSeenStatusHandlerOutput = tutorialSeenStatusHandler
+            .transform(input: .init(
+                checkTutorialSeenStatus: input.inputFromView.viewDidAppear.take(1))
+            )
+        
+        let tutorialViewShowed = tutorialSeenStatusHandlerOutput.showTutorial
+            .do(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                // TODO: navigator経由でチュートリアルの表示指示
+            })
+        
+        let gameStartAfterTutorialTrigger = tutorialEndObserver
+            .flatMapLatest({ [weak self] _ -> Observable<Void> in
+                guard let self = self else { return .empty() }
+                return self.useCase.setTutorialAlreadySeen()
+            })
+        
+        let startGameHandlerOutput = gameStartHandler
+            .transform(input: .init(
+                gameStarted: Observable.merge(
+                    tutorialSeenStatusHandlerOutput.startGame,
+                    gameStartAfterTutorialTrigger
+                ))
+            )
+        
         let firingMotionDetected = firingMoitonFilter
             .transform(input: .init(
                 accelerationUpdated: input.inputFromCoreMotion.accelerationUpdated,
@@ -237,7 +272,6 @@ final class SimpleGameViewModel2: ViewModelType {
             .do(onNext: { [weak self] in
                 guard let self = self else { return }
                 self.state.scoreRelay.accept($0)
-                print("score after updated: \(self.state.scoreRelay.value)")
             })
             
         

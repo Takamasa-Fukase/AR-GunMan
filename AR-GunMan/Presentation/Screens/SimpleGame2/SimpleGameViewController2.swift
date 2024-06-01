@@ -32,6 +32,7 @@ class SimpleGameViewController2: UIViewController {
 
         let input = SimpleGameViewModel2.Input(
             inputFromView: SimpleGameViewModel2.Input.InputFromView(
+                viewDidAppear: rx.viewDidAppear,
                 weaponChangeButtonTapped: switchWeaponButton.rx.tap.asObservable()
             ),
             inputFromGameScene: SimpleGameViewModel2.Input.InputFromGameScene(

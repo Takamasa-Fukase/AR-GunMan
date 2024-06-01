@@ -33,13 +33,13 @@ final class SimpleGameNavigator2: SimpleGameNavigator2Interface {
         )
         let viewModel = SimpleGameViewModel2(
             useCase: useCase,
+            tutorialSeenStatusHandler: TutorialSeenStatusHandler(gameUseCase: useCase),
+            gameStartHandler: GameStartHandler(gameUseCase: useCase),
             firingMoitonFilter: FiringMotionFilter(),
             reloadingMotionFilter: ReloadingMotionFilter(),
             weaponFireHandler: WeaponFireHandler(),
             weaponAutoReloadHandler: WeaponAutoReloadHandler(),
-            weaponReloadHandler: WeaponReloadHandler(
-                gameUseCase: useCase
-            ),
+            weaponReloadHandler: WeaponReloadHandler(gameUseCase: useCase),
             weaponSelectHandler: WeaponSelectHandler(),
             targetHitHandler: TargetHitHandler()
         )
