@@ -94,6 +94,7 @@ class SimpleGameViewController2: UIViewController {
             viewModelAction.weaponChanged.subscribe()
             viewModelAction.targetHitSoundPlayed.subscribe()
             viewModelAction.scoreUpdated.subscribe()
+            viewModelAction.tutorialViewShowed.subscribe()
         }
     }
     

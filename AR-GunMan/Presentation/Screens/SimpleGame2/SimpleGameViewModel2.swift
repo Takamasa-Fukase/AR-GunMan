@@ -50,6 +50,7 @@ final class SimpleGameViewModel2: ViewModelType {
             let weaponChanged: Observable<WeaponType>
             let targetHitSoundPlayed: Observable<SoundType>
             let scoreUpdated: Observable<Double>
+            let tutorialViewShowed: Observable<Void>
         }
         
         struct OutputToView {
@@ -70,6 +71,7 @@ final class SimpleGameViewModel2: ViewModelType {
     }
 
     private let useCase: GameUseCase2Interface
+    private let navigator: SimpleGameNavigator2Interface
     private let tutorialEndObserver: PublishRelay<Void>
     private let weaponSelectObserver: PublishRelay<WeaponType>
     private let tutorialSeenStatusHandler: TutorialSeenStatusHandler
@@ -86,6 +88,7 @@ final class SimpleGameViewModel2: ViewModelType {
     
     init(
         useCase: GameUseCase2Interface,
+        navigator: SimpleGameNavigator2Interface,
         tutorialEndObserver: PublishRelay<Void> = PublishRelay<Void>(),
         weaponSelectObserver: PublishRelay<WeaponType> = PublishRelay<WeaponType>(),
         tutorialSeenStatusHandler: TutorialSeenStatusHandler,
@@ -101,6 +104,7 @@ final class SimpleGameViewModel2: ViewModelType {
         soundPlayer: SoundPlayerInterface = SoundPlayer.shared
     ) {
         self.useCase = useCase
+        self.navigator = navigator
         self.tutorialEndObserver = tutorialEndObserver
         self.weaponSelectObserver = weaponSelectObserver
         self.tutorialSeenStatusHandler = tutorialSeenStatusHandler
@@ -126,7 +130,9 @@ final class SimpleGameViewModel2: ViewModelType {
         let tutorialViewShowed = tutorialSeenStatusHandlerOutput.showTutorial
             .do(onNext: { [weak self] _ in
                 guard let self = self else { return }
-                // TODO: navigator経由でチュートリアルの表示指示
+                self.navigator.showTutorialView(
+                    tutorialEndObserver: self.tutorialEndObserver
+                )
             })
         
         let gameStartAfterTutorialTrigger = tutorialEndObserver
@@ -302,7 +308,8 @@ final class SimpleGameViewModel2: ViewModelType {
                 weaponReloadingFlagChangedForNewWeapon: weaponReloadingFlagChangedForNewWeapon,
                 weaponChanged: weaponChanged,
                 targetHitSoundPlayed: targetHitSoundPlayed,
-                scoreUpdated: scoreUpdated
+                scoreUpdated: scoreUpdated,
+                tutorialViewShowed: tutorialViewShowed
             ),
             outputToView: Output.OutputToView(
                 bulletsCountImage: bulletsCountImage

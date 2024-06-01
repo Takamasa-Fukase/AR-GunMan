@@ -11,7 +11,10 @@ import RxCocoa
 import CoreMotion
 
 protocol SimpleGameNavigator2Interface {
-    
+    func showTutorialView(tutorialEndObserver: PublishRelay<Void>)
+    func showWeaponChangeView(weaponSelectObserver: PublishRelay<WeaponType>)
+    func dismissWeaponChangeView()
+    func showResultView(totalScore: Double)
 }
 
 final class SimpleGameNavigator2: SimpleGameNavigator2Interface {
@@ -33,6 +36,7 @@ final class SimpleGameNavigator2: SimpleGameNavigator2Interface {
         )
         let viewModel = SimpleGameViewModel2(
             useCase: useCase,
+            navigator: navigator,
             tutorialSeenStatusHandler: TutorialSeenStatusHandler(gameUseCase: useCase),
             gameStartHandler: GameStartHandler(gameUseCase: useCase),
             firingMoitonFilter: FiringMotionFilter(),
@@ -50,7 +54,30 @@ final class SimpleGameNavigator2: SimpleGameNavigator2Interface {
         vc.coreMotionController = coreMotionController
         return vc
     }
+    
+    func showTutorialView(tutorialEndObserver: PublishRelay<Void>) {
+        let vc = TutorialNavigator.assembleModules(
+            transitionType: .gamePage,
+            tutorialEndObserver: tutorialEndObserver
+        )
+        // TODO: 後でiOS16からの公式ハーフモーダルに変える
+        viewController.present(vc, animated: true)
+//        viewController.presentPanModal(vc)
+    }
+    
+    func showWeaponChangeView(weaponSelectObserver: PublishRelay<WeaponType>) {
+        let vc = WeaponChangeNavigator.assembleModules(
+            weaponSelectObserver: weaponSelectObserver
+        )
+        viewController.present(vc, animated: true)
+    }
+    
+    func dismissWeaponChangeView() {
+        viewController.presentedViewController?.dismiss(animated: true)
+    }
+    
+    func showResultView(totalScore: Double) {
+        let vc = ResultNavigator.assembleModules(totalScore: totalScore)
+        viewController.present(vc, animated: true)
+    }
 }
-
-
-
