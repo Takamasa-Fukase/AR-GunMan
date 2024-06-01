@@ -39,6 +39,7 @@ final class SimpleGameNavigator2: SimpleGameNavigator2Interface {
             navigator: navigator,
             tutorialSeenStatusHandler: TutorialSeenStatusHandler(gameUseCase: useCase),
             gameStartHandler: GameStartHandler(gameUseCase: useCase),
+            gameTimerHandler: GameTimerHandler(gameUseCase: useCase),
             firingMoitonFilter: FiringMotionFilter(),
             reloadingMotionFilter: ReloadingMotionFilter(),
             weaponFireHandler: WeaponFireHandler(),

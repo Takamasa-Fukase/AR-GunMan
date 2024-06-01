@@ -33,8 +33,10 @@ final class SimpleGameViewModel2: ViewModelType {
         let viewModelAction: ViewModelAction
         let outputToView: OutputToView
         let outputToGameScene: OutputToGameScene
+        let outputToDeviceMotion: OutputToDeviceMotion
         
         struct ViewModelAction {
+            let pistolSetSoundPlayed: Observable<SoundType>
             let noBulletsSoundPlayed: Observable<SoundType>
             let bulletsCountDecremented: Observable<Int>
             let firingSoundPlayed: Observable<SoundType>
@@ -51,19 +53,28 @@ final class SimpleGameViewModel2: ViewModelType {
             let targetHitSoundPlayed: Observable<SoundType>
             let scoreUpdated: Observable<Double>
             let tutorialViewShowed: Observable<Void>
+            let startWhistleSoundPlayed: Observable<SoundType>
+            let endWhistleSoundPlayed: Observable<SoundType>
+            let timerDisposed: Observable<Void>
         }
         
         struct OutputToView {
             let bulletsCountImage: Observable<UIImage?>
+            let timeCountText: Observable<String>
         }
         
         struct OutputToGameScene {
             let renderSelectedWeapon: Observable<WeaponType>
             let renderWeaponFiring: Observable<WeaponType>
         }
+        
+        struct OutputToDeviceMotion {
+            let startMotionDetection: Observable<Void>
+        }
     }
     
     class State {
+        let timeCountRelay = BehaviorRelay<Double>(value: GameConst.timeCount)
         let weaponTypeRelay = BehaviorRelay<WeaponType>(value: .pistol)
         let bulletsCountRelay = BehaviorRelay<Int>(value: WeaponType.pistol.bulletsCapacity)
         var isWeaponReloadingRelay = BehaviorRelay<Bool>(value: false)
@@ -76,6 +87,7 @@ final class SimpleGameViewModel2: ViewModelType {
     private let weaponSelectObserver: PublishRelay<WeaponType>
     private let tutorialSeenStatusHandler: TutorialSeenStatusHandler
     private let gameStartHandler: GameStartHandler
+    private let gameTimerHandler: GameTimerHandler
     private let firingMoitonFilter: FiringMotionFilter
     private let reloadingMotionFilter: ReloadingMotionFilter
     private let weaponFireHandler: WeaponFireHandler
@@ -93,6 +105,7 @@ final class SimpleGameViewModel2: ViewModelType {
         weaponSelectObserver: PublishRelay<WeaponType> = PublishRelay<WeaponType>(),
         tutorialSeenStatusHandler: TutorialSeenStatusHandler,
         gameStartHandler: GameStartHandler,
+        gameTimerHandler: GameTimerHandler,
         firingMoitonFilter: FiringMotionFilter,
         reloadingMotionFilter: ReloadingMotionFilter,
         weaponFireHandler: WeaponFireHandler,
@@ -109,6 +122,7 @@ final class SimpleGameViewModel2: ViewModelType {
         self.weaponSelectObserver = weaponSelectObserver
         self.tutorialSeenStatusHandler = tutorialSeenStatusHandler
         self.gameStartHandler = gameStartHandler
+        self.gameTimerHandler = gameTimerHandler
         self.firingMoitonFilter = firingMoitonFilter
         self.reloadingMotionFilter = reloadingMotionFilter
         self.weaponFireHandler = weaponFireHandler
@@ -141,13 +155,44 @@ final class SimpleGameViewModel2: ViewModelType {
                 return self.useCase.setTutorialAlreadySeen()
             })
         
-        let startGameHandlerOutput = gameStartHandler
+        let gameStartHandlerOutput = gameStartHandler
             .transform(input: .init(
                 gameStarted: Observable.merge(
                     tutorialSeenStatusHandlerOutput.startGame,
                     gameStartAfterTutorialTrigger
                 ))
             )
+        
+        let pistolSetSoundPlayed = gameStartHandlerOutput.playPistolSetSound
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.soundPlayer.play($0)
+            })
+        
+        let gameTimerHandlerOutput = gameTimerHandler
+            .transform(input: .init(
+                timerStartTrigger: gameStartHandlerOutput.startTimer)
+            )
+        
+        let startWhistleSoundPlayed = gameTimerHandlerOutput.playStartWhistleSound
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.soundPlayer.play($0)
+            })
+        
+        let endWhistleSoundPlayed = gameTimerHandlerOutput.playEndWhistleSound
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.soundPlayer.play($0)
+            })
+        
+        let timeCountUpdatingDisposable = gameTimerHandlerOutput.updateTimeCount
+            .bind(to: state.timeCountRelay)
+        
+        let timerDisposed = gameTimerHandlerOutput.disposeTimer
+            .do(onNext: { _ in
+                timeCountUpdatingDisposable.dispose()
+            })
         
         let firingMotionDetected = firingMoitonFilter
             .transform(input: .init(
@@ -285,15 +330,22 @@ final class SimpleGameViewModel2: ViewModelType {
         let bulletsCountImage = state.bulletsCountRelay
             .map({ [weak self] in self?.state.weaponTypeRelay.value.bulletsCountImage(at: $0) })
         
+        let timeCountText = state.timeCountRelay
+            .map({ TimeCountUtil.twoDigitTimeCount($0) })
         
         // MARK: OutputToGameScene
         let renderSelectedWeapon = weaponChanged
 
         let renderWeaponFiring = weaponFired
+        
+        
+        // MARK: OutputToDeviceMotion
+        let startMotionDetection = gameStartHandlerOutput.startMotionDetection
 
         
         return Output(
             viewModelAction: Output.ViewModelAction(
+                pistolSetSoundPlayed: pistolSetSoundPlayed,
                 noBulletsSoundPlayed: noBulletsSoundPlayed,
                 bulletsCountDecremented: bulletsCountDecremented,
                 firingSoundPlayed: firingSoundPlayed,
@@ -309,14 +361,21 @@ final class SimpleGameViewModel2: ViewModelType {
                 weaponChanged: weaponChanged,
                 targetHitSoundPlayed: targetHitSoundPlayed,
                 scoreUpdated: scoreUpdated,
-                tutorialViewShowed: tutorialViewShowed
+                tutorialViewShowed: tutorialViewShowed,
+                startWhistleSoundPlayed: startWhistleSoundPlayed,
+                endWhistleSoundPlayed: endWhistleSoundPlayed,
+                timerDisposed: timerDisposed
             ),
             outputToView: Output.OutputToView(
-                bulletsCountImage: bulletsCountImage
+                bulletsCountImage: bulletsCountImage,
+                timeCountText: timeCountText
             ),
             outputToGameScene: Output.OutputToGameScene(
                 renderSelectedWeapon: renderSelectedWeapon,
                 renderWeaponFiring: renderWeaponFiring
+            ),
+            outputToDeviceMotion: Output.OutputToDeviceMotion(
+                startMotionDetection: startMotionDetection
             )
         )
     }

@@ -11,7 +11,9 @@ import RxCocoa
 
 class SimpleGameViewController2: UIViewController {
     var viewModel: SimpleGameViewModel2!
+    // TODO: 命名をARContentControllerとか抽象的な命名にして、実装詳細を意識しない様にしたい
     var gameSceneController: GameSceneController!
+    // TODO: 命名をDeviceMotionControllerとか抽象的な命名にして、実装詳細を意識しない様にしたい
     var coreMotionController: CoreMotionController!
     private let disposeBag = DisposeBag()
     
@@ -66,7 +68,7 @@ class SimpleGameViewController2: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.gameSceneController.startSession()
-        self.coreMotionController.startUpdate()
+//        self.coreMotionController.startUpdate()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -95,6 +97,9 @@ class SimpleGameViewController2: UIViewController {
             viewModelAction.targetHitSoundPlayed.subscribe()
             viewModelAction.scoreUpdated.subscribe()
             viewModelAction.tutorialViewShowed.subscribe()
+            viewModelAction.startWhistleSoundPlayed.subscribe()
+            viewModelAction.endWhistleSoundPlayed.subscribe()
+            viewModelAction.timerDisposed.subscribe()
         }
     }
     
@@ -104,6 +109,9 @@ class SimpleGameViewController2: UIViewController {
         disposeBag.insert {
             outputToView.bulletsCountImage
                 .bind(to: bulletsCountImageView.rx.image)
+            
+            outputToView.timeCountText
+                .bind(to: timeCountLabel.rx.text)
         }
     }
     
@@ -121,6 +129,18 @@ class SimpleGameViewController2: UIViewController {
                 .subscribe(onNext: { [weak self] type in
                     guard let self = self else { return }
                     self.gameSceneController.fireWeapon(type)
+                })
+        }
+    }
+    
+    private func bindOutputToCoreMotionController(
+        _ OutputToDeviceMotion: SimpleGameViewModel2.Output.OutputToDeviceMotion
+    ) {
+        disposeBag.insert {
+            OutputToDeviceMotion.startMotionDetection
+                .subscribe(onNext: { [weak self] _ in
+                    guard let self = self else { return }
+                    self.coreMotionController.startUpdate()
                 })
         }
     }
