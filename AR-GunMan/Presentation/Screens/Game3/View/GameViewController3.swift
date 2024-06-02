@@ -51,6 +51,7 @@ class GameViewController3: UIViewController {
         subscribeViewModelActions(output.viewModelAction)
         bindOutputToViewComponents(output.outputToView)
         bindOutputToGameSceneController(output.outputToGameScene)
+        bindOutputToCoreMotionController(output.outputToDeviceMotion)
         
         // other
         gameSceneController.rendererUpdated
