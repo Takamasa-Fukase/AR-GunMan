@@ -19,7 +19,7 @@ final class WeaponReloadHandler {
         let changeBulletsCount: Observable<Int>
         let changeWeaponReloadingFlag: Observable<Bool>
         let playReloadingSound: Observable<SoundType>
-        let weaponReloaded: Observable<WeaponType>
+        let weaponReloadProcessCompleted: Observable<WeaponType>
     }
     
     private let gameUseCase: GameUseCase2Interface
@@ -33,7 +33,7 @@ final class WeaponReloadHandler {
         let changeWeaponReloadingFlagRelay = PublishRelay<Bool>()
         let playReloadingSoundRelay = PublishRelay<SoundType>()
 
-        let weaponReloaded = input.weaponReloadingTrigger
+        let weaponReloadProcessCompleted = input.weaponReloadingTrigger
             .withLatestFrom(Observable.combineLatest(
                 input.bulletsCount,
                 input.isWeaponReloading
@@ -61,7 +61,7 @@ final class WeaponReloadHandler {
             changeBulletsCount: changeBulletsCountRelay.asObservable(),
             changeWeaponReloadingFlag: changeWeaponReloadingFlagRelay.asObservable(),
             playReloadingSound: playReloadingSoundRelay.asObservable(),
-            weaponReloaded: weaponReloaded
+            weaponReloadProcessCompleted: weaponReloadProcessCompleted
         )
     }
 }

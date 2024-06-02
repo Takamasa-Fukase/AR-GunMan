@@ -18,7 +18,7 @@ final class WeaponFireHandler {
         let playNoBulletsSound: Observable<SoundType>
         let changeBulletsCount: Observable<Int>
         let playFiringSound: Observable<SoundType>
-        let weaponFired: Observable<WeaponType>
+        let weaponFireProcessCompleted: Observable<WeaponType>
     }
     
     func transform(input: Input) -> Output {
@@ -26,7 +26,7 @@ final class WeaponFireHandler {
         let changeBulletsCountRelay = PublishRelay<Int>()
         let playFiringSoundRelay = PublishRelay<SoundType>()
 
-        let weaponFired = input.weaponFiringTrigger
+        let weaponFireProcessCompleted = input.weaponFiringTrigger
             .withLatestFrom(input.bulletsCount) {
                 return (weaponType: $0, bulletsCount: $1)
             }
@@ -49,7 +49,7 @@ final class WeaponFireHandler {
             playNoBulletsSound: playNoBulletsSoundRelay.asObservable(),
             changeBulletsCount: changeBulletsCountRelay.asObservable(),
             playFiringSound: playFiringSoundRelay.asObservable(),
-            weaponFired: weaponFired
+            weaponFireProcessCompleted: weaponFireProcessCompleted
         )
     }
 }

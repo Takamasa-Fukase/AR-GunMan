@@ -40,16 +40,16 @@ final class GameViewModel3: ViewModelType {
             let noBulletsSoundPlayed: Observable<SoundType>
             let bulletsCountDecremented: Observable<Int>
             let firingSoundPlayed: Observable<SoundType>
-            let weaponFired: Observable<WeaponType>
+            let weaponFireProcessCompleted: Observable<WeaponType>
             let bulletsCountRefilled: Observable<Int>
             let weaponReloadingFlagChanged: Observable<Bool>
             let reloadingSoundPlayed: Observable<SoundType>
-            let weaponReloaded: Observable<WeaponType>
+            let weaponReloadProcessCompleted: Observable<WeaponType>
             let weaponTypeChanged: Observable<WeaponType>
             let weaponChangingSoundPlayed: Observable<SoundType>
             let bulletsCountRefilledForNewWeapon: Observable<Int>
             let weaponReloadingFlagChangedForNewWeapon: Observable<Bool>
-            let weaponChanged: Observable<WeaponType>
+            let weaponChangeProcessCompleted: Observable<WeaponType>
             let targetHitSoundPlayed: Observable<SoundType>
             let scoreUpdated: Observable<Double>
             let tutorialViewShowed: Observable<Void>
@@ -234,12 +234,12 @@ final class GameViewModel3: ViewModelType {
                 self.soundPlayer.play($0)
             })
         
-        let weaponFired = weaponFireHandlerOutput.weaponFired
+        let weaponFireProcessCompleted = weaponFireHandlerOutput.weaponFireProcessCompleted
             .share()
         
         let reloadWeaponAutomatically = weaponAutoReloadFilter
             .transform(
-                input: .init(weaponFired: weaponFired
+                input: .init(weaponFired: weaponFireProcessCompleted
                     .withLatestFrom(state.bulletsCountRelay) { ($0, $1) })
             )
             .reloadWeaponAutomatically
@@ -276,7 +276,7 @@ final class GameViewModel3: ViewModelType {
                 self.soundPlayer.play($0)
             })
         
-        let weaponReloaded = weaponReloadHandlerOutput.weaponReloaded
+        let weaponReloadProcessCompleted = weaponReloadHandlerOutput.weaponReloadProcessCompleted
         
         let weaponSelectHandlerOutput = weaponSelectHandler
             .transform(input: .init(weaponSelected: weaponSelectObserver.asObservable()))
@@ -305,7 +305,7 @@ final class GameViewModel3: ViewModelType {
                 self.state.isWeaponReloadingRelay.accept($0)
             })
         
-        let weaponChanged = weaponSelectHandlerOutput.weaponChanged
+        let weaponChangeProcessCompleted = weaponSelectHandlerOutput.weaponChangeProcessCompleted
             .share()
         
         let targetHitHandlerOutput = targetHitHandler
@@ -343,9 +343,9 @@ final class GameViewModel3: ViewModelType {
         
         
         // MARK: OutputToGameScene
-        let renderSelectedWeapon = weaponChanged
+        let renderSelectedWeapon = weaponChangeProcessCompleted
 
-        let renderWeaponFiring = weaponFired
+        let renderWeaponFiring = weaponFireProcessCompleted
         
         
         // MARK: OutputToDeviceMotion
@@ -358,16 +358,16 @@ final class GameViewModel3: ViewModelType {
                 noBulletsSoundPlayed: noBulletsSoundPlayed,
                 bulletsCountDecremented: bulletsCountDecremented,
                 firingSoundPlayed: firingSoundPlayed,
-                weaponFired: weaponFired,
+                weaponFireProcessCompleted: weaponFireProcessCompleted,
                 bulletsCountRefilled: bulletsCountRefilled,
                 weaponReloadingFlagChanged: weaponReloadingFlagChanged,
                 reloadingSoundPlayed: reloadingSoundPlayed,
-                weaponReloaded: weaponReloaded,
+                weaponReloadProcessCompleted: weaponReloadProcessCompleted,
                 weaponTypeChanged: weaponTypeChanged,
                 weaponChangingSoundPlayed: weaponChangingSoundPlayed,
                 bulletsCountRefilledForNewWeapon: bulletsCountRefilledForNewWeapon,
                 weaponReloadingFlagChangedForNewWeapon: weaponReloadingFlagChangedForNewWeapon,
-                weaponChanged: weaponChanged,
+                weaponChangeProcessCompleted: weaponChangeProcessCompleted,
                 targetHitSoundPlayed: targetHitSoundPlayed,
                 scoreUpdated: scoreUpdated,
                 tutorialViewShowed: tutorialViewShowed,

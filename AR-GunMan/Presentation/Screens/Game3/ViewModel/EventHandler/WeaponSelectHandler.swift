@@ -18,7 +18,7 @@ final class WeaponSelectHandler {
         let playWeaponChangingSound: Observable<SoundType>
         let refillBulletsCountForNewWeapon: Observable<Int>
         let changeWeaponReloadingFlagForNewWeapon: Observable<Bool>
-        let weaponChanged: Observable<WeaponType>
+        let weaponChangeProcessCompleted: Observable<WeaponType>
     }
     
     func transform(input: Input) -> Output {
@@ -27,7 +27,7 @@ final class WeaponSelectHandler {
         let refillBulletsCountRelay = PublishRelay<Int>()
         let changeWeaponReloadingFlagRelay = PublishRelay<Bool>()
         
-        let weaponChanged = input.weaponSelected
+        let weaponChangeProcessCompleted = input.weaponSelected
             .do(onNext: { weaponType in
                 changeWeaponTypeRelay.accept(weaponType)
                 playWeaponChangingSoundRelay.accept(weaponType.weaponChangingSound)
@@ -40,7 +40,7 @@ final class WeaponSelectHandler {
             playWeaponChangingSound: playWeaponChangingSoundRelay.asObservable(),
             refillBulletsCountForNewWeapon: refillBulletsCountRelay.asObservable(),
             changeWeaponReloadingFlagForNewWeapon: changeWeaponReloadingFlagRelay.asObservable(),
-            weaponChanged: weaponChanged
+            weaponChangeProcessCompleted: weaponChangeProcessCompleted
         )
     }
 }
