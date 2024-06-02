@@ -8,20 +8,20 @@
 import RxSwift
 import RxCocoa
 
-final class WeaponAutoReloadHandler {
+final class WeaponAutoReloadFilter {
     struct Input {
         let weaponFired: Observable<(weaponType: WeaponType, bulletsCount: Int)>
     }
     
     struct Output {
-        let weaponAutoReloadTrigger: Observable<WeaponType>
+        let reloadWeaponAutomatically: Observable<WeaponType>
     }
         
     func transform(input: Input) -> Output {
-        let weaponAutoReloadTrigger = input.weaponFired
+        let reloadWeaponAutomatically = input.weaponFired
             .filter({ $0.bulletsCount == 0 && $0.weaponType.reloadType == .auto })
             .map({ $0.weaponType })
 
-        return Output(weaponAutoReloadTrigger: weaponAutoReloadTrigger)
+        return Output(reloadWeaponAutomatically: reloadWeaponAutomatically)
     }
 }

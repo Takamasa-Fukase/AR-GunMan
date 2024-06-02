@@ -93,7 +93,7 @@ final class GameViewModel3: ViewModelType {
     private let firingMoitonFilter: FiringMotionFilter
     private let reloadingMotionFilter: ReloadingMotionFilter
     private let weaponFireHandler: WeaponFireHandler
-    private let weaponAutoReloadHandler: WeaponAutoReloadHandler
+    private let weaponAutoReloadFilter: WeaponAutoReloadFilter
     private let weaponReloadHandler: WeaponReloadHandler
     private let weaponSelectHandler: WeaponSelectHandler
     private let targetHitHandler: TargetHitHandler
@@ -111,7 +111,7 @@ final class GameViewModel3: ViewModelType {
         firingMoitonFilter: FiringMotionFilter,
         reloadingMotionFilter: ReloadingMotionFilter,
         weaponFireHandler: WeaponFireHandler,
-        weaponAutoReloadHandler: WeaponAutoReloadHandler,
+        weaponAutoReloadFilter: WeaponAutoReloadFilter,
         weaponReloadHandler: WeaponReloadHandler,
         weaponSelectHandler: WeaponSelectHandler,
         targetHitHandler: TargetHitHandler,
@@ -128,7 +128,7 @@ final class GameViewModel3: ViewModelType {
         self.firingMoitonFilter = firingMoitonFilter
         self.reloadingMotionFilter = reloadingMotionFilter
         self.weaponFireHandler = weaponFireHandler
-        self.weaponAutoReloadHandler = weaponAutoReloadHandler
+        self.weaponAutoReloadFilter = weaponAutoReloadFilter
         self.weaponReloadHandler = weaponReloadHandler
         self.weaponSelectHandler = weaponSelectHandler
         self.targetHitHandler = targetHitHandler
@@ -237,18 +237,18 @@ final class GameViewModel3: ViewModelType {
         let weaponFired = weaponFireHandlerOutput.weaponFired
             .share()
         
-        let weaponAutoReloadTrigger = weaponAutoReloadHandler
+        let reloadWeaponAutomatically = weaponAutoReloadFilter
             .transform(
                 input: .init(weaponFired: weaponFired
                     .withLatestFrom(state.bulletsCountRelay) { ($0, $1) })
             )
-            .weaponAutoReloadTrigger
+            .reloadWeaponAutomatically
         
         let weaponReloadingTrigger = Observable
             .merge(
                 reloadingMotionDetected
                     .map({ [weak self] _ in self?.state.weaponTypeRelay.value ?? .pistol }),
-                weaponAutoReloadTrigger
+                reloadWeaponAutomatically
             )
 
         let weaponReloadHandlerOutput = weaponReloadHandler
