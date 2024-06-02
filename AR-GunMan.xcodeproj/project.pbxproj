@@ -882,11 +882,9 @@
 		867B855A2BFF3173004F6D56 /* Game3 */ = {
 			isa = PBXGroup;
 			children = (
-				BCD1C2412C044E81008975EB /* GameNavigator3.swift */,
-				BCD1C2242C01B3EA008975EB /* GameViewModel3.swift */,
-				BCD1C2392C044DCD008975EB /* GameViewController3.swift */,
-				BCD1C23D2C044DDA008975EB /* GameViewController3.storyboard */,
-				BCD1C22A2C041332008975EB /* EventHandler */,
+				BCCD44712C0C1F7E00BF541D /* Navigator */,
+				BCCD44722C0C1F8700BF541D /* ViewModel */,
+				BCCD44732C0C1F9500BF541D /* View */,
 			);
 			path = Game3;
 			sourceTree = "<group>";
@@ -1187,6 +1185,32 @@
 				82CB4F049BB35C36EAA5A632 /* Pods_AR_GunManTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BCCD44712C0C1F7E00BF541D /* Navigator */ = {
+			isa = PBXGroup;
+			children = (
+				BCD1C2412C044E81008975EB /* GameNavigator3.swift */,
+			);
+			path = Navigator;
+			sourceTree = "<group>";
+		};
+		BCCD44722C0C1F8700BF541D /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				BCD1C2242C01B3EA008975EB /* GameViewModel3.swift */,
+				BCD1C22A2C041332008975EB /* EventHandler */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		BCCD44732C0C1F9500BF541D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				BCD1C2392C044DCD008975EB /* GameViewController3.swift */,
+				BCD1C23D2C044DDA008975EB /* GameViewController3.storyboard */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		BCD1C22A2C041332008975EB /* EventHandler */ = {
