@@ -97,6 +97,7 @@ class GameViewController3: UIViewController {
             viewModelAction.targetHitSoundPlayed.subscribe()
             viewModelAction.scoreUpdated.subscribe()
             viewModelAction.tutorialViewShowed.subscribe()
+            viewModelAction.pistolSetSoundPlayed.subscribe()
             viewModelAction.startWhistleSoundPlayed.subscribe()
             viewModelAction.endWhistleSoundPlayed.subscribe()
             viewModelAction.timerDisposed.subscribe()
