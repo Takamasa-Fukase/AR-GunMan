@@ -40,7 +40,7 @@ final class GameTimerHandler {
                 return self.gameUseCase.getTimeCountStream()
             })
             .do(onNext: { timeCount in
-                if timeCount <= 0 {
+                if timeCount < 0 {
                     playEndWhistleSoundRelay.accept(.endWhistle)
                     disposeTimerRelay.accept(Void())
                 }

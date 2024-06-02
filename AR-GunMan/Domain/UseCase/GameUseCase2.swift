@@ -72,7 +72,7 @@ final class GameUseCase2: GameUseCase2Interface {
             )
             .map({ timerUpdatedCount in // タイマーが更新された回数を表すInt
                 // 例: 30.00 - (1 / 100) => 29.99
-                return max(GameConst.timeCount - (Double(timerUpdatedCount) / 100), 0)
+                return GameConst.timeCount - (Double(timerUpdatedCount) / 100)
             })
     }
 }
