@@ -240,8 +240,10 @@ final class GameViewModel3: ViewModelType {
         
         let reloadWeaponAutomatically = weaponAutoReloadFilter
             .transform(
-                input: .init(weaponFired: weaponFireProcessCompleted
-                    .withLatestFrom(state.bulletsCountRelay) { ($0, $1) })
+                input: .init(
+                    weaponFired: weaponFireProcessCompleted,
+                    bulletsCount: state.bulletsCountRelay.asObservable()
+                )
             )
             .reloadWeaponAutomatically
         

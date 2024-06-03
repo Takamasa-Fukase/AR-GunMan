@@ -10,7 +10,8 @@ import RxCocoa
 
 final class WeaponAutoReloadFilter {
     struct Input {
-        let weaponFired: Observable<(weaponType: WeaponType, bulletsCount: Int)>
+        let weaponFired: Observable<WeaponType>
+        let bulletsCount: Observable<Int>
     }
     
     struct Output {
@@ -19,6 +20,7 @@ final class WeaponAutoReloadFilter {
         
     func transform(input: Input) -> Output {
         let reloadWeaponAutomatically = input.weaponFired
+            .withLatestFrom(input.bulletsCount) { (weaponType: $0, bulletsCount: $1) }
             .filter({ $0.bulletsCount == 0 && $0.weaponType.reloadType == .auto })
             .map({ $0.weaponType })
 
