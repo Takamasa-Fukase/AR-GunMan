@@ -15,11 +15,15 @@ final class GameViewModel3: ViewModelType {
         let inputFromCoreMotion: InputFromCoreMotion
 
         struct InputFromView {
+            let viewDidLoad: Observable<Void>
+            let viewWillAppear: Observable<Void>
             let viewDidAppear: Observable<Void>
+            let viewWillDisappear: Observable<Void>
             let weaponChangeButtonTapped: Observable<Void>
         }
         
         struct InputFromGameScene {
+            let rendererUpdated: Observable<Void>
             let targetHit: Observable<Void>
         }
         
@@ -56,6 +60,10 @@ final class GameViewModel3: ViewModelType {
             let startWhistleSoundPlayed: Observable<SoundType>
             let endWhistleSoundPlayed: Observable<SoundType>
             let timerDisposed: Observable<Void>
+            let weaponChangeViewShowed: Observable<Void>
+            let weaponChangeViewDismissed: Observable<Void>
+            let rankingAppearSoundPlayed: Observable<SoundType>
+            let resultViewShowed: Observable<Void>
         }
         
         struct OutputToView {
@@ -67,12 +75,19 @@ final class GameViewModel3: ViewModelType {
         }
         
         struct OutputToGameScene {
+            let setupSceneView: Observable<Void>
+            let renderAllTargets: Observable<Int>
+            let startSceneSession: Observable<Void>
+            let pauseSceneSession: Observable<Void>
             let renderSelectedWeapon: Observable<WeaponType>
             let renderWeaponFiring: Observable<WeaponType>
+//            let renderTargetsAppearanceChanging: Observable<Void>
+            let moveWeaponToFPSPosition: Observable<WeaponType>
         }
         
         struct OutputToDeviceMotion {
             let startMotionDetection: Observable<Void>
+            let stopMotionDetection: Observable<Void>
         }
     }
     
@@ -91,6 +106,7 @@ final class GameViewModel3: ViewModelType {
     private let tutorialSeenStatusHandler: TutorialSeenStatusHandler
     private let gameStartHandler: GameStartHandler
     private let gameTimerHandler: GameTimerHandler
+    private let gameTimerDisposalHandler: GameTimerDisposalHandler
     private let firingMoitonFilter: FiringMotionFilter
     private let reloadingMotionFilter: ReloadingMotionFilter
     private let weaponFireHandler: WeaponFireHandler
@@ -109,6 +125,7 @@ final class GameViewModel3: ViewModelType {
         tutorialSeenStatusHandler: TutorialSeenStatusHandler,
         gameStartHandler: GameStartHandler,
         gameTimerHandler: GameTimerHandler,
+        gameTimerDisposalHandler: GameTimerDisposalHandler,
         firingMoitonFilter: FiringMotionFilter,
         reloadingMotionFilter: ReloadingMotionFilter,
         weaponFireHandler: WeaponFireHandler,
@@ -126,6 +143,7 @@ final class GameViewModel3: ViewModelType {
         self.tutorialSeenStatusHandler = tutorialSeenStatusHandler
         self.gameStartHandler = gameStartHandler
         self.gameTimerHandler = gameTimerHandler
+        self.gameTimerDisposalHandler = gameTimerDisposalHandler
         self.firingMoitonFilter = firingMoitonFilter
         self.reloadingMotionFilter = reloadingMotionFilter
         self.weaponFireHandler = weaponFireHandler
@@ -329,7 +347,35 @@ final class GameViewModel3: ViewModelType {
                 guard let self = self else { return }
                 self.state.scoreRelay.accept($0)
             })
-            
+        
+        let weaponChangeViewShowed = input.inputFromView.weaponChangeButtonTapped
+            .do(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.navigator.showWeaponChangeView(
+                    weaponSelectObserver: self.weaponSelectObserver
+                )
+            })
+        
+        let gameTimerDisposalHandlerOutput = gameTimerDisposalHandler
+            .transform(input: .init(timerDisposed: timerDisposed))
+        
+        let weaponChangeViewDismissed = gameTimerDisposalHandlerOutput.dismissWeaponChangeView
+            .do(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.navigator.dismissWeaponChangeView()
+            })
+        
+        let rankingAppearSoundPlayed = gameTimerDisposalHandlerOutput.playRankingAppearSound
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.soundPlayer.play($0)
+            })
+        
+        let resultViewShowed = gameTimerDisposalHandlerOutput.showResultView
+            .do(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.navigator.showResultView(totalScore: self.state.scoreRelay.value)
+            })
         
         // MARK: OutputToView
         let sightImage = state.weaponTypeRelay
@@ -347,14 +393,34 @@ final class GameViewModel3: ViewModelType {
         let isWeaponChangeButtonEnabled = state.timeCountRelay
             .map({ $0 < GameConst.timeCount && $0 > 0 })
         
+        
         // MARK: OutputToGameScene
+        let setupSceneView = input.inputFromView.viewDidLoad
+        
+        let renderAllTargets = input.inputFromView.viewDidLoad
+            .map({ _ in GameConst.targetCount })
+        
+        let startSceneSession = input.inputFromView.viewWillAppear
+        
+        let pauseSceneSession = input.inputFromView.viewWillDisappear
+        
         let renderSelectedWeapon = weaponChangeProcessCompleted
 
         let renderWeaponFiring = weaponFireProcessCompleted
         
+        // TODO: define "20" in constants
+//        let renderTargetsAppearanceChanging = state.reloadingMotionDetectedCountRelay
+//            .filter({ $0 == 20 && state.isPlaying })
+//            .map({ _ in AudioUtil.playSound(of: .kyuiin) })
+        
+        let moveWeaponToFPSPosition = input.inputFromGameScene.rendererUpdated
+            .map({ [weak self] _ in self?.state.weaponTypeRelay.value ?? .pistol })
+        
         
         // MARK: OutputToDeviceMotion
         let startMotionDetection = gameStartHandlerOutput.startMotionDetection
+        
+        let stopMotionDetection = gameTimerDisposalHandlerOutput.stopMotionDetection
 
         
         return Output(
@@ -378,22 +444,32 @@ final class GameViewModel3: ViewModelType {
                 tutorialViewShowed: tutorialViewShowed,
                 startWhistleSoundPlayed: startWhistleSoundPlayed,
                 endWhistleSoundPlayed: endWhistleSoundPlayed,
-                timerDisposed: timerDisposed
+                timerDisposed: timerDisposed,
+                weaponChangeViewShowed: weaponChangeViewShowed,
+                weaponChangeViewDismissed: weaponChangeViewDismissed,
+                rankingAppearSoundPlayed: rankingAppearSoundPlayed,
+                resultViewShowed: resultViewShowed
             ),
             outputToView: Output.OutputToView(
                 sightImage: sightImage,
                 sightImageColor: sightImageColor,
                 timeCountText: timeCountText,
-                bulletsCountImage: bulletsCountImage
                 bulletsCountImage: bulletsCountImage,
                 isWeaponChangeButtonEnabled: isWeaponChangeButtonEnabled
             ),
             outputToGameScene: Output.OutputToGameScene(
+                setupSceneView: setupSceneView,
+                renderAllTargets: renderAllTargets,
+                startSceneSession: startSceneSession,
+                pauseSceneSession: pauseSceneSession,
                 renderSelectedWeapon: renderSelectedWeapon,
-                renderWeaponFiring: renderWeaponFiring
+                renderWeaponFiring: renderWeaponFiring,
+//                renderTargetsAppearanceChanging: renderTargetsAppearanceChanging,
+                moveWeaponToFPSPosition: moveWeaponToFPSPosition
             ),
             outputToDeviceMotion: Output.OutputToDeviceMotion(
-                startMotionDetection: startMotionDetection
+                startMotionDetection: startMotionDetection,
+                stopMotionDetection: stopMotionDetection
             )
         )
     }

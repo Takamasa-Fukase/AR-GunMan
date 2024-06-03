@@ -11,9 +11,9 @@ import RxCocoa
 
 class GameViewController3: UIViewController {
     var viewModel: GameViewModel3!
-    // TODO: 命名をARContentControllerとか抽象的な命名にして、実装詳細を意識しない様にしたい
+    // TODO: change class name to "ARContentController"
     var gameSceneController: GameSceneController!
-    // TODO: 命名をDeviceMotionControllerとか抽象的な命名にして、実装詳細を意識しない様にしたい
+    // TODO: change class name to "DeviceMotionController"
     var coreMotionController: CoreMotionController!
     private let disposeBag = DisposeBag()
     
@@ -26,18 +26,17 @@ class GameViewController3: UIViewController {
         super.viewDidLoad()
         
         setupUI()
-        
-        let sceneView = gameSceneController.setupSceneView(with: view.frame)
-        view.insertSubview(sceneView, at: 0)
-        gameSceneController.showTargets(count: 50)
-        gameSceneController.showWeapon(.pistol)
 
         let input = GameViewModel3.Input(
             inputFromView: GameViewModel3.Input.InputFromView(
+                viewDidLoad: .just(()),
+                viewWillAppear: rx.viewWillAppear,
                 viewDidAppear: rx.viewDidAppear,
+                viewWillDisappear: rx.viewWillDisappear,
                 weaponChangeButtonTapped: switchWeaponButton.rx.tap.asObservable()
             ),
             inputFromGameScene: GameViewModel3.Input.InputFromGameScene(
+                rendererUpdated: gameSceneController.rendererUpdated,
                 targetHit: gameSceneController.targetHit
             ),
             inputFromCoreMotion: GameViewModel3.Input.InputFromCoreMotion(
@@ -52,30 +51,11 @@ class GameViewController3: UIViewController {
         bindOutputToViewComponents(output.outputToView)
         bindOutputToGameSceneController(output.outputToGameScene)
         bindOutputToCoreMotionController(output.outputToDeviceMotion)
-        
-        // other
-        gameSceneController.rendererUpdated
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                self.gameSceneController.moveWeaponToFPSPosition(currentWeapon: .pistol)
-            }).disposed(by: disposeBag)
     }
 
     private func setupUI() {
-        // 等幅フォントにして高速で動くタイムカウントの横振れを防止
+        // MEMO: to prevent time count text looks shaking horizontally rapidly.
         timeCountLabel.font = timeCountLabel.font.monospacedDigitFont
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.gameSceneController.startSession()
-//        self.coreMotionController.startUpdate()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.gameSceneController.pauseSession()
-        self.coreMotionController.stopUpdate()
     }
     
     private func subscribeViewModelActions(
@@ -102,6 +82,10 @@ class GameViewController3: UIViewController {
             viewModelAction.startWhistleSoundPlayed.subscribe()
             viewModelAction.endWhistleSoundPlayed.subscribe()
             viewModelAction.timerDisposed.subscribe()
+            viewModelAction.weaponChangeViewShowed.subscribe()
+            viewModelAction.weaponChangeViewDismissed.subscribe()
+            viewModelAction.rankingAppearSoundPlayed.subscribe()
+            viewModelAction.resultViewShowed.subscribe()
         }
     }
     
@@ -126,6 +110,27 @@ class GameViewController3: UIViewController {
         _ outputToGameScene: GameViewModel3.Output.OutputToGameScene
     ) {
         disposeBag.insert {
+            outputToGameScene.setupSceneView
+                .subscribe(onNext: { [weak self] _ in
+                    guard let self = self else { return }
+                    let sceneView = self.gameSceneController.setupSceneView(with: self.view.frame)
+                    self.view.insertSubview(sceneView, at: 0)
+                })
+            outputToGameScene.renderAllTargets
+                .subscribe(onNext: { [weak self] count in
+                    guard let self = self else { return }
+                    self.gameSceneController.showTargets(count: count)
+                })
+            outputToGameScene.startSceneSession
+                .subscribe(onNext: { [weak self] _ in
+                    guard let self = self else { return }
+                    self.gameSceneController.startSession()
+                })
+            outputToGameScene.pauseSceneSession
+                .subscribe(onNext: { [weak self] _ in
+                    guard let self = self else { return }
+                    self.gameSceneController.pauseSession()
+                })
             outputToGameScene.renderSelectedWeapon
                 .subscribe(onNext: { [weak self] type in
                     guard let self = self else { return }
@@ -135,6 +140,16 @@ class GameViewController3: UIViewController {
                 .subscribe(onNext: { [weak self] type in
                     guard let self = self else { return }
                     self.gameSceneController.fireWeapon(type)
+                })
+//            outputToGameScene.renderTargetsAppearanceChanging
+//                .subscribe(onNext: { [weak self] _ in
+//                    guard let self = self else { return }
+//                    self.gameSceneController.changeTargetsToTaimeisan()
+//                })
+            outputToGameScene.moveWeaponToFPSPosition
+                .subscribe(onNext: { [weak self] type in
+                    guard let self = self else { return }
+                    self.gameSceneController.moveWeaponToFPSPosition(currentWeapon: type)
                 })
         }
     }
@@ -147,6 +162,11 @@ class GameViewController3: UIViewController {
                 .subscribe(onNext: { [weak self] _ in
                     guard let self = self else { return }
                     self.coreMotionController.startUpdate()
+                })
+            OutputToDeviceMotion.stopMotionDetection
+                .subscribe(onNext: { [weak self] _ in
+                    guard let self = self else { return }
+                    self.coreMotionController.stopUpdate()
                 })
         }
     }

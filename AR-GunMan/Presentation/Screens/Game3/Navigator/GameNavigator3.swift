@@ -40,6 +40,7 @@ final class GameNavigator3: GameNavigatorInterface3 {
             tutorialSeenStatusHandler: TutorialSeenStatusHandler(gameUseCase: useCase),
             gameStartHandler: GameStartHandler(gameUseCase: useCase),
             gameTimerHandler: GameTimerHandler(gameUseCase: useCase),
+            gameTimerDisposalHandler: GameTimerDisposalHandler(gameUseCase: useCase),
             firingMoitonFilter: FiringMotionFilter(),
             reloadingMotionFilter: ReloadingMotionFilter(),
             weaponFireHandler: WeaponFireHandler(),
