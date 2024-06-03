@@ -22,25 +22,12 @@ final class WeaponSelectHandler {
     }
     
     func transform(input: Input) -> Output {
-        let changeWeaponTypeRelay = PublishRelay<WeaponType>()
-        let playWeaponChangingSoundRelay = PublishRelay<SoundType>()
-        let refillBulletsCountRelay = PublishRelay<Int>()
-        let changeWeaponReloadingFlagRelay = PublishRelay<Bool>()
-        
-        let weaponChangeProcessCompleted = input.weaponSelected
-            .do(onNext: { weaponType in
-                changeWeaponTypeRelay.accept(weaponType)
-                playWeaponChangingSoundRelay.accept(weaponType.weaponChangingSound)
-                refillBulletsCountRelay.accept(weaponType.bulletsCapacity)
-                changeWeaponReloadingFlagRelay.accept(false)
-            })
-        
         return Output(
-            changeWeaponType: changeWeaponTypeRelay.asObservable(),
-            playWeaponChangingSound: playWeaponChangingSoundRelay.asObservable(),
-            refillBulletsCountForNewWeapon: refillBulletsCountRelay.asObservable(),
-            changeWeaponReloadingFlagForNewWeapon: changeWeaponReloadingFlagRelay.asObservable(),
-            weaponChangeProcessCompleted: weaponChangeProcessCompleted
+            changeWeaponType: input.weaponSelected,
+            playWeaponChangingSound: input.weaponSelected.map({ $0.weaponChangingSound }),
+            refillBulletsCountForNewWeapon: input.weaponSelected.map({ $0.bulletsCapacity }),
+            changeWeaponReloadingFlagForNewWeapon: input.weaponSelected.map({ _ in false }),
+            weaponChangeProcessCompleted: input.weaponSelected
         )
     }
 }

@@ -26,10 +26,7 @@ final class GameStartHandler {
     }
     
     func transform(input: Input) -> Output {
-        let playPistolSetSoundRelay = PublishRelay<SoundType>()
-        
         let timerStartSignalReceived = input.gameStarted
-            .do(onNext: { playPistolSetSoundRelay.accept(.pistolSet) })
             .flatMapLatest({ [weak self] _ -> Observable<Void> in
                 guard let self = self else { return .empty() }
                 return self.gameUseCase.awaitTimerStartSignal()
@@ -37,7 +34,7 @@ final class GameStartHandler {
             .share()
         
         return Output(
-            playPistolSetSound: playPistolSetSoundRelay.asObservable(),
+            playPistolSetSound: input.gameStarted.map({ _ in .pistolSet }),
             startMotionDetection: timerStartSignalReceived,
             startTimer: timerStartSignalReceived
         )
