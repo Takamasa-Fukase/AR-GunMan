@@ -117,6 +117,8 @@ class GameViewController3: UIViewController {
                 .bind(to: timeCountLabel.rx.text)
             outputToView.bulletsCountImage
                 .bind(to: bulletsCountImageView.rx.image)
+            outputToView.isWeaponChangeButtonEnabled
+                .bind(to: switchWeaponButton.rx.isEnabled)
         }
     }
     

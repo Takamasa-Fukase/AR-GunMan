@@ -63,6 +63,7 @@ final class GameViewModel3: ViewModelType {
             let sightImageColor: Observable<UIColor>
             let timeCountText: Observable<String>
             let bulletsCountImage: Observable<UIImage?>
+            let isWeaponChangeButtonEnabled: Observable<Bool>
         }
         
         struct OutputToGameScene {
@@ -341,6 +342,8 @@ final class GameViewModel3: ViewModelType {
         let bulletsCountImage = state.bulletsCountRelay
             .map({ [weak self] in self?.state.weaponTypeRelay.value.bulletsCountImage(at: $0) })
         
+        let isWeaponChangeButtonEnabled = state.timeCountRelay
+            .map({ $0 < GameConst.timeCount && $0 > 0 })
         
         // MARK: OutputToGameScene
         let renderSelectedWeapon = weaponChangeProcessCompleted
@@ -380,6 +383,8 @@ final class GameViewModel3: ViewModelType {
                 sightImageColor: sightImageColor,
                 timeCountText: timeCountText,
                 bulletsCountImage: bulletsCountImage
+                bulletsCountImage: bulletsCountImage,
+                isWeaponChangeButtonEnabled: isWeaponChangeButtonEnabled
             ),
             outputToGameScene: Output.OutputToGameScene(
                 renderSelectedWeapon: renderSelectedWeapon,
