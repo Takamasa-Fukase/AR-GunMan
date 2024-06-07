@@ -356,6 +356,9 @@
 		BCCD44792C12982500BF541D /* ReloadingMotionDetectionCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCD44782C12982500BF541D /* ReloadingMotionDetectionCounter.swift */; };
 		BCCD447A2C12982500BF541D /* ReloadingMotionDetectionCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCD44782C12982500BF541D /* ReloadingMotionDetectionCounter.swift */; };
 		BCCD447B2C12982500BF541D /* ReloadingMotionDetectionCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCD44782C12982500BF541D /* ReloadingMotionDetectionCounter.swift */; };
+		BCCD447D2C12AB4500BF541D /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCD447C2C12AB4500BF541D /* UIColor+Extension.swift */; };
+		BCCD447E2C12AB4500BF541D /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCD447C2C12AB4500BF541D /* UIColor+Extension.swift */; };
+		BCCD447F2C12AB4500BF541D /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCD447C2C12AB4500BF541D /* UIColor+Extension.swift */; };
 		BCD1C2252C01B3EA008975EB /* GameViewModel3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD1C2242C01B3EA008975EB /* GameViewModel3.swift */; };
 		BCD1C2262C01B3EA008975EB /* GameViewModel3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD1C2242C01B3EA008975EB /* GameViewModel3.swift */; };
 		BCD1C2272C01B3EA008975EB /* GameViewModel3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD1C2242C01B3EA008975EB /* GameViewModel3.swift */; };
@@ -543,6 +546,7 @@
 		BCCD44642C0B4A5200BF541D /* GameTimerHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTimerHandler.swift; sourceTree = "<group>"; };
 		BCCD44742C0D935700BF541D /* GameTimerDisposalHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTimerDisposalHandler.swift; sourceTree = "<group>"; };
 		BCCD44782C12982500BF541D /* ReloadingMotionDetectionCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReloadingMotionDetectionCounter.swift; sourceTree = "<group>"; };
+		BCCD447C2C12AB4500BF541D /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		BCD1C2242C01B3EA008975EB /* GameViewModel3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel3.swift; sourceTree = "<group>"; };
 		BCD1C2282C01B9E2008975EB /* WeaponFiringEventTransformerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponFiringEventTransformerTests.swift; sourceTree = "<group>"; };
 		BCD1C2372C043924008975EB /* WeaponReloadingEventTransformerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponReloadingEventTransformerTests.swift; sourceTree = "<group>"; };
@@ -610,6 +614,7 @@
 				BC2B11662977F90C009F4DC4 /* UIScrollView+Extension.swift */,
 				BCD9675D2979E55400E33587 /* UIImageView+Extension.swift */,
 				86C5AB972AB8819C00CB161D /* UIAlertController+Extension.swift */,
+				BCCD447C2C12AB4500BF541D /* UIColor+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1620,6 +1625,7 @@
 				BCD1C2422C044E81008975EB /* GameNavigator3.swift in Sources */,
 				67DB2C5727BFD01900B8CB3C /* SceneNodeUtil.swift in Sources */,
 				86594DC82BCD50F100971D1A /* TopUseCase.swift in Sources */,
+				BCCD447D2C12AB4500BF541D /* UIColor+Extension.swift in Sources */,
 				863FE7EE2BEA6D8D00E104F5 /* FirebaseConst.swift in Sources */,
 				59945100256AD55900560202 /* TutorialViewController.swift in Sources */,
 				8613E2902BB1BFC400BF4489 /* GameUseCase.swift in Sources */,
@@ -1685,6 +1691,7 @@
 				860646762BF599D500906DA0 /* ResultViewController.swift in Sources */,
 				8606467D2BF599D500906DA0 /* NameRegisterNavigator.swift in Sources */,
 				860646972BF599E900906DA0 /* SettingsViewController.swift in Sources */,
+				BCCD447E2C12AB4500BF541D /* UIColor+Extension.swift in Sources */,
 				8606465A2BF5999F00906DA0 /* GameSceneController.swift in Sources */,
 				8606462F2BF5997200906DA0 /* ReplayRepository.swift in Sources */,
 				8606464E2BF5999600906DA0 /* GameNavigator.swift in Sources */,
@@ -1826,6 +1833,7 @@
 				BCD1C2442C044E81008975EB /* GameNavigator3.swift in Sources */,
 				860646092BF5996100906DA0 /* SceneAnimationUtil.swift in Sources */,
 				8606460D2BF5996100906DA0 /* ScoreCalculator.swift in Sources */,
+				BCCD447F2C12AB4500BF541D /* UIColor+Extension.swift in Sources */,
 				860646052BF5996100906DA0 /* RankingUtil.swift in Sources */,
 				860646272BF5996800906DA0 /* FirebaseConst.swift in Sources */,
 				860646362BF5997300906DA0 /* ReplayRepository.swift in Sources */,
