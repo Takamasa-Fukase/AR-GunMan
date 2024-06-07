@@ -86,6 +86,8 @@ class GameViewController3: UIViewController {
             viewModelAction.weaponChangeViewDismissed.subscribe()
             viewModelAction.rankingAppearSoundPlayed.subscribe()
             viewModelAction.resultViewShowed.subscribe()
+            viewModelAction.reloadingMotionDetectedCountUpdated.subscribe()
+            viewModelAction.targetsAppearanceChangingSoundPlayed.subscribe()
         }
     }
     
@@ -141,11 +143,11 @@ class GameViewController3: UIViewController {
                     guard let self = self else { return }
                     self.gameSceneController.fireWeapon(type)
                 })
-//            outputToGameScene.renderTargetsAppearanceChanging
-//                .subscribe(onNext: { [weak self] _ in
-//                    guard let self = self else { return }
-//                    self.gameSceneController.changeTargetsToTaimeisan()
-//                })
+            outputToGameScene.renderTargetsAppearanceChanging
+                .subscribe(onNext: { [weak self] _ in
+                    guard let self = self else { return }
+                    self.gameSceneController.changeTargetsToTaimeisan()
+                })
             outputToGameScene.moveWeaponToFPSPosition
                 .subscribe(onNext: { [weak self] type in
                     guard let self = self else { return }

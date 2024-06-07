@@ -29,6 +29,8 @@ final class GameConst {
     static let showResultWaitingTimeMillisec: Int = 1500
     // ゲームのタイムカウントをアップデートする間隔
     static let timeCountUpdateDurationMillisec: Int = 10
+    // 的の見た目を変更する隠しイベントを発動するのに必要なリロードモーションの検知回数
+    static let targetsAppearanceChangingLimit: Int = 20
     static let playerAnimationUpdateInterval: Double = 0.2
     static let targetNodeName = "target"
     static let bulletNodeName = "bullet"

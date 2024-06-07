@@ -47,7 +47,8 @@ final class GameNavigator3: GameNavigatorInterface3 {
             weaponAutoReloadFilter: WeaponAutoReloadFilter(),
             weaponReloadHandler: WeaponReloadHandler(gameUseCase: useCase),
             weaponSelectHandler: WeaponSelectHandler(),
-            targetHitHandler: TargetHitHandler()
+            targetHitHandler: TargetHitHandler(),
+            reloadingMotionDetectionCounter: ReloadingMotionDetectionCounter()
         )
         let gameSceneController = GameSceneController()
         let coreMotionController = CoreMotionController(coreMotionManager: CMMotionManager())

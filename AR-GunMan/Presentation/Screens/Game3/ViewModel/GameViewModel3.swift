@@ -64,6 +64,8 @@ final class GameViewModel3: ViewModelType {
             let weaponChangeViewDismissed: Observable<Void>
             let rankingAppearSoundPlayed: Observable<SoundType>
             let resultViewShowed: Observable<Void>
+            let reloadingMotionDetectedCountUpdated: Observable<Int>
+            let targetsAppearanceChangingSoundPlayed: Observable<SoundType>
         }
         
         struct OutputToView {
@@ -81,7 +83,7 @@ final class GameViewModel3: ViewModelType {
             let pauseSceneSession: Observable<Void>
             let renderSelectedWeapon: Observable<WeaponType>
             let renderWeaponFiring: Observable<WeaponType>
-//            let renderTargetsAppearanceChanging: Observable<Void>
+            let renderTargetsAppearanceChanging: Observable<Void>
             let moveWeaponToFPSPosition: Observable<WeaponType>
         }
         
@@ -97,6 +99,7 @@ final class GameViewModel3: ViewModelType {
         let bulletsCountRelay = BehaviorRelay<Int>(value: WeaponType.pistol.bulletsCapacity)
         var isWeaponReloadingRelay = BehaviorRelay<Bool>(value: false)
         let scoreRelay = BehaviorRelay<Double>(value: 0)
+        let reloadingMotionDetectedCountRelay = BehaviorRelay<Int>(value: 0)
     }
 
     private let useCase: GameUseCase2Interface
@@ -114,6 +117,7 @@ final class GameViewModel3: ViewModelType {
     private let weaponReloadHandler: WeaponReloadHandler
     private let weaponSelectHandler: WeaponSelectHandler
     private let targetHitHandler: TargetHitHandler
+    private let reloadingMotionDetectionCounter: ReloadingMotionDetectionCounter
     private let state: State
     private let soundPlayer: SoundPlayerInterface
     
@@ -133,6 +137,7 @@ final class GameViewModel3: ViewModelType {
         weaponReloadHandler: WeaponReloadHandler,
         weaponSelectHandler: WeaponSelectHandler,
         targetHitHandler: TargetHitHandler,
+        reloadingMotionDetectionCounter: ReloadingMotionDetectionCounter,
         state: State = State(),
         soundPlayer: SoundPlayerInterface = SoundPlayer.shared
     ) {
@@ -151,6 +156,7 @@ final class GameViewModel3: ViewModelType {
         self.weaponReloadHandler = weaponReloadHandler
         self.weaponSelectHandler = weaponSelectHandler
         self.targetHitHandler = targetHitHandler
+        self.reloadingMotionDetectionCounter = reloadingMotionDetectionCounter
         self.state = state
         self.soundPlayer = soundPlayer
     }
@@ -227,6 +233,7 @@ final class GameViewModel3: ViewModelType {
                 gyroUpdated: input.inputFromCoreMotion.gyroUpdated)
             )
             .reloadingMotionDetected
+            .share()
         
         let weaponFireHandlerOutput = weaponFireHandler
             .transform(input: .init(
@@ -377,6 +384,25 @@ final class GameViewModel3: ViewModelType {
                 self.navigator.showResultView(totalScore: self.state.scoreRelay.value)
             })
         
+        let reloadingMotionDetectionCounterOutput = reloadingMotionDetectionCounter
+            .transform(input: .init(
+                reloadingMotionDetected: reloadingMotionDetected,
+                currentCount: state.reloadingMotionDetectedCountRelay.asObservable())
+            )
+        
+        let reloadingMotionDetectedCountUpdated = reloadingMotionDetectionCounterOutput.updateCount
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.state.reloadingMotionDetectedCountRelay.accept($0)
+            })
+        
+        let targetsAppearanceChangingSoundPlayed = reloadingMotionDetectionCounterOutput.playTargetsAppearanceChangingSound
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.soundPlayer.play($0)
+            })
+        
+        
         // MARK: OutputToView
         let sightImage = state.weaponTypeRelay
             .map({ $0.sightImage })
@@ -412,10 +438,7 @@ final class GameViewModel3: ViewModelType {
 
         let renderWeaponFiring = weaponFireProcessCompleted
         
-        // TODO: define "20" in constants
-//        let renderTargetsAppearanceChanging = state.reloadingMotionDetectedCountRelay
-//            .filter({ $0 == 20 && state.isPlaying })
-//            .map({ _ in AudioUtil.playSound(of: .kyuiin) })
+        let renderTargetsAppearanceChanging = reloadingMotionDetectionCounterOutput.detectionCountReachedTargetsAppearanceChangingLimit
         
         let moveWeaponToFPSPosition = input.inputFromGameScene.rendererUpdated
             .map({ [weak self] _ in self?.state.weaponTypeRelay.value ?? .pistol })
@@ -452,7 +475,9 @@ final class GameViewModel3: ViewModelType {
                 weaponChangeViewShowed: weaponChangeViewShowed,
                 weaponChangeViewDismissed: weaponChangeViewDismissed,
                 rankingAppearSoundPlayed: rankingAppearSoundPlayed,
-                resultViewShowed: resultViewShowed
+                resultViewShowed: resultViewShowed,
+                reloadingMotionDetectedCountUpdated: reloadingMotionDetectedCountUpdated,
+                targetsAppearanceChangingSoundPlayed: targetsAppearanceChangingSoundPlayed
             ),
             outputToView: Output.OutputToView(
                 sightImage: sightImage,
@@ -468,7 +493,7 @@ final class GameViewModel3: ViewModelType {
                 pauseSceneSession: pauseSceneSession,
                 renderSelectedWeapon: renderSelectedWeapon,
                 renderWeaponFiring: renderWeaponFiring,
-//                renderTargetsAppearanceChanging: renderTargetsAppearanceChanging,
+                renderTargetsAppearanceChanging: renderTargetsAppearanceChanging,
                 moveWeaponToFPSPosition: moveWeaponToFPSPosition
             ),
             outputToDeviceMotion: Output.OutputToDeviceMotion(
