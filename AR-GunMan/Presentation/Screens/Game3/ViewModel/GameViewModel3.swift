@@ -404,7 +404,11 @@ final class GameViewModel3: ViewModelType {
         
         let pauseSceneSession = input.inputFromView.viewWillDisappear
         
-        let renderSelectedWeapon = weaponChangeProcessCompleted
+        let renderSelectedWeapon = Observable.merge(
+            input.inputFromView.viewDidLoad
+                .map({ [weak self] _ in self?.state.weaponTypeRelay.value ?? .pistol }),
+            weaponChangeProcessCompleted
+        )
 
         let renderWeaponFiring = weaponFireProcessCompleted
         
