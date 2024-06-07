@@ -61,6 +61,7 @@ enum WeaponType: CaseIterable {
         }
     }
     
+    // TODO: 差し替えが終わったら削除する
     var sightImage: UIImage? {
         switch self {
         case .pistol:
@@ -70,12 +71,31 @@ enum WeaponType: CaseIterable {
         }
     }
     
+    // TODO: 差し替えが終わったら削除する
     var sightImageColor: UIColor {
         switch self {
         case .pistol:
             return .systemRed
         case .bazooka:
             return .systemGreen
+        }
+    }
+    
+    var sightImageName: String {
+        switch self {
+        case .pistol:
+            return "pistolSight"
+        case .bazooka:
+            return "bazookaSight"
+        }
+    }
+    
+    var sightImageColorHexCode: String {
+        switch self {
+        case .pistol:
+            return UIColor.systemRed.toHexString()
+        case .bazooka:
+            return UIColor.systemGreen.toHexString()
         }
     }
     
@@ -124,12 +144,22 @@ enum WeaponType: CaseIterable {
         }
     }
     
+    // TODO: 差し替えが終わったら削除する
     func bulletsCountImage(at count: Int) -> UIImage? {
         switch self {
         case .pistol:
             return UIImage(named: "bullets\(count)")
         case .bazooka:
             return UIImage(named: "bazookaRocket\(count)")
+        }
+    }
+    
+    func bulletsCountImageName(at count: Int) -> String {
+        switch self {
+        case .pistol:
+            return "bullets\(count)"
+        case .bazooka:
+            return "bazookaRocket\(count)"
         }
     }
 }

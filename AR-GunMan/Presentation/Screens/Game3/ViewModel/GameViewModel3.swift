@@ -69,10 +69,10 @@ final class GameViewModel3: ViewModelType {
         }
         
         struct OutputToView {
-            let sightImage: Observable<UIImage?>
-            let sightImageColor: Observable<UIColor>
+            let sightImageName: Observable<String>
+            let sightImageColorHexCode: Observable<String>
             let timeCountText: Observable<String>
-            let bulletsCountImage: Observable<UIImage?>
+            let bulletsCountImageName: Observable<String>
             let isWeaponChangeButtonEnabled: Observable<Bool>
         }
         
@@ -404,17 +404,17 @@ final class GameViewModel3: ViewModelType {
         
         
         // MARK: OutputToView
-        let sightImage = state.weaponTypeRelay
-            .map({ $0.sightImage })
+        let sightImageName = state.weaponTypeRelay
+            .map({ $0.sightImageName })
         
-        let sightImageColor = state.weaponTypeRelay
-            .map({ $0.sightImageColor })
+        let sightImageColorHexCode = state.weaponTypeRelay
+            .map({ $0.sightImageColorHexCode })
         
         let timeCountText = state.timeCountRelay
             .map({ TimeCountUtil.twoDigitTimeCount($0) })
         
-        let bulletsCountImage = state.bulletsCountRelay
-            .map({ [weak self] in self?.state.weaponTypeRelay.value.bulletsCountImage(at: $0) })
+        let bulletsCountImageName = state.bulletsCountRelay
+            .map({ [weak self] in self?.state.weaponTypeRelay.value.bulletsCountImageName(at: $0) ?? "" })
         
         let isWeaponChangeButtonEnabled = state.timeCountRelay
             .map({ $0 < GameConst.timeCount && $0 > 0 })
@@ -480,10 +480,10 @@ final class GameViewModel3: ViewModelType {
                 targetsAppearanceChangingSoundPlayed: targetsAppearanceChangingSoundPlayed
             ),
             outputToView: Output.OutputToView(
-                sightImage: sightImage,
-                sightImageColor: sightImageColor,
+                sightImageName: sightImageName,
+                sightImageColorHexCode: sightImageColorHexCode,
                 timeCountText: timeCountText,
-                bulletsCountImage: bulletsCountImage,
+                bulletsCountImageName: bulletsCountImageName,
                 isWeaponChangeButtonEnabled: isWeaponChangeButtonEnabled
             ),
             outputToGameScene: Output.OutputToGameScene(

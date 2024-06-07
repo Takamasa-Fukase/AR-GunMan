@@ -95,13 +95,16 @@ class GameViewController3: UIViewController {
         _ outputToView: GameViewModel3.Output.OutputToView
     ) {
         disposeBag.insert {
-            outputToView.sightImage
+            outputToView.sightImageName
+                .map({ UIImage(named: $0) })
                 .bind(to: sightImageView.rx.image)
-            outputToView.sightImageColor
+            outputToView.sightImageColorHexCode
+                .map({ UIColor(hexString: $0) })
                 .bind(to: sightImageView.rx.tintColor)
             outputToView.timeCountText
                 .bind(to: timeCountLabel.rx.text)
-            outputToView.bulletsCountImage
+            outputToView.bulletsCountImageName
+                .map({ UIImage(named: $0) })
                 .bind(to: bulletsCountImageView.rx.image)
             outputToView.isWeaponChangeButtonEnabled
                 .bind(to: switchWeaponButton.rx.isEnabled)
