@@ -102,7 +102,8 @@ final class TopViewModel: ViewModelType {
         buttonImageRelay: PublishRelay<UIImage?>,
         onReverted: (@escaping () -> Void)
     ) {
-        AudioUtil.playSound(of: TopConst.iconChangingSound)
+        // TODO: DIする
+        SoundPlayer.shared.play(TopConst.iconChangingSound)
         buttonImageRelay.accept(TopConst.targetIcon(isSwitched: true))
         DispatchQueue.main.asyncAfter(deadline: .now() + TopConst.iconRevertInterval) {
             buttonImageRelay.accept(TopConst.targetIcon(isSwitched: false))

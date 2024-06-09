@@ -50,7 +50,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         AVCaptureDevice.requestAccess(for: .video) { _ in }
-        AudioUtil.initAudioPlayers()
         
         window?.rootViewController = TopNavigator.assembleModules()
         
