@@ -17,3 +17,16 @@ struct GameObjectInfo {
     let type: ObjectType
     let id: UUID = UUID()
 }
+
+extension GameObjectInfo.ObjectType {
+    var weaponType: WeaponType? {
+        switch self {
+        case .target:
+            return nil
+        case .pistolBullet:
+            return .pistol
+        case .bazookaBullet:
+            return .bazooka
+        }
+    }
+}
