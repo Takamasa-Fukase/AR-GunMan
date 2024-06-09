@@ -301,6 +301,9 @@
 		BC92C8602975A2A800E49BD5 /* UIViewController+RxLifeCycleEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C85F2975A2A800E49BD5 /* UIViewController+RxLifeCycleEvents.swift */; };
 		BCAB8A7A297C779C00F81E73 /* WeaponChangeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAB8A79297C779C00F81E73 /* WeaponChangeViewModel.swift */; };
 		BCB852AF2BE4F7FB0027F060 /* GameSceneRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB852AE2BE4F7FB0027F060 /* GameSceneRepository.swift */; };
+		BCC512C22C15B5F000D77305 /* Extension+SCNNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC512C12C15B5F000D77305 /* Extension+SCNNode.swift */; };
+		BCC512C32C15B5F000D77305 /* Extension+SCNNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC512C12C15B5F000D77305 /* Extension+SCNNode.swift */; };
+		BCC512C42C15B5F000D77305 /* Extension+SCNNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC512C12C15B5F000D77305 /* Extension+SCNNode.swift */; };
 		BCCD44512C0954B700BF541D /* WeaponSelectHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCD44502C0954B700BF541D /* WeaponSelectHandler.swift */; };
 		BCCD44522C0954B700BF541D /* WeaponSelectHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCD44502C0954B700BF541D /* WeaponSelectHandler.swift */; };
 		BCCD44532C0954B700BF541D /* WeaponSelectHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCD44502C0954B700BF541D /* WeaponSelectHandler.swift */; };
@@ -502,6 +505,7 @@
 		BC92C85F2975A2A800E49BD5 /* UIViewController+RxLifeCycleEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+RxLifeCycleEvents.swift"; sourceTree = "<group>"; };
 		BCAB8A79297C779C00F81E73 /* WeaponChangeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponChangeViewModel.swift; sourceTree = "<group>"; };
 		BCB852AE2BE4F7FB0027F060 /* GameSceneRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneRepository.swift; sourceTree = "<group>"; };
+		BCC512C12C15B5F000D77305 /* Extension+SCNNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+SCNNode.swift"; sourceTree = "<group>"; };
 		BCCD44502C0954B700BF541D /* WeaponSelectHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponSelectHandler.swift; sourceTree = "<group>"; };
 		BCCD44542C0B12B100BF541D /* TargetHitHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetHitHandler.swift; sourceTree = "<group>"; };
 		BCCD44582C0B2BAF00BF541D /* TutorialSeenStatusHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialSeenStatusHandler.swift; sourceTree = "<group>"; };
@@ -581,6 +585,7 @@
 				BCD9675D2979E55400E33587 /* UIImageView+Extension.swift */,
 				86C5AB972AB8819C00CB161D /* UIAlertController+Extension.swift */,
 				BCCD447C2C12AB4500BF541D /* UIColor+Extension.swift */,
+				BCC512C12C15B5F000D77305 /* Extension+SCNNode.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1526,6 +1531,7 @@
 				86594DC82BCD50F100971D1A /* TopUseCase.swift in Sources */,
 				BCCD447D2C12AB4500BF541D /* UIColor+Extension.swift in Sources */,
 				863FE7EE2BEA6D8D00E104F5 /* FirebaseConst.swift in Sources */,
+				BCC512C22C15B5F000D77305 /* Extension+SCNNode.swift in Sources */,
 				59945100256AD55900560202 /* TutorialViewController.swift in Sources */,
 				BCD1C23A2C044DCD008975EB /* GameViewController.swift in Sources */,
 				BC62CE0E2C15632100070B49 /* TargetHitFilter.swift in Sources */,
@@ -1597,6 +1603,7 @@
 				8606467C2BF599D500906DA0 /* ResultUseCase.swift in Sources */,
 				860646782BF599D500906DA0 /* ResultViewModel.swift in Sources */,
 				BCD1C2382C043924008975EB /* WeaponReloadingEventTransformerTests.swift in Sources */,
+				BCC512C32C15B5F000D77305 /* Extension+SCNNode.swift in Sources */,
 				860646142BF5996200906DA0 /* ObservableActivityTracker.swift in Sources */,
 				BCD1C23B2C044DCD008975EB /* GameViewController.swift in Sources */,
 				860646CA2BF59CF100906DA0 /* WeaponType.swift in Sources */,
@@ -1723,6 +1730,7 @@
 				860646052BF5996100906DA0 /* RankingUtil.swift in Sources */,
 				860646272BF5996800906DA0 /* FirebaseConst.swift in Sources */,
 				860646362BF5997300906DA0 /* ReplayRepository.swift in Sources */,
+				BCC512C42C15B5F000D77305 /* Extension+SCNNode.swift in Sources */,
 				BCD1C23C2C044DCD008975EB /* GameViewController.swift in Sources */,
 				BC62CE102C15632100070B49 /* TargetHitFilter.swift in Sources */,
 				860646842BF599D600906DA0 /* NameRegisterViewController.swift in Sources */,
