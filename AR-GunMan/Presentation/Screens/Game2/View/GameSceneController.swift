@@ -140,16 +140,10 @@ final class GameSceneController: NSObject {
 
     //弾ノードを発射
     private func shootBullet(of weaponType: WeaponType) {
-        let gameObjectType: GameObjectInfo.ObjectType = {
-            switch weaponType {
-            case .pistol: return .pistolBullet
-            case .bazooka: return .bazookaBullet
-            }
-        }()
         let clonedBulletNode = CustomSCNNode(
             //メモリ節約のため、オリジナルをクローンして使う
             from: GameSceneConst.originalBulletNode.clone(),
-            gameObjectInfo: .init(type: gameObjectType)
+            gameObjectInfo: .init(type: weaponType.gameObjectType)
         )
         clonedBulletNode.position = SceneNodeUtil.getCameraPosition(sceneView)
         sceneView.scene.rootNode.addChildNode(clonedBulletNode)

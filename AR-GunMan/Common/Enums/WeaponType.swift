@@ -163,3 +163,14 @@ enum WeaponType: CaseIterable {
         }
     }
 }
+
+extension WeaponType {
+    var gameObjectType: GameObjectInfo.ObjectType {
+        switch self {
+        case .pistol: 
+            return .pistolBullet
+        case .bazooka: 
+            return .bazookaBullet
+        }
+    }
+}
