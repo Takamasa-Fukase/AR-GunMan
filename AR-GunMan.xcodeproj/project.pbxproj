@@ -648,6 +648,7 @@
 				86A6CB212BCC0D9F00628C61 /* Presentation */,
 				86DA33192BFDE0F200186C04 /* Domain */,
 				86DA33172BFDDD5500186C04 /* Data */,
+				5952F63E25EA0DE900ADB85B /* Extensions */,
 				677DF1EC27A71086007512F6 /* Utilities */,
 				5952F64A25EA104D00ADB85B /* Constants */,
 				86DA33122BFDD68800186C04 /* Common */,
@@ -764,7 +765,6 @@
 				8627F6422BD16BB60003D374 /* ObservableActivityTracker.swift */,
 				860191752BEDE03D00382749 /* CoreMotionStreamFilter.swift */,
 				BCD1C2562C06B60C008975EB /* CompositeCalculator.swift */,
-				5952F63E25EA0DE900ADB85B /* Extensions */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
