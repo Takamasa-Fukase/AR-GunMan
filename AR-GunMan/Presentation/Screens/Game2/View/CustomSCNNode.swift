@@ -10,6 +10,11 @@ import SceneKit
 final class CustomSCNNode: SCNNode {
     private(set) var gameObjectInfo: GameObjectInfo
     
+    override init() {
+        self.gameObjectInfo = .init(type: .pistolBullet)
+        super.init()
+    }
+    
     init(gameObjectInfo: GameObjectInfo) {
         self.gameObjectInfo = gameObjectInfo
         super.init()
