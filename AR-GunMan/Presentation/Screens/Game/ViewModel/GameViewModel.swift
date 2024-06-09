@@ -2,7 +2,7 @@
 //  GameViewModel.swift
 //  AR-GunMan
 //
-//  Created by ウルトラ深瀬 on 11/1/23.
+//  Created by ウルトラ深瀬 on 25/5/24.
 //
 
 import RxSwift
@@ -10,277 +10,512 @@ import RxCocoa
 
 final class GameViewModel: ViewModelType {
     struct Input {
-        let viewDidLoad: Observable<Void>
-        let viewWillAppear: Observable<Void>
-        let viewDidAppear: Observable<Void>
-        let viewWillDisappear: Observable<Void>
-        let weaponChangeButtonTapped: Observable<Void>
+        let inputFromView: InputFromView
+        let inputFromARContent: InputFromARContent
+        let inputFromDeviceMotion: InputFromDeviceMotion
+
+        struct InputFromView {
+            let viewDidLoad: Observable<Void>
+            let viewWillAppear: Observable<Void>
+            let viewDidAppear: Observable<Void>
+            let viewWillDisappear: Observable<Void>
+            let weaponChangeButtonTapped: Observable<Void>
+        }
+        
+        struct InputFromARContent {
+            let rendererUpdated: Observable<Void>
+            let collisionOccurred: Observable<CollisionInfo>
+        }
+        
+        struct InputFromDeviceMotion {
+            let accelerationUpdated: Observable<(x: Double, y: Double, z: Double)>
+            let gyroUpdated: Observable<(x: Double, y: Double, z: Double)>
+        }
     }
     
     struct Output {
-        let sceneView: Observable<UIView>
-        let sightImage: Observable<UIImage?>
-        let sightImageColor: Observable<UIColor>
-        let timeCountText: Observable<String>
-        let bulletsCountImage: Observable<UIImage?>
+        let viewModelAction: ViewModelAction
+        let outputToView: OutputToView
+        let outputToARContent: OutputToARContent
+        let outputToDeviceMotion: OutputToDeviceMotion
+        
+        struct ViewModelAction {
+            let pistolSetSoundPlayed: Observable<SoundType>
+            let noBulletsSoundPlayed: Observable<SoundType>
+            let bulletsCountDecremented: Observable<Int>
+            let firingSoundPlayed: Observable<SoundType>
+            let weaponFireProcessCompleted: Observable<WeaponType>
+            let bulletsCountRefilled: Observable<Int>
+            let weaponReloadingFlagChanged: Observable<Bool>
+            let reloadingSoundPlayed: Observable<SoundType>
+            let weaponReloadProcessCompleted: Observable<WeaponType>
+            let weaponTypeChanged: Observable<WeaponType>
+            let weaponChangingSoundPlayed: Observable<SoundType>
+            let bulletsCountRefilledForNewWeapon: Observable<Int>
+            let weaponReloadingFlagChangedForNewWeapon: Observable<Bool>
+            let weaponChangeProcessCompleted: Observable<WeaponType>
+            let targetHitSoundPlayed: Observable<SoundType>
+            let scoreUpdated: Observable<Double>
+            let tutorialViewShowed: Observable<Void>
+            let startWhistleSoundPlayed: Observable<SoundType>
+            let endWhistleSoundPlayed: Observable<SoundType>
+            let timerDisposed: Observable<Void>
+            let weaponChangeViewShowed: Observable<Void>
+            let weaponChangeViewDismissed: Observable<Void>
+            let rankingAppearSoundPlayed: Observable<SoundType>
+            let resultViewShowed: Observable<Void>
+            let reloadingMotionDetectedCountUpdated: Observable<Int>
+            let targetsAppearanceChangingSoundPlayed: Observable<SoundType>
+        }
+        
+        struct OutputToView {
+            let sightImageName: Observable<String>
+            let sightImageColorHexCode: Observable<String>
+            let timeCountText: Observable<String>
+            let bulletsCountImageName: Observable<String>
+            let isWeaponChangeButtonEnabled: Observable<Bool>
+        }
+        
+        struct OutputToARContent {
+            let setupSceneView: Observable<Void>
+            let renderAllTargets: Observable<Int>
+            let startSceneSession: Observable<Void>
+            let pauseSceneSession: Observable<Void>
+            let renderSelectedWeapon: Observable<WeaponType>
+            let renderWeaponFiring: Observable<WeaponType>
+            let renderTargetsAppearanceChanging: Observable<Void>
+            let moveWeaponToFPSPosition: Observable<WeaponType>
+            let removeContactedTargetAndBullet: Observable<(targetId: UUID, bulletId: UUID)>
+            let renderTargetHitParticleToContactPoint: Observable<(weaponType: WeaponType, contactPoint: Vector)>
+        }
+        
+        struct OutputToDeviceMotion {
+            let startMotionDetection: Observable<Void>
+            let stopMotionDetection: Observable<Void>
+        }
     }
     
-    struct State {
+    class State {
+        let timeCountRelay = BehaviorRelay<Double>(value: GameConst.timeCount)
         let weaponTypeRelay = BehaviorRelay<WeaponType>(value: .pistol)
         let bulletsCountRelay = BehaviorRelay<Int>(value: WeaponType.pistol.bulletsCapacity)
-        var isWeaponReloading: Bool = false
-        let timeCountRelay = BehaviorRelay<Double>(value: GameConst.timeCount)
-        var score: Double = 0
-        var reloadingMotionDetectedCountRelay = BehaviorRelay<Int>(value: 0)
-        var isPlaying: Bool {
-            return timeCountRelay.value < GameConst.timeCount && timeCountRelay.value > 0
-        }
-        var canFire: Bool {
-            return bulletsCountRelay.value > 0
-        }
-        var canReload: Bool {
-            return bulletsCountRelay.value <= 0 && !isWeaponReloading
-        }
+        var isWeaponReloadingRelay = BehaviorRelay<Bool>(value: false)
+        let scoreRelay = BehaviorRelay<Double>(value: 0)
+        let reloadingMotionDetectedCountRelay = BehaviorRelay<Int>(value: 0)
     }
-    
+
     private let useCase: GameUseCaseInterface
     private let navigator: GameNavigatorInterface
-    
-    private let disposeBag = DisposeBag()
-    // 遷移先画面から受け取る通知
-    private let tutorialEndObserver = PublishRelay<Void>()
-    private let weaponSelectObserver = PublishRelay<WeaponType>()
+    private let tutorialEndObserver: PublishRelay<Void>
+    private let weaponSelectObserver: PublishRelay<WeaponType>
+    private let tutorialSeenStatusHandler: TutorialSeenStatusHandler
+    private let gameStartHandler: GameStartHandler
+    private let gameTimerHandler: GameTimerHandler
+    private let gameTimerDisposalHandler: GameTimerDisposalHandler
+    private let firingMoitonFilter: FiringMotionFilter
+    private let reloadingMotionFilter: ReloadingMotionFilter
+    private let weaponFireHandler: WeaponFireHandler
+    private let weaponAutoReloadFilter: WeaponAutoReloadFilter
+    private let weaponReloadHandler: WeaponReloadHandler
+    private let weaponSelectHandler: WeaponSelectHandler
+    private let collisionInfoHandler: CollisionInfoHandler
+    private let targetHitHandler: TargetHitHandler
+    private let reloadingMotionDetectionCounter: ReloadingMotionDetectionCounter
+    private let state: State
+    private let soundPlayer: SoundPlayerInterface
     
     init(
         useCase: GameUseCaseInterface,
-        navigator: GameNavigatorInterface
+        navigator: GameNavigatorInterface,
+        tutorialEndObserver: PublishRelay<Void> = PublishRelay<Void>(),
+        weaponSelectObserver: PublishRelay<WeaponType> = PublishRelay<WeaponType>(),
+        tutorialSeenStatusHandler: TutorialSeenStatusHandler,
+        gameStartHandler: GameStartHandler,
+        gameTimerHandler: GameTimerHandler,
+        gameTimerDisposalHandler: GameTimerDisposalHandler,
+        firingMoitonFilter: FiringMotionFilter,
+        reloadingMotionFilter: ReloadingMotionFilter,
+        weaponFireHandler: WeaponFireHandler,
+        weaponAutoReloadFilter: WeaponAutoReloadFilter,
+        weaponReloadHandler: WeaponReloadHandler,
+        weaponSelectHandler: WeaponSelectHandler,
+        collisionInfoHandler: CollisionInfoHandler,
+        targetHitHandler: TargetHitHandler,
+        reloadingMotionDetectionCounter: ReloadingMotionDetectionCounter,
+        state: State = State(),
+        soundPlayer: SoundPlayerInterface = SoundPlayer.shared
     ) {
         self.useCase = useCase
         self.navigator = navigator
+        self.tutorialEndObserver = tutorialEndObserver
+        self.weaponSelectObserver = weaponSelectObserver
+        self.tutorialSeenStatusHandler = tutorialSeenStatusHandler
+        self.gameStartHandler = gameStartHandler
+        self.gameTimerHandler = gameTimerHandler
+        self.gameTimerDisposalHandler = gameTimerDisposalHandler
+        self.firingMoitonFilter = firingMoitonFilter
+        self.reloadingMotionFilter = reloadingMotionFilter
+        self.weaponFireHandler = weaponFireHandler
+        self.weaponAutoReloadFilter = weaponAutoReloadFilter
+        self.weaponReloadHandler = weaponReloadHandler
+        self.weaponSelectHandler = weaponSelectHandler
+        self.collisionInfoHandler = collisionInfoHandler
+        self.targetHitHandler = targetHitHandler
+        self.reloadingMotionDetectionCounter = reloadingMotionDetectionCounter
+        self.state = state
+        self.soundPlayer = soundPlayer
     }
     
     func transform(input: Input) -> Output {
-        // 画面が持つ状態
-        var state = State()
+        // MARK: ViewModelAction
+        let tutorialSeenStatusHandlerOutput = tutorialSeenStatusHandler
+            .transform(input: .init(
+                checkTutorialSeenStatus: input.inputFromView.viewDidAppear.take(1))
+            )
         
-        var timerObservable: Disposable?
-        let autoReloadRelay = BehaviorRelay<Void>(value: Void())
-        let startGameRelay = PublishRelay<Void>()
-        
-        timerObservable = startGameRelay
-            .flatMapLatest({ [unowned self] in
-                return self.useCase.startAccelerometerAndGyroUpdate()
-            })
-            .flatMapLatest({ [unowned self] in
-                AudioUtil.playSound(of: .pistolSet)
-                return self.useCase.awaitGameStartSignal()
-            })
-            .flatMapLatest({ [unowned self] in
-                AudioUtil.playSound(of: .startWhistle)
-                return self.useCase.getTimeCountStream()
-            })
-            .bind(to: state.timeCountRelay)
-        
-        input.viewDidLoad
-            .flatMapLatest({ [unowned self] in
-                return Observable.concat(
-                    self.useCase.setupSceneViewAndNodes(),
-                    self.useCase.showWeapon(.pistol).map({ _ in })
+        let tutorialViewShowed = tutorialSeenStatusHandlerOutput.showTutorial
+            .do(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.navigator.showTutorialView(
+                    tutorialEndObserver: self.tutorialEndObserver
                 )
             })
-            .subscribe()
-            .disposed(by: disposeBag)
-
-        input.viewWillAppear
-            .flatMapLatest({ [unowned self] in
-                return self.useCase.startSession()
-            })
-            .subscribe()
-            .disposed(by: disposeBag)
         
-        input.viewWillDisappear
-            .flatMapLatest({ [unowned self] in
-                return self.useCase.pauseSession()
+        let gameStartAfterTutorialTrigger = tutorialEndObserver
+            .flatMapLatest({ [weak self] _ -> Observable<Void> in
+                guard let self = self else { return .empty() }
+                return self.useCase.setTutorialAlreadySeen()
             })
-            .subscribe()
-            .disposed(by: disposeBag)
         
-        input.viewDidAppear
-            .take(1)
-            .flatMapLatest { [unowned self] _ in
-                return self.useCase.getIsTutorialSeen()
-            }
-            .subscribe(onNext: { [weak self] isSeen in
+        let gameStartHandlerOutput = gameStartHandler
+            .transform(input: .init(
+                gameStarted: Observable.merge(
+                    tutorialSeenStatusHandlerOutput.startGame,
+                    gameStartAfterTutorialTrigger
+                ))
+            )
+        
+        let pistolSetSoundPlayed = gameStartHandlerOutput.playPistolSetSound
+            .do(onNext: { [weak self] in
                 guard let self = self else { return }
-                if isSeen {
-                    startGameRelay.accept(Void())
-                }else {
-                    self.navigator.showTutorialView(
-                        tutorialEndObserver: self.tutorialEndObserver
-                    )
-                }
-            }).disposed(by: disposeBag)
+                self.soundPlayer.play($0)
+            })
         
-        input.weaponChangeButtonTapped
-            .filter({ _ in state.isPlaying })
-            .subscribe(onNext: { [weak self] _ in
+        let gameTimerHandlerOutput = gameTimerHandler
+            .transform(input: .init(
+                timerStartTrigger: gameStartHandlerOutput.startTimer)
+            )
+        
+        let startWhistleSoundPlayed = gameTimerHandlerOutput.playStartWhistleSound
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.soundPlayer.play($0)
+            })
+        
+        let endWhistleSoundPlayed = gameTimerHandlerOutput.playEndWhistleSound
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.soundPlayer.play($0)
+            })
+        
+        let timeCountUpdatingDisposable = gameTimerHandlerOutput.updateTimeCount
+            .bind(to: state.timeCountRelay)
+        
+        let timerDisposed = gameTimerHandlerOutput.disposeTimer
+            .do(onNext: { _ in
+                timeCountUpdatingDisposable.dispose()
+            })
+        
+        let firingMotionDetected = firingMoitonFilter
+            .transform(input: .init(
+                accelerationUpdated: input.inputFromDeviceMotion.accelerationUpdated,
+                gyroUpdated: input.inputFromDeviceMotion.gyroUpdated)
+            )
+            .firingMotionDetected
+        
+        let reloadingMotionDetected = reloadingMotionFilter
+            .transform(input: .init(
+                gyroUpdated: input.inputFromDeviceMotion.gyroUpdated)
+            )
+            .reloadingMotionDetected
+            .share()
+        
+        let weaponFireHandlerOutput = weaponFireHandler
+            .transform(input: .init(
+                weaponFiringTrigger: firingMotionDetected
+                    .map({ [weak self] _ in self?.state.weaponTypeRelay.value ?? .pistol }),
+                bulletsCount: state.bulletsCountRelay.asObservable()
+            ))
+        
+        let noBulletsSoundPlayed = weaponFireHandlerOutput.playNoBulletsSound
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.soundPlayer.play($0)
+            })
+        
+        let bulletsCountDecremented = weaponFireHandlerOutput.changeBulletsCount
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.state.bulletsCountRelay.accept($0)
+            })
+        
+        let firingSoundPlayed = weaponFireHandlerOutput.playFiringSound
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.soundPlayer.play($0)
+            })
+        
+        let weaponFireProcessCompleted = weaponFireHandlerOutput.weaponFireProcessCompleted
+            .share()
+        
+        let reloadWeaponAutomatically = weaponAutoReloadFilter
+            .transform(
+                input: .init(
+                    weaponFired: weaponFireProcessCompleted,
+                    bulletsCount: state.bulletsCountRelay.asObservable()
+                )
+            )
+            .reloadWeaponAutomatically
+        
+        let weaponReloadingTrigger = Observable
+            .merge(
+                reloadingMotionDetected
+                    .map({ [weak self] _ in self?.state.weaponTypeRelay.value ?? .pistol }),
+                reloadWeaponAutomatically
+            )
+
+        let weaponReloadHandlerOutput = weaponReloadHandler
+            .transform(input: .init(
+                weaponReloadingTrigger: weaponReloadingTrigger,
+                bulletsCount: state.bulletsCountRelay.asObservable(),
+                isWeaponReloading: state.isWeaponReloadingRelay.asObservable())
+            )
+        
+        let bulletsCountRefilled = weaponReloadHandlerOutput.changeBulletsCount
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.state.bulletsCountRelay.accept($0)
+            })
+        
+        let weaponReloadingFlagChanged = weaponReloadHandlerOutput.changeWeaponReloadingFlag
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.state.isWeaponReloadingRelay.accept($0)
+            })
+        
+        let reloadingSoundPlayed = weaponReloadHandlerOutput.playReloadingSound
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.soundPlayer.play($0)
+            })
+        
+        let weaponReloadProcessCompleted = weaponReloadHandlerOutput.weaponReloadProcessCompleted
+        
+        let weaponSelectHandlerOutput = weaponSelectHandler
+            .transform(input: .init(weaponSelected: weaponSelectObserver.asObservable()))
+        
+        let weaponTypeChanged = weaponSelectHandlerOutput.changeWeaponType
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.state.weaponTypeRelay.accept($0)
+            })
+        
+        let weaponChangingSoundPlayed = weaponSelectHandlerOutput.playWeaponChangingSound
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.soundPlayer.play($0)
+            })
+        
+        let bulletsCountRefilledForNewWeapon = weaponSelectHandlerOutput.refillBulletsCountForNewWeapon
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.state.bulletsCountRelay.accept($0)
+            })
+        
+        let weaponReloadingFlagChangedForNewWeapon = weaponSelectHandlerOutput.changeWeaponReloadingFlagForNewWeapon
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.state.isWeaponReloadingRelay.accept($0)
+            })
+        
+        let weaponChangeProcessCompleted = weaponSelectHandlerOutput.weaponChangeProcessCompleted
+            .share()
+        
+        let collisionInfoHandlerOutput = collisionInfoHandler
+            .transform(input: .init(collisionOccurred: input.inputFromARContent.collisionOccurred))
+        
+        let targetHitHandlerOutput = targetHitHandler
+            .transform(input: .init(
+                targetHit: collisionInfoHandlerOutput.targetHit,
+                currentScore: state.scoreRelay.asObservable())
+            )
+        
+        let targetHitSoundPlayed = targetHitHandlerOutput.playTargetHitSound
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.soundPlayer.play($0)
+            })
+        
+        let scoreUpdated = targetHitHandlerOutput.updateScore
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.state.scoreRelay.accept($0)
+            })
+        
+        let weaponChangeViewShowed = input.inputFromView.weaponChangeButtonTapped
+            .do(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 self.navigator.showWeaponChangeView(
                     weaponSelectObserver: self.weaponSelectObserver
                 )
-            }).disposed(by: disposeBag)
+            })
         
-        tutorialEndObserver
-            .flatMapLatest({ [unowned self] in
-                // チュートリアル通過フラグをセットする
-                return self.useCase.setTutorialAlreadySeen()
-            })
-            .subscribe(onNext: { _ in
-                startGameRelay.accept(Void())
-            }).disposed(by: disposeBag)
+        let gameTimerDisposalHandlerOutput = gameTimerDisposalHandler
+            .transform(input: .init(timerDisposed: timerDisposed))
         
-        weaponSelectObserver
-            .flatMapLatest({ [unowned self] weaponType in
-                return self.useCase.showWeapon(weaponType)
-            })
-            .subscribe(onNext: { weaponType in
-                state.weaponTypeRelay.accept(weaponType)
-                AudioUtil.playSound(of: weaponType.weaponChangingSound)
-                state.bulletsCountRelay.accept(
-                    weaponType.bulletsCapacity
-                )
-                state.isWeaponReloading = false
-            }).disposed(by: disposeBag)
-        
-        state.timeCountRelay
-            .filter({$0 <= 0})
-            .flatMapLatest({ [unowned self] _ in
-                AudioUtil.playSound(of: .endWhistle)
-                timerObservable?.dispose()
-                self.navigator.dismissWeaponChangeView()
-                return self.useCase.stopAccelerometerAndGyroUpdate()
-            })
-            .flatMapLatest({ [unowned self] in
-                return self.useCase.awaitShowResultSignal()
-            })
-            .subscribe(onNext: { [weak self] _ in
+        let weaponChangeViewDismissed = gameTimerDisposalHandlerOutput.dismissWeaponChangeView
+            .do(onNext: { [weak self] _ in
                 guard let self = self else { return }
-                AudioUtil.playSound(of: .rankingAppear)
-                self.navigator.showResultView(totalScore: state.score)
-            }).disposed(by: disposeBag)
-
-        useCase.getRendererUpdateStream()
-            .flatMapLatest({ [unowned self] in
-                return self.useCase.moveWeaponToFPSPosition(
-                    currentWeapon: state.weaponTypeRelay.value
-                )
+                self.navigator.dismissWeaponChangeView()
             })
-            .subscribe()
-            .disposed(by: disposeBag)
-            
-        useCase.getCollisionOccurrenceStream()
-            .flatMapLatest({ [unowned self] contact in
-                return self.useCase.checkTargetHit(contact: contact)
-            })
-            .filter({ (isTargetHit, _) in
-                return isTargetHit
-            })
-            .flatMapLatest({ [unowned self] (_, contact) in
-                return Observable.merge(
-                    self.useCase.removeContactedNodes(contact: contact),
-                    self.useCase.showTargetHitParticleToContactPoint(
-                        currentWeapon: state.weaponTypeRelay.value,
-                        contact: contact
-                    )
-                )
-            })
-            .subscribe(onNext: { _ in
-                AudioUtil.playSound(of: state.weaponTypeRelay.value.hitSound)
-                state.score = ScoreCalculator.getTotalScore(
-                    currentScore: state.score,
-                    weaponType: state.weaponTypeRelay.value
-                )
-            }).disposed(by: disposeBag)
         
-        useCase.getFiringMotionStream()
-            .filter({ _ in
-                guard state.isPlaying else { return false }
-                guard state.canFire else {
-                    if state.weaponTypeRelay.value.reloadType == .manual {
-                        AudioUtil.playSound(of: .pistolOutBullets)
-                    }
-                    return false
-                }
-                return true
+        let rankingAppearSoundPlayed = gameTimerDisposalHandlerOutput.playRankingAppearSound
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.soundPlayer.play($0)
             })
-            .flatMapLatest({ [unowned self] _ in
-                return self.useCase.fireWeapon()
+        
+        let resultViewShowed = gameTimerDisposalHandlerOutput.showResultView
+            .do(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.navigator.showResultView(totalScore: self.state.scoreRelay.value)
             })
-            .subscribe(onNext: { _ in
-                AudioUtil.playSound(of: state.weaponTypeRelay.value.firingSound)
-                state.bulletsCountRelay.accept(
-                    state.bulletsCountRelay.value - 1
-                )
-                if state.weaponTypeRelay.value.reloadType == .auto {
-                    autoReloadRelay.accept(Void())
-                }
-            }).disposed(by: disposeBag)
-
-        // 自動リロードトリガーとモーション検知のどちらでも発火させる為combineしている
-        Observable
-            .combineLatest(
-                autoReloadRelay.asObservable(),
-                useCase.getReloadingMotionStream()
-                    .map({ _ in
-                        // リロードモーションの検知回数をインクリメントする
-                        state.reloadingMotionDetectedCountRelay.accept(
-                            state.reloadingMotionDetectedCountRelay.value + 1
-                        )
-                    })
+        
+        let reloadingMotionDetectionCounterOutput = reloadingMotionDetectionCounter
+            .transform(input: .init(
+                reloadingMotionDetected: reloadingMotionDetected,
+                currentCount: state.reloadingMotionDetectedCountRelay.asObservable())
             )
-            .filter({ _ in
-                return state.isPlaying && state.canReload
-            })
-            .flatMapLatest({ [unowned self] _ in
-                state.isWeaponReloading = true
-                AudioUtil.playSound(of: state.weaponTypeRelay.value.reloadingSound)
-                return self.useCase.awaitWeaponReloadEnds(currentWeapon: state.weaponTypeRelay.value)
-            })
-            .subscribe(onNext: { _ in
-                state.bulletsCountRelay.accept(
-                    state.weaponTypeRelay.value.bulletsCapacity
-                )
-                state.isWeaponReloading = false
-            }).disposed(by: disposeBag)
         
-        state.reloadingMotionDetectedCountRelay
-            .filter({ $0 == 20 && state.isPlaying })
-            .flatMapLatest({ [unowned self] _ in
-                return self.useCase.executeSecretEvent()
+        let reloadingMotionDetectedCountUpdated = reloadingMotionDetectionCounterOutput.updateCount
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.state.reloadingMotionDetectedCountRelay.accept($0)
             })
-            .subscribe(onNext: { _ in
-                AudioUtil.playSound(of: .kyuiin)
-            }).disposed(by: disposeBag)
         
-        // MARK: Outputの作成
-        let sightImage = state.weaponTypeRelay
-            .map({$0.sightImage})
+        let targetsAppearanceChangingSoundPlayed = reloadingMotionDetectionCounterOutput.playTargetsAppearanceChangingSound
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.soundPlayer.play($0)
+            })
         
-        let sightImageColor = state.weaponTypeRelay
-            .map({$0.sightImageColor})
+        
+        // MARK: OutputToView
+        let sightImageName = state.weaponTypeRelay
+            .map({ $0.sightImageName })
+        
+        let sightImageColorHexCode = state.weaponTypeRelay
+            .map({ $0.sightImageColorHexCode })
         
         let timeCountText = state.timeCountRelay
-            .map({TimeCountUtil.twoDigitTimeCount($0)})
+            .map({ TimeCountUtil.twoDigitTimeCount($0) })
         
-        let bulletsCountImage = state.bulletsCountRelay
-            .map({state.weaponTypeRelay.value.bulletsCountImage(at: $0)})
+        let bulletsCountImageName = state.bulletsCountRelay
+            .map({ [weak self] in self?.state.weaponTypeRelay.value.bulletsCountImageName(at: $0) ?? "" })
+        
+        let isWeaponChangeButtonEnabled = state.timeCountRelay
+            .map({ $0 < GameConst.timeCount && $0 > 0 })
+        
+        
+        // MARK: OutputToARContent
+        let setupSceneView = input.inputFromView.viewDidLoad
+        
+        let renderAllTargets = input.inputFromView.viewDidLoad
+            .map({ _ in GameConst.targetCount })
+        
+        let startSceneSession = input.inputFromView.viewWillAppear
+        
+        let pauseSceneSession = input.inputFromView.viewWillDisappear
+        
+        let renderSelectedWeapon = Observable.merge(
+            input.inputFromView.viewDidLoad
+                .map({ [weak self] _ in self?.state.weaponTypeRelay.value ?? .pistol }),
+            weaponChangeProcessCompleted
+        )
+
+        let renderWeaponFiring = weaponFireProcessCompleted
+        
+        let renderTargetsAppearanceChanging = reloadingMotionDetectionCounterOutput.detectionCountReachedTargetsAppearanceChangingLimit
+        
+        let moveWeaponToFPSPosition = input.inputFromARContent.rendererUpdated
+            .map({ [weak self] _ in self?.state.weaponTypeRelay.value ?? .pistol })
+        
+        let removeContactedTargetAndBullet = collisionInfoHandlerOutput.removeContactedTargetAndBullet
+        
+        let renderTargetHitParticleToContactPoint = collisionInfoHandlerOutput.renderTargetHitParticleToContactPoint
+        
+        
+        // MARK: OutputToDeviceMotion
+        let startMotionDetection = gameStartHandlerOutput.startMotionDetection
+        
+        let stopMotionDetection = gameTimerDisposalHandlerOutput.stopMotionDetection
+
         
         return Output(
-            sceneView: useCase.getSceneView(),
-            sightImage: sightImage,
-            sightImageColor: sightImageColor,
-            timeCountText: timeCountText,
-            bulletsCountImage: bulletsCountImage
+            viewModelAction: Output.ViewModelAction(
+                pistolSetSoundPlayed: pistolSetSoundPlayed,
+                noBulletsSoundPlayed: noBulletsSoundPlayed,
+                bulletsCountDecremented: bulletsCountDecremented,
+                firingSoundPlayed: firingSoundPlayed,
+                weaponFireProcessCompleted: weaponFireProcessCompleted,
+                bulletsCountRefilled: bulletsCountRefilled,
+                weaponReloadingFlagChanged: weaponReloadingFlagChanged,
+                reloadingSoundPlayed: reloadingSoundPlayed,
+                weaponReloadProcessCompleted: weaponReloadProcessCompleted,
+                weaponTypeChanged: weaponTypeChanged,
+                weaponChangingSoundPlayed: weaponChangingSoundPlayed,
+                bulletsCountRefilledForNewWeapon: bulletsCountRefilledForNewWeapon,
+                weaponReloadingFlagChangedForNewWeapon: weaponReloadingFlagChangedForNewWeapon,
+                weaponChangeProcessCompleted: weaponChangeProcessCompleted,
+                targetHitSoundPlayed: targetHitSoundPlayed,
+                scoreUpdated: scoreUpdated,
+                tutorialViewShowed: tutorialViewShowed,
+                startWhistleSoundPlayed: startWhistleSoundPlayed,
+                endWhistleSoundPlayed: endWhistleSoundPlayed,
+                timerDisposed: timerDisposed,
+                weaponChangeViewShowed: weaponChangeViewShowed,
+                weaponChangeViewDismissed: weaponChangeViewDismissed,
+                rankingAppearSoundPlayed: rankingAppearSoundPlayed,
+                resultViewShowed: resultViewShowed,
+                reloadingMotionDetectedCountUpdated: reloadingMotionDetectedCountUpdated,
+                targetsAppearanceChangingSoundPlayed: targetsAppearanceChangingSoundPlayed
+            ),
+            outputToView: Output.OutputToView(
+                sightImageName: sightImageName,
+                sightImageColorHexCode: sightImageColorHexCode,
+                timeCountText: timeCountText,
+                bulletsCountImageName: bulletsCountImageName,
+                isWeaponChangeButtonEnabled: isWeaponChangeButtonEnabled
+            ),
+            outputToARContent: Output.OutputToARContent(
+                setupSceneView: setupSceneView,
+                renderAllTargets: renderAllTargets,
+                startSceneSession: startSceneSession,
+                pauseSceneSession: pauseSceneSession,
+                renderSelectedWeapon: renderSelectedWeapon,
+                renderWeaponFiring: renderWeaponFiring,
+                renderTargetsAppearanceChanging: renderTargetsAppearanceChanging,
+                moveWeaponToFPSPosition: moveWeaponToFPSPosition,
+                removeContactedTargetAndBullet: removeContactedTargetAndBullet,
+                renderTargetHitParticleToContactPoint: renderTargetHitParticleToContactPoint
+            ),
+            outputToDeviceMotion: Output.OutputToDeviceMotion(
+                startMotionDetection: startMotionDetection,
+                stopMotionDetection: stopMotionDetection
+            )
         )
     }
 }
+
+
+

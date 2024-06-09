@@ -2,7 +2,7 @@
 //  GameNavigator.swift
 //  AR-GunMan
 //
-//  Created by 深瀬 on 2024/03/25.
+//  Created by ウルトラ深瀬 on 27/5/24.
 //
 
 import Foundation
@@ -23,29 +23,39 @@ final class GameNavigator: GameNavigatorInterface {
     init(viewController: UIViewController) {
         self.viewController = viewController
     }
-    
+
     static func assembleModules() -> UIViewController {
         let storyboard: UIStoryboard = UIStoryboard(name: "GameViewController", bundle: nil)
         let vc = storyboard.instantiateInitialViewController() as! GameViewController
         vc.modalPresentationStyle = .fullScreen
         
-        let coreMotionManager = CMMotionManager()
-        let coreMotionRepository = CoreMotionRepository(coreMotionManager: coreMotionManager)
-        let tutorialRepository = TutorialRepository()
-        let gameSceneRepository = GameSceneRepository()
-        let timerRepository = TimerRepository()
-        let useCase = GameUseCase(
-            coreMotionRepository: coreMotionRepository,
-            tutorialRepository: tutorialRepository,
-            gameSceneRepository: gameSceneRepository,
-            timerRepository: timerRepository
-        )
         let navigator = GameNavigator(viewController: vc)
+        let useCase = GameUseCase(
+            tutorialRepository: TutorialRepository(),
+            timerRepository: TimerRepository()
+        )
         let viewModel = GameViewModel(
             useCase: useCase,
-            navigator: navigator
+            navigator: navigator,
+            tutorialSeenStatusHandler: TutorialSeenStatusHandler(gameUseCase: useCase),
+            gameStartHandler: GameStartHandler(gameUseCase: useCase),
+            gameTimerHandler: GameTimerHandler(gameUseCase: useCase),
+            gameTimerDisposalHandler: GameTimerDisposalHandler(gameUseCase: useCase),
+            firingMoitonFilter: FiringMotionFilter(),
+            reloadingMotionFilter: ReloadingMotionFilter(),
+            weaponFireHandler: WeaponFireHandler(),
+            weaponAutoReloadFilter: WeaponAutoReloadFilter(),
+            weaponReloadHandler: WeaponReloadHandler(gameUseCase: useCase),
+            weaponSelectHandler: WeaponSelectHandler(),
+            collisionInfoHandler: CollisionInfoHandler(),
+            targetHitHandler: TargetHitHandler(),
+            reloadingMotionDetectionCounter: ReloadingMotionDetectionCounter()
         )
+        let arContentController = ARContentController()
+        let deviceMotionController = DeviceMotionController(coreMotionManager: CMMotionManager())
         vc.viewModel = viewModel
+        vc.arContentController = arContentController
+        vc.deviceMotionController = deviceMotionController
         return vc
     }
     

@@ -22,9 +22,9 @@ final class WeaponReloadHandler {
         let weaponReloadProcessCompleted: Observable<WeaponType>
     }
     
-    private let gameUseCase: GameUseCase2Interface
+    private let gameUseCase: GameUseCaseInterface
     
-    init(gameUseCase: GameUseCase2Interface) {
+    init(gameUseCase: GameUseCaseInterface) {
         self.gameUseCase = gameUseCase
     }
     

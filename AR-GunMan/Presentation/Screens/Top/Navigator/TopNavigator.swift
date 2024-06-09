@@ -39,7 +39,7 @@ final class TopNavigator: TopNavigatorInterface {
     }
     
     func showGame() {
-        let vc = GameNavigator3.assembleModules()
+        let vc = GameNavigator.assembleModules()
         viewController.present(vc, animated: true)
     }
     

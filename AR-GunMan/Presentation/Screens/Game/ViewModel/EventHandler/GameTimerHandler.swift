@@ -20,9 +20,9 @@ final class GameTimerHandler {
         let disposeTimer: Observable<Void>
     }
     
-    private let gameUseCase: GameUseCase2Interface
+    private let gameUseCase: GameUseCaseInterface
     
-    init(gameUseCase: GameUseCase2Interface) {
+    init(gameUseCase: GameUseCaseInterface) {
         self.gameUseCase = gameUseCase
     }
     

@@ -2,16 +2,17 @@
 //  GameViewController.swift
 //  AR-GunMan
 //
-//  Created by 深瀬 貴将 on 2020/08/15.
-//  Copyright © 2020 fukase. All rights reserved.
+//  Created by ウルトラ深瀬 on 27/5/24.
 //
 
 import UIKit
 import RxSwift
 import RxCocoa
 
-final class GameViewController: UIViewController {
+class GameViewController: UIViewController {
     var viewModel: GameViewModel!
+    var arContentController: ARContentController!
+    var deviceMotionController: DeviceMotionController!
     private let disposeBag = DisposeBag()
     
     @IBOutlet private weak var bulletsCountImageView: UIImageView!
@@ -23,45 +24,163 @@ final class GameViewController: UIViewController {
         super.viewDidLoad()
         
         setupUI()
-        
+
         let input = GameViewModel.Input(
-            viewDidLoad: Observable.just(Void()),
-            viewWillAppear: rx.viewWillAppear,
-            viewDidAppear: rx.viewDidAppear,
-            viewWillDisappear: rx.viewWillDisappear,
-            weaponChangeButtonTapped: switchWeaponButton.rx.tap.asObservable()
+            inputFromView: GameViewModel.Input.InputFromView(
+                viewDidLoad: .just(()),
+                viewWillAppear: rx.viewWillAppear,
+                viewDidAppear: rx.viewDidAppear,
+                viewWillDisappear: rx.viewWillDisappear,
+                weaponChangeButtonTapped: switchWeaponButton.rx.tap.asObservable()
+            ),
+            inputFromARContent: GameViewModel.Input.InputFromARContent(
+                rendererUpdated: arContentController.rendererUpdated,
+                collisionOccurred: arContentController.collisionOccurred
+            ),
+            inputFromDeviceMotion: GameViewModel.Input.InputFromDeviceMotion(
+                accelerationUpdated: deviceMotionController.accelerationUpdated,
+                gyroUpdated: deviceMotionController.gyroUpdated
+            )
         )
-        
+
         let output = viewModel.transform(input: input)
-        
-        output.sceneView
-            .subscribe(onNext: { [weak self] sceneView in
-                guard let self = self else {return}
-                sceneView.frame = self.view.frame
-                self.view.insertSubview(sceneView, at: 0)
-            }).disposed(by: disposeBag)
-        
-        output.sightImage
-            .bind(to: sightImageView.rx.image)
-            .disposed(by: disposeBag)
-        
-        output.sightImageColor
-            .subscribe(onNext: { [weak self] element in
-                guard let self = self else {return}
-                self.sightImageView.tintColor = element
-            }).disposed(by: disposeBag)
-        
-        output.bulletsCountImage
-            .bind(to: bulletsCountImageView.rx.image)
-            .disposed(by: disposeBag)
-        
-        output.timeCountText
-            .bind(to: timeCountLabel.rx.text)
-            .disposed(by: disposeBag)
+
+        subscribeViewModelActions(output.viewModelAction)
+        bindOutputToViewComponents(output.outputToView)
+        bindOutputToGameSceneController(output.outputToARContent)
+        bindOutputToCoreMotionController(output.outputToDeviceMotion)
+    }
+
+    private func setupUI() {
+        // MEMO: to prevent time count text looks shaking horizontally rapidly.
+        timeCountLabel.font = timeCountLabel.font.monospacedDigitFont
     }
     
-    private func setupUI() {
-        // - 等幅フォントにして高速で動くタイムカウントの横振れを防止
-        timeCountLabel.font = timeCountLabel.font.monospacedDigitFont
+    private func subscribeViewModelActions(
+        _ viewModelAction: GameViewModel.Output.ViewModelAction
+    ) {
+        disposeBag.insert {
+            viewModelAction.noBulletsSoundPlayed.subscribe()
+            viewModelAction.bulletsCountDecremented.subscribe()
+            viewModelAction.firingSoundPlayed.subscribe()
+            viewModelAction.weaponFireProcessCompleted.subscribe()
+            viewModelAction.bulletsCountRefilled.subscribe()
+            viewModelAction.weaponReloadingFlagChanged.subscribe()
+            viewModelAction.reloadingSoundPlayed.subscribe()
+            viewModelAction.weaponReloadProcessCompleted.subscribe()
+            viewModelAction.weaponTypeChanged.subscribe()
+            viewModelAction.weaponChangingSoundPlayed.subscribe()
+            viewModelAction.bulletsCountRefilledForNewWeapon.subscribe()
+            viewModelAction.weaponReloadingFlagChangedForNewWeapon.subscribe()
+            viewModelAction.weaponChangeProcessCompleted.subscribe()
+            viewModelAction.targetHitSoundPlayed.subscribe()
+            viewModelAction.scoreUpdated.subscribe()
+            viewModelAction.tutorialViewShowed.subscribe()
+            viewModelAction.pistolSetSoundPlayed.subscribe()
+            viewModelAction.startWhistleSoundPlayed.subscribe()
+            viewModelAction.endWhistleSoundPlayed.subscribe()
+            viewModelAction.timerDisposed.subscribe()
+            viewModelAction.weaponChangeViewShowed.subscribe()
+            viewModelAction.weaponChangeViewDismissed.subscribe()
+            viewModelAction.rankingAppearSoundPlayed.subscribe()
+            viewModelAction.resultViewShowed.subscribe()
+            viewModelAction.reloadingMotionDetectedCountUpdated.subscribe()
+            viewModelAction.targetsAppearanceChangingSoundPlayed.subscribe()
+        }
+    }
+    
+    private func bindOutputToViewComponents(
+        _ outputToView: GameViewModel.Output.OutputToView
+    ) {
+        disposeBag.insert {
+            outputToView.sightImageName
+                .map({ UIImage(named: $0) })
+                .bind(to: sightImageView.rx.image)
+            outputToView.sightImageColorHexCode
+                .map({ UIColor(hexString: $0) })
+                .bind(to: sightImageView.rx.tintColor)
+            outputToView.timeCountText
+                .bind(to: timeCountLabel.rx.text)
+            outputToView.bulletsCountImageName
+                .map({ UIImage(named: $0) })
+                .bind(to: bulletsCountImageView.rx.image)
+            outputToView.isWeaponChangeButtonEnabled
+                .bind(to: switchWeaponButton.rx.isEnabled)
+        }
+    }
+    
+    private func bindOutputToGameSceneController(
+        _ outputToGameScene: GameViewModel.Output.OutputToARContent
+    ) {
+        disposeBag.insert {
+            outputToGameScene.setupSceneView
+                .subscribe(onNext: { [weak self] _ in
+                    guard let self = self else { return }
+                    let sceneView = self.arContentController.setupSceneView(with: self.view.frame)
+                    self.view.insertSubview(sceneView, at: 0)
+                })
+            outputToGameScene.renderAllTargets
+                .subscribe(onNext: { [weak self] count in
+                    guard let self = self else { return }
+                    self.arContentController.showTargets(count: count)
+                })
+            outputToGameScene.startSceneSession
+                .subscribe(onNext: { [weak self] _ in
+                    guard let self = self else { return }
+                    self.arContentController.startSession()
+                })
+            outputToGameScene.pauseSceneSession
+                .subscribe(onNext: { [weak self] _ in
+                    guard let self = self else { return }
+                    self.arContentController.pauseSession()
+                })
+            outputToGameScene.renderSelectedWeapon
+                .subscribe(onNext: { [weak self] type in
+                    guard let self = self else { return }
+                    self.arContentController.showWeapon(type)
+                })
+            outputToGameScene.renderWeaponFiring
+                .subscribe(onNext: { [weak self] type in
+                    guard let self = self else { return }
+                    self.arContentController.fireWeapon(type)
+                })
+            outputToGameScene.renderTargetsAppearanceChanging
+                .subscribe(onNext: { [weak self] _ in
+                    guard let self = self else { return }
+                    self.arContentController.changeTargetsToTaimeisan()
+                })
+            outputToGameScene.moveWeaponToFPSPosition
+                .subscribe(onNext: { [weak self] type in
+                    guard let self = self else { return }
+                    self.arContentController.moveWeaponToFPSPosition(currentWeapon: type)
+                })
+            outputToGameScene.removeContactedTargetAndBullet
+                .subscribe(onNext: { [weak self] in
+                    guard let self = self else { return }
+                    self.arContentController.removeContactedTargetAndBullet(targetId: $0.targetId, bulletId: $0.bulletId)
+                })
+            outputToGameScene.renderTargetHitParticleToContactPoint
+                .subscribe(onNext: { [weak self] in
+                    guard let self = self else { return }
+                    self.arContentController.showTargetHitParticleToContactPoint(weaponType: $0.weaponType, contactPoint: $0.contactPoint)
+                })
+        }
+    }
+    
+    private func bindOutputToCoreMotionController(
+        _ OutputToDeviceMotion: GameViewModel.Output.OutputToDeviceMotion
+    ) {
+        disposeBag.insert {
+            OutputToDeviceMotion.startMotionDetection
+                .subscribe(onNext: { [weak self] _ in
+                    guard let self = self else { return }
+                    self.deviceMotionController.startUpdate()
+                })
+            OutputToDeviceMotion.stopMotionDetection
+                .subscribe(onNext: { [weak self] _ in
+                    guard let self = self else { return }
+                    self.deviceMotionController.stopUpdate()
+                })
+        }
     }
 }
