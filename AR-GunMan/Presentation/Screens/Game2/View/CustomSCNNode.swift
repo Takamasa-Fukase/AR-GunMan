@@ -35,6 +35,9 @@ final class CustomSCNNode: SCNNode {
         self.rotation = existingScnNode.rotation
         self.scale = existingScnNode.scale
         self.transform = existingScnNode.transform
+        let existingPhysicsBody = existingScnNode.physicsBody
+        existingScnNode.physicsBody = nil
+        self.physicsBody = existingPhysicsBody
         existingScnNode.childNodes.forEach({ self.addChildNode($0) })
     }
     
