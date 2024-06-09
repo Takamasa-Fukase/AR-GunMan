@@ -40,32 +40,39 @@ final class GameViewModel: ViewModelType {
         let outputToDeviceMotion: OutputToDeviceMotion
         
         struct ViewModelAction {
+            // sound playings
             let pistolSetSoundPlayed: Observable<SoundType>
-            let noBulletsSoundPlayed: Observable<SoundType>
-            let bulletsCountDecremented: Observable<Int>
-            let firingSoundPlayed: Observable<SoundType>
-            let weaponFireProcessCompleted: Observable<WeaponType>
-            let bulletsCountRefilled: Observable<Int>
-            let weaponReloadingFlagChanged: Observable<Bool>
-            let reloadingSoundPlayed: Observable<SoundType>
-            let weaponReloadProcessCompleted: Observable<WeaponType>
-            let weaponTypeChanged: Observable<WeaponType>
-            let weaponChangingSoundPlayed: Observable<SoundType>
-            let bulletsCountRefilledForNewWeapon: Observable<Int>
-            let weaponReloadingFlagChangedForNewWeapon: Observable<Bool>
-            let weaponChangeProcessCompleted: Observable<WeaponType>
-            let targetHitSoundPlayed: Observable<SoundType>
-            let scoreUpdated: Observable<Double>
-            let tutorialViewShowed: Observable<Void>
             let startWhistleSoundPlayed: Observable<SoundType>
-            let endWhistleSoundPlayed: Observable<SoundType>
-            let timerDisposed: Observable<Void>
-            let weaponChangeViewShowed: Observable<Void>
-            let weaponChangeViewDismissed: Observable<Void>
-            let rankingAppearSoundPlayed: Observable<SoundType>
-            let resultViewShowed: Observable<Void>
-            let reloadingMotionDetectedCountUpdated: Observable<Int>
+            let firingSoundPlayed: Observable<SoundType>
+            let noBulletsSoundPlayed: Observable<SoundType>
+            let reloadingSoundPlayed: Observable<SoundType>
+            let targetHitSoundPlayed: Observable<SoundType>
             let targetsAppearanceChangingSoundPlayed: Observable<SoundType>
+            let weaponChangingSoundPlayed: Observable<SoundType>
+            let endWhistleSoundPlayed: Observable<SoundType>
+            let rankingAppearSoundPlayed: Observable<SoundType>
+            
+            // state changes
+            let bulletsCountDecremented: Observable<Int>
+            let bulletsCountRefilled: Observable<Int>
+            let bulletsCountRefilledForNewWeapon: Observable<Int>
+            let weaponReloadingFlagChanged: Observable<Bool>
+            let weaponReloadingFlagChangedForNewWeapon: Observable<Bool>
+            let weaponTypeChanged: Observable<WeaponType>
+            let scoreUpdated: Observable<Double>
+            let reloadingMotionDetectedCountUpdated: Observable<Int>
+            
+            // transitions
+            let tutorialViewShowed: Observable<Void>
+            let weaponChangeViewShowed: Observable<Void>
+            let weaponChangeViewDismissedOnTimerDisposal: Observable<Void>
+            let resultViewShowed: Observable<Void>
+            
+            // others
+            let weaponFireProcessCompleted: Observable<WeaponType>
+            let weaponReloadProcessCompleted: Observable<WeaponType>
+            let weaponChangeProcessCompleted: Observable<WeaponType>
+            let timerDisposed: Observable<Void>
         }
         
         struct OutputToView {
@@ -373,7 +380,7 @@ final class GameViewModel: ViewModelType {
         let gameTimerDisposalHandlerOutput = gameTimerDisposalHandler
             .transform(input: .init(timerDisposed: timerDisposed))
         
-        let weaponChangeViewDismissed = gameTimerDisposalHandlerOutput.dismissWeaponChangeView
+        let weaponChangeViewDismissedOnTimerDisposal = gameTimerDisposalHandlerOutput.dismissWeaponChangeView
             .do(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 self.navigator.dismissWeaponChangeView()
@@ -464,31 +471,31 @@ final class GameViewModel: ViewModelType {
         return Output(
             viewModelAction: Output.ViewModelAction(
                 pistolSetSoundPlayed: pistolSetSoundPlayed,
-                noBulletsSoundPlayed: noBulletsSoundPlayed,
-                bulletsCountDecremented: bulletsCountDecremented,
-                firingSoundPlayed: firingSoundPlayed,
-                weaponFireProcessCompleted: weaponFireProcessCompleted,
-                bulletsCountRefilled: bulletsCountRefilled,
-                weaponReloadingFlagChanged: weaponReloadingFlagChanged,
-                reloadingSoundPlayed: reloadingSoundPlayed,
-                weaponReloadProcessCompleted: weaponReloadProcessCompleted,
-                weaponTypeChanged: weaponTypeChanged,
-                weaponChangingSoundPlayed: weaponChangingSoundPlayed,
-                bulletsCountRefilledForNewWeapon: bulletsCountRefilledForNewWeapon,
-                weaponReloadingFlagChangedForNewWeapon: weaponReloadingFlagChangedForNewWeapon,
-                weaponChangeProcessCompleted: weaponChangeProcessCompleted,
-                targetHitSoundPlayed: targetHitSoundPlayed,
-                scoreUpdated: scoreUpdated,
-                tutorialViewShowed: tutorialViewShowed,
                 startWhistleSoundPlayed: startWhistleSoundPlayed,
+                firingSoundPlayed: firingSoundPlayed,
+                noBulletsSoundPlayed: noBulletsSoundPlayed,
+                reloadingSoundPlayed: reloadingSoundPlayed,
+                targetHitSoundPlayed: targetHitSoundPlayed,
+                targetsAppearanceChangingSoundPlayed: targetsAppearanceChangingSoundPlayed,
+                weaponChangingSoundPlayed: weaponChangingSoundPlayed,
                 endWhistleSoundPlayed: endWhistleSoundPlayed,
-                timerDisposed: timerDisposed,
-                weaponChangeViewShowed: weaponChangeViewShowed,
-                weaponChangeViewDismissed: weaponChangeViewDismissed,
                 rankingAppearSoundPlayed: rankingAppearSoundPlayed,
-                resultViewShowed: resultViewShowed,
+                bulletsCountDecremented: bulletsCountDecremented,
+                bulletsCountRefilled: bulletsCountRefilled,
+                bulletsCountRefilledForNewWeapon: bulletsCountRefilledForNewWeapon,
+                weaponReloadingFlagChanged: weaponReloadingFlagChanged,
+                weaponReloadingFlagChangedForNewWeapon: weaponReloadingFlagChangedForNewWeapon,
+                weaponTypeChanged: weaponTypeChanged,
+                scoreUpdated: scoreUpdated,
                 reloadingMotionDetectedCountUpdated: reloadingMotionDetectedCountUpdated,
-                targetsAppearanceChangingSoundPlayed: targetsAppearanceChangingSoundPlayed
+                tutorialViewShowed: tutorialViewShowed,
+                weaponChangeViewShowed: weaponChangeViewShowed,
+                weaponChangeViewDismissedOnTimerDisposal: weaponChangeViewDismissedOnTimerDisposal,
+                resultViewShowed: resultViewShowed,
+                weaponFireProcessCompleted: weaponFireProcessCompleted,
+                weaponReloadProcessCompleted: weaponReloadProcessCompleted,
+                weaponChangeProcessCompleted: weaponChangeProcessCompleted,
+                timerDisposed: timerDisposed
             ),
             outputToView: Output.OutputToView(
                 sightImageName: sightImageName,
