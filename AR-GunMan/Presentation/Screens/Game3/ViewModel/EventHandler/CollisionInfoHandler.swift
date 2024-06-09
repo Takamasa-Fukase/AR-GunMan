@@ -41,6 +41,7 @@ final class CollisionInfoHandler {
             .map({ (targetId: $0.firstObjectInfo.id, bulletId: $0.secondObjectInfo.id) })
 
         let renderTargetHitParticleToContactPoint = targetHit
+            .filter({ $0 == .bazooka })
             .withLatestFrom(input.collisionOccurred) { (weaponType: $0, contactPoint: $1.contactPoint) }
         
         return Output(
