@@ -10,5 +10,5 @@ import Foundation
 struct CollisionInfo {
     let firstObjectInfo: GameObjectInfo
     let secondObjectInfo: GameObjectInfo
-    let contactPoint: (x: Double, y: Double, z: Double)
+    let contactPoint: Vector
 }
