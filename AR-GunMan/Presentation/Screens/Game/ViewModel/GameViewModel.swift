@@ -118,7 +118,7 @@ final class GameViewModel: ViewModelType {
     private let weaponAutoReloadFilter: WeaponAutoReloadFilter
     private let weaponReloadHandler: WeaponReloadHandler
     private let weaponSelectHandler: WeaponSelectHandler
-    private let collisionInfoHandler: CollisionInfoHandler
+    private let targetHitFilter: TargetHitFilter
     private let targetHitHandler: TargetHitHandler
     private let reloadingMotionDetectionCounter: ReloadingMotionDetectionCounter
     private let state: State
@@ -139,7 +139,7 @@ final class GameViewModel: ViewModelType {
         weaponAutoReloadFilter: WeaponAutoReloadFilter,
         weaponReloadHandler: WeaponReloadHandler,
         weaponSelectHandler: WeaponSelectHandler,
-        collisionInfoHandler: CollisionInfoHandler,
+        targetHitFilter: TargetHitFilter,
         targetHitHandler: TargetHitHandler,
         reloadingMotionDetectionCounter: ReloadingMotionDetectionCounter,
         state: State = State(),
@@ -159,7 +159,7 @@ final class GameViewModel: ViewModelType {
         self.weaponAutoReloadFilter = weaponAutoReloadFilter
         self.weaponReloadHandler = weaponReloadHandler
         self.weaponSelectHandler = weaponSelectHandler
-        self.collisionInfoHandler = collisionInfoHandler
+        self.targetHitFilter = targetHitFilter
         self.targetHitHandler = targetHitHandler
         self.reloadingMotionDetectionCounter = reloadingMotionDetectionCounter
         self.state = state
@@ -341,12 +341,12 @@ final class GameViewModel: ViewModelType {
         let weaponChangeProcessCompleted = weaponSelectHandlerOutput.weaponChangeProcessCompleted
             .share()
         
-        let collisionInfoHandlerOutput = collisionInfoHandler
+        let targetHitFilterOutput = targetHitFilter
             .transform(input: .init(collisionOccurred: input.inputFromARContent.collisionOccurred))
         
         let targetHitHandlerOutput = targetHitHandler
             .transform(input: .init(
-                targetHit: collisionInfoHandlerOutput.targetHit,
+                targetHit: targetHitFilterOutput.targetHit,
                 currentScore: state.scoreRelay.asObservable())
             )
         
@@ -450,9 +450,9 @@ final class GameViewModel: ViewModelType {
         let moveWeaponToFPSPosition = input.inputFromARContent.rendererUpdated
             .map({ [weak self] _ in self?.state.weaponTypeRelay.value ?? .pistol })
         
-        let removeContactedTargetAndBullet = collisionInfoHandlerOutput.removeContactedTargetAndBullet
+        let removeContactedTargetAndBullet = targetHitHandlerOutput.removeContactedTargetAndBullet
         
-        let renderTargetHitParticleToContactPoint = collisionInfoHandlerOutput.renderTargetHitParticleToContactPoint
+        let renderTargetHitParticleToContactPoint = targetHitHandlerOutput.renderTargetHitParticleToContactPoint
         
         
         // MARK: OutputToDeviceMotion

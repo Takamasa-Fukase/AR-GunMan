@@ -47,7 +47,7 @@ final class GameNavigator: GameNavigatorInterface {
             weaponAutoReloadFilter: WeaponAutoReloadFilter(),
             weaponReloadHandler: WeaponReloadHandler(gameUseCase: useCase),
             weaponSelectHandler: WeaponSelectHandler(),
-            collisionInfoHandler: CollisionInfoHandler(),
+            targetHitFilter: TargetHitFilter(),
             targetHitHandler: TargetHitHandler(),
             reloadingMotionDetectionCounter: ReloadingMotionDetectionCounter()
         )

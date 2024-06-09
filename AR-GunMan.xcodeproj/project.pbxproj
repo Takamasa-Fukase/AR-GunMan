@@ -292,9 +292,9 @@
 		BC62CE0A2C15607D00070B49 /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC62CE092C15607D00070B49 /* Vector.swift */; };
 		BC62CE0B2C15607D00070B49 /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC62CE092C15607D00070B49 /* Vector.swift */; };
 		BC62CE0C2C15607D00070B49 /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC62CE092C15607D00070B49 /* Vector.swift */; };
-		BC62CE0E2C15632100070B49 /* CollisionInfoHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC62CE0D2C15632100070B49 /* CollisionInfoHandler.swift */; };
-		BC62CE0F2C15632100070B49 /* CollisionInfoHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC62CE0D2C15632100070B49 /* CollisionInfoHandler.swift */; };
-		BC62CE102C15632100070B49 /* CollisionInfoHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC62CE0D2C15632100070B49 /* CollisionInfoHandler.swift */; };
+		BC62CE0E2C15632100070B49 /* TargetHitFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC62CE0D2C15632100070B49 /* TargetHitFilter.swift */; };
+		BC62CE0F2C15632100070B49 /* TargetHitFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC62CE0D2C15632100070B49 /* TargetHitFilter.swift */; };
+		BC62CE102C15632100070B49 /* TargetHitFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC62CE0D2C15632100070B49 /* TargetHitFilter.swift */; };
 		BC92C854297061FE00E49BD5 /* WeaponType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C853297061FE00E49BD5 /* WeaponType.swift */; };
 		BC92C85A297348D500E49BD5 /* ScoreCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C859297348D500E49BD5 /* ScoreCalculator.swift */; };
 		BC92C85E297420CD00E49BD5 /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C85D297420CD00E49BD5 /* UserDefaults+Extension.swift */; };
@@ -495,7 +495,7 @@
 		BC1795BB2985D01300D91A19 /* ResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewModel.swift; sourceTree = "<group>"; };
 		BC2B11662977F90C009F4DC4 /* UIScrollView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Extension.swift"; sourceTree = "<group>"; };
 		BC62CE092C15607D00070B49 /* Vector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector.swift; sourceTree = "<group>"; };
-		BC62CE0D2C15632100070B49 /* CollisionInfoHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollisionInfoHandler.swift; sourceTree = "<group>"; };
+		BC62CE0D2C15632100070B49 /* TargetHitFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetHitFilter.swift; sourceTree = "<group>"; };
 		BC92C853297061FE00E49BD5 /* WeaponType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponType.swift; sourceTree = "<group>"; };
 		BC92C859297348D500E49BD5 /* ScoreCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCalculator.swift; sourceTree = "<group>"; };
 		BC92C85D297420CD00E49BD5 /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
@@ -1143,7 +1143,7 @@
 				BCD1C2522C06B353008975EB /* FiringMotionFilter.swift */,
 				BCD1C25A2C06B7C8008975EB /* ReloadingMotionFilter.swift */,
 				BCCD44502C0954B700BF541D /* WeaponSelectHandler.swift */,
-				BC62CE0D2C15632100070B49 /* CollisionInfoHandler.swift */,
+				BC62CE0D2C15632100070B49 /* TargetHitFilter.swift */,
 				BCCD44542C0B12B100BF541D /* TargetHitHandler.swift */,
 				BCCD44582C0B2BAF00BF541D /* TutorialSeenStatusHandler.swift */,
 				BCCD445C2C0B2F8D00BF541D /* GameStartHandler.swift */,
@@ -1528,7 +1528,7 @@
 				863FE7EE2BEA6D8D00E104F5 /* FirebaseConst.swift in Sources */,
 				59945100256AD55900560202 /* TutorialViewController.swift in Sources */,
 				BCD1C23A2C044DCD008975EB /* GameViewController.swift in Sources */,
-				BC62CE0E2C15632100070B49 /* CollisionInfoHandler.swift in Sources */,
+				BC62CE0E2C15632100070B49 /* TargetHitFilter.swift in Sources */,
 				8627F6432BD16BB60003D374 /* ObservableActivityTracker.swift in Sources */,
 				86627DE6273FD5E30044A980 /* RankingViewController.swift in Sources */,
 				59D2D5952552E718006DDB70 /* WeaponChangeViewController.swift in Sources */,
@@ -1635,7 +1635,7 @@
 				8606463B2BF5998100906DA0 /* TopNavigator.swift in Sources */,
 				860646592BF5999F00906DA0 /* DeviceMotionController.swift in Sources */,
 				BCD1C2262C01B3EA008975EB /* GameViewModel.swift in Sources */,
-				BC62CE0F2C15632100070B49 /* CollisionInfoHandler.swift in Sources */,
+				BC62CE0F2C15632100070B49 /* TargetHitFilter.swift in Sources */,
 				860646582BF5999F00906DA0 /* GameUseCase.swift in Sources */,
 				86B112522C0080AA006D464A /* WeaponFireHandler.swift in Sources */,
 				8606460F2BF5996200906DA0 /* RankingUtil.swift in Sources */,
@@ -1724,7 +1724,7 @@
 				860646272BF5996800906DA0 /* FirebaseConst.swift in Sources */,
 				860646362BF5997300906DA0 /* ReplayRepository.swift in Sources */,
 				BCD1C23C2C044DCD008975EB /* GameViewController.swift in Sources */,
-				BC62CE102C15632100070B49 /* CollisionInfoHandler.swift in Sources */,
+				BC62CE102C15632100070B49 /* TargetHitFilter.swift in Sources */,
 				860646842BF599D600906DA0 /* NameRegisterViewController.swift in Sources */,
 				860646702BF599BD00906DA0 /* WeaponChangeNavigator.swift in Sources */,
 				8606462A2BF5996E00906DA0 /* Ranking.swift in Sources */,
