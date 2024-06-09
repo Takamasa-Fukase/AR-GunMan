@@ -19,36 +19,36 @@ enum WeaponType: CaseIterable {
     var name: String {
         switch self {
         case .pistol:
-            return "pistol"
+            return WeaponTypeConst.pistolTypeName
         case .bazooka:
-            return "bazooka"
+            return WeaponTypeConst.bazookaTypeName
         }
     }
     
     var bulletsCapacity: Int {
         switch self {
         case .pistol:
-            return 7
+            return WeaponTypeConst.pistolBulletsCapacity
         case .bazooka:
-            return 1
+            return WeaponTypeConst.bazookaBulletsCapacity
         }
     }
     
-    var hitPoint: Double {
+    var hitPoint: Int {
         switch self {
         case .pistol:
-            return 5
+            return WeaponTypeConst.pistolHitPoint
         case .bazooka:
-            return 12
+            return WeaponTypeConst.bazookaHitPoint
         }
     }
     
-    var reloadDurationMillisec: Int {
+    var reloadWaitingTimeMillisec: Int {
         switch self {
         case .pistol:
-            return 0
+            return WeaponTypeConst.pistolReloadWaitingTimeMillisec
         case .bazooka:
-            return 3200
+            return WeaponTypeConst.bazookaReloadWaitingTimeMillisec
         }
     }
     
@@ -61,50 +61,21 @@ enum WeaponType: CaseIterable {
         }
     }
     
-    // TODO: 差し替えが終わったら削除する
-    var sightImage: UIImage? {
-        switch self {
-        case .pistol:
-            return UIImage(named: "pistolSight")
-        case .bazooka:
-            return UIImage(named: "bazookaSight")
-        }
-    }
-    
-    // TODO: 差し替えが終わったら削除する
-    var sightImageColor: UIColor {
-        switch self {
-        case .pistol:
-            return .systemRed
-        case .bazooka:
-            return .systemGreen
-        }
-    }
-    
     var sightImageName: String {
         switch self {
         case .pistol:
-            return "pistolSight"
+            return WeaponTypeConst.pistolSightImageName
         case .bazooka:
-            return "bazookaSight"
+            return WeaponTypeConst.bazookaSightImageName
         }
     }
     
     var sightImageColorHexCode: String {
         switch self {
         case .pistol:
-            return UIColor.systemRed.toHexString()
+            return WeaponTypeConst.pistolSightImageColorHexCode
         case .bazooka:
-            return UIColor.systemGreen.toHexString()
-        }
-    }
-    
-    var targetHitParticleType: ParticleSystemTypes? {
-        switch self {
-        case .bazooka:
-            return .bazookaExplosion
-        default:
-            return nil
+            return WeaponTypeConst.bazookaSightImageColorHexCode
         }
     }
     
@@ -144,33 +115,48 @@ enum WeaponType: CaseIterable {
         }
     }
     
-    // TODO: 差し替えが終わったら削除する
-    func bulletsCountImage(at count: Int) -> UIImage? {
+    var gameObjectType: GameObjectInfo.ObjectType {
         switch self {
         case .pistol:
-            return UIImage(named: "bullets\(count)")
+            return .pistolBullet
         case .bazooka:
-            return UIImage(named: "bazookaRocket\(count)")
+            return .bazookaBullet
+        }
+    }
+    
+    var targetHitParticleType: ParticleSystemType? {
+        switch self {
+        case .bazooka:
+            return .bazookaExplosion
+        default:
+            return nil
+        }
+    }
+    
+    var scnAssetsPath: String {
+        switch self {
+        case .pistol:
+            return ARContentConst.pistolScnAssetsPath
+        case .bazooka:
+            return ARContentConst.bazookaScnAssetsPath
+        }
+    }
+    
+    var parentNodeName: String {
+        switch self {
+        case .pistol:
+            return ARContentConst.pistolParentNodeName
+        case .bazooka:
+            return ARContentConst.bazookaParentNodeName
         }
     }
     
     func bulletsCountImageName(at count: Int) -> String {
         switch self {
         case .pistol:
-            return "bullets\(count)"
+            return WeaponTypeConst.pistolBulletsCountImageBaseName + String(count)
         case .bazooka:
-            return "bazookaRocket\(count)"
-        }
-    }
-}
-
-extension WeaponType {
-    var gameObjectType: GameObjectInfo.ObjectType {
-        switch self {
-        case .pistol: 
-            return .pistolBullet
-        case .bazooka: 
-            return .bazookaBullet
+            return WeaponTypeConst.bazookaBulletsCountImageBaseName + String(count)
         }
     }
 }

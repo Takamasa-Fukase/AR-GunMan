@@ -45,7 +45,7 @@ final class ARContentController: NSObject {
         DispatchQueue.main.async {
             Array(0..<count).forEach { index in
                 //メモリ節約のため、オリジナルをクローンして使う
-                let clonedTargetNode = GameSceneConst.originalTargetNode.clone()
+                let clonedTargetNode = ARContentConst.originalTargetNode.clone()
                 clonedTargetNode.position = SceneNodeUtil.getRandomTargetPosition()
                 SceneNodeUtil.addBillboardConstraint(clonedTargetNode)
                 self.sceneView.scene.rootNode.addChildNode(clonedTargetNode)
@@ -73,13 +73,13 @@ final class ARContentController: NSObject {
 
     func changeTargetsToTaimeisan() {
         sceneView.scene.rootNode.childNodes.forEach({ node in
-            if node.name == GameConst.targetNodeName {
+            if node.name == ARContentConst.targetNodeName {
                 while node.childNode(withName: "torus", recursively: false) != nil {
                     node.childNode(withName: "torus", recursively: false)?.removeFromParentNode()
                     //ドーナツ型の白い線のパーツを削除
                     print("torusを削除")
                 }
-                node.childNode(withName: "sphere", recursively: false)?.geometry?.firstMaterial?.diffuse.contents = GameConst.taimeiSanImage
+                node.childNode(withName: "sphere", recursively: false)?.geometry?.firstMaterial?.diffuse.contents = UIImage(named: ARContentConst.taimeiSanImageName)
             }
         })
     }
@@ -120,7 +120,7 @@ final class ARContentController: NSObject {
     }
 
     private func setupWeaponNode(type: WeaponType) -> SCNNode {
-        let weaponParentNode = SceneNodeUtil.loadScnFile(of: GameConst.getWeaponScnAssetsPath(type), nodeName: "\(type.name)Parent")
+        let weaponParentNode = SceneNodeUtil.loadScnFile(of: type.scnAssetsPath, nodeName: type.parentNodeName)
         SceneNodeUtil.addBillboardConstraint(weaponParentNode)
         weaponParentNode.position = SceneNodeUtil.getCameraPosition(sceneView)
         return weaponParentNode
@@ -142,12 +142,12 @@ final class ARContentController: NSObject {
     }
     
     //ロケラン名中時の爆発をセットアップ
-    private func createOriginalParticleSystem(type: ParticleSystemTypes) -> SCNParticleSystem {
-        let originalExplosionNode = SceneNodeUtil.loadScnFile(of: GameConst.getParticleSystemScnAssetsPath(type), nodeName: type.rawValue)
+    private func createOriginalParticleSystem(type: ParticleSystemType) -> SCNParticleSystem {
+        let originalExplosionNode = SceneNodeUtil.loadScnFile(of: type.scnAssetsPath, nodeName: type.rawValue)
         return originalExplosionNode.particleSystems?.first ?? SCNParticleSystem()
     }
     
-    private func createTargetHitParticleNode(type: ParticleSystemTypes) -> SCNNode {
+    private func createTargetHitParticleNode(type: ParticleSystemType) -> SCNNode {
         originalBazookaHitExplosionParticle.birthRate = 0
         originalBazookaHitExplosionParticle.loops = true
         let targetHitParticleNode = SCNNode()
@@ -162,7 +162,7 @@ final class ARContentController: NSObject {
     private func shootBullet(of weaponType: WeaponType) {
         let clonedBulletNode = CustomSCNNode(
             //メモリ節約のため、オリジナルをクローンして使う
-            from: GameSceneConst.originalBulletNode.clone(),
+            from: ARContentConst.originalBulletNode.clone(),
             gameObjectInfo: .init(type: weaponType.gameObjectType)
         )
         clonedBulletNode.position = SceneNodeUtil.getCameraPosition(sceneView)

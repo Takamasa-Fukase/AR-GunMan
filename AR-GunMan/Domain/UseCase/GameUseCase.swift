@@ -41,7 +41,7 @@ final class GameUseCase: GameUseCaseInterface {
         return timerRepository
             .getTimerStream(
                 milliSec: GameConst.timerStartWaitingTimeMillisec,
-                isRepeatd: false
+                isRepeated: false
             )
             .map({ _ in })
     }
@@ -50,7 +50,7 @@ final class GameUseCase: GameUseCaseInterface {
         return timerRepository
             .getTimerStream(
                 milliSec: GameConst.showResultWaitingTimeMillisec,
-                isRepeatd: false
+                isRepeated: false
             )
             .map({ _ in })
     }
@@ -58,8 +58,8 @@ final class GameUseCase: GameUseCaseInterface {
     func awaitWeaponReloadEnds(currentWeapon: WeaponType) -> Observable<WeaponType> {
         return timerRepository
             .getTimerStream(
-                milliSec: currentWeapon.reloadDurationMillisec,
-                isRepeatd: false
+                milliSec: currentWeapon.reloadWaitingTimeMillisec,
+                isRepeated: false
             )
             .map({ _ in currentWeapon })
     }
@@ -68,7 +68,7 @@ final class GameUseCase: GameUseCaseInterface {
         return timerRepository
             .getTimerStream(
                 milliSec: GameConst.timeCountUpdateDurationMillisec,
-                isRepeatd: true
+                isRepeated: true
             )
             .map({ timerUpdatedCount in // タイマーが更新された回数を表すInt
                 // 例: 30.00 - (1 / 100) => 29.99
