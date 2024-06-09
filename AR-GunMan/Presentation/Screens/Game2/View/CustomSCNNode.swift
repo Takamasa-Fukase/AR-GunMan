@@ -12,14 +12,18 @@ final class CustomSCNNode: SCNNode {
     
     init(gameObjectInfo: GameObjectInfo) {
         self.gameObjectInfo = gameObjectInfo
+        super.init()
     }
     
     init(with geometry: SCNGeometry?, gameObjectInfo: GameObjectInfo) {
-        self.geometry = geometry
         self.gameObjectInfo = gameObjectInfo
+        super.init()
+        self.geometry = geometry
     }
     
     init(from existingScnNode: SCNNode, gameObjectInfo: GameObjectInfo) {
+        self.gameObjectInfo = gameObjectInfo
+        super.init()
         self.geometry = existingScnNode.geometry
         self.name = existingScnNode.name
         self.position = existingScnNode.position
@@ -27,7 +31,6 @@ final class CustomSCNNode: SCNNode {
         self.scale = existingScnNode.scale
         self.transform = existingScnNode.transform
         existingScnNode.childNodes.forEach({ self.addChildNode($0) })
-        self.gameObjectInfo = gameObjectInfo
     }
     
     required init?(coder: NSCoder) {
