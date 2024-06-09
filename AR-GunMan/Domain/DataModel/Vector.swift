@@ -11,8 +11,4 @@ struct Vector {
     let x: Double
     let y: Double
     let z: Double
-    
-    var sceneVector3: SCNVector3 {
-        return SCNVector3(x: Float(x), y: Float(y), z: Float(z))
-    }
 }

@@ -198,3 +198,9 @@ extension ARContentController: SCNPhysicsContactDelegate {
         collisionOccurredRelay.accept(collisionInfo)
     }
 }
+
+extension Vector {
+    fileprivate var sceneVector3: SCNVector3 {
+        return SCNVector3(x: Float(x), y: Float(y), z: Float(z))
+    }
+}
