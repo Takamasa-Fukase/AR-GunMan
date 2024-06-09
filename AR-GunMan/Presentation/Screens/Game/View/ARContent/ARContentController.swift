@@ -143,7 +143,7 @@ final class ARContentController: NSObject {
     
     //ロケラン名中時の爆発をセットアップ
     private func createOriginalParticleSystem(type: ParticleSystemType) -> SCNParticleSystem {
-        let originalExplosionNode = SceneNodeUtil.loadScnFile(of: type.scnAssetsPath, nodeName: type.rawValue)
+        let originalExplosionNode = SceneNodeUtil.loadScnFile(of: type.scnAssetsPath, nodeName: type.name)
         return originalExplosionNode.particleSystems?.first ?? SCNParticleSystem()
     }
     

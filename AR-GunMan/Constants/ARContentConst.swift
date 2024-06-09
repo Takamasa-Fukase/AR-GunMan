@@ -10,8 +10,8 @@ import SceneKit
 
 final class ARContentConst {
     static let targetScnAssetsPath = "art.scnassets/Target/target.scn"
-    static let pistolScnAssetsPath = "art.scnassets/Pistol/pistol.scn"
-    static let bazookaScnAssetsPath = "art.scnassets/Bazooka/bazooka.scn"
+    static let pistolScnAssetsPath = "art.scnassets/Weapon/Pistol/pistol.scn"
+    static let bazookaScnAssetsPath = "art.scnassets/Weapon/Bazooka/bazooka.scn"
     static let bazookaExplosionParticleScnAssetsPath = "art.scnassets/ParticleSystem/bazookaExplosion.scn"
     
     static let bazookaExplosionParticleBirthRate: CGFloat = 300
