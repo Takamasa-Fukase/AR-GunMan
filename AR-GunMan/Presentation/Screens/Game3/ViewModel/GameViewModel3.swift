@@ -11,8 +11,8 @@ import RxCocoa
 final class GameViewModel3: ViewModelType {
     struct Input {
         let inputFromView: InputFromView
-        let inputFromGameScene: InputFromGameScene
-        let inputFromCoreMotion: InputFromCoreMotion
+        let inputFromARContent: InputFromARContent
+        let inputFromDeviceMotion: InputFromDeviceMotion
 
         struct InputFromView {
             let viewDidLoad: Observable<Void>
@@ -22,12 +22,12 @@ final class GameViewModel3: ViewModelType {
             let weaponChangeButtonTapped: Observable<Void>
         }
         
-        struct InputFromGameScene {
+        struct InputFromARContent {
             let rendererUpdated: Observable<Void>
             let collisionOccurred: Observable<CollisionInfo>
         }
         
-        struct InputFromCoreMotion {
+        struct InputFromDeviceMotion {
             let accelerationUpdated: Observable<(x: Double, y: Double, z: Double)>
             let gyroUpdated: Observable<(x: Double, y: Double, z: Double)>
         }
@@ -36,7 +36,7 @@ final class GameViewModel3: ViewModelType {
     struct Output {
         let viewModelAction: ViewModelAction
         let outputToView: OutputToView
-        let outputToGameScene: OutputToGameScene
+        let outputToARContent: OutputToARContent
         let outputToDeviceMotion: OutputToDeviceMotion
         
         struct ViewModelAction {
@@ -76,7 +76,7 @@ final class GameViewModel3: ViewModelType {
             let isWeaponChangeButtonEnabled: Observable<Bool>
         }
         
-        struct OutputToGameScene {
+        struct OutputToARContent {
             let setupSceneView: Observable<Void>
             let renderAllTargets: Observable<Int>
             let startSceneSession: Observable<Void>
@@ -228,14 +228,14 @@ final class GameViewModel3: ViewModelType {
         
         let firingMotionDetected = firingMoitonFilter
             .transform(input: .init(
-                accelerationUpdated: input.inputFromCoreMotion.accelerationUpdated,
-                gyroUpdated: input.inputFromCoreMotion.gyroUpdated)
+                accelerationUpdated: input.inputFromDeviceMotion.accelerationUpdated,
+                gyroUpdated: input.inputFromDeviceMotion.gyroUpdated)
             )
             .firingMotionDetected
         
         let reloadingMotionDetected = reloadingMotionFilter
             .transform(input: .init(
-                gyroUpdated: input.inputFromCoreMotion.gyroUpdated)
+                gyroUpdated: input.inputFromDeviceMotion.gyroUpdated)
             )
             .reloadingMotionDetected
             .share()
@@ -342,7 +342,7 @@ final class GameViewModel3: ViewModelType {
             .share()
         
         let collisionInfoHandlerOutput = collisionInfoHandler
-            .transform(input: .init(collisionOccurred: input.inputFromGameScene.collisionOccurred))
+            .transform(input: .init(collisionOccurred: input.inputFromARContent.collisionOccurred))
         
         let targetHitHandlerOutput = targetHitHandler
             .transform(input: .init(
@@ -427,7 +427,7 @@ final class GameViewModel3: ViewModelType {
             .map({ $0 < GameConst.timeCount && $0 > 0 })
         
         
-        // MARK: OutputToGameScene
+        // MARK: OutputToARContent
         let setupSceneView = input.inputFromView.viewDidLoad
         
         let renderAllTargets = input.inputFromView.viewDidLoad
@@ -447,7 +447,7 @@ final class GameViewModel3: ViewModelType {
         
         let renderTargetsAppearanceChanging = reloadingMotionDetectionCounterOutput.detectionCountReachedTargetsAppearanceChangingLimit
         
-        let moveWeaponToFPSPosition = input.inputFromGameScene.rendererUpdated
+        let moveWeaponToFPSPosition = input.inputFromARContent.rendererUpdated
             .map({ [weak self] _ in self?.state.weaponTypeRelay.value ?? .pistol })
         
         let removeContactedTargetAndBullet = collisionInfoHandlerOutput.removeContactedTargetAndBullet
@@ -497,7 +497,7 @@ final class GameViewModel3: ViewModelType {
                 bulletsCountImageName: bulletsCountImageName,
                 isWeaponChangeButtonEnabled: isWeaponChangeButtonEnabled
             ),
-            outputToGameScene: Output.OutputToGameScene(
+            outputToARContent: Output.OutputToARContent(
                 setupSceneView: setupSceneView,
                 renderAllTargets: renderAllTargets,
                 startSceneSession: startSceneSession,

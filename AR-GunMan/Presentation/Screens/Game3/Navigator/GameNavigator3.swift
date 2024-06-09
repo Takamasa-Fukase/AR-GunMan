@@ -51,11 +51,11 @@ final class GameNavigator3: GameNavigatorInterface3 {
             targetHitHandler: TargetHitHandler(),
             reloadingMotionDetectionCounter: ReloadingMotionDetectionCounter()
         )
-        let gameSceneController = GameSceneController()
-        let coreMotionController = CoreMotionController(coreMotionManager: CMMotionManager())
+        let arContentController = ARContentController()
+        let deviceMotionController = DeviceMotionController(coreMotionManager: CMMotionManager())
         vc.viewModel = viewModel
-        vc.gameSceneController = gameSceneController
-        vc.coreMotionController = coreMotionController
+        vc.arContentController = arContentController
+        vc.deviceMotionController = deviceMotionController
         return vc
     }
     

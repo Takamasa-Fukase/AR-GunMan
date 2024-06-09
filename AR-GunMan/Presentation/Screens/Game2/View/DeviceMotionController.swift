@@ -1,5 +1,5 @@
 //
-//  CoreMotionController.swift
+//  DeviceMotionController.swift
 //  AR-GunMan
 //
 //  Created by 深瀬 on 2024/05/10.
@@ -9,7 +9,7 @@ import CoreMotion
 import RxSwift
 import RxCocoa
 
-final class CoreMotionController {
+final class DeviceMotionController {
     private let coreMotionManager: CMMotionManager
     private let accelerationUpdatedRelay = PublishRelay<CMAcceleration>()
     private let gyroUpdatedRelay = PublishRelay<CMRotationRate>()

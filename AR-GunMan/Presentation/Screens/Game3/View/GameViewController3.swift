@@ -11,10 +11,8 @@ import RxCocoa
 
 class GameViewController3: UIViewController {
     var viewModel: GameViewModel3!
-    // TODO: change class name to "ARContentController"
-    var gameSceneController: GameSceneController!
-    // TODO: change class name to "DeviceMotionController"
-    var coreMotionController: CoreMotionController!
+    var arContentController: ARContentController!
+    var deviceMotionController: DeviceMotionController!
     private let disposeBag = DisposeBag()
     
     @IBOutlet private weak var bulletsCountImageView: UIImageView!
@@ -35,13 +33,13 @@ class GameViewController3: UIViewController {
                 viewWillDisappear: rx.viewWillDisappear,
                 weaponChangeButtonTapped: switchWeaponButton.rx.tap.asObservable()
             ),
-            inputFromGameScene: GameViewModel3.Input.InputFromGameScene(
-                rendererUpdated: gameSceneController.rendererUpdated,
-                collisionOccurred: gameSceneController.collisionOccurred
+            inputFromARContent: GameViewModel3.Input.InputFromARContent(
+                rendererUpdated: arContentController.rendererUpdated,
+                collisionOccurred: arContentController.collisionOccurred
             ),
-            inputFromCoreMotion: GameViewModel3.Input.InputFromCoreMotion(
-                accelerationUpdated: coreMotionController.accelerationUpdated,
-                gyroUpdated: coreMotionController.gyroUpdated
+            inputFromDeviceMotion: GameViewModel3.Input.InputFromDeviceMotion(
+                accelerationUpdated: deviceMotionController.accelerationUpdated,
+                gyroUpdated: deviceMotionController.gyroUpdated
             )
         )
 
@@ -49,7 +47,7 @@ class GameViewController3: UIViewController {
 
         subscribeViewModelActions(output.viewModelAction)
         bindOutputToViewComponents(output.outputToView)
-        bindOutputToGameSceneController(output.outputToGameScene)
+        bindOutputToGameSceneController(output.outputToARContent)
         bindOutputToCoreMotionController(output.outputToDeviceMotion)
     }
 
@@ -112,59 +110,59 @@ class GameViewController3: UIViewController {
     }
     
     private func bindOutputToGameSceneController(
-        _ outputToGameScene: GameViewModel3.Output.OutputToGameScene
+        _ outputToGameScene: GameViewModel3.Output.OutputToARContent
     ) {
         disposeBag.insert {
             outputToGameScene.setupSceneView
                 .subscribe(onNext: { [weak self] _ in
                     guard let self = self else { return }
-                    let sceneView = self.gameSceneController.setupSceneView(with: self.view.frame)
+                    let sceneView = self.arContentController.setupSceneView(with: self.view.frame)
                     self.view.insertSubview(sceneView, at: 0)
                 })
             outputToGameScene.renderAllTargets
                 .subscribe(onNext: { [weak self] count in
                     guard let self = self else { return }
-                    self.gameSceneController.showTargets(count: count)
+                    self.arContentController.showTargets(count: count)
                 })
             outputToGameScene.startSceneSession
                 .subscribe(onNext: { [weak self] _ in
                     guard let self = self else { return }
-                    self.gameSceneController.startSession()
+                    self.arContentController.startSession()
                 })
             outputToGameScene.pauseSceneSession
                 .subscribe(onNext: { [weak self] _ in
                     guard let self = self else { return }
-                    self.gameSceneController.pauseSession()
+                    self.arContentController.pauseSession()
                 })
             outputToGameScene.renderSelectedWeapon
                 .subscribe(onNext: { [weak self] type in
                     guard let self = self else { return }
-                    self.gameSceneController.showWeapon(type)
+                    self.arContentController.showWeapon(type)
                 })
             outputToGameScene.renderWeaponFiring
                 .subscribe(onNext: { [weak self] type in
                     guard let self = self else { return }
-                    self.gameSceneController.fireWeapon(type)
+                    self.arContentController.fireWeapon(type)
                 })
             outputToGameScene.renderTargetsAppearanceChanging
                 .subscribe(onNext: { [weak self] _ in
                     guard let self = self else { return }
-                    self.gameSceneController.changeTargetsToTaimeisan()
+                    self.arContentController.changeTargetsToTaimeisan()
                 })
             outputToGameScene.moveWeaponToFPSPosition
                 .subscribe(onNext: { [weak self] type in
                     guard let self = self else { return }
-                    self.gameSceneController.moveWeaponToFPSPosition(currentWeapon: type)
+                    self.arContentController.moveWeaponToFPSPosition(currentWeapon: type)
                 })
             outputToGameScene.removeContactedTargetAndBullet
                 .subscribe(onNext: { [weak self] in
                     guard let self = self else { return }
-                    self.gameSceneController.removeContactedTargetAndBullet(targetId: $0.targetId, bulletId: $0.bulletId)
+                    self.arContentController.removeContactedTargetAndBullet(targetId: $0.targetId, bulletId: $0.bulletId)
                 })
             outputToGameScene.renderTargetHitParticleToContactPoint
                 .subscribe(onNext: { [weak self] in
                     guard let self = self else { return }
-                    self.gameSceneController.showTargetHitParticleToContactPoint(weaponType: $0.weaponType, contactPoint: $0.contactPoint)
+                    self.arContentController.showTargetHitParticleToContactPoint(weaponType: $0.weaponType, contactPoint: $0.contactPoint)
                 })
         }
     }
@@ -176,12 +174,12 @@ class GameViewController3: UIViewController {
             OutputToDeviceMotion.startMotionDetection
                 .subscribe(onNext: { [weak self] _ in
                     guard let self = self else { return }
-                    self.coreMotionController.startUpdate()
+                    self.deviceMotionController.startUpdate()
                 })
             OutputToDeviceMotion.stopMotionDetection
                 .subscribe(onNext: { [weak self] _ in
                     guard let self = self else { return }
-                    self.coreMotionController.stopUpdate()
+                    self.deviceMotionController.stopUpdate()
                 })
         }
     }

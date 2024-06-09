@@ -1,5 +1,5 @@
 //
-//  GameSceneController.swift
+//  ARContentController.swift
 //  AR-GunMan
 //
 //  Created by 深瀬 on 2024/05/13.
@@ -10,7 +10,7 @@ import SceneKit
 import RxSwift
 import RxCocoa
 
-final class GameSceneController: NSObject {
+final class ARContentController: NSObject {
     private var sceneView: ARSCNView!
     private let rendererUpdatedRelay = PublishRelay<Void>()
     private let collisionOccurredRelay = PublishRelay<CollisionInfo>()
@@ -175,14 +175,14 @@ final class GameSceneController: NSObject {
     }
 }
 
-extension GameSceneController: ARSCNViewDelegate {
+extension ARContentController: ARSCNViewDelegate {
     //常に更新され続けるdelegateメソッド
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         rendererUpdatedRelay.accept(Void())
     }
 }
 
-extension GameSceneController: SCNPhysicsContactDelegate {
+extension ARContentController: SCNPhysicsContactDelegate {
     //衝突検知時に呼ばれる
     //MEMO: - このメソッド内でUIの更新を行いたい場合はmainThreadで行う
     func physicsWorld(_ world: SCNPhysicsWorld, didEnd contact: SCNPhysicsContact) {
