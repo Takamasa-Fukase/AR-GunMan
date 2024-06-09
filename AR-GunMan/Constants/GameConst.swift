@@ -35,6 +35,10 @@ final class GameConst {
     static let targetNodeName = "target"
     static let bulletNodeName = "bullet"
     static let taimeiSanImage = UIImage(named: "taimei-san.jpg")
+    static let targetHitConditionPairs: Set<Set<GameObjectInfo.ObjectType>> = [
+        [.target, .pistolBullet],
+        [.target, .bazookaBullet]
+    ]
 
     static func getWeaponScnAssetsPath(_ weapon: WeaponType) -> String {
         let weaponPath = "art.scnassets/Weapon/"

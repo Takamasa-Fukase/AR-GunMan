@@ -20,8 +20,7 @@ final class TargetHitFilter {
     func transform(input: Input) -> Output {
         let targetHit = input.collisionOccurred
             .filter({
-                return (($0.firstObjectInfo.type == .pistolBullet || $0.firstObjectInfo.type == .bazookaBullet) && $0.secondObjectInfo.type == .target)
-                || (($0.secondObjectInfo.type == .pistolBullet || $0.secondObjectInfo.type == .bazookaBullet) && $0.firstObjectInfo.type == .target)
+                return GameConst.targetHitConditionPairs.contains([$0.firstObjectInfo.type, $0.secondObjectInfo.type])
             })
             .map({
                 if let weaponType = $0.firstObjectInfo.type.weaponType {
