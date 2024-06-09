@@ -37,7 +37,7 @@ class GameViewController3: UIViewController {
             ),
             inputFromGameScene: GameViewModel3.Input.InputFromGameScene(
                 rendererUpdated: gameSceneController.rendererUpdated,
-                targetHit: gameSceneController.targetHit
+                collisionOccurred: gameSceneController.collisionOccurred
             ),
             inputFromCoreMotion: GameViewModel3.Input.InputFromCoreMotion(
                 accelerationUpdated: coreMotionController.accelerationUpdated,
@@ -155,6 +155,16 @@ class GameViewController3: UIViewController {
                 .subscribe(onNext: { [weak self] type in
                     guard let self = self else { return }
                     self.gameSceneController.moveWeaponToFPSPosition(currentWeapon: type)
+                })
+            outputToGameScene.removeContactedTargetAndBullet
+                .subscribe(onNext: { [weak self] in
+                    guard let self = self else { return }
+                    self.gameSceneController.removeContactedTargetAndBullet(targetId: $0.targetId, bulletId: $0.bulletId)
+                })
+            outputToGameScene.renderTargetHitParticleToContactPoint
+                .subscribe(onNext: { [weak self] in
+                    guard let self = self else { return }
+                    self.gameSceneController.showTargetHitParticleToContactPoint(weaponType: $0.weaponType, contactPoint: $0.contactPoint)
                 })
         }
     }

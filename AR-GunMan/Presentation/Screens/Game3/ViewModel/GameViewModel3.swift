@@ -24,7 +24,7 @@ final class GameViewModel3: ViewModelType {
         
         struct InputFromGameScene {
             let rendererUpdated: Observable<Void>
-            let targetHit: Observable<Void>
+            let collisionOccurred: Observable<CollisionInfo>
         }
         
         struct InputFromCoreMotion {
@@ -85,6 +85,8 @@ final class GameViewModel3: ViewModelType {
             let renderWeaponFiring: Observable<WeaponType>
             let renderTargetsAppearanceChanging: Observable<Void>
             let moveWeaponToFPSPosition: Observable<WeaponType>
+            let removeContactedTargetAndBullet: Observable<(targetId: UUID, bulletId: UUID)>
+            let renderTargetHitParticleToContactPoint: Observable<(weaponType: WeaponType, contactPoint: Vector)>
         }
         
         struct OutputToDeviceMotion {
@@ -116,6 +118,7 @@ final class GameViewModel3: ViewModelType {
     private let weaponAutoReloadFilter: WeaponAutoReloadFilter
     private let weaponReloadHandler: WeaponReloadHandler
     private let weaponSelectHandler: WeaponSelectHandler
+    private let collisionInfoHandler: CollisionInfoHandler
     private let targetHitHandler: TargetHitHandler
     private let reloadingMotionDetectionCounter: ReloadingMotionDetectionCounter
     private let state: State
@@ -136,6 +139,7 @@ final class GameViewModel3: ViewModelType {
         weaponAutoReloadFilter: WeaponAutoReloadFilter,
         weaponReloadHandler: WeaponReloadHandler,
         weaponSelectHandler: WeaponSelectHandler,
+        collisionInfoHandler: CollisionInfoHandler,
         targetHitHandler: TargetHitHandler,
         reloadingMotionDetectionCounter: ReloadingMotionDetectionCounter,
         state: State = State(),
@@ -155,6 +159,7 @@ final class GameViewModel3: ViewModelType {
         self.weaponAutoReloadFilter = weaponAutoReloadFilter
         self.weaponReloadHandler = weaponReloadHandler
         self.weaponSelectHandler = weaponSelectHandler
+        self.collisionInfoHandler = collisionInfoHandler
         self.targetHitHandler = targetHitHandler
         self.reloadingMotionDetectionCounter = reloadingMotionDetectionCounter
         self.state = state
@@ -336,10 +341,12 @@ final class GameViewModel3: ViewModelType {
         let weaponChangeProcessCompleted = weaponSelectHandlerOutput.weaponChangeProcessCompleted
             .share()
         
+        let collisionInfoHandlerOutput = collisionInfoHandler
+            .transform(input: .init(collisionOccurred: input.inputFromGameScene.collisionOccurred))
+        
         let targetHitHandlerOutput = targetHitHandler
             .transform(input: .init(
-                targetHit: input.inputFromGameScene.targetHit
-                    .map({ [weak self] _ in self?.state.weaponTypeRelay.value ?? .pistol }),
+                targetHit: collisionInfoHandlerOutput.targetHit,
                 currentScore: state.scoreRelay.asObservable())
             )
         
@@ -443,6 +450,10 @@ final class GameViewModel3: ViewModelType {
         let moveWeaponToFPSPosition = input.inputFromGameScene.rendererUpdated
             .map({ [weak self] _ in self?.state.weaponTypeRelay.value ?? .pistol })
         
+        let removeContactedTargetAndBullet = collisionInfoHandlerOutput.removeContactedTargetAndBullet
+        
+        let renderTargetHitParticleToContactPoint = collisionInfoHandlerOutput.renderTargetHitParticleToContactPoint
+        
         
         // MARK: OutputToDeviceMotion
         let startMotionDetection = gameStartHandlerOutput.startMotionDetection
@@ -494,7 +505,9 @@ final class GameViewModel3: ViewModelType {
                 renderSelectedWeapon: renderSelectedWeapon,
                 renderWeaponFiring: renderWeaponFiring,
                 renderTargetsAppearanceChanging: renderTargetsAppearanceChanging,
-                moveWeaponToFPSPosition: moveWeaponToFPSPosition
+                moveWeaponToFPSPosition: moveWeaponToFPSPosition,
+                removeContactedTargetAndBullet: removeContactedTargetAndBullet,
+                renderTargetHitParticleToContactPoint: renderTargetHitParticleToContactPoint
             ),
             outputToDeviceMotion: Output.OutputToDeviceMotion(
                 startMotionDetection: startMotionDetection,

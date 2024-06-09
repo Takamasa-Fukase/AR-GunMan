@@ -25,30 +25,30 @@ final class GameViewController2: UIViewController {
         
         setupUI()
 
-        let input = GameViewModel2.Input(
-            inputFromView: GameViewModel2.Input.InputFromView(
-                viewDidLoad: Observable.just(Void()),
-                viewWillAppear: rx.viewWillAppear,
-                viewDidAppear: rx.viewDidAppear,
-                viewWillDisappear: rx.viewWillDisappear,
-                weaponChangeButtonTapped: switchWeaponButton.rx.tap.asObservable()
-            ),
-            inputFromGameScene: GameViewModel2.Input.InputFromGameScene(
-                rendererUpdated: gameSceneController.rendererUpdated,
-                targetHit: gameSceneController.targetHit
-            ),
-            inputFromCoreMotion: GameViewModel2.Input.InputFromCoreMotion(
-                accelerationUpdated: coreMotionController.accelerationUpdated,
-                gyroUpdated: coreMotionController.gyroUpdated
-            )
-        )
-
-        let output = viewModel.transform(input: input)
-        
-        bindOutputToViewComponents(output.outputToView)
-        bindOutputToGameSceneController(output.outputToGameScene)
-        bindOutputToCoreMotionController(output.outputToCoreMotion)
-        subscribeViewModelAction(output.viewModelAction)
+//        let input = GameViewModel2.Input(
+//            inputFromView: GameViewModel2.Input.InputFromView(
+//                viewDidLoad: Observable.just(Void()),
+//                viewWillAppear: rx.viewWillAppear,
+//                viewDidAppear: rx.viewDidAppear,
+//                viewWillDisappear: rx.viewWillDisappear,
+//                weaponChangeButtonTapped: switchWeaponButton.rx.tap.asObservable()
+//            ),
+//            inputFromGameScene: GameViewModel2.Input.InputFromGameScene(
+//                rendererUpdated: gameSceneController.rendererUpdated,
+//                targetHit: gameSceneController.targetHit
+//            ),
+//            inputFromCoreMotion: GameViewModel2.Input.InputFromCoreMotion(
+//                accelerationUpdated: coreMotionController.accelerationUpdated,
+//                gyroUpdated: coreMotionController.gyroUpdated
+//            )
+//        )
+//
+//        let output = viewModel.transform(input: input)
+//        
+//        bindOutputToViewComponents(output.outputToView)
+//        bindOutputToGameSceneController(output.outputToGameScene)
+//        bindOutputToCoreMotionController(output.outputToCoreMotion)
+//        subscribeViewModelAction(output.viewModelAction)
     }
 
     private func setupUI() {

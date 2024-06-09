@@ -13,15 +13,14 @@ import RxCocoa
 final class GameSceneController: NSObject {
     private var sceneView: ARSCNView!
     private let rendererUpdatedRelay = PublishRelay<Void>()
-    private let targetHitRelay = PublishRelay<Void>()
+    private let collisionOccurredRelay = PublishRelay<CollisionInfo>()
     
     var rendererUpdated: Observable<Void> {
         return rendererUpdatedRelay.asObservable()
     }
-    // TODO: 外部にはcollisionOccurredだけ公開して、GameVMでその後を制御させる様にする
-    // TODO: BulletNodeにメタ情報としてweaponTypeを付与して、そこから取得したtypeをreturnする様にする
-    var targetHit: Observable<Void> {
-        return targetHitRelay.asObservable()
+    
+    var collisionOccurred: Observable<CollisionInfo> {
+        return collisionOccurredRelay.asObservable()
     }
     
     private var originalBazookaHitExplosionParticle = SCNParticleSystem()
@@ -67,7 +66,6 @@ final class GameSceneController: NSObject {
     }
     
     func fireWeapon(_ type: WeaponType) {
-        // TODO: weaponTypeを渡してWeaponConstから対象nodeなど取得する様にする（今は実際には弾は共通だが）
         shootBullet(of: type)
         // TODO: 共通処理に変える（今は反動アニメーションはピストルだけだが）
         pistolNode().runAction(SceneAnimationUtil.shootingMotion())
@@ -97,6 +95,28 @@ final class GameSceneController: NSObject {
             }
         }
         weaponParentNode.position = SceneNodeUtil.getCameraPosition(sceneView)
+    }
+    
+    func removeContactedTargetAndBullet(targetId: UUID, bulletId: UUID) {
+        let targetNode = sceneView.scene.rootNode.childNodes.first(where: {
+            let node = $0 as? CustomSCNNode
+            return node?.gameObjectInfo.id == targetId
+        })
+        let bulletNode = sceneView.scene.rootNode.childNodes.first(where: {
+            let node = $0 as? CustomSCNNode
+            return node?.gameObjectInfo.id == bulletId
+        })
+        targetNode?.removeFromParentNode()
+        bulletNode?.removeFromParentNode()
+    }
+    
+    func showTargetHitParticleToContactPoint(weaponType: WeaponType, contactPoint: Vector) {
+        guard let targetHitParticleType = weaponType.targetHitParticleType else { return}
+        let targetHitParticleNode = createTargetHitParticleNode(type: targetHitParticleType)
+        targetHitParticleNode.position = contactPoint.sceneVector3
+        sceneView.scene.rootNode.addChildNode(targetHitParticleNode)
+        targetHitParticleNode.particleSystems?.first?.birthRate = targetHitParticleType.birthRate
+        targetHitParticleNode.particleSystems?.first?.loops = false
     }
 
     private func setupWeaponNode(type: WeaponType) -> SCNNode {
@@ -153,25 +173,6 @@ final class GameSceneController: NSObject {
             }
         )
     }
-    
-    private func isTargetHit(nodeAName: String, nodeBName: String) -> Bool {
-        return (nodeAName == GameConst.bulletNodeName && nodeBName == GameConst.targetNodeName)
-        || (nodeBName == GameConst.bulletNodeName && nodeAName == GameConst.targetNodeName)
-    }
-    
-    private func removeContactedNodes(nodeA: SCNNode, nodeB: SCNNode) {
-        nodeA.removeFromParentNode()
-        nodeB.removeFromParentNode()
-    }
-    
-    private func showTargetHitParticleToContactPoint(currentWeapon: WeaponType, contactPoint: SCNVector3) {
-        guard let targetHitParticleType = currentWeapon.targetHitParticleType else { return}
-        let targetHitParticleNode = createTargetHitParticleNode(type: targetHitParticleType)
-        targetHitParticleNode.position = contactPoint
-        sceneView.scene.rootNode.addChildNode(targetHitParticleNode)
-        targetHitParticleNode.particleSystems?.first?.birthRate = targetHitParticleType.birthRate
-        targetHitParticleNode.particleSystems?.first?.loops = false
-    }
 }
 
 extension GameSceneController: ARSCNViewDelegate {
@@ -185,12 +186,15 @@ extension GameSceneController: SCNPhysicsContactDelegate {
     //衝突検知時に呼ばれる
     //MEMO: - このメソッド内でUIの更新を行いたい場合はmainThreadで行う
     func physicsWorld(_ world: SCNPhysicsWorld, didEnd contact: SCNPhysicsContact) {
-        if isTargetHit(nodeAName: contact.nodeA.name ?? "", nodeBName: contact.nodeB.name ?? "") {
-            removeContactedNodes(nodeA: contact.nodeA, nodeB: contact.nodeB)
-            // TODO: ここのweaponTypeも後でVMからの指示に含まれたtypeの値に変える
-//            showTargetHitParticleToContactPoint(currentWeapon: .bazooka, contactPoint: contact.contactPoint)
-            targetHitRelay.accept(Void())
+        guard let firstObject = contact.nodeA as? CustomSCNNode,
+              let secondObject = contact.nodeB as? CustomSCNNode else {
+            return
         }
+        let collisionInfo = CollisionInfo(
+            firstObjectInfo: firstObject.gameObjectInfo,
+            secondObjectInfo: secondObject.gameObjectInfo,
+            contactPoint: contact.contactPoint.vector
+        )
+        collisionOccurredRelay.accept(collisionInfo)
     }
 }
-

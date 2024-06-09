@@ -329,6 +329,12 @@
 		86F157412BD93C1E00BE979C /* ErrorConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86F157402BD93C1E00BE979C /* ErrorConst.swift */; };
 		BC1795BC2985D01300D91A19 /* ResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1795BB2985D01300D91A19 /* ResultViewModel.swift */; };
 		BC2B11672977F90C009F4DC4 /* UIScrollView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2B11662977F90C009F4DC4 /* UIScrollView+Extension.swift */; };
+		BC62CE0A2C15607D00070B49 /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC62CE092C15607D00070B49 /* Vector.swift */; };
+		BC62CE0B2C15607D00070B49 /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC62CE092C15607D00070B49 /* Vector.swift */; };
+		BC62CE0C2C15607D00070B49 /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC62CE092C15607D00070B49 /* Vector.swift */; };
+		BC62CE0E2C15632100070B49 /* CollisionInfoHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC62CE0D2C15632100070B49 /* CollisionInfoHandler.swift */; };
+		BC62CE0F2C15632100070B49 /* CollisionInfoHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC62CE0D2C15632100070B49 /* CollisionInfoHandler.swift */; };
+		BC62CE102C15632100070B49 /* CollisionInfoHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC62CE0D2C15632100070B49 /* CollisionInfoHandler.swift */; };
 		BC92C854297061FE00E49BD5 /* WeaponType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C853297061FE00E49BD5 /* WeaponType.swift */; };
 		BC92C85A297348D500E49BD5 /* ScoreCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C859297348D500E49BD5 /* ScoreCalculator.swift */; };
 		BC92C85E297420CD00E49BD5 /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C85D297420CD00E49BD5 /* UserDefaults+Extension.swift */; };
@@ -542,6 +548,8 @@
 		90D4D1AD42BB6A3A0192887F /* Pods-AR-GunManTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-GunManTests.release.xcconfig"; path = "Target Support Files/Pods-AR-GunManTests/Pods-AR-GunManTests.release.xcconfig"; sourceTree = "<group>"; };
 		BC1795BB2985D01300D91A19 /* ResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewModel.swift; sourceTree = "<group>"; };
 		BC2B11662977F90C009F4DC4 /* UIScrollView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Extension.swift"; sourceTree = "<group>"; };
+		BC62CE092C15607D00070B49 /* Vector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector.swift; sourceTree = "<group>"; };
+		BC62CE0D2C15632100070B49 /* CollisionInfoHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollisionInfoHandler.swift; sourceTree = "<group>"; };
 		BC92C853297061FE00E49BD5 /* WeaponType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponType.swift; sourceTree = "<group>"; };
 		BC92C859297348D500E49BD5 /* ScoreCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCalculator.swift; sourceTree = "<group>"; };
 		BC92C85D297420CD00E49BD5 /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
@@ -1253,6 +1261,7 @@
 			children = (
 				BCCD44812C12BF1A00BF541D /* CollisionInfo.swift */,
 				BCCD44862C12C8C000BF541D /* GameObjectInfo.swift */,
+				BC62CE092C15607D00070B49 /* Vector.swift */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -1266,6 +1275,7 @@
 				BCD1C2522C06B353008975EB /* FiringMotionFilter.swift */,
 				BCD1C25A2C06B7C8008975EB /* ReloadingMotionFilter.swift */,
 				BCCD44502C0954B700BF541D /* WeaponSelectHandler.swift */,
+				BC62CE0D2C15632100070B49 /* CollisionInfoHandler.swift */,
 				BCCD44542C0B12B100BF541D /* TargetHitHandler.swift */,
 				BCCD44582C0B2BAF00BF541D /* TutorialSeenStatusHandler.swift */,
 				BCCD445C2C0B2F8D00BF541D /* GameStartHandler.swift */,
@@ -1651,6 +1661,7 @@
 				861469072BF4B811007BF1B6 /* SimpleGameViewModel.swift in Sources */,
 				BC2B11672977F90C009F4DC4 /* UIScrollView+Extension.swift in Sources */,
 				8627F6392BD0A4280003D374 /* ResultNavigator.swift in Sources */,
+				BC62CE0A2C15607D00070B49 /* Vector.swift in Sources */,
 				861469032BF4B7EF007BF1B6 /* SimpleGameViewController.swift in Sources */,
 				BCCD44932C13F93900BF541D /* CustomSCNNode.swift in Sources */,
 				8627F63B2BD0B1340003D374 /* ResultUseCase.swift in Sources */,
@@ -1663,6 +1674,7 @@
 				59945100256AD55900560202 /* TutorialViewController.swift in Sources */,
 				8613E2902BB1BFC400BF4489 /* GameUseCase.swift in Sources */,
 				BCD1C23A2C044DCD008975EB /* GameViewController3.swift in Sources */,
+				BC62CE0E2C15632100070B49 /* CollisionInfoHandler.swift in Sources */,
 				8627F6432BD16BB60003D374 /* ObservableActivityTracker.swift in Sources */,
 				86627DE6273FD5E30044A980 /* RankingViewController.swift in Sources */,
 				8629E0FD2BF21F16004FFEBD /* GameViewController2.swift in Sources */,
@@ -1745,6 +1757,7 @@
 				860646292BF5996E00906DA0 /* Ranking.swift in Sources */,
 				8606468C2BF599DF00906DA0 /* RankingCell.swift in Sources */,
 				861B87792BFE258100D0882D /* SoundPlayerMock.swift in Sources */,
+				BC62CE0B2C15607D00070B49 /* Vector.swift in Sources */,
 				860646112BF5996200906DA0 /* SceneNodeUtil.swift in Sources */,
 				860646392BF5998100906DA0 /* TopViewModel.swift in Sources */,
 				860646122BF5996200906DA0 /* SafariViewUtil.swift in Sources */,
@@ -1780,6 +1793,7 @@
 				8606463B2BF5998100906DA0 /* TopNavigator.swift in Sources */,
 				860646592BF5999F00906DA0 /* CoreMotionController.swift in Sources */,
 				BCD1C2262C01B3EA008975EB /* GameViewModel3.swift in Sources */,
+				BC62CE0F2C15632100070B49 /* CollisionInfoHandler.swift in Sources */,
 				860646582BF5999F00906DA0 /* GameUseCase2.swift in Sources */,
 				86B112522C0080AA006D464A /* WeaponFireHandler.swift in Sources */,
 				8606460F2BF5996200906DA0 /* RankingUtil.swift in Sources */,
@@ -1865,6 +1879,7 @@
 				860646712BF599BD00906DA0 /* WeaponChangeViewController.swift in Sources */,
 				860646252BF5996800906DA0 /* ErrorConst.swift in Sources */,
 				860646282BF5996800906DA0 /* GameSceneConst.swift in Sources */,
+				BC62CE0C2C15607D00070B49 /* Vector.swift in Sources */,
 				860646512BF5999600906DA0 /* GameUseCase.swift in Sources */,
 				BCCD44952C13F93900BF541D /* CustomSCNNode.swift in Sources */,
 				860646822BF599D600906DA0 /* ResultViewModel.swift in Sources */,
@@ -1877,6 +1892,7 @@
 				860646272BF5996800906DA0 /* FirebaseConst.swift in Sources */,
 				860646362BF5997300906DA0 /* ReplayRepository.swift in Sources */,
 				BCD1C23C2C044DCD008975EB /* GameViewController3.swift in Sources */,
+				BC62CE102C15632100070B49 /* CollisionInfoHandler.swift in Sources */,
 				860646842BF599D600906DA0 /* NameRegisterViewController.swift in Sources */,
 				860646702BF599BD00906DA0 /* WeaponChangeNavigator.swift in Sources */,
 				8606462A2BF5996E00906DA0 /* Ranking.swift in Sources */,
