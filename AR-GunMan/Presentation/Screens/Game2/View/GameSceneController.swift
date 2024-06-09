@@ -43,13 +43,11 @@ final class GameSceneController: NSObject {
 
     // 的ノードをランダムな座標に設置
     func showTargets(count: Int) {
-        let originalTargetNode = createOriginalTargetNode()
         DispatchQueue.main.async {
             Array(0..<count).forEach { index in
-                //メモリ節約のためにクローンして使う
-                let clonedTargetNode = originalTargetNode.clone()
+                //メモリ節約のため、オリジナルをクローンして使う
+                let clonedTargetNode = GameSceneConst.originalTargetNode.clone()
                 clonedTargetNode.position = SceneNodeUtil.getRandomTargetPosition()
-                // TODO: nameにindexを混ぜてnode0,node1...みたいにして一意に判別可能にする
                 SceneNodeUtil.addBillboardConstraint(clonedTargetNode)
                 self.sceneView.scene.rootNode.addChildNode(clonedTargetNode)
             }
@@ -70,7 +68,8 @@ final class GameSceneController: NSObject {
     
     func fireWeapon(_ type: WeaponType) {
         // TODO: weaponTypeを渡してWeaponConstから対象nodeなど取得する様にする（今は実際には弾は共通だが）
-        shootBullet()
+        shootBullet(of: type)
+        // TODO: 共通処理に変える（今は反動アニメーションはピストルだけだが）
         pistolNode().runAction(SceneAnimationUtil.shootingMotion())
     }
 
@@ -140,9 +139,18 @@ final class GameSceneController: NSObject {
     }
 
     //弾ノードを発射
-    private func shootBullet() {
-        //メモリ節約のため、オリジナルをクローンして使う
-        let clonedBulletNode = GameSceneConst.bulletNode.clone()
+    private func shootBullet(of weaponType: WeaponType) {
+        let gameObjectType: GameObjectInfo.ObjectType = {
+            switch weaponType {
+            case .pistol: return .pistolBullet
+            case .bazooka: return .bazookaBullet
+            }
+        }()
+        let clonedBulletNode = CustomSCNNode(
+            //メモリ節約のため、オリジナルをクローンして使う
+            from: GameSceneConst.originalBulletNode.clone(),
+            gameObjectInfo: .init(type: gameObjectType)
+        )
         clonedBulletNode.position = SceneNodeUtil.getCameraPosition(sceneView)
         sceneView.scene.rootNode.addChildNode(clonedBulletNode)
         clonedBulletNode.runAction(
@@ -150,24 +158,6 @@ final class GameSceneController: NSObject {
                 clonedBulletNode.removeFromParentNode()
             }
         )
-    }
-    
-    private func createOriginalTargetNode() -> SCNNode {
-        let originalTargetNode = SceneNodeUtil.loadScnFile(of: GameConst.getTargetScnAssetsPath(), nodeName: GameConst.targetNodeName)
-        originalTargetNode.scale = SCNVector3(0.3, 0.3, 0.3)
-        
-        let targetNodeGeometry = (originalTargetNode.childNode(withName: "sphere", recursively: false)?.geometry) ?? SCNGeometry()
-        
-        //MARK: - 当たり判定の肝2つ
-        //①形状はラップしてる空のNodeではなく何か1つgeometryを持っているものにするを指定する
-        //②当たり判定のscaleはoptions: [SCNPhysicsShape.Option.scale: SCNVector3]で明示的に設定する（大体①のgeometryの元となっているNodeのscaleを代入すれば等しい当たり判定になる）
-        let shape = SCNPhysicsShape(geometry: targetNodeGeometry, options: [SCNPhysicsShape.Option.scale: originalTargetNode.scale])
-        
-        //当たり判定用のphysicBodyを追加
-        originalTargetNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: shape)
-        originalTargetNode.physicsBody?.isAffectedByGravity = false
-        
-        return originalTargetNode
     }
     
     private func isTargetHit(nodeAName: String, nodeBName: String) -> Bool {
