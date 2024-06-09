@@ -8,7 +8,7 @@
 import RxSwift
 import RxCocoa
 
-final class TargetHitHandler {
+final class TargetHitHandler: ViewModelEventHandlerType {
     struct Input {
         let targetHit: Observable<(weaponType: WeaponType, collisionInfo: CollisionInfo)>
         let currentScore: Observable<Double>

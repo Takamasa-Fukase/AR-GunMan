@@ -8,7 +8,7 @@
 import RxSwift
 import RxCocoa
 
-final class ReloadingMotionFilter {
+final class ReloadingMotionFilter: ViewModelEventHandlerType {
     struct Input {
         let gyroUpdated: Observable<(x: Double, y: Double, z: Double)>
     }

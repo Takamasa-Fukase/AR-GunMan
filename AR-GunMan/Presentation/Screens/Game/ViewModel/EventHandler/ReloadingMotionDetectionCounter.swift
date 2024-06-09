@@ -8,7 +8,7 @@
 import RxSwift
 import RxCocoa
 
-final class ReloadingMotionDetectionCounter {
+final class ReloadingMotionDetectionCounter: ViewModelEventHandlerType {
     struct Input {
         let reloadingMotionDetected: Observable<Void>
         let currentCount: Observable<Int>

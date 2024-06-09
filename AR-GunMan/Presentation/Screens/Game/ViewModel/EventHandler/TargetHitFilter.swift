@@ -8,7 +8,7 @@
 import RxSwift
 import RxCocoa
 
-final class TargetHitFilter {
+final class TargetHitFilter: ViewModelEventHandlerType {
     struct Input {
         let collisionOccurred: Observable<CollisionInfo>
     }

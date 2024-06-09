@@ -8,7 +8,7 @@
 import RxSwift
 import RxCocoa
 
-final class TutorialSeenStatusHandler {
+final class TutorialSeenStatusHandler: ViewModelEventHandlerType {
     struct Input {
         let checkTutorialSeenStatus: Observable<Void>
     }

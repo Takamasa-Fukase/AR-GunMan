@@ -279,6 +279,9 @@
 		86F1573D2BD7BBA200BE979C /* RankingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86F1573C2BD7BBA200BE979C /* RankingUseCase.swift */; };
 		86F1573F2BD9329600BE979C /* CustomError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86F1573E2BD9329600BE979C /* CustomError.swift */; };
 		86F157412BD93C1E00BE979C /* ErrorConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86F157402BD93C1E00BE979C /* ErrorConst.swift */; };
+		BC0BBE382C15F19D00789349 /* ViewModelEventHandlerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0BBE372C15F19D00789349 /* ViewModelEventHandlerType.swift */; };
+		BC0BBE392C15F19D00789349 /* ViewModelEventHandlerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0BBE372C15F19D00789349 /* ViewModelEventHandlerType.swift */; };
+		BC0BBE3A2C15F19D00789349 /* ViewModelEventHandlerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0BBE372C15F19D00789349 /* ViewModelEventHandlerType.swift */; };
 		BC1795BC2985D01300D91A19 /* ResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1795BB2985D01300D91A19 /* ResultViewModel.swift */; };
 		BC2B11672977F90C009F4DC4 /* UIScrollView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2B11662977F90C009F4DC4 /* UIScrollView+Extension.swift */; };
 		BC62CE0A2C15607D00070B49 /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC62CE092C15607D00070B49 /* Vector.swift */; };
@@ -490,6 +493,7 @@
 		86F1573E2BD9329600BE979C /* CustomError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomError.swift; sourceTree = "<group>"; };
 		86F157402BD93C1E00BE979C /* ErrorConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorConst.swift; sourceTree = "<group>"; };
 		90D4D1AD42BB6A3A0192887F /* Pods-AR-GunManTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-GunManTests.release.xcconfig"; path = "Target Support Files/Pods-AR-GunManTests/Pods-AR-GunManTests.release.xcconfig"; sourceTree = "<group>"; };
+		BC0BBE372C15F19D00789349 /* ViewModelEventHandlerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelEventHandlerType.swift; sourceTree = "<group>"; };
 		BC1795BB2985D01300D91A19 /* ResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewModel.swift; sourceTree = "<group>"; };
 		BC2B11662977F90C009F4DC4 /* UIScrollView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Extension.swift"; sourceTree = "<group>"; };
 		BC62CE092C15607D00070B49 /* Vector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector.swift; sourceTree = "<group>"; };
@@ -1030,6 +1034,7 @@
 			isa = PBXGroup;
 			children = (
 				8627F6342BCE83F30003D374 /* ViewModelType.swift */,
+				BC0BBE372C15F19D00789349 /* ViewModelEventHandlerType.swift */,
 				861B87742BFE0F6100D0882D /* SoundPlayer.swift */,
 				BCC512CD2C15DD6000D77305 /* Enums */,
 			);
@@ -1570,6 +1575,7 @@
 				595E6987256C0190002B4F3E /* SettingsViewController.swift in Sources */,
 				67DB2C5F27C17F4E00B8CB3C /* SettingsConst.swift in Sources */,
 				8613E28D2BB1B0C600BF4489 /* CoreMotionRepository.swift in Sources */,
+				BC0BBE382C15F19D00789349 /* ViewModelEventHandlerType.swift in Sources */,
 				8629E1032BF22916004FFEBD /* ARContentController.swift in Sources */,
 				59A01134255AF580008996E3 /* ResultViewController.swift in Sources */,
 				86594DCA2BCD558E00971D1A /* AVPermissionRepository.swift in Sources */,
@@ -1595,6 +1601,7 @@
 				8606467D2BF599D500906DA0 /* NameRegisterNavigator.swift in Sources */,
 				860646972BF599E900906DA0 /* SettingsViewController.swift in Sources */,
 				BCCD447E2C12AB4500BF541D /* UIColor+Extension.swift in Sources */,
+				BC0BBE392C15F19D00789349 /* ViewModelEventHandlerType.swift in Sources */,
 				8606465A2BF5999F00906DA0 /* ARContentController.swift in Sources */,
 				8606462F2BF5997200906DA0 /* ReplayRepository.swift in Sources */,
 				8606462E2BF5997200906DA0 /* TutorialRepository.swift in Sources */,
@@ -1767,6 +1774,7 @@
 				860646352BF5997300906DA0 /* TutorialRepository.swift in Sources */,
 				860646C92BF59CF000906DA0 /* WeaponType.swift in Sources */,
 				860645F82BF5994D00906DA0 /* Font+Extension.swift in Sources */,
+				BC0BBE3A2C15F19D00789349 /* ViewModelEventHandlerType.swift in Sources */,
 				860646882BF599D600906DA0 /* NameRegisterViewModel.swift in Sources */,
 				860646932BF599E000906DA0 /* RankingCell.swift in Sources */,
 				BCF1C2852BF611F300ACD841 /* UIViewController+Extension.swift in Sources */,

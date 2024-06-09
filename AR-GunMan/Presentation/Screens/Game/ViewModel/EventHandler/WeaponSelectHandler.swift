@@ -8,7 +8,7 @@
 import RxSwift
 import RxCocoa
 
-final class WeaponSelectHandler {
+final class WeaponSelectHandler: ViewModelEventHandlerType {
     struct Input {
         let weaponSelected: Observable<WeaponType>
     }

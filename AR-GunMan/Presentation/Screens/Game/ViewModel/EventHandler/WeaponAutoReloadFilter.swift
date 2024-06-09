@@ -8,7 +8,7 @@
 import RxSwift
 import RxCocoa
 
-final class WeaponAutoReloadFilter {
+final class WeaponAutoReloadFilter: ViewModelEventHandlerType {
     struct Input {
         let weaponFired: Observable<WeaponType>
         let bulletsCount: Observable<Int>

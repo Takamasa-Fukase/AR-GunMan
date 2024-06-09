@@ -8,7 +8,7 @@
 import RxSwift
 import RxCocoa
 
-final class GameTimerHandler {
+final class GameTimerHandler: ViewModelEventHandlerType {
     struct Input {
         let timerStartTrigger: Observable<Void>
     }

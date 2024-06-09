@@ -8,7 +8,7 @@
 import RxSwift
 import RxCocoa
 
-final class FiringMotionFilter {
+final class FiringMotionFilter: ViewModelEventHandlerType {
     struct Input {
         let accelerationUpdated: Observable<(x: Double, y: Double, z: Double)>
         let gyroUpdated: Observable<(x: Double, y: Double, z: Double)>

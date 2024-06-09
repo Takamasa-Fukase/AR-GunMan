@@ -8,7 +8,7 @@
 import RxSwift
 import RxCocoa
 
-final class GameStartHandler {
+final class GameStartHandler: ViewModelEventHandlerType {
     struct Input {
         let gameStarted: Observable<Void>
     }

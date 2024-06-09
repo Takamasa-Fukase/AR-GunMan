@@ -8,7 +8,7 @@
 import RxSwift
 import RxCocoa
 
-final class WeaponFireHandler {
+final class WeaponFireHandler: ViewModelEventHandlerType {
     struct Input {
         let weaponFiringTrigger: Observable<WeaponType>
         let bulletsCount: Observable<Int>
