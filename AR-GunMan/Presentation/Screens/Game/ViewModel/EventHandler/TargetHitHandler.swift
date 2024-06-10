@@ -30,7 +30,7 @@ final class TargetHitHandler: ViewModelEventHandlerType {
                 return (weaponType: $0.weaponType, currentScore: $1)
             }
             .map({
-                return ScoreCalculator.getTotalScore(
+                return ScoreCalculator.getUpdatedScoreAfterHit(
                     currentScore: $0.currentScore,
                     weaponType: $0.weaponType
                 )
