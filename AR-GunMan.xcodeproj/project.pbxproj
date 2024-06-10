@@ -288,6 +288,8 @@
 		BC0BBE402C16D31800789349 /* NSObject+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0BBE3F2C16D31800789349 /* NSObject+Extension.swift */; };
 		BC0BBE412C16D31800789349 /* NSObject+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0BBE3F2C16D31800789349 /* NSObject+Extension.swift */; };
 		BC0BBE422C16D31800789349 /* NSObject+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0BBE3F2C16D31800789349 /* NSObject+Extension.swift */; };
+		BC0BBE442C1745EB00789349 /* UIViewController+PanModalPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0BBE432C1745EB00789349 /* UIViewController+PanModalPresentable.swift */; };
+		BC0BBE452C17460A00789349 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866675D3275215AF007CB4D6 /* UIViewController+Extension.swift */; };
 		BC1795BC2985D01300D91A19 /* ResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1795BB2985D01300D91A19 /* ResultViewModel.swift */; };
 		BC2B11672977F90C009F4DC4 /* UIScrollView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2B11662977F90C009F4DC4 /* UIScrollView+Extension.swift */; };
 		BC62CE0A2C15607D00070B49 /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC62CE092C15607D00070B49 /* Vector.swift */; };
@@ -374,8 +376,6 @@
 		BCD1C25D2C06B7C8008975EB /* ReloadingMotionFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD1C25A2C06B7C8008975EB /* ReloadingMotionFilter.swift */; };
 		BCD9675E2979E55400E33587 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD9675D2979E55400E33587 /* UIImageView+Extension.swift */; };
 		BCD96C03297C757600E33587 /* RankingViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BCD96C02297C757600E33587 /* RankingViewController.storyboard */; };
-		BCF1C2842BF611F200ACD841 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866675D3275215AF007CB4D6 /* UIViewController+Extension.swift */; };
-		BCF1C2852BF611F300ACD841 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866675D3275215AF007CB4D6 /* UIViewController+Extension.swift */; };
 		D54734259EA1C7BF11A28908 /* Pods_AR_GunMan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4280580740F2443B66781090 /* Pods_AR_GunMan.framework */; };
 /* End PBXBuildFile section */
 
@@ -502,6 +502,7 @@
 		BC0BBE372C15F19D00789349 /* ViewModelEventHandlerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelEventHandlerType.swift; sourceTree = "<group>"; };
 		BC0BBE3B2C16B7E100789349 /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
 		BC0BBE3F2C16D31800789349 /* NSObject+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Extension.swift"; sourceTree = "<group>"; };
+		BC0BBE432C1745EB00789349 /* UIViewController+PanModalPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+PanModalPresentable.swift"; sourceTree = "<group>"; };
 		BC1795BB2985D01300D91A19 /* ResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewModel.swift; sourceTree = "<group>"; };
 		BC2B11662977F90C009F4DC4 /* UIScrollView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Extension.swift"; sourceTree = "<group>"; };
 		BC62CE092C15607D00070B49 /* Vector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector.swift; sourceTree = "<group>"; };
@@ -587,6 +588,7 @@
 				59D2D5392552E1D2006DDB70 /* Storyboard+Extension.swift */,
 				5952F63F25EA0E1800ADB85B /* Font+Extension.swift */,
 				866675D3275215AF007CB4D6 /* UIViewController+Extension.swift */,
+				BC0BBE432C1745EB00789349 /* UIViewController+PanModalPresentable.swift */,
 				BC92C85D297420CD00E49BD5 /* UserDefaults+Extension.swift */,
 				BC92C85F2975A2A800E49BD5 /* UIViewController+RxLifeCycleEvents.swift */,
 				BC2B11662977F90C009F4DC4 /* UIScrollView+Extension.swift */,
@@ -1535,6 +1537,7 @@
 				5921A208255D6A4E001D8C39 /* RankingCell.swift in Sources */,
 				677DF1F127A7C096007512F6 /* RankingRepository.swift in Sources */,
 				BCD9675E2979E55400E33587 /* UIImageView+Extension.swift in Sources */,
+				BC0BBE442C1745EB00789349 /* UIViewController+PanModalPresentable.swift in Sources */,
 				BC0BBE402C16D31800789349 /* NSObject+Extension.swift in Sources */,
 				BC92C854297061FE00E49BD5 /* WeaponType.swift in Sources */,
 				BCD1C2572C06B60C008975EB /* CompositeCalculator.swift in Sources */,
@@ -1609,6 +1612,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC0BBE452C17460A00789349 /* UIViewController+Extension.swift in Sources */,
 				860646762BF599D500906DA0 /* ResultViewController.swift in Sources */,
 				8606467D2BF599D500906DA0 /* NameRegisterNavigator.swift in Sources */,
 				860646972BF599E900906DA0 /* SettingsViewController.swift in Sources */,
@@ -1668,7 +1672,6 @@
 				860646582BF5999F00906DA0 /* GameUseCase.swift in Sources */,
 				86B112522C0080AA006D464A /* WeaponFireHandler.swift in Sources */,
 				8606460F2BF5996200906DA0 /* RankingUtil.swift in Sources */,
-				BCF1C2842BF611F200ACD841 /* UIViewController+Extension.swift in Sources */,
 				860646452BF5998F00906DA0 /* TutorialNavigator.swift in Sources */,
 				8606468F2BF599DF00906DA0 /* RankingViewModel.swift in Sources */,
 				860646102BF5996200906DA0 /* SceneViewSettingUtil.swift in Sources */,
@@ -1792,7 +1795,6 @@
 				BC0BBE3A2C15F19D00789349 /* ViewModelEventHandlerType.swift in Sources */,
 				860646882BF599D600906DA0 /* NameRegisterViewModel.swift in Sources */,
 				860646932BF599E000906DA0 /* RankingCell.swift in Sources */,
-				BCF1C2852BF611F300ACD841 /* UIViewController+Extension.swift in Sources */,
 				860646022BF5995900906DA0 /* UIViewController+RxLifeCycleEvents.swift in Sources */,
 				860646812BF599D600906DA0 /* NameRegisterUseCase.swift in Sources */,
 				8606465F2BF599A000906DA0 /* GameUseCase.swift in Sources */,
@@ -2008,7 +2010,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 37MFDT4LMQ;
 				INFOPLIST_FILE = "AR-GunManTests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2031,7 +2033,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 37MFDT4LMQ;
 				INFOPLIST_FILE = "AR-GunManTests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2053,7 +2055,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 37MFDT4LMQ;
 				INFOPLIST_FILE = "AR-GunManUITests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2075,7 +2077,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 37MFDT4LMQ;
 				INFOPLIST_FILE = "AR-GunManUITests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

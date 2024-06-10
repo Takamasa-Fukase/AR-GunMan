@@ -54,9 +54,7 @@ final class ResultNavigator: ResultNavigatorInterface {
             rankingListObservable: rankingListObservable,
             eventObserver: eventObserver
         )
-        // TODO: 後でiOS16からの公式ハーフモーダルに変える
-        viewController.present(vc, animated: true)
-//        viewController.presentPanModal(vc)
+        viewController.presentPanModal(vc)
     }
     
     func backToTop() {

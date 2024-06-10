@@ -33,9 +33,7 @@ final class SettingsNavigator: SettingsNavigatorInterface {
     
     func showRanking() {
         let vc = RankingNavigator.assembleModules()
-        // TODO: 後でiOS16からの公式ハーフモーダルに変える
-        viewController.present(vc, animated: true)
-//        viewController.presentPanModal(vc)
+        viewController.presentPanModal(vc)
     }
     
     func showPrivacyPolicy() {

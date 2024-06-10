@@ -20,6 +20,20 @@
                ReferencedContainer = "container:AR-GunMan.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "NO"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "59D2D4F52552DE67006DDB70"
+               BuildableName = "AR-GunManUITests.xctest"
+               BlueprintName = "AR-GunManUITests"
+               ReferencedContainer = "container:AR-GunMan.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -35,16 +49,6 @@
                BlueprintIdentifier = "59D2D4EA2552DE67006DDB70"
                BuildableName = "AR-GunManTests.xctest"
                BlueprintName = "AR-GunManTests"
-               ReferencedContainer = "container:AR-GunMan.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "59D2D4F52552DE67006DDB70"
-               BuildableName = "AR-GunManUITests.xctest"
-               BlueprintName = "AR-GunManUITests"
                ReferencedContainer = "container:AR-GunMan.xcodeproj">
             </BuildableReference>
          </TestableReference>

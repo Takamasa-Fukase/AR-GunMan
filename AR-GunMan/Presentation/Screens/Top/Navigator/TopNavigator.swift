@@ -45,16 +45,12 @@ final class TopNavigator: TopNavigatorInterface {
     
     func showSettings() {
         let vc = SettingsNavigator.assembleModules()
-        // TODO: 後でiOS16からの公式ハーフモーダルに変える
-        viewController.present(vc, animated: true)
-//        viewController.presentPanModal(vc)
+        viewController.presentPanModal(vc)
     }
     
     func showTutorial() {
         let vc = TutorialNavigator.assembleModules(transitionType: .topPage)
-        // TODO: 後でiOS16からの公式ハーフモーダルに変える
-        viewController.present(vc, animated: true)
-//        viewController.presentPanModal(vc)
+        viewController.presentPanModal(vc)
         
         
     }

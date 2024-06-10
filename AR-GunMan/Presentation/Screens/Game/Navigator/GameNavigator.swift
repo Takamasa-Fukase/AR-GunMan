@@ -64,9 +64,7 @@ final class GameNavigator: GameNavigatorInterface {
             transitionType: .gamePage,
             tutorialEndObserver: tutorialEndObserver
         )
-        // TODO: 後でiOS16からの公式ハーフモーダルに変える
-        viewController.present(vc, animated: true)
-//        viewController.presentPanModal(vc)
+        viewController.presentPanModal(vc)
     }
     
     func showWeaponChangeView(weaponSelectObserver: PublishRelay<WeaponType>) {
