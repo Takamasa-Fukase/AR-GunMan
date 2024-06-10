@@ -53,12 +53,12 @@ final class GameViewModel: ViewModelType {
             let rankingAppearSoundPlayed: Observable<SoundType>
             
             // state changes
+            let weaponTypeChanged: Observable<WeaponType>
+            let weaponReloadingFlagChanged: Observable<Bool>
+            let weaponReloadingFlagChangedForNewWeapon: Observable<Bool>
             let bulletsCountDecremented: Observable<Int>
             let bulletsCountRefilled: Observable<Int>
             let bulletsCountRefilledForNewWeapon: Observable<Int>
-            let weaponReloadingFlagChanged: Observable<Bool>
-            let weaponReloadingFlagChangedForNewWeapon: Observable<Bool>
-            let weaponTypeChanged: Observable<WeaponType>
             let scoreUpdated: Observable<Double>
             let reloadingMotionDetectedCountUpdated: Observable<Int>
             
@@ -105,8 +105,8 @@ final class GameViewModel: ViewModelType {
     class State {
         let timeCountRelay = BehaviorRelay<Double>(value: GameConst.timeCount)
         let weaponTypeRelay = BehaviorRelay<WeaponType>(value: .pistol)
-        let bulletsCountRelay = BehaviorRelay<Int>(value: WeaponType.pistol.bulletsCapacity)
         var isWeaponReloadingRelay = BehaviorRelay<Bool>(value: false)
+        let bulletsCountRelay = BehaviorRelay<Int>(value: WeaponType.pistol.bulletsCapacity)
         let scoreRelay = BehaviorRelay<Double>(value: 0)
         let reloadingMotionDetectedCountRelay = BehaviorRelay<Int>(value: 0)
     }
@@ -480,12 +480,12 @@ final class GameViewModel: ViewModelType {
                 weaponChangingSoundPlayed: weaponChangingSoundPlayed,
                 endWhistleSoundPlayed: endWhistleSoundPlayed,
                 rankingAppearSoundPlayed: rankingAppearSoundPlayed,
+                weaponTypeChanged: weaponTypeChanged,
+                weaponReloadingFlagChanged: weaponReloadingFlagChanged,
+                weaponReloadingFlagChangedForNewWeapon: weaponReloadingFlagChangedForNewWeapon,
                 bulletsCountDecremented: bulletsCountDecremented,
                 bulletsCountRefilled: bulletsCountRefilled,
                 bulletsCountRefilledForNewWeapon: bulletsCountRefilledForNewWeapon,
-                weaponReloadingFlagChanged: weaponReloadingFlagChanged,
-                weaponReloadingFlagChangedForNewWeapon: weaponReloadingFlagChangedForNewWeapon,
-                weaponTypeChanged: weaponTypeChanged,
                 scoreUpdated: scoreUpdated,
                 reloadingMotionDetectedCountUpdated: reloadingMotionDetectedCountUpdated,
                 tutorialViewShowed: tutorialViewShowed,
