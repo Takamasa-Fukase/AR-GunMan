@@ -290,6 +290,7 @@
 		BC0BBE422C16D31800789349 /* NSObject+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0BBE3F2C16D31800789349 /* NSObject+Extension.swift */; };
 		BC0BBE442C1745EB00789349 /* UIViewController+PanModalPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0BBE432C1745EB00789349 /* UIViewController+PanModalPresentable.swift */; };
 		BC0BBE452C17460A00789349 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866675D3275215AF007CB4D6 /* UIViewController+Extension.swift */; };
+		BC0BBE472C17474800789349 /* WeaponAutoReloadHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0BBE462C17474800789349 /* WeaponAutoReloadHandlerTests.swift */; };
 		BC1795BC2985D01300D91A19 /* ResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1795BB2985D01300D91A19 /* ResultViewModel.swift */; };
 		BC2B11672977F90C009F4DC4 /* UIScrollView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2B11662977F90C009F4DC4 /* UIScrollView+Extension.swift */; };
 		BC62CE0A2C15607D00070B49 /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC62CE092C15607D00070B49 /* Vector.swift */; };
@@ -503,6 +504,7 @@
 		BC0BBE3B2C16B7E100789349 /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
 		BC0BBE3F2C16D31800789349 /* NSObject+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Extension.swift"; sourceTree = "<group>"; };
 		BC0BBE432C1745EB00789349 /* UIViewController+PanModalPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+PanModalPresentable.swift"; sourceTree = "<group>"; };
+		BC0BBE462C17474800789349 /* WeaponAutoReloadHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponAutoReloadHandlerTests.swift; sourceTree = "<group>"; };
 		BC1795BB2985D01300D91A19 /* ResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewModel.swift; sourceTree = "<group>"; };
 		BC2B11662977F90C009F4DC4 /* UIScrollView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Extension.swift"; sourceTree = "<group>"; };
 		BC62CE092C15607D00070B49 /* Vector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector.swift; sourceTree = "<group>"; };
@@ -684,6 +686,7 @@
 			children = (
 				BCD1C2282C01B9E2008975EB /* WeaponFiringEventTransformerTests.swift */,
 				BCD1C2372C043924008975EB /* WeaponReloadingEventTransformerTests.swift */,
+				BC0BBE462C17474800789349 /* WeaponAutoReloadHandlerTests.swift */,
 				861B87782BFE258100D0882D /* SoundPlayerMock.swift */,
 				59D2D4F12552DE67006DDB70 /* Info.plist */,
 			);
@@ -1627,6 +1630,7 @@
 				BCCD44762C0D935B00BF541D /* GameTimerDisposalHandler.swift in Sources */,
 				8606467C2BF599D500906DA0 /* ResultUseCase.swift in Sources */,
 				860646782BF599D500906DA0 /* ResultViewModel.swift in Sources */,
+				BC0BBE472C17474800789349 /* WeaponAutoReloadHandlerTests.swift in Sources */,
 				BCD1C2382C043924008975EB /* WeaponReloadingEventTransformerTests.swift in Sources */,
 				BCC512CB2C15CFBF00D77305 /* ParticleSystemType.swift in Sources */,
 				BCC512C32C15B5F000D77305 /* Extension+SCNNode.swift in Sources */,
