@@ -43,7 +43,7 @@ final class ARContentController: NSObject {
     // 的ノードをランダムな座標に設置
     func showTargets(count: Int) {
         DispatchQueue.main.async {
-            Array(0..<count).forEach { index in
+            Array(0..<count).forEach { _ in
                 //メモリ節約のため、オリジナルをクローンして使う
                 let clonedTargetNode = ARContentConst.originalTargetNode.clone()
                 clonedTargetNode.position = SceneNodeUtil.getRandomTargetPosition()
