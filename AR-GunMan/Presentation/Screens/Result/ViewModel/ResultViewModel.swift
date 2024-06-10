@@ -17,7 +17,7 @@ final class ResultViewModel: ViewModelType {
     
     struct Output {
         let rankingList: Observable<[Ranking]>
-        let totalScore: Observable<String>
+        let scoreText: Observable<String>
         let showButtons: Observable<Void>
         let scrollAndHightlightCell: Observable<IndexPath>
         let isLoading: Observable<Bool>
@@ -100,11 +100,11 @@ final class ResultViewModel: ViewModelType {
                 scrollAndHightlightCellRelay.accept(IndexPath(row: rankIndex, section: 0))
             }).disposed(by: disposeBag)
         
-        let totalScore = Observable.just(String(format: "%.3f", totalScore))
+        let scoreText = Observable.just(score.scoreText)
 
         return Output(
             rankingList: rankingListRelay.asObservable(),
-            totalScore: totalScore,
+            scoreText: scoreText,
             showButtons: nameRegisterEventObserver.onClose.asObservable(),
             scrollAndHightlightCell: scrollAndHightlightCellRelay.asObservable(),
             isLoading: loadingTracker.asObservable()

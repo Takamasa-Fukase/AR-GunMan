@@ -23,7 +23,7 @@ final class RankingCell: UITableViewCell {
     
     func configure(ranking: Ranking, row: Int) {
         nameLabel.text = ranking.userName
-        scoreLabel.text = String(format: "%.3f", ranking.score)
+        scoreLabel.text = ranking.score.scoreText
         rankLabel.text = String(row + 1)
     }
 }

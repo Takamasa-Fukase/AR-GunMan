@@ -23,7 +23,7 @@ final class NameRegisterViewModel: ViewModelType {
     
     struct Output {
         let rankText: Observable<String?>
-        let totalScore: Observable<String>
+        let scoreText: Observable<String>
         let isRegisterButtonEnabled: Observable<Bool>
         let isRegistering: Observable<Bool>
     }
@@ -90,9 +90,7 @@ final class NameRegisterViewModel: ViewModelType {
                 )
             })
         
-        let totalScore = Observable.just(
-            "Score: \(String(format: "%.3f", totalScore))"
-        )
+        let scoreText = Observable.just("Score: \(score.scoreText)")
         
         let isRegisterButtonEnabled = input.nameTextFieldChanged
             .map({ element in
@@ -101,7 +99,7 @@ final class NameRegisterViewModel: ViewModelType {
         
         return Output(
             rankText: rankText,
-            totalScore: totalScore,
+            scoreText: scoreText,
             isRegisterButtonEnabled: isRegisterButtonEnabled,
             isRegistering: registeringTracker.asObservable()
         )
