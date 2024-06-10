@@ -35,8 +35,7 @@ final class ResultViewController: UIViewController {
         
         output.rankingList
             .bind(to: tableView.rx.items(
-                // TODO: セルのクラス内にstaticで定義する
-                cellIdentifier: "RankingCell",
+                cellIdentifier: RankingCell.reuseIdentifier,
                 cellType: RankingCell.self
             )) { row, element, cell in
                 cell.configure(ranking: element, row: row)
@@ -76,7 +75,7 @@ final class ResultViewController: UIViewController {
         replayButton.alpha = 0
         homeButton.alpha = 0
         tableView.contentInset.top = 10
-        tableView.register(UINib(nibName: "RankingCell", bundle: nil), forCellReuseIdentifier: "RankingCell")
+        tableView.register(UINib(nibName: RankingCell.reuseIdentifier, bundle: nil), forCellReuseIdentifier: RankingCell.reuseIdentifier)
     }
 
     private func showButtons() {
