@@ -24,7 +24,7 @@ final class NameRegisterNavigator: NameRegisterNavigatorInterface {
         rankingListObservable: Observable<[Ranking]>,
         eventObserver: NameRegisterEventObserver
     ) -> UIViewController {
-        let storyboard: UIStoryboard = UIStoryboard(name: "NameRegisterViewController", bundle: nil)
+        let storyboard: UIStoryboard = UIStoryboard(name: NameRegisterViewController.className, bundle: nil)
         let vc = storyboard.instantiateInitialViewController() as! NameRegisterViewController
         vc.modalPresentationStyle = .overCurrentContext
         let navigator = NameRegisterNavigator(viewController: vc)

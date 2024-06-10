@@ -23,7 +23,7 @@ final class TopNavigator: TopNavigatorInterface {
     }
     
     static func assembleModules() -> UIViewController {
-        let storyboard = UIStoryboard(name: "TopViewController", bundle: nil)
+        let storyboard = UIStoryboard(name: TopViewController.className, bundle: nil)
         let vc = storyboard.instantiateInitialViewController() as! TopViewController
         let useCase = TopUseCase(
             avPermissionRepository: AVPermissionRepository(),
@@ -55,6 +55,8 @@ final class TopNavigator: TopNavigatorInterface {
         // TODO: 後でiOS16からの公式ハーフモーダルに変える
         viewController.present(vc, animated: true)
 //        viewController.presentPanModal(vc)
+        
+        
     }
     
     func showCameraPermissionDescriptionAlert() {

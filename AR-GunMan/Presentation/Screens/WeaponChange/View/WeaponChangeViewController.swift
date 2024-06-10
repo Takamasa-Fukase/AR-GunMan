@@ -17,8 +17,8 @@ final class WeaponChangeViewController: UIViewController {
     
     @IBOutlet private weak var pagerView: FSPagerView! {
         didSet{
-            let nib = UINib(nibName: "WeaponChangeCell", bundle: nil)
-            self.pagerView.register(nib, forCellWithReuseIdentifier: "WeaponChangeCell")
+            let nib = UINib(nibName: WeaponChangeCell.className, bundle: nil)
+            self.pagerView.register(nib, forCellWithReuseIdentifier: WeaponChangeCell.className)
         }
     }
     
@@ -62,7 +62,7 @@ extension WeaponChangeViewController: FSPagerViewDataSource {
     }
     
     func pagerView(_ pagerView: FSPagerView, cellForItemAt index: Int) -> FSPagerViewCell {
-        guard let cell = pagerView.dequeueReusableCell(withReuseIdentifier: "WeaponChangeCell", at: index) as? WeaponChangeCell else {
+        guard let cell = pagerView.dequeueReusableCell(withReuseIdentifier: WeaponChangeCell.className, at: index) as? WeaponChangeCell else {
             return FSPagerViewCell()
         }
         cell.configure(

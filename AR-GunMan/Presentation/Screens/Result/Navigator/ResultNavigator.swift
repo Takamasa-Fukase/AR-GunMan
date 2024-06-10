@@ -27,7 +27,7 @@ final class ResultNavigator: ResultNavigatorInterface {
     }
     
     static func assembleModules(score: Double) -> UIViewController {
-        let storyboard = UIStoryboard(name: "ResultViewController", bundle: nil)
+        let storyboard = UIStoryboard(name: ResultViewController.className, bundle: nil)
         let vc = storyboard.instantiateInitialViewController() as! ResultViewController
         vc.modalPresentationStyle = .fullScreen
         let useCase = ResultUseCase(

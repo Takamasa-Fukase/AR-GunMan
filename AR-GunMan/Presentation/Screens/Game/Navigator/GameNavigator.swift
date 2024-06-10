@@ -25,7 +25,7 @@ final class GameNavigator: GameNavigatorInterface {
     }
 
     static func assembleModules() -> UIViewController {
-        let storyboard: UIStoryboard = UIStoryboard(name: "GameViewController", bundle: nil)
+        let storyboard: UIStoryboard = UIStoryboard(name: GameViewController.className, bundle: nil)
         let vc = storyboard.instantiateInitialViewController() as! GameViewController
         vc.modalPresentationStyle = .fullScreen
         

@@ -23,7 +23,7 @@ final class SettingsNavigator: SettingsNavigatorInterface {
     }
     
     static func assembleModules() -> UIViewController {
-        let storyboard: UIStoryboard = UIStoryboard(name: "SettingsViewController", bundle: nil)
+        let storyboard: UIStoryboard = UIStoryboard(name: SettingsViewController.className, bundle: nil)
         let vc = storyboard.instantiateInitialViewController() as! SettingsViewController
         let navigator = SettingsNavigator(viewController: vc)
         let viewModel = SettingsViewModel(navigator: navigator)

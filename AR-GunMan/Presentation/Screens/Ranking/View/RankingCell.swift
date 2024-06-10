@@ -8,8 +8,6 @@
 import UIKit
 
 final class RankingCell: UITableViewCell {
-    static let reuseIdentifier = "RankingCell"
-    
     @IBOutlet private weak var scoreLabel: UILabel!
     @IBOutlet private weak var nameLabel: UILabel!
     @IBOutlet private weak var rankLabel: UILabel!

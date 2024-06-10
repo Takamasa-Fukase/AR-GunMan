@@ -32,7 +32,7 @@ final class RankingViewController: UIViewController {
         
         output.rankingList
             .bind(to: tableView.rx.items(
-                cellIdentifier: RankingCell.reuseIdentifier,
+                cellIdentifier: RankingCell.className,
                 cellType: RankingCell.self
             )) { row, element, cell in
                 cell.configure(ranking: element, row: row)
@@ -62,7 +62,7 @@ final class RankingViewController: UIViewController {
     
     private func setupTableView() {
         tableView.contentInset.top = 10
-        tableView.register(UINib(nibName: RankingCell.reuseIdentifier, bundle: nil), forCellReuseIdentifier: RankingCell.reuseIdentifier)
+        tableView.register(UINib(nibName: RankingCell.className, bundle: nil), forCellReuseIdentifier: RankingCell.className)
     }
 }
 
