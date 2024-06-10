@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22113.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="fhR-3F-0ga">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="fhR-3F-0ga">
     <device id="retina6_1" orientation="landscape" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22089.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -236,8 +235,8 @@
                         <outlet property="homeButton" destination="iHA-ik-oUi" id="ihD-D2-2IZ"/>
                         <outlet property="replayButton" destination="avj-FL-Nbb" id="sdc-bK-BYL"/>
                         <outlet property="rightButtonsStackView" destination="v39-2X-XUS" id="dSD-40-YgN"/>
+                        <outlet property="scoreLabel" destination="dJn-TX-OQf" id="Cch-qh-eHC"/>
                         <outlet property="tableView" destination="8Qm-qL-jSi" id="WyP-bS-Grl"/>
-                        <outlet property="totalScoreLabel" destination="dJn-TX-OQf" id="bI6-6L-6F7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MKM-Yl-M2b" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

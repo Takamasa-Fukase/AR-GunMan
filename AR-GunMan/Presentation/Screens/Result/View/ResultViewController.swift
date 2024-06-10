@@ -15,7 +15,7 @@ final class ResultViewController: UIViewController {
     
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var activityIndicatorView: UIActivityIndicatorView!
-    @IBOutlet private weak var totalScoreLabel: UILabel!
+    @IBOutlet private weak var scoreLabel: UILabel!
     @IBOutlet private weak var rightButtonsStackView: UIStackView!
     @IBOutlet private weak var replayButton: UIButton!
     @IBOutlet private weak var homeButton: UIButton!
@@ -35,14 +35,15 @@ final class ResultViewController: UIViewController {
         
         output.rankingList
             .bind(to: tableView.rx.items(
+                // TODO: セルのクラス内にstaticで定義する
                 cellIdentifier: "RankingCell",
                 cellType: RankingCell.self
             )) { row, element, cell in
                 cell.configure(ranking: element, row: row)
             }.disposed(by: disposeBag)
         
-        output.totalScore
-            .bind(to: totalScoreLabel.rx.text)
+        output.scoreText
+            .bind(to: scoreLabel.rx.text)
             .disposed(by: disposeBag)
         
         output.showButtons

@@ -16,7 +16,7 @@ final class NameRegisterViewController: UIViewController {
     
     @IBOutlet private weak var rankLabel: UILabel!
     @IBOutlet private weak var rankLabelSpinner: UIActivityIndicatorView!
-    @IBOutlet private weak var totalScoreLabel: UILabel!
+    @IBOutlet private weak var scoreLabel: UILabel!
     @IBOutlet private weak var nameTextField: UITextField!
     @IBOutlet private weak var noButton: UIButton!
     @IBOutlet private weak var registerButton: UIButton!
@@ -44,8 +44,8 @@ final class NameRegisterViewController: UIViewController {
                 self.rankLabelSpinner.isHidden = rankText != nil
             }).disposed(by: disposeBag)
 
-        output.totalScore
-            .bind(to: totalScoreLabel.rx.text)
+        output.scoreText
+            .bind(to: scoreLabel.rx.text)
             .disposed(by: disposeBag)
         
         output.isRegisterButtonEnabled

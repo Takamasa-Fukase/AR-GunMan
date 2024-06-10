@@ -14,7 +14,7 @@ protocol GameNavigatorInterface {
     func showTutorialView(tutorialEndObserver: PublishRelay<Void>)
     func showWeaponChangeView(weaponSelectObserver: PublishRelay<WeaponType>)
     func dismissWeaponChangeView()
-    func showResultView(totalScore: Double)
+    func showResultView(score: Double)
 }
 
 final class GameNavigator: GameNavigatorInterface {
@@ -80,8 +80,8 @@ final class GameNavigator: GameNavigatorInterface {
         viewController.presentedViewController?.dismiss(animated: true)
     }
     
-    func showResultView(totalScore: Double) {
-        let vc = ResultNavigator.assembleModules(totalScore: totalScore)
+    func showResultView(score: Double) {
+        let vc = ResultNavigator.assembleModules(score: score)
         viewController.present(vc, animated: true)
     }
 }

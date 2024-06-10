@@ -15,7 +15,7 @@ final class RankingUtil {
     ) -> String? {
         guard !rankingList.isEmpty else { return nil }
         // スコア表示は1から始まるので＋1する
-        let temporaryRankNumber = getTemporaryRankIndex(rankingList: rankingList, score: score)
+        let temporaryRankNumber = getTemporaryRankIndex(rankingList: rankingList, score: score) + 1
         return "\(temporaryRankNumber) / \(rankingList.count)"
     }
     
@@ -24,7 +24,7 @@ final class RankingUtil {
         rankingList: [Ranking],
         score: Double
     ) -> Int {
-        // スコアの高い順になっているリストの中から最初にtotalScore以下のランクのindex番号を取得
+        // スコアの高い順になっているリストの中から最初に引数のscore以下のランクのindex番号を取得
         return rankingList.firstIndex(where: { $0.score <= score }) ?? 0
     }
 }

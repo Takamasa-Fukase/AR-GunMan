@@ -395,7 +395,7 @@ final class GameViewModel: ViewModelType {
         let resultViewShowed = gameTimerDisposalHandlerOutput.showResultView
             .do(onNext: { [weak self] _ in
                 guard let self = self else { return }
-                self.navigator.showResultView(totalScore: self.state.scoreRelay.value)
+                self.navigator.showResultView(score: self.state.scoreRelay.value)
             })
         
         let reloadingMotionDetectionCounterOutput = reloadingMotionDetectionCounter

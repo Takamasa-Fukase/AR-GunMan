@@ -27,7 +27,7 @@ final class ResultViewModel: ViewModelType {
 
     private let useCase: ResultUseCaseInterface
     private let navigator: ResultNavigatorInterface
-    private let totalScore: Double
+    private let score: Double
     
     private let disposeBag = DisposeBag()
     private let nameRegisterEventObserver = NameRegisterEventObserver()
@@ -35,11 +35,11 @@ final class ResultViewModel: ViewModelType {
     init(
         useCase: ResultUseCaseInterface,
         navigator: ResultNavigatorInterface,
-        totalScore: Double
+        score: Double
     ) {
         self.useCase = useCase
         self.navigator = navigator
-        self.totalScore = totalScore
+        self.score = score
     }
     
     func transform(input: Input) -> Output {
@@ -52,7 +52,7 @@ final class ResultViewModel: ViewModelType {
             .map({ [weak self] _ in
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     self?.navigator.showNameRegister(
-                        totalScore: self?.totalScore ?? 0.0,
+                        score: self?.score ?? 0.0,
                         rankingListObservable: rankingListRelay.asObservable(),
                         eventObserver: self?.nameRegisterEventObserver ?? NameRegisterEventObserver()
                     )

@@ -11,7 +11,7 @@ import RxSwift
 
 protocol ResultNavigatorInterface {
     func showNameRegister(
-        totalScore: Double,
+        score: Double,
         rankingListObservable: Observable<[Ranking]>,
         eventObserver: NameRegisterEventObserver
     )
@@ -26,7 +26,7 @@ final class ResultNavigator: ResultNavigatorInterface {
         self.viewController = viewController
     }
     
-    static func assembleModules(totalScore: Double) -> UIViewController {
+    static func assembleModules(score: Double) -> UIViewController {
         let storyboard = UIStoryboard(name: "ResultViewController", bundle: nil)
         let vc = storyboard.instantiateInitialViewController() as! ResultViewController
         vc.modalPresentationStyle = .fullScreen
@@ -38,19 +38,19 @@ final class ResultNavigator: ResultNavigatorInterface {
         let viewModel = ResultViewModel(
             useCase: useCase,
             navigator: navigator,
-            totalScore: totalScore
+            score: score
         )
         vc.viewModel = viewModel
         return vc
     }
     
     func showNameRegister(
-        totalScore: Double,
+        score: Double,
         rankingListObservable: Observable<[Ranking]>,
         eventObserver: NameRegisterEventObserver
     ) {
         let vc = NameRegisterNavigator.assembleModules(
-            totalScore: totalScore,
+            score: score,
             rankingListObservable: rankingListObservable,
             eventObserver: eventObserver
         )

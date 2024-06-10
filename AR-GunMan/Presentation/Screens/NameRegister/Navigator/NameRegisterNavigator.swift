@@ -20,7 +20,7 @@ final class NameRegisterNavigator: NameRegisterNavigatorInterface {
     }
     
     static func assembleModules(
-        totalScore: Double,
+        score: Double,
         rankingListObservable: Observable<[Ranking]>,
         eventObserver: NameRegisterEventObserver
     ) -> UIViewController {
@@ -32,7 +32,7 @@ final class NameRegisterNavigator: NameRegisterNavigatorInterface {
         let viewModel = NameRegisterViewModel(
             navigator: navigator,
             useCase: useCase,
-            totalScore: totalScore,
+            score: score,
             rankingListObservable: rankingListObservable,
             eventObserver: eventObserver
         )
