@@ -216,6 +216,8 @@
 		BC482DD02C1815B000FAF079 /* ReplayHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DCE2C1815B000FAF079 /* ReplayHandler.swift */; };
 		BC482DD22C181B0600FAF079 /* CameraPermissionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DD12C181B0600FAF079 /* CameraPermissionHandler.swift */; };
 		BC482DD32C181B0600FAF079 /* CameraPermissionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DD12C181B0600FAF079 /* CameraPermissionHandler.swift */; };
+		BC482DD52C18226800FAF079 /* TopPageButtonIconChangeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DD42C18226800FAF079 /* TopPageButtonIconChangeHandler.swift */; };
+		BC482DD62C18226800FAF079 /* TopPageButtonIconChangeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DD42C18226800FAF079 /* TopPageButtonIconChangeHandler.swift */; };
 		BC62CE0A2C15607D00070B49 /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC62CE092C15607D00070B49 /* Vector.swift */; };
 		BC62CE0B2C15607D00070B49 /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC62CE092C15607D00070B49 /* Vector.swift */; };
 		BC62CE0E2C15632100070B49 /* TargetHitFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC62CE0D2C15632100070B49 /* TargetHitFilter.swift */; };
@@ -406,6 +408,7 @@
 		BC482DCA2C1800E500FAF079 /* TopUseCase2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopUseCase2.swift; sourceTree = "<group>"; };
 		BC482DCE2C1815B000FAF079 /* ReplayHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplayHandler.swift; sourceTree = "<group>"; };
 		BC482DD12C181B0600FAF079 /* CameraPermissionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPermissionHandler.swift; sourceTree = "<group>"; };
+		BC482DD42C18226800FAF079 /* TopPageButtonIconChangeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopPageButtonIconChangeHandler.swift; sourceTree = "<group>"; };
 		BC62CE092C15607D00070B49 /* Vector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector.swift; sourceTree = "<group>"; };
 		BC62CE0D2C15632100070B49 /* TargetHitFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetHitFilter.swift; sourceTree = "<group>"; };
 		BC92C853297061FE00E49BD5 /* WeaponType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponType.swift; sourceTree = "<group>"; };
@@ -1005,6 +1008,7 @@
 			children = (
 				BC482DCE2C1815B000FAF079 /* ReplayHandler.swift */,
 				BC482DD12C181B0600FAF079 /* CameraPermissionHandler.swift */,
+				BC482DD42C18226800FAF079 /* TopPageButtonIconChangeHandler.swift */,
 			);
 			path = EventHandler;
 			sourceTree = "<group>";
@@ -1458,6 +1462,7 @@
 				BCC512CA2C15CFBF00D77305 /* ParticleSystemType.swift in Sources */,
 				BCC512C62C15CF7300D77305 /* WeaponTypeConst.swift in Sources */,
 				8629E1052BF2E56E004FFEBD /* GameUseCase.swift in Sources */,
+				BC482DD52C18226800FAF079 /* TopPageButtonIconChangeHandler.swift in Sources */,
 				677DF1EE27A710A8007512F6 /* SafariViewUtil.swift in Sources */,
 				BCCD44792C12982500BF541D /* ReloadingMotionDetectionCounter.swift in Sources */,
 				BCD1C24A2C05B3D0008975EB /* WeaponAutoReloadFilter.swift in Sources */,
@@ -1522,6 +1527,7 @@
 				8606462E2BF5997200906DA0 /* TutorialRepository.swift in Sources */,
 				BCCD44882C12C8C000BF541D /* GameObjectInfo.swift in Sources */,
 				BCCD44522C0954B700BF541D /* WeaponSelectHandler.swift in Sources */,
+				BC482DD62C18226800FAF079 /* TopPageButtonIconChangeHandler.swift in Sources */,
 				8606466A2BF599BC00906DA0 /* WeaponChangeNavigator.swift in Sources */,
 				BC0BBE482C174B1000789349 /* TopNavigator.swift in Sources */,
 				BCCD44762C0D935B00BF541D /* GameTimerDisposalHandler.swift in Sources */,
