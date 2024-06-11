@@ -41,14 +41,16 @@ final class TopViewModel2: ViewModelType {
     private let useCase: TopUseCaseInterface2
     private let navigator: TopNavigatorInterface
     private let soundPlayer: SoundPlayerInterface
+
+    // EventHandlers
     private let replayHandler: ReplayHandler
     private let cameraPermissionHandler: CameraPermissionHandler
     private let buttonIconChangeHandler: TopPageButtonIconChangeHandler
-    
+
     init(
         useCase: TopUseCaseInterface2,
         navigator: TopNavigatorInterface,
-        soundPlayer: SoundPlayerInterface,
+        soundPlayer: SoundPlayerInterface = SoundPlayer.shared,
         replayHandler: ReplayHandler,
         cameraPermissionHandler: CameraPermissionHandler,
         buttonIconChangeHandler: TopPageButtonIconChangeHandler
@@ -99,7 +101,6 @@ final class TopViewModel2: ViewModelType {
         let settingsButtonIconChangeHandlerOutput = buttonIconChangeHandler
             .transform(input: .init(buttonTapped: input.startButtonTapped))
         
-        
         let settingsViewShowed = settingsButtonIconChangeHandlerOutput.buttonIconReverted
             .do(onNext: { [weak self] _ in
                 guard let self = self else { return }
@@ -108,7 +109,6 @@ final class TopViewModel2: ViewModelType {
         
         let howToPlayButtonIconChangeHandlerOutput = buttonIconChangeHandler
             .transform(input: .init(buttonTapped: input.startButtonTapped))
-        
         
         let tutorialViewShowed = howToPlayButtonIconChangeHandlerOutput.buttonIconReverted
             .do(onNext: { [weak self] _ in

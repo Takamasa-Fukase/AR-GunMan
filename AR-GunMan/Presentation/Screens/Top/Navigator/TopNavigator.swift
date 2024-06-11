@@ -25,14 +25,18 @@ final class TopNavigator: TopNavigatorInterface {
     static func assembleModules() -> UIViewController {
         let storyboard = UIStoryboard(name: TopViewController.className, bundle: nil)
         let vc = storyboard.instantiateInitialViewController() as! TopViewController
-        let useCase = TopUseCase(
+        let useCase = TopUseCase2(
             avPermissionRepository: AVPermissionRepository(),
-            replayRepository: ReplayRepository()
+            replayRepository: ReplayRepository(),
+            timerRepository: TimerRepository()
         )
         let navigator = TopNavigator(viewController: vc)
-        let viewModel = TopViewModel(
+        let viewModel = TopViewModel2(
             useCase: useCase,
-            navigator: navigator
+            navigator: navigator,
+            replayHandler: ReplayHandler(topUseCase: useCase),
+            cameraPermissionHandler: CameraPermissionHandler(topUseCase: useCase),
+            buttonIconChangeHandler: TopPageButtonIconChangeHandler(topUseCase: useCase)
         )
         vc.viewModel = viewModel
         return vc
@@ -51,8 +55,6 @@ final class TopNavigator: TopNavigatorInterface {
     func showTutorial() {
         let vc = TutorialNavigator.assembleModules(transitionType: .topPage)
         viewController.presentPanModal(vc)
-        
-        
     }
     
     func showCameraPermissionDescriptionAlert() {

@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 
 final class TopViewController: UIViewController {
-    var viewModel: TopViewModel!
+    var viewModel: TopViewModel2!
     private let disposeBag = DisposeBag()
     
     @IBOutlet private weak var startButton: UIButton!
@@ -23,26 +23,39 @@ final class TopViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let input = TopViewModel.Input(
+
+        let input = TopViewModel2.Input(
             viewDidAppear: rx.viewDidAppear,
             startButtonTapped: startButton.rx.tap.asObservable(),
             settingsButtonTapped: settingsButton.rx.tap.asObservable(),
             howToPlayButtonTapped: howToPlayButton.rx.tap.asObservable()
         )
-        
         let output = viewModel.transform(input: input)
+        bind(output: output)
+    }
+    
+    func bind(output: TopViewModel2.Output) {
+        let viewModelAction = output.viewModelAction
+        disposeBag.insert {
+            viewModelAction.gameViewShowed.subscribe()
+            viewModelAction.settingsViewShowed.subscribe()
+            viewModelAction.tutorialViewShowed.subscribe()
+            viewModelAction.cameraPermissionDescriptionAlertShowed.subscribe()
+            viewModelAction.iconChangingSoundPlayed.subscribe()
+            viewModelAction.needsReplayFlagIsSetToFalse.subscribe()
+        }
         
-        output.startButtonImage
-            .bind(to: startButtonIcon.rx.image)
-            .disposed(by: disposeBag)
-        
-        output.settingsButtonImage
-            .bind(to: settingsButtonIcon.rx.image)
-            .disposed(by: disposeBag)
-        
-        output.howToPlayButtonImage
-            .bind(to: howToPlayButtonIcon.rx.image)
-            .disposed(by: disposeBag)
+        let outputToView = output.outputToView
+        disposeBag.insert {
+            outputToView.isStartButtonIconSwitched
+                .map({ TopConst.targetIcon(isSwitched: $0) })
+                .bind(to: startButtonIcon.rx.image)
+            outputToView.isSettingsButtonIconSwitched
+                .map({ TopConst.targetIcon(isSwitched: $0) })
+                .bind(to: settingsButtonIcon.rx.image)
+            outputToView.isHowToPlayButtonIconSwitched
+                .map({ TopConst.targetIcon(isSwitched: $0) })
+                .bind(to: howToPlayButtonIcon.rx.image)
+        }
     }
 }

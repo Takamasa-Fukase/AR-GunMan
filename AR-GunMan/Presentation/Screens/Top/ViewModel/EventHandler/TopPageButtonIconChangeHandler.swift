@@ -24,7 +24,7 @@ final class TopPageButtonIconChangeHandler: ViewModelEventHandlerType {
     
     init(
         topUseCase: TopUseCaseInterface2,
-        soundPlayer: SoundPlayerInterface
+        soundPlayer: SoundPlayerInterface = SoundPlayer.shared
     ) {
         self.topUseCase = topUseCase
         self.soundPlayer = soundPlayer
