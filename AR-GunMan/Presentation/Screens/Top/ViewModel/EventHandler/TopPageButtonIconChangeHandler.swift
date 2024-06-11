@@ -20,14 +20,9 @@ final class TopPageButtonIconChangeHandler: ViewModelEventHandlerType {
     }
     
     private let topUseCase: TopUseCaseInterface2
-    private let soundPlayer: SoundPlayerInterface
     
-    init(
-        topUseCase: TopUseCaseInterface2,
-        soundPlayer: SoundPlayerInterface = SoundPlayer.shared
-    ) {
+    init(topUseCase: TopUseCaseInterface2) {
         self.topUseCase = topUseCase
-        self.soundPlayer = soundPlayer
     }
     
     func transform(input: Input) -> Output {
