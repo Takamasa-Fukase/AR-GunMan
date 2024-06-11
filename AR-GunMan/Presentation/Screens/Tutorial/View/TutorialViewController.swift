@@ -23,18 +23,21 @@ final class TutorialViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let scrollViewPageIndexObservable = Observable
+        let pageIndexWhenScrollViewScrolled = Observable
             .concat(
-                Observable.just(0),
-                scrollView.rx.didScroll.asObservable()
-                    .map({ [weak self] _ in self?.scrollView.horizontalPageIndex ?? 0})
+                Observable.just(0), // 初期値として0を流している
+                scrollView.rx.didScroll
+                    .map({ [weak self] _ in
+                        guard let self = self else { return 0 }
+                        return self.scrollView.horizontalPageIndex
+                    })
                     .asObservable()
             )
         
         let input = TutorialViewModel.Input(
-            viewDidLoad: Observable.just(Void()),
+            viewDidLoad: .just(()),
             viewDidDisappear: rx.viewDidDisappear,
-            pageIndexUpdated: scrollViewPageIndexObservable,
+            pageIndexWhenScrollViewScrolled: pageIndexWhenScrollViewScrolled,
             bottomButtonTapped: bottomButton.rx.tap.asObservable()
         )
         let output = viewModel.transform(input: input)
@@ -59,16 +62,19 @@ final class TutorialViewController: UIViewController {
             viewModelAction.tutorialEndEventSent.subscribe()
             
             outputToView.setupUI
-                .subscribe(onNext: { [weak self] _ in self?.setupUI() })
+                .subscribe(onNext: { [weak self] _ in
+                    self?.setupUI()
+                })
             outputToView.insertBlurEffectView
-                .subscribe(onNext: { [weak self] _ in self?.insertBlurEffectView() })
+                .subscribe(onNext: { [weak self] _ in
+                    self?.insertBlurEffectView()
+                })
             outputToView.buttonText
                 .bind(to: bottomButton.rx.title(for: .normal))
             outputToView.pageControllIndex
                 .bind(to: pageControl.rx.currentPage)
             outputToView.scrollToNextPage
                 .subscribe(onNext: { [weak self] _ in
-                    // TODO: rx拡張へのbindにする
                     self?.scrollView.scrollHorizontallyToNextPage()
                 })
         }

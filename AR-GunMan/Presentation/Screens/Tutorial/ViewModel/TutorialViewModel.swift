@@ -17,7 +17,7 @@ final class TutorialViewModel: ViewModelType {
     struct Input {
         let viewDidLoad: Observable<Void>
         let viewDidDisappear: Observable<Void>
-        let pageIndexUpdated: Observable<Int>
+        let pageIndexWhenScrollViewScrolled: Observable<Int>
         let bottomButtonTapped: Observable<Void>
     }
     
@@ -58,7 +58,7 @@ final class TutorialViewModel: ViewModelType {
     func transform(input: Input) -> Output {
         // MARK: - ViewModelAction
         let viewDismissed = input.bottomButtonTapped
-            .withLatestFrom(input.pageIndexUpdated)
+            .withLatestFrom(input.pageIndexWhenScrollViewScrolled)
             .filter({ pageIndex in
                 return pageIndex >= 2
             })
@@ -84,13 +84,19 @@ final class TutorialViewModel: ViewModelType {
                 return self.transitionType == .gamePage
             })
         
-        let buttonText = input.pageIndexUpdated
-            .map({ $0 < 2 ? "NEXT" : "OK" })
+        let buttonText = input.pageIndexWhenScrollViewScrolled
+            .map({ pageIndex in
+                if pageIndex < 2 {
+                    return "NEXT"
+                }else {
+                    return "OK"
+                }
+            })
         
-        let pageControllIndex = input.pageIndexUpdated
+        let pageControllIndex = input.pageIndexWhenScrollViewScrolled
         
         let scrollToNextPage = input.bottomButtonTapped
-            .withLatestFrom(input.pageIndexUpdated)
+            .withLatestFrom(input.pageIndexWhenScrollViewScrolled)
             .filter({ pageIndex in
                 return pageIndex < 2
             })
