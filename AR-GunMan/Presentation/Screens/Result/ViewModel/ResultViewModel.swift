@@ -30,7 +30,9 @@ final class ResultViewModel: ViewModelType {
     private let score: Double
     
     private let disposeBag = DisposeBag()
-    private let nameRegisterEventObserver = NameRegisterEventObserver()
+    
+    // 遷移先からの通知を受け取るレシーバー
+    private let nameRegisterEventReceiver = NameRegisterEventReceiver()
     
     init(
         useCase: ResultUseCaseInterface,
@@ -54,7 +56,7 @@ final class ResultViewModel: ViewModelType {
                     self?.navigator.showNameRegister(
                         score: self?.score ?? 0.0,
                         rankingListObservable: rankingListRelay.asObservable(),
-                        eventObserver: self?.nameRegisterEventObserver ?? NameRegisterEventObserver()
+                        eventReceiver: self?.nameRegisterEventReceiver ?? NameRegisterEventReceiver()
                     )
                 }
             })
@@ -86,7 +88,7 @@ final class ResultViewModel: ViewModelType {
                 self.navigator.backToTop()
             }).disposed(by: disposeBag)
         
-        nameRegisterEventObserver.onRegister
+        nameRegisterEventReceiver.onRegister
             .subscribe(onNext: { registeredRanking in
                 let rankIndex = RankingUtil.getTemporaryRankIndex(
                     rankingList: rankingListRelay.value,
@@ -105,7 +107,7 @@ final class ResultViewModel: ViewModelType {
         return Output(
             rankingList: rankingListRelay.asObservable(),
             scoreText: scoreText,
-            showButtons: nameRegisterEventObserver.onClose.asObservable(),
+            showButtons: nameRegisterEventReceiver.onClose.asObservable(),
             scrollAndHightlightCell: scrollAndHightlightCellRelay.asObservable(),
             isLoading: loadingTracker.asObservable()
         )

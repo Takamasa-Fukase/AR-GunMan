@@ -116,9 +116,9 @@ final class GameViewModel: ViewModelType {
     private let state: State
     private let soundPlayer: SoundPlayerInterface
     
-    // 遷移先からの通知を受け取るオブザーバー
-    private let tutorialEndObserver: PublishRelay<Void>
-    private let weaponSelectObserver: PublishRelay<WeaponType>
+    // 遷移先からの通知を受け取るレシーバー
+    private let tutorialEndEventReceiver: PublishRelay<Void>
+    private let weaponSelectEventReceiver: PublishRelay<WeaponType>
     
     // EventHandlers
     private let tutorialSeenStatusHandler: TutorialSeenStatusHandler
@@ -140,8 +140,8 @@ final class GameViewModel: ViewModelType {
         navigator: GameNavigatorInterface,
         state: State = State(),
         soundPlayer: SoundPlayerInterface = SoundPlayer.shared,
-        tutorialEndObserver: PublishRelay<Void> = PublishRelay<Void>(),
-        weaponSelectObserver: PublishRelay<WeaponType> = PublishRelay<WeaponType>(),
+        tutorialEndEventReceiver: PublishRelay<Void> = PublishRelay<Void>(),
+        weaponSelectEventReceiver: PublishRelay<WeaponType> = PublishRelay<WeaponType>(),
         tutorialSeenStatusHandler: TutorialSeenStatusHandler,
         gameStartHandler: GameStartHandler,
         gameTimerHandler: GameTimerHandler,
@@ -160,8 +160,8 @@ final class GameViewModel: ViewModelType {
         self.navigator = navigator
         self.state = state
         self.soundPlayer = soundPlayer
-        self.tutorialEndObserver = tutorialEndObserver
-        self.weaponSelectObserver = weaponSelectObserver
+        self.tutorialEndEventReceiver = tutorialEndEventReceiver
+        self.weaponSelectEventReceiver = weaponSelectEventReceiver
         self.tutorialSeenStatusHandler = tutorialSeenStatusHandler
         self.gameStartHandler = gameStartHandler
         self.gameTimerHandler = gameTimerHandler
@@ -188,11 +188,11 @@ final class GameViewModel: ViewModelType {
             .do(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 self.navigator.showTutorialView(
-                    tutorialEndObserver: self.tutorialEndObserver
+                    tutorialEndEventReceiver: self.tutorialEndEventReceiver
                 )
             })
         
-        let gameStartAfterTutorialTrigger = tutorialEndObserver
+        let gameStartAfterTutorialTrigger = tutorialEndEventReceiver
             .flatMapLatest({ [weak self] _ -> Observable<Void> in
                 guard let self = self else { return .empty() }
                 return self.useCase.setTutorialAlreadySeen()
@@ -323,7 +323,7 @@ final class GameViewModel: ViewModelType {
         let weaponReloadProcessCompleted = weaponReloadHandlerOutput.weaponReloadProcessCompleted
         
         let weaponSelectHandlerOutput = weaponSelectHandler
-            .transform(input: .init(weaponSelected: weaponSelectObserver.asObservable()))
+            .transform(input: .init(weaponSelected: weaponSelectEventReceiver.asObservable()))
         
         let weaponTypeChanged = weaponSelectHandlerOutput.changeWeaponType
             .do(onNext: { [weak self] in
@@ -377,7 +377,7 @@ final class GameViewModel: ViewModelType {
             .do(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 self.navigator.showWeaponChangeView(
-                    weaponSelectObserver: self.weaponSelectObserver
+                    weaponSelectEventReceiver: self.weaponSelectEventReceiver
                 )
             })
         

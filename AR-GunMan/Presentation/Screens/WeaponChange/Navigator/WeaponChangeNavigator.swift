@@ -19,14 +19,14 @@ final class WeaponChangeNavigator: WeaponChangeNavigatorInterface {
     }
     
     static func assembleModules(
-        weaponSelectObserver: PublishRelay<WeaponType>?
+        weaponSelectEventReceiver: PublishRelay<WeaponType>?
     ) -> UIViewController {
         let storyboard = UIStoryboard(name: WeaponChangeViewController.className, bundle: nil)
         let vc = storyboard.instantiateInitialViewController() as! WeaponChangeViewController
         let navigator = WeaponChangeNavigator(viewController: vc)
         let viewModel = WeaponChangeViewModel(
             navigator: navigator,
-            weaponSelectObserver: weaponSelectObserver
+            weaponSelectEventReceiver: weaponSelectEventReceiver
         )
         vc.viewModel = viewModel
         return vc

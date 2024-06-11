@@ -11,8 +11,8 @@ import RxCocoa
 import CoreMotion
 
 protocol GameNavigatorInterface {
-    func showTutorialView(tutorialEndObserver: PublishRelay<Void>)
-    func showWeaponChangeView(weaponSelectObserver: PublishRelay<WeaponType>)
+    func showTutorialView(tutorialEndEventReceiver: PublishRelay<Void>)
+    func showWeaponChangeView(weaponSelectEventReceiver: PublishRelay<WeaponType>)
     func dismissWeaponChangeView()
     func showResultView(score: Double)
 }
@@ -59,17 +59,17 @@ final class GameNavigator: GameNavigatorInterface {
         return vc
     }
     
-    func showTutorialView(tutorialEndObserver: PublishRelay<Void>) {
+    func showTutorialView(tutorialEndEventReceiver: PublishRelay<Void>) {
         let vc = TutorialNavigator.assembleModules(
             transitionType: .gamePage,
-            tutorialEndObserver: tutorialEndObserver
+            tutorialEndEventReceiver: tutorialEndEventReceiver
         )
         viewController.presentPanModal(vc)
     }
     
-    func showWeaponChangeView(weaponSelectObserver: PublishRelay<WeaponType>) {
+    func showWeaponChangeView(weaponSelectEventReceiver: PublishRelay<WeaponType>) {
         let vc = WeaponChangeNavigator.assembleModules(
-            weaponSelectObserver: weaponSelectObserver
+            weaponSelectEventReceiver: weaponSelectEventReceiver
         )
         viewController.present(vc, animated: true)
     }

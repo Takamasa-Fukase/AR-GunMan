@@ -13,7 +13,7 @@ protocol ResultNavigatorInterface {
     func showNameRegister(
         score: Double,
         rankingListObservable: Observable<[Ranking]>,
-        eventObserver: NameRegisterEventObserver
+        eventReceiver: NameRegisterEventReceiver
     )
     func backToTop()
     func showErrorAlert(_ error: Error)
@@ -47,12 +47,12 @@ final class ResultNavigator: ResultNavigatorInterface {
     func showNameRegister(
         score: Double,
         rankingListObservable: Observable<[Ranking]>,
-        eventObserver: NameRegisterEventObserver
+        eventReceiver: NameRegisterEventReceiver
     ) {
         let vc = NameRegisterNavigator.assembleModules(
             score: score,
             rankingListObservable: rankingListObservable,
-            eventObserver: eventObserver
+            eventReceiver: eventReceiver
         )
         viewController.presentPanModal(vc)
     }

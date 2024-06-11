@@ -18,23 +18,23 @@ final class WeaponChangeViewModel: ViewModelType {
     struct State {}
     
     private let navigator: WeaponChangeNavigatorInterface
-    private weak var weaponSelectObserver: PublishRelay<WeaponType>?
+    private weak var weaponSelectEventReceiver: PublishRelay<WeaponType>?
     
     private let disposeBag = DisposeBag()
             
     init(
         navigator: WeaponChangeNavigatorInterface,
-        weaponSelectObserver: PublishRelay<WeaponType>?
+        weaponSelectEventReceiver: PublishRelay<WeaponType>?
     ) {
         self.navigator = navigator
-        self.weaponSelectObserver = weaponSelectObserver
+        self.weaponSelectEventReceiver = weaponSelectEventReceiver
     }
     
     func transform(input: Input) -> Output {
         input.itemSelected
             .subscribe(onNext: { [weak self] index in
                 guard let self = self else { return }
-                self.weaponSelectObserver?.accept(WeaponType.allCases[index])
+                self.weaponSelectEventReceiver?.accept(WeaponType.allCases[index])
                 self.navigator.dismiss()
             }).disposed(by: disposeBag)
         

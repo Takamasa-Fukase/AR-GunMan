@@ -20,7 +20,7 @@ final class TutorialNavigator: TutorialNavigatorInterface {
     
     static func assembleModules(
         transitionType: TutorialViewModel.TransitType,
-        tutorialEndObserver: PublishRelay<Void>? = nil
+        tutorialEndEventReceiver: PublishRelay<Void>? = nil
     ) -> UIViewController {
         let storyboard: UIStoryboard = UIStoryboard(name: "TutorialViewController", bundle: nil)
         let vc = storyboard.instantiateInitialViewController() as! TutorialViewController
@@ -28,7 +28,7 @@ final class TutorialNavigator: TutorialNavigatorInterface {
         let viewModel = TutorialViewModel(
             navigator: navigator,
             transitionType: transitionType,
-            tutorialEndObserver: tutorialEndObserver
+            tutorialEndEventReceiver: tutorialEndEventReceiver
         )
         vc.viewModel = viewModel
         return vc

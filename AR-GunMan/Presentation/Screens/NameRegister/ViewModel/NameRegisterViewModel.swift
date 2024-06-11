@@ -8,7 +8,7 @@
 import RxSwift
 import RxCocoa
 
-final class NameRegisterEventObserver {
+final class NameRegisterEventReceiver {
     let onRegister = PublishRelay<Ranking>()
     let onClose = PublishRelay<Void>()
 }
@@ -34,7 +34,7 @@ final class NameRegisterViewModel: ViewModelType {
     private let useCase: NameRegisterUseCaseInterface
     private let score: Double
     private let rankingListObservable: Observable<[Ranking]>
-    private weak var eventObserver: NameRegisterEventObserver?
+    private weak var eventReceiver: NameRegisterEventReceiver?
     
     private let disposeBag = DisposeBag()
     
@@ -43,20 +43,20 @@ final class NameRegisterViewModel: ViewModelType {
         useCase: NameRegisterUseCaseInterface,
         score: Double,
         rankingListObservable: Observable<[Ranking]>,
-        eventObserver: NameRegisterEventObserver?
+        eventReceiver: NameRegisterEventReceiver?
     ) {
         self.navigator = navigator
         self.useCase = useCase
         self.score = score
         self.rankingListObservable = rankingListObservable
-        self.eventObserver = eventObserver
+        self.eventReceiver = eventReceiver
     }
     
     func transform(input: Input) -> Output {
         let registeringTracker = ObservableActivityTracker()
         
         input.viewWillDisappear
-            .bind(to: eventObserver?.onClose ?? PublishRelay())
+            .bind(to: eventReceiver?.onClose ?? PublishRelay())
             .disposed(by: disposeBag)
         
         input.registerButtonTapped
@@ -68,7 +68,7 @@ final class NameRegisterViewModel: ViewModelType {
             })
             .subscribe(
                 onNext: { [weak self] registeredRanking in
-                    self?.eventObserver?.onRegister.accept(registeredRanking)
+                    self?.eventReceiver?.onRegister.accept(registeredRanking)
                     self?.navigator.dismiss()
                 },
                 onError: { [weak self] error in

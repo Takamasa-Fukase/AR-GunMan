@@ -33,18 +33,18 @@ final class TutorialViewModel: ViewModelType {
     
     private let navigator: TutorialNavigatorInterface
     private let transitionType: TransitType
-    private weak var tutorialEndObserver: PublishRelay<Void>?
+    private weak var tutorialEndEventReceiver: PublishRelay<Void>?
     
     private let disposeBag = DisposeBag()
     
     init(
         navigator: TutorialNavigatorInterface,
         transitionType: TransitType,
-        tutorialEndObserver: PublishRelay<Void>?
+        tutorialEndEventReceiver: PublishRelay<Void>?
     ) {
         self.navigator = navigator
         self.transitionType = transitionType
-        self.tutorialEndObserver = tutorialEndObserver
+        self.tutorialEndEventReceiver = tutorialEndEventReceiver
     }
     
     func transform(input: Input) -> Output {
@@ -52,7 +52,7 @@ final class TutorialViewModel: ViewModelType {
         
         input.viewDidDisappear
             .subscribe(onNext: { [weak self] element in
-                self?.tutorialEndObserver?.accept(Void())
+                self?.tutorialEndEventReceiver?.accept(Void())
             }).disposed(by: disposeBag)
         
         input.horizontalPageIndex
