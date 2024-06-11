@@ -1,5 +1,5 @@
 //
-//  ReplayHandler.swift
+//  TopPageReplayHandler.swift
 //  AR-GunMan
 //
 //  Created by ウルトラ深瀬 on 11/6/24.
@@ -8,7 +8,7 @@
 import RxSwift
 import RxCocoa
 
-final class ReplayHandler: ViewModelEventHandlerType {
+final class TopPageReplayHandler: ViewModelEventHandlerType {
     struct Input {
         let checkNeedsReplay: Observable<Void>
     }
@@ -18,9 +18,9 @@ final class ReplayHandler: ViewModelEventHandlerType {
         let showGameForReplay: Observable<Void>
     }
     
-    private let topUseCase: TopUseCaseInterface2
+    private let topUseCase: TopUseCaseInterface
     
-    init(topUseCase: TopUseCaseInterface2) {
+    init(topUseCase: TopUseCaseInterface) {
         self.topUseCase = topUseCase
     }
     

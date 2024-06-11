@@ -18,7 +18,6 @@
 		59484C7D256584B000F9C6A8 /* startWhistle.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 59484C7C256584B000F9C6A8 /* startWhistle.mp3 */; };
 		59484C8525664E7400F9C6A8 /* bazookaShoot.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 59484C8425664E7400F9C6A8 /* bazookaShoot.mp3 */; };
 		59484C8A25664FEC00F9C6A8 /* bazookaHit.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 59484C8925664FEB00F9C6A8 /* bazookaHit.mp3 */; };
-		5952F62825E94D1000ADB85B /* TopViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5952F62725E94D1000ADB85B /* TopViewModel.swift */; };
 		5952F64025EA0E1900ADB85B /* Font+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5952F63F25EA0E1800ADB85B /* Font+Extension.swift */; };
 		595E6987256C0190002B4F3E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595E6986256C0190002B4F3E /* SettingsViewController.swift */; };
 		595E698F256C01A4002B4F3E /* SettingsViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 595E698E256C01A4002B4F3E /* SettingsViewController.storyboard */; };
@@ -95,7 +94,6 @@
 		8606462F2BF5997200906DA0 /* ReplayRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86594DCB2BCD75E100971D1A /* ReplayRepository.swift */; };
 		860646302BF5997200906DA0 /* AVPermissionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86594DC92BCD558E00971D1A /* AVPermissionRepository.swift */; };
 		860646312BF5997200906DA0 /* TimerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86F044262BEA0A60005D8D14 /* TimerRepository.swift */; };
-		8606463D2BF5998100906DA0 /* TopUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86594DC72BCD50F100971D1A /* TopUseCase.swift */; };
 		860646582BF5999F00906DA0 /* GameUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8629E1042BF2E56E004FFEBD /* GameUseCase.swift */; };
 		860646592BF5999F00906DA0 /* DeviceMotionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860191732BEDDF2A00382749 /* DeviceMotionController.swift */; };
 		8606465A2BF5999F00906DA0 /* ARContentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8629E1022BF22916004FFEBD /* ARContentController.swift */; };
@@ -173,7 +171,6 @@
 		8629E1032BF22916004FFEBD /* ARContentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8629E1022BF22916004FFEBD /* ARContentController.swift */; };
 		8629E1052BF2E56E004FFEBD /* GameUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8629E1042BF2E56E004FFEBD /* GameUseCase.swift */; };
 		863FE7EE2BEA6D8D00E104F5 /* FirebaseConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 863FE7ED2BEA6D8D00E104F5 /* FirebaseConst.swift */; };
-		86594DC82BCD50F100971D1A /* TopUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86594DC72BCD50F100971D1A /* TopUseCase.swift */; };
 		86594DCA2BCD558E00971D1A /* AVPermissionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86594DC92BCD558E00971D1A /* AVPermissionRepository.swift */; };
 		86594DCC2BCD75E100971D1A /* ReplayRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86594DCB2BCD75E100971D1A /* ReplayRepository.swift */; };
 		86627DE6273FD5E30044A980 /* RankingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86627DE5273FD5E30044A980 /* RankingViewController.swift */; };
@@ -199,7 +196,6 @@
 		BC0BBE452C17460A00789349 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866675D3275215AF007CB4D6 /* UIViewController+Extension.swift */; };
 		BC0BBE472C17474800789349 /* WeaponAutoReloadHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0BBE462C17474800789349 /* WeaponAutoReloadHandlerTests.swift */; };
 		BC0BBE482C174B1000789349 /* TopNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A6CB402BCC116D00628C61 /* TopNavigator.swift */; };
-		BC0BBE492C174B1300789349 /* TopViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5952F62725E94D1000ADB85B /* TopViewModel.swift */; };
 		BC0BBE4A2C174B1900789349 /* TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2D5792552E536006DDB70 /* TopViewController.swift */; };
 		BC0BBE4B2C174B2800789349 /* TutorialNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8627F6312BCE454C0003D374 /* TutorialNavigator.swift */; };
 		BC0BBE4C2C174B2C00789349 /* TutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67200F5427A000AC00AD92EC /* TutorialViewModel.swift */; };
@@ -208,12 +204,12 @@
 		BC0BBE4F2C174B4200789349 /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD1C2242C01B3EA008975EB /* GameViewModel.swift */; };
 		BC1795BC2985D01300D91A19 /* ResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1795BB2985D01300D91A19 /* ResultViewModel.swift */; };
 		BC2B11672977F90C009F4DC4 /* UIScrollView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2B11662977F90C009F4DC4 /* UIScrollView+Extension.swift */; };
-		BC482DC82C17F56600FAF079 /* TopViewModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DC72C17F56600FAF079 /* TopViewModel2.swift */; };
-		BC482DC92C17F56600FAF079 /* TopViewModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DC72C17F56600FAF079 /* TopViewModel2.swift */; };
-		BC482DCB2C1800E500FAF079 /* TopUseCase2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DCA2C1800E500FAF079 /* TopUseCase2.swift */; };
-		BC482DCC2C1800E500FAF079 /* TopUseCase2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DCA2C1800E500FAF079 /* TopUseCase2.swift */; };
-		BC482DCF2C1815B000FAF079 /* ReplayHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DCE2C1815B000FAF079 /* ReplayHandler.swift */; };
-		BC482DD02C1815B000FAF079 /* ReplayHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DCE2C1815B000FAF079 /* ReplayHandler.swift */; };
+		BC482DC82C17F56600FAF079 /* TopViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DC72C17F56600FAF079 /* TopViewModel.swift */; };
+		BC482DC92C17F56600FAF079 /* TopViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DC72C17F56600FAF079 /* TopViewModel.swift */; };
+		BC482DCB2C1800E500FAF079 /* TopUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DCA2C1800E500FAF079 /* TopUseCase.swift */; };
+		BC482DCC2C1800E500FAF079 /* TopUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DCA2C1800E500FAF079 /* TopUseCase.swift */; };
+		BC482DCF2C1815B000FAF079 /* TopPageReplayHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DCE2C1815B000FAF079 /* TopPageReplayHandler.swift */; };
+		BC482DD02C1815B000FAF079 /* TopPageReplayHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DCE2C1815B000FAF079 /* TopPageReplayHandler.swift */; };
 		BC482DD22C181B0600FAF079 /* CameraPermissionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DD12C181B0600FAF079 /* CameraPermissionHandler.swift */; };
 		BC482DD32C181B0600FAF079 /* CameraPermissionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DD12C181B0600FAF079 /* CameraPermissionHandler.swift */; };
 		BC482DD52C18226800FAF079 /* TopPageButtonIconChangeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DD42C18226800FAF079 /* TopPageButtonIconChangeHandler.swift */; };
@@ -310,7 +306,6 @@
 		59484C7C256584B000F9C6A8 /* startWhistle.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = startWhistle.mp3; sourceTree = "<group>"; };
 		59484C8425664E7400F9C6A8 /* bazookaShoot.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bazookaShoot.mp3; sourceTree = "<group>"; };
 		59484C8925664FEB00F9C6A8 /* bazookaHit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bazookaHit.mp3; sourceTree = "<group>"; };
-		5952F62725E94D1000ADB85B /* TopViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopViewModel.swift; sourceTree = "<group>"; };
 		5952F63F25EA0E1800ADB85B /* Font+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Extension.swift"; sourceTree = "<group>"; };
 		595E6986256C0190002B4F3E /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		595E698E256C01A4002B4F3E /* SettingsViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SettingsViewController.storyboard; sourceTree = "<group>"; };
@@ -381,7 +376,6 @@
 		8629E1022BF22916004FFEBD /* ARContentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARContentController.swift; sourceTree = "<group>"; };
 		8629E1042BF2E56E004FFEBD /* GameUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameUseCase.swift; sourceTree = "<group>"; };
 		863FE7ED2BEA6D8D00E104F5 /* FirebaseConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseConst.swift; sourceTree = "<group>"; };
-		86594DC72BCD50F100971D1A /* TopUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopUseCase.swift; sourceTree = "<group>"; };
 		86594DC92BCD558E00971D1A /* AVPermissionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPermissionRepository.swift; sourceTree = "<group>"; };
 		86594DCB2BCD75E100971D1A /* ReplayRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplayRepository.swift; sourceTree = "<group>"; };
 		86627DE5273FD5E30044A980 /* RankingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingViewController.swift; sourceTree = "<group>"; };
@@ -404,9 +398,9 @@
 		BC0BBE462C17474800789349 /* WeaponAutoReloadHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponAutoReloadHandlerTests.swift; sourceTree = "<group>"; };
 		BC1795BB2985D01300D91A19 /* ResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewModel.swift; sourceTree = "<group>"; };
 		BC2B11662977F90C009F4DC4 /* UIScrollView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Extension.swift"; sourceTree = "<group>"; };
-		BC482DC72C17F56600FAF079 /* TopViewModel2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopViewModel2.swift; sourceTree = "<group>"; };
-		BC482DCA2C1800E500FAF079 /* TopUseCase2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopUseCase2.swift; sourceTree = "<group>"; };
-		BC482DCE2C1815B000FAF079 /* ReplayHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplayHandler.swift; sourceTree = "<group>"; };
+		BC482DC72C17F56600FAF079 /* TopViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopViewModel.swift; sourceTree = "<group>"; };
+		BC482DCA2C1800E500FAF079 /* TopUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopUseCase.swift; sourceTree = "<group>"; };
+		BC482DCE2C1815B000FAF079 /* TopPageReplayHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopPageReplayHandler.swift; sourceTree = "<group>"; };
 		BC482DD12C181B0600FAF079 /* CameraPermissionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPermissionHandler.swift; sourceTree = "<group>"; };
 		BC482DD42C18226800FAF079 /* TopPageButtonIconChangeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopPageButtonIconChangeHandler.swift; sourceTree = "<group>"; };
 		BC62CE092C15607D00070B49 /* Vector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector.swift; sourceTree = "<group>"; };
@@ -741,8 +735,7 @@
 		86A6CB252BCC0E4800628C61 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				5952F62725E94D1000ADB85B /* TopViewModel.swift */,
-				BC482DC72C17F56600FAF079 /* TopViewModel2.swift */,
+				BC482DC72C17F56600FAF079 /* TopViewModel.swift */,
 				BC482DCD2C18156700FAF079 /* EventHandler */,
 			);
 			path = ViewModel;
@@ -940,8 +933,7 @@
 		86DA331A2BFDE21B00186C04 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
-				86594DC72BCD50F100971D1A /* TopUseCase.swift */,
-				BC482DCA2C1800E500FAF079 /* TopUseCase2.swift */,
+				BC482DCA2C1800E500FAF079 /* TopUseCase.swift */,
 				8629E1042BF2E56E004FFEBD /* GameUseCase.swift */,
 				8627F63A2BD0B1340003D374 /* ResultUseCase.swift */,
 				860C94982BD3D2980042D52C /* NameRegisterUseCase.swift */,
@@ -1006,7 +998,7 @@
 		BC482DCD2C18156700FAF079 /* EventHandler */ = {
 			isa = PBXGroup;
 			children = (
-				BC482DCE2C1815B000FAF079 /* ReplayHandler.swift */,
+				BC482DCE2C1815B000FAF079 /* TopPageReplayHandler.swift */,
 				BC482DD12C181B0600FAF079 /* CameraPermissionHandler.swift */,
 				BC482DD42C18226800FAF079 /* TopPageButtonIconChangeHandler.swift */,
 			);
@@ -1434,7 +1426,7 @@
 				BCCD44752C0D935700BF541D /* GameTimerDisposalHandler.swift in Sources */,
 				BCCD44652C0B4A5200BF541D /* GameTimerHandler.swift in Sources */,
 				5921A208255D6A4E001D8C39 /* RankingCell.swift in Sources */,
-				BC482DC82C17F56600FAF079 /* TopViewModel2.swift in Sources */,
+				BC482DC82C17F56600FAF079 /* TopViewModel.swift in Sources */,
 				677DF1F127A7C096007512F6 /* RankingRepository.swift in Sources */,
 				BCD9675E2979E55400E33587 /* UIImageView+Extension.swift in Sources */,
 				BC0BBE442C1745EB00789349 /* UIViewController+PanModalPresentable.swift in Sources */,
@@ -1449,7 +1441,6 @@
 				BCD1C2422C044E81008975EB /* GameNavigator.swift in Sources */,
 				67DB2C5727BFD01900B8CB3C /* SceneNodeUtil.swift in Sources */,
 				BCCD44822C12BF1A00BF541D /* CollisionInfo.swift in Sources */,
-				86594DC82BCD50F100971D1A /* TopUseCase.swift in Sources */,
 				BCCD447D2C12AB4500BF541D /* UIColor+Extension.swift in Sources */,
 				863FE7EE2BEA6D8D00E104F5 /* FirebaseConst.swift in Sources */,
 				BCC512C22C15B5F000D77305 /* Extension+SCNNode.swift in Sources */,
@@ -1479,7 +1470,6 @@
 				BCD1C2252C01B3EA008975EB /* GameViewModel.swift in Sources */,
 				67200F5527A000AC00AD92EC /* TutorialViewModel.swift in Sources */,
 				59D2D57B2552E536006DDB70 /* TopViewController.swift in Sources */,
-				5952F62825E94D1000ADB85B /* TopViewModel.swift in Sources */,
 				59D2D4D92552DE66006DDB70 /* AppDelegate.swift in Sources */,
 				866675D4275215AF007CB4D6 /* UIViewController+Extension.swift in Sources */,
 				861B87752BFE0F6100D0882D /* SoundPlayer.swift in Sources */,
@@ -1501,12 +1491,12 @@
 				BC0BBE3C2C16B7E100789349 /* Double+Extension.swift in Sources */,
 				86A6CB412BCC116D00628C61 /* TopNavigator.swift in Sources */,
 				8627F6372BCE86850003D374 /* WeaponChangeNavigator.swift in Sources */,
-				BC482DCB2C1800E500FAF079 /* TopUseCase2.swift in Sources */,
+				BC482DCB2C1800E500FAF079 /* TopUseCase.swift in Sources */,
 				59D2D5932552E718006DDB70 /* WeaponChangeCell.swift in Sources */,
 				86F157412BD93C1E00BE979C /* ErrorConst.swift in Sources */,
 				67B685EF27AAD8B300D7F413 /* TimeCountUtil.swift in Sources */,
 				59940BAC2552FAA600EC20C1 /* NameRegisterViewController.swift in Sources */,
-				BC482DCF2C1815B000FAF079 /* ReplayHandler.swift in Sources */,
+				BC482DCF2C1815B000FAF079 /* TopPageReplayHandler.swift in Sources */,
 				67200F5B27A0028700AD92EC /* SettingsViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1535,12 +1525,11 @@
 				860646782BF599D500906DA0 /* ResultViewModel.swift in Sources */,
 				BC0BBE472C17474800789349 /* WeaponAutoReloadHandlerTests.swift in Sources */,
 				BCD1C2382C043924008975EB /* WeaponReloadingEventTransformerTests.swift in Sources */,
-				BC482DD02C1815B000FAF079 /* ReplayHandler.swift in Sources */,
+				BC482DD02C1815B000FAF079 /* TopPageReplayHandler.swift in Sources */,
 				BCC512CB2C15CFBF00D77305 /* ParticleSystemType.swift in Sources */,
 				BCC512C32C15B5F000D77305 /* Extension+SCNNode.swift in Sources */,
 				860646142BF5996200906DA0 /* ObservableActivityTracker.swift in Sources */,
 				BCD1C23B2C044DCD008975EB /* GameViewController.swift in Sources */,
-				BC0BBE492C174B1300789349 /* TopViewModel.swift in Sources */,
 				860646CA2BF59CF100906DA0 /* WeaponType.swift in Sources */,
 				860646132BF5996200906DA0 /* SceneAnimationUtil.swift in Sources */,
 				860646292BF5996E00906DA0 /* Ranking.swift in Sources */,
@@ -1563,7 +1552,6 @@
 				8606461F2BF5996700906DA0 /* FirebaseConst.swift in Sources */,
 				860646302BF5997200906DA0 /* AVPermissionRepository.swift in Sources */,
 				8606461B2BF5996700906DA0 /* SettingsConst.swift in Sources */,
-				8606463D2BF5998100906DA0 /* TopUseCase.swift in Sources */,
 				860646752BF599D500906DA0 /* ResultNavigator.swift in Sources */,
 				BCD1C25C2C06B7C8008975EB /* ReloadingMotionFilter.swift in Sources */,
 				8606466E2BF599BC00906DA0 /* WeaponChangeCell.swift in Sources */,
@@ -1576,7 +1564,7 @@
 				BC62CE0F2C15632100070B49 /* TargetHitFilter.swift in Sources */,
 				860646582BF5999F00906DA0 /* GameUseCase.swift in Sources */,
 				86B112522C0080AA006D464A /* WeaponFireHandler.swift in Sources */,
-				BC482DCC2C1800E500FAF079 /* TopUseCase2.swift in Sources */,
+				BC482DCC2C1800E500FAF079 /* TopUseCase.swift in Sources */,
 				8606460F2BF5996200906DA0 /* RankingUtil.swift in Sources */,
 				8606468F2BF599DF00906DA0 /* RankingViewModel.swift in Sources */,
 				860646102BF5996200906DA0 /* SceneViewSettingUtil.swift in Sources */,
@@ -1597,7 +1585,7 @@
 				BCC512C72C15CF7300D77305 /* WeaponTypeConst.swift in Sources */,
 				BCD1C2542C06B353008975EB /* FiringMotionFilter.swift in Sources */,
 				8606466D2BF599BC00906DA0 /* WeaponChangeViewModel.swift in Sources */,
-				BC482DC92C17F56600FAF079 /* TopViewModel2.swift in Sources */,
+				BC482DC92C17F56600FAF079 /* TopViewModel.swift in Sources */,
 				8606467A2BF599D500906DA0 /* NameRegisterViewController.swift in Sources */,
 				BC0BBE4A2C174B1900789349 /* TopViewController.swift in Sources */,
 				8606461D2BF5996700906DA0 /* ErrorConst.swift in Sources */,

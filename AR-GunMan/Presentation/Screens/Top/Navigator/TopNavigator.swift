@@ -25,16 +25,16 @@ final class TopNavigator: TopNavigatorInterface {
     static func assembleModules() -> UIViewController {
         let storyboard = UIStoryboard(name: TopViewController.className, bundle: nil)
         let vc = storyboard.instantiateInitialViewController() as! TopViewController
-        let useCase = TopUseCase2(
+        let useCase = TopUseCase(
             avPermissionRepository: AVPermissionRepository(),
             replayRepository: ReplayRepository(),
             timerRepository: TimerRepository()
         )
         let navigator = TopNavigator(viewController: vc)
-        let viewModel = TopViewModel2(
+        let viewModel = TopViewModel(
             useCase: useCase,
             navigator: navigator,
-            replayHandler: ReplayHandler(topUseCase: useCase),
+            replayHandler: TopPageReplayHandler(topUseCase: useCase),
             cameraPermissionHandler: CameraPermissionHandler(topUseCase: useCase),
             buttonIconChangeHandler: TopPageButtonIconChangeHandler(topUseCase: useCase)
         )

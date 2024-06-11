@@ -19,9 +19,9 @@ final class TopPageButtonIconChangeHandler: ViewModelEventHandlerType {
         let buttonIconReverted: Observable<Void>
     }
     
-    private let topUseCase: TopUseCaseInterface2
+    private let topUseCase: TopUseCaseInterface
     
-    init(topUseCase: TopUseCaseInterface2) {
+    init(topUseCase: TopUseCaseInterface) {
         self.topUseCase = topUseCase
     }
     

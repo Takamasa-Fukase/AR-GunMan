@@ -18,9 +18,9 @@ final class CameraPermissionHandler: ViewModelEventHandlerType {
         let showCameraPermissionDescriptionAlert: Observable<Void>
     }
     
-    private let topUseCase: TopUseCaseInterface2
+    private let topUseCase: TopUseCaseInterface
     
-    init(topUseCase: TopUseCaseInterface2) {
+    init(topUseCase: TopUseCaseInterface) {
         self.topUseCase = topUseCase
     }
     

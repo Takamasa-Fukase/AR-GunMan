@@ -2,7 +2,7 @@
 //  TopViewModel.swift
 //  AR-GunMan
 //
-//  Created by 深瀬 貴将 on 2021/02/27.
+//  Created by ウルトラ深瀬 on 11/6/24.
 //
 
 import RxSwift
@@ -17,97 +17,138 @@ final class TopViewModel: ViewModelType {
     }
     
     struct Output {
-        let startButtonImage: Observable<UIImage?>
-        let settingsButtonImage: Observable<UIImage?>
-        let howToPlayButtonImage: Observable<UIImage?>
+        let viewModelAction: ViewModelAction
+        let outputToView: OutputToView
+        
+        struct ViewModelAction {
+            let gameViewShowed: Observable<Void>
+            let settingsViewShowed: Observable<Void>
+            let tutorialViewShowed: Observable<Void>
+            let cameraPermissionDescriptionAlertShowed: Observable<Void>
+            let iconChangingSoundPlayed: Observable<SoundType>
+            let needsReplayFlagIsSetToFalse: Observable<Void>
+        }
+        
+        struct OutputToView {
+            let isStartButtonIconSwitched: Observable<Bool>
+            let isSettingsButtonIconSwitched: Observable<Bool>
+            let isHowToPlayButtonIconSwitched: Observable<Bool>
+        }
     }
     
-    struct State {}
+    class State {}
 
     private let useCase: TopUseCaseInterface
     private let navigator: TopNavigatorInterface
-    
-    private let disposeBag = DisposeBag()
-    
+    private let soundPlayer: SoundPlayerInterface
+
+    // EventHandlers
+    private let replayHandler: TopPageReplayHandler
+    private let cameraPermissionHandler: CameraPermissionHandler
+    private let buttonIconChangeHandler: TopPageButtonIconChangeHandler
+
     init(
         useCase: TopUseCaseInterface,
-        navigator: TopNavigatorInterface
+        navigator: TopNavigatorInterface,
+        soundPlayer: SoundPlayerInterface = SoundPlayer.shared,
+        replayHandler: TopPageReplayHandler,
+        cameraPermissionHandler: CameraPermissionHandler,
+        buttonIconChangeHandler: TopPageButtonIconChangeHandler
     ) {
         self.useCase = useCase
         self.navigator = navigator
+        self.soundPlayer = soundPlayer
+        self.replayHandler = replayHandler
+        self.cameraPermissionHandler = cameraPermissionHandler
+        self.buttonIconChangeHandler = buttonIconChangeHandler
     }
 
     func transform(input: Input) -> Output {
-        let startButtonImageRelay = PublishRelay<UIImage?>()
-        let settingsButtonImageRelay = PublishRelay<UIImage?>()
-        let howToPlayButtonImageRelay = PublishRelay<UIImage?>()
+        // MARK: - ViewModelAction
+        let replayHandlerOutput = replayHandler
+            .transform(input: .init(checkNeedsReplay: input.viewDidAppear))
         
-        input.viewDidAppear
-            .flatMapLatest({ [weak self] in
-                return self?.useCase.getNeedsReplay() ?? Observable.just(false)
+        let needsReplayFlagIsSetToFalse = replayHandlerOutput.setNeedsReplayFlagToFalse
+            .flatMapLatest({ [weak self] _ -> Observable<Void> in
+                guard let self = self else { return .empty() }
+                return self.useCase.setNeedsReplay(false)
             })
-            .subscribe(onNext: { [weak self] needsReplay in
+        
+        let startButtonIconChangeHandlerOutput = buttonIconChangeHandler
+            .transform(input: .init(buttonTapped: input.startButtonTapped))
+                
+        let cameraPermissionHandlerOutput = cameraPermissionHandler
+            .transform(input: .init(
+                checkIsCameraAccessPermitted: startButtonIconChangeHandlerOutput.buttonIconReverted)
+            )
+        
+        let gameViewShowed = Observable
+            .merge(
+                replayHandlerOutput.showGameForReplay,
+                cameraPermissionHandlerOutput.showGame
+            )
+            .do(onNext: { [weak self] _ in
                 guard let self = self else { return }
-                if needsReplay {
-                    self.useCase.setNeedsReplay(false)
-                    self.navigator.showGame()
-                }
-            }).disposed(by: disposeBag)
+                self.navigator.showGame()
+            })
+        
+        let cameraPermissionDescriptionAlertShowed = cameraPermissionHandlerOutput.showCameraPermissionDescriptionAlert
+            .do(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.navigator.showCameraPermissionDescriptionAlert()
+            })
+        
+        let settingsButtonIconChangeHandlerOutput = buttonIconChangeHandler
+            .transform(input: .init(buttonTapped: input.settingsButtonTapped))
+        
+        let settingsViewShowed = settingsButtonIconChangeHandlerOutput.buttonIconReverted
+            .do(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.navigator.showSettings()
+            })
+        
+        let howToPlayButtonIconChangeHandlerOutput = buttonIconChangeHandler
+            .transform(input: .init(buttonTapped: input.howToPlayButtonTapped))
+        
+        let tutorialViewShowed = howToPlayButtonIconChangeHandlerOutput.buttonIconReverted
+            .do(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.navigator.showTutorial()
+            })
 
-        input.startButtonTapped
-            .flatMapLatest({ [weak self] in
-                return self?.useCase.getIsPermittedCameraAccess() ?? Observable.just(false)
+        let iconChangingSoundPlayed = Observable
+            .merge(
+                startButtonIconChangeHandlerOutput.playIconChangingSound,
+                settingsButtonIconChangeHandlerOutput.playIconChangingSound,
+                howToPlayButtonIconChangeHandlerOutput.playIconChangingSound
+            )
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.soundPlayer.play($0)
             })
-            .subscribe(onNext: { [weak self] isPermittedCameraAccess in
-                guard let self = self else { return }
-                if isPermittedCameraAccess {
-                    self.switchAndRevertButtonImage(
-                        buttonImageRelay: startButtonImageRelay,
-                        onReverted: {
-                            self.navigator.showGame()
-                        })
-                }else {
-                    self.navigator.showCameraPermissionDescriptionAlert()
-                }
-            }).disposed(by: disposeBag)
         
-        input.settingsButtonTapped
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                self.switchAndRevertButtonImage(
-                    buttonImageRelay: settingsButtonImageRelay,
-                    onReverted: {
-                        self.navigator.showSettings()
-                    })
-            }).disposed(by: disposeBag)
         
-        input.howToPlayButtonTapped
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                self.switchAndRevertButtonImage(
-                    buttonImageRelay: howToPlayButtonImageRelay,
-                    onReverted: {
-                        self.navigator.showTutorial()
-                    })
-            }).disposed(by: disposeBag)
+        // MARK: - OutputToView
+        let isStartButtonIconSwitched = startButtonIconChangeHandlerOutput.isButtonIconSwitched
+        
+        let isSettingsButtonIconSwitched = settingsButtonIconChangeHandlerOutput.isButtonIconSwitched
+        
+        let isHowToPlayButtonIconSwitched = howToPlayButtonIconChangeHandlerOutput.isButtonIconSwitched
         
         return Output(
-            startButtonImage: startButtonImageRelay.asObservable(),
-            settingsButtonImage: settingsButtonImageRelay.asObservable(),
-            howToPlayButtonImage: howToPlayButtonImageRelay.asObservable()
+            viewModelAction: Output.ViewModelAction(
+                gameViewShowed: gameViewShowed,
+                settingsViewShowed: settingsViewShowed,
+                tutorialViewShowed: tutorialViewShowed,
+                cameraPermissionDescriptionAlertShowed: cameraPermissionDescriptionAlertShowed,
+                iconChangingSoundPlayed: iconChangingSoundPlayed,
+                needsReplayFlagIsSetToFalse: needsReplayFlagIsSetToFalse
+            ),
+            outputToView: Output.OutputToView(
+                isStartButtonIconSwitched: isStartButtonIconSwitched,
+                isSettingsButtonIconSwitched: isSettingsButtonIconSwitched,
+                isHowToPlayButtonIconSwitched: isHowToPlayButtonIconSwitched
+            )
         )
-    }
-    
-    private func switchAndRevertButtonImage(
-        buttonImageRelay: PublishRelay<UIImage?>,
-        onReverted: (@escaping () -> Void)
-    ) {
-        // TODO: DIする
-        SoundPlayer.shared.play(TopConst.iconChangingSound)
-        buttonImageRelay.accept(TopConst.targetIcon(isSwitched: true))
-        DispatchQueue.main.asyncAfter(deadline: .now() + TopConst.iconRevertInterval) {
-            buttonImageRelay.accept(TopConst.targetIcon(isSwitched: false))
-            onReverted()
-        }
     }
 }
