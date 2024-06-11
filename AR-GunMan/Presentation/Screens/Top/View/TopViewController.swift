@@ -34,7 +34,7 @@ final class TopViewController: UIViewController {
         bind(output: output)
     }
     
-    func bind(output: TopViewModel.Output) {
+    private func bind(output: TopViewModel.Output) {
         let viewModelAction = output.viewModelAction
         let outputToView = output.outputToView
 

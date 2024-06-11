@@ -2,10 +2,9 @@
 //  TutorialViewModel.swift
 //  AR-GunMan
 //
-//  Created by ウルトラ深瀬 on 2022/01/25.
+//  Created by ウルトラ深瀬 on 11/6/24.
 //
 
-import Foundation
 import RxSwift
 import RxCocoa
 
@@ -18,15 +17,26 @@ final class TutorialViewModel: ViewModelType {
     struct Input {
         let viewDidLoad: Observable<Void>
         let viewDidDisappear: Observable<Void>
-        let horizontalPageIndex: Observable<Int>
+        let pageIndexUpdated: Observable<Int>
         let bottomButtonTapped: Observable<Void>
     }
     
     struct Output {
-        let setupUI: Observable<TransitType>
-        let buttonText: Observable<String>
-        let pageControllIndex: Observable<Int>
-        let scrollToNextPage: Observable<Void>
+        let viewModelAction: ViewModelAction
+        let outputToView: OutputToView
+        
+        struct ViewModelAction {
+            let viewDismissed: Observable<Void>
+            let tutorialEndEventSent: Observable<Void>
+        }
+        
+        struct OutputToView {
+            let setupUI: Observable<Void>
+            let insertBlurEffectView: Observable<Void>
+            let buttonText: Observable<String>
+            let pageControllIndex: Observable<Int>
+            let scrollToNextPage: Observable<Void>
+        }
     }
     
     struct State {}
@@ -34,9 +44,7 @@ final class TutorialViewModel: ViewModelType {
     private let navigator: TutorialNavigatorInterface
     private let transitionType: TransitType
     private weak var tutorialEndEventReceiver: PublishRelay<Void>?
-    
-    private let disposeBag = DisposeBag()
-    
+        
     init(
         navigator: TutorialNavigatorInterface,
         transitionType: TransitType,
@@ -48,40 +56,59 @@ final class TutorialViewModel: ViewModelType {
     }
     
     func transform(input: Input) -> Output {
-        let horizontalPageIndexRelay = BehaviorRelay<Int>(value: 0)
-        
-        input.viewDidDisappear
-            .subscribe(onNext: { [weak self] element in
-                self?.tutorialEndEventReceiver?.accept(Void())
-            }).disposed(by: disposeBag)
-        
-        input.horizontalPageIndex
-            .bind(to: horizontalPageIndexRelay)
-            .disposed(by: disposeBag)
-        
-        input.bottomButtonTapped
-            .filter({_ in horizontalPageIndexRelay.value >= 2})
-            .subscribe(onNext: { [weak self] _ in
+        // MARK: - ViewModelAction
+        let viewDismissed = input.bottomButtonTapped
+            .withLatestFrom(input.pageIndexUpdated)
+            .filter({ pageIndex in
+                return pageIndex >= 2
+            })
+            .do(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 self.navigator.dismiss()
-            }).disposed(by: disposeBag)
+            })
+            .map({ _ in })
         
-        let setupUI = input.viewDidLoad
-            .map({ [weak self] _ in
-                return self?.transitionType ?? .topPage
+        let tutorialEndEventSent = input.viewDidDisappear
+            .do(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.tutorialEndEventReceiver?.accept(())
             })
         
-        let buttonText = horizontalPageIndexRelay
-            .map({($0 < 2) ? "NEXT" : "OK"})
+        
+        // MARK: - OutputToView
+        let setupUI = input.viewDidLoad
+        
+        let insertBlurEffectView = input.viewDidLoad
+            .filter({ [weak self] _ in
+                guard let self = self else { return false }
+                return self.transitionType == .gamePage
+            })
+        
+        let buttonText = input.pageIndexUpdated
+            .map({ $0 < 2 ? "NEXT" : "OK" })
+        
+        let pageControllIndex = input.pageIndexUpdated
         
         let scrollToNextPage = input.bottomButtonTapped
-            .filter({_ in horizontalPageIndexRelay.value < 2})
+            .withLatestFrom(input.pageIndexUpdated)
+            .filter({ pageIndex in
+                return pageIndex < 2
+            })
+            .map({ _ in })
+        
         
         return Output(
-            setupUI: setupUI,
-            buttonText: buttonText,
-            pageControllIndex: horizontalPageIndexRelay.asObservable(),
-            scrollToNextPage: scrollToNextPage
+            viewModelAction: Output.ViewModelAction(
+                viewDismissed: viewDismissed,
+                tutorialEndEventSent: tutorialEndEventSent),
+            outputToView: Output.OutputToView(
+                setupUI: setupUI,
+                insertBlurEffectView: insertBlurEffectView,
+                buttonText: buttonText,
+                pageControllIndex: pageControllIndex,
+                scrollToNextPage: scrollToNextPage
+            )
         )
     }
 }
+

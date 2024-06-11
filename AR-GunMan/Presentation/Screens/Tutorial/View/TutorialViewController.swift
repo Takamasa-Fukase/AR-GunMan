@@ -22,50 +22,55 @@ final class TutorialViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let horizontalPageIndexObservable = scrollView.rx.didScroll
-            .map({ [weak self] _ in self?.scrollView.horizontalPageIndex ?? 0})
-            .asObservable()
+
+        let scrollViewPageIndexObservable = Observable
+            .concat(
+                Observable.just(0),
+                scrollView.rx.didScroll.asObservable()
+                    .map({ [weak self] _ in self?.scrollView.horizontalPageIndex ?? 0})
+                    .asObservable()
+            )
         
         let input = TutorialViewModel.Input(
             viewDidLoad: Observable.just(Void()),
             viewDidDisappear: rx.viewDidDisappear,
-            horizontalPageIndex: horizontalPageIndexObservable,
+            pageIndexUpdated: scrollViewPageIndexObservable,
             bottomButtonTapped: bottomButton.rx.tap.asObservable()
         )
-        
         let output = viewModel.transform(input: input)
-        
-        output.setupUI
-            .subscribe(onNext: { [weak self] transitionType in
-                guard let self = self else { return }
-                self.setupUI(transitionType: transitionType)
-            }).disposed(by: disposeBag)
-        
-        output.buttonText
-            .bind(to: bottomButton.rx.title(for: .normal))
-            .disposed(by: disposeBag)
-        
-        output.pageControllIndex
-            .bind(to: pageControl.rx.currentPage)
-            .disposed(by: disposeBag)
-        
-        output.scrollToNextPage
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else {return}
-                self.scrollView.scrollHorizontallyToNextPage()
-            }).disposed(by: disposeBag)
+        bind(output: output)
     }
     
-    private func setupUI(transitionType: TutorialViewModel.TransitType) {
-        if transitionType == .gamePage {
-            insertBlurEffectView()
-        }
+    private func setupUI() {
         firstImageView.setupAnimationImages(
             imageNames: [Int](0...1).map({"howToShoot\($0)"}),
             duration: 0.8)
         secondImageView.setupAnimationImages(
             imageNames: [Int](0...1).map({"howToReload\($0)"}),
             duration: 0.8)
+    }
+    
+    private func bind(output: TutorialViewModel.Output) {
+        let viewModelAction = output.viewModelAction
+        let outputToView = output.outputToView
+        
+        disposeBag.insert {
+            viewModelAction.viewDismissed.subscribe()
+            viewModelAction.tutorialEndEventSent.subscribe()
+            
+            outputToView.setupUI
+                .subscribe(onNext: { [weak self] _ in self?.setupUI() })
+            outputToView.insertBlurEffectView
+                .subscribe(onNext: { [weak self] _ in self?.insertBlurEffectView() })
+            outputToView.buttonText
+                .bind(to: bottomButton.rx.title(for: .normal))
+            outputToView.pageControllIndex
+                .bind(to: pageControl.rx.currentPage)
+            outputToView.scrollToNextPage
+                .subscribe(onNext: { [weak self] _ in
+                    // TODO: rx拡張へのbindにする
+                    self?.scrollView.scrollHorizontallyToNextPage()
+                })
+        }
     }
 }
