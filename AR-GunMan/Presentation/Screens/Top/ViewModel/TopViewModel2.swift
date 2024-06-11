@@ -99,7 +99,7 @@ final class TopViewModel2: ViewModelType {
             })
         
         let settingsButtonIconChangeHandlerOutput = buttonIconChangeHandler
-            .transform(input: .init(buttonTapped: input.startButtonTapped))
+            .transform(input: .init(buttonTapped: input.settingsButtonTapped))
         
         let settingsViewShowed = settingsButtonIconChangeHandlerOutput.buttonIconReverted
             .do(onNext: { [weak self] _ in
@@ -108,7 +108,7 @@ final class TopViewModel2: ViewModelType {
             })
         
         let howToPlayButtonIconChangeHandlerOutput = buttonIconChangeHandler
-            .transform(input: .init(buttonTapped: input.startButtonTapped))
+            .transform(input: .init(buttonTapped: input.howToPlayButtonTapped))
         
         let tutorialViewShowed = howToPlayButtonIconChangeHandlerOutput.buttonIconReverted
             .do(onNext: { [weak self] _ in
