@@ -14,6 +14,7 @@ import RxCocoa
 final class WeaponChangeViewController: UIViewController {
     var viewModel: WeaponChangeViewModel!
     private let itemSelectedRelay = PublishRelay<Int>()
+    private let disposeBag = DisposeBag()
     
     @IBOutlet private weak var pagerView: FSPagerView! {
         didSet{
@@ -30,8 +31,8 @@ final class WeaponChangeViewController: UIViewController {
         let input = WeaponChangeViewModel.Input(
             itemSelected: itemSelectedRelay.asObservable()
         )
-                
-        _ = viewModel.transform(input: input)
+        let output = viewModel.transform(input: input)
+        bind(output: output)
     }
 
     override func viewDidLayoutSubviews() {
@@ -47,6 +48,13 @@ final class WeaponChangeViewController: UIViewController {
         pagerView.decelerationDistance = 1
         pagerView.interitemSpacing = 8
         pagerView.transformer = FSPagerViewTransformer(type: .ferrisWheel)
+    }
+    
+    private func bind(output: WeaponChangeViewModel.Output) {
+        disposeBag.insert {
+            output.weaponSelectEventSent.subscribe()
+            output.viewDismissed.subscribe()
+        }
     }
 }
 
