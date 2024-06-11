@@ -113,8 +113,14 @@ final class GameViewModel: ViewModelType {
 
     private let useCase: GameUseCaseInterface
     private let navigator: GameNavigatorInterface
+    private let state: State
+    private let soundPlayer: SoundPlayerInterface
+    
+    // 遷移先からの通知を受け取るオブザーバー
     private let tutorialEndObserver: PublishRelay<Void>
     private let weaponSelectObserver: PublishRelay<WeaponType>
+    
+    // EventHandlers
     private let tutorialSeenStatusHandler: TutorialSeenStatusHandler
     private let gameStartHandler: GameStartHandler
     private let gameTimerHandler: GameTimerHandler
@@ -128,12 +134,12 @@ final class GameViewModel: ViewModelType {
     private let targetHitFilter: TargetHitFilter
     private let targetHitHandler: TargetHitHandler
     private let reloadingMotionDetectionCounter: ReloadingMotionDetectionCounter
-    private let state: State
-    private let soundPlayer: SoundPlayerInterface
     
     init(
         useCase: GameUseCaseInterface,
         navigator: GameNavigatorInterface,
+        state: State = State(),
+        soundPlayer: SoundPlayerInterface = SoundPlayer.shared,
         tutorialEndObserver: PublishRelay<Void> = PublishRelay<Void>(),
         weaponSelectObserver: PublishRelay<WeaponType> = PublishRelay<WeaponType>(),
         tutorialSeenStatusHandler: TutorialSeenStatusHandler,
@@ -148,12 +154,12 @@ final class GameViewModel: ViewModelType {
         weaponSelectHandler: WeaponSelectHandler,
         targetHitFilter: TargetHitFilter,
         targetHitHandler: TargetHitHandler,
-        reloadingMotionDetectionCounter: ReloadingMotionDetectionCounter,
-        state: State = State(),
-        soundPlayer: SoundPlayerInterface = SoundPlayer.shared
+        reloadingMotionDetectionCounter: ReloadingMotionDetectionCounter
     ) {
         self.useCase = useCase
         self.navigator = navigator
+        self.state = state
+        self.soundPlayer = soundPlayer
         self.tutorialEndObserver = tutorialEndObserver
         self.weaponSelectObserver = weaponSelectObserver
         self.tutorialSeenStatusHandler = tutorialSeenStatusHandler
@@ -169,8 +175,6 @@ final class GameViewModel: ViewModelType {
         self.targetHitFilter = targetHitFilter
         self.targetHitHandler = targetHitHandler
         self.reloadingMotionDetectionCounter = reloadingMotionDetectionCounter
-        self.state = state
-        self.soundPlayer = soundPlayer
     }
     
     func transform(input: Input) -> Output {
