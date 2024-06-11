@@ -24,46 +24,128 @@ final class TopViewModel2: ViewModelType {
             let gameViewShowed: Observable<Void>
             let settingsViewShowed: Observable<Void>
             let tutorialViewShowed: Observable<Void>
+            let cameraPermissionDescriptionAlertShowed: Observable<Void>
             let iconChangingSoundPlayed: Observable<SoundType>
         }
         
         struct OutputToView {
-            let startButtonImageName: Observable<String>
-            let settingsButtonImageName: Observable<String>
-            let howToPlayButtonImageName: Observable<String>
+            let isStartButtonIconSwitched: Observable<Bool>
+            let isSettingsButtonIconSwitched: Observable<Bool>
+            let isHowToPlayButtonIconSwitched: Observable<Bool>
         }
     }
     
     class State {}
 
-    private let useCase: TopUseCaseInterface
+    private let useCase: TopUseCaseInterface2
     private let navigator: TopNavigatorInterface
     private let soundPlayer: SoundPlayerInterface
+    private let replayHandler: ReplayHandler
+    private let cameraPermissionHandler: CameraPermissionHandler
+    private let buttonIconChangeHandler: TopPageButtonIconChangeHandler
     
     init(
-        useCase: TopUseCaseInterface,
+        useCase: TopUseCaseInterface2,
         navigator: TopNavigatorInterface,
-        soundPlayer: SoundPlayerInterface
+        soundPlayer: SoundPlayerInterface,
+        replayHandler: ReplayHandler,
+        cameraPermissionHandler: CameraPermissionHandler,
+        buttonIconChangeHandler: TopPageButtonIconChangeHandler
     ) {
         self.useCase = useCase
         self.navigator = navigator
         self.soundPlayer = soundPlayer
+        self.replayHandler = replayHandler
+        self.cameraPermissionHandler = cameraPermissionHandler
+        self.buttonIconChangeHandler = buttonIconChangeHandler
     }
 
     func transform(input: Input) -> Output {
+        // MARK: - ViewModelAction
+        let replayHandlerOutput = replayHandler
+            .transform(input: .init(checkNeedsReplay: input.viewDidAppear))
         
+        let needsReplayFlagIsSetToFalse = replayHandlerOutput.setNeedsReplayFlagToFalse
+            .flatMapLatest({ [weak self] _ -> Observable<Void> in
+                guard let self = self else { return .empty() }
+                return self.useCase.setNeedsReplay(false)
+            })
+        
+        let startButtonIconChangeHandlerOutput = buttonIconChangeHandler
+            .transform(input: .init(buttonTapped: input.startButtonTapped))
+                
+        let cameraPermissionHandlerOutput = cameraPermissionHandler
+            .transform(input: .init(
+                checkIsCameraAccessPermitted: startButtonIconChangeHandlerOutput.buttonIconReverted)
+            )
+        
+        let gameViewShowed = Observable
+            .merge(
+                replayHandlerOutput.showGameForReplay,
+                cameraPermissionHandlerOutput.showGame
+            )
+            .do(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.navigator.showGame()
+            })
+        
+        let cameraPermissionDescriptionAlertShowed = cameraPermissionHandlerOutput.showCameraPermissionDescriptionAlert
+            .do(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.navigator.showCameraPermissionDescriptionAlert()
+            })
+        
+        let settingsButtonIconChangeHandlerOutput = buttonIconChangeHandler
+            .transform(input: .init(buttonTapped: input.startButtonTapped))
+        
+        
+        let settingsViewShowed = settingsButtonIconChangeHandlerOutput.buttonIconReverted
+            .do(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.navigator.showSettings()
+            })
+        
+        let howToPlayButtonIconChangeHandlerOutput = buttonIconChangeHandler
+            .transform(input: .init(buttonTapped: input.startButtonTapped))
+        
+        
+        let tutorialViewShowed = howToPlayButtonIconChangeHandlerOutput.buttonIconReverted
+            .do(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.navigator.showTutorial()
+            })
+
+        let iconChangingSoundPlayed = Observable
+            .merge(
+                startButtonIconChangeHandlerOutput.playIconChangingSound,
+                settingsButtonIconChangeHandlerOutput.playIconChangingSound,
+                howToPlayButtonIconChangeHandlerOutput.playIconChangingSound
+            )
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.soundPlayer.play($0)
+            })
+        
+        
+        // MARK: - OutputToView
+        let isStartButtonIconSwitched = startButtonIconChangeHandlerOutput.isButtonIconSwitched
+        
+        let isSettingsButtonIconSwitched = settingsButtonIconChangeHandlerOutput.isButtonIconSwitched
+        
+        let isHowToPlayButtonIconSwitched = howToPlayButtonIconChangeHandlerOutput.isButtonIconSwitched
         
         return Output(
             viewModelAction: Output.ViewModelAction(
-                gameViewShowed: ,
-                settingsViewShowed: ,
-                tutorialViewShowed: ,
-                iconChangingSoundPlayed:
+                gameViewShowed: gameViewShowed,
+                settingsViewShowed: settingsViewShowed,
+                tutorialViewShowed: tutorialViewShowed,
+                cameraPermissionDescriptionAlertShowed: cameraPermissionDescriptionAlertShowed,
+                iconChangingSoundPlayed: iconChangingSoundPlayed
             ),
             outputToView: Output.OutputToView(
-                startButtonImageName: ,
-                settingsButtonImageName: ,
-                howToPlayButtonImageName:
+                isStartButtonIconSwitched: isStartButtonIconSwitched,
+                isSettingsButtonIconSwitched: isSettingsButtonIconSwitched,
+                isHowToPlayButtonIconSwitched: isHowToPlayButtonIconSwitched
             )
         )
     }

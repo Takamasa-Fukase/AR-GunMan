@@ -14,7 +14,7 @@ final class ReplayHandler: ViewModelEventHandlerType {
     }
     
     struct Output {
-        let setNeedsReplayToFalse: Observable<Void>
+        let setNeedsReplayFlagToFalse: Observable<Void>
         let showGameForReplay: Observable<Void>
     }
     
@@ -35,7 +35,7 @@ final class ReplayHandler: ViewModelEventHandlerType {
             .share()
         
         return Output(
-            setNeedsReplayToFalse: needsReplay,
+            setNeedsReplayFlagToFalse: needsReplay,
             showGameForReplay: needsReplay
         )
     }
