@@ -26,6 +26,7 @@ final class TopViewModel2: ViewModelType {
             let tutorialViewShowed: Observable<Void>
             let cameraPermissionDescriptionAlertShowed: Observable<Void>
             let iconChangingSoundPlayed: Observable<SoundType>
+            let needsReplayFlagIsSetToFalse: Observable<Void>
         }
         
         struct OutputToView {
@@ -140,7 +141,8 @@ final class TopViewModel2: ViewModelType {
                 settingsViewShowed: settingsViewShowed,
                 tutorialViewShowed: tutorialViewShowed,
                 cameraPermissionDescriptionAlertShowed: cameraPermissionDescriptionAlertShowed,
-                iconChangingSoundPlayed: iconChangingSoundPlayed
+                iconChangingSoundPlayed: iconChangingSoundPlayed,
+                needsReplayFlagIsSetToFalse: needsReplayFlagIsSetToFalse
             ),
             outputToView: Output.OutputToView(
                 isStartButtonIconSwitched: isStartButtonIconSwitched,
