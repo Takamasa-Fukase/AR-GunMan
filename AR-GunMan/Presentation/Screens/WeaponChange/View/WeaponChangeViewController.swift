@@ -17,9 +17,9 @@ final class WeaponChangeViewController: UIViewController {
     private let disposeBag = DisposeBag()
     
     @IBOutlet private weak var pagerView: FSPagerView! {
-        didSet{
+        didSet {
             let nib = UINib(nibName: WeaponChangeCell.className, bundle: nil)
-            self.pagerView.register(nib, forCellWithReuseIdentifier: WeaponChangeCell.className)
+            pagerView.register(nib, forCellWithReuseIdentifier: WeaponChangeCell.className)
         }
     }
     
@@ -37,7 +37,7 @@ final class WeaponChangeViewController: UIViewController {
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        self.pagerView.itemSize = CGSize(width: self.view.frame.width * 0.5, height: self.view.frame.height * 0.8)
+        pagerView.itemSize = CGSize(width: view.frame.width * 0.5, height: view.frame.height * 0.8)
     }
     
     private func setupFSPagerView() {

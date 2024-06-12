@@ -53,11 +53,11 @@ final class RankingViewController: UIViewController {
     private func setupTapDismiss() {
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissByTap))
         tapRecognizer.delegate = self
-        self.view.addGestureRecognizer(tapRecognizer)
+        view.addGestureRecognizer(tapRecognizer)
     }
     
     @objc private func dismissByTap() {
-        self.dismiss(animated: true)
+        dismiss(animated: true)
     }
     
     private func setupTableView() {
