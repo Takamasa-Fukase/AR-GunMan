@@ -37,14 +37,8 @@ final class RankingListView: UIView {
             }.disposed(by: disposeBag)
         
         isLoading
-            .subscribe(onNext: { [weak self] element in
-                guard let self = self else {return}
-                if element {
-                    self.activityIndicatorView.startAnimating()
-                }else {
-                    self.activityIndicatorView.stopAnimating()
-                }
-            }).disposed(by: disposeBag)
+            .bind(to: activityIndicatorView.rx.isAnimating)
+            .disposed(by: disposeBag)
     }
     
     func scrollCellToCenterVertically(at indexPath: IndexPath) {
@@ -59,5 +53,6 @@ final class RankingListView: UIView {
         
         tableView.contentInset.top = 10
         tableView.register(UINib(nibName: RankingCell.className, bundle: nil), forCellReuseIdentifier: RankingCell.className)
+        activityIndicatorView.hidesWhenStopped = true
     }
 }

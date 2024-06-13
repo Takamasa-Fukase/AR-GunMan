@@ -25,9 +25,7 @@ final class NameRegisterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        nameTextField.delegate = self
-        rankLabel.text = nil
-        
+        setupUI()
         bindViewModel()
         
         NotificationCenter.default.rx.notification(UIResponder.keyboardWillShowNotification, object: nil)
@@ -49,6 +47,13 @@ final class NameRegisterViewController: UIViewController {
         .disposed(by: disposeBag)
     }
     
+    private func setupUI() {
+        nameTextField.delegate = self
+        registerButton.setTitleColor(.black.withAlphaComponent(0.1), for: .disabled)
+        rankLabelSpinner.hidesWhenStopped = true
+        registerButtonSpinner.hidesWhenStopped = true
+    }
+    
     private func bindViewModel() {
         let input = NameRegisterViewModel.Input(
             viewWillDisappear: rx.viewWillDisappear,
@@ -66,33 +71,20 @@ final class NameRegisterViewController: UIViewController {
             viewModelAction.closeEventSent.subscribe()
             viewModelAction.viewDismissed.subscribe()
             viewModelAction.errorAlertShowed.subscribe()
-         
+            
             outputToView.temporaryRankText
-                .subscribe(onNext: { [weak self] temporaryRankText in
-                    guard let self = self else { return }
-                    self.rankLabel.text = temporaryRankText
-                    self.rankLabelSpinner.isHidden = temporaryRankText != nil
-                })
+                .bind(to: rankLabel.rx.text)
+            outputToView.temporaryRankText
+                .map({ $0.isEmpty })
+                .bind(to: rankLabelSpinner.rx.isAnimating)
             outputToView.scoreText
                 .bind(to: scoreLabel.rx.text)
             outputToView.isRegisterButtonEnabled
-                .subscribe(onNext: { [weak self] isEnabled in
-                    guard let self = self else { return }
-                    self.registerButton.isEnabled = isEnabled
-                    self.registerButton.setTitleColor(
-                        isEnabled ? .black : .black.withAlphaComponent(0.1),
-                        for: .normal
-                    )
-                })
+                .bind(to: registerButton.rx.isEnabled)
             outputToView.isRegistering
-                .subscribe(onNext: {  [weak self] isRegistering in
-                    guard let self = self else { return }
-                    self.registerButton.isHidden = isRegistering
-                    self.registerButtonSpinner.isHidden = !isRegistering
-                    if isRegistering {
-                        self.registerButtonSpinner.startAnimating()
-                    }
-                })
+                .bind(to: registerButton.rx.isHidden)
+            outputToView.isRegistering
+                .bind(to: registerButtonSpinner.rx.isAnimating)
         }
     }
 }
