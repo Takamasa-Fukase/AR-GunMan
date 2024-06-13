@@ -195,6 +195,8 @@
 		BC0BBE4D2C174B3000789349 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 599450FF256AD55900560202 /* TutorialViewController.swift */; };
 		BC0BBE4E2C174B3300789349 /* GameNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD1C2412C044E81008975EB /* GameNavigator.swift */; };
 		BC0BBE4F2C174B4200789349 /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD1C2242C01B3EA008975EB /* GameViewModel.swift */; };
+		BC22E0162C1B281300C59BAB /* Observable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22E0152C1B281300C59BAB /* Observable+Extension.swift */; };
+		BC22E0172C1B281300C59BAB /* Observable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22E0152C1B281300C59BAB /* Observable+Extension.swift */; };
 		BC2B11672977F90C009F4DC4 /* UIScrollView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2B11662977F90C009F4DC4 /* UIScrollView+Extension.swift */; };
 		BC482DC82C17F56600FAF079 /* TopViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DC72C17F56600FAF079 /* TopViewModel.swift */; };
 		BC482DC92C17F56600FAF079 /* TopViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DC72C17F56600FAF079 /* TopViewModel.swift */; };
@@ -403,6 +405,7 @@
 		BC0BBE3F2C16D31800789349 /* NSObject+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Extension.swift"; sourceTree = "<group>"; };
 		BC0BBE432C1745EB00789349 /* UIViewController+PanModalPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+PanModalPresentable.swift"; sourceTree = "<group>"; };
 		BC0BBE462C17474800789349 /* WeaponAutoReloadHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponAutoReloadHandlerTests.swift; sourceTree = "<group>"; };
+		BC22E0152C1B281300C59BAB /* Observable+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+Extension.swift"; sourceTree = "<group>"; };
 		BC2B11662977F90C009F4DC4 /* UIScrollView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Extension.swift"; sourceTree = "<group>"; };
 		BC482DC72C17F56600FAF079 /* TopViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopViewModel.swift; sourceTree = "<group>"; };
 		BC482DCA2C1800E500FAF079 /* TopUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopUseCase.swift; sourceTree = "<group>"; };
@@ -512,6 +515,7 @@
 				BCC512C12C15B5F000D77305 /* Extension+SCNNode.swift */,
 				BC0BBE3B2C16B7E100789349 /* Double+Extension.swift */,
 				BC0BBE3F2C16D31800789349 /* NSObject+Extension.swift */,
+				BC22E0152C1B281300C59BAB /* Observable+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1483,6 +1487,7 @@
 				677DF1EE27A710A8007512F6 /* SafariViewUtil.swift in Sources */,
 				BCCD44792C12982500BF541D /* ReloadingMotionDetectionCounter.swift in Sources */,
 				BCD1C24A2C05B3D0008975EB /* WeaponAutoReloadFilter.swift in Sources */,
+				BC22E0162C1B281300C59BAB /* Observable+Extension.swift in Sources */,
 				BCCD445D2C0B2F8D00BF541D /* GameStartHandler.swift in Sources */,
 				860191742BEDDF2A00382749 /* DeviceMotionController.swift in Sources */,
 				8627F6352BCE83F30003D374 /* ViewModelType.swift in Sources */,
@@ -1557,6 +1562,7 @@
 				BCD1C23B2C044DCD008975EB /* GameViewController.swift in Sources */,
 				BC482DD92C184E5800FAF079 /* TutorialViewModel.swift in Sources */,
 				860646CA2BF59CF100906DA0 /* WeaponType.swift in Sources */,
+				BC22E0172C1B281300C59BAB /* Observable+Extension.swift in Sources */,
 				860646132BF5996200906DA0 /* SceneAnimationUtil.swift in Sources */,
 				860646292BF5996E00906DA0 /* Ranking.swift in Sources */,
 				8606468C2BF599DF00906DA0 /* RankingCell.swift in Sources */,
