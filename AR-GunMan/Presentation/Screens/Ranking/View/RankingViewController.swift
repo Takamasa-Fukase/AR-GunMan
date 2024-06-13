@@ -11,42 +11,35 @@ import RxCocoa
 
 final class RankingViewController: UIViewController {
     var viewModel: RankingViewModel!
+    private let rankingListView = RankingListView()
     private let disposeBag = DisposeBag()
 
     @IBOutlet private weak var closeButton: UIButton!
-    @IBOutlet private weak var tableView: UITableView!
-    @IBOutlet private weak var activityIndicatorView: UIActivityIndicatorView!
+    @IBOutlet private weak var rankingListBaseView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        setupUI()
+        bindViewModel()
         setupTapDismiss()
-        setupTableView()
-        
+    }
+    
+    private func setupUI() {
+        rankingListBaseView.addSubview(rankingListView)
+        rankingListBaseView.addConstraints(for: rankingListView)
+    }
+    
+    private func bindViewModel() {
         let input = RankingViewModel.Input(
             viewWillAppear: rx.viewWillAppear,
             closeButtonTapped: closeButton.rx.tap.asObservable()
         )
-        
         let output = viewModel.transform(input: input)
-        
-        output.rankingList
-            .bind(to: tableView.rx.items(
-                cellIdentifier: RankingCell.className,
-                cellType: RankingCell.self
-            )) { row, element, cell in
-                cell.configure(ranking: element, row: row)
-            }.disposed(by: disposeBag)
-
-        output.isLoading
-            .subscribe(onNext: { [weak self] element in
-                guard let self = self else { return }
-                if element {
-                    self.activityIndicatorView.startAnimating()
-                }else {
-                    self.activityIndicatorView.stopAnimating()
-                }
-            }).disposed(by: disposeBag)
+        rankingListView.bind(
+            rankingList: output.rankingList,
+            isLoading: output.isLoading
+        )
     }
     
     //枠外タップでdismissの設定をつける
@@ -58,11 +51,6 @@ final class RankingViewController: UIViewController {
     
     @objc private func dismissByTap() {
         dismiss(animated: true)
-    }
-    
-    private func setupTableView() {
-        tableView.contentInset.top = 10
-        tableView.register(UINib(nibName: RankingCell.className, bundle: nil), forCellReuseIdentifier: RankingCell.className)
     }
 }
 

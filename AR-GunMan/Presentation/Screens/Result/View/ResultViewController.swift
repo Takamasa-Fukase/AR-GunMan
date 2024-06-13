@@ -11,8 +11,8 @@ import RxCocoa
 
 final class ResultViewController: UIViewController {
     var viewModel: ResultViewModel2!
-    private let disposeBag = DisposeBag()
     private let rankingListView = RankingListView()
+    private let disposeBag = DisposeBag()
     
     @IBOutlet private weak var rankingListBaseView: UIView!
     @IBOutlet private weak var scoreLabel: UILabel!
@@ -33,7 +33,6 @@ final class ResultViewController: UIViewController {
             replayButtonTapped: replayButton.rx.tap.asObservable(),
             toHomeButtonTapped: homeButton.rx.tap.asObservable()
         )
-        
         let output = viewModel.transform(input: input)
         let viewModelAction = output.viewModelAction
         let outputToView = output.outputToView
