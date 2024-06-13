@@ -11,23 +11,23 @@ import RxCocoa
 final class ObservableActivityTracker: ObservableConvertibleType {
     typealias Element = Bool
     
-    private let isLoading = BehaviorRelay<Bool>(value: false)
+    private let isLoadingRelay = BehaviorRelay<Element>(value: false)
     
     fileprivate func trackActivity<O: ObservableConvertibleType>(_ source: O) -> Observable<O.Element> {
         return source.asObservable()
             .do(onNext: { [weak self] _ in
-                self?.isLoading.accept(false)
+                self?.isLoadingRelay.accept(false)
             }, onError: { [weak self] _ in
-                self?.isLoading.accept(false)
+                self?.isLoadingRelay.accept(false)
             }, onCompleted: {
-                self.isLoading.accept(false)
+                self.isLoadingRelay.accept(false)
             }, onSubscribe: {
-                self.isLoading.accept(true)
+                self.isLoadingRelay.accept(true)
             })
     }
     
     func asObservable() -> Observable<Element> {
-        return isLoading.asObservable()
+        return isLoadingRelay.asObservable()
     }
 }
 
