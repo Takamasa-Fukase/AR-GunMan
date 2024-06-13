@@ -82,6 +82,7 @@ final class NameRegisterViewModel: ViewModelType {
                 return self.useCase.registerRanking(ranking)
                     .trackActivity(registerActivityTracker)
                     .trackError(errorTracker)
+                    .catchErrorJustComplete()
             })
             .share()
         

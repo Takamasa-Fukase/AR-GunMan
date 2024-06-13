@@ -70,6 +70,7 @@ final class ResultViewModel: ViewModelType {
                 return self.useCase.getRanking()
                     .trackActivity(rankingLoadActivityTracker)
                     .trackError(errorTracker)
+                    .catchErrorJustComplete()
             })
             .share()
         
