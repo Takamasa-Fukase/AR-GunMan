@@ -12,9 +12,9 @@ import RxCocoa
 final class ResultViewController: UIViewController {
     var viewModel: ResultViewModel2!
     private let disposeBag = DisposeBag()
+    private let rankingListView = RankingListView()
     
-    @IBOutlet private weak var tableView: UITableView!
-    @IBOutlet private weak var activityIndicatorView: UIActivityIndicatorView!
+    @IBOutlet private weak var rankingListBaseView: UIView!
     @IBOutlet private weak var scoreLabel: UILabel!
     @IBOutlet private weak var rightButtonsStackView: UIStackView!
     @IBOutlet private weak var replayButton: UIButton!
@@ -45,14 +45,7 @@ final class ResultViewController: UIViewController {
             viewModelAction.viewDismissedToTopPage.subscribe()
             viewModelAction.errorAlertShowed.subscribe()
             viewModelAction.needsReplayFlagIsSetToTrue.subscribe()
-            
-            outputToView.rankingList
-                .bind(to: tableView.rx.items(
-                    cellIdentifier: RankingCell.className,
-                    cellType: RankingCell.self
-                )) { row, element, cell in
-                    cell.configure(ranking: element, row: row)
-                }
+
             outputToView.scoreText
                 .bind(to: scoreLabel.rx.text)
             outputToView.showButtons
@@ -63,18 +56,14 @@ final class ResultViewController: UIViewController {
             outputToView.scrollCellToCenter
                 .subscribe(onNext: { [weak self] indexPath in
                     guard let self = self else {return}
-                    self.scrollCellToCenterVertically(at: indexPath)
-                })
-            outputToView.isLoadingRankingList
-                .subscribe(onNext: { [weak self] element in
-                    guard let self = self else { return }
-                    if element {
-                        self.activityIndicatorView.startAnimating()
-                    }else {
-                        self.activityIndicatorView.stopAnimating()
-                    }
+                    self.rankingListView.scrollCellToCenterVertically(at: indexPath)
                 })
         }
+        
+        rankingListView.bind(
+            rankingList: outputToView.rankingList,
+            isLoading: outputToView.isLoadingRankingList
+        )
     }
     
     private func setupUI() {
@@ -82,8 +71,9 @@ final class ResultViewController: UIViewController {
         rightButtonsStackView.isHidden = true
         replayButton.alpha = 0
         homeButton.alpha = 0
-        tableView.contentInset.top = 10
-        tableView.register(UINib(nibName: RankingCell.className, bundle: nil), forCellReuseIdentifier: RankingCell.className)
+        
+        rankingListBaseView.addSubview(rankingListView)
+        rankingListBaseView.addConstraints(for: rankingListView)
     }
 
     private func showButtons() {
@@ -96,10 +86,6 @@ final class ResultViewController: UIViewController {
                 self.homeButton.alpha = 1
             }
         }
-    }
-    
-    private func scrollCellToCenterVertically(at indexPath: IndexPath) {
-        self.tableView.scrollToRow(at: indexPath, at: .middle, animated: true)
     }
     
     private func highlightCell(at indexPath: IndexPath) {
