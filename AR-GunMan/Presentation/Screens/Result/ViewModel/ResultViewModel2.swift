@@ -71,6 +71,7 @@ final class ResultViewModel2: ViewModelType {
                     .trackActivity(rankingLoadActivityTracker)
                     .trackError(errorTracker)
             })
+            .share()
         
         let temporaryRankIndex = loadedRankingList
             .map({ [weak self] in
