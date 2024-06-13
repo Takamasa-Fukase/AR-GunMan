@@ -12,13 +12,8 @@ import RxSwift
 protocol ResultNavigatorInterface {
     func showNameRegister(
         score: Double,
-        rankingListObservable: Observable<[Ranking]>,
-        eventReceiver: NameRegisterEventReceiver
-    )
-    func showNameRegister2(
-        score: Double,
         temporaryRankTextObservable: Observable<String>,
-        eventReceiver: NameRegisterEventReceiver2
+        eventReceiver: NameRegisterEventReceiver
     )
     func backToTop()
     func showErrorAlert(_ error: Error)
@@ -41,7 +36,7 @@ final class ResultNavigator: ResultNavigatorInterface {
             replayRepository: ReplayRepository()
         )
         let navigator = ResultNavigator(viewController: vc)
-        let viewModel = ResultViewModel2(
+        let viewModel = ResultViewModel(
             useCase: useCase,
             navigator: navigator,
             score: score
@@ -52,23 +47,10 @@ final class ResultNavigator: ResultNavigatorInterface {
     
     func showNameRegister(
         score: Double,
-        rankingListObservable: Observable<[Ranking]>,
+        temporaryRankTextObservable: Observable<String>,
         eventReceiver: NameRegisterEventReceiver
     ) {
         let vc = NameRegisterNavigator.assembleModules(
-            score: score,
-            rankingListObservable: rankingListObservable,
-            eventReceiver: eventReceiver
-        )
-        viewController.presentPanModal(vc)
-    }
-    
-    func showNameRegister2(
-        score: Double,
-        temporaryRankTextObservable: Observable<String>,
-        eventReceiver: NameRegisterEventReceiver2
-    ) {
-        let vc = NameRegisterNavigator2.assembleModules(
             score: score,
             temporaryRankTextObservable: temporaryRankTextObservable,
             eventReceiver: eventReceiver

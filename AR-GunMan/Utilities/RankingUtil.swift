@@ -10,17 +10,6 @@ import Foundation
 final class RankingUtil {
     // 何位中/何位の表示テキストを作成
     static func createTemporaryRankText(
-        rankingList: [Ranking],
-        score: Double
-    ) -> String? {
-        guard !rankingList.isEmpty else { return nil }
-        // スコア表示は1から始まるので＋1する
-        let temporaryRankNumber = getTemporaryRankIndex(rankingList: rankingList, score: score) + 1
-        return "\(temporaryRankNumber) / \(rankingList.count)"
-    }
-    
-    // 何位中/何位の表示テキストを作成
-    static func createTemporaryRankText2(
         temporaryRankIndex: Int,
         rankingListCount: Int
     ) -> String {

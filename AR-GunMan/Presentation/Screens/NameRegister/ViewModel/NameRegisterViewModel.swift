@@ -1,15 +1,15 @@
 //
-//  RegisterNameViewModel.swift
+//  NameRegisterViewModel.swift
 //  AR-GunMan
 //
-//  Created by ウルトラ深瀬 on 2022/01/25.
+//  Created by ウルトラ深瀬 on 12/6/24.
 //
 
 import RxSwift
 import RxCocoa
 
 final class NameRegisterEventReceiver {
-    let onRegister = PublishRelay<Ranking>()
+    let onRegisterComplete = PublishRelay<Ranking>()
     let onClose = PublishRelay<Void>()
 }
 
@@ -22,86 +22,117 @@ final class NameRegisterViewModel: ViewModelType {
     }
     
     struct Output {
-        let rankText: Observable<String?>
-        let scoreText: Observable<String>
-        let isRegisterButtonEnabled: Observable<Bool>
-        let isRegistering: Observable<Bool>
+        let viewModelAction: ViewModelAction
+        let outputToView: OutputToView
+                
+        struct ViewModelAction {
+            let rankingRegistered: Observable<Ranking>
+            let registerCompleteEventSent: Observable<Ranking>
+            let closeEventSent: Observable<Void>
+            let viewDismissed: Observable<Void>
+            let errorAlertShowed: Observable<Error>
+        }
+        
+        struct OutputToView {
+            let temporaryRankText: Observable<String>
+            let scoreText: Observable<String>
+            let isRegisterButtonEnabled: Observable<Bool>
+            let isRegistering: Observable<Bool>
+        }
     }
     
     struct State {}
     
-    private let navigator: NameRegisterNavigatorInterface
     private let useCase: NameRegisterUseCaseInterface
+    private let navigator: NameRegisterNavigatorInterface
     private let score: Double
-    private let rankingListObservable: Observable<[Ranking]>
+    private let temporaryRankTextObservable: Observable<String>
     private weak var eventReceiver: NameRegisterEventReceiver?
-    
-    private let disposeBag = DisposeBag()
-    
+        
     init(
-        navigator: NameRegisterNavigatorInterface,
         useCase: NameRegisterUseCaseInterface,
+        navigator: NameRegisterNavigatorInterface,
         score: Double,
-        rankingListObservable: Observable<[Ranking]>,
+        temporaryRankTextObservable: Observable<String>,
         eventReceiver: NameRegisterEventReceiver?
     ) {
-        self.navigator = navigator
         self.useCase = useCase
+        self.navigator = navigator
         self.score = score
-        self.rankingListObservable = rankingListObservable
+        self.temporaryRankTextObservable = temporaryRankTextObservable
         self.eventReceiver = eventReceiver
     }
     
     func transform(input: Input) -> Output {
-        let registeringTracker = ObservableActivityTracker()
+        let registerActivityTracker = ObservableActivityTracker()
+        let errorTracker = ObservableErrorTracker()
         
-        input.viewWillDisappear
-            .bind(to: eventReceiver?.onClose ?? PublishRelay())
-            .disposed(by: disposeBag)
+        // MARK: - ViewModelAction
+        let closeEventSent = input.viewWillDisappear
+            .do(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.eventReceiver?.onClose.accept(())
+            })
         
-        input.registerButtonTapped
+        let rankingRegistered = input.registerButtonTapped
             .withLatestFrom(input.nameTextFieldChanged)
-            .flatMapLatest({ [weak self] userName in
-                let ranking = Ranking(score: self?.score ?? 0.0, userName: userName)
-                return (self?.useCase.registerRanking(ranking) ?? Single.just(ranking))
-                    .trackActivity(registeringTracker)
+            .flatMapLatest({ [weak self] userName -> Observable<Ranking> in
+                guard let self = self else { return .empty() }
+                let ranking = Ranking(score: self.score, userName: userName)
+                return self.useCase.registerRanking(ranking)
+                    .trackActivity(registerActivityTracker)
+                    .trackError(errorTracker)
             })
-            .subscribe(
-                onNext: { [weak self] registeredRanking in
-                    self?.eventReceiver?.onRegister.accept(registeredRanking)
-                    self?.navigator.dismiss()
-                },
-                onError: { [weak self] error in
-                    self?.navigator.showErrorAlert(error)
-                }
-            ).disposed(by: disposeBag)
+            .share()
         
-        input.noButtonTapped
-            .subscribe(onNext: { [weak self] _ in
-                self?.navigator.dismiss()
-            }).disposed(by: disposeBag)
-        
-        let rankText = rankingListObservable
-            .filter({ !$0.isEmpty })
-            .map({ [weak self] rankingList in
-                return RankingUtil.createTemporaryRankText(
-                    rankingList: rankingList,
-                    score: self?.score ?? 0.0
-                )
+        let registerCompleteEventSent = rankingRegistered
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.eventReceiver?.onRegisterComplete.accept($0)
             })
+        
+        let viewDismissed = Observable
+            .merge(
+                input.noButtonTapped,
+                rankingRegistered.map({ _ in })
+            )
+            .do(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.navigator.dismiss()
+            })
+        
+        let errorAlertShowed = errorTracker.asObservable()
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.navigator.showErrorAlert($0)
+            })
+        
+        
+        // MARK: - OutputToView
+        let temporaryRankText = temporaryRankTextObservable
         
         let scoreText = Observable.just("Score: \(score.scoreText)")
         
         let isRegisterButtonEnabled = input.nameTextFieldChanged
-            .map({ element in
-                return !element.isEmpty
-            })
+            .map({ !$0.isEmpty })
+        
+        let isRegistering = registerActivityTracker.asObservable()
+        
         
         return Output(
-            rankText: rankText,
-            scoreText: scoreText,
-            isRegisterButtonEnabled: isRegisterButtonEnabled,
-            isRegistering: registeringTracker.asObservable()
+            viewModelAction: Output.ViewModelAction(
+                rankingRegistered: rankingRegistered,
+                registerCompleteEventSent: registerCompleteEventSent,
+                closeEventSent: closeEventSent,
+                viewDismissed: viewDismissed,
+                errorAlertShowed: errorAlertShowed
+            ),
+            outputToView: Output.OutputToView(
+                temporaryRankText: temporaryRankText,
+                scoreText: scoreText,
+                isRegisterButtonEnabled: isRegisterButtonEnabled,
+                isRegistering: isRegistering
+            )
         )
     }
 }

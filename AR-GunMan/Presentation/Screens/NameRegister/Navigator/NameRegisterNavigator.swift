@@ -2,7 +2,7 @@
 //  NameRegisterNavigator.swift
 //  AR-GunMan
 //
-//  Created by 深瀬 on 2024/04/20.
+//  Created by ウルトラ深瀬 on 13/6/24.
 //
 
 import RxSwift
@@ -21,7 +21,7 @@ final class NameRegisterNavigator: NameRegisterNavigatorInterface {
     
     static func assembleModules(
         score: Double,
-        rankingListObservable: Observable<[Ranking]>,
+        temporaryRankTextObservable: Observable<String>,
         eventReceiver: NameRegisterEventReceiver
     ) -> UIViewController {
         let storyboard: UIStoryboard = UIStoryboard(name: NameRegisterViewController.className, bundle: nil)
@@ -30,13 +30,13 @@ final class NameRegisterNavigator: NameRegisterNavigatorInterface {
         let navigator = NameRegisterNavigator(viewController: vc)
         let useCase = NameRegisterUseCase(rankingRepository: RankingRepository())
         let viewModel = NameRegisterViewModel(
-            navigator: navigator,
             useCase: useCase,
+            navigator: navigator,
             score: score,
-            rankingListObservable: rankingListObservable,
+            temporaryRankTextObservable: temporaryRankTextObservable,
             eventReceiver: eventReceiver
         )
-//        vc.viewModel = viewModel
+        vc.viewModel = viewModel
         return vc
     }
     

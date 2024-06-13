@@ -11,7 +11,7 @@ import RxCocoa
 import PKHUD
 
 final class NameRegisterViewController: UIViewController {
-    var viewModel: NameRegisterViewModel2!
+    var viewModel: NameRegisterViewModel!
     private let disposeBag = DisposeBag()
     
     @IBOutlet private weak var rankLabel: UILabel!
@@ -50,7 +50,7 @@ final class NameRegisterViewController: UIViewController {
     }
     
     private func bindViewModel() {
-        let input = NameRegisterViewModel2.Input(
+        let input = NameRegisterViewModel.Input(
             viewWillDisappear: rx.viewWillDisappear,
             nameTextFieldChanged: nameTextField.rx.text.orEmpty.asObservable(),
             registerButtonTapped: registerButton.rx.tap.asObservable(),

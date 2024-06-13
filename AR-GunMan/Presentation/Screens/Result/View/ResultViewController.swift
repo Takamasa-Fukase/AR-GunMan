@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 
 final class ResultViewController: UIViewController {
-    var viewModel: ResultViewModel2!
+    var viewModel: ResultViewModel!
     private let rankingListView = RankingListView()
     private let disposeBag = DisposeBag()
     
@@ -28,7 +28,7 @@ final class ResultViewController: UIViewController {
     }
     
     private func bindViewModel() {
-        let input = ResultViewModel2.Input(
+        let input = ResultViewModel.Input(
             viewWillAppear: rx.viewWillAppear,
             replayButtonTapped: replayButton.rx.tap.asObservable(),
             toHomeButtonTapped: homeButton.rx.tap.asObservable()
