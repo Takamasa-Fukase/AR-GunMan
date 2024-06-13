@@ -19,6 +19,16 @@ final class RankingUtil {
         return "\(temporaryRankNumber) / \(rankingList.count)"
     }
     
+    // 何位中/何位の表示テキストを作成
+    static func createTemporaryRankText2(
+        temporaryRankIndex: Int,
+        rankingListCount: Int
+    ) -> String {
+        // スコア表示は1から始まるので＋1する
+        let temporaryRankNumber = temporaryRankIndex + 1
+        return "\(temporaryRankNumber) / \(rankingListCount)"
+    }
+    
     // 取得したランキング順位の中から今回のスコア（まだ未登録）を差し込むと暫定何位になるかを計算して返却
     static func getTemporaryRankIndex(
         rankingList: [Ranking],

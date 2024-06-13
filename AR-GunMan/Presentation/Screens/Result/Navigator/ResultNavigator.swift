@@ -32,6 +32,7 @@ final class ResultNavigator: ResultNavigatorInterface {
         vc.modalPresentationStyle = .fullScreen
         let useCase = ResultUseCase(
             rankingRepository: RankingRepository(),
+            timerRepository: TimerRepository(),
             replayRepository: ReplayRepository()
         )
         let navigator = ResultNavigator(viewController: vc)
