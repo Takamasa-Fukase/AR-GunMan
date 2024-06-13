@@ -11,7 +11,7 @@ import RxCocoa
 import PKHUD
 
 final class NameRegisterViewController: UIViewController {
-    var viewModel: NameRegisterViewModel!
+    var viewModel: NameRegisterViewModel2!
     private let disposeBag = DisposeBag()
     
     @IBOutlet private weak var rankLabel: UILabel!
@@ -28,45 +28,7 @@ final class NameRegisterViewController: UIViewController {
         nameTextField.delegate = self
         rankLabel.text = nil
         
-        let input = NameRegisterViewModel.Input(
-            viewWillDisappear: rx.viewWillDisappear,
-            nameTextFieldChanged: nameTextField.rx.text.orEmpty.asObservable(),
-            registerButtonTapped: registerButton.rx.tap.asObservable(),
-            noButtonTapped: noButton.rx.tap.asObservable()
-        )
-
-        let output = viewModel.transform(input: input)
-        
-        output.rankText
-            .subscribe(onNext: { [weak self] rankText in
-                guard let self = self else { return }
-                self.rankLabel.text = rankText
-                self.rankLabelSpinner.isHidden = rankText != nil
-            }).disposed(by: disposeBag)
-
-        output.scoreText
-            .bind(to: scoreLabel.rx.text)
-            .disposed(by: disposeBag)
-        
-        output.isRegisterButtonEnabled
-            .subscribe(onNext: { [weak self] isEnabled in
-                guard let self = self else { return }
-                self.registerButton.isEnabled = isEnabled
-                self.registerButton.setTitleColor(
-                    isEnabled ? .black : .black.withAlphaComponent(0.1),
-                    for: .normal
-                )
-            }).disposed(by: disposeBag)
-        
-        output.isRegistering
-            .subscribe(onNext: {  [weak self] isRegistering in
-                guard let self = self else { return }
-                self.registerButton.isHidden = isRegistering
-                self.registerButtonSpinner.isHidden = !isRegistering
-                if isRegistering {
-                    self.registerButtonSpinner.startAnimating()
-                }
-            }).disposed(by: disposeBag)
+        bindViewModel()
         
         NotificationCenter.default.rx.notification(UIResponder.keyboardWillShowNotification, object: nil)
             .subscribe({ [weak self] (notification) in
@@ -85,6 +47,53 @@ final class NameRegisterViewController: UIViewController {
                 }
             })
         .disposed(by: disposeBag)
+    }
+    
+    private func bindViewModel() {
+        let input = NameRegisterViewModel2.Input(
+            viewWillDisappear: rx.viewWillDisappear,
+            nameTextFieldChanged: nameTextField.rx.text.orEmpty.asObservable(),
+            registerButtonTapped: registerButton.rx.tap.asObservable(),
+            noButtonTapped: noButton.rx.tap.asObservable()
+        )
+        let output = viewModel.transform(input: input)
+        let viewModelAction = output.viewModelAction
+        let outputToView = output.outputToView
+        
+        disposeBag.insert {
+            viewModelAction.rankingRegistered.subscribe()
+            viewModelAction.registerCompleteEventSent.subscribe()
+            viewModelAction.closeEventSent.subscribe()
+            viewModelAction.viewDismissed.subscribe()
+            viewModelAction.errorAlertShowed.subscribe()
+         
+            outputToView.temporaryRankText
+                .subscribe(onNext: { [weak self] temporaryRankText in
+                    guard let self = self else { return }
+                    self.rankLabel.text = temporaryRankText
+                    self.rankLabelSpinner.isHidden = temporaryRankText != nil
+                })
+            outputToView.scoreText
+                .bind(to: scoreLabel.rx.text)
+            outputToView.isRegisterButtonEnabled
+                .subscribe(onNext: { [weak self] isEnabled in
+                    guard let self = self else { return }
+                    self.registerButton.isEnabled = isEnabled
+                    self.registerButton.setTitleColor(
+                        isEnabled ? .black : .black.withAlphaComponent(0.1),
+                        for: .normal
+                    )
+                })
+            outputToView.isRegistering
+                .subscribe(onNext: {  [weak self] isRegistering in
+                    guard let self = self else { return }
+                    self.registerButton.isHidden = isRegistering
+                    self.registerButtonSpinner.isHidden = !isRegistering
+                    if isRegistering {
+                        self.registerButtonSpinner.startAnimating()
+                    }
+                })
+        }
     }
 }
 

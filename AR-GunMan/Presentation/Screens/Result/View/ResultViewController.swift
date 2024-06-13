@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 
 final class ResultViewController: UIViewController {
-    var viewModel: ResultViewModel!
+    var viewModel: ResultViewModel2!
     private let disposeBag = DisposeBag()
     
     @IBOutlet private weak var tableView: UITableView!
@@ -24,49 +24,57 @@ final class ResultViewController: UIViewController {
         super.viewDidLoad()
         
         setupUI()
-        
-        let input = ResultViewModel.Input(
+        bindViewModel()
+    }
+    
+    private func bindViewModel() {
+        let input = ResultViewModel2.Input(
             viewWillAppear: rx.viewWillAppear,
             replayButtonTapped: replayButton.rx.tap.asObservable(),
             toHomeButtonTapped: homeButton.rx.tap.asObservable()
         )
         
         let output = viewModel.transform(input: input)
+        let viewModelAction = output.viewModelAction
+        let outputToView = output.outputToView
         
-        output.rankingList
-            .bind(to: tableView.rx.items(
-                cellIdentifier: RankingCell.className,
-                cellType: RankingCell.self
-            )) { row, element, cell in
-                cell.configure(ranking: element, row: row)
-            }.disposed(by: disposeBag)
-        
-        output.scoreText
-            .bind(to: scoreLabel.rx.text)
-            .disposed(by: disposeBag)
-        
-        output.showButtons
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else {return}
-                self.showButtons()
-            }).disposed(by: disposeBag)
-        
-        output.scrollAndHightlightCell
-            .subscribe(onNext: { [weak self] indexPath in
-                guard let self = self else {return}
-                self.scrollCellToCenterVertically(at: indexPath)
-                // TODO: ハイライトさせる
-            }).disposed(by: disposeBag)
-        
-        output.isLoading
-            .subscribe(onNext: { [weak self] element in
-                guard let self = self else { return }
-                if element {
-                    self.activityIndicatorView.startAnimating()
-                }else {
-                    self.activityIndicatorView.stopAnimating()
+        disposeBag.insert {
+            viewModelAction.rankingListLoaded.subscribe()
+            viewModelAction.nameRegisterViewShowed.subscribe()
+            viewModelAction.rankingListUpdatedAfterRegister.subscribe()
+            viewModelAction.viewDismissedToTopPage.subscribe()
+            viewModelAction.errorAlertShowed.subscribe()
+            viewModelAction.needsReplayFlagIsSetToTrue.subscribe()
+            
+            outputToView.rankingList
+                .bind(to: tableView.rx.items(
+                    cellIdentifier: RankingCell.className,
+                    cellType: RankingCell.self
+                )) { row, element, cell in
+                    cell.configure(ranking: element, row: row)
                 }
-            }).disposed(by: disposeBag)
+            outputToView.scoreText
+                .bind(to: scoreLabel.rx.text)
+            outputToView.showButtons
+                .subscribe(onNext: { [weak self] _ in
+                    guard let self = self else {return}
+                    self.showButtons()
+                })
+            outputToView.scrollCellToCenter
+                .subscribe(onNext: { [weak self] indexPath in
+                    guard let self = self else {return}
+                    self.scrollCellToCenterVertically(at: indexPath)
+                })
+            outputToView.isLoadingRankingList
+                .subscribe(onNext: { [weak self] element in
+                    guard let self = self else { return }
+                    if element {
+                        self.activityIndicatorView.startAnimating()
+                    }else {
+                        self.activityIndicatorView.stopAnimating()
+                    }
+                })
+        }
     }
     
     private func setupUI() {

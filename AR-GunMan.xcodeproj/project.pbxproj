@@ -222,6 +222,8 @@
 		BC482DE22C19D53F00FAF079 /* NameRegisterViewModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DE02C19D53F00FAF079 /* NameRegisterViewModel2.swift */; };
 		BC482DE72C1A74F800FAF079 /* ObservableErrorTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DE62C1A74F800FAF079 /* ObservableErrorTracker.swift */; };
 		BC482DE82C1A74F800FAF079 /* ObservableErrorTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DE62C1A74F800FAF079 /* ObservableErrorTracker.swift */; };
+		BC482DEA2C1AAB7400FAF079 /* NameRegisterNavigator2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DE92C1AAB7400FAF079 /* NameRegisterNavigator2.swift */; };
+		BC482DEB2C1AAB7400FAF079 /* NameRegisterNavigator2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DE92C1AAB7400FAF079 /* NameRegisterNavigator2.swift */; };
 		BC62CE0A2C15607D00070B49 /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC62CE092C15607D00070B49 /* Vector.swift */; };
 		BC62CE0B2C15607D00070B49 /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC62CE092C15607D00070B49 /* Vector.swift */; };
 		BC62CE0E2C15632100070B49 /* TargetHitFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC62CE0D2C15632100070B49 /* TargetHitFilter.swift */; };
@@ -415,6 +417,7 @@
 		BC482DDD2C196FB000FAF079 /* ResultConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultConst.swift; sourceTree = "<group>"; };
 		BC482DE02C19D53F00FAF079 /* NameRegisterViewModel2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameRegisterViewModel2.swift; sourceTree = "<group>"; };
 		BC482DE62C1A74F800FAF079 /* ObservableErrorTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableErrorTracker.swift; sourceTree = "<group>"; };
+		BC482DE92C1AAB7400FAF079 /* NameRegisterNavigator2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameRegisterNavigator2.swift; sourceTree = "<group>"; };
 		BC62CE092C15607D00070B49 /* Vector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector.swift; sourceTree = "<group>"; };
 		BC62CE0D2C15632100070B49 /* TargetHitFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetHitFilter.swift; sourceTree = "<group>"; };
 		BC92C853297061FE00E49BD5 /* WeaponType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponType.swift; sourceTree = "<group>"; };
@@ -863,6 +866,7 @@
 			isa = PBXGroup;
 			children = (
 				860C94962BD3CDAC0042D52C /* NameRegisterNavigator.swift */,
+				BC482DE92C1AAB7400FAF079 /* NameRegisterNavigator2.swift */,
 			);
 			path = Navigator;
 			sourceTree = "<group>";
@@ -1487,6 +1491,7 @@
 				BCCD44592C0B2BAF00BF541D /* TutorialSeenStatusHandler.swift in Sources */,
 				BCCD44872C12C8C000BF541D /* GameObjectInfo.swift in Sources */,
 				86B112512C0080AA006D464A /* WeaponFireHandler.swift in Sources */,
+				BC482DEA2C1AAB7400FAF079 /* NameRegisterNavigator2.swift in Sources */,
 				BCD1C2252C01B3EA008975EB /* GameViewModel.swift in Sources */,
 				59D2D57B2552E536006DDB70 /* TopViewController.swift in Sources */,
 				59D2D4D92552DE66006DDB70 /* AppDelegate.swift in Sources */,
@@ -1567,6 +1572,7 @@
 				860645EF2BF5992100906DA0 /* ViewModelType.swift in Sources */,
 				860646772BF599D500906DA0 /* NameRegisterUseCase.swift in Sources */,
 				BCCD44942C13F93900BF541D /* CustomSCNNode.swift in Sources */,
+				BC482DEB2C1AAB7400FAF079 /* NameRegisterNavigator2.swift in Sources */,
 				8606462C2BF5997200906DA0 /* CoreMotionRepository.swift in Sources */,
 				860646002BF5995800906DA0 /* UIImageView+Extension.swift in Sources */,
 				860645FD2BF5995800906DA0 /* UIAlertController+Extension.swift in Sources */,

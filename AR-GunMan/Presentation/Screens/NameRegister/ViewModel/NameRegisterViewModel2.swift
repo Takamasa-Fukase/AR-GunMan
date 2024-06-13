@@ -44,14 +44,14 @@ final class NameRegisterViewModel2: ViewModelType {
     struct State {}
     
     private let useCase: NameRegisterUseCaseInterface
-    private let navigator: NameRegisterNavigatorInterface
+    private let navigator: NameRegisterNavigatorInterface2
     private let score: Double
     private let temporaryRankTextObservable: Observable<String>
     private weak var eventReceiver: NameRegisterEventReceiver2?
         
     init(
         useCase: NameRegisterUseCaseInterface,
-        navigator: NameRegisterNavigatorInterface,
+        navigator: NameRegisterNavigatorInterface2,
         score: Double,
         temporaryRankTextObservable: Observable<String>,
         eventReceiver: NameRegisterEventReceiver2?

@@ -1,18 +1,18 @@
 //
-//  NameRegisterNavigator.swift
+//  NameRegisterNavigator2.swift
 //  AR-GunMan
 //
-//  Created by 深瀬 on 2024/04/20.
+//  Created by ウルトラ深瀬 on 13/6/24.
 //
 
 import RxSwift
 
-protocol NameRegisterNavigatorInterface {
+protocol NameRegisterNavigatorInterface2 {
     func dismiss()
     func showErrorAlert(_ error: Error)
 }
 
-final class NameRegisterNavigator: NameRegisterNavigatorInterface {
+final class NameRegisterNavigator2: NameRegisterNavigatorInterface2 {
     private unowned let viewController: UIViewController
     
     init(viewController: UIViewController) {
@@ -21,22 +21,22 @@ final class NameRegisterNavigator: NameRegisterNavigatorInterface {
     
     static func assembleModules(
         score: Double,
-        rankingListObservable: Observable<[Ranking]>,
-        eventReceiver: NameRegisterEventReceiver
+        temporaryRankTextObservable: Observable<String>,
+        eventReceiver: NameRegisterEventReceiver2
     ) -> UIViewController {
         let storyboard: UIStoryboard = UIStoryboard(name: NameRegisterViewController.className, bundle: nil)
         let vc = storyboard.instantiateInitialViewController() as! NameRegisterViewController
         vc.modalPresentationStyle = .overCurrentContext
-        let navigator = NameRegisterNavigator(viewController: vc)
+        let navigator = NameRegisterNavigator2(viewController: vc)
         let useCase = NameRegisterUseCase(rankingRepository: RankingRepository())
-        let viewModel = NameRegisterViewModel(
-            navigator: navigator,
+        let viewModel = NameRegisterViewModel2(
             useCase: useCase,
+            navigator: navigator,
             score: score,
-            rankingListObservable: rankingListObservable,
+            temporaryRankTextObservable: temporaryRankTextObservable,
             eventReceiver: eventReceiver
         )
-//        vc.viewModel = viewModel
+        vc.viewModel = viewModel
         return vc
     }
     

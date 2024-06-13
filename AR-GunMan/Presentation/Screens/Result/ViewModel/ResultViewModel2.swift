@@ -20,7 +20,7 @@ final class ResultViewModel2: ViewModelType {
         let outputToView: OutputToView
                 
         struct ViewModelAction {
-            let rankingListFetched: Observable<[Ranking]>
+            let rankingListLoaded: Observable<[Ranking]>
             let nameRegisterViewShowed: Observable<Void>
             let rankingListUpdatedAfterRegister: Observable<[Ranking]>
             let viewDismissedToTopPage: Observable<Void>
@@ -63,7 +63,7 @@ final class ResultViewModel2: ViewModelType {
         let errorTracker = ObservableErrorTracker()
 
         // MARK: - ViewModelAction
-        let fetchedRankingList = input.viewWillAppear
+        let loadedRankingList = input.viewWillAppear
             .take(1)
             .flatMapLatest({ [weak self] _ -> Observable<[Ranking]> in
                 guard let self = self else { return .empty() }
@@ -72,7 +72,7 @@ final class ResultViewModel2: ViewModelType {
                     .trackError(errorTracker)
             })
         
-        let temporaryRankIndex = fetchedRankingList
+        let temporaryRankIndex = loadedRankingList
             .map({ [weak self] in
                 guard let self = self else { return 0 }
                 return RankingUtil.getTemporaryRankIndex(
@@ -82,7 +82,7 @@ final class ResultViewModel2: ViewModelType {
             })
         
         let temporaryRankText = temporaryRankIndex
-            .withLatestFrom(fetchedRankingList) { (rankIndex: $0, rankingList: $1) }
+            .withLatestFrom(loadedRankingList) { (rankIndex: $0, rankingList: $1) }
             .map({
                 return RankingUtil.createTemporaryRankText2(
                     temporaryRankIndex: $0.rankIndex,
@@ -107,7 +107,7 @@ final class ResultViewModel2: ViewModelType {
         
         let updatedRankingListAfterRegister = nameRegisterEventReceiver.onRegisterComplete
             .withLatestFrom(Observable.combineLatest(
-                fetchedRankingList,
+                loadedRankingList,
                 temporaryRankIndex
             )) {
                 return (registeredRanking: $0, rankingList: $1.0, rankIndex: $1.1)
@@ -145,7 +145,7 @@ final class ResultViewModel2: ViewModelType {
         // MARK: - OutputToView
         let rankingList = Observable
             .merge(
-                fetchedRankingList,
+                loadedRankingList,
                 updatedRankingListAfterRegister
             )
         
@@ -162,7 +162,7 @@ final class ResultViewModel2: ViewModelType {
         
         return Output(
             viewModelAction: Output.ViewModelAction(
-                rankingListFetched: fetchedRankingList,
+                rankingListLoaded: loadedRankingList,
                 nameRegisterViewShowed: nameRegisterViewShowed,
                 rankingListUpdatedAfterRegister: updatedRankingListAfterRegister,
                 viewDismissedToTopPage: viewDismissedToTopPage,
