@@ -91,12 +91,15 @@ final class NameRegisterViewModel2: ViewModelType {
                 self.eventReceiver?.onRegisterComplete.accept($0)
             })
         
-        let viewDismissed = rankingRegistered
+        let viewDismissed = Observable
+            .merge(
+                input.noButtonTapped,
+                rankingRegistered.map({ _ in })
+            )
             .do(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 self.navigator.dismiss()
             })
-            .map({ _ in })
         
         let errorAlertShowed = errorTracker.asObservable()
             .do(onNext: { [weak self] in
