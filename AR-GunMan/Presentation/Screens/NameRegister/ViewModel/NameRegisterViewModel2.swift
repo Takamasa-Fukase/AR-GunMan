@@ -106,10 +106,14 @@ final class NameRegisterViewModel2: ViewModelType {
         
         
         // MARK: - OutputToView
+        let temporaryRankText = temporaryRankTextObservable
+        
         let scoreText = Observable.just("Score: \(score.scoreText)")
         
         let isRegisterButtonEnabled = input.nameTextFieldChanged
             .map({ !$0.isEmpty })
+        
+        let isRegistering = registerActivityTracker.asObservable()
         
         
         return Output(
@@ -121,10 +125,10 @@ final class NameRegisterViewModel2: ViewModelType {
                 errorAlertShowed: errorAlertShowed
             ),
             outputToView: Output.OutputToView(
-                temporaryRankText: temporaryRankTextObservable,
+                temporaryRankText: temporaryRankText,
                 scoreText: scoreText,
                 isRegisterButtonEnabled: isRegisterButtonEnabled,
-                isRegistering: registerActivityTracker.asObservable()
+                isRegistering: isRegistering
             )
         )
     }
