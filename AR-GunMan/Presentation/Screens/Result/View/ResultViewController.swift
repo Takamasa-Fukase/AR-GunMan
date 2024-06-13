@@ -57,12 +57,12 @@ final class ResultViewController: UIViewController {
                     guard let self = self else {return}
                     self.rankingListView.scrollCellToCenterVertically(at: indexPath)
                 })
+            
+            rankingListView.bind(
+                rankingList: outputToView.rankingList,
+                isLoading: outputToView.isLoadingRankingList
+            )
         }
-        
-        rankingListView.bind(
-            rankingList: outputToView.rankingList,
-            isLoading: outputToView.isLoadingRankingList
-        )
     }
     
     private func setupUI() {

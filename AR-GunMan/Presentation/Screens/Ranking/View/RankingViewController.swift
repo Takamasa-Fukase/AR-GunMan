@@ -39,7 +39,7 @@ final class RankingViewController: UIViewController {
         rankingListView.bind(
             rankingList: output.rankingList,
             isLoading: output.isLoading
-        )
+        ).disposed(by: disposeBag)
     }
     
     //枠外タップでdismissの設定をつける

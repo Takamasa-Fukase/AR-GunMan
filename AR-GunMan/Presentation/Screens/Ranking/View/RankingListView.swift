@@ -9,8 +9,6 @@ import RxSwift
 import RxCocoa
 
 final class RankingListView: UIView {
-    private let disposeBag = DisposeBag()
-    
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var activityIndicatorView: UIActivityIndicatorView!
 
@@ -27,18 +25,18 @@ final class RankingListView: UIView {
     func bind(
         rankingList: Observable<[Ranking]>,
         isLoading: Observable<Bool>
-    ) {
-        rankingList
-            .bind(to: tableView.rx.items(
-                cellIdentifier: RankingCell.className,
-                cellType: RankingCell.self
-            )) { row, element, cell in
-                cell.configure(ranking: element, row: row)
-            }.disposed(by: disposeBag)
-        
-        isLoading
-            .bind(to: activityIndicatorView.rx.isAnimating)
-            .disposed(by: disposeBag)
+    ) -> Cancelable {
+        return Disposables.create(
+            rankingList
+                .bind(to: tableView.rx.items(
+                    cellIdentifier: RankingCell.className,
+                    cellType: RankingCell.self
+                )) { row, element, cell in
+                    cell.configure(ranking: element, row: row)
+                },
+            isLoading
+                .bind(to: activityIndicatorView.rx.isAnimating)
+        )
     }
     
     func scrollCellToCenterVertically(at indexPath: IndexPath) {
