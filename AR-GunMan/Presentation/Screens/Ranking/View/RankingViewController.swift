@@ -9,10 +9,9 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-final class RankingViewController: UIViewController {
+final class RankingViewController: UIViewController, BackgroundViewTapTrackable {
     var viewModel: RankingViewModel!
     private let rankingListView = RankingListView()
-    private let tapRecognizer = UITapGestureRecognizer()
     private let disposeBag = DisposeBag()
     
     @IBOutlet private weak var closeButton: UIButton!
@@ -28,14 +27,13 @@ final class RankingViewController: UIViewController {
     private func setupUI() {
         rankingListBaseView.addSubview(rankingListView)
         rankingListBaseView.addConstraints(for: rankingListView)
-        view.addGestureRecognizer(tapRecognizer)
     }
     
     private func bindViewModel() {
         let input = RankingViewModel.Input(
             viewWillAppear: rx.viewWillAppear,
             closeButtonTapped: closeButton.rx.tap.asObservable(),
-            backgroundViewTapped: tapRecognizer.rx.backgroundViewTapped
+            backgroundViewTapped: trackBackgroundViewTap()
         )
         let output = viewModel.transform(input: input)
         let viewModelAction = output.viewModelAction
