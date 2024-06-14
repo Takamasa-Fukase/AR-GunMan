@@ -36,10 +36,18 @@ final class RankingViewController: UIViewController {
             closeButtonTapped: closeButton.rx.tap.asObservable()
         )
         let output = viewModel.transform(input: input)
-        rankingListView.bind(
-            rankingList: output.rankingList,
-            isLoading: output.isLoading
-        ).disposed(by: disposeBag)
+        let viewModelAction = output.viewModelAction
+        let outputToView = output.outputToView
+        
+        disposeBag.insert {
+            viewModelAction.viewDismissed.subscribe()
+            viewModelAction.errorAlertShowed.subscribe()
+         
+            rankingListView.bind(
+                rankingList: outputToView.rankingList,
+                isLoading: outputToView.isLoadingRankingList
+            )
+        }
     }
     
     //枠外タップでdismissの設定をつける

@@ -5,7 +5,6 @@
 //  Created by ウルトラ深瀬 on 2022/01/25.
 //
 
-import Foundation
 import RxSwift
 import RxCocoa
 
@@ -16,15 +15,24 @@ final class RankingViewModel: ViewModelType {
     }
     
     struct Output {
-        let rankingList: Observable<[Ranking]>
-        let isLoading: Observable<Bool>
+        let viewModelAction: ViewModelAction
+        let outputToView: OutputToView
+                
+        struct ViewModelAction {
+            let viewDismissed: Observable<Void>
+            let errorAlertShowed: Observable<Error>
+        }
+        
+        struct OutputToView {
+            let rankingList: Observable<[Ranking]>
+            let isLoadingRankingList: Observable<Bool>
+        }
     }
     
     struct State {}
     
     private let useCase: RankingUseCaseInterface
     private let navigator: RankingNavigatorInterface
-    private let disposeBag = DisposeBag()
     
     init(
         useCase: RankingUseCaseInterface,
@@ -35,32 +43,45 @@ final class RankingViewModel: ViewModelType {
     }
 
     func transform(input: Input) -> Output {
-        let rankingListRelay = BehaviorRelay<[Ranking]>(value: [])
-        let loadingTracker = ObservableActivityTracker()
-
-        input.viewWillAppear
-            .flatMapLatest({ [weak self] in
-                return (self?.useCase.getRanking() ?? Single.just([]))
-                    .trackActivity(loadingTracker)
-            })
-            .subscribe(
-                onNext: { ranking in
-                    rankingListRelay.accept(ranking)
-                },
-                onError: { [weak self] error in
-                    self?.navigator.showErrorAlert(error)
-                }
-            ).disposed(by: disposeBag)
-
-        input.closeButtonTapped
-            .subscribe(onNext: { [weak self] _ in
+        let rankingLoadActivityTracker = ObservableActivityTracker()
+        let errorTracker = ObservableErrorTracker()
+        
+        // MARK: - ViewModelAction
+        let viewDismissed = input.closeButtonTapped
+            .do(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 self.navigator.dismiss()
-            }).disposed(by: disposeBag)
+            })
+        
+        let errorAlertShowed = errorTracker.asObservable()
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.navigator.showErrorAlert($0)
+            })
+        
+        
+        // MARK: - OutputToView
+        let rankingList = input.viewWillAppear
+            .take(1)
+            .flatMapLatest({ [weak self] _ -> Observable<[Ranking]> in
+                guard let self = self else { return .empty() }
+                return self.useCase.getRanking()
+                    .trackActivity(rankingLoadActivityTracker)
+                    .trackError(errorTracker)
+                    .catchErrorJustComplete()
+            })
+        
+        let isLoadingRankingList = rankingLoadActivityTracker.asObservable()
+        
         
         return Output(
-            rankingList: rankingListRelay.asObservable(),
-            isLoading: loadingTracker.asObservable()
+            viewModelAction: Output.ViewModelAction(
+                viewDismissed: viewDismissed,
+                errorAlertShowed: errorAlertShowed),
+            outputToView: Output.OutputToView(
+                rankingList: rankingList,
+                isLoadingRankingList: isLoadingRankingList
+            )
         )
     }
 }
