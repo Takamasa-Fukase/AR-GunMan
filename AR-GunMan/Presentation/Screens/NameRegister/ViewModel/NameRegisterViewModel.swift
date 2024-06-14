@@ -19,6 +19,7 @@ final class NameRegisterViewModel: ViewModelType {
         let nameTextFieldChanged: Observable<String>
         let registerButtonTapped: Observable<Void>
         let noButtonTapped: Observable<Void>
+        let backgroundViewTapped: Observable<Void>
     }
     
     struct Output {
@@ -95,6 +96,7 @@ final class NameRegisterViewModel: ViewModelType {
         let viewDismissed = Observable
             .merge(
                 input.noButtonTapped,
+                input.backgroundViewTapped,
                 rankingRegistered.map({ _ in })
             )
             .do(onNext: { [weak self] _ in

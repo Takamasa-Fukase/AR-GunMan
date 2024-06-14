@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import PKHUD
 
-final class NameRegisterViewController: UIViewController {
+final class NameRegisterViewController: UIViewController, BackgroundViewTapTrackable {
     var viewModel: NameRegisterViewModel!
     private let disposeBag = DisposeBag()
     
@@ -59,7 +59,8 @@ final class NameRegisterViewController: UIViewController {
             viewWillDisappear: rx.viewWillDisappear,
             nameTextFieldChanged: nameTextField.rx.text.orEmpty.asObservable(),
             registerButtonTapped: registerButton.rx.tap.asObservable(),
-            noButtonTapped: noButton.rx.tap.asObservable()
+            noButtonTapped: noButton.rx.tap.asObservable(),
+            backgroundViewTapped: trackBackgroundViewTap()
         )
         let output = viewModel.transform(input: input)
         let viewModelAction = output.viewModelAction
