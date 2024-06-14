@@ -12,6 +12,7 @@ final class RankingViewModel: ViewModelType {
     struct Input {
         let viewWillAppear: Observable<Void>
         let closeButtonTapped: Observable<Void>
+        let backgroundViewTapped: Observable<Void>
     }
     
     struct Output {
@@ -47,7 +48,11 @@ final class RankingViewModel: ViewModelType {
         let errorTracker = ObservableErrorTracker()
         
         // MARK: - ViewModelAction
-        let viewDismissed = input.closeButtonTapped
+        let viewDismissed = Observable
+            .merge(
+                input.closeButtonTapped,
+                input.backgroundViewTapped
+            )
             .do(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 self.navigator.dismiss()
