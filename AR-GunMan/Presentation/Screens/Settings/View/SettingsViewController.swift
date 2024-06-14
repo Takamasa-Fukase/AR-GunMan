@@ -8,7 +8,6 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import SafariServices
 
 final class SettingsViewController: UIViewController {
     var viewModel: SettingsViewModel!
@@ -22,13 +21,23 @@ final class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        bindViewModel()
+    }
+    
+    private func bindViewModel() {
         let input = SettingsViewModel.Input(
             worldRankingButtonTapped: worldRankingButton.rx.tap.asObservable(),
             privacyPolicyButtonTapped: privacyPolicyButton.rx.tap.asObservable(),
             developerConctactButtonTapped: developerContactButton.rx.tap.asObservable(),
             backButtonTapped: backButton.rx.tap.asObservable()
         )
+        let output = viewModel.transform(input: input)
         
-        _ = viewModel.transform(input: input)
+        disposeBag.insert {
+            output.rankingViewShowed.subscribe()
+            output.privacyPolicyViewShowed.subscribe()
+            output.developerContactViewShowed.subscribe()
+            output.viewDismissed.subscribe()
+        }
     }
 }
