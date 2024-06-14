@@ -197,6 +197,8 @@
 		BC0BBE4F2C174B4200789349 /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD1C2242C01B3EA008975EB /* GameViewModel.swift */; };
 		BC22E0162C1B281300C59BAB /* Observable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22E0152C1B281300C59BAB /* Observable+Extension.swift */; };
 		BC22E0172C1B281300C59BAB /* Observable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22E0152C1B281300C59BAB /* Observable+Extension.swift */; };
+		BC22E0222C1C71E900C59BAB /* UITapGestureRecognizer+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22E0212C1C71E900C59BAB /* UITapGestureRecognizer+Rx.swift */; };
+		BC22E0232C1C71E900C59BAB /* UITapGestureRecognizer+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22E0212C1C71E900C59BAB /* UITapGestureRecognizer+Rx.swift */; };
 		BC2B11672977F90C009F4DC4 /* UIScrollView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2B11662977F90C009F4DC4 /* UIScrollView+Extension.swift */; };
 		BC482DC82C17F56600FAF079 /* TopViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DC72C17F56600FAF079 /* TopViewModel.swift */; };
 		BC482DC92C17F56600FAF079 /* TopViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DC72C17F56600FAF079 /* TopViewModel.swift */; };
@@ -406,6 +408,7 @@
 		BC0BBE432C1745EB00789349 /* UIViewController+PanModalPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+PanModalPresentable.swift"; sourceTree = "<group>"; };
 		BC0BBE462C17474800789349 /* WeaponAutoReloadHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponAutoReloadHandlerTests.swift; sourceTree = "<group>"; };
 		BC22E0152C1B281300C59BAB /* Observable+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+Extension.swift"; sourceTree = "<group>"; };
+		BC22E0212C1C71E900C59BAB /* UITapGestureRecognizer+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITapGestureRecognizer+Rx.swift"; sourceTree = "<group>"; };
 		BC2B11662977F90C009F4DC4 /* UIScrollView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Extension.swift"; sourceTree = "<group>"; };
 		BC482DC72C17F56600FAF079 /* TopViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopViewModel.swift; sourceTree = "<group>"; };
 		BC482DCA2C1800E500FAF079 /* TopUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopUseCase.swift; sourceTree = "<group>"; };
@@ -516,6 +519,7 @@
 				BC0BBE3B2C16B7E100789349 /* Double+Extension.swift */,
 				BC0BBE3F2C16D31800789349 /* NSObject+Extension.swift */,
 				BC22E0152C1B281300C59BAB /* Observable+Extension.swift */,
+				BC22E0212C1C71E900C59BAB /* UITapGestureRecognizer+Rx.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1496,6 +1500,7 @@
 				86C421B82BB040C300EFD791 /* TutorialRepository.swift in Sources */,
 				BCCD44592C0B2BAF00BF541D /* TutorialSeenStatusHandler.swift in Sources */,
 				BCCD44872C12C8C000BF541D /* GameObjectInfo.swift in Sources */,
+				BC22E0222C1C71E900C59BAB /* UITapGestureRecognizer+Rx.swift in Sources */,
 				86B112512C0080AA006D464A /* WeaponFireHandler.swift in Sources */,
 				BC482DEA2C1AAB7400FAF079 /* NameRegisterNavigator.swift in Sources */,
 				BCD1C2252C01B3EA008975EB /* GameViewModel.swift in Sources */,
@@ -1568,6 +1573,7 @@
 				8606468C2BF599DF00906DA0 /* RankingCell.swift in Sources */,
 				861B87792BFE258100D0882D /* SoundPlayerMock.swift in Sources */,
 				BC62CE0B2C15607D00070B49 /* Vector.swift in Sources */,
+				BC22E0232C1C71E900C59BAB /* UITapGestureRecognizer+Rx.swift in Sources */,
 				BC0BBE4B2C174B2800789349 /* TutorialNavigator.swift in Sources */,
 				860646112BF5996200906DA0 /* SceneNodeUtil.swift in Sources */,
 				860646122BF5996200906DA0 /* SafariViewUtil.swift in Sources */,
