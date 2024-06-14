@@ -10,7 +10,7 @@ import RxCocoa
 
 final class UIGestureRecognizerDelegateProxy: DelegateProxy<UITapGestureRecognizer, UIGestureRecognizerDelegate> {
 
-    fileprivate let shouldReceiveCalledRelay = PublishRelay<(gestureRecognizer: UIGestureRecognizer, touch: UITouch)>()
+    fileprivate let nextTapEventInfoRelay = PublishRelay<(gestureRecognizer: UIGestureRecognizer, touch: UITouch)>()
 
     init(parentObject: ParentObject) {
         super.init(parentObject: parentObject, delegateProxy: UIGestureRecognizerDelegateProxy.self)
@@ -33,7 +33,8 @@ extension UIGestureRecognizerDelegateProxy: DelegateProxyType {
 
 extension UIGestureRecognizerDelegateProxy: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        shouldReceiveCalledRelay.accept((gestureRecognizer, touch))
+        // この後にrecognizerにタップイベントとして流れる時に(recognizer, touch)の情報を使える様に保持
+        nextTapEventInfoRelay.accept((gestureRecognizer, touch))
         return true
     }
 }
@@ -43,7 +44,16 @@ extension Reactive where Base: UITapGestureRecognizer {
         return UIGestureRecognizerDelegateProxy.proxy(for: base)
     }
 
-    var shouldReceiveCalled: Observable<(gestureRecognizer: UIGestureRecognizer, touch: UITouch)> {
-        return delegateProxy.shouldReceiveCalledRelay.asObservable()
+    // タップ検知（touchUpInside）イベントに(recognizer, touch)の情報を一緒に付与して返却
+    var tap: Observable<(gestureRecognizer: UIGestureRecognizer, touch: UITouch)> {
+        return event
+            .withLatestFrom(delegateProxy.nextTapEventInfoRelay)
+    }
+    
+    // 最背面ビュー（recognizerがaddされているビュー）がタップされた時のイベント
+    var backgroundViewTapped: Observable<Void> {
+        return tap
+            .filter({ $0.touch.view == $0.gestureRecognizer.view })
+            .mapToVoid()
     }
 }

@@ -32,16 +32,10 @@ final class RankingViewController: UIViewController {
     }
     
     private func bindViewModel() {
-        let backgroundViewTapped = tapRecognizer.rx.shouldReceiveCalled
-            .filter({
-                return $0.touch.view == $0.gestureRecognizer.view
-            })
-            .mapToVoid()
-
         let input = RankingViewModel.Input(
             viewWillAppear: rx.viewWillAppear,
             closeButtonTapped: closeButton.rx.tap.asObservable(),
-            backgroundViewTapped: backgroundViewTapped
+            backgroundViewTapped: tapRecognizer.rx.backgroundViewTapped
         )
         let output = viewModel.transform(input: input)
         let viewModelAction = output.viewModelAction
