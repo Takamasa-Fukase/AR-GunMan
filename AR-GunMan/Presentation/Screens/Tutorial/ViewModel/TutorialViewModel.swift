@@ -19,6 +19,7 @@ final class TutorialViewModel: ViewModelType {
         let viewDidDisappear: Observable<Void>
         let pageIndexWhenScrollViewScrolled: Observable<Int>
         let bottomButtonTapped: Observable<Void>
+        let backgroundViewTapped: Observable<Void>
     }
     
     struct Output {
@@ -57,16 +58,20 @@ final class TutorialViewModel: ViewModelType {
     
     func transform(input: Input) -> Output {
         // MARK: - ViewModelAction
-        let viewDismissed = input.bottomButtonTapped
-            .withLatestFrom(input.pageIndexWhenScrollViewScrolled)
-            .filter({ pageIndex in
-                return pageIndex >= 2
-            })
+        let viewDismissed = Observable
+            .merge(
+                input.bottomButtonTapped
+                    .withLatestFrom(input.pageIndexWhenScrollViewScrolled)
+                    .filter({ pageIndex in
+                        return pageIndex >= 2
+                    })
+                    .map({ _ in }),
+                input.backgroundViewTapped
+            )
             .do(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 self.navigator.dismiss()
             })
-            .map({ _ in })
         
         let tutorialEndEventSent = input.viewDidDisappear
             .do(onNext: { [weak self] _ in

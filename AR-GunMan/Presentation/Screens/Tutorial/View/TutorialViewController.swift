@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-final class TutorialViewController: UIViewController {
+final class TutorialViewController: UIViewController, BackgroundViewTapTrackable {
     var viewModel: TutorialViewModel!
     private let disposeBag = DisposeBag()
     
@@ -38,7 +38,8 @@ final class TutorialViewController: UIViewController {
             viewDidLoad: .just(()),
             viewDidDisappear: rx.viewDidDisappear,
             pageIndexWhenScrollViewScrolled: pageIndexWhenScrollViewScrolled,
-            bottomButtonTapped: bottomButton.rx.tap.asObservable()
+            bottomButtonTapped: bottomButton.rx.tap.asObservable(),
+            backgroundViewTapped: trackBackgroundViewTap()
         )
         let output = viewModel.transform(input: input)
         bind(output: output)
