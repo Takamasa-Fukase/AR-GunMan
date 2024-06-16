@@ -30,7 +30,7 @@ final class FiringMotionFilter: ViewModelEventHandlerType {
             .filter { (accelerationCompositeValue, gyroCompositeValue) in
                 return accelerationCompositeValue >= 1.5 && gyroCompositeValue < 10
             }
-            .map({ _ in })
+            .mapToVoid()
         return Output(firingMotionDetected: firingMotionDetected)
     }
 }

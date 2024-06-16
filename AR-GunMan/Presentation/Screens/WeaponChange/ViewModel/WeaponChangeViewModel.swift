@@ -44,8 +44,8 @@ final class WeaponChangeViewModel: ViewModelType {
                 guard let self = self else { return }
                 self.navigator.dismiss()
             })
-            .map({ _ in })
-        
+            .mapToVoid()
+
         return Output(
             weaponSelectEventSent: weaponSelectEventSent,
             viewDismissed: viewDismissed

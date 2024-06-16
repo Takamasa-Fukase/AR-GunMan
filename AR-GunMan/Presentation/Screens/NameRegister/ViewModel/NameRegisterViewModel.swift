@@ -97,7 +97,7 @@ final class NameRegisterViewModel: ViewModelType {
             .merge(
                 input.noButtonTapped,
                 input.backgroundViewTapped,
-                rankingRegistered.map({ _ in })
+                rankingRegistered.mapToVoid()
             )
             .do(onNext: { [weak self] _ in
                 guard let self = self else { return }

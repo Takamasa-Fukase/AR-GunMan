@@ -26,8 +26,8 @@ final class ReloadingMotionDetectionCounter: ViewModelEventHandlerType {
                 
         let detectionCountReachedTargetsAppearanceChangingLimit = reloadingMotionDetected
             .filter({ $0 == GameConst.targetsAppearanceChangingLimit })
-            .map({ _ in })
-        
+            .mapToVoid()
+
         return Output(
             updateCount: reloadingMotionDetected.map({ $0 + 1 }),
             playTargetsAppearanceChangingSound: detectionCountReachedTargetsAppearanceChangingLimit.map({ _ in .kyuiin }),

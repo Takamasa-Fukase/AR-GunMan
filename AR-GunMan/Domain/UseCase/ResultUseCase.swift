@@ -38,7 +38,7 @@ final class ResultUseCase: ResultUseCaseInterface {
                 milliSec: ResultConst.showNameRegisterWaitingTimeMillisec,
                 isRepeated: false
             )
-            .map({ _ in })
+            .mapToVoid()
     }
     
     func setNeedsReplay(_ newValue: Bool) -> Observable<Void> {

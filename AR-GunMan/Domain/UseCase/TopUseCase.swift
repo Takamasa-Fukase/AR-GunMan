@@ -48,7 +48,7 @@ final class TopUseCase: TopUseCaseInterface {
                 milliSec: TopConst.iconRevertWaitingTimeMillisec,
                 isRepeated: false
             )
-            .map({ _ in })
+            .mapToVoid()
     }
 }
 

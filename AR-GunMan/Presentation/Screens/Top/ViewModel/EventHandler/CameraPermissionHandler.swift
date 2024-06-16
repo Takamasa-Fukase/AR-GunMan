@@ -34,12 +34,12 @@ final class CameraPermissionHandler: ViewModelEventHandlerType {
         
         let showGame = isPermitted
             .filter({ $0 })
-            .map({ _ in })
-        
+            .mapToVoid()
+
         let showCameraPermissionDescriptionAlert = isPermitted
             .filter({ !$0 })
-            .map({ _ in })
-        
+            .mapToVoid()
+
         return Output(
             showGame: showGame,
             showCameraPermissionDescriptionAlert: showCameraPermissionDescriptionAlert

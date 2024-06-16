@@ -65,7 +65,7 @@ final class TutorialViewModel: ViewModelType {
                     .filter({ pageIndex in
                         return pageIndex >= 2
                     })
-                    .map({ _ in }),
+                    .mapToVoid(),
                 input.backgroundViewTapped
             )
             .do(onNext: { [weak self] _ in
@@ -105,8 +105,8 @@ final class TutorialViewModel: ViewModelType {
             .filter({ pageIndex in
                 return pageIndex < 2
             })
-            .map({ _ in })
-        
+            .mapToVoid()
+
         
         return Output(
             viewModelAction: Output.ViewModelAction(

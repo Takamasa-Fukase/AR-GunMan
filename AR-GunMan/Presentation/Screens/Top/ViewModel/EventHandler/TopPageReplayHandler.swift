@@ -31,7 +31,7 @@ final class TopPageReplayHandler: ViewModelEventHandlerType {
                 return self.topUseCase.getNeedsReplay()
             })
             .filter({ $0 })
-            .map({ _ in })
+            .mapToVoid()
             .share()
         
         return Output(

@@ -34,12 +34,12 @@ final class TutorialSeenStatusHandler: ViewModelEventHandlerType {
         
         let startGame = isTutorialSeen
             .filter({ $0 })
-            .map({ _ in })
-        
+            .mapToVoid()
+
         let showTutorial = isTutorialSeen
             .filter({ !$0 })
-            .map({ _ in })
-        
+            .mapToVoid()
+
         return Output(
             startGame: startGame,
             showTutorial: showTutorial

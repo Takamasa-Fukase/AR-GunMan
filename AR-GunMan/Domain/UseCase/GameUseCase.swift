@@ -43,7 +43,7 @@ final class GameUseCase: GameUseCaseInterface {
                 milliSec: GameConst.timerStartWaitingTimeMillisec,
                 isRepeated: false
             )
-            .map({ _ in })
+            .mapToVoid()
     }
 
     func awaitShowResultSignal() -> Observable<Void> {
@@ -52,7 +52,7 @@ final class GameUseCase: GameUseCaseInterface {
                 milliSec: GameConst.showResultWaitingTimeMillisec,
                 isRepeated: false
             )
-            .map({ _ in })
+            .mapToVoid()
     }
     
     func awaitWeaponReloadEnds(currentWeapon: WeaponType) -> Observable<WeaponType> {

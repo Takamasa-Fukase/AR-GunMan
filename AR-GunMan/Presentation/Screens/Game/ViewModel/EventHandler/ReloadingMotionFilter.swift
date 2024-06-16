@@ -25,7 +25,7 @@ final class ReloadingMotionFilter: ViewModelEventHandlerType {
             .filter { gyroCompositeValue in
                 gyroCompositeValue >= 10
             }
-            .map({_ in})
+            .mapToVoid()
         return Output(reloadingMotionDetected: reloadingMotionDetected)
     }
 }
