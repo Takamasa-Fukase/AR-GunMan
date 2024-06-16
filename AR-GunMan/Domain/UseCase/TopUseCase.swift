@@ -31,7 +31,7 @@ final class TopUseCase: TopUseCaseInterface {
     
     func getIsCameraAccessPermitted() -> Observable<Bool> {
         // TODO: 後でrepoも命名を合わせる
-        return avPermissionRepository.getIsPermittedCameraAccess()
+        return avPermissionRepository.getIsCameraAccessPermitted()
     }
     
     func getNeedsReplay() -> Observable<Bool> {

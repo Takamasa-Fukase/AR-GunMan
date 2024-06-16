@@ -9,11 +9,11 @@ import AVFoundation
 import RxSwift
 
 protocol AVPermissionRepositoryInterface {
-    func getIsPermittedCameraAccess() -> Observable<Bool>
+    func getIsCameraAccessPermitted() -> Observable<Bool>
 }
 
 final class AVPermissionRepository: AVPermissionRepositoryInterface {
-    func getIsPermittedCameraAccess() -> Observable<Bool> {
+    func getIsCameraAccessPermitted() -> Observable<Bool> {
         return Observable.just(
             AVCaptureDevice.authorizationStatus(for: .video) == .authorized
         )
