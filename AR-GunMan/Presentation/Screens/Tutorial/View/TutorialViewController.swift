@@ -23,16 +23,13 @@ final class TutorialViewController: UIViewController, BackgroundViewTapTrackable
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let pageIndexWhenScrollViewScrolled = Observable
-            .concat(
-                Observable.just(0), // 初期値として0を流している
-                scrollView.rx.didScroll
-                    .map({ [weak self] _ in
-                        guard let self = self else { return 0 }
-                        return self.scrollView.horizontalPageIndex
-                    })
-                    .asObservable()
-            )
+        let pageIndexWhenScrollViewScrolled = scrollView.rx.didScroll
+            .map({ [weak self] _ in
+                guard let self = self else { return 0 }
+                return self.scrollView.horizontalPageIndex
+            })
+            .startWith(0) // 初期値として0を流している
+            .asObservable()
         
         let input = TutorialViewModel.Input(
             viewDidLoad: .just(()),
