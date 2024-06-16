@@ -18,7 +18,7 @@ class GameViewController: UIViewController {
     @IBOutlet private weak var bulletsCountImageView: UIImageView!
     @IBOutlet private weak var sightImageView: UIImageView!
     @IBOutlet private weak var timeCountLabel: UILabel!
-    @IBOutlet private weak var switchWeaponButton: UIButton!
+    @IBOutlet private weak var weaponChangeButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +31,7 @@ class GameViewController: UIViewController {
                 viewWillAppear: rx.viewWillAppear,
                 viewDidAppear: rx.viewDidAppear,
                 viewWillDisappear: rx.viewWillDisappear,
-                weaponChangeButtonTapped: switchWeaponButton.rx.tap.asObservable()
+                weaponChangeButtonTapped: weaponChangeButton.rx.tap.asObservable()
             ),
             inputFromARContent: GameViewModel.Input.InputFromARContent(
                 rendererUpdated: arContentController.rendererUpdated,
@@ -105,7 +105,7 @@ class GameViewController: UIViewController {
                 .map({ UIImage(named: $0) })
                 .bind(to: bulletsCountImageView.rx.image)
             outputToView.isWeaponChangeButtonEnabled
-                .bind(to: switchWeaponButton.rx.isEnabled)
+                .bind(to: weaponChangeButton.rx.isEnabled)
         }
     }
     
