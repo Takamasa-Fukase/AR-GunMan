@@ -29,17 +29,13 @@ final class WeaponChangeViewController: UIViewController {
         setupFSPagerView()
         
         let input = WeaponChangeViewModel.Input(
+            viewDidLayoutSubviews: rx.viewDidLayoutSubviews,
             itemSelected: itemSelectedRelay.asObservable()
         )
         let output = viewModel.transform(input: input)
         bind(output: output)
     }
 
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        pagerView.itemSize = CGSize(width: view.frame.width * 0.5, height: view.frame.height * 0.8)
-    }
-    
     private func setupFSPagerView() {
         pagerView.delegate = self
         pagerView.dataSource = self
@@ -52,6 +48,14 @@ final class WeaponChangeViewController: UIViewController {
     
     private func bind(output: WeaponChangeViewModel.Output) {
         disposeBag.insert {
+            output.adjustPageViewItemSize
+                .map({ [weak self] _ in
+                    guard let self = self else { return CGSize() }
+                    return CGSize(width: self.view.frame.width * 0.5,
+                                  height: self.view.frame.height * 0.8)
+                })
+                .bind(to: pagerView.rx.itemSize)
+            
             output.weaponSelectEventSent.subscribe()
             output.viewDismissed.subscribe()
         }

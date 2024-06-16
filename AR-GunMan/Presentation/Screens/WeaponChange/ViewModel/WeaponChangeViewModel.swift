@@ -10,10 +10,12 @@ import RxCocoa
 
 final class WeaponChangeViewModel: ViewModelType {
     struct Input {
+        let viewDidLayoutSubviews: Observable<Void>
         let itemSelected: Observable<Int>
     }
     
     struct Output {
+        let adjustPageViewItemSize: Observable<Void>
         let weaponSelectEventSent: Observable<WeaponType>
         let viewDismissed: Observable<Void>
     }
@@ -47,6 +49,7 @@ final class WeaponChangeViewModel: ViewModelType {
             .mapToVoid()
 
         return Output(
+            adjustPageViewItemSize: input.viewDidLayoutSubviews,
             weaponSelectEventSent: weaponSelectEventSent,
             viewDismissed: viewDismissed
         )
