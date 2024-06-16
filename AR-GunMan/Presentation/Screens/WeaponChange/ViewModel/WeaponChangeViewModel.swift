@@ -15,9 +15,17 @@ final class WeaponChangeViewModel: ViewModelType {
     }
     
     struct Output {
-        let adjustPageViewItemSize: Observable<Void>
-        let weaponSelectEventSent: Observable<WeaponType>
-        let viewDismissed: Observable<Void>
+        let viewModelAction: ViewModelAction
+        let outputToView: OutputToView
+        
+        struct ViewModelAction {
+            let weaponSelectEventSent: Observable<WeaponType>
+            let viewDismissed: Observable<Void>
+        }
+        
+        struct OutputToView {
+            let adjustPageViewItemSize: Observable<Void>
+        }
     }
     
     struct State {}
@@ -49,9 +57,13 @@ final class WeaponChangeViewModel: ViewModelType {
             .mapToVoid()
 
         return Output(
-            adjustPageViewItemSize: input.viewDidLayoutSubviews,
-            weaponSelectEventSent: weaponSelectEventSent,
-            viewDismissed: viewDismissed
+            viewModelAction: Output.ViewModelAction(
+                weaponSelectEventSent: weaponSelectEventSent,
+                viewDismissed: viewDismissed
+            ),
+            outputToView: Output.OutputToView(
+                adjustPageViewItemSize: input.viewDidLayoutSubviews
+            )
         )
     }
 }

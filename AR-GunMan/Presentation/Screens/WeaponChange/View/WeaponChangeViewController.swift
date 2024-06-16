@@ -16,24 +16,15 @@ final class WeaponChangeViewController: UIViewController {
     private let itemSelectedRelay = PublishRelay<Int>()
     private let disposeBag = DisposeBag()
     
-    @IBOutlet private weak var pagerView: FSPagerView! {
-        didSet {
-            let nib = UINib(nibName: WeaponChangeCell.className, bundle: nil)
-            pagerView.register(nib, forCellWithReuseIdentifier: WeaponChangeCell.className)
-        }
-    }
+    @IBOutlet private weak var pagerView: FSPagerView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupFSPagerView()
         
-        let input = WeaponChangeViewModel.Input(
-            viewDidLayoutSubviews: rx.viewDidLayoutSubviews,
-            itemSelected: itemSelectedRelay.asObservable()
-        )
-        let output = viewModel.transform(input: input)
-        bind(output: output)
+        
+        bindViewModel()
     }
 
     private func setupFSPagerView() {
@@ -44,20 +35,30 @@ final class WeaponChangeViewController: UIViewController {
         pagerView.decelerationDistance = 1
         pagerView.interitemSpacing = 8
         pagerView.transformer = FSPagerViewTransformer(type: .ferrisWheel)
+        let nib = UINib(nibName: WeaponChangeCell.className, bundle: nil)
+        pagerView.register(nib, forCellWithReuseIdentifier: WeaponChangeCell.className)
     }
     
-    private func bind(output: WeaponChangeViewModel.Output) {
+    private func bindViewModel() {
+        let input = WeaponChangeViewModel.Input(
+            viewDidLayoutSubviews: rx.viewDidLayoutSubviews,
+            itemSelected: itemSelectedRelay.asObservable()
+        )
+        let output = viewModel.transform(input: input)
+        let viewModelAction = output.viewModelAction
+        let outputToView = output.outputToView
+        
         disposeBag.insert {
-            output.adjustPageViewItemSize
+            viewModelAction.weaponSelectEventSent.subscribe()
+            viewModelAction.viewDismissed.subscribe()
+            
+            outputToView.adjustPageViewItemSize
                 .map({ [weak self] _ in
                     guard let self = self else { return CGSize() }
                     return CGSize(width: self.view.frame.width * 0.5,
                                   height: self.view.frame.height * 0.8)
                 })
                 .bind(to: pagerView.rx.itemSize)
-            
-            output.weaponSelectEventSent.subscribe()
-            output.viewDismissed.subscribe()
         }
     }
 }
