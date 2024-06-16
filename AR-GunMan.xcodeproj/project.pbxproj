@@ -284,6 +284,12 @@
 		BCD1C2582C06B60C008975EB /* CompositeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD1C2562C06B60C008975EB /* CompositeCalculator.swift */; };
 		BCD1C25B2C06B7C8008975EB /* ReloadingMotionFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD1C25A2C06B7C8008975EB /* ReloadingMotionFilter.swift */; };
 		BCD1C25C2C06B7C8008975EB /* ReloadingMotionFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD1C25A2C06B7C8008975EB /* ReloadingMotionFilter.swift */; };
+		BCD89D9E2C1EA01A00BBBB99 /* NotificationCenter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD89D9D2C1EA01A00BBBB99 /* NotificationCenter+Extension.swift */; };
+		BCD89D9F2C1EA01A00BBBB99 /* NotificationCenter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD89D9D2C1EA01A00BBBB99 /* NotificationCenter+Extension.swift */; };
+		BCD89DA12C1EA1E800BBBB99 /* KeyboardOverlapCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD89DA02C1EA1E800BBBB99 /* KeyboardOverlapCalculator.swift */; };
+		BCD89DA22C1EA1E800BBBB99 /* KeyboardOverlapCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD89DA02C1EA1E800BBBB99 /* KeyboardOverlapCalculator.swift */; };
+		BCD89DA42C1EA56400BBBB99 /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD89DA32C1EA56400BBBB99 /* Notification+Extension.swift */; };
+		BCD89DA52C1EA56400BBBB99 /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD89DA32C1EA56400BBBB99 /* Notification+Extension.swift */; };
 		BCD9675E2979E55400E33587 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD9675D2979E55400E33587 /* UIImageView+Extension.swift */; };
 		BCD96C03297C757600E33587 /* RankingViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BCD96C02297C757600E33587 /* RankingViewController.storyboard */; };
 		D54734259EA1C7BF11A28908 /* Pods_AR_GunMan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4280580740F2443B66781090 /* Pods_AR_GunMan.framework */; };
@@ -459,6 +465,9 @@
 		BCD1C2522C06B353008975EB /* FiringMotionFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiringMotionFilter.swift; sourceTree = "<group>"; };
 		BCD1C2562C06B60C008975EB /* CompositeCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeCalculator.swift; sourceTree = "<group>"; };
 		BCD1C25A2C06B7C8008975EB /* ReloadingMotionFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReloadingMotionFilter.swift; sourceTree = "<group>"; };
+		BCD89D9D2C1EA01A00BBBB99 /* NotificationCenter+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationCenter+Extension.swift"; sourceTree = "<group>"; };
+		BCD89DA02C1EA1E800BBBB99 /* KeyboardOverlapCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardOverlapCalculator.swift; sourceTree = "<group>"; };
+		BCD89DA32C1EA56400BBBB99 /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
 		BCD9675D2979E55400E33587 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		BCD96C02297C757600E33587 /* RankingViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RankingViewController.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -524,6 +533,8 @@
 				BC0BBE3F2C16D31800789349 /* NSObject+Extension.swift */,
 				BC22E0152C1B281300C59BAB /* Observable+Extension.swift */,
 				BC22E0212C1C71E900C59BAB /* UITapGestureRecognizer+Rx.swift */,
+				BCD89D9D2C1EA01A00BBBB99 /* NotificationCenter+Extension.swift */,
+				BCD89DA32C1EA56400BBBB99 /* Notification+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -709,6 +720,7 @@
 				8627F6422BD16BB60003D374 /* ObservableActivityTracker.swift */,
 				BC482DE62C1A74F800FAF079 /* ObservableErrorTracker.swift */,
 				BCD1C2562C06B60C008975EB /* CompositeCalculator.swift */,
+				BCD89DA02C1EA1E800BBBB99 /* KeyboardOverlapCalculator.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1452,6 +1464,7 @@
 				BC92C8602975A2A800E49BD5 /* UIViewController+RxLifeCycleEvents.swift in Sources */,
 				BCCD44552C0B12B100BF541D /* TargetHitHandler.swift in Sources */,
 				677DF1F427A7C100007512F6 /* Ranking.swift in Sources */,
+				BCD89D9E2C1EA01A00BBBB99 /* NotificationCenter+Extension.swift in Sources */,
 				BC92C85A297348D500E49BD5 /* ScoreCalculator.swift in Sources */,
 				86F1573F2BD9329600BE979C /* CustomError.swift in Sources */,
 				BC482DD82C184E5800FAF079 /* TutorialViewModel.swift in Sources */,
@@ -1461,6 +1474,7 @@
 				BCCD44652C0B4A5200BF541D /* GameTimerHandler.swift in Sources */,
 				5921A208255D6A4E001D8C39 /* RankingCell.swift in Sources */,
 				BC482DDB2C19664400FAF079 /* ResultViewModel.swift in Sources */,
+				BCD89DA12C1EA1E800BBBB99 /* KeyboardOverlapCalculator.swift in Sources */,
 				BC482DF62C1ABB5F00FAF079 /* RankingListView.swift in Sources */,
 				BC482DE12C19D53F00FAF079 /* NameRegisterViewModel.swift in Sources */,
 				BC482DC82C17F56600FAF079 /* TopViewModel.swift in Sources */,
@@ -1486,6 +1500,7 @@
 				BCD1C23A2C044DCD008975EB /* GameViewController.swift in Sources */,
 				BC62CE0E2C15632100070B49 /* TargetHitFilter.swift in Sources */,
 				8627F6432BD16BB60003D374 /* ObservableActivityTracker.swift in Sources */,
+				BCD89DA42C1EA56400BBBB99 /* Notification+Extension.swift in Sources */,
 				86627DE6273FD5E30044A980 /* RankingViewController.swift in Sources */,
 				59D2D5952552E718006DDB70 /* WeaponChangeViewController.swift in Sources */,
 				BCC512CA2C15CFBF00D77305 /* ParticleSystemType.swift in Sources */,
@@ -1553,6 +1568,7 @@
 				860646972BF599E900906DA0 /* SettingsViewController.swift in Sources */,
 				BCCD447E2C12AB4500BF541D /* UIColor+Extension.swift in Sources */,
 				BC0BBE392C15F19D00789349 /* ViewModelEventHandlerType.swift in Sources */,
+				BCD89DA22C1EA1E800BBBB99 /* KeyboardOverlapCalculator.swift in Sources */,
 				8606465A2BF5999F00906DA0 /* ARContentController.swift in Sources */,
 				8606462F2BF5997200906DA0 /* ReplayRepository.swift in Sources */,
 				8606462E2BF5997200906DA0 /* TutorialRepository.swift in Sources */,
@@ -1575,11 +1591,13 @@
 				BC22E0172C1B281300C59BAB /* Observable+Extension.swift in Sources */,
 				860646132BF5996200906DA0 /* SceneAnimationUtil.swift in Sources */,
 				860646292BF5996E00906DA0 /* Ranking.swift in Sources */,
+				BCD89D9F2C1EA01A00BBBB99 /* NotificationCenter+Extension.swift in Sources */,
 				8606468C2BF599DF00906DA0 /* RankingCell.swift in Sources */,
 				861B87792BFE258100D0882D /* SoundPlayerMock.swift in Sources */,
 				BC62CE0B2C15607D00070B49 /* Vector.swift in Sources */,
 				BC22E0232C1C71E900C59BAB /* UITapGestureRecognizer+Rx.swift in Sources */,
 				BC0BBE4B2C174B2800789349 /* TutorialNavigator.swift in Sources */,
+				BCD89DA52C1EA56400BBBB99 /* Notification+Extension.swift in Sources */,
 				860646112BF5996200906DA0 /* SceneNodeUtil.swift in Sources */,
 				860646122BF5996200906DA0 /* SafariViewUtil.swift in Sources */,
 				860646982BF599E900906DA0 /* SettingsNavigator.swift in Sources */,
