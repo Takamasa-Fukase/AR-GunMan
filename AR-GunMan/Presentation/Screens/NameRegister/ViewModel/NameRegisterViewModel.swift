@@ -20,6 +20,8 @@ final class NameRegisterViewModel: ViewModelType {
         let registerButtonTapped: Observable<Void>
         let noButtonTapped: Observable<Void>
         let backgroundViewTapped: Observable<Void>
+        let keyboardWillShowNotificationReceived: Observable<Notification>
+        let keyboardWillHideNotificationReceived: Observable<Notification>
     }
     
     struct Output {
@@ -39,6 +41,8 @@ final class NameRegisterViewModel: ViewModelType {
             let scoreText: Observable<String>
             let isRegisterButtonEnabled: Observable<Bool>
             let isRegistering: Observable<Bool>
+            let handleActiveTextFieldOverlapWhenKeyboardWillShow: Observable<Notification>
+            let resetActiveTextFieldPositionWhenKeyboardWillHide: Observable<Notification>
         }
     }
     
@@ -133,7 +137,9 @@ final class NameRegisterViewModel: ViewModelType {
                 temporaryRankText: temporaryRankText,
                 scoreText: scoreText,
                 isRegisterButtonEnabled: isRegisterButtonEnabled,
-                isRegistering: isRegistering
+                isRegistering: isRegistering,
+                handleActiveTextFieldOverlapWhenKeyboardWillShow: input.keyboardWillShowNotificationReceived,
+                resetActiveTextFieldPositionWhenKeyboardWillHide: input.keyboardWillHideNotificationReceived
             )
         )
     }

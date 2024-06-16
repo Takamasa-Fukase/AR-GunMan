@@ -8,7 +8,6 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import PKHUD
 
 final class NameRegisterViewController: UIViewController, BackgroundViewTapTrackable {
     var viewModel: NameRegisterViewModel!
@@ -27,24 +26,6 @@ final class NameRegisterViewController: UIViewController, BackgroundViewTapTrack
         
         setupUI()
         bindViewModel()
-        
-        NotificationCenter.default.rx.notification(UIResponder.keyboardWillShowNotification, object: nil)
-            .subscribe({ [weak self] (notification) in
-                guard let self = self else { return }
-                if let element = notification.element {
-                    self.keyboardWillShow(notification: element, textField: self.nameTextField, view: self.view)
-                }
-            })
-        .disposed(by: disposeBag)
-        
-        NotificationCenter.default.rx.notification(UIResponder.keyboardWillHideNotification, object: nil)
-            .subscribe({ [weak self] (notification) in
-                guard let self = self else { return }
-                if let element = notification.element {
-                    self.keyboardWillHide(notification: element, view: self.view)
-                }
-            })
-        .disposed(by: disposeBag)
     }
     
     private func setupUI() {
@@ -60,7 +41,9 @@ final class NameRegisterViewController: UIViewController, BackgroundViewTapTrack
             nameTextFieldChanged: nameTextField.rx.text.orEmpty.asObservable(),
             registerButtonTapped: registerButton.rx.tap.asObservable(),
             noButtonTapped: noButton.rx.tap.asObservable(),
-            backgroundViewTapped: trackBackgroundViewTap()
+            backgroundViewTapped: trackBackgroundViewTap(),
+            keyboardWillShowNotificationReceived: NotificationCenter.keyboardWillShow,
+            keyboardWillHideNotificationReceived: NotificationCenter.keyboardWillHide
         )
         let output = viewModel.transform(input: input)
         let viewModelAction = output.viewModelAction
@@ -86,6 +69,23 @@ final class NameRegisterViewController: UIViewController, BackgroundViewTapTrack
                 .bind(to: registerButton.rx.isHidden)
             outputToView.isRegistering
                 .bind(to: registerButtonSpinner.rx.isAnimating)
+            outputToView.handleActiveTextFieldOverlapWhenKeyboardWillShow
+                .subscribe(onNext: { [weak self] notification in
+                    guard let self = self,
+                          let keyboardFrameEnd = notification.keyboardFrameEnd,
+                          let duration = notification.keyboardAnimationDuration else { return }
+                    self.handleActiveTextFieldOverlapWhenKeyboardWillShow(
+                        keyboardFrameEnd: keyboardFrameEnd,
+                        keyboardAnimationDuration: duration,
+                        activeTextField: self.nameTextField
+                    )
+                })
+            outputToView.resetActiveTextFieldPositionWhenKeyboardWillHide
+                .subscribe(onNext: { [weak self] notification in
+                    guard let self = self,
+                          let duration = notification.keyboardAnimationDuration else { return }
+                    self.resetViewTransform(with: duration)
+                })
         }
     }
 }
@@ -98,36 +98,5 @@ extension NameRegisterViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         nameTextField.resignFirstResponder()
         return true
-    }
-    
-    private func keyboardWillShow(notification: Notification, textField: UIView?, view: UIView) {
-        guard let rect = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue,
-              let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval,
-              let activeTextField = textField else {return}
-        
-        let keyboardY = view.frame.size.height - rect.height
-        let textYpoint = activeTextField.convert(activeTextField.frame, to: view).maxY
-        let keyboardOverlap = keyboardY - textYpoint - 6
-        
-        print(keyboardY,textYpoint,keyboardOverlap)
-        
-        if keyboardOverlap < 0 {
-            UIView.animate(withDuration: duration) {
-                let transform = CGAffineTransform(translationX: 0, y: keyboardOverlap)
-                view.transform = transform
-            }
-        } else {
-            UIView.animate(withDuration: duration) {
-                let transform = CGAffineTransform(translationX: 0, y: 0)
-                view.transform = transform
-            }
-        }
-    }
-    
-    private func keyboardWillHide(notification: Notification, view: UIView) {
-        guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval else {return}
-        UIView.animate(withDuration: duration) {
-            view.transform = CGAffineTransform.identity
-        }
     }
 }
