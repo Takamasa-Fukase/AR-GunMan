@@ -91,10 +91,6 @@ final class NameRegisterViewController: UIViewController, BackgroundViewTapTrack
 }
 
 extension NameRegisterViewController: UITextFieldDelegate {
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        view.endEditing(true)
-    }
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         nameTextField.resignFirstResponder()
         return true

@@ -43,4 +43,9 @@ extension UIViewController {
             self?.view.transform = CGAffineTransform.identity
         }
     }
+    
+    open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        view.endEditing(true)
+    }
 }
