@@ -46,6 +46,8 @@ final class ResultViewModel: ViewModelType {
     // 遷移先からの通知を受け取るレシーバー
     private let nameRegisterEventReceiver: NameRegisterEventReceiver
     
+    private let disposeBag = DisposeBag()
+    
     init(
         useCase: ResultUseCaseInterface,
         navigator: ResultNavigatorInterface,
@@ -82,8 +84,10 @@ final class ResultViewModel: ViewModelType {
                     score: self.score
                 )
             })
+            .share()
         
-        let temporaryRankText = temporaryRankIndex
+        let temporaryRankTextRelay = BehaviorRelay<String>(value: "")
+        temporaryRankIndex
             .withLatestFrom(loadedRankingList) { (rankIndex: $0, rankingList: $1) }
             .map({
                 return RankingUtil.createTemporaryRankText(
@@ -91,6 +95,8 @@ final class ResultViewModel: ViewModelType {
                     rankingListCount: $0.rankingList.count
                 )
             })
+            .bind(to: temporaryRankTextRelay)
+            .disposed(by: disposeBag)
         
         let nameRegisterViewShowed = input.viewWillAppear
             .take(1)
@@ -102,7 +108,7 @@ final class ResultViewModel: ViewModelType {
                 guard let self = self else { return }
                 self.navigator.showNameRegister(
                     score: self.score,
-                    temporaryRankTextObservable: temporaryRankText,
+                    temporaryRankTextObservable: temporaryRankTextRelay.asObservable(),
                     eventReceiver: self.nameRegisterEventReceiver
                 )
             })

@@ -110,13 +110,8 @@ final class NameRegisterViewModel: ViewModelType {
                 self.navigator.showErrorAlert($0)
             })
         
-        
         // MARK: - OutputToView
-        let temporaryRankText = Observable
-            .concat(
-                Observable.just(""), // 初期値として空文字を流している
-                temporaryRankTextObservable
-            )
+        let temporaryRankText = temporaryRankTextObservable
         
         let scoreText = Observable.just("Score: \(score.scoreText)")
         
