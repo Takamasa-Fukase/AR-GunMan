@@ -22,8 +22,6 @@ final class WeaponChangeViewController: UIViewController {
         super.viewDidLoad()
         
         setupFSPagerView()
-        
-        
         bindViewModel()
     }
 
