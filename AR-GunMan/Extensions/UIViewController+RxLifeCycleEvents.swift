@@ -21,6 +21,12 @@ extension Reactive where Base: UIViewController {
             .share(replay: 1)
     }
     
+    var viewDidLayoutSubviews: Observable<Void> {
+        return sentMessage(#selector(base.viewDidLayoutSubviews))
+            .mapToVoid()
+            .share(replay: 1)
+    }
+    
     var viewWillDisappear: Observable<Void> {
         return sentMessage(#selector(base.viewWillDisappear(_:)))
             .mapToVoid()
@@ -41,6 +47,12 @@ extension Reactive where Base: UIViewController {
     
     var viewDidAppearInvoked: Observable<Void> {
         return methodInvoked(#selector(base.viewDidAppear(_:)))
+            .mapToVoid()
+            .share(replay: 1)
+    }
+    
+    var viewDidLayoutSubviewsInvoked: Observable<Void> {
+        return methodInvoked(#selector(base.viewDidLayoutSubviews))
             .mapToVoid()
             .share(replay: 1)
     }
