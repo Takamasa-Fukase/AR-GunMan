@@ -16,6 +16,7 @@ struct TopControllerInput {
 }
 
 struct TopViewModel2 {
+    // TODO: ここでBoolに応じたImageNameに変換したい（systemImageとImageなのでそこを解消する必要あり）
     let isStartButtonIconSwitched: Observable<Bool>
     let isSettingsButtonIconSwitched: Observable<Bool>
     let isHowToPlayButtonIconSwitched: Observable<Bool>
