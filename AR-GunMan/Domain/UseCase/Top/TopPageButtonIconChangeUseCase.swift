@@ -14,7 +14,6 @@ struct TopPageButtonIconChangeInput {
 
 struct TopPageButtonIconChangeOutput {
     let isButtonIconSwitched: Observable<Bool>
-    let playIconChangingSound: Observable<SoundType>
     let buttonIconReverted: Observable<Void>
 }
 
@@ -23,17 +22,20 @@ protocol TopPageButtonIconChangeUseCaseInterface {
 }
 
 final class TopPageButtonIconChangeUseCase: TopPageButtonIconChangeUseCaseInterface {
+    private let soundPlayer: SoundPlayerInterface
+    
+    init(soundPlayer: SoundPlayerInterface = SoundPlayer.shared) {
+        self.soundPlayer = soundPlayer
+    }
+    
     func transform(input: TopPageButtonIconChangeInput) -> TopPageButtonIconChangeOutput {
         let isButtonIconSwitchedRelay = PublishRelay<Bool>()
-        
-        let playIconChangingSound = input.buttonTapped
-            .map({ _ in
-                return TopConst.iconChangingSound
-            })
-        
+
         let buttonIconReverted = input.buttonTapped
-            .do(onNext: { _ in
+            .do(onNext: { [weak self] _ in
+                guard let self = self else { return }
                 isButtonIconSwitchedRelay.accept(true)
+                self.soundPlayer.play(TopConst.iconChangingSound)
             })
             .flatMapLatest({ _ in
                 return TimerStreamCreator
@@ -49,7 +51,6 @@ final class TopPageButtonIconChangeUseCase: TopPageButtonIconChangeUseCaseInterf
         
         return TopPageButtonIconChangeOutput(
             isButtonIconSwitched: isButtonIconSwitchedRelay.asObservable(),
-            playIconChangingSound: playIconChangingSound,
             buttonIconReverted: buttonIconReverted
         )
     }
