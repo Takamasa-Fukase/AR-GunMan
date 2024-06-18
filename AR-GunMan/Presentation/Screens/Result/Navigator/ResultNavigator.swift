@@ -59,8 +59,8 @@ final class ResultNavigator: ResultNavigatorInterface {
     }
     
     func backToTop() {
-        let topVC = viewController.presentingViewController?.presentingViewController as! TopViewController
-        topVC.dismiss(animated: false)
+        let topVC = viewController.presentingViewController?.presentingViewController
+        topVC?.dismiss(animated: false)
     }
     
     func showErrorAlert(_ error: Error) {
