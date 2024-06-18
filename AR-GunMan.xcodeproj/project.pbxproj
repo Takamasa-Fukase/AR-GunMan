@@ -788,6 +788,7 @@
 			isa = PBXGroup;
 			children = (
 				86DA331C2BFE0B6600186C04 /* Screens */,
+				BC03F9E92C21A5F800E27C01 /* Screens2 */,
 				86DA331B2BFE0AE100186C04 /* Common */,
 			);
 			path = Presentation;
@@ -1030,7 +1031,6 @@
 			isa = PBXGroup;
 			children = (
 				59D2D5712552E448006DDB70 /* Top */,
-				BC03F9E42C21A3A000E27C01 /* Top2 */,
 				599450FE256AD53A00560202 /* Tutorial */,
 				867B855A2BFF3173004F6D56 /* Game */,
 				59EF28EB256E93A600F63C74 /* WeaponChange */,
@@ -1052,14 +1052,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		BC03F9E42C21A3A000E27C01 /* Top2 */ = {
+		BC03F9E42C21A3A000E27C01 /* Top */ = {
 			isa = PBXGroup;
 			children = (
 				BC03F9E52C21A3B600E27C01 /* Navigator */,
 				BC03F9E62C21A3C000E27C01 /* Presenter */,
 				BC03F9E72C21A3CA00E27C01 /* View */,
 			);
-			path = Top2;
+			path = Top;
 			sourceTree = "<group>";
 		};
 		BC03F9E52C21A3B600E27C01 /* Navigator */ = {
@@ -1096,6 +1096,14 @@
 				BC03F9DB2C2166D800E27C01 /* TopPageButtonIconChangeUseCase.swift */,
 			);
 			path = Top;
+			sourceTree = "<group>";
+		};
+		BC03F9E92C21A5F800E27C01 /* Screens2 */ = {
+			isa = PBXGroup;
+			children = (
+				BC03F9E42C21A3A000E27C01 /* Top */,
+			);
+			path = Screens2;
 			sourceTree = "<group>";
 		};
 		BC35B1FC2C159E1A00131483 /* ARContent */ = {
