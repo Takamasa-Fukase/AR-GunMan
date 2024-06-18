@@ -51,7 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         AVCaptureDevice.requestAccess(for: .video) { _ in }
         
-        window?.rootViewController = TopNavigator.assembleModules()
+        window?.rootViewController = TopNavigator2.assembleModules()
         
         return true
     }
