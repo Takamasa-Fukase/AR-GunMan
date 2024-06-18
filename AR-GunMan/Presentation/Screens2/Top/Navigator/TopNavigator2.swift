@@ -29,10 +29,10 @@ final class TopNavigator2: TopNavigatorInterface2 {
             replayNecessityCheckUseCase: ReplayNecessityCheckUseCase(
                 replayRepository: ReplayRepository()
             ),
+            buttonIconChangeUseCase: TopPageButtonIconChangeUseCase(),
             cameraPermissionCheckUseCase: CameraPermissionCheckUseCase(
                 avPermissionRepository: AVPermissionRepository()
             ),
-            buttonIconChangeUseCase: TopPageButtonIconChangeUseCase(),
             navigator: navigator
         )
         vc.presenter = presenter

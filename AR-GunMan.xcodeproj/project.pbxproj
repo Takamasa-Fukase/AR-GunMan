@@ -1092,8 +1092,8 @@
 			isa = PBXGroup;
 			children = (
 				BC03F9D52C215AC400E27C01 /* ReplayNecessityCheckUseCase.swift */,
-				BC03F9D82C21634A00E27C01 /* CameraPermissionCheckUseCase.swift */,
 				BC03F9DB2C2166D800E27C01 /* TopPageButtonIconChangeUseCase.swift */,
+				BC03F9D82C21634A00E27C01 /* CameraPermissionCheckUseCase.swift */,
 			);
 			path = Top;
 			sourceTree = "<group>";

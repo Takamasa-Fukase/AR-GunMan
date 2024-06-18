@@ -28,24 +28,27 @@ protocol TopPresenterInterface {
 
 final class TopPresenter: TopPresenterInterface {
     private let replayNecessityCheckUseCase: ReplayNecessityCheckUseCaseInterface
-    private let cameraPermissionCheckUseCase: CameraPermissionCheckUseCaseInterface
     private let buttonIconChangeUseCase: TopPageButtonIconChangeUseCaseInterface
+    private let cameraPermissionCheckUseCase: CameraPermissionCheckUseCaseInterface
     private let navigator: TopNavigatorInterface2
     private let disposeBag = DisposeBag()
     
     init(
         replayNecessityCheckUseCase: ReplayNecessityCheckUseCaseInterface,
-        cameraPermissionCheckUseCase: CameraPermissionCheckUseCaseInterface,
         buttonIconChangeUseCase: TopPageButtonIconChangeUseCaseInterface,
+        cameraPermissionCheckUseCase: CameraPermissionCheckUseCaseInterface,
         navigator: TopNavigatorInterface2
     ) {
         self.replayNecessityCheckUseCase = replayNecessityCheckUseCase
-        self.cameraPermissionCheckUseCase = cameraPermissionCheckUseCase
         self.buttonIconChangeUseCase = buttonIconChangeUseCase
+        self.cameraPermissionCheckUseCase = cameraPermissionCheckUseCase
         self.navigator = navigator
     }
     
     func transform(input: TopControllerInput) -> TopViewModel2 {
+        let replayNecessityCheckUseCaseOutput = replayNecessityCheckUseCase
+            .transform(input: .init(checkNeedsReplay: input.viewDidAppear))
+        
         let startButtonIconChangeUseCaseOutput = buttonIconChangeUseCase
             .transform(input: .init(buttonTapped: input.startButtonTapped))
         
@@ -58,15 +61,7 @@ final class TopPresenter: TopPresenterInterface {
         let cameraPermissionCheckUseCaseOutput = cameraPermissionCheckUseCase
             .transform(input: .init(checkIsCameraAccessPermitted: startButtonIconChangeUseCaseOutput.buttonIconReverted))
         
-        let replayNecessityCheckUseCaseOutput = replayNecessityCheckUseCase
-            .transform(input: .init(checkNeedsReplay: input.viewDidAppear))
-        
         disposeBag.insert {
-            cameraPermissionCheckUseCaseOutput.showCameraPermissionDescriptionAlert
-                .subscribe(onNext: { [weak self] _ in
-                    guard let self = self else { return }
-                    self.navigator.showCameraPermissionDescriptionAlert()
-                })
             Observable
                 .merge(
                     replayNecessityCheckUseCaseOutput.showGameForReplay,
@@ -75,6 +70,11 @@ final class TopPresenter: TopPresenterInterface {
                 .subscribe(onNext: { [weak self] _ in
                     guard let self = self else { return }
                     self.navigator.showGame()
+                })
+            cameraPermissionCheckUseCaseOutput.showCameraPermissionDescriptionAlert
+                .subscribe(onNext: { [weak self] _ in
+                    guard let self = self else { return }
+                    self.navigator.showCameraPermissionDescriptionAlert()
                 })
             settingsButtonIconChangeUseCaseOutput.buttonIconReverted
                 .subscribe(onNext: { [weak self] _ in
