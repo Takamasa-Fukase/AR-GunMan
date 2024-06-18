@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 
 class TopViewController2: UIViewController {
-    var presenter: TopPresenter!
+    var presenter: TopPresenterInterface!
     private let disposeBag = DisposeBag()
     private let contentView = TopView()
 
@@ -27,7 +27,7 @@ class TopViewController2: UIViewController {
     }
     
     private func bind() {
-        let controllerInput = TopPresenter.ControllerInput(
+        let controllerInput = TopControllerInput(
             viewDidAppear: rx.viewDidAppear,
             startButtonTapped: contentView.startButton.rx.tap.asObservable(),
             settingsButtonTapped: contentView.settingsButton.rx.tap.asObservable(),

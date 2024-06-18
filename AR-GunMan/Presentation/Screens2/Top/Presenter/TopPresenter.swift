@@ -8,20 +8,24 @@
 import RxSwift
 import RxCocoa
 
-final class TopPresenter {
-    struct ControllerInput {
-        let viewDidAppear: Observable<Void>
-        let startButtonTapped: Observable<Void>
-        let settingsButtonTapped: Observable<Void>
-        let howToPlayButtonTapped: Observable<Void>
-    }
-    
-    struct ViewModel {
-        let isStartButtonIconSwitched: Observable<Bool>
-        let isSettingsButtonIconSwitched: Observable<Bool>
-        let isHowToPlayButtonIconSwitched: Observable<Bool>
-    }
-    
+struct TopControllerInput {
+    let viewDidAppear: Observable<Void>
+    let startButtonTapped: Observable<Void>
+    let settingsButtonTapped: Observable<Void>
+    let howToPlayButtonTapped: Observable<Void>
+}
+
+struct TopViewModel2 {
+    let isStartButtonIconSwitched: Observable<Bool>
+    let isSettingsButtonIconSwitched: Observable<Bool>
+    let isHowToPlayButtonIconSwitched: Observable<Bool>
+}
+
+protocol TopPresenterInterface {
+    func transform(input: TopControllerInput) -> TopViewModel2
+}
+
+final class TopPresenter: TopPresenterInterface {
     private let replayNecessityCheckUseCase: ReplayNecessityCheckUseCaseInterface
     private let cameraPermissionCheckUseCase: CameraPermissionCheckUseCaseInterface
     private let buttonIconChangeUseCase: TopPageButtonIconChangeUseCaseInterface
@@ -40,7 +44,7 @@ final class TopPresenter {
         self.navigator = navigator
     }
     
-    func transform(input: ControllerInput) -> ViewModel {
+    func transform(input: TopControllerInput) -> TopViewModel2 {
         let startButtonIconChangeUseCaseOutput = buttonIconChangeUseCase
             .transform(input: .init(buttonTapped: input.startButtonTapped))
         
@@ -83,7 +87,7 @@ final class TopPresenter {
                 })
         }
         
-        return ViewModel(
+        return TopViewModel2(
             isStartButtonIconSwitched: startButtonIconChangeUseCaseOutput.isButtonIconSwitched,
             isSettingsButtonIconSwitched: settingsButtonIconChangeUseCaseOutput.isButtonIconSwitched,
             isHowToPlayButtonIconSwitched: howToPlayButtonIconChangeUseCaseOutput.isButtonIconSwitched
