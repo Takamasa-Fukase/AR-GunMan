@@ -31,7 +31,7 @@ final class GameTimerDisposalHandlingUseCase: GameTimerDisposalHandlingUseCaseIn
     }
     
     func transform(input: GameTimerDisposalHandlingInput) -> GameTimerDisposalHandlingOutput {
-        let resultViewShowingSignalReceived = input.timerDisposed
+        let resultViewShowingWaitTimeEnded = input.timerDisposed
             .flatMapLatest({ _ in
                 return TimerStreamCreator
                     .create(
@@ -43,7 +43,7 @@ final class GameTimerDisposalHandlingUseCase: GameTimerDisposalHandlingUseCaseIn
             .share()
         
         disposeBag.insert {
-            resultViewShowingSignalReceived
+            resultViewShowingWaitTimeEnded
                 .subscribe(onNext: { [weak self] _ in
                     guard let self = self else {return}
                     self.soundPlayer.play(.rankingAppear)
@@ -53,7 +53,7 @@ final class GameTimerDisposalHandlingUseCase: GameTimerDisposalHandlingUseCaseIn
         return GameTimerDisposalHandlingOutput(
             stopMotionDetection: input.timerDisposed,
             dismissWeaponChangeView: input.timerDisposed,
-            showResultView: resultViewShowingSignalReceived
+            showResultView: resultViewShowingWaitTimeEnded
         )
     }
 }

@@ -30,7 +30,7 @@ final class GameStartUseCase: GameStartUseCaseInterface {
     }
     
     func transform(input: GameStartInput) -> GameStartOutput {
-        let timerStartSignalReceived = input.trigger
+        let timerStartWaitTimeEnded = input.trigger
             .flatMapLatest({ _ in
                 return TimerStreamCreator
                     .create(
@@ -50,8 +50,8 @@ final class GameStartUseCase: GameStartUseCaseInterface {
         }
         
         return GameStartOutput(
-            startMotionDetection: timerStartSignalReceived,
-            startTimer: timerStartSignalReceived
+            startMotionDetection: timerStartWaitTimeEnded,
+            startTimer: timerStartWaitTimeEnded
         )
     }
 }
