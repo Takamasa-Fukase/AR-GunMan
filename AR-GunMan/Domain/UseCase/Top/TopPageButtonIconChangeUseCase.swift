@@ -23,7 +23,8 @@ protocol TopPageButtonIconChangeUseCaseInterface {
 
 final class TopPageButtonIconChangeUseCase: TopPageButtonIconChangeUseCaseInterface {
     private let soundPlayer: SoundPlayerInterface
-    
+    private let disposeBag = DisposeBag()
+
     init(soundPlayer: SoundPlayerInterface = SoundPlayer.shared) {
         self.soundPlayer = soundPlayer
     }
@@ -31,12 +32,7 @@ final class TopPageButtonIconChangeUseCase: TopPageButtonIconChangeUseCaseInterf
     func transform(input: TopPageButtonIconChangeInput) -> TopPageButtonIconChangeOutput {
         let isButtonIconSwitchedRelay = PublishRelay<Bool>()
 
-        let buttonIconReverted = input.buttonTapped
-            .do(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                isButtonIconSwitchedRelay.accept(true)
-                self.soundPlayer.play(TopConst.iconChangingSound)
-            })
+        let iconRevertWaitTimeEnded = input.buttonTapped
             .flatMapLatest({ _ in
                 return TimerStreamCreator
                     .create(
@@ -45,13 +41,23 @@ final class TopPageButtonIconChangeUseCase: TopPageButtonIconChangeUseCaseInterf
                     )
                     .mapToVoid()
             })
-            .do(onNext: { _ in
-                isButtonIconSwitchedRelay.accept(false)
-            })
+        
+        disposeBag.insert {
+            input.buttonTapped
+                .subscribe(onNext: { [weak self] _ in
+                    guard let self = self else {return}
+                    isButtonIconSwitchedRelay.accept(true)
+                    self.soundPlayer.play(TopConst.iconChangingSound)
+                })
+            iconRevertWaitTimeEnded
+                .subscribe(onNext: { _ in
+                    isButtonIconSwitchedRelay.accept(false)
+                })
+        }
         
         return TopPageButtonIconChangeOutput(
             isButtonIconSwitched: isButtonIconSwitchedRelay.asObservable(),
-            buttonIconReverted: buttonIconReverted
+            buttonIconReverted: iconRevertWaitTimeEnded
         )
     }
 }

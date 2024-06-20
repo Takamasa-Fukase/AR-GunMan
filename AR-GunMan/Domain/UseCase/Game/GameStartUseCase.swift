@@ -23,6 +23,7 @@ protocol GameStartUseCaseInterface {
 
 final class GameStartUseCase: GameStartUseCaseInterface {
     private let soundPlayer: SoundPlayerInterface
+    private let disposeBag = DisposeBag()
     
     init(soundPlayer: SoundPlayerInterface = SoundPlayer.shared) {
         self.soundPlayer = soundPlayer
@@ -30,10 +31,6 @@ final class GameStartUseCase: GameStartUseCaseInterface {
     
     func transform(input: GameStartInput) -> GameStartOutput {
         let timerStartSignalReceived = input.trigger
-            .do(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                self.soundPlayer.play(.pistolSet)
-            })
             .flatMapLatest({ _ in
                 return TimerStreamCreator
                     .create(
@@ -43,6 +40,14 @@ final class GameStartUseCase: GameStartUseCaseInterface {
                     .mapToVoid()
             })
             .share()
+        
+        disposeBag.insert {
+            input.trigger
+                .subscribe(onNext: { [weak self] _ in
+                    guard let self = self else {return}
+                    self.soundPlayer.play(.pistolSet)
+                })
+        }
         
         return GameStartOutput(
             startMotionDetection: timerStartSignalReceived,
