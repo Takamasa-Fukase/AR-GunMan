@@ -301,16 +301,21 @@ final class GamePresenter: GamePresenterInterface {
         
         
         disposeBag.insert {
-            tutorialNecessityCheckUseCaseOutput.showTutorial
-                .subscribe(onNext: { [weak self] _ in
+            // state changes
+            weaponChangeUseCaseOutput.updateWeaponType
+                .subscribe(onNext: { [weak self] in
                     guard let self = self else { return }
-                    self.navigator.showTutorialView(
-                        tutorialEndEventReceiver: self.tutorialEndEventReceiver
-                    )
+                    self.state.weaponTypeRelay.accept($0)
                 })
-            gameTimerHandlingUseCaseOutput.disposeTimer
-                .subscribe(onNext: { _ in
-                    timeCountUpdatingDisposable.dispose()
+            weaponReloadUseCaseOutput.updateWeaponReloadingFlag
+                .subscribe(onNext: { [weak self] in
+                    guard let self = self else { return }
+                    self.state.isWeaponReloadingRelay.accept($0)
+                })
+            weaponChangeUseCaseOutput.resetWeaponReloadingFlag
+                .subscribe(onNext: { [weak self] in
+                    guard let self = self else { return }
+                    self.state.isWeaponReloadingRelay.accept($0)
                 })
             weaponFireUseCaseOutput.updateBulletsCount
                 .subscribe(onNext: { [weak self] in
@@ -322,30 +327,29 @@ final class GamePresenter: GamePresenterInterface {
                     guard let self = self else { return }
                     self.state.bulletsCountRelay.accept($0)
                 })
-            weaponReloadUseCaseOutput.updateWeaponReloadingFlag
-                .subscribe(onNext: { [weak self] in
-                    guard let self = self else { return }
-                    self.state.isWeaponReloadingRelay.accept($0)
-                })
-            weaponChangeUseCaseOutput.updateWeaponType
-                .subscribe(onNext: { [weak self] in
-                    guard let self = self else { return }
-                    self.state.weaponTypeRelay.accept($0)
-                })
             weaponChangeUseCaseOutput.refillBulletsCountForNewWeapon
                 .subscribe(onNext: { [weak self] in
                     guard let self = self else { return }
                     self.state.bulletsCountRelay.accept($0)
                 })
-            weaponChangeUseCaseOutput.resetWeaponReloadingFlag
-                .subscribe(onNext: { [weak self] in
-                    guard let self = self else { return }
-                    self.state.isWeaponReloadingRelay.accept($0)
-                })
             targetHitHandlingUseCaseOutput.updateScore
                 .subscribe(onNext: { [weak self] in
                     guard let self = self else { return }
                     self.state.scoreRelay.accept($0)
+                })
+            reloadMotionDetectionCountUseCaseOutput.updateCount
+                .subscribe(onNext: { [weak self] in
+                    guard let self = self else { return }
+                    self.state.reloadingMotionDetectedCountRelay.accept($0)
+                })
+            
+            // transitions
+            tutorialNecessityCheckUseCaseOutput.showTutorial
+                .subscribe(onNext: { [weak self] _ in
+                    guard let self = self else { return }
+                    self.navigator.showTutorialView(
+                        tutorialEndEventReceiver: self.tutorialEndEventReceiver
+                    )
                 })
             input.inputFromViewController.weaponChangeButtonTapped
                 .subscribe(onNext: { [weak self] _ in
@@ -364,10 +368,11 @@ final class GamePresenter: GamePresenterInterface {
                     guard let self = self else { return }
                     self.navigator.showResultView(score: self.state.scoreRelay.value)
                 })
-            reloadMotionDetectionCountUseCaseOutput.updateCount
-                .subscribe(onNext: { [weak self] in
-                    guard let self = self else { return }
-                    self.state.reloadingMotionDetectedCountRelay.accept($0)
+            
+            // others
+            gameTimerHandlingUseCaseOutput.disposeTimer
+                .subscribe(onNext: { _ in
+                    timeCountUpdatingDisposable.dispose()
                 })
         }
         
