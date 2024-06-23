@@ -17,7 +17,6 @@ struct WeaponReloadInput {
 struct WeaponReloadOutput {
     let updateBulletsCount: Observable<Int>
     let updateWeaponReloadingFlag: Observable<Bool>
-    let weaponReloaded: Observable<WeaponType>
 }
 
 protocol WeaponReloadUseCaseInterface {
@@ -83,8 +82,7 @@ final class WeaponReloadUseCase: WeaponReloadUseCaseInterface {
         
         return WeaponReloadOutput(
             updateBulletsCount: updateBulletsCount,
-            updateWeaponReloadingFlag: isWeaponReloadingRelay.asObservable(),
-            weaponReloaded: weaponReloadWaitTimeEnded
+            updateWeaponReloadingFlag: isWeaponReloadingRelay.asObservable()
         )
     }
 }

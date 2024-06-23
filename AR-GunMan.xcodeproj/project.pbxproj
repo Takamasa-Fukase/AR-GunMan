@@ -224,6 +224,12 @@
 		BC03FA0F2C21CB7100E27C01 /* GameTimerDisposalHandlingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA0D2C21CB7100E27C01 /* GameTimerDisposalHandlingUseCase.swift */; };
 		BC03FA112C21CB7900E27C01 /* ReloadMotionDetectionCountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA102C21CB7900E27C01 /* ReloadMotionDetectionCountUseCase.swift */; };
 		BC03FA122C21CB7900E27C01 /* ReloadMotionDetectionCountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA102C21CB7900E27C01 /* ReloadMotionDetectionCountUseCase.swift */; };
+		BC03FA182C24273200E27C01 /* GameNavigator2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA172C24273200E27C01 /* GameNavigator2.swift */; };
+		BC03FA192C24273200E27C01 /* GameNavigator2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA172C24273200E27C01 /* GameNavigator2.swift */; };
+		BC03FA1B2C24279700E27C01 /* GamePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA1A2C24279700E27C01 /* GamePresenter.swift */; };
+		BC03FA1C2C24279700E27C01 /* GamePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA1A2C24279700E27C01 /* GamePresenter.swift */; };
+		BC03FA1E2C242E5200E27C01 /* TutorialEndHandlingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA1D2C242E5200E27C01 /* TutorialEndHandlingUseCase.swift */; };
+		BC03FA1F2C242E5200E27C01 /* TutorialEndHandlingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA1D2C242E5200E27C01 /* TutorialEndHandlingUseCase.swift */; };
 		BC0BBE382C15F19D00789349 /* ViewModelEventHandlerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0BBE372C15F19D00789349 /* ViewModelEventHandlerType.swift */; };
 		BC0BBE392C15F19D00789349 /* ViewModelEventHandlerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0BBE372C15F19D00789349 /* ViewModelEventHandlerType.swift */; };
 		BC0BBE3C2C16B7E100789349 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0BBE3B2C16B7E100789349 /* Double+Extension.swift */; };
@@ -476,6 +482,9 @@
 		BC03FA0A2C21CB6900E27C01 /* GameTimerHandlingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTimerHandlingUseCase.swift; sourceTree = "<group>"; };
 		BC03FA0D2C21CB7100E27C01 /* GameTimerDisposalHandlingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTimerDisposalHandlingUseCase.swift; sourceTree = "<group>"; };
 		BC03FA102C21CB7900E27C01 /* ReloadMotionDetectionCountUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReloadMotionDetectionCountUseCase.swift; sourceTree = "<group>"; };
+		BC03FA172C24273200E27C01 /* GameNavigator2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameNavigator2.swift; sourceTree = "<group>"; };
+		BC03FA1A2C24279700E27C01 /* GamePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePresenter.swift; sourceTree = "<group>"; };
+		BC03FA1D2C242E5200E27C01 /* TutorialEndHandlingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialEndHandlingUseCase.swift; sourceTree = "<group>"; };
 		BC0BBE372C15F19D00789349 /* ViewModelEventHandlerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelEventHandlerType.swift; sourceTree = "<group>"; };
 		BC0BBE3B2C16B7E100789349 /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
 		BC0BBE3F2C16D31800789349 /* NSObject+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Extension.swift"; sourceTree = "<group>"; };
@@ -1142,6 +1151,7 @@
 			isa = PBXGroup;
 			children = (
 				BC03F9E42C21A3A000E27C01 /* Top */,
+				BC03FA132C2426D900E27C01 /* Game */,
 			);
 			path = Screens2;
 			sourceTree = "<group>";
@@ -1150,6 +1160,7 @@
 			isa = PBXGroup;
 			children = (
 				BC03FA042C21CB5700E27C01 /* TutorialNecessityCheckUseCase.swift */,
+				BC03FA1D2C242E5200E27C01 /* TutorialEndHandlingUseCase.swift */,
 				BC03FA072C21CB6000E27C01 /* GameStartUseCase.swift */,
 				BC03FA0A2C21CB6900E27C01 /* GameTimerHandlingUseCase.swift */,
 				BC03F9F52C21CB1400E27C01 /* FireMotionFilterUseCase.swift */,
@@ -1164,6 +1175,39 @@
 				BC03FA0D2C21CB7100E27C01 /* GameTimerDisposalHandlingUseCase.swift */,
 			);
 			path = Game;
+			sourceTree = "<group>";
+		};
+		BC03FA132C2426D900E27C01 /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				BC03FA142C2426EE00E27C01 /* Navigator */,
+				BC03FA152C2426F900E27C01 /* Presenter */,
+				BC03FA162C2426FF00E27C01 /* View */,
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
+		BC03FA142C2426EE00E27C01 /* Navigator */ = {
+			isa = PBXGroup;
+			children = (
+				BC03FA172C24273200E27C01 /* GameNavigator2.swift */,
+			);
+			path = Navigator;
+			sourceTree = "<group>";
+		};
+		BC03FA152C2426F900E27C01 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				BC03FA1A2C24279700E27C01 /* GamePresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		BC03FA162C2426FF00E27C01 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		BC35B1FC2C159E1A00131483 /* ARContent */ = {
@@ -1683,6 +1727,7 @@
 				86C421B82BB040C300EFD791 /* TutorialRepository.swift in Sources */,
 				BCCD44592C0B2BAF00BF541D /* TutorialSeenStatusHandler.swift in Sources */,
 				BCCD44872C12C8C000BF541D /* GameObjectInfo.swift in Sources */,
+				BC03FA182C24273200E27C01 /* GameNavigator2.swift in Sources */,
 				BC03F9F32C21CB0B00E27C01 /* WeaponReloadUseCase.swift in Sources */,
 				BC22E0222C1C71E900C59BAB /* UITapGestureRecognizer+Rx.swift in Sources */,
 				86B112512C0080AA006D464A /* WeaponFireHandler.swift in Sources */,
@@ -1690,12 +1735,14 @@
 				BC482DEA2C1AAB7400FAF079 /* NameRegisterNavigator.swift in Sources */,
 				BCD1C2252C01B3EA008975EB /* GameViewModel.swift in Sources */,
 				59D2D57B2552E536006DDB70 /* TopViewController.swift in Sources */,
+				BC03FA1B2C24279700E27C01 /* GamePresenter.swift in Sources */,
 				59D2D4D92552DE66006DDB70 /* AppDelegate.swift in Sources */,
 				866675D4275215AF007CB4D6 /* UIViewController+Extension.swift in Sources */,
 				861B87752BFE0F6100D0882D /* SoundPlayer.swift in Sources */,
 				86F044272BEA0A60005D8D14 /* TimerRepository.swift in Sources */,
 				59D2D53A2552E1D2006DDB70 /* Storyboard+Extension.swift in Sources */,
 				67200F5727A0020B00AD92EC /* RankingViewModel.swift in Sources */,
+				BC03FA1E2C242E5200E27C01 /* TutorialEndHandlingUseCase.swift in Sources */,
 				67684E6D27B988C0000B2B5C /* SceneViewSettingUtil.swift in Sources */,
 				BC03FA052C21CB5700E27C01 /* TutorialNecessityCheckUseCase.swift in Sources */,
 				595E6987256C0190002B4F3E /* SettingsViewController.swift in Sources */,
@@ -1782,7 +1829,9 @@
 				860646772BF599D500906DA0 /* NameRegisterUseCase.swift in Sources */,
 				BCCD44942C13F93900BF541D /* CustomSCNNode.swift in Sources */,
 				BC482DEB2C1AAB7400FAF079 /* NameRegisterNavigator.swift in Sources */,
+				BC03FA192C24273200E27C01 /* GameNavigator2.swift in Sources */,
 				8606462C2BF5997200906DA0 /* CoreMotionRepository.swift in Sources */,
+				BC03FA1C2C24279700E27C01 /* GamePresenter.swift in Sources */,
 				860646002BF5995800906DA0 /* UIImageView+Extension.swift in Sources */,
 				860645FD2BF5995800906DA0 /* UIAlertController+Extension.swift in Sources */,
 				8606461F2BF5996700906DA0 /* FirebaseConst.swift in Sources */,
@@ -1837,6 +1886,7 @@
 				8606466D2BF599BC00906DA0 /* WeaponChangeViewModel.swift in Sources */,
 				BC482DC92C17F56600FAF079 /* TopViewModel.swift in Sources */,
 				BC03F9FA2C21CB1E00E27C01 /* ReloadMotionFilterUseCase.swift in Sources */,
+				BC03FA1F2C242E5200E27C01 /* TutorialEndHandlingUseCase.swift in Sources */,
 				8606467A2BF599D500906DA0 /* NameRegisterViewController.swift in Sources */,
 				BC0BBE4A2C174B1900789349 /* TopViewController.swift in Sources */,
 				8606461D2BF5996700906DA0 /* ErrorConst.swift in Sources */,
