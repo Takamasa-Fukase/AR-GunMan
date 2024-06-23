@@ -26,6 +26,7 @@ class GameViewController2: UIViewController {
     private func setView() {
         view.addSubview(contentView)
         view.addConstraints(for: contentView)
+        view.backgroundColor = .systemBackground
     }
     
     private func bind() {

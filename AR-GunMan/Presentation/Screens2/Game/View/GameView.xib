@@ -23,26 +23,19 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pistolSight" translatesAutoresizingMaskIntoConstraints="NO" id="E7X-GG-OiZ">
-                    <rect key="frame" x="374" y="133" width="100" height="100"/>
+                    <rect key="frame" x="376" y="146.66666666666666" width="100" height="100"/>
                     <color key="tintColor" systemColor="systemRedColor"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="100" id="brR-Uu-Sad"/>
-                        <constraint firstAttribute="width" constant="100" id="x1i-Dv-mC3"/>
-                    </constraints>
-                </imageView>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gGO-hd-zD3">
-                    <rect key="frame" x="57" y="288" width="210" height="70"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="210" id="NhQ-lm-aFf"/>
-                        <constraint firstAttribute="height" constant="70" id="YCR-5M-oO6"/>
+                        <constraint firstAttribute="height" constant="100" id="3Zf-1y-7JQ"/>
+                        <constraint firstAttribute="width" constant="100" id="Ovb-OY-Gv5"/>
                     </constraints>
                 </imageView>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="30:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mzE-5N-AX6">
-                    <rect key="frame" x="77" y="16" width="120" height="50"/>
+                    <rect key="frame" x="79" y="30" width="120" height="50"/>
                     <color key="backgroundColor" red="0.79046171899999995" green="0.69538801910000003" blue="0.53327715399999998" alpha="0.5977097603" colorSpace="custom" customColorSpace="displayP3"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="50" id="9Ov-dG-vfe"/>
-                        <constraint firstAttribute="width" constant="120" id="fUj-el-eqP"/>
+                        <constraint firstAttribute="height" constant="50" id="JXE-cS-2qF"/>
+                        <constraint firstAttribute="width" constant="120" id="d9i-Ik-DcR"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="35"/>
                     <nil key="textColor"/>
@@ -60,25 +53,31 @@
                     </userDefinedRuntimeAttributes>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8bi-fz-qwp">
-                    <rect key="frame" x="690" y="16" width="100" height="100"/>
+                    <rect key="frame" x="681" y="30" width="100" height="100"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="100" id="baL-Em-JPa"/>
-                        <constraint firstAttribute="height" constant="100" id="sLy-kf-0V3"/>
+                        <constraint firstAttribute="height" constant="100" id="Sz2-gi-o61"/>
+                        <constraint firstAttribute="width" constant="100" id="x4D-WL-Nl2"/>
                     </constraints>
                     <state key="normal" title="switch" image="weaponSwitch"/>
                 </button>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gGO-hd-zD3">
+                    <rect key="frame" x="59" y="302" width="210" height="70"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="210" id="GCV-J3-HHB"/>
+                        <constraint firstAttribute="height" constant="70" id="wcy-PR-6c2"/>
+                    </constraints>
+                </imageView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="zy3-Tg-hJI"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="zy3-Tg-hJI" firstAttribute="bottom" secondItem="gGO-hd-zD3" secondAttribute="bottom" constant="14" id="7WJ-eE-UFt"/>
-                <constraint firstItem="mzE-5N-AX6" firstAttribute="top" secondItem="8bi-fz-qwp" secondAttribute="top" id="IcD-hq-bJs"/>
-                <constraint firstItem="mzE-5N-AX6" firstAttribute="top" secondItem="zy3-Tg-hJI" secondAttribute="top" constant="16" id="KLR-yQ-5Jh"/>
-                <constraint firstItem="zy3-Tg-hJI" firstAttribute="trailing" secondItem="gGO-hd-zD3" secondAttribute="trailing" constant="526" id="Lmo-gh-a39"/>
-                <constraint firstItem="mzE-5N-AX6" firstAttribute="leading" secondItem="zy3-Tg-hJI" secondAttribute="leading" constant="18" id="T0m-fv-L0f"/>
-                <constraint firstItem="zy3-Tg-hJI" firstAttribute="trailing" secondItem="8bi-fz-qwp" secondAttribute="trailing" constant="3" id="VCr-xs-4dj"/>
-                <constraint firstItem="E7X-GG-OiZ" firstAttribute="leading" secondItem="zy3-Tg-hJI" secondAttribute="leading" constant="315" id="omG-8m-lJj"/>
-                <constraint firstItem="E7X-GG-OiZ" firstAttribute="top" secondItem="zy3-Tg-hJI" secondAttribute="top" constant="133" id="qbr-eL-6tB"/>
+                <constraint firstItem="zy3-Tg-hJI" firstAttribute="bottom" secondItem="gGO-hd-zD3" secondAttribute="bottom" id="9Gm-WR-avC"/>
+                <constraint firstItem="8bi-fz-qwp" firstAttribute="top" secondItem="zy3-Tg-hJI" secondAttribute="top" constant="30" id="9kL-mf-lHL"/>
+                <constraint firstItem="E7X-GG-OiZ" firstAttribute="centerX" secondItem="1KV-gi-ybZ" secondAttribute="centerX" id="DgR-nZ-h3W"/>
+                <constraint firstItem="mzE-5N-AX6" firstAttribute="leading" secondItem="zy3-Tg-hJI" secondAttribute="leading" constant="20" id="N10-Qt-3xX"/>
+                <constraint firstItem="E7X-GG-OiZ" firstAttribute="centerY" secondItem="1KV-gi-ybZ" secondAttribute="centerY" id="NAI-hh-5EU"/>
+                <constraint firstItem="mzE-5N-AX6" firstAttribute="top" secondItem="zy3-Tg-hJI" secondAttribute="top" constant="30" id="nnT-wx-GDG"/>
+                <constraint firstItem="zy3-Tg-hJI" firstAttribute="trailing" secondItem="8bi-fz-qwp" secondAttribute="trailing" constant="12" id="vHi-R5-Xza"/>
+                <constraint firstItem="gGO-hd-zD3" firstAttribute="leading" secondItem="zy3-Tg-hJI" secondAttribute="leading" id="zYD-xr-lCs"/>
             </constraints>
             <point key="canvasLocation" x="-193" y="152"/>
         </view>
@@ -86,9 +85,6 @@
     <resources>
         <image name="pistolSight" width="1500" height="1500"/>
         <image name="weaponSwitch" width="2048" height="2048"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
