@@ -37,6 +37,7 @@ final class GameNavigator2: GameNavigatorInterface2 {
             ),
             gameStartUseCase: GameStartUseCase(),
             gameTimerHandlingUseCase: GameTimerHandlingUseCase(),
+            gameTimerEndHandlingUseCase: GameTimerEndHandlingUseCase(),
             fireMotionFilterUseCase: FireMotionFilterUseCase(),
             reloadMotionFilterUseCase: ReloadMotionFilterUseCase(),
             reloadMotionDetectionCountUseCase: ReloadMotionDetectionCountUseCase(),
@@ -46,7 +47,6 @@ final class GameNavigator2: GameNavigatorInterface2 {
             weaponChangeUseCase: WeaponChangeUseCase(),
             targetHitFilterUseCase: TargetHitFilterUseCase(),
             targetHitHandlingUseCase: TargetHitHandlingUseCase(),
-            gameTimerDisposalHandlingUseCase: GameTimerDisposalHandlingUseCase(),
             navigator: GameNavigator2(viewController: vc)
         )
         let arContentController = ARContentController()

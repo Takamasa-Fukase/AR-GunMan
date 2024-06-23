@@ -82,6 +82,7 @@ final class GamePresenter: GamePresenterInterface {
     private let tutorialEndHandlingUseCase: TutorialEndHandlingUseCaseInterface
     private let gameStartUseCase: GameStartUseCaseInterface
     private let gameTimerHandlingUseCase: GameTimerHandlingUseCaseInterface
+    private let gameTimerEndHandlingUseCase: GameTimerEndHandlingUseCaseInterface
     private let fireMotionFilterUseCase: FireMotionFilterUseCaseInterface
     private let reloadMotionFilterUseCase: ReloadMotionFilterUseCaseInterface
     private let reloadMotionDetectionCountUseCase: ReloadMotionDetectionCountUseCaseInterface
@@ -91,7 +92,6 @@ final class GamePresenter: GamePresenterInterface {
     private let weaponChangeUseCase: WeaponChangeUseCaseInterface
     private let targetHitFilterUseCase: TargetHitFilterUseCaseInterface
     private let targetHitHandlingUseCase: TargetHitHandlingUseCaseInterface
-    private let gameTimerDisposalHandlingUseCase: GameTimerDisposalHandlingUseCaseInterface
     private let navigator: GameNavigatorInterface2
     private let state: State
     
@@ -106,6 +106,7 @@ final class GamePresenter: GamePresenterInterface {
         tutorialEndHandlingUseCase: TutorialEndHandlingUseCaseInterface,
         gameStartUseCase: GameStartUseCaseInterface,
         gameTimerHandlingUseCase: GameTimerHandlingUseCaseInterface,
+        gameTimerEndHandlingUseCase: GameTimerEndHandlingUseCaseInterface,
         fireMotionFilterUseCase: FireMotionFilterUseCaseInterface,
         reloadMotionFilterUseCase: ReloadMotionFilterUseCaseInterface,
         reloadMotionDetectionCountUseCase: ReloadMotionDetectionCountUseCaseInterface,
@@ -115,7 +116,6 @@ final class GamePresenter: GamePresenterInterface {
         weaponChangeUseCase: WeaponChangeUseCaseInterface,
         targetHitFilterUseCase: TargetHitFilterUseCaseInterface,
         targetHitHandlingUseCase: TargetHitHandlingUseCaseInterface,
-        gameTimerDisposalHandlingUseCase: GameTimerDisposalHandlingUseCaseInterface,
         navigator: GameNavigatorInterface2,
         state: State = State(),
         tutorialEndEventReceiver: PublishRelay<Void> = PublishRelay<Void>(),
@@ -125,6 +125,7 @@ final class GamePresenter: GamePresenterInterface {
         self.tutorialEndHandlingUseCase = tutorialEndHandlingUseCase
         self.gameStartUseCase = gameStartUseCase
         self.gameTimerHandlingUseCase = gameTimerHandlingUseCase
+        self.gameTimerEndHandlingUseCase = gameTimerEndHandlingUseCase
         self.fireMotionFilterUseCase = fireMotionFilterUseCase
         self.reloadMotionFilterUseCase = reloadMotionFilterUseCase
         self.reloadMotionDetectionCountUseCase = reloadMotionDetectionCountUseCase
@@ -134,7 +135,6 @@ final class GamePresenter: GamePresenterInterface {
         self.weaponChangeUseCase = weaponChangeUseCase
         self.targetHitFilterUseCase = targetHitFilterUseCase
         self.targetHitHandlingUseCase = targetHitHandlingUseCase
-        self.gameTimerDisposalHandlingUseCase = gameTimerDisposalHandlingUseCase
         self.navigator = navigator
         self.state = state
         self.tutorialEndEventReceiver = tutorialEndEventReceiver
@@ -165,8 +165,8 @@ final class GamePresenter: GamePresenterInterface {
                 timerStartTrigger: gameStartUseCaseOutput.startTimer
             ))
         
-        let timeCountUpdatingDisposable = gameTimerHandlingUseCaseOutput.updateTimeCount
-            .bind(to: state.timeCountRelay)
+        let gameTimerEndHandlingUseCaseOutput = gameTimerEndHandlingUseCase
+            .transform(input: .init(timerEnded: gameTimerHandlingUseCaseOutput.timerEnded))
         
         let fireMotionDetected = fireMotionFilterUseCase
             .transform(input: .init(
@@ -237,9 +237,6 @@ final class GamePresenter: GamePresenterInterface {
                 currentScore: state.scoreRelay.asObservable()
             ))
         
-        let gameTimerDisposalHandlingUseCaseOutput = gameTimerDisposalHandlingUseCase
-            .transform(input: .init(timerDisposed: gameTimerHandlingUseCaseOutput.disposeTimer))
-        
         let reloadMotionDetectionCountUseCaseOutput = reloadMotionDetectionCountUseCase
             .transform(input: .init(
                 reloadMotionDetected: reloadMotionDetected,
@@ -297,11 +294,13 @@ final class GamePresenter: GamePresenterInterface {
         // MARK: OutputToDeviceMotion
         let startMotionDetection = gameStartUseCaseOutput.startMotionDetection
         
-        let stopMotionDetection = gameTimerDisposalHandlingUseCaseOutput.stopMotionDetection
+        let stopMotionDetection = gameTimerEndHandlingUseCaseOutput.stopMotionDetection
         
         
         disposeBag.insert {
             // state changes
+            gameTimerHandlingUseCaseOutput.updateTimeCount
+                .bind(to: state.timeCountRelay)
             weaponChangeUseCaseOutput.updateWeaponType
                 .subscribe(onNext: { [weak self] in
                     guard let self = self else { return }
@@ -358,21 +357,15 @@ final class GamePresenter: GamePresenterInterface {
                         weaponSelectEventReceiver: self.weaponSelectEventReceiver
                     )
                 })
-            gameTimerDisposalHandlingUseCaseOutput.dismissWeaponChangeView
+            gameTimerEndHandlingUseCaseOutput.dismissWeaponChangeView
                 .subscribe(onNext: { [weak self] _ in
                     guard let self = self else { return }
                     self.navigator.dismissWeaponChangeView()
                 })
-            gameTimerDisposalHandlingUseCaseOutput.showResultView
+            gameTimerEndHandlingUseCaseOutput.showResultView
                 .subscribe(onNext: { [weak self] _ in
                     guard let self = self else { return }
                     self.navigator.showResultView(score: self.state.scoreRelay.value)
-                })
-            
-            // others
-            gameTimerHandlingUseCaseOutput.disposeTimer
-                .subscribe(onNext: { _ in
-                    timeCountUpdatingDisposable.dispose()
                 })
         }
         

@@ -220,8 +220,8 @@
 		BC03FA092C21CB6000E27C01 /* GameStartUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA072C21CB6000E27C01 /* GameStartUseCase.swift */; };
 		BC03FA0B2C21CB6900E27C01 /* GameTimerHandlingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA0A2C21CB6900E27C01 /* GameTimerHandlingUseCase.swift */; };
 		BC03FA0C2C21CB6900E27C01 /* GameTimerHandlingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA0A2C21CB6900E27C01 /* GameTimerHandlingUseCase.swift */; };
-		BC03FA0E2C21CB7100E27C01 /* GameTimerDisposalHandlingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA0D2C21CB7100E27C01 /* GameTimerDisposalHandlingUseCase.swift */; };
-		BC03FA0F2C21CB7100E27C01 /* GameTimerDisposalHandlingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA0D2C21CB7100E27C01 /* GameTimerDisposalHandlingUseCase.swift */; };
+		BC03FA0E2C21CB7100E27C01 /* GameTimerEndHandlingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA0D2C21CB7100E27C01 /* GameTimerEndHandlingUseCase.swift */; };
+		BC03FA0F2C21CB7100E27C01 /* GameTimerEndHandlingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA0D2C21CB7100E27C01 /* GameTimerEndHandlingUseCase.swift */; };
 		BC03FA112C21CB7900E27C01 /* ReloadMotionDetectionCountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA102C21CB7900E27C01 /* ReloadMotionDetectionCountUseCase.swift */; };
 		BC03FA122C21CB7900E27C01 /* ReloadMotionDetectionCountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA102C21CB7900E27C01 /* ReloadMotionDetectionCountUseCase.swift */; };
 		BC03FA182C24273200E27C01 /* GameNavigator2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA172C24273200E27C01 /* GameNavigator2.swift */; };
@@ -488,7 +488,7 @@
 		BC03FA042C21CB5700E27C01 /* TutorialNecessityCheckUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialNecessityCheckUseCase.swift; sourceTree = "<group>"; };
 		BC03FA072C21CB6000E27C01 /* GameStartUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameStartUseCase.swift; sourceTree = "<group>"; };
 		BC03FA0A2C21CB6900E27C01 /* GameTimerHandlingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTimerHandlingUseCase.swift; sourceTree = "<group>"; };
-		BC03FA0D2C21CB7100E27C01 /* GameTimerDisposalHandlingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTimerDisposalHandlingUseCase.swift; sourceTree = "<group>"; };
+		BC03FA0D2C21CB7100E27C01 /* GameTimerEndHandlingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTimerEndHandlingUseCase.swift; sourceTree = "<group>"; };
 		BC03FA102C21CB7900E27C01 /* ReloadMotionDetectionCountUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReloadMotionDetectionCountUseCase.swift; sourceTree = "<group>"; };
 		BC03FA172C24273200E27C01 /* GameNavigator2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameNavigator2.swift; sourceTree = "<group>"; };
 		BC03FA1A2C24279700E27C01 /* GamePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePresenter.swift; sourceTree = "<group>"; };
@@ -1184,7 +1184,7 @@
 				BC03F9FB2C21CB2A00E27C01 /* WeaponChangeUseCase.swift */,
 				BC03F9FE2C21CB4500E27C01 /* TargetHitFilterUseCase.swift */,
 				BC03FA012C21CB4F00E27C01 /* TargetHitHandlingUseCase.swift */,
-				BC03FA0D2C21CB7100E27C01 /* GameTimerDisposalHandlingUseCase.swift */,
+				BC03FA0D2C21CB7100E27C01 /* GameTimerEndHandlingUseCase.swift */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -1741,7 +1741,7 @@
 				BC03FA212C2808A100E27C01 /* GameView.swift in Sources */,
 				8627F6352BCE83F30003D374 /* ViewModelType.swift in Sources */,
 				BC03FA272C2809D500E27C01 /* GameViewController2.swift in Sources */,
-				BC03FA0E2C21CB7100E27C01 /* GameTimerDisposalHandlingUseCase.swift in Sources */,
+				BC03FA0E2C21CB7100E27C01 /* GameTimerEndHandlingUseCase.swift in Sources */,
 				86C5AB982AB8819C00CB161D /* UIAlertController+Extension.swift in Sources */,
 				BCD1C25B2C06B7C8008975EB /* ReloadingMotionFilter.swift in Sources */,
 				BC03F9CA2C214E7D00E27C01 /* TopView.swift in Sources */,
@@ -1819,7 +1819,7 @@
 				BCCD44762C0D935B00BF541D /* GameTimerDisposalHandler.swift in Sources */,
 				8606467C2BF599D500906DA0 /* ResultUseCase.swift in Sources */,
 				BC0BBE472C17474800789349 /* WeaponAutoReloadHandlerTests.swift in Sources */,
-				BC03FA0F2C21CB7100E27C01 /* GameTimerDisposalHandlingUseCase.swift in Sources */,
+				BC03FA0F2C21CB7100E27C01 /* GameTimerEndHandlingUseCase.swift in Sources */,
 				BCD1C2382C043924008975EB /* WeaponReloadingEventTransformerTests.swift in Sources */,
 				BC03F9F42C21CB0B00E27C01 /* WeaponReloadUseCase.swift in Sources */,
 				BC482DD02C1815B000FAF079 /* TopPageReplayHandler.swift in Sources */,

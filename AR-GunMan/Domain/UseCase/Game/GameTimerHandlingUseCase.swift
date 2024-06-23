@@ -14,7 +14,7 @@ struct GameTimerHandlingInput {
 
 struct GameTimerHandlingOutput {
     let updateTimeCount: Observable<Double>
-    let disposeTimer: Observable<Void>
+    let timerEnded: Observable<Void>
 }
 
 protocol GameTimerHandlingUseCaseInterface {
@@ -30,41 +30,43 @@ final class GameTimerHandlingUseCase: GameTimerHandlingUseCaseInterface {
     }
     
     func transform(input: GameTimerHandlingInput) -> GameTimerHandlingOutput {
-        let timeCountStream = input.timerStartTrigger
-            .flatMapLatest({ _ in
-                return TimerStreamCreator
-                    .create(
-                        milliSec: GameConst.timeCountUpdateDurationMillisec,
-                        isRepeated: true
-                    )
-                    .map({ timerUpdatedCount in // タイマーが更新された回数を表すInt
-                        // 例: 30.00 - (1 / 100) => 29.99
-                        return GameConst.timeCount - (Double(timerUpdatedCount) / 100)
-                    })
-            })
-            .share()
-        
-        let timeCountEnded = timeCountStream
-            .filter({ $0 < 0 })
-            .mapToVoid()
-            .share()
-        
+        let updateTimeCountRelay = PublishRelay<Double>()
+        let timerEndedRelay = PublishRelay<Void>()
+
         disposeBag.insert {
             input.timerStartTrigger
                 .subscribe(onNext: { [weak self] _ in
                     guard let self = self else {return}
                     self.soundPlayer.play(.startWhistle)
                 })
-            timeCountEnded
-                .subscribe(onNext: { [weak self] element in
-                    guard let self = self else {return}
-                    self.soundPlayer.play(.endWhistle)
+            input.timerStartTrigger
+                .flatMapLatest({ _ in
+                    return TimerStreamCreator
+                        .create(
+                            milliSec: GameConst.timeCountUpdateDurationMillisec,
+                            isRepeated: true
+                        )
+                        .map({ timerUpdatedCount in // タイマーが更新された回数を表すInt
+                            // 例: 30.00 - (1 / 100) => 29.99
+                            return GameConst.timeCount - (Double(timerUpdatedCount) / 100)
+                        })
                 })
+                .take(while: { $0 >= 0 }) // 条件がfalseになるとcompletedが呼ばれる
+                .subscribe(
+                    onNext: {
+                        updateTimeCountRelay.accept($0)
+                    },
+                    onCompleted: { [weak self] in
+                        guard let self = self else { return }
+                        self.soundPlayer.play(.endWhistle)
+                        timerEndedRelay.accept(())
+                    }
+                )
         }
         
         return GameTimerHandlingOutput(
-            updateTimeCount: timeCountStream,
-            disposeTimer: timeCountEnded
+            updateTimeCount: updateTimeCountRelay.asObservable(),
+            timerEnded: timerEndedRelay.asObservable()
         )
     }
 }

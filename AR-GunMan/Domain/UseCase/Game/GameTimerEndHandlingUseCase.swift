@@ -1,5 +1,5 @@
 //
-//  GameTimerDisposalHandlingUseCase.swift
+//  GameTimerEndHandlingUseCase.swift
 //  AR-GunMan
 //
 //  Created by ウルトラ深瀬 on 18/6/24.
@@ -8,21 +8,21 @@
 import RxSwift
 import RxCocoa
 
-struct GameTimerDisposalHandlingInput {
-    let timerDisposed: Observable<Void>
+struct GameTimerEndHandlingInput {
+    let timerEnded: Observable<Void>
 }
 
-struct GameTimerDisposalHandlingOutput {
+struct GameTimerEndHandlingOutput {
     let stopMotionDetection: Observable<Void>
     let dismissWeaponChangeView: Observable<Void>
     let showResultView: Observable<Void>
 }
 
-protocol GameTimerDisposalHandlingUseCaseInterface {
-    func transform(input: GameTimerDisposalHandlingInput) -> GameTimerDisposalHandlingOutput
+protocol GameTimerEndHandlingUseCaseInterface {
+    func transform(input: GameTimerEndHandlingInput) -> GameTimerEndHandlingOutput
 }
 
-final class GameTimerDisposalHandlingUseCase: GameTimerDisposalHandlingUseCaseInterface {
+final class GameTimerEndHandlingUseCase: GameTimerEndHandlingUseCaseInterface {
     private let soundPlayer: SoundPlayerInterface
     private let disposeBag = DisposeBag()
     
@@ -30,8 +30,8 @@ final class GameTimerDisposalHandlingUseCase: GameTimerDisposalHandlingUseCaseIn
         self.soundPlayer = soundPlayer
     }
     
-    func transform(input: GameTimerDisposalHandlingInput) -> GameTimerDisposalHandlingOutput {
-        let resultViewShowingWaitTimeEnded = input.timerDisposed
+    func transform(input: GameTimerEndHandlingInput) -> GameTimerEndHandlingOutput {
+        let resultViewShowingWaitTimeEnded = input.timerEnded
             .flatMapLatest({ _ in
                 return TimerStreamCreator
                     .create(
@@ -50,9 +50,9 @@ final class GameTimerDisposalHandlingUseCase: GameTimerDisposalHandlingUseCaseIn
                 })
         }
         
-        return GameTimerDisposalHandlingOutput(
-            stopMotionDetection: input.timerDisposed,
-            dismissWeaponChangeView: input.timerDisposed,
+        return GameTimerEndHandlingOutput(
+            stopMotionDetection: input.timerEnded,
+            dismissWeaponChangeView: input.timerEnded,
             showResultView: resultViewShowingWaitTimeEnded
         )
     }
