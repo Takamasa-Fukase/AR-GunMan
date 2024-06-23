@@ -31,6 +31,9 @@ final class WeaponFireUseCase: WeaponFireUseCaseInterface {
     }
     
     func transform(input: WeaponFireUseCaseInput) -> WeaponFireUseCaseOutput {
+        let updateBulletsCountRelay = PublishRelay<Int>()
+        let weaponFiredRelay = PublishRelay<WeaponType>()
+
         let weaponTypeAndBulletsCount = input.weaponFiringTrigger
             .withLatestFrom(input.bulletsCount) {
                 return (weaponType: $0, bulletsCount: $1)
@@ -43,13 +46,7 @@ final class WeaponFireUseCase: WeaponFireUseCaseInterface {
         let fire = weaponTypeAndBulletsCount
             .filter({ $0.bulletsCount > 0 })
             .share()
-        
-        let updateBulletsCount = fire
-            .map({ $0.bulletsCount - 1 })
-        
-        let weaponFired = fire
-            .map({ $0.weaponType })
-        
+
         disposeBag.insert {
             noBullets
                 .filter({ $0.weaponType.reloadType == .manual })
@@ -61,12 +58,14 @@ final class WeaponFireUseCase: WeaponFireUseCaseInterface {
                 .subscribe(onNext: { [weak self] in
                     guard let self = self else {return}
                     self.soundPlayer.play($0.weaponType.firingSound)
+                    updateBulletsCountRelay.accept($0.bulletsCount - 1)
+                    weaponFiredRelay.accept($0.weaponType)
                 })
         }
         
         return WeaponFireUseCaseOutput(
-            updateBulletsCount: updateBulletsCount,
-            weaponFired: weaponFired
+            updateBulletsCount: updateBulletsCountRelay.asObservable(),
+            weaponFired: weaponFiredRelay.asObservable()
         )
     }
 }
