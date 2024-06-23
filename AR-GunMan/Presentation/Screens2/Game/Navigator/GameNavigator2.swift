@@ -28,7 +28,7 @@ final class GameNavigator2: GameNavigatorInterface2 {
         let vc = GameViewController2()
         vc.modalPresentationStyle = .fullScreen
         let tutorialRepository = TutorialRepository()
-        let viewModel = GamePresenter(
+        let presenter = GamePresenter(
             tutorialNecessityCheckUseCase: TutorialNecessityCheckUseCase(
                 tutorialRepository: tutorialRepository
             ),
@@ -50,8 +50,8 @@ final class GameNavigator2: GameNavigatorInterface2 {
             navigator: GameNavigator2(viewController: vc)
         )
         let arContentController = ARContentController()
-        let deviceMotionController = DeviceMotionController(coreMotionManager: CMMotionManager())
-//        vc.viewModel = viewModel
+        let deviceMotionController = DeviceMotionController2(coreMotionManager: CMMotionManager())
+        vc.presenter = presenter
         vc.arContentController = arContentController
         vc.deviceMotionController = deviceMotionController
         return vc
