@@ -298,51 +298,27 @@ final class GamePresenter: GamePresenterInterface {
         
         
         disposeBag.insert {
-            // state changes
+            // MARK: State updates
             gameTimerHandlingUseCaseOutput.updateTimeCount
                 .bind(to: state.timeCountRelay)
             weaponChangeUseCaseOutput.updateWeaponType
-                .subscribe(onNext: { [weak self] in
-                    guard let self = self else { return }
-                    self.state.weaponTypeRelay.accept($0)
-                })
+                .bind(to: state.weaponTypeRelay)
             weaponReloadUseCaseOutput.updateWeaponReloadingFlag
-                .subscribe(onNext: { [weak self] in
-                    guard let self = self else { return }
-                    self.state.isWeaponReloadingRelay.accept($0)
-                })
+                .bind(to: state.isWeaponReloadingRelay)
             weaponChangeUseCaseOutput.resetWeaponReloadingFlag
-                .subscribe(onNext: { [weak self] in
-                    guard let self = self else { return }
-                    self.state.isWeaponReloadingRelay.accept($0)
-                })
+                .bind(to: state.isWeaponReloadingRelay)
             weaponFireUseCaseOutput.updateBulletsCount
-                .subscribe(onNext: { [weak self] in
-                    guard let self = self else { return }
-                    self.state.bulletsCountRelay.accept($0)
-                })
+                .bind(to: state.bulletsCountRelay)
             weaponReloadUseCaseOutput.updateBulletsCount
-                .subscribe(onNext: { [weak self] in
-                    guard let self = self else { return }
-                    self.state.bulletsCountRelay.accept($0)
-                })
+                .bind(to: state.bulletsCountRelay)
             weaponChangeUseCaseOutput.refillBulletsCountForNewWeapon
-                .subscribe(onNext: { [weak self] in
-                    guard let self = self else { return }
-                    self.state.bulletsCountRelay.accept($0)
-                })
+                .bind(to: state.bulletsCountRelay)
             targetHitHandlingUseCaseOutput.updateScore
-                .subscribe(onNext: { [weak self] in
-                    guard let self = self else { return }
-                    self.state.scoreRelay.accept($0)
-                })
+                .bind(to: state.scoreRelay)
             reloadMotionDetectionCountUseCaseOutput.updateCount
-                .subscribe(onNext: { [weak self] in
-                    guard let self = self else { return }
-                    self.state.reloadingMotionDetectedCountRelay.accept($0)
-                })
+                .bind(to: state.reloadingMotionDetectedCountRelay)
             
-            // transitions
+            // MARK: Transitions
             tutorialNecessityCheckUseCaseOutput.showTutorial
                 .subscribe(onNext: { [weak self] _ in
                     guard let self = self else { return }
