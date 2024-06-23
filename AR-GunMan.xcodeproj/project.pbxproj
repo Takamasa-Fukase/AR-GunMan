@@ -230,6 +230,14 @@
 		BC03FA1C2C24279700E27C01 /* GamePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA1A2C24279700E27C01 /* GamePresenter.swift */; };
 		BC03FA1E2C242E5200E27C01 /* TutorialEndHandlingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA1D2C242E5200E27C01 /* TutorialEndHandlingUseCase.swift */; };
 		BC03FA1F2C242E5200E27C01 /* TutorialEndHandlingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA1D2C242E5200E27C01 /* TutorialEndHandlingUseCase.swift */; };
+		BC03FA212C2808A100E27C01 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA202C2808A100E27C01 /* GameView.swift */; };
+		BC03FA222C2808A100E27C01 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA202C2808A100E27C01 /* GameView.swift */; };
+		BC03FA242C2808A900E27C01 /* GameView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC03FA232C2808A900E27C01 /* GameView.xib */; };
+		BC03FA252C2808A900E27C01 /* GameView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC03FA232C2808A900E27C01 /* GameView.xib */; };
+		BC03FA272C2809D500E27C01 /* GameViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA262C2809D500E27C01 /* GameViewController2.swift */; };
+		BC03FA282C2809D500E27C01 /* GameViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA262C2809D500E27C01 /* GameViewController2.swift */; };
+		BC03FA2A2C280D3600E27C01 /* DeviceMotionController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA292C280D3600E27C01 /* DeviceMotionController2.swift */; };
+		BC03FA2B2C280D3600E27C01 /* DeviceMotionController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA292C280D3600E27C01 /* DeviceMotionController2.swift */; };
 		BC0BBE382C15F19D00789349 /* ViewModelEventHandlerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0BBE372C15F19D00789349 /* ViewModelEventHandlerType.swift */; };
 		BC0BBE392C15F19D00789349 /* ViewModelEventHandlerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0BBE372C15F19D00789349 /* ViewModelEventHandlerType.swift */; };
 		BC0BBE3C2C16B7E100789349 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0BBE3B2C16B7E100789349 /* Double+Extension.swift */; };
@@ -485,6 +493,10 @@
 		BC03FA172C24273200E27C01 /* GameNavigator2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameNavigator2.swift; sourceTree = "<group>"; };
 		BC03FA1A2C24279700E27C01 /* GamePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePresenter.swift; sourceTree = "<group>"; };
 		BC03FA1D2C242E5200E27C01 /* TutorialEndHandlingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialEndHandlingUseCase.swift; sourceTree = "<group>"; };
+		BC03FA202C2808A100E27C01 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		BC03FA232C2808A900E27C01 /* GameView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GameView.xib; sourceTree = "<group>"; };
+		BC03FA262C2809D500E27C01 /* GameViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController2.swift; sourceTree = "<group>"; };
+		BC03FA292C280D3600E27C01 /* DeviceMotionController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMotionController2.swift; sourceTree = "<group>"; };
 		BC0BBE372C15F19D00789349 /* ViewModelEventHandlerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelEventHandlerType.swift; sourceTree = "<group>"; };
 		BC0BBE3B2C16B7E100789349 /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
 		BC0BBE3F2C16D31800789349 /* NSObject+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Extension.swift"; sourceTree = "<group>"; };
@@ -1206,6 +1218,10 @@
 		BC03FA162C2426FF00E27C01 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				BC03FA262C2809D500E27C01 /* GameViewController2.swift */,
+				BC03FA202C2808A100E27C01 /* GameView.swift */,
+				BC03FA232C2808A900E27C01 /* GameView.xib */,
+				BC03FA292C280D3600E27C01 /* DeviceMotionController2.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1459,6 +1475,7 @@
 				59D2D4E52552DE67006DDB70 /* LaunchScreen.storyboard in Resources */,
 				5903192F256D82BA005C30EF /* westernPistolShoot.mp3 in Resources */,
 				595E698F256C01A4002B4F3E /* SettingsViewController.storyboard in Resources */,
+				BC03FA242C2808A900E27C01 /* GameView.xib in Resources */,
 				5921A209255D6A4E001D8C39 /* RankingCell.xib in Resources */,
 				59D2D5422552E24D006DDB70 /* art.scnassets in Resources */,
 				59484C6B25657E1C00F9C6A8 /* endWhistle.mp3 in Resources */,
@@ -1482,6 +1499,7 @@
 				860646C12BF59A3F00906DA0 /* LaunchScreen.storyboard in Resources */,
 				860646A02BF599FB00906DA0 /* kyuiin.mp3 in Resources */,
 				860646AA2BF599FB00906DA0 /* startWhistle.mp3 in Resources */,
+				BC03FA252C2808A900E27C01 /* GameView.xib in Resources */,
 				860646A32BF599FB00906DA0 /* bazookaSet.mp3 in Resources */,
 				8606469F2BF599FB00906DA0 /* pistol-out-bullets.mp3 in Resources */,
 				860646AB2BF599FB00906DA0 /* rankingAppear.mp3 in Resources */,
@@ -1641,6 +1659,7 @@
 				86B8A3A62B7E0D1F005ED2F8 /* RankingUtil.swift in Sources */,
 				67DB2C5927C10E8B00B8CB3C /* SceneAnimationUtil.swift in Sources */,
 				BC482DE72C1A74F800FAF079 /* ObservableErrorTracker.swift in Sources */,
+				BC03FA2A2C280D3600E27C01 /* DeviceMotionController2.swift in Sources */,
 				67DB2C5D27C17EF300B8CB3C /* TopConst.swift in Sources */,
 				BC482DD22C181B0600FAF079 /* CameraPermissionHandler.swift in Sources */,
 				BCD1C24F2C0603AF008975EB /* WeaponReloadHandler.swift in Sources */,
@@ -1719,7 +1738,9 @@
 				BCCD445D2C0B2F8D00BF541D /* GameStartHandler.swift in Sources */,
 				860191742BEDDF2A00382749 /* DeviceMotionController.swift in Sources */,
 				BC03F9D32C21534100E27C01 /* TopPresenter.swift in Sources */,
+				BC03FA212C2808A100E27C01 /* GameView.swift in Sources */,
 				8627F6352BCE83F30003D374 /* ViewModelType.swift in Sources */,
+				BC03FA272C2809D500E27C01 /* GameViewController2.swift in Sources */,
 				BC03FA0E2C21CB7100E27C01 /* GameTimerDisposalHandlingUseCase.swift in Sources */,
 				86C5AB982AB8819C00CB161D /* UIAlertController+Extension.swift in Sources */,
 				BCD1C25B2C06B7C8008975EB /* ReloadingMotionFilter.swift in Sources */,
@@ -1815,12 +1836,14 @@
 				8606468C2BF599DF00906DA0 /* RankingCell.swift in Sources */,
 				861B87792BFE258100D0882D /* SoundPlayerMock.swift in Sources */,
 				BC62CE0B2C15607D00070B49 /* Vector.swift in Sources */,
+				BC03FA282C2809D500E27C01 /* GameViewController2.swift in Sources */,
 				BC03FA062C21CB5700E27C01 /* TutorialNecessityCheckUseCase.swift in Sources */,
 				BC22E0232C1C71E900C59BAB /* UITapGestureRecognizer+Rx.swift in Sources */,
 				BC0BBE4B2C174B2800789349 /* TutorialNavigator.swift in Sources */,
 				BCD89DA52C1EA56400BBBB99 /* Notification+Extension.swift in Sources */,
 				860646112BF5996200906DA0 /* SceneNodeUtil.swift in Sources */,
 				860646122BF5996200906DA0 /* SafariViewUtil.swift in Sources */,
+				BC03FA222C2808A100E27C01 /* GameView.swift in Sources */,
 				860646982BF599E900906DA0 /* SettingsNavigator.swift in Sources */,
 				8606466B2BF599BC00906DA0 /* WeaponChangeViewController.swift in Sources */,
 				BC03F9EE2C21CAF200E27C01 /* WeaponFireUseCase.swift in Sources */,
@@ -1865,6 +1888,7 @@
 				860646102BF5996200906DA0 /* SceneViewSettingUtil.swift in Sources */,
 				BCD1C2502C0603AF008975EB /* WeaponReloadHandler.swift in Sources */,
 				861B87762BFE1E4700D0882D /* SoundPlayer.swift in Sources */,
+				BC03FA2B2C280D3600E27C01 /* DeviceMotionController2.swift in Sources */,
 				860645FF2BF5995800906DA0 /* UIScrollView+Extension.swift in Sources */,
 				BCD1C24B2C05B3D0008975EB /* WeaponAutoReloadFilter.swift in Sources */,
 				BC03F9DA2C21634A00E27C01 /* CameraPermissionCheckUseCase.swift in Sources */,
