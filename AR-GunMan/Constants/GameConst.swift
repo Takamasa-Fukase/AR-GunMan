@@ -16,9 +16,9 @@ final class GameConst {
     static let showResultWaitingTimeMillisec: Int = 1500
     // ゲームのタイムカウントをアップデートする間隔
     static let timeCountUpdateDurationMillisec: Int = 10
-    
     // 的の見た目を変更する隠しイベントを発動するのに必要なリロードモーションの検知回数
     static let targetsAppearanceChangingLimit: Int = 20
+    // ターゲットヒット判定に該当するパターン（順不同なのでSet）
     static let targetHitConditionPairs: Set<Set<GameObjectInfo.ObjectType>> = [
         [.target, .pistolBullet],
         [.target, .bazookaBullet]
