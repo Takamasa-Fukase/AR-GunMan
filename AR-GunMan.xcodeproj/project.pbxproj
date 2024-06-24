@@ -294,6 +294,8 @@
 		BC62CE0B2C15607D00070B49 /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC62CE092C15607D00070B49 /* Vector.swift */; };
 		BC62CE0E2C15632100070B49 /* TargetHitFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC62CE0D2C15632100070B49 /* TargetHitFilter.swift */; };
 		BC62CE0F2C15632100070B49 /* TargetHitFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC62CE0D2C15632100070B49 /* TargetHitFilter.swift */; };
+		BC7FF24A2C2983D20014CDCE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7FF2492C2983D20014CDCE /* SceneDelegate.swift */; };
+		BC7FF24B2C2983D20014CDCE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7FF2492C2983D20014CDCE /* SceneDelegate.swift */; };
 		BC92C854297061FE00E49BD5 /* WeaponType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C853297061FE00E49BD5 /* WeaponType.swift */; };
 		BC92C85A297348D500E49BD5 /* ScoreCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C859297348D500E49BD5 /* ScoreCalculator.swift */; };
 		BC92C85E297420CD00E49BD5 /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C85D297420CD00E49BD5 /* UserDefaults+Extension.swift */; };
@@ -525,6 +527,7 @@
 		BC482DFB2C1B09C900FAF079 /* UIView+Constraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraint.swift"; sourceTree = "<group>"; };
 		BC62CE092C15607D00070B49 /* Vector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector.swift; sourceTree = "<group>"; };
 		BC62CE0D2C15632100070B49 /* TargetHitFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetHitFilter.swift; sourceTree = "<group>"; };
+		BC7FF2492C2983D20014CDCE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		BC92C853297061FE00E49BD5 /* WeaponType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponType.swift; sourceTree = "<group>"; };
 		BC92C859297348D500E49BD5 /* ScoreCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCalculator.swift; sourceTree = "<group>"; };
 		BC92C85D297420CD00E49BD5 /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
@@ -1052,6 +1055,7 @@
 			isa = PBXGroup;
 			children = (
 				59D2D4D82552DE66006DDB70 /* AppDelegate.swift */,
+				BC7FF2492C2983D20014CDCE /* SceneDelegate.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -1666,6 +1670,7 @@
 				BC03FA2A2C280D3600E27C01 /* DeviceMotionController2.swift in Sources */,
 				67DB2C5D27C17EF300B8CB3C /* TopConst.swift in Sources */,
 				BC482DD22C181B0600FAF079 /* CameraPermissionHandler.swift in Sources */,
+				BC7FF24A2C2983D20014CDCE /* SceneDelegate.swift in Sources */,
 				BCD1C24F2C0603AF008975EB /* WeaponReloadHandler.swift in Sources */,
 				BC03F9FC2C21CB2A00E27C01 /* WeaponChangeUseCase.swift in Sources */,
 				86F1573D2BD7BBA200BE979C /* RankingUseCase.swift in Sources */,
@@ -1830,6 +1835,7 @@
 				BC482DD02C1815B000FAF079 /* TopPageReplayHandler.swift in Sources */,
 				BCC512CB2C15CFBF00D77305 /* ParticleSystemType.swift in Sources */,
 				BCC512C32C15B5F000D77305 /* Extension+SCNNode.swift in Sources */,
+				BC7FF24B2C2983D20014CDCE /* SceneDelegate.swift in Sources */,
 				860646142BF5996200906DA0 /* ObservableActivityTracker.swift in Sources */,
 				BCD1C23B2C044DCD008975EB /* GameViewController.swift in Sources */,
 				BC482DD92C184E5800FAF079 /* TutorialViewModel.swift in Sources */,
