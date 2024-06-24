@@ -29,24 +29,26 @@ final class GameNavigator2: GameNavigatorInterface2 {
         vc.modalPresentationStyle = .fullScreen
         let tutorialRepository = TutorialRepository()
         let presenter = GamePresenter(
-            tutorialNecessityCheckUseCase: TutorialNecessityCheckUseCase(
-                tutorialRepository: tutorialRepository
-            ),
-            tutorialEndHandlingUseCase: TutorialEndHandlingUseCase(
-                tutorialRepository: tutorialRepository
-            ),
-            gameStartUseCase: GameStartUseCase(),
-            gameTimerHandlingUseCase: GameTimerHandlingUseCase(),
-            gameTimerEndHandlingUseCase: GameTimerEndHandlingUseCase(),
-            fireMotionFilterUseCase: FireMotionFilterUseCase(),
-            reloadMotionFilterUseCase: ReloadMotionFilterUseCase(),
-            reloadMotionDetectionCountUseCase: ReloadMotionDetectionCountUseCase(),
-            weaponFireUseCase: WeaponFireUseCase(),
-            weaponReloadUseCase: WeaponReloadUseCase(),
-            weaponAutoReloadFilterUseCase: WeaponAutoReloadFilterUseCase(),
-            weaponChangeUseCase: WeaponChangeUseCase(),
-            targetHitFilterUseCase: TargetHitFilterUseCase(),
-            targetHitHandlingUseCase: TargetHitHandlingUseCase(),
+            gameUseCasesComposer: GameUseCasesComposer(useCases: .init(
+                tutorialNecessityCheckUseCase: TutorialNecessityCheckUseCase(
+                    tutorialRepository: tutorialRepository
+                ),
+                tutorialEndHandlingUseCase: TutorialEndHandlingUseCase(
+                    tutorialRepository: tutorialRepository
+                ),
+                gameStartUseCase: GameStartUseCase(),
+                gameTimerHandlingUseCase: GameTimerHandlingUseCase(),
+                gameTimerEndHandlingUseCase: GameTimerEndHandlingUseCase(),
+                fireMotionFilterUseCase: FireMotionFilterUseCase(),
+                reloadMotionFilterUseCase: ReloadMotionFilterUseCase(),
+                reloadMotionDetectionCountUseCase: ReloadMotionDetectionCountUseCase(),
+                weaponFireUseCase: WeaponFireUseCase(),
+                weaponReloadUseCase: WeaponReloadUseCase(),
+                weaponAutoReloadFilterUseCase: WeaponAutoReloadFilterUseCase(),
+                weaponChangeUseCase: WeaponChangeUseCase(),
+                targetHitFilterUseCase: TargetHitFilterUseCase(),
+                targetHitHandlingUseCase: TargetHitHandlingUseCase()
+            )),
             navigator: GameNavigator2(viewController: vc)
         )
         let arContentController = ARContentController()

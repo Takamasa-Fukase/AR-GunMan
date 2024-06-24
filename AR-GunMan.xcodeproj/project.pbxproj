@@ -238,6 +238,8 @@
 		BC03FA282C2809D500E27C01 /* GameViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA262C2809D500E27C01 /* GameViewController2.swift */; };
 		BC03FA2A2C280D3600E27C01 /* DeviceMotionController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA292C280D3600E27C01 /* DeviceMotionController2.swift */; };
 		BC03FA2B2C280D3600E27C01 /* DeviceMotionController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA292C280D3600E27C01 /* DeviceMotionController2.swift */; };
+		BC03FA2D2C293B3100E27C01 /* GameUseCasesComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA2C2C293B3100E27C01 /* GameUseCasesComposer.swift */; };
+		BC03FA2E2C293B3100E27C01 /* GameUseCasesComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA2C2C293B3100E27C01 /* GameUseCasesComposer.swift */; };
 		BC0BBE382C15F19D00789349 /* ViewModelEventHandlerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0BBE372C15F19D00789349 /* ViewModelEventHandlerType.swift */; };
 		BC0BBE392C15F19D00789349 /* ViewModelEventHandlerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0BBE372C15F19D00789349 /* ViewModelEventHandlerType.swift */; };
 		BC0BBE3C2C16B7E100789349 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0BBE3B2C16B7E100789349 /* Double+Extension.swift */; };
@@ -497,6 +499,7 @@
 		BC03FA232C2808A900E27C01 /* GameView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GameView.xib; sourceTree = "<group>"; };
 		BC03FA262C2809D500E27C01 /* GameViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController2.swift; sourceTree = "<group>"; };
 		BC03FA292C280D3600E27C01 /* DeviceMotionController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMotionController2.swift; sourceTree = "<group>"; };
+		BC03FA2C2C293B3100E27C01 /* GameUseCasesComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameUseCasesComposer.swift; sourceTree = "<group>"; };
 		BC0BBE372C15F19D00789349 /* ViewModelEventHandlerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelEventHandlerType.swift; sourceTree = "<group>"; };
 		BC0BBE3B2C16B7E100789349 /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
 		BC0BBE3F2C16D31800789349 /* NSObject+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Extension.swift"; sourceTree = "<group>"; };
@@ -1185,6 +1188,7 @@
 				BC03F9FE2C21CB4500E27C01 /* TargetHitFilterUseCase.swift */,
 				BC03FA012C21CB4F00E27C01 /* TargetHitHandlingUseCase.swift */,
 				BC03FA0D2C21CB7100E27C01 /* GameTimerEndHandlingUseCase.swift */,
+				BC03FA2C2C293B3100E27C01 /* GameUseCasesComposer.swift */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -1691,6 +1695,7 @@
 				BC03FA112C21CB7900E27C01 /* ReloadMotionDetectionCountUseCase.swift in Sources */,
 				BCD89DA12C1EA1E800BBBB99 /* KeyboardOverlapCalculator.swift in Sources */,
 				BC482DF62C1ABB5F00FAF079 /* RankingListView.swift in Sources */,
+				BC03FA2D2C293B3100E27C01 /* GameUseCasesComposer.swift in Sources */,
 				BC482DE12C19D53F00FAF079 /* NameRegisterViewModel.swift in Sources */,
 				BC482DC82C17F56600FAF079 /* TopViewModel.swift in Sources */,
 				BC22E0252C1C9B8800C59BAB /* UIViewController+BackgroundViewTapTrackable.swift in Sources */,
@@ -1880,6 +1885,7 @@
 				860646592BF5999F00906DA0 /* DeviceMotionController.swift in Sources */,
 				BC62CE0F2C15632100070B49 /* TargetHitFilter.swift in Sources */,
 				860646582BF5999F00906DA0 /* GameUseCase.swift in Sources */,
+				BC03FA2E2C293B3100E27C01 /* GameUseCasesComposer.swift in Sources */,
 				86B112522C0080AA006D464A /* WeaponFireHandler.swift in Sources */,
 				BC482DCC2C1800E500FAF079 /* TopUseCase.swift in Sources */,
 				8606460F2BF5996200906DA0 /* RankingUtil.swift in Sources */,

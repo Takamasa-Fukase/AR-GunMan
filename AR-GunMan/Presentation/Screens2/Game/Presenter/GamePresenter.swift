@@ -78,20 +78,7 @@ final class GamePresenter: GamePresenterInterface {
         let reloadingMotionDetectedCountRelay = BehaviorRelay<Int>(value: 0)
     }
     
-    private let tutorialNecessityCheckUseCase: TutorialNecessityCheckUseCaseInterface
-    private let tutorialEndHandlingUseCase: TutorialEndHandlingUseCaseInterface
-    private let gameStartUseCase: GameStartUseCaseInterface
-    private let gameTimerHandlingUseCase: GameTimerHandlingUseCaseInterface
-    private let gameTimerEndHandlingUseCase: GameTimerEndHandlingUseCaseInterface
-    private let fireMotionFilterUseCase: FireMotionFilterUseCaseInterface
-    private let reloadMotionFilterUseCase: ReloadMotionFilterUseCaseInterface
-    private let reloadMotionDetectionCountUseCase: ReloadMotionDetectionCountUseCaseInterface
-    private let weaponFireUseCase: WeaponFireUseCaseInterface
-    private let weaponReloadUseCase: WeaponReloadUseCaseInterface
-    private let weaponAutoReloadFilterUseCase: WeaponAutoReloadFilterUseCaseInterface
-    private let weaponChangeUseCase: WeaponChangeUseCaseInterface
-    private let targetHitFilterUseCase: TargetHitFilterUseCaseInterface
-    private let targetHitHandlingUseCase: TargetHitHandlingUseCaseInterface
+    private let gameUseCasesComposer: GameUseCasesComposerInterface
     private let navigator: GameNavigatorInterface2
     private let state: State
     
@@ -102,39 +89,13 @@ final class GamePresenter: GamePresenterInterface {
     private let disposeBag = DisposeBag()
     
     init(
-        tutorialNecessityCheckUseCase: TutorialNecessityCheckUseCaseInterface,
-        tutorialEndHandlingUseCase: TutorialEndHandlingUseCaseInterface,
-        gameStartUseCase: GameStartUseCaseInterface,
-        gameTimerHandlingUseCase: GameTimerHandlingUseCaseInterface,
-        gameTimerEndHandlingUseCase: GameTimerEndHandlingUseCaseInterface,
-        fireMotionFilterUseCase: FireMotionFilterUseCaseInterface,
-        reloadMotionFilterUseCase: ReloadMotionFilterUseCaseInterface,
-        reloadMotionDetectionCountUseCase: ReloadMotionDetectionCountUseCaseInterface,
-        weaponFireUseCase: WeaponFireUseCaseInterface,
-        weaponReloadUseCase: WeaponReloadUseCaseInterface,
-        weaponAutoReloadFilterUseCase: WeaponAutoReloadFilterUseCaseInterface,
-        weaponChangeUseCase: WeaponChangeUseCaseInterface,
-        targetHitFilterUseCase: TargetHitFilterUseCaseInterface,
-        targetHitHandlingUseCase: TargetHitHandlingUseCaseInterface,
+        gameUseCasesComposer: GameUseCasesComposerInterface,
         navigator: GameNavigatorInterface2,
         state: State = State(),
         tutorialEndEventReceiver: PublishRelay<Void> = PublishRelay<Void>(),
         weaponSelectEventReceiver: PublishRelay<WeaponType> = PublishRelay<WeaponType>()
     ) {
-        self.tutorialNecessityCheckUseCase = tutorialNecessityCheckUseCase
-        self.tutorialEndHandlingUseCase = tutorialEndHandlingUseCase
-        self.gameStartUseCase = gameStartUseCase
-        self.gameTimerHandlingUseCase = gameTimerHandlingUseCase
-        self.gameTimerEndHandlingUseCase = gameTimerEndHandlingUseCase
-        self.fireMotionFilterUseCase = fireMotionFilterUseCase
-        self.reloadMotionFilterUseCase = reloadMotionFilterUseCase
-        self.reloadMotionDetectionCountUseCase = reloadMotionDetectionCountUseCase
-        self.weaponFireUseCase = weaponFireUseCase
-        self.weaponReloadUseCase = weaponReloadUseCase
-        self.weaponAutoReloadFilterUseCase = weaponAutoReloadFilterUseCase
-        self.weaponChangeUseCase = weaponChangeUseCase
-        self.targetHitFilterUseCase = targetHitFilterUseCase
-        self.targetHitHandlingUseCase = targetHitHandlingUseCase
+        self.gameUseCasesComposer = gameUseCasesComposer
         self.navigator = navigator
         self.state = state
         self.tutorialEndEventReceiver = tutorialEndEventReceiver
@@ -142,184 +103,38 @@ final class GamePresenter: GamePresenterInterface {
     }
     
     func transform(input: GameControllerInput) -> GameViewModel2 {
-        let tutorialNecessityCheckUseCaseOutput = tutorialNecessityCheckUseCase
+        let composedGameUseCasesOutput = gameUseCasesComposer
             .transform(input: .init(
-                trigger: input.inputFromViewController.viewDidAppear.take(1)
-            ))
-        
-        let tutorialEndHandlingUseCaseOutput = tutorialEndHandlingUseCase
-            .transform(input: .init(
-                tutorialEnded: tutorialEndEventReceiver.asObservable()
-            ))
-        
-        let gameStartUseCaseOutput = gameStartUseCase
-            .transform(input: .init(
-                trigger: Observable.merge(
-                    tutorialNecessityCheckUseCaseOutput.startGame,
-                    tutorialEndHandlingUseCaseOutput.startGame
-                )
-            ))
-        
-        let gameTimerHandlingUseCaseOutput = gameTimerHandlingUseCase
-            .transform(input: .init(
-                timerStartTrigger: gameStartUseCaseOutput.startTimer
-            ))
-        
-        let gameTimerEndHandlingUseCaseOutput = gameTimerEndHandlingUseCase
-            .transform(input: .init(timerEnded: gameTimerHandlingUseCaseOutput.timerEnded))
-        
-        let fireMotionDetected = fireMotionFilterUseCase
-            .transform(input: .init(
+                tutorialNecessityCheckTrigger: input.inputFromViewController.viewDidAppear.take(1),
+                tutorialEnded: tutorialEndEventReceiver.asObservable(),
                 accelerationUpdated: input.inputFromDeviceMotion.accelerationUpdated,
-                gyroUpdated: input.inputFromDeviceMotion.gyroUpdated
-            ))
-            .fireMotionDetected
-        
-        let reloadMotionDetected = reloadMotionFilterUseCase
-            .transform(input: .init(
-                gyroUpdated: input.inputFromDeviceMotion.gyroUpdated
-            ))
-            .reloadMotionDetected
-            .share()
-        
-        let weaponFireUseCaseOutput = weaponFireUseCase
-            .transform(input: .init(
-                weaponFiringTrigger: fireMotionDetected
-                    .map({ [weak self] _ -> WeaponType in
-                        guard let self = self else { return .pistol }
-                        return self.state.weaponTypeRelay.value
-                    }),
-                bulletsCount: state.bulletsCountRelay.asObservable()
-            ))
-        
-        let weaponFired = weaponFireUseCaseOutput.weaponFired
-            .share()
-        
-        let weaponAutoReloadFilterUseCaseOutput = weaponAutoReloadFilterUseCase
-            .transform(input: .init(
-                weaponFired: weaponFired,
-                bulletsCount: state.bulletsCountRelay.asObservable()
-            ))
-        
-        let weaponReloadTrigger = Observable
-            .merge(
-                reloadMotionDetected
-                    .map({ [weak self] _ -> WeaponType in
-                        guard let self = self else { return .pistol }
-                        return self.state.weaponTypeRelay.value
-                    }),
-                weaponAutoReloadFilterUseCaseOutput.reloadWeaponAutomatically
-            )
-
-        let weaponReloadUseCaseOutput = weaponReloadUseCase
-            .transform(input: .init(
-                weaponReloadingTrigger: weaponReloadTrigger,
+                gyroUpdated: input.inputFromDeviceMotion.gyroUpdated,
+                weaponSelected: weaponSelectEventReceiver.asObservable(),
+                collisionOccurred: input.inputFromARContent.collisionOccurred,
+                weaponType: state.weaponTypeRelay.asObservable(),
                 bulletsCount: state.bulletsCountRelay.asObservable(),
-                isWeaponReloading: state.isWeaponReloadingRelay.asObservable()
+                isWeaponReloading: state.isWeaponReloadingRelay.asObservable(),
+                score: state.scoreRelay.asObservable(),
+                reloadingMotionDetectedCount: state.reloadingMotionDetectedCountRelay.asObservable()
             ))
-                
-        let weaponChangeUseCaseOutput = weaponChangeUseCase
-            .transform(input: .init(
-                weaponSelected: weaponSelectEventReceiver.asObservable()
-            ))
-               
-        let weaponChanged = weaponChangeUseCaseOutput.weaponChanged
-            .share()
-        
-        let targetHitFilterUseCaseOutput = targetHitFilterUseCase
-            .transform(input: .init(
-                collisionOccurred: input.inputFromARContent.collisionOccurred
-            ))
-        
-        let targetHitHandlingUseCaseOutput = targetHitHandlingUseCase
-            .transform(input: .init(
-                targetHit: targetHitFilterUseCaseOutput.targetHit,
-                currentScore: state.scoreRelay.asObservable()
-            ))
-        
-        let reloadMotionDetectionCountUseCaseOutput = reloadMotionDetectionCountUseCase
-            .transform(input: .init(
-                reloadMotionDetected: reloadMotionDetected,
-                currentCount: state.reloadingMotionDetectedCountRelay.asObservable())
-            )
-        
-        
-        // MARK: OutputToView
-        let sightImageName = state.weaponTypeRelay
-            .map({ $0.sightImageName })
-        
-        let sightImageColorHexCode = state.weaponTypeRelay
-            .map({ $0.sightImageColorHexCode })
-        
-        let timeCountText = state.timeCountRelay
-            .map({ TimeCountUtil.twoDigitTimeCount($0) })
-        
-        let bulletsCountImageName = state.bulletsCountRelay
-            .map({ [weak self] in
-                guard let self = self else { return "" }
-                return self.state.weaponTypeRelay.value.bulletsCountImageName(at: $0)
-            })
-        
-        let isWeaponChangeButtonEnabled = state.timeCountRelay
-            .map({ $0 < GameConst.timeCount && $0 > 0 })
-        
-        
-        // MARK: OutputToARContent
-        let setupSceneView = input.inputFromViewController.viewDidLoad
-        
-        let renderAllTargets = input.inputFromViewController.viewDidLoad
-            .map({ _ in GameConst.targetCount })
-        
-        let startSceneSession = input.inputFromViewController.viewWillAppear
-        
-        let pauseSceneSession = input.inputFromViewController.viewWillDisappear
-
-        let renderSelectedWeapon = weaponChanged.startWith(state.weaponTypeRelay.value)
-
-        let renderWeaponFiring = weaponFired
-        
-        let renderTargetsAppearanceChanging = reloadMotionDetectionCountUseCaseOutput.changeTargetsAppearance
-        
-        let moveWeaponToFPSPosition = input.inputFromARContent.rendererUpdated
-            .map({ [weak self] _ -> WeaponType in
-                guard let self = self else { return .pistol }
-                return self.state.weaponTypeRelay.value
-            })
-        
-        let removeContactedTargetAndBullet = targetHitHandlingUseCaseOutput.removeContactedTargetAndBullet
-        
-        let renderTargetHitParticleToContactPoint = targetHitHandlingUseCaseOutput.renderTargetHitParticleToContactPoint
-        
-        
-        // MARK: OutputToDeviceMotion
-        let startMotionDetection = gameStartUseCaseOutput.startMotionDetection
-        
-        let stopMotionDetection = gameTimerEndHandlingUseCaseOutput.stopMotionDetection
-        
         
         disposeBag.insert {
             // MARK: State updates
-            gameTimerHandlingUseCaseOutput.updateTimeCount
+            composedGameUseCasesOutput.updateTimeCount
                 .bind(to: state.timeCountRelay)
-            weaponChangeUseCaseOutput.updateWeaponType
+            composedGameUseCasesOutput.updateWeaponType
                 .bind(to: state.weaponTypeRelay)
-            weaponReloadUseCaseOutput.updateWeaponReloadingFlag
+            composedGameUseCasesOutput.updateWeaponReloadingFlag
                 .bind(to: state.isWeaponReloadingRelay)
-            weaponChangeUseCaseOutput.resetWeaponReloadingFlag
-                .bind(to: state.isWeaponReloadingRelay)
-            weaponFireUseCaseOutput.updateBulletsCount
+            composedGameUseCasesOutput.updateBulletsCount
                 .bind(to: state.bulletsCountRelay)
-            weaponReloadUseCaseOutput.updateBulletsCount
-                .bind(to: state.bulletsCountRelay)
-            weaponChangeUseCaseOutput.refillBulletsCountForNewWeapon
-                .bind(to: state.bulletsCountRelay)
-            targetHitHandlingUseCaseOutput.updateScore
+            composedGameUseCasesOutput.updateScore
                 .bind(to: state.scoreRelay)
-            reloadMotionDetectionCountUseCaseOutput.updateCount
+            composedGameUseCasesOutput.updateReloadMotionDetectionCount
                 .bind(to: state.reloadingMotionDetectedCountRelay)
             
             // MARK: Transitions
-            tutorialNecessityCheckUseCaseOutput.showTutorial
+            composedGameUseCasesOutput.showTutorial
                 .subscribe(onNext: { [weak self] _ in
                     guard let self = self else { return }
                     self.navigator.showTutorialView(
@@ -333,42 +148,50 @@ final class GamePresenter: GamePresenterInterface {
                         weaponSelectEventReceiver: self.weaponSelectEventReceiver
                     )
                 })
-            gameTimerEndHandlingUseCaseOutput.dismissWeaponChangeView
+            composedGameUseCasesOutput.dismissWeaponChangeView
                 .subscribe(onNext: { [weak self] _ in
                     guard let self = self else { return }
                     self.navigator.dismissWeaponChangeView()
                 })
-            gameTimerEndHandlingUseCaseOutput.showResultView
+            composedGameUseCasesOutput.showResultView
                 .subscribe(onNext: { [weak self] _ in
                     guard let self = self else { return }
                     self.navigator.showResultView(score: self.state.scoreRelay.value)
                 })
         }
-        
-        
+
         return GameViewModel2(
             outputToView: GameViewModel2.OutputToView(
-                sightImageName: sightImageName,
-                sightImageColorHexCode: sightImageColorHexCode,
-                timeCountText: timeCountText,
-                bulletsCountImageName: bulletsCountImageName,
-                isWeaponChangeButtonEnabled: isWeaponChangeButtonEnabled
+                sightImageName: state.weaponTypeRelay
+                    .map({ $0.sightImageName }),
+                sightImageColorHexCode: state.weaponTypeRelay
+                    .map({ $0.sightImageColorHexCode }),
+                timeCountText: state.timeCountRelay
+                    .map({ TimeCountUtil.twoDigitTimeCount($0) }),
+                bulletsCountImageName: state.bulletsCountRelay
+                    .withLatestFrom(state.weaponTypeRelay) { ($0, $1) }
+                    .map({ $1.bulletsCountImageName(at: $0) }),
+                isWeaponChangeButtonEnabled: state.timeCountRelay
+                    .map({ $0 < GameConst.timeCount && $0 > 0 })
             ),
             outputToARContent: GameViewModel2.OutputToARContent(
-                setupSceneView: setupSceneView,
-                renderAllTargets: renderAllTargets,
-                startSceneSession: startSceneSession,
-                pauseSceneSession: pauseSceneSession,
-                renderSelectedWeapon: renderSelectedWeapon,
-                renderWeaponFiring: renderWeaponFiring,
-                renderTargetsAppearanceChanging: renderTargetsAppearanceChanging,
-                moveWeaponToFPSPosition: moveWeaponToFPSPosition,
-                removeContactedTargetAndBullet: removeContactedTargetAndBullet,
-                renderTargetHitParticleToContactPoint: renderTargetHitParticleToContactPoint
+                setupSceneView: input.inputFromViewController.viewDidLoad,
+                renderAllTargets: input.inputFromViewController.viewDidLoad
+                    .map({ _ in GameConst.targetCount }),
+                startSceneSession: input.inputFromViewController.viewWillAppear,
+                pauseSceneSession: input.inputFromViewController.viewWillDisappear,
+                renderSelectedWeapon: composedGameUseCasesOutput.weaponChanged
+                    .startWith(state.weaponTypeRelay.value),
+                renderWeaponFiring: composedGameUseCasesOutput.weaponFired,
+                renderTargetsAppearanceChanging: composedGameUseCasesOutput.changeTargetsAppearance,
+                moveWeaponToFPSPosition: input.inputFromARContent.rendererUpdated
+                    .withLatestFrom(state.weaponTypeRelay),
+                removeContactedTargetAndBullet: composedGameUseCasesOutput.removeContactedTargetAndBullet,
+                renderTargetHitParticleToContactPoint: composedGameUseCasesOutput.renderTargetHitParticleToContactPoint
             ),
             outputToDeviceMotion: GameViewModel2.OutputToDeviceMotion(
-                startMotionDetection: startMotionDetection,
-                stopMotionDetection: stopMotionDetection
+                startMotionDetection: composedGameUseCasesOutput.startMotionDetection,
+                stopMotionDetection: composedGameUseCasesOutput.stopMotionDetection
             )
         )
     }
