@@ -1,5 +1,5 @@
 //
-//  GameViewController2.swift
+//  GameViewController.swift
 //  AR-GunMan
 //
 //  Created by ウルトラ深瀬 on 23/6/24.
@@ -9,12 +9,12 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class GameViewController2: UIViewController {
+class GameViewController: UIViewController {
     var presenter: GamePresenterInterface!
     var arContentController: ARContentController!
-    var deviceMotionController: DeviceMotionController2!
+    var deviceMotionController: DeviceMotionController!
     private let disposeBag = DisposeBag()
-    private let contentView = GameView()
+    private let contentView = GameContentView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,7 +54,7 @@ class GameViewController2: UIViewController {
     }
     
     private func bindOutputToViewComponents(
-        _ outputToView: GameViewModel2.OutputToView
+        _ outputToView: GameViewModel.OutputToView
     ) {
         disposeBag.insert {
             outputToView.sightImageName
@@ -74,7 +74,7 @@ class GameViewController2: UIViewController {
     }
     
     private func bindOutputToARContentController(
-        _ outputToARContent: GameViewModel2.OutputToARContent
+        _ outputToARContent: GameViewModel.OutputToARContent
     ) {
         disposeBag.insert {
             outputToARContent.setupSceneView
@@ -132,7 +132,7 @@ class GameViewController2: UIViewController {
     }
     
     private func bindOutputToDeviceMotionController(
-        _ outputToDeviceMotion: GameViewModel2.OutputToDeviceMotion
+        _ outputToDeviceMotion: GameViewModel.OutputToDeviceMotion
     ) {
         disposeBag.insert {
             outputToDeviceMotion.startMotionDetection

@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TopView" customModule="AR_GunMan" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TopContentView" customModule="AR_GunMan" customModuleProvider="target">
             <connections>
                 <outlet property="howToPlayButton" destination="cDJ-0O-0h9" id="2bd-hj-O4s"/>
                 <outlet property="howToPlayButtonIcon" destination="KFl-zZ-29B" id="6YO-IZ-WJl"/>

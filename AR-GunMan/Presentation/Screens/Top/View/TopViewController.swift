@@ -1,5 +1,5 @@
 //
-//  TopViewController2.swift
+//  TopViewController.swift
 //  AR-GunMan
 //
 //  Created by ウルトラ深瀬 on 18/6/24.
@@ -9,10 +9,10 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class TopViewController2: UIViewController {
+class TopViewController: UIViewController {
     var presenter: TopPresenterInterface!
     private let disposeBag = DisposeBag()
-    private let contentView = TopView()
+    private let contentView = TopContentView()
 
     override func viewDidLoad() {
         super.viewDidLoad()

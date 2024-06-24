@@ -32,7 +32,7 @@ struct GameControllerInput {
     }
 }
 
-struct GameViewModel2 {
+struct GameViewModel {
     let outputToView: OutputToView
     let outputToARContent: OutputToARContent
     let outputToDeviceMotion: OutputToDeviceMotion
@@ -65,7 +65,7 @@ struct GameViewModel2 {
 }
 
 protocol GamePresenterInterface {
-    func transform(input: GameControllerInput) -> GameViewModel2
+    func transform(input: GameControllerInput) -> GameViewModel
 }
 
 final class GamePresenter: GamePresenterInterface {
@@ -79,7 +79,7 @@ final class GamePresenter: GamePresenterInterface {
     }
     
     private let gameUseCasesComposer: GameUseCasesComposerInterface
-    private let navigator: GameNavigatorInterface2
+    private let navigator: GameNavigatorInterface
     private let state: State
     
     // 遷移先からの通知を受け取るレシーバー
@@ -90,7 +90,7 @@ final class GamePresenter: GamePresenterInterface {
     
     init(
         gameUseCasesComposer: GameUseCasesComposerInterface,
-        navigator: GameNavigatorInterface2,
+        navigator: GameNavigatorInterface,
         state: State = State(),
         tutorialEndEventReceiver: PublishRelay<Void> = PublishRelay<Void>(),
         weaponSelectEventReceiver: PublishRelay<WeaponType> = PublishRelay<WeaponType>()
@@ -102,7 +102,7 @@ final class GamePresenter: GamePresenterInterface {
         self.weaponSelectEventReceiver = weaponSelectEventReceiver
     }
     
-    func transform(input: GameControllerInput) -> GameViewModel2 {
+    func transform(input: GameControllerInput) -> GameViewModel {
         let composedGameUseCasesOutput = gameUseCasesComposer
             .transform(input: .init(
                 tutorialNecessityCheckTrigger: input.inputFromViewController.viewDidAppear.take(1),
@@ -160,8 +160,8 @@ final class GamePresenter: GamePresenterInterface {
                 })
         }
 
-        return GameViewModel2(
-            outputToView: GameViewModel2.OutputToView(
+        return GameViewModel(
+            outputToView: GameViewModel.OutputToView(
                 sightImageName: state.weaponTypeRelay
                     .map({ $0.sightImageName }),
                 sightImageColorHexCode: state.weaponTypeRelay
@@ -174,7 +174,7 @@ final class GamePresenter: GamePresenterInterface {
                 isWeaponChangeButtonEnabled: state.timeCountRelay
                     .map({ $0 < GameConst.timeCount && $0 > 0 })
             ),
-            outputToARContent: GameViewModel2.OutputToARContent(
+            outputToARContent: GameViewModel.OutputToARContent(
                 setupSceneView: input.inputFromViewController.viewDidLoad,
                 renderAllTargets: input.inputFromViewController.viewDidLoad
                     .map({ _ in GameConst.targetCount }),
@@ -189,7 +189,7 @@ final class GamePresenter: GamePresenterInterface {
                 removeContactedTargetAndBullet: composedGameUseCasesOutput.removeContactedTargetAndBullet,
                 renderTargetHitParticleToContactPoint: composedGameUseCasesOutput.renderTargetHitParticleToContactPoint
             ),
-            outputToDeviceMotion: GameViewModel2.OutputToDeviceMotion(
+            outputToDeviceMotion: GameViewModel.OutputToDeviceMotion(
                 startMotionDetection: composedGameUseCasesOutput.startMotionDetection,
                 stopMotionDetection: composedGameUseCasesOutput.stopMotionDetection
             )

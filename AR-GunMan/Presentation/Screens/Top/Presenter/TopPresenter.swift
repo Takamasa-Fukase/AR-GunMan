@@ -15,7 +15,7 @@ struct TopControllerInput {
     let howToPlayButtonTapped: Observable<Void>
 }
 
-struct TopViewModel2 {
+struct TopViewModel {
     // TODO: ここでBoolに応じたImageNameに変換したい（systemImageとImageなのでそこを解消する必要あり）
     let isStartButtonIconSwitched: Observable<Bool>
     let isSettingsButtonIconSwitched: Observable<Bool>
@@ -23,21 +23,21 @@ struct TopViewModel2 {
 }
 
 protocol TopPresenterInterface {
-    func transform(input: TopControllerInput) -> TopViewModel2
+    func transform(input: TopControllerInput) -> TopViewModel
 }
 
 final class TopPresenter: TopPresenterInterface {
     private let replayNecessityCheckUseCase: ReplayNecessityCheckUseCaseInterface
     private let buttonIconChangeUseCase: TopPageButtonIconChangeUseCaseInterface
     private let cameraPermissionCheckUseCase: CameraPermissionCheckUseCaseInterface
-    private let navigator: TopNavigatorInterface2
+    private let navigator: TopNavigatorInterface
     private let disposeBag = DisposeBag()
     
     init(
         replayNecessityCheckUseCase: ReplayNecessityCheckUseCaseInterface,
         buttonIconChangeUseCase: TopPageButtonIconChangeUseCaseInterface,
         cameraPermissionCheckUseCase: CameraPermissionCheckUseCaseInterface,
-        navigator: TopNavigatorInterface2
+        navigator: TopNavigatorInterface
     ) {
         self.replayNecessityCheckUseCase = replayNecessityCheckUseCase
         self.buttonIconChangeUseCase = buttonIconChangeUseCase
@@ -45,7 +45,7 @@ final class TopPresenter: TopPresenterInterface {
         self.navigator = navigator
     }
     
-    func transform(input: TopControllerInput) -> TopViewModel2 {
+    func transform(input: TopControllerInput) -> TopViewModel {
         let replayNecessityCheckUseCaseOutput = replayNecessityCheckUseCase
             .transform(input: .init(checkNeedsReplay: input.viewDidAppear))
         
@@ -88,7 +88,7 @@ final class TopPresenter: TopPresenterInterface {
                 })
         }
         
-        return TopViewModel2(
+        return TopViewModel(
             isStartButtonIconSwitched: startButtonIconChangeUseCaseOutput.isButtonIconSwitched,
             isSettingsButtonIconSwitched: settingsButtonIconChangeUseCaseOutput.isButtonIconSwitched,
             isHowToPlayButtonIconSwitched: howToPlayButtonIconChangeUseCaseOutput.isButtonIconSwitched

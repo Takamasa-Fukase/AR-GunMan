@@ -173,12 +173,12 @@
 		86F1573D2BD7BBA200BE979C /* RankingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86F1573C2BD7BBA200BE979C /* RankingUseCase.swift */; };
 		86F1573F2BD9329600BE979C /* CustomError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86F1573E2BD9329600BE979C /* CustomError.swift */; };
 		86F157412BD93C1E00BE979C /* ErrorConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86F157402BD93C1E00BE979C /* ErrorConst.swift */; };
-		BC03F9CA2C214E7D00E27C01 /* TopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03F9C92C214E7D00E27C01 /* TopView.swift */; };
-		BC03F9CB2C214E7D00E27C01 /* TopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03F9C92C214E7D00E27C01 /* TopView.swift */; };
-		BC03F9CD2C214E9900E27C01 /* TopView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC03F9CC2C214E9900E27C01 /* TopView.xib */; };
-		BC03F9CE2C214E9900E27C01 /* TopView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC03F9CC2C214E9900E27C01 /* TopView.xib */; };
-		BC03F9D02C2151C200E27C01 /* TopViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03F9CF2C2151C200E27C01 /* TopViewController2.swift */; };
-		BC03F9D12C2151C200E27C01 /* TopViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03F9CF2C2151C200E27C01 /* TopViewController2.swift */; };
+		BC03F9CA2C214E7D00E27C01 /* TopContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03F9C92C214E7D00E27C01 /* TopContentView.swift */; };
+		BC03F9CB2C214E7D00E27C01 /* TopContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03F9C92C214E7D00E27C01 /* TopContentView.swift */; };
+		BC03F9CD2C214E9900E27C01 /* TopContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC03F9CC2C214E9900E27C01 /* TopContentView.xib */; };
+		BC03F9CE2C214E9900E27C01 /* TopContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC03F9CC2C214E9900E27C01 /* TopContentView.xib */; };
+		BC03F9D02C2151C200E27C01 /* TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03F9CF2C2151C200E27C01 /* TopViewController.swift */; };
+		BC03F9D12C2151C200E27C01 /* TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03F9CF2C2151C200E27C01 /* TopViewController.swift */; };
 		BC03F9D32C21534100E27C01 /* TopPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03F9D22C21534100E27C01 /* TopPresenter.swift */; };
 		BC03F9D42C21534100E27C01 /* TopPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03F9D22C21534100E27C01 /* TopPresenter.swift */; };
 		BC03F9D62C215AC400E27C01 /* ReplayNecessityCheckUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03F9D52C215AC400E27C01 /* ReplayNecessityCheckUseCase.swift */; };
@@ -189,8 +189,8 @@
 		BC03F9DD2C2166D800E27C01 /* TopPageButtonIconChangeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03F9DB2C2166D800E27C01 /* TopPageButtonIconChangeUseCase.swift */; };
 		BC03F9DF2C21704300E27C01 /* TimerStreamCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03F9DE2C21704300E27C01 /* TimerStreamCreator.swift */; };
 		BC03F9E02C21704300E27C01 /* TimerStreamCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03F9DE2C21704300E27C01 /* TimerStreamCreator.swift */; };
-		BC03F9E22C217A1400E27C01 /* TopNavigator2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03F9E12C217A1400E27C01 /* TopNavigator2.swift */; };
-		BC03F9E32C217A1400E27C01 /* TopNavigator2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03F9E12C217A1400E27C01 /* TopNavigator2.swift */; };
+		BC03F9E22C217A1400E27C01 /* TopNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03F9E12C217A1400E27C01 /* TopNavigator.swift */; };
+		BC03F9E32C217A1400E27C01 /* TopNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03F9E12C217A1400E27C01 /* TopNavigator.swift */; };
 		BC03F9ED2C21CAF200E27C01 /* WeaponFireUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03F9EC2C21CAF200E27C01 /* WeaponFireUseCase.swift */; };
 		BC03F9EE2C21CAF200E27C01 /* WeaponFireUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03F9EC2C21CAF200E27C01 /* WeaponFireUseCase.swift */; };
 		BC03F9F02C21CAFF00E27C01 /* WeaponAutoReloadFilterUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03F9EF2C21CAFF00E27C01 /* WeaponAutoReloadFilterUseCase.swift */; };
@@ -217,20 +217,20 @@
 		BC03FA0F2C21CB7100E27C01 /* GameTimerEndHandlingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA0D2C21CB7100E27C01 /* GameTimerEndHandlingUseCase.swift */; };
 		BC03FA112C21CB7900E27C01 /* ReloadMotionDetectionCountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA102C21CB7900E27C01 /* ReloadMotionDetectionCountUseCase.swift */; };
 		BC03FA122C21CB7900E27C01 /* ReloadMotionDetectionCountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA102C21CB7900E27C01 /* ReloadMotionDetectionCountUseCase.swift */; };
-		BC03FA182C24273200E27C01 /* GameNavigator2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA172C24273200E27C01 /* GameNavigator2.swift */; };
-		BC03FA192C24273200E27C01 /* GameNavigator2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA172C24273200E27C01 /* GameNavigator2.swift */; };
+		BC03FA182C24273200E27C01 /* GameNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA172C24273200E27C01 /* GameNavigator.swift */; };
+		BC03FA192C24273200E27C01 /* GameNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA172C24273200E27C01 /* GameNavigator.swift */; };
 		BC03FA1B2C24279700E27C01 /* GamePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA1A2C24279700E27C01 /* GamePresenter.swift */; };
 		BC03FA1C2C24279700E27C01 /* GamePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA1A2C24279700E27C01 /* GamePresenter.swift */; };
 		BC03FA1E2C242E5200E27C01 /* TutorialEndHandlingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA1D2C242E5200E27C01 /* TutorialEndHandlingUseCase.swift */; };
 		BC03FA1F2C242E5200E27C01 /* TutorialEndHandlingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA1D2C242E5200E27C01 /* TutorialEndHandlingUseCase.swift */; };
-		BC03FA212C2808A100E27C01 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA202C2808A100E27C01 /* GameView.swift */; };
-		BC03FA222C2808A100E27C01 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA202C2808A100E27C01 /* GameView.swift */; };
-		BC03FA242C2808A900E27C01 /* GameView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC03FA232C2808A900E27C01 /* GameView.xib */; };
-		BC03FA252C2808A900E27C01 /* GameView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC03FA232C2808A900E27C01 /* GameView.xib */; };
-		BC03FA272C2809D500E27C01 /* GameViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA262C2809D500E27C01 /* GameViewController2.swift */; };
-		BC03FA282C2809D500E27C01 /* GameViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA262C2809D500E27C01 /* GameViewController2.swift */; };
-		BC03FA2A2C280D3600E27C01 /* DeviceMotionController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA292C280D3600E27C01 /* DeviceMotionController2.swift */; };
-		BC03FA2B2C280D3600E27C01 /* DeviceMotionController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA292C280D3600E27C01 /* DeviceMotionController2.swift */; };
+		BC03FA212C2808A100E27C01 /* GameContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA202C2808A100E27C01 /* GameContentView.swift */; };
+		BC03FA222C2808A100E27C01 /* GameContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA202C2808A100E27C01 /* GameContentView.swift */; };
+		BC03FA242C2808A900E27C01 /* GameContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC03FA232C2808A900E27C01 /* GameContentView.xib */; };
+		BC03FA252C2808A900E27C01 /* GameContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC03FA232C2808A900E27C01 /* GameContentView.xib */; };
+		BC03FA272C2809D500E27C01 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA262C2809D500E27C01 /* GameViewController.swift */; };
+		BC03FA282C2809D500E27C01 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA262C2809D500E27C01 /* GameViewController.swift */; };
+		BC03FA2A2C280D3600E27C01 /* DeviceMotionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA292C280D3600E27C01 /* DeviceMotionController.swift */; };
+		BC03FA2B2C280D3600E27C01 /* DeviceMotionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA292C280D3600E27C01 /* DeviceMotionController.swift */; };
 		BC03FA2D2C293B3100E27C01 /* GameUseCasesComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA2C2C293B3100E27C01 /* GameUseCasesComposer.swift */; };
 		BC03FA2E2C293B3100E27C01 /* GameUseCasesComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03FA2C2C293B3100E27C01 /* GameUseCasesComposer.swift */; };
 		BC0BBE382C15F19D00789349 /* ViewModelEventHandlerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0BBE372C15F19D00789349 /* ViewModelEventHandlerType.swift */; };
@@ -419,15 +419,15 @@
 		86F1573E2BD9329600BE979C /* CustomError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomError.swift; sourceTree = "<group>"; };
 		86F157402BD93C1E00BE979C /* ErrorConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorConst.swift; sourceTree = "<group>"; };
 		90D4D1AD42BB6A3A0192887F /* Pods-AR-GunManTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-GunManTests.release.xcconfig"; path = "Target Support Files/Pods-AR-GunManTests/Pods-AR-GunManTests.release.xcconfig"; sourceTree = "<group>"; };
-		BC03F9C92C214E7D00E27C01 /* TopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopView.swift; sourceTree = "<group>"; };
-		BC03F9CC2C214E9900E27C01 /* TopView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TopView.xib; sourceTree = "<group>"; };
-		BC03F9CF2C2151C200E27C01 /* TopViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopViewController2.swift; sourceTree = "<group>"; };
+		BC03F9C92C214E7D00E27C01 /* TopContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopContentView.swift; sourceTree = "<group>"; };
+		BC03F9CC2C214E9900E27C01 /* TopContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TopContentView.xib; sourceTree = "<group>"; };
+		BC03F9CF2C2151C200E27C01 /* TopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopViewController.swift; sourceTree = "<group>"; };
 		BC03F9D22C21534100E27C01 /* TopPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopPresenter.swift; sourceTree = "<group>"; };
 		BC03F9D52C215AC400E27C01 /* ReplayNecessityCheckUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplayNecessityCheckUseCase.swift; sourceTree = "<group>"; };
 		BC03F9D82C21634A00E27C01 /* CameraPermissionCheckUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPermissionCheckUseCase.swift; sourceTree = "<group>"; };
 		BC03F9DB2C2166D800E27C01 /* TopPageButtonIconChangeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopPageButtonIconChangeUseCase.swift; sourceTree = "<group>"; };
 		BC03F9DE2C21704300E27C01 /* TimerStreamCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerStreamCreator.swift; sourceTree = "<group>"; };
-		BC03F9E12C217A1400E27C01 /* TopNavigator2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopNavigator2.swift; sourceTree = "<group>"; };
+		BC03F9E12C217A1400E27C01 /* TopNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopNavigator.swift; sourceTree = "<group>"; };
 		BC03F9EC2C21CAF200E27C01 /* WeaponFireUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponFireUseCase.swift; sourceTree = "<group>"; };
 		BC03F9EF2C21CAFF00E27C01 /* WeaponAutoReloadFilterUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponAutoReloadFilterUseCase.swift; sourceTree = "<group>"; };
 		BC03F9F22C21CB0B00E27C01 /* WeaponReloadUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponReloadUseCase.swift; sourceTree = "<group>"; };
@@ -441,13 +441,13 @@
 		BC03FA0A2C21CB6900E27C01 /* GameTimerHandlingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTimerHandlingUseCase.swift; sourceTree = "<group>"; };
 		BC03FA0D2C21CB7100E27C01 /* GameTimerEndHandlingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTimerEndHandlingUseCase.swift; sourceTree = "<group>"; };
 		BC03FA102C21CB7900E27C01 /* ReloadMotionDetectionCountUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReloadMotionDetectionCountUseCase.swift; sourceTree = "<group>"; };
-		BC03FA172C24273200E27C01 /* GameNavigator2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameNavigator2.swift; sourceTree = "<group>"; };
+		BC03FA172C24273200E27C01 /* GameNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameNavigator.swift; sourceTree = "<group>"; };
 		BC03FA1A2C24279700E27C01 /* GamePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePresenter.swift; sourceTree = "<group>"; };
 		BC03FA1D2C242E5200E27C01 /* TutorialEndHandlingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialEndHandlingUseCase.swift; sourceTree = "<group>"; };
-		BC03FA202C2808A100E27C01 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
-		BC03FA232C2808A900E27C01 /* GameView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GameView.xib; sourceTree = "<group>"; };
-		BC03FA262C2809D500E27C01 /* GameViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController2.swift; sourceTree = "<group>"; };
-		BC03FA292C280D3600E27C01 /* DeviceMotionController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMotionController2.swift; sourceTree = "<group>"; };
+		BC03FA202C2808A100E27C01 /* GameContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameContentView.swift; sourceTree = "<group>"; };
+		BC03FA232C2808A900E27C01 /* GameContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GameContentView.xib; sourceTree = "<group>"; };
+		BC03FA262C2809D500E27C01 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		BC03FA292C280D3600E27C01 /* DeviceMotionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMotionController.swift; sourceTree = "<group>"; };
 		BC03FA2C2C293B3100E27C01 /* GameUseCasesComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameUseCasesComposer.swift; sourceTree = "<group>"; };
 		BC0BBE372C15F19D00789349 /* ViewModelEventHandlerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelEventHandlerType.swift; sourceTree = "<group>"; };
 		BC0BBE3B2C16B7E100789349 /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
@@ -1014,7 +1014,7 @@
 		BC03F9E52C21A3B600E27C01 /* Navigator */ = {
 			isa = PBXGroup;
 			children = (
-				BC03F9E12C217A1400E27C01 /* TopNavigator2.swift */,
+				BC03F9E12C217A1400E27C01 /* TopNavigator.swift */,
 			);
 			path = Navigator;
 			sourceTree = "<group>";
@@ -1030,9 +1030,9 @@
 		BC03F9E72C21A3CA00E27C01 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				BC03F9CF2C2151C200E27C01 /* TopViewController2.swift */,
-				BC03F9C92C214E7D00E27C01 /* TopView.swift */,
-				BC03F9CC2C214E9900E27C01 /* TopView.xib */,
+				BC03F9CF2C2151C200E27C01 /* TopViewController.swift */,
+				BC03F9C92C214E7D00E27C01 /* TopContentView.swift */,
+				BC03F9CC2C214E9900E27C01 /* TopContentView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1089,7 +1089,7 @@
 		BC03FA142C2426EE00E27C01 /* Navigator */ = {
 			isa = PBXGroup;
 			children = (
-				BC03FA172C24273200E27C01 /* GameNavigator2.swift */,
+				BC03FA172C24273200E27C01 /* GameNavigator.swift */,
 			);
 			path = Navigator;
 			sourceTree = "<group>";
@@ -1105,9 +1105,9 @@
 		BC03FA162C2426FF00E27C01 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				BC03FA262C2809D500E27C01 /* GameViewController2.swift */,
-				BC03FA202C2808A100E27C01 /* GameView.swift */,
-				BC03FA232C2808A900E27C01 /* GameView.xib */,
+				BC03FA262C2809D500E27C01 /* GameViewController.swift */,
+				BC03FA202C2808A100E27C01 /* GameContentView.swift */,
+				BC03FA232C2808A900E27C01 /* GameContentView.xib */,
 				BC35B1FC2C159E1A00131483 /* ARContent */,
 				BC35B1FE2C159E2B00131483 /* DeviceMotion */,
 			);
@@ -1126,7 +1126,7 @@
 		BC35B1FE2C159E2B00131483 /* DeviceMotion */ = {
 			isa = PBXGroup;
 			children = (
-				BC03FA292C280D3600E27C01 /* DeviceMotionController2.swift */,
+				BC03FA292C280D3600E27C01 /* DeviceMotionController.swift */,
 			);
 			path = DeviceMotion;
 			sourceTree = "<group>";
@@ -1305,7 +1305,7 @@
 				59D2D4E52552DE67006DDB70 /* LaunchScreen.storyboard in Resources */,
 				5903192F256D82BA005C30EF /* westernPistolShoot.mp3 in Resources */,
 				595E698F256C01A4002B4F3E /* SettingsViewController.storyboard in Resources */,
-				BC03FA242C2808A900E27C01 /* GameView.xib in Resources */,
+				BC03FA242C2808A900E27C01 /* GameContentView.xib in Resources */,
 				5921A209255D6A4E001D8C39 /* RankingCell.xib in Resources */,
 				59D2D5422552E24D006DDB70 /* art.scnassets in Resources */,
 				59484C6B25657E1C00F9C6A8 /* endWhistle.mp3 in Resources */,
@@ -1315,7 +1315,7 @@
 				59D2D55E2552E2CC006DDB70 /* headShot.mp3 in Resources */,
 				59484C8525664E7400F9C6A8 /* bazookaShoot.mp3 in Resources */,
 				59D2D56A2552E31E006DDB70 /* Assets.xcassets in Resources */,
-				BC03F9CD2C214E9900E27C01 /* TopView.xib in Resources */,
+				BC03F9CD2C214E9900E27C01 /* TopContentView.xib in Resources */,
 				59D2D55C2552E2CC006DDB70 /* pistol-slide.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1327,11 +1327,11 @@
 				860646C12BF59A3F00906DA0 /* LaunchScreen.storyboard in Resources */,
 				860646A02BF599FB00906DA0 /* kyuiin.mp3 in Resources */,
 				860646AA2BF599FB00906DA0 /* startWhistle.mp3 in Resources */,
-				BC03FA252C2808A900E27C01 /* GameView.xib in Resources */,
+				BC03FA252C2808A900E27C01 /* GameContentView.xib in Resources */,
 				860646A32BF599FB00906DA0 /* bazookaSet.mp3 in Resources */,
 				8606469F2BF599FB00906DA0 /* pistol-out-bullets.mp3 in Resources */,
 				860646AB2BF599FB00906DA0 /* rankingAppear.mp3 in Resources */,
-				BC03F9CE2C214E9900E27C01 /* TopView.xib in Resources */,
+				BC03F9CE2C214E9900E27C01 /* TopContentView.xib in Resources */,
 				860646A72BF599FB00906DA0 /* pistol-reload.mp3 in Resources */,
 				860646A12BF599FB00906DA0 /* pistol-fire.mp3 in Resources */,
 				860646A42BF599FB00906DA0 /* endWhistle.mp3 in Resources */,
@@ -1486,7 +1486,7 @@
 				86B8A3A62B7E0D1F005ED2F8 /* RankingUtil.swift in Sources */,
 				67DB2C5927C10E8B00B8CB3C /* SceneAnimationUtil.swift in Sources */,
 				BC482DE72C1A74F800FAF079 /* ObservableErrorTracker.swift in Sources */,
-				BC03FA2A2C280D3600E27C01 /* DeviceMotionController2.swift in Sources */,
+				BC03FA2A2C280D3600E27C01 /* DeviceMotionController.swift in Sources */,
 				67DB2C5D27C17EF300B8CB3C /* TopConst.swift in Sources */,
 				BC7FF24A2C2983D20014CDCE /* SceneDelegate.swift in Sources */,
 				BC03F9FC2C21CB2A00E27C01 /* WeaponChangeUseCase.swift in Sources */,
@@ -1509,7 +1509,7 @@
 				BC03F9ED2C21CAF200E27C01 /* WeaponFireUseCase.swift in Sources */,
 				5921A208255D6A4E001D8C39 /* RankingCell.swift in Sources */,
 				BC482DDB2C19664400FAF079 /* ResultViewModel.swift in Sources */,
-				BC03F9D02C2151C200E27C01 /* TopViewController2.swift in Sources */,
+				BC03F9D02C2151C200E27C01 /* TopViewController.swift in Sources */,
 				BC03FA112C21CB7900E27C01 /* ReloadMotionDetectionCountUseCase.swift in Sources */,
 				BCD89DA12C1EA1E800BBBB99 /* KeyboardOverlapCalculator.swift in Sources */,
 				BC482DF62C1ABB5F00FAF079 /* RankingListView.swift in Sources */,
@@ -1552,15 +1552,15 @@
 				BC03FA022C21CB4F00E27C01 /* TargetHitHandlingUseCase.swift in Sources */,
 				BC22E0162C1B281300C59BAB /* Observable+Extension.swift in Sources */,
 				BC03F9D32C21534100E27C01 /* TopPresenter.swift in Sources */,
-				BC03FA212C2808A100E27C01 /* GameView.swift in Sources */,
+				BC03FA212C2808A100E27C01 /* GameContentView.swift in Sources */,
 				8627F6352BCE83F30003D374 /* ViewModelType.swift in Sources */,
-				BC03FA272C2809D500E27C01 /* GameViewController2.swift in Sources */,
+				BC03FA272C2809D500E27C01 /* GameViewController.swift in Sources */,
 				BC03FA0E2C21CB7100E27C01 /* GameTimerEndHandlingUseCase.swift in Sources */,
 				86C5AB982AB8819C00CB161D /* UIAlertController+Extension.swift in Sources */,
-				BC03F9CA2C214E7D00E27C01 /* TopView.swift in Sources */,
+				BC03F9CA2C214E7D00E27C01 /* TopContentView.swift in Sources */,
 				86C421B82BB040C300EFD791 /* TutorialRepository.swift in Sources */,
 				BCCD44872C12C8C000BF541D /* GameObjectInfo.swift in Sources */,
-				BC03FA182C24273200E27C01 /* GameNavigator2.swift in Sources */,
+				BC03FA182C24273200E27C01 /* GameNavigator.swift in Sources */,
 				BC03F9F32C21CB0B00E27C01 /* WeaponReloadUseCase.swift in Sources */,
 				BC22E0222C1C71E900C59BAB /* UITapGestureRecognizer+Rx.swift in Sources */,
 				BC03F9FF2C21CB4500E27C01 /* TargetHitFilterUseCase.swift in Sources */,
@@ -1594,7 +1594,7 @@
 				86F157412BD93C1E00BE979C /* ErrorConst.swift in Sources */,
 				67B685EF27AAD8B300D7F413 /* TimeCountUtil.swift in Sources */,
 				59940BAC2552FAA600EC20C1 /* NameRegisterViewController.swift in Sources */,
-				BC03F9E22C217A1400E27C01 /* TopNavigator2.swift in Sources */,
+				BC03F9E22C217A1400E27C01 /* TopNavigator.swift in Sources */,
 				67200F5B27A0028700AD92EC /* SettingsViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1637,14 +1637,14 @@
 				8606468C2BF599DF00906DA0 /* RankingCell.swift in Sources */,
 				861B87792BFE258100D0882D /* SoundPlayerMock.swift in Sources */,
 				BC62CE0B2C15607D00070B49 /* Vector.swift in Sources */,
-				BC03FA282C2809D500E27C01 /* GameViewController2.swift in Sources */,
+				BC03FA282C2809D500E27C01 /* GameViewController.swift in Sources */,
 				BC03FA062C21CB5700E27C01 /* TutorialNecessityCheckUseCase.swift in Sources */,
 				BC22E0232C1C71E900C59BAB /* UITapGestureRecognizer+Rx.swift in Sources */,
 				BC0BBE4B2C174B2800789349 /* TutorialNavigator.swift in Sources */,
 				BCD89DA52C1EA56400BBBB99 /* Notification+Extension.swift in Sources */,
 				860646112BF5996200906DA0 /* SceneNodeUtil.swift in Sources */,
 				860646122BF5996200906DA0 /* SafariViewUtil.swift in Sources */,
-				BC03FA222C2808A100E27C01 /* GameView.swift in Sources */,
+				BC03FA222C2808A100E27C01 /* GameContentView.swift in Sources */,
 				860646982BF599E900906DA0 /* SettingsNavigator.swift in Sources */,
 				8606466B2BF599BC00906DA0 /* WeaponChangeViewController.swift in Sources */,
 				BC03F9EE2C21CAF200E27C01 /* WeaponFireUseCase.swift in Sources */,
@@ -1653,7 +1653,7 @@
 				860646772BF599D500906DA0 /* NameRegisterUseCase.swift in Sources */,
 				BCCD44942C13F93900BF541D /* CustomSCNNode.swift in Sources */,
 				BC482DEB2C1AAB7400FAF079 /* NameRegisterNavigator.swift in Sources */,
-				BC03FA192C24273200E27C01 /* GameNavigator2.swift in Sources */,
+				BC03FA192C24273200E27C01 /* GameNavigator.swift in Sources */,
 				8606462C2BF5997200906DA0 /* CoreMotionRepository.swift in Sources */,
 				BC03FA1C2C24279700E27C01 /* GamePresenter.swift in Sources */,
 				860646002BF5995800906DA0 /* UIImageView+Extension.swift in Sources */,
@@ -1685,7 +1685,7 @@
 				8606468F2BF599DF00906DA0 /* RankingViewModel.swift in Sources */,
 				860646102BF5996200906DA0 /* SceneViewSettingUtil.swift in Sources */,
 				861B87762BFE1E4700D0882D /* SoundPlayer.swift in Sources */,
-				BC03FA2B2C280D3600E27C01 /* DeviceMotionController2.swift in Sources */,
+				BC03FA2B2C280D3600E27C01 /* DeviceMotionController.swift in Sources */,
 				860645FF2BF5995800906DA0 /* UIScrollView+Extension.swift in Sources */,
 				BC03F9DA2C21634A00E27C01 /* CameraPermissionCheckUseCase.swift in Sources */,
 				BCD1C2292C01B9E2008975EB /* WeaponFiringEventTransformerTests.swift in Sources */,
@@ -1707,15 +1707,15 @@
 				8606461D2BF5996700906DA0 /* ErrorConst.swift in Sources */,
 				BC0BBE412C16D31800789349 /* NSObject+Extension.swift in Sources */,
 				860645F72BF5994C00906DA0 /* Font+Extension.swift in Sources */,
-				BC03F9E32C217A1400E27C01 /* TopNavigator2.swift in Sources */,
+				BC03F9E32C217A1400E27C01 /* TopNavigator.swift in Sources */,
 				BCCD44832C12BF1B00BF541D /* CollisionInfo.swift in Sources */,
 				860645FB2BF5995200906DA0 /* UserDefaults+Extension.swift in Sources */,
 				8606468E2BF599DF00906DA0 /* RankingNavigator.swift in Sources */,
 				BC482DDF2C196FB000FAF079 /* ResultConst.swift in Sources */,
 				860646172BF5996200906DA0 /* ScoreCalculator.swift in Sources */,
-				BC03F9CB2C214E7D00E27C01 /* TopView.swift in Sources */,
+				BC03F9CB2C214E7D00E27C01 /* TopContentView.swift in Sources */,
 				860646202BF5996700906DA0 /* ARContentConst.swift in Sources */,
-				BC03F9D12C2151C200E27C01 /* TopViewController2.swift in Sources */,
+				BC03F9D12C2151C200E27C01 /* TopViewController.swift in Sources */,
 				860645F32BF5994400906DA0 /* CustomError.swift in Sources */,
 				860646892BF599DF00906DA0 /* RankingViewController.swift in Sources */,
 			);

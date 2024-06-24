@@ -1,5 +1,5 @@
 //
-//  TopNavigator2.swift
+//  TopNavigator.swift
 //  AR-GunMan
 //
 //  Created by ウルトラ深瀬 on 18/6/24.
@@ -8,14 +8,14 @@
 import UIKit
 import PanModal
 
-protocol TopNavigatorInterface2 {
+protocol TopNavigatorInterface {
     func showGame()
     func showSettings()
     func showTutorial()
     func showCameraPermissionDescriptionAlert()
 }
 
-final class TopNavigator2: TopNavigatorInterface2 {
+final class TopNavigator: TopNavigatorInterface {
     private unowned let viewController: UIViewController
     
     init(viewController: UIViewController) {
@@ -23,9 +23,8 @@ final class TopNavigator2: TopNavigatorInterface2 {
     }
     
     static func assembleModules() -> UIViewController {
-        let vc = TopViewController2()
-        let navigator = TopNavigator2(viewController: vc)
-        let presenter = TopPresenter(
+        let vc = TopViewController()
+        vc.presenter = TopPresenter(
             replayNecessityCheckUseCase: ReplayNecessityCheckUseCase(
                 replayRepository: ReplayRepository()
             ),
@@ -33,14 +32,13 @@ final class TopNavigator2: TopNavigatorInterface2 {
             cameraPermissionCheckUseCase: CameraPermissionCheckUseCase(
                 avPermissionRepository: AVPermissionRepository()
             ),
-            navigator: navigator
+            navigator: TopNavigator(viewController: vc)
         )
-        vc.presenter = presenter
         return vc
     }
     
     func showGame() {
-        let vc = GameNavigator2.assembleModules()
+        let vc = GameNavigator.assembleModules()
         viewController.present(vc, animated: true)
     }
     

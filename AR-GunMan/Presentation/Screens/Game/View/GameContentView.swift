@@ -1,5 +1,5 @@
 //
-//  GameView.swift
+//  GameContentView.swift
 //  AR-GunMan
 //
 //  Created by ウルトラ深瀬 on 23/6/24.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class GameView: UIView {
+final class GameContentView: UIView {
     @IBOutlet weak var bulletsCountImageView: UIImageView!
     @IBOutlet weak var sightImageView: UIImageView!
     @IBOutlet weak var timeCountLabel: UILabel!
@@ -29,7 +29,7 @@ final class GameView: UIView {
     }
     
     private func loadNib() {
-        let nib = UINib(nibName: GameView.className, bundle: nil)
+        let nib = UINib(nibName: GameContentView.className, bundle: nil)
         guard let view = nib.instantiate(withOwner: self).first as? UIView else { return }
         addSubview(view)
         addConstraints(for: view)

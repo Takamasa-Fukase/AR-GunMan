@@ -1,5 +1,5 @@
 //
-//  TopView.swift
+//  TopContentView.swift
 //  AR-GunMan
 //
 //  Created by ウルトラ深瀬 on 18/6/24.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class TopView: UIView {
+final class TopContentView: UIView {
     @IBOutlet weak var startButton: UIButton!
     @IBOutlet weak var startButtonIcon: UIImageView!
     @IBOutlet weak var settingsButton: UIButton!
@@ -30,7 +30,7 @@ final class TopView: UIView {
     }
     
     private func loadNib() {
-        let nib = UINib(nibName: TopView.className, bundle: nil)
+        let nib = UINib(nibName: TopContentView.className, bundle: nil)
         guard let view = nib.instantiate(withOwner: self).first as? UIView else { return }
         addSubview(view)
         addConstraints(for: view)

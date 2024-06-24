@@ -1,5 +1,5 @@
 //
-//  GameNavigator2.swift
+//  GameNavigator.swift
 //  AR-GunMan
 //
 //  Created by ウルトラ深瀬 on 20/6/24.
@@ -10,14 +10,14 @@ import PanModal
 import RxCocoa
 import CoreMotion
 
-protocol GameNavigatorInterface2 {
+protocol GameNavigatorInterface {
     func showTutorialView(tutorialEndEventReceiver: PublishRelay<Void>)
     func showWeaponChangeView(weaponSelectEventReceiver: PublishRelay<WeaponType>)
     func dismissWeaponChangeView()
     func showResultView(score: Double)
 }
 
-final class GameNavigator2: GameNavigatorInterface2 {
+final class GameNavigator: GameNavigatorInterface {
     private unowned let viewController: UIViewController
     
     init(viewController: UIViewController) {
@@ -25,10 +25,10 @@ final class GameNavigator2: GameNavigatorInterface2 {
     }
 
     static func assembleModules() -> UIViewController {
-        let vc = GameViewController2()
+        let vc = GameViewController()
         vc.modalPresentationStyle = .fullScreen
         let tutorialRepository = TutorialRepository()
-        let presenter = GamePresenter(
+        vc.presenter = GamePresenter(
             gameUseCasesComposer: GameUseCasesComposer(useCases: .init(
                 tutorialNecessityCheckUseCase: TutorialNecessityCheckUseCase(
                     tutorialRepository: tutorialRepository
@@ -49,13 +49,10 @@ final class GameNavigator2: GameNavigatorInterface2 {
                 targetHitFilterUseCase: TargetHitFilterUseCase(),
                 targetHitHandlingUseCase: TargetHitHandlingUseCase()
             )),
-            navigator: GameNavigator2(viewController: vc)
+            navigator: GameNavigator(viewController: vc)
         )
-        let arContentController = ARContentController()
-        let deviceMotionController = DeviceMotionController2(coreMotionManager: CMMotionManager())
-        vc.presenter = presenter
-        vc.arContentController = arContentController
-        vc.deviceMotionController = deviceMotionController
+        vc.arContentController = ARContentController()
+        vc.deviceMotionController = DeviceMotionController(coreMotionManager: CMMotionManager())
         return vc
     }
     
