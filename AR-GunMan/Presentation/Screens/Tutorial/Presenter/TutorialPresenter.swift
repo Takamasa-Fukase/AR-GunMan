@@ -50,6 +50,7 @@ final class TutorialPresenter: TutorialPresenterInterface {
     
     func transform(input: TutorialControllerInput) -> TutorialViewModel {
         disposeBag.insert {
+            // MARK: Transitions
             Observable
                 .merge(
                     input.bottomButtonTapped
@@ -62,11 +63,10 @@ final class TutorialPresenter: TutorialPresenterInterface {
                     guard let self = self else {return}
                     self.navigator.dismiss()
                 })
+            
+            // MARK: Others
             input.viewDidDisappear
-                .subscribe(onNext: { [weak self] in
-                    guard let self = self else {return}
-                    self.tutorialEndEventReceiver?.accept(())
-                })
+                .bind(to: tutorialEndEventReceiver ?? PublishRelay<Void>())
         }
         
         let insertBlurEffectView = input.viewDidLoad
