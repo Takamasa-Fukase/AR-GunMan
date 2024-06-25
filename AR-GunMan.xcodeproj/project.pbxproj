@@ -45,7 +45,6 @@
 		59D2D5952552E718006DDB70 /* WeaponSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2D5912552E718006DDB70 /* WeaponSelectViewController.swift */; };
 		59D2D5962552E718006DDB70 /* WeaponSelectViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59D2D5922552E718006DDB70 /* WeaponSelectViewController.storyboard */; };
 		5F0F53972765C07884597855 /* Pods_AR_GunManTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82CB4F049BB35C36EAA5A632 /* Pods_AR_GunManTests.framework */; };
-		67200F5727A0020B00AD92EC /* RankingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67200F5627A0020B00AD92EC /* RankingViewModel.swift */; };
 		67684E6D27B988C0000B2B5C /* SceneViewSettingUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67684E6C27B988C0000B2B5C /* SceneViewSettingUtil.swift */; };
 		677DF1EE27A710A8007512F6 /* SafariViewUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 677DF1ED27A710A8007512F6 /* SafariViewUtil.swift */; };
 		677DF1F127A7C096007512F6 /* RankingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 677DF1F027A7C096007512F6 /* RankingRepository.swift */; };
@@ -99,9 +98,7 @@
 		8606467C2BF599D500906DA0 /* ResultUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8627F63A2BD0B1340003D374 /* ResultUseCase.swift */; };
 		860646892BF599DF00906DA0 /* RankingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86627DE5273FD5E30044A980 /* RankingViewController.swift */; };
 		8606468C2BF599DF00906DA0 /* RankingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5921A206255D6A4E001D8C39 /* RankingCell.swift */; };
-		8606468D2BF599DF00906DA0 /* RankingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86F1573C2BD7BBA200BE979C /* RankingUseCase.swift */; };
 		8606468E2BF599DF00906DA0 /* RankingNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86F1573A2BD7B71E00BE979C /* RankingNavigator.swift */; };
-		8606468F2BF599DF00906DA0 /* RankingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67200F5627A0020B00AD92EC /* RankingViewModel.swift */; };
 		860646972BF599E900906DA0 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595E6986256C0190002B4F3E /* SettingsViewController.swift */; };
 		860646982BF599E900906DA0 /* SettingsNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8627F62F2BCDFEB40003D374 /* SettingsNavigator.swift */; };
 		8606469F2BF599FB00906DA0 /* pistol-out-bullets.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 59D2D5502552E2CC006DDB70 /* pistol-out-bullets.mp3 */; };
@@ -165,7 +162,6 @@
 		86C5AB982AB8819C00CB161D /* UIAlertController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C5AB972AB8819C00CB161D /* UIAlertController+Extension.swift */; };
 		86F044272BEA0A60005D8D14 /* TimerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86F044262BEA0A60005D8D14 /* TimerRepository.swift */; };
 		86F1573B2BD7B71E00BE979C /* RankingNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86F1573A2BD7B71E00BE979C /* RankingNavigator.swift */; };
-		86F1573D2BD7BBA200BE979C /* RankingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86F1573C2BD7BBA200BE979C /* RankingUseCase.swift */; };
 		86F1573F2BD9329600BE979C /* CustomError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86F1573E2BD9329600BE979C /* CustomError.swift */; };
 		86F157412BD93C1E00BE979C /* ErrorConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86F157402BD93C1E00BE979C /* ErrorConst.swift */; };
 		BC03F9CA2C214E7D00E27C01 /* TopContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC03F9C92C214E7D00E27C01 /* TopContentView.swift */; };
@@ -254,6 +250,8 @@
 		BC2EBB722C2A611000EB1400 /* ResultPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EBB702C2A611000EB1400 /* ResultPresenter.swift */; };
 		BC2EBB752C2A62F000EB1400 /* SettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EBB742C2A62F000EB1400 /* SettingsPresenter.swift */; };
 		BC2EBB762C2A62F000EB1400 /* SettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EBB742C2A62F000EB1400 /* SettingsPresenter.swift */; };
+		BC2EBB7D2C2A6BCE00EB1400 /* RankingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EBB7C2C2A6BCE00EB1400 /* RankingPresenter.swift */; };
+		BC2EBB7E2C2A6BCE00EB1400 /* RankingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EBB7C2C2A6BCE00EB1400 /* RankingPresenter.swift */; };
 		BC482DDB2C19664400FAF079 /* ResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DDA2C19664400FAF079 /* ResultViewModel.swift */; };
 		BC482DDC2C19664400FAF079 /* ResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DDA2C19664400FAF079 /* ResultViewModel.swift */; };
 		BC482DDE2C196FB000FAF079 /* ResultConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DDD2C196FB000FAF079 /* ResultConst.swift */; };
@@ -375,7 +373,6 @@
 		59E43329A2D9B4F8752F833A /* Pods-AR-GunMan-AR-GunManUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-GunMan-AR-GunManUITests.debug.xcconfig"; path = "Target Support Files/Pods-AR-GunMan-AR-GunManUITests/Pods-AR-GunMan-AR-GunManUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		59F79E5F256BE7B0006EC1B3 /* AR-GunMan.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "AR-GunMan.entitlements"; sourceTree = "<group>"; };
 		5AB32EC76FF682FB7040AD4D /* Pods-AR-GunMan-AR-GunManUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-GunMan-AR-GunManUITests.release.xcconfig"; path = "Target Support Files/Pods-AR-GunMan-AR-GunManUITests/Pods-AR-GunMan-AR-GunManUITests.release.xcconfig"; sourceTree = "<group>"; };
-		67200F5627A0020B00AD92EC /* RankingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingViewModel.swift; sourceTree = "<group>"; };
 		67684E6C27B988C0000B2B5C /* SceneViewSettingUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneViewSettingUtil.swift; sourceTree = "<group>"; };
 		677DF1ED27A710A8007512F6 /* SafariViewUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariViewUtil.swift; sourceTree = "<group>"; };
 		677DF1F027A7C096007512F6 /* RankingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingRepository.swift; sourceTree = "<group>"; };
@@ -411,7 +408,6 @@
 		86C5AB972AB8819C00CB161D /* UIAlertController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extension.swift"; sourceTree = "<group>"; };
 		86F044262BEA0A60005D8D14 /* TimerRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerRepository.swift; sourceTree = "<group>"; };
 		86F1573A2BD7B71E00BE979C /* RankingNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingNavigator.swift; sourceTree = "<group>"; };
-		86F1573C2BD7BBA200BE979C /* RankingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingUseCase.swift; sourceTree = "<group>"; };
 		86F1573E2BD9329600BE979C /* CustomError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomError.swift; sourceTree = "<group>"; };
 		86F157402BD93C1E00BE979C /* ErrorConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorConst.swift; sourceTree = "<group>"; };
 		90D4D1AD42BB6A3A0192887F /* Pods-AR-GunManTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-GunManTests.release.xcconfig"; path = "Target Support Files/Pods-AR-GunManTests/Pods-AR-GunManTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -458,6 +454,7 @@
 		BC2EBB6C2C2A52AA00EB1400 /* WeaponSelectPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponSelectPresenter.swift; sourceTree = "<group>"; };
 		BC2EBB702C2A611000EB1400 /* ResultPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultPresenter.swift; sourceTree = "<group>"; };
 		BC2EBB742C2A62F000EB1400 /* SettingsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPresenter.swift; sourceTree = "<group>"; };
+		BC2EBB7C2C2A6BCE00EB1400 /* RankingPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingPresenter.swift; sourceTree = "<group>"; };
 		BC482DDA2C19664400FAF079 /* ResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewModel.swift; sourceTree = "<group>"; };
 		BC482DDD2C196FB000FAF079 /* ResultConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultConst.swift; sourceTree = "<group>"; };
 		BC482DE02C19D53F00FAF079 /* NameRegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameRegisterViewModel.swift; sourceTree = "<group>"; };
@@ -698,7 +695,7 @@
 			isa = PBXGroup;
 			children = (
 				86A6CB3A2BCC0FC500628C61 /* Navigator */,
-				86A6CB392BCC0FC000628C61 /* ViewModel */,
+				BC2EBB7B2C2A6BBE00EB1400 /* Presenter */,
 				86A6CB382BCC0FBB00628C61 /* View */,
 			);
 			path = Ranking;
@@ -862,14 +859,6 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		86A6CB392BCC0FC000628C61 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				67200F5627A0020B00AD92EC /* RankingViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
 		86A6CB3A2BCC0FC500628C61 /* Navigator */ = {
 			isa = PBXGroup;
 			children = (
@@ -930,7 +919,6 @@
 				BC03F9EB2C21C5AE00E27C01 /* Game */,
 				8627F63A2BD0B1340003D374 /* ResultUseCase.swift */,
 				860C94982BD3D2980042D52C /* NameRegisterUseCase.swift */,
-				86F1573C2BD7BBA200BE979C /* RankingUseCase.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -1105,6 +1093,14 @@
 			isa = PBXGroup;
 			children = (
 				BC2EBB742C2A62F000EB1400 /* SettingsPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		BC2EBB7B2C2A6BBE00EB1400 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				BC2EBB7C2C2A6BCE00EB1400 /* RankingPresenter.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -1484,9 +1480,9 @@
 				BC482DE72C1A74F800FAF079 /* ObservableErrorTracker.swift in Sources */,
 				BC03FA2A2C280D3600E27C01 /* DeviceMotionController.swift in Sources */,
 				67DB2C5D27C17EF300B8CB3C /* TopConst.swift in Sources */,
+				BC2EBB7D2C2A6BCE00EB1400 /* RankingPresenter.swift in Sources */,
 				BC7FF24A2C2983D20014CDCE /* SceneDelegate.swift in Sources */,
 				BC03F9FC2C21CB2A00E27C01 /* WeaponChangeUseCase.swift in Sources */,
-				86F1573D2BD7BBA200BE979C /* RankingUseCase.swift in Sources */,
 				86594DCC2BCD75E100971D1A /* ReplayRepository.swift in Sources */,
 				BC92C85E297420CD00E49BD5 /* UserDefaults+Extension.swift in Sources */,
 				67DB2C6127C17F8D00B8CB3C /* GameConst.swift in Sources */,
@@ -1568,7 +1564,6 @@
 				861B87752BFE0F6100D0882D /* SoundPlayer.swift in Sources */,
 				86F044272BEA0A60005D8D14 /* TimerRepository.swift in Sources */,
 				59D2D53A2552E1D2006DDB70 /* Storyboard+Extension.swift in Sources */,
-				67200F5727A0020B00AD92EC /* RankingViewModel.swift in Sources */,
 				BC03FA1E2C242E5200E27C01 /* TutorialEndHandlingUseCase.swift in Sources */,
 				67684E6D27B988C0000B2B5C /* SceneViewSettingUtil.swift in Sources */,
 				BC03FA052C21CB5700E27C01 /* TutorialNecessityCheckUseCase.swift in Sources */,
@@ -1668,6 +1663,7 @@
 				BCD1C2582C06B60C008975EB /* CompositeCalculator.swift in Sources */,
 				BC03F9F12C21CAFF00E27C01 /* WeaponAutoReloadFilterUseCase.swift in Sources */,
 				BC03FA122C21CB7900E27C01 /* ReloadMotionDetectionCountUseCase.swift in Sources */,
+				BC2EBB7E2C2A6BCE00EB1400 /* RankingPresenter.swift in Sources */,
 				860645F52BF5994900906DA0 /* Storyboard+Extension.swift in Sources */,
 				BC482DE82C1A74F800FAF079 /* ObservableErrorTracker.swift in Sources */,
 				8606461A2BF5996700906DA0 /* GameConst.swift in Sources */,
@@ -1676,7 +1672,6 @@
 				BC03FA2E2C293B3100E27C01 /* GameUseCasesComposer.swift in Sources */,
 				8606460F2BF5996200906DA0 /* RankingUtil.swift in Sources */,
 				BC03FA002C21CB4500E27C01 /* TargetHitFilterUseCase.swift in Sources */,
-				8606468F2BF599DF00906DA0 /* RankingViewModel.swift in Sources */,
 				860646102BF5996200906DA0 /* SceneViewSettingUtil.swift in Sources */,
 				861B87762BFE1E4700D0882D /* SoundPlayer.swift in Sources */,
 				BC03FA2B2C280D3600E27C01 /* DeviceMotionController.swift in Sources */,
@@ -1691,7 +1686,6 @@
 				860646162BF5996200906DA0 /* TimeCountUtil.swift in Sources */,
 				8606461E2BF5996700906DA0 /* TopConst.swift in Sources */,
 				BC03FA032C21CB4F00E27C01 /* TargetHitHandlingUseCase.swift in Sources */,
-				8606468D2BF599DF00906DA0 /* RankingUseCase.swift in Sources */,
 				8606462D2BF5997200906DA0 /* RankingRepository.swift in Sources */,
 				8606461C2BF5996700906DA0 /* SoundType.swift in Sources */,
 				BCC512C72C15CF7300D77305 /* WeaponTypeConst.swift in Sources */,
