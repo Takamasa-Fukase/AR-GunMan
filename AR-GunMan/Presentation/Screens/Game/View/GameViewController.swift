@@ -13,7 +13,7 @@ class GameViewController: UIViewController {
     var presenter: GamePresenterInterface!
     var arContentController: ARContentController!
     var deviceMotionController: DeviceMotionController!
-    private let contentView = GameContentView()
+    private var contentView: GameContentView!
     private let disposeBag = DisposeBag()
 
     override func viewDidLoad() {
@@ -24,6 +24,7 @@ class GameViewController: UIViewController {
     }
     
     private func setView() {
+        contentView = .init(frame: view.frame)
         view.addSubview(contentView)
         view.addConstraints(for: contentView)
         view.backgroundColor = .systemBackground

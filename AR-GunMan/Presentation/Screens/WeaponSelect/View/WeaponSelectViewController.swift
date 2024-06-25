@@ -12,7 +12,7 @@ import RxCocoa
 
 final class WeaponSelectViewController: UIViewController {
     var presenter: WeaponSelectPresenterInterface!
-    private let contentView = WeaponSelectContentView()
+    private var contentView: WeaponSelectContentView!
     private let disposeBag = DisposeBag()
         
     override func viewDidLoad() {
@@ -23,6 +23,7 @@ final class WeaponSelectViewController: UIViewController {
     }
     
     private func setView() {
+        contentView = .init(frame: view.frame)
         view.addSubview(contentView)
         view.addConstraints(for: contentView)
     }

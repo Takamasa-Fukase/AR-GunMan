@@ -22,7 +22,7 @@ final class ResultViewController: UIViewController {
     }
     
     private func setView() {
-        contentView = ResultContentView(frame: view.frame)
+        contentView = .init(frame: view.frame)
         view.addSubview(contentView)
         view.addConstraints(for: contentView)
     }

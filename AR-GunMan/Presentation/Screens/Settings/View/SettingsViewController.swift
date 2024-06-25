@@ -11,7 +11,7 @@ import RxCocoa
 
 final class SettingsViewController: UIViewController {
     var presenter: SettingsPresenterInterface!
-    private let contentView = SettingsContentView()
+    private var contentView: SettingsContentView!
     private let disposeBag = DisposeBag()
 
     override func viewDidLoad() {
@@ -22,6 +22,7 @@ final class SettingsViewController: UIViewController {
     }
     
     private func setView() {
+        contentView = .init(frame: view.frame)
         view.addSubview(contentView)
         view.addConstraints(for: contentView)
     }

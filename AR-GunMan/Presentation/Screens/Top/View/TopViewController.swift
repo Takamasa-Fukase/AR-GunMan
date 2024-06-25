@@ -11,7 +11,7 @@ import RxCocoa
 
 class TopViewController: UIViewController {
     var presenter: TopPresenterInterface!
-    private let contentView = TopContentView()
+    private var contentView: TopContentView!
     private let disposeBag = DisposeBag()
 
     override func viewDidLoad() {
@@ -22,6 +22,7 @@ class TopViewController: UIViewController {
     }
     
     private func setView() {
+        contentView = .init(frame: view.frame)
         view.addSubview(contentView)
         view.addConstraints(for: contentView)
     }

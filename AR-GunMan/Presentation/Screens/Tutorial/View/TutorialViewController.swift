@@ -11,7 +11,7 @@ import RxCocoa
 
 final class TutorialViewController: UIViewController {
     var presenter: TutorialPresenterInterface!
-    private let contentView = TutorialContentView()
+    private var contentView: TutorialContentView!
     private let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
@@ -22,6 +22,7 @@ final class TutorialViewController: UIViewController {
     }
     
     private func setView() {
+        contentView = .init(frame: view.frame)
         view.addSubview(contentView)
         view.addConstraints(for: contentView)
     }
