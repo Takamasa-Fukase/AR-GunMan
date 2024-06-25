@@ -21,8 +21,7 @@ final class WeaponSelectNavigator: WeaponSelectNavigatorInterface {
     static func assembleModules(
         weaponSelectEventReceiver: PublishRelay<WeaponType>?
     ) -> UIViewController {
-        let storyboard = UIStoryboard(name: WeaponSelectViewController.className, bundle: nil)
-        let vc = storyboard.instantiateInitialViewController() as! WeaponSelectViewController
+        let vc = WeaponSelectViewController()
         vc.presenter = WeaponSelectPresenter(
             navigator: WeaponSelectNavigator(viewController: vc),
             weaponSelectEventReceiver: weaponSelectEventReceiver

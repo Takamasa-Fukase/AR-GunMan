@@ -41,7 +41,6 @@
 		59D2D5932552E718006DDB70 /* WeaponSelectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2D58F2552E717006DDB70 /* WeaponSelectCell.swift */; };
 		59D2D5942552E718006DDB70 /* WeaponSelectCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59D2D5902552E718006DDB70 /* WeaponSelectCell.xib */; };
 		59D2D5952552E718006DDB70 /* WeaponSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2D5912552E718006DDB70 /* WeaponSelectViewController.swift */; };
-		59D2D5962552E718006DDB70 /* WeaponSelectViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59D2D5922552E718006DDB70 /* WeaponSelectViewController.storyboard */; };
 		5F0F53972765C07884597855 /* Pods_AR_GunManTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82CB4F049BB35C36EAA5A632 /* Pods_AR_GunManTests.framework */; };
 		67684E6D27B988C0000B2B5C /* SceneViewSettingUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67684E6C27B988C0000B2B5C /* SceneViewSettingUtil.swift */; };
 		677DF1EE27A710A8007512F6 /* SafariViewUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 677DF1ED27A710A8007512F6 /* SafariViewUtil.swift */; };
@@ -254,6 +253,10 @@
 		BC2EBB8F2C2A8F8C00EB1400 /* TutorialContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EBB8D2C2A8F8C00EB1400 /* TutorialContentView.swift */; };
 		BC2EBB912C2A8FA800EB1400 /* TutorialContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC2EBB902C2A8FA800EB1400 /* TutorialContentView.xib */; };
 		BC2EBB922C2A8FA800EB1400 /* TutorialContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC2EBB902C2A8FA800EB1400 /* TutorialContentView.xib */; };
+		BC2EBB942C2A962500EB1400 /* WeaponSelectContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EBB932C2A962500EB1400 /* WeaponSelectContentView.swift */; };
+		BC2EBB952C2A962500EB1400 /* WeaponSelectContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EBB932C2A962500EB1400 /* WeaponSelectContentView.swift */; };
+		BC2EBB972C2A963B00EB1400 /* WeaponSelectContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC2EBB962C2A963B00EB1400 /* WeaponSelectContentView.xib */; };
+		BC2EBB982C2A963B00EB1400 /* WeaponSelectContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC2EBB962C2A963B00EB1400 /* WeaponSelectContentView.xib */; };
 		BC482DDE2C196FB000FAF079 /* ResultConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DDD2C196FB000FAF079 /* ResultConst.swift */; };
 		BC482DDF2C196FB000FAF079 /* ResultConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DDD2C196FB000FAF079 /* ResultConst.swift */; };
 		BC482DE72C1A74F800FAF079 /* ObservableErrorTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DE62C1A74F800FAF079 /* ObservableErrorTracker.swift */; };
@@ -365,7 +368,6 @@
 		59D2D58F2552E717006DDB70 /* WeaponSelectCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeaponSelectCell.swift; sourceTree = "<group>"; };
 		59D2D5902552E718006DDB70 /* WeaponSelectCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WeaponSelectCell.xib; sourceTree = "<group>"; };
 		59D2D5912552E718006DDB70 /* WeaponSelectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeaponSelectViewController.swift; sourceTree = "<group>"; };
-		59D2D5922552E718006DDB70 /* WeaponSelectViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = WeaponSelectViewController.storyboard; sourceTree = "<group>"; };
 		59E43329A2D9B4F8752F833A /* Pods-AR-GunMan-AR-GunManUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-GunMan-AR-GunManUITests.debug.xcconfig"; path = "Target Support Files/Pods-AR-GunMan-AR-GunManUITests/Pods-AR-GunMan-AR-GunManUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		59F79E5F256BE7B0006EC1B3 /* AR-GunMan.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "AR-GunMan.entitlements"; sourceTree = "<group>"; };
 		5AB32EC76FF682FB7040AD4D /* Pods-AR-GunMan-AR-GunManUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-GunMan-AR-GunManUITests.release.xcconfig"; path = "Target Support Files/Pods-AR-GunMan-AR-GunManUITests/Pods-AR-GunMan-AR-GunManUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -453,6 +455,8 @@
 		BC2EBB8A2C2A8E7D00EB1400 /* UIView+NibLoading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+NibLoading.swift"; sourceTree = "<group>"; };
 		BC2EBB8D2C2A8F8C00EB1400 /* TutorialContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialContentView.swift; sourceTree = "<group>"; };
 		BC2EBB902C2A8FA800EB1400 /* TutorialContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TutorialContentView.xib; sourceTree = "<group>"; };
+		BC2EBB932C2A962500EB1400 /* WeaponSelectContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponSelectContentView.swift; sourceTree = "<group>"; };
+		BC2EBB962C2A963B00EB1400 /* WeaponSelectContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeaponSelectContentView.xib; sourceTree = "<group>"; };
 		BC482DDD2C196FB000FAF079 /* ResultConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultConst.swift; sourceTree = "<group>"; };
 		BC482DE62C1A74F800FAF079 /* ObservableErrorTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableErrorTracker.swift; sourceTree = "<group>"; };
 		BC482DE92C1AAB7400FAF079 /* NameRegisterNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameRegisterNavigator.swift; sourceTree = "<group>"; };
@@ -777,7 +781,8 @@
 			isa = PBXGroup;
 			children = (
 				59D2D5912552E718006DDB70 /* WeaponSelectViewController.swift */,
-				59D2D5922552E718006DDB70 /* WeaponSelectViewController.storyboard */,
+				BC2EBB932C2A962500EB1400 /* WeaponSelectContentView.swift */,
+				BC2EBB962C2A963B00EB1400 /* WeaponSelectContentView.xib */,
 				59D2D58F2552E717006DDB70 /* WeaponSelectCell.swift */,
 				59D2D5902552E718006DDB70 /* WeaponSelectCell.xib */,
 			);
@@ -1289,10 +1294,10 @@
 				59484C6B25657E1C00F9C6A8 /* endWhistle.mp3 in Resources */,
 				59940B882552F54900EC20C1 /* GoogleService-Info.plist in Resources */,
 				59484C662565796400F9C6A8 /* bazookaReload.mp3 in Resources */,
-				59D2D5962552E718006DDB70 /* WeaponSelectViewController.storyboard in Resources */,
 				59D2D55E2552E2CC006DDB70 /* headShot.mp3 in Resources */,
 				59484C8525664E7400F9C6A8 /* bazookaShoot.mp3 in Resources */,
 				59D2D56A2552E31E006DDB70 /* Assets.xcassets in Resources */,
+				BC2EBB972C2A963B00EB1400 /* WeaponSelectContentView.xib in Resources */,
 				BC03F9CD2C214E9900E27C01 /* TopContentView.xib in Resources */,
 				59D2D55C2552E2CC006DDB70 /* pistol-slide.mp3 in Resources */,
 			);
@@ -1306,6 +1311,7 @@
 				860646A02BF599FB00906DA0 /* kyuiin.mp3 in Resources */,
 				860646AA2BF599FB00906DA0 /* startWhistle.mp3 in Resources */,
 				BC03FA252C2808A900E27C01 /* GameContentView.xib in Resources */,
+				BC2EBB982C2A963B00EB1400 /* WeaponSelectContentView.xib in Resources */,
 				860646A32BF599FB00906DA0 /* bazookaSet.mp3 in Resources */,
 				8606469F2BF599FB00906DA0 /* pistol-out-bullets.mp3 in Resources */,
 				860646AB2BF599FB00906DA0 /* rankingAppear.mp3 in Resources */,
@@ -1559,6 +1565,7 @@
 				8629E1032BF22916004FFEBD /* ARContentController.swift in Sources */,
 				BC2EBB752C2A62F000EB1400 /* SettingsPresenter.swift in Sources */,
 				59A01134255AF580008996E3 /* ResultViewController.swift in Sources */,
+				BC2EBB942C2A962500EB1400 /* WeaponSelectContentView.swift in Sources */,
 				86594DCA2BCD558E00971D1A /* AVPermissionRepository.swift in Sources */,
 				5952F64025EA0E1900ADB85B /* Font+Extension.swift in Sources */,
 				86299BA02BEC7E9600BAA2B3 /* ARContentConst.swift in Sources */,
@@ -1619,6 +1626,7 @@
 				BC22E0232C1C71E900C59BAB /* UITapGestureRecognizer+Rx.swift in Sources */,
 				BC0BBE4B2C174B2800789349 /* TutorialNavigator.swift in Sources */,
 				BC2EBB8F2C2A8F8C00EB1400 /* TutorialContentView.swift in Sources */,
+				BC2EBB952C2A962500EB1400 /* WeaponSelectContentView.swift in Sources */,
 				BCD89DA52C1EA56400BBBB99 /* Notification+Extension.swift in Sources */,
 				860646112BF5996200906DA0 /* SceneNodeUtil.swift in Sources */,
 				860646122BF5996200906DA0 /* SafariViewUtil.swift in Sources */,
