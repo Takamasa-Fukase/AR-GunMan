@@ -13,8 +13,8 @@ class GameViewController: UIViewController {
     var presenter: GamePresenterInterface!
     var arContentController: ARContentController!
     var deviceMotionController: DeviceMotionController!
-    private let disposeBag = DisposeBag()
     private let contentView = GameContentView()
+    private let disposeBag = DisposeBag()
 
     override func viewDidLoad() {
         super.viewDidLoad()

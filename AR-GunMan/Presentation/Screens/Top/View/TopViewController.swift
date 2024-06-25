@@ -11,8 +11,8 @@ import RxCocoa
 
 class TopViewController: UIViewController {
     var presenter: TopPresenterInterface!
-    private let disposeBag = DisposeBag()
     private let contentView = TopContentView()
+    private let disposeBag = DisposeBag()
 
     override func viewDidLoad() {
         super.viewDidLoad()

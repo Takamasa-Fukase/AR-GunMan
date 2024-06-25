@@ -30,7 +30,7 @@ final class TopContentView: UIView {
     }
     
     private func loadNib() {
-        let nib = UINib(nibName: TopContentView.className, bundle: nil)
+        let nib = UINib(nibName: Self.className, bundle: nil)
         guard let view = nib.instantiate(withOwner: self).first as? UIView else { return }
         addSubview(view)
         addConstraints(for: view)

@@ -44,11 +44,18 @@ final class RankingListView: UIView {
     }
     
     private func configure() {
-        let nib = UINib(nibName: RankingListView.className, bundle: nil)
+        loadNib()
+        setupUI()
+    }
+    
+    private func loadNib() {
+        let nib = UINib(nibName: Self.className, bundle: nil)
         guard let view = nib.instantiate(withOwner: self).first as? UIView else { return }
         addSubview(view)
         addConstraints(for: view)
-        
+    }
+    
+    private func setupUI() {
         tableView.contentInset.top = 10
         tableView.register(UINib(nibName: RankingCell.className, bundle: nil), forCellReuseIdentifier: RankingCell.className)
         activityIndicatorView.hidesWhenStopped = true
