@@ -24,7 +24,6 @@
 		5961B6DA256ECAEF00B6D736 /* kyuiin.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5961B6D9256ECAEF00B6D736 /* kyuiin.mp3 */; };
 		59940B882552F54900EC20C1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 59940B872552F54900EC20C1 /* GoogleService-Info.plist */; };
 		59940BAC2552FAA600EC20C1 /* NameRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59940BAB2552FAA600EC20C1 /* NameRegisterViewController.swift */; };
-		59940BB12552FAAF00EC20C1 /* NameRegisterViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59940BB02552FAAF00EC20C1 /* NameRegisterViewController.storyboard */; };
 		59945100256AD55900560202 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 599450FF256AD55900560202 /* TutorialViewController.swift */; };
 		59A01134255AF580008996E3 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A01133255AF580008996E3 /* ResultViewController.swift */; };
 		59D2D4D92552DE66006DDB70 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2D4D82552DE66006DDB70 /* AppDelegate.swift */; };
@@ -260,6 +259,10 @@
 		BC2EBB9B2C2A992500EB1400 /* ResultContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EBB992C2A992500EB1400 /* ResultContentView.swift */; };
 		BC2EBB9D2C2A994100EB1400 /* ResultContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC2EBB9C2C2A994100EB1400 /* ResultContentView.xib */; };
 		BC2EBB9E2C2A994100EB1400 /* ResultContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC2EBB9C2C2A994100EB1400 /* ResultContentView.xib */; };
+		BC2EBBA02C2AA5DA00EB1400 /* NameRegisterContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EBB9F2C2AA5DA00EB1400 /* NameRegisterContentView.swift */; };
+		BC2EBBA12C2AA5DA00EB1400 /* NameRegisterContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EBB9F2C2AA5DA00EB1400 /* NameRegisterContentView.swift */; };
+		BC2EBBA32C2AA63F00EB1400 /* NameRegisterContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC2EBBA22C2AA63F00EB1400 /* NameRegisterContentView.xib */; };
+		BC2EBBA42C2AA64000EB1400 /* NameRegisterContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC2EBBA22C2AA63F00EB1400 /* NameRegisterContentView.xib */; };
 		BC482DDE2C196FB000FAF079 /* ResultConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DDD2C196FB000FAF079 /* ResultConst.swift */; };
 		BC482DDF2C196FB000FAF079 /* ResultConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DDD2C196FB000FAF079 /* ResultConst.swift */; };
 		BC482DE72C1A74F800FAF079 /* ObservableErrorTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DE62C1A74F800FAF079 /* ObservableErrorTracker.swift */; };
@@ -348,7 +351,6 @@
 		5961B6D9256ECAEF00B6D736 /* kyuiin.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = kyuiin.mp3; sourceTree = "<group>"; };
 		59940B872552F54900EC20C1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		59940BAB2552FAA600EC20C1 /* NameRegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameRegisterViewController.swift; sourceTree = "<group>"; };
-		59940BB02552FAAF00EC20C1 /* NameRegisterViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NameRegisterViewController.storyboard; sourceTree = "<group>"; };
 		599450FF256AD55900560202 /* TutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 		59A01133255AF580008996E3 /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		59D2D4D52552DE66006DDB70 /* AR-GunMan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AR-GunMan.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -461,6 +463,8 @@
 		BC2EBB962C2A963B00EB1400 /* WeaponSelectContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeaponSelectContentView.xib; sourceTree = "<group>"; };
 		BC2EBB992C2A992500EB1400 /* ResultContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultContentView.swift; sourceTree = "<group>"; };
 		BC2EBB9C2C2A994100EB1400 /* ResultContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResultContentView.xib; sourceTree = "<group>"; };
+		BC2EBB9F2C2AA5DA00EB1400 /* NameRegisterContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameRegisterContentView.swift; sourceTree = "<group>"; };
+		BC2EBBA22C2AA63F00EB1400 /* NameRegisterContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NameRegisterContentView.xib; sourceTree = "<group>"; };
 		BC482DDD2C196FB000FAF079 /* ResultConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultConst.swift; sourceTree = "<group>"; };
 		BC482DE62C1A74F800FAF079 /* ObservableErrorTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableErrorTracker.swift; sourceTree = "<group>"; };
 		BC482DE92C1AAB7400FAF079 /* NameRegisterNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameRegisterNavigator.swift; sourceTree = "<group>"; };
@@ -823,7 +827,8 @@
 			isa = PBXGroup;
 			children = (
 				59940BAB2552FAA600EC20C1 /* NameRegisterViewController.swift */,
-				59940BB02552FAAF00EC20C1 /* NameRegisterViewController.storyboard */,
+				BC2EBB9F2C2AA5DA00EB1400 /* NameRegisterContentView.swift */,
+				BC2EBBA22C2AA63F00EB1400 /* NameRegisterContentView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1279,11 +1284,11 @@
 				59484C7D256584B000F9C6A8 /* startWhistle.mp3 in Resources */,
 				59D2D55D2552E2CC006DDB70 /* pistol-fire.mp3 in Resources */,
 				59484C8A25664FEC00F9C6A8 /* bazookaHit.mp3 in Resources */,
-				59940BB12552FAAF00EC20C1 /* NameRegisterViewController.storyboard in Resources */,
 				BC2EBB882C2A8A1800EB1400 /* SettingsContentView.xib in Resources */,
 				BC482DF92C1ABB6900FAF079 /* RankingListView.xib in Resources */,
 				59D2D5942552E718006DDB70 /* WeaponSelectCell.xib in Resources */,
 				5961B6D5256EC44700B6D736 /* taimei-san.jpg in Resources */,
+				BC2EBBA32C2AA63F00EB1400 /* NameRegisterContentView.xib in Resources */,
 				BCD96C03297C757600E33587 /* RankingViewController.storyboard in Resources */,
 				5961B6DA256ECAEF00B6D736 /* kyuiin.mp3 in Resources */,
 				59D2D55B2552E2CC006DDB70 /* pistol-out-bullets.mp3 in Resources */,
@@ -1312,6 +1317,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC2EBBA42C2AA64000EB1400 /* NameRegisterContentView.xib in Resources */,
 				860646C12BF59A3F00906DA0 /* LaunchScreen.storyboard in Resources */,
 				860646A02BF599FB00906DA0 /* kyuiin.mp3 in Resources */,
 				860646AA2BF599FB00906DA0 /* startWhistle.mp3 in Resources */,
@@ -1495,6 +1501,7 @@
 				677DF1F427A7C100007512F6 /* Ranking.swift in Sources */,
 				BCD89D9E2C1EA01A00BBBB99 /* NotificationCenter+Extension.swift in Sources */,
 				BC92C85A297348D500E49BD5 /* ScoreCalculator.swift in Sources */,
+				BC2EBBA02C2AA5DA00EB1400 /* NameRegisterContentView.swift in Sources */,
 				86F1573F2BD9329600BE979C /* CustomError.swift in Sources */,
 				BC03F9F92C21CB1E00E27C01 /* ReloadMotionFilterUseCase.swift in Sources */,
 				8627F6322BCE454C0003D374 /* TutorialNavigator.swift in Sources */,
@@ -1593,6 +1600,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC2EBBA12C2AA5DA00EB1400 /* NameRegisterContentView.swift in Sources */,
 				BC0BBE452C17460A00789349 /* UIView+Extension.swift in Sources */,
 				860646762BF599D500906DA0 /* ResultViewController.swift in Sources */,
 				BC03F9F72C21CB1400E27C01 /* FireMotionFilterUseCase.swift in Sources */,

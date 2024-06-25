@@ -11,37 +11,29 @@ import RxCocoa
 
 final class NameRegisterViewController: UIViewController, BackgroundViewTapTrackable {
     var presenter: NameRegisterPresenterInterface!
+    private var contentView: NameRegisterContentView!
     private let disposeBag = DisposeBag()
-    
-    @IBOutlet private weak var rankLabel: UILabel!
-    @IBOutlet private weak var rankLabelSpinner: UIActivityIndicatorView!
-    @IBOutlet private weak var scoreLabel: UILabel!
-    @IBOutlet private weak var nameTextField: UITextField!
-    @IBOutlet private weak var noButton: UIButton!
-    @IBOutlet private weak var registerButton: UIButton!
-    @IBOutlet private weak var registerButtonSpinner: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupUI()
+        setView()
         bind()
     }
     
-    private func setupUI() {
-        nameTextField.delegate = self
-        registerButton.setTitleColor(.black.withAlphaComponent(0.1), for: .disabled)
-        rankLabelSpinner.hidesWhenStopped = true
-        registerButtonSpinner.hidesWhenStopped = true
+    private func setView() {
+        contentView = .init(frame: view.frame)
+        view.addSubview(contentView)
+        view.addConstraints(for: contentView)
     }
     
     private func bind() {
         let controllerInput = NameRegisterControllerInput(
             viewWillDisappear: rx.viewWillDisappear,
-            nameTextFieldChanged: nameTextField.rx.text.orEmpty.asObservable(),
-            registerButtonTapped: registerButton.rx.tap.asObservable(),
-            noButtonTapped: noButton.rx.tap.asObservable(),
-            backgroundViewTapped: trackBackgroundViewTap(),
+            nameTextFieldChanged: contentView.nameTextField.rx.text.orEmpty.asObservable(),
+            registerButtonTapped: contentView.registerButton.rx.tap.asObservable(),
+            noButtonTapped: contentView.noButton.rx.tap.asObservable(),
+            backgroundViewTapped: contentView.trackBackgroundViewTap(),
             keyboardWillShowNotificationReceived: NotificationCenter.keyboardWillShow,
             keyboardWillHideNotificationReceived: NotificationCenter.keyboardWillHide
         )
@@ -49,18 +41,18 @@ final class NameRegisterViewController: UIViewController, BackgroundViewTapTrack
         
         disposeBag.insert {
             viewModel.temporaryRankText
-                .bind(to: rankLabel.rx.text)
+                .bind(to: contentView.rankLabel.rx.text)
             viewModel.temporaryRankText
                 .map({ $0.isEmpty })
-                .bind(to: rankLabelSpinner.rx.isAnimating)
+                .bind(to: contentView.rankLabelSpinner.rx.isAnimating)
             viewModel.scoreText
-                .bind(to: scoreLabel.rx.text)
+                .bind(to: contentView.scoreLabel.rx.text)
             viewModel.isRegisterButtonEnabled
-                .bind(to: registerButton.rx.isEnabled)
+                .bind(to: contentView.registerButton.rx.isEnabled)
             viewModel.isRegistering
-                .bind(to: registerButton.rx.isHidden)
+                .bind(to: contentView.registerButton.rx.isHidden)
             viewModel.isRegistering
-                .bind(to: registerButtonSpinner.rx.isAnimating)
+                .bind(to: contentView.registerButtonSpinner.rx.isAnimating)
             viewModel.handleActiveTextFieldOverlapWhenKeyboardWillShow
                 .subscribe(onNext: { [weak self] notification in
                     guard let self = self,
@@ -69,7 +61,7 @@ final class NameRegisterViewController: UIViewController, BackgroundViewTapTrack
                     self.view.handleActiveTextFieldOverlapWhenKeyboardWillShow(
                         keyboardFrameEnd: keyboardFrameEnd,
                         keyboardAnimationDuration: duration,
-                        activeTextField: self.nameTextField
+                        activeTextField: self.contentView.nameTextField
                     )
                 })
             viewModel.resetActiveTextFieldPositionWhenKeyboardWillHide
@@ -79,12 +71,5 @@ final class NameRegisterViewController: UIViewController, BackgroundViewTapTrack
                     self.view.resetViewTransform(with: duration)
                 })
         }
-    }
-}
-
-extension NameRegisterViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        nameTextField.resignFirstResponder()
-        return true
     }
 }

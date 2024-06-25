@@ -24,8 +24,7 @@ final class NameRegisterNavigator: NameRegisterNavigatorInterface {
         temporaryRankTextObservable: Observable<String>,
         eventReceiver: NameRegisterEventReceiver
     ) -> UIViewController {
-        let storyboard: UIStoryboard = UIStoryboard(name: NameRegisterViewController.className, bundle: nil)
-        let vc = storyboard.instantiateInitialViewController() as! NameRegisterViewController
+        let vc = NameRegisterViewController()
         vc.modalPresentationStyle = .overCurrentContext
         vc.presenter = NameRegisterPresenter(
             rankingRepository: RankingRepository(),
