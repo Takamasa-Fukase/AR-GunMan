@@ -903,13 +903,13 @@
 			isa = PBXGroup;
 			children = (
 				BC03F9E42C21A3A000E27C01 /* Top */,
-				599450FE256AD53A00560202 /* Tutorial */,
 				BC03FA132C2426D900E27C01 /* Game */,
+				595E6985256C0169002B4F3E /* Settings */,
+				599450FE256AD53A00560202 /* Tutorial */,
 				59EF28EB256E93A600F63C74 /* WeaponSelect */,
 				BCD96C01297C6F4000E33587 /* Result */,
 				59D2D5732552E4A9006DDB70 /* NameRegister */,
 				59D2D5742552E4D1006DDB70 /* Ranking */,
-				595E6985256C0169002B4F3E /* Settings */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
