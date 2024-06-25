@@ -81,11 +81,8 @@ final class GamePresenter: GamePresenterInterface {
     private let gameUseCasesComposer: GameUseCasesComposerInterface
     private let navigator: GameNavigatorInterface
     private let state: State
-    
-    // 遷移先からの通知を受け取るレシーバー
     private let tutorialEndEventReceiver: PublishRelay<Void>
     private let weaponSelectEventReceiver: PublishRelay<WeaponType>
-    
     private let disposeBag = DisposeBag()
     
     init(

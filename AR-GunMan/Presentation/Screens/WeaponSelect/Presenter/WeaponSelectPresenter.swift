@@ -36,17 +36,17 @@ final class WeaponSelectPresenter: WeaponSelectPresenterInterface {
     
     func transform(input: WeaponSelectControllerInput) -> WeaponSelectViewModel {
         disposeBag.insert {
+            // MARK: Event posts
+            input.itemSelected
+                .map({ WeaponType.allCases[$0] })
+                .bind(to: weaponSelectEventReceiver ?? PublishRelay<WeaponType>())
+            
             // MARK: Transitions
             input.itemSelected
                 .subscribe(onNext: { [weak self] _ in
                     guard let self = self else {return}
                     self.navigator.dismiss()
                 })
-            
-            // MARK: Event posts
-            input.itemSelected
-                .map({ WeaponType.allCases[$0] })
-                .bind(to: weaponSelectEventReceiver ?? PublishRelay<WeaponType>())
         }
         
         return WeaponSelectViewModel(

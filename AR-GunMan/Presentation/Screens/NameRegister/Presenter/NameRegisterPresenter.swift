@@ -75,6 +75,12 @@ final class NameRegisterPresenter: NameRegisterPresenterInterface {
             .share()
         
         disposeBag.insert {
+            // MARK: Event posts
+            input.viewWillDisappear
+                .bind(to: eventReceiver?.onClose ?? PublishRelay<Void>())
+            rankingRegistered
+                .bind(to: eventReceiver?.onRegisterComplete ?? PublishRelay<Ranking>())
+            
             // MARK: Transitions
             Observable
                 .merge(
@@ -91,12 +97,6 @@ final class NameRegisterPresenter: NameRegisterPresenterInterface {
                     guard let self = self else { return }
                     self.navigator.showErrorAlert($0)
                 })
-            
-            // MARK: Event posts
-            input.viewWillDisappear
-                .bind(to: eventReceiver?.onClose ?? PublishRelay<Void>())
-            rankingRegistered
-                .bind(to: eventReceiver?.onRegisterComplete ?? PublishRelay<Ranking>())
         }
         
         return NameRegisterViewModel(

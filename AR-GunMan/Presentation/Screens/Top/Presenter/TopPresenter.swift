@@ -62,6 +62,7 @@ final class TopPresenter: TopPresenterInterface {
             .transform(input: .init(checkIsCameraAccessPermitted: startButtonIconChangeUseCaseOutput.buttonIconReverted))
         
         disposeBag.insert {
+            // MARK: Transitions
             Observable
                 .merge(
                     replayNecessityCheckUseCaseOutput.showGameForReplay,

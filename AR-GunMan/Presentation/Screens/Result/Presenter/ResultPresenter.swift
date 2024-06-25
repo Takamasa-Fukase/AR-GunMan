@@ -31,10 +31,7 @@ final class ResultPresenter: ResultPresenterInterface {
     private let replayRepository: ReplayRepositoryInterface
     private let navigator: ResultNavigatorInterface
     private let score: Double
-    
-    // 遷移先からの通知を受け取るレシーバー
     private let nameRegisterEventReceiver: NameRegisterEventReceiver
-    
     private let disposeBag = DisposeBag()
     
     init(
@@ -92,6 +89,7 @@ final class ResultPresenter: ResultPresenterInterface {
             })
         
         disposeBag.insert {
+            // MARK: Event sents
             temporaryRankIndex
                 .withLatestFrom(loadedRankingList) { (rankIndex: $0, rankingList: $1) }
                 .map({
@@ -101,6 +99,8 @@ final class ResultPresenter: ResultPresenterInterface {
                     )
                 })
                 .bind(to: temporaryRankTextRelay)
+            
+            // MARK: Transitions
             input.viewWillAppear
                 .take(1)
                 .flatMapLatest({ _ in
