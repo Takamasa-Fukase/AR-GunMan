@@ -30,18 +30,12 @@ final class ResultNavigator: ResultNavigatorInterface {
         let storyboard = UIStoryboard(name: ResultViewController.className, bundle: nil)
         let vc = storyboard.instantiateInitialViewController() as! ResultViewController
         vc.modalPresentationStyle = .fullScreen
-        let useCase = ResultUseCase(
+        vc.presenter = ResultPresenter(
             rankingRepository: RankingRepository(),
-            timerRepository: TimerRepository(),
-            replayRepository: ReplayRepository()
-        )
-        let navigator = ResultNavigator(viewController: vc)
-        let viewModel = ResultViewModel(
-            useCase: useCase,
-            navigator: navigator,
+            replayRepository: ReplayRepository(),
+            navigator: ResultNavigator(viewController: vc),
             score: score
         )
-        vc.viewModel = viewModel
         return vc
     }
     

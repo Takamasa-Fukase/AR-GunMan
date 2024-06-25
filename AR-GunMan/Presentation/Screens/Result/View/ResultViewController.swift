@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 
 final class ResultViewController: UIViewController {
-    var viewModel: ResultViewModel!
+    var presenter: ResultPresenterInterface!
     private let rankingListView = RankingListView()
     private let disposeBag = DisposeBag()
     
@@ -24,43 +24,33 @@ final class ResultViewController: UIViewController {
         super.viewDidLoad()
         
         setupUI()
-        bindViewModel()
+        bind()
     }
     
-    private func bindViewModel() {
-        let input = ResultViewModel.Input(
+    private func bind() {
+        let controllerInput = ResultControllerInput(
             viewWillAppear: rx.viewWillAppear,
             replayButtonTapped: replayButton.rx.tap.asObservable(),
             toHomeButtonTapped: homeButton.rx.tap.asObservable()
         )
-        let output = viewModel.transform(input: input)
-        let viewModelAction = output.viewModelAction
-        let outputToView = output.outputToView
+        let viewModel = presenter.transform(input: controllerInput)
         
         disposeBag.insert {
-            viewModelAction.rankingListLoaded.subscribe()
-            viewModelAction.nameRegisterViewShowed.subscribe()
-            viewModelAction.rankingListUpdatedAfterRegister.subscribe()
-            viewModelAction.viewDismissedToTopPage.subscribe()
-            viewModelAction.errorAlertShowed.subscribe()
-            viewModelAction.needsReplayFlagIsSetToTrue.subscribe()
-
-            outputToView.scoreText
+            viewModel.scoreText
                 .bind(to: scoreLabel.rx.text)
-            outputToView.showButtons
+            viewModel.showButtons
                 .subscribe(onNext: { [weak self] _ in
                     guard let self = self else {return}
                     self.showButtons()
                 })
-            outputToView.scrollCellToCenter
+            viewModel.scrollCellToCenter
                 .subscribe(onNext: { [weak self] indexPath in
                     guard let self = self else {return}
                     self.rankingListView.scrollCellToCenterVertically(at: indexPath)
                 })
-            
             rankingListView.bind(
-                rankingList: outputToView.rankingList,
-                isLoading: outputToView.isLoadingRankingList
+                rankingList: viewModel.rankingList,
+                isLoading: viewModel.isLoadingRankingList
             )
         }
     }
