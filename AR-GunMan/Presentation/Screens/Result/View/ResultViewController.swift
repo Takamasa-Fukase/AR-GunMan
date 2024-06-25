@@ -11,7 +11,7 @@ import RxCocoa
 
 final class ResultViewController: UIViewController {
     var presenter: ResultPresenterInterface!
-    private let contentView = ResultContentView()
+    private var contentView: ResultContentView!
     private let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
@@ -22,6 +22,7 @@ final class ResultViewController: UIViewController {
     }
     
     private func setView() {
+        contentView = ResultContentView(frame: view.frame)
         view.addSubview(contentView)
         view.addConstraints(for: contentView)
     }
