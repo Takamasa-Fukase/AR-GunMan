@@ -263,6 +263,10 @@
 		BC2EBBA12C2AA5DA00EB1400 /* NameRegisterContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EBB9F2C2AA5DA00EB1400 /* NameRegisterContentView.swift */; };
 		BC2EBBA32C2AA63F00EB1400 /* NameRegisterContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC2EBBA22C2AA63F00EB1400 /* NameRegisterContentView.xib */; };
 		BC2EBBA42C2AA64000EB1400 /* NameRegisterContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC2EBBA22C2AA63F00EB1400 /* NameRegisterContentView.xib */; };
+		BC2EBBA62C2AA9FE00EB1400 /* RankingContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EBBA52C2AA9FE00EB1400 /* RankingContentView.swift */; };
+		BC2EBBA72C2AA9FE00EB1400 /* RankingContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EBBA52C2AA9FE00EB1400 /* RankingContentView.swift */; };
+		BC2EBBA92C2AAA0F00EB1400 /* RankingContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC2EBBA82C2AAA0F00EB1400 /* RankingContentView.xib */; };
+		BC2EBBAA2C2AAA0F00EB1400 /* RankingContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC2EBBA82C2AAA0F00EB1400 /* RankingContentView.xib */; };
 		BC482DDE2C196FB000FAF079 /* ResultConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DDD2C196FB000FAF079 /* ResultConst.swift */; };
 		BC482DDF2C196FB000FAF079 /* ResultConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DDD2C196FB000FAF079 /* ResultConst.swift */; };
 		BC482DE72C1A74F800FAF079 /* ObservableErrorTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DE62C1A74F800FAF079 /* ObservableErrorTracker.swift */; };
@@ -308,7 +312,6 @@
 		BCD89DA42C1EA56400BBBB99 /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD89DA32C1EA56400BBBB99 /* Notification+Extension.swift */; };
 		BCD89DA52C1EA56400BBBB99 /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD89DA32C1EA56400BBBB99 /* Notification+Extension.swift */; };
 		BCD9675E2979E55400E33587 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD9675D2979E55400E33587 /* UIImageView+Extension.swift */; };
-		BCD96C03297C757600E33587 /* RankingViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BCD96C02297C757600E33587 /* RankingViewController.storyboard */; };
 		D54734259EA1C7BF11A28908 /* Pods_AR_GunMan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4280580740F2443B66781090 /* Pods_AR_GunMan.framework */; };
 /* End PBXBuildFile section */
 
@@ -465,6 +468,8 @@
 		BC2EBB9C2C2A994100EB1400 /* ResultContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResultContentView.xib; sourceTree = "<group>"; };
 		BC2EBB9F2C2AA5DA00EB1400 /* NameRegisterContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameRegisterContentView.swift; sourceTree = "<group>"; };
 		BC2EBBA22C2AA63F00EB1400 /* NameRegisterContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NameRegisterContentView.xib; sourceTree = "<group>"; };
+		BC2EBBA52C2AA9FE00EB1400 /* RankingContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingContentView.swift; sourceTree = "<group>"; };
+		BC2EBBA82C2AAA0F00EB1400 /* RankingContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RankingContentView.xib; sourceTree = "<group>"; };
 		BC482DDD2C196FB000FAF079 /* ResultConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultConst.swift; sourceTree = "<group>"; };
 		BC482DE62C1A74F800FAF079 /* ObservableErrorTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableErrorTracker.swift; sourceTree = "<group>"; };
 		BC482DE92C1AAB7400FAF079 /* NameRegisterNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameRegisterNavigator.swift; sourceTree = "<group>"; };
@@ -491,7 +496,6 @@
 		BCD89DA02C1EA1E800BBBB99 /* KeyboardOverlapCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardOverlapCalculator.swift; sourceTree = "<group>"; };
 		BCD89DA32C1EA56400BBBB99 /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
 		BCD9675D2979E55400E33587 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
-		BCD96C02297C757600E33587 /* RankingViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RankingViewController.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -845,7 +849,8 @@
 			isa = PBXGroup;
 			children = (
 				86627DE5273FD5E30044A980 /* RankingViewController.swift */,
-				BCD96C02297C757600E33587 /* RankingViewController.storyboard */,
+				BC2EBBA52C2AA9FE00EB1400 /* RankingContentView.swift */,
+				BC2EBBA82C2AAA0F00EB1400 /* RankingContentView.xib */,
 				BC482DF52C1ABB5F00FAF079 /* RankingListView.swift */,
 				BC482DF82C1ABB6900FAF079 /* RankingListView.xib */,
 				5921A206255D6A4E001D8C39 /* RankingCell.swift */,
@@ -1289,7 +1294,7 @@
 				59D2D5942552E718006DDB70 /* WeaponSelectCell.xib in Resources */,
 				5961B6D5256EC44700B6D736 /* taimei-san.jpg in Resources */,
 				BC2EBBA32C2AA63F00EB1400 /* NameRegisterContentView.xib in Resources */,
-				BCD96C03297C757600E33587 /* RankingViewController.storyboard in Resources */,
+				BC2EBBA92C2AAA0F00EB1400 /* RankingContentView.xib in Resources */,
 				5961B6DA256ECAEF00B6D736 /* kyuiin.mp3 in Resources */,
 				59D2D55B2552E2CC006DDB70 /* pistol-out-bullets.mp3 in Resources */,
 				59484C5A2565792300F9C6A8 /* bazookaSet.mp3 in Resources */,
@@ -1321,6 +1326,7 @@
 				860646C12BF59A3F00906DA0 /* LaunchScreen.storyboard in Resources */,
 				860646A02BF599FB00906DA0 /* kyuiin.mp3 in Resources */,
 				860646AA2BF599FB00906DA0 /* startWhistle.mp3 in Resources */,
+				BC2EBBAA2C2AAA0F00EB1400 /* RankingContentView.xib in Resources */,
 				BC03FA252C2808A900E27C01 /* GameContentView.xib in Resources */,
 				BC2EBB982C2A963B00EB1400 /* WeaponSelectContentView.xib in Resources */,
 				860646A32BF599FB00906DA0 /* bazookaSet.mp3 in Resources */,
@@ -1528,6 +1534,7 @@
 				BC2B11672977F90C009F4DC4 /* UIScrollView+Extension.swift in Sources */,
 				8627F6392BD0A4280003D374 /* ResultNavigator.swift in Sources */,
 				BC03FA0B2C21CB6900E27C01 /* GameTimerHandlingUseCase.swift in Sources */,
+				BC2EBBA62C2AA9FE00EB1400 /* RankingContentView.swift in Sources */,
 				BC62CE0A2C15607D00070B49 /* Vector.swift in Sources */,
 				BCCD44932C13F93900BF541D /* CustomSCNNode.swift in Sources */,
 				67DB2C5727BFD01900B8CB3C /* SceneNodeUtil.swift in Sources */,
@@ -1628,6 +1635,7 @@
 				BCC512C32C15B5F000D77305 /* Extension+SCNNode.swift in Sources */,
 				BC7FF24B2C2983D20014CDCE /* SceneDelegate.swift in Sources */,
 				860646142BF5996200906DA0 /* ObservableActivityTracker.swift in Sources */,
+				BC2EBBA72C2AA9FE00EB1400 /* RankingContentView.swift in Sources */,
 				860646CA2BF59CF100906DA0 /* WeaponType.swift in Sources */,
 				BC22E0172C1B281300C59BAB /* Observable+Extension.swift in Sources */,
 				860646132BF5996200906DA0 /* SceneAnimationUtil.swift in Sources */,

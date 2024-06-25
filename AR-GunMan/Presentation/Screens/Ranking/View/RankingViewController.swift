@@ -11,34 +11,32 @@ import RxCocoa
 
 final class RankingViewController: UIViewController, BackgroundViewTapTrackable {
     var presenter: RankingPresenterInterface!
-    private let rankingListView = RankingListView()
+    private var contentView: RankingContentView!
     private let disposeBag = DisposeBag()
-    
-    @IBOutlet private weak var closeButton: UIButton!
-    @IBOutlet private weak var rankingListBaseView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupUI()
+        setView()
         bind()
     }
     
-    private func setupUI() {
-        rankingListBaseView.addSubview(rankingListView)
-        rankingListBaseView.addConstraints(for: rankingListView)
+    private func setView() {
+        contentView = .init(frame: view.frame)
+        view.addSubview(contentView)
+        view.addConstraints(for: contentView)
     }
     
     private func bind() {
         let controllerInput = RankingControllerInput(
             viewWillAppear: rx.viewWillAppear,
-            closeButtonTapped: closeButton.rx.tap.asObservable(),
-            backgroundViewTapped: trackBackgroundViewTap()
+            closeButtonTapped: contentView.closeButton.rx.tap.asObservable(),
+            backgroundViewTapped: contentView.trackBackgroundViewTap()
         )
         let viewModel = presenter.transform(input: controllerInput)
         
         disposeBag.insert {
-            rankingListView.bind(
+            contentView.rankingListView.bind(
                 rankingList: viewModel.rankingList,
                 isLoading: viewModel.isLoadingRankingList
             )
