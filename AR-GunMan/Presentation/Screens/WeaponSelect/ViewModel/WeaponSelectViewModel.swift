@@ -1,5 +1,5 @@
 //
-//  WeaponChangeViewModel.swift
+//  WeaponSelectViewModel.swift
 //  AR-GunMan
 //
 //  Created by ウルトラ深瀬 on 21/1/23.
@@ -8,7 +8,7 @@
 import RxSwift
 import RxCocoa
 
-final class WeaponChangeViewModel: ViewModelType {
+final class WeaponSelectViewModel: ViewModelType {
     struct Input {
         let viewDidLayoutSubviews: Observable<Void>
         let itemSelected: Observable<Int>
@@ -30,11 +30,11 @@ final class WeaponChangeViewModel: ViewModelType {
     
     struct State {}
     
-    private let navigator: WeaponChangeNavigatorInterface
+    private let navigator: WeaponSelectNavigatorInterface
     private weak var weaponSelectEventReceiver: PublishRelay<WeaponType>?
                 
     init(
-        navigator: WeaponChangeNavigatorInterface,
+        navigator: WeaponSelectNavigatorInterface,
         weaponSelectEventReceiver: PublishRelay<WeaponType>?
     ) {
         self.navigator = navigator

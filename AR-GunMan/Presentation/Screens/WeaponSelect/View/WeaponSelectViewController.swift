@@ -1,5 +1,5 @@
 //
-//  WeaponChangeViewController.swift
+//  WeaponSelectViewController.swift
 //  AR-GunMan
 //
 //  Created by 深瀬 貴将 on 2020/11/03.
@@ -11,8 +11,8 @@ import FSPagerView
 import RxSwift
 import RxCocoa
 
-final class WeaponChangeViewController: UIViewController {
-    var viewModel: WeaponChangeViewModel!
+final class WeaponSelectViewController: UIViewController {
+    var viewModel: WeaponSelectViewModel!
     private let itemSelectedRelay = PublishRelay<Int>()
     private let disposeBag = DisposeBag()
     
@@ -33,12 +33,12 @@ final class WeaponChangeViewController: UIViewController {
         pagerView.decelerationDistance = 1
         pagerView.interitemSpacing = 8
         pagerView.transformer = FSPagerViewTransformer(type: .ferrisWheel)
-        let nib = UINib(nibName: WeaponChangeCell.className, bundle: nil)
-        pagerView.register(nib, forCellWithReuseIdentifier: WeaponChangeCell.className)
+        let nib = UINib(nibName: WeaponSelectCell.className, bundle: nil)
+        pagerView.register(nib, forCellWithReuseIdentifier: WeaponSelectCell.className)
     }
     
     private func bindViewModel() {
-        let input = WeaponChangeViewModel.Input(
+        let input = WeaponSelectViewModel.Input(
             viewDidLayoutSubviews: rx.viewDidLayoutSubviews,
             itemSelected: itemSelectedRelay.asObservable()
         )
@@ -61,19 +61,19 @@ final class WeaponChangeViewController: UIViewController {
     }
 }
 
-extension WeaponChangeViewController: FSPagerViewDelegate {
+extension WeaponSelectViewController: FSPagerViewDelegate {
     func pagerView(_ pagerView: FSPagerView, didSelectItemAt index: Int) {
         itemSelectedRelay.accept(index)
     }
 }
 
-extension WeaponChangeViewController: FSPagerViewDataSource {
+extension WeaponSelectViewController: FSPagerViewDataSource {
     func numberOfItems(in pagerView: FSPagerView) -> Int {
         return WeaponType.allCases.count
     }
     
     func pagerView(_ pagerView: FSPagerView, cellForItemAt index: Int) -> FSPagerViewCell {
-        guard let cell = pagerView.dequeueReusableCell(withReuseIdentifier: WeaponChangeCell.className, at: index) as? WeaponChangeCell else {
+        guard let cell = pagerView.dequeueReusableCell(withReuseIdentifier: WeaponSelectCell.className, at: index) as? WeaponSelectCell else {
             return FSPagerViewCell()
         }
         cell.configure(

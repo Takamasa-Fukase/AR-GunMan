@@ -144,14 +144,14 @@ final class GamePresenter: GamePresenterInterface {
             input.inputFromViewController.weaponChangeButtonTapped
                 .subscribe(onNext: { [weak self] _ in
                     guard let self = self else { return }
-                    self.navigator.showWeaponChangeView(
+                    self.navigator.showWeaponSelectView(
                         weaponSelectEventReceiver: self.weaponSelectEventReceiver
                     )
                 })
             composedGameUseCasesOutput.dismissWeaponChangeView
                 .subscribe(onNext: { [weak self] _ in
                     guard let self = self else { return }
-                    self.navigator.dismissWeaponChangeView()
+                    self.navigator.dismissWeaponSelectView()
                 })
             composedGameUseCasesOutput.showResultView
                 .subscribe(onNext: { [weak self] _ in

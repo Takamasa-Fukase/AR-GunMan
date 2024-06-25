@@ -12,8 +12,8 @@ import CoreMotion
 
 protocol GameNavigatorInterface {
     func showTutorialView(tutorialEndEventReceiver: PublishRelay<Void>)
-    func showWeaponChangeView(weaponSelectEventReceiver: PublishRelay<WeaponType>)
-    func dismissWeaponChangeView()
+    func showWeaponSelectView(weaponSelectEventReceiver: PublishRelay<WeaponType>)
+    func dismissWeaponSelectView()
     func showResultView(score: Double)
 }
 
@@ -64,14 +64,14 @@ final class GameNavigator: GameNavigatorInterface {
         viewController.presentPanModal(vc)
     }
     
-    func showWeaponChangeView(weaponSelectEventReceiver: PublishRelay<WeaponType>) {
-        let vc = WeaponChangeNavigator.assembleModules(
+    func showWeaponSelectView(weaponSelectEventReceiver: PublishRelay<WeaponType>) {
+        let vc = WeaponSelectNavigator.assembleModules(
             weaponSelectEventReceiver: weaponSelectEventReceiver
         )
         viewController.present(vc, animated: true)
     }
     
-    func dismissWeaponChangeView() {
+    func dismissWeaponSelectView() {
         viewController.presentedViewController?.dismiss(animated: true)
     }
     
