@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 
 final class NameRegisterViewController: UIViewController, BackgroundViewTapTrackable {
-    var viewModel: NameRegisterViewModel!
+    var presenter: NameRegisterPresenterInterface!
     private let disposeBag = DisposeBag()
     
     @IBOutlet private weak var rankLabel: UILabel!
@@ -25,7 +25,7 @@ final class NameRegisterViewController: UIViewController, BackgroundViewTapTrack
         super.viewDidLoad()
         
         setupUI()
-        bindViewModel()
+        bind()
     }
     
     private func setupUI() {
@@ -35,8 +35,8 @@ final class NameRegisterViewController: UIViewController, BackgroundViewTapTrack
         registerButtonSpinner.hidesWhenStopped = true
     }
     
-    private func bindViewModel() {
-        let input = NameRegisterViewModel.Input(
+    private func bind() {
+        let controllerInput = NameRegisterControllerInput(
             viewWillDisappear: rx.viewWillDisappear,
             nameTextFieldChanged: nameTextField.rx.text.orEmpty.asObservable(),
             registerButtonTapped: registerButton.rx.tap.asObservable(),
@@ -45,31 +45,23 @@ final class NameRegisterViewController: UIViewController, BackgroundViewTapTrack
             keyboardWillShowNotificationReceived: NotificationCenter.keyboardWillShow,
             keyboardWillHideNotificationReceived: NotificationCenter.keyboardWillHide
         )
-        let output = viewModel.transform(input: input)
-        let viewModelAction = output.viewModelAction
-        let outputToView = output.outputToView
+        let viewModel = presenter.transform(input: controllerInput)
         
         disposeBag.insert {
-            viewModelAction.rankingRegistered.subscribe()
-            viewModelAction.registerCompleteEventSent.subscribe()
-            viewModelAction.closeEventSent.subscribe()
-            viewModelAction.viewDismissed.subscribe()
-            viewModelAction.errorAlertShowed.subscribe()
-            
-            outputToView.temporaryRankText
+            viewModel.temporaryRankText
                 .bind(to: rankLabel.rx.text)
-            outputToView.temporaryRankText
+            viewModel.temporaryRankText
                 .map({ $0.isEmpty })
                 .bind(to: rankLabelSpinner.rx.isAnimating)
-            outputToView.scoreText
+            viewModel.scoreText
                 .bind(to: scoreLabel.rx.text)
-            outputToView.isRegisterButtonEnabled
+            viewModel.isRegisterButtonEnabled
                 .bind(to: registerButton.rx.isEnabled)
-            outputToView.isRegistering
+            viewModel.isRegistering
                 .bind(to: registerButton.rx.isHidden)
-            outputToView.isRegistering
+            viewModel.isRegistering
                 .bind(to: registerButtonSpinner.rx.isAnimating)
-            outputToView.handleActiveTextFieldOverlapWhenKeyboardWillShow
+            viewModel.handleActiveTextFieldOverlapWhenKeyboardWillShow
                 .subscribe(onNext: { [weak self] notification in
                     guard let self = self,
                           let keyboardFrameEnd = notification.keyboardFrameEnd,
@@ -80,7 +72,7 @@ final class NameRegisterViewController: UIViewController, BackgroundViewTapTrack
                         activeTextField: self.nameTextField
                     )
                 })
-            outputToView.resetActiveTextFieldPositionWhenKeyboardWillHide
+            viewModel.resetActiveTextFieldPositionWhenKeyboardWillHide
                 .subscribe(onNext: { [weak self] notification in
                     guard let self = self,
                           let duration = notification.keyboardAnimationDuration else { return }

@@ -43,7 +43,7 @@ final class WeaponSelectPresenter: WeaponSelectPresenterInterface {
                     self.navigator.dismiss()
                 })
             
-            // MARK: Others
+            // MARK: Event posts
             input.itemSelected
                 .map({ WeaponType.allCases[$0] })
                 .bind(to: weaponSelectEventReceiver ?? PublishRelay<WeaponType>())

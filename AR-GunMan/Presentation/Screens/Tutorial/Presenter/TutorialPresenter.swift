@@ -64,7 +64,7 @@ final class TutorialPresenter: TutorialPresenterInterface {
                     self.navigator.dismiss()
                 })
             
-            // MARK: Others
+            // MARK: Event posts
             input.viewDidDisappear
                 .bind(to: tutorialEndEventReceiver ?? PublishRelay<Void>())
         }
