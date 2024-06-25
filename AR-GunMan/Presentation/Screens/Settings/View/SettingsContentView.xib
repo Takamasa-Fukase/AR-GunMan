@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="landscape" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SettingsContentView" customModule="AR_GunMan" customModuleProvider="target">
+            <connections>
+                <outlet property="backButton" destination="Tdx-6W-DKt" id="ycI-rS-Zfw"/>
+                <outlet property="developerContactButton" destination="UUg-tJ-UxK" id="hj6-yN-kjK"/>
+                <outlet property="privacyPolicyButton" destination="YMe-G2-bb7" id="sHo-on-zH8"/>
+                <outlet property="worldRankingButton" destination="dsq-Qx-xaz" id="7zp-lx-AfN"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="On2-vb-JuQ">
+            <rect key="frame" x="0.0" y="0.0" width="852" height="393"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Settings" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IUt-UW-pIL">
+                    <rect key="frame" x="88.999999999999986" y="50" width="191.66666666666663" height="42.666666666666657"/>
+                    <fontDescription key="fontDescription" name="Copperplate-Bold" family="Copperplate" pointSize="42"/>
+                    <color key="textColor" red="0.027436967940000001" green="0.027523037050000001" blue="0.019605956970000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="iRd-7f-0pV">
+                    <rect key="frame" x="223" y="92.666666666666671" width="406" height="189.33333333333331"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dsq-Qx-xaz" userLabel="WorldRankingButton">
+                            <rect key="frame" x="44.666666666666686" y="0.0" width="316.99999999999994" height="63"/>
+                            <state key="normal" title="Contact Developer">
+                                <attributedString key="attributedTitle">
+                                    <fragment content="World Ranking">
+                                        <attributes>
+                                            <color key="NSColor" red="0.027436967940000001" green="0.027523037050000001" blue="0.019605956970000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <font key="NSFont" size="40" name="Copperplate-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            <integer key="NSUnderline" value="1"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                            </state>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YMe-G2-bb7" userLabel="PrivacyPolicyButton">
+                            <rect key="frame" x="48" y="63" width="310" height="63.333333333333314"/>
+                            <state key="normal" title="Contact Developer">
+                                <attributedString key="attributedTitle">
+                                    <fragment content="Privacy Policy">
+                                        <attributes>
+                                            <color key="NSColor" red="0.027436967940000001" green="0.027523037050000001" blue="0.019605956970000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <font key="NSFont" size="40" name="Copperplate-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            <integer key="NSUnderline" value="1"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                            </state>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UUg-tJ-UxK" userLabel="DeveloperContactButton">
+                            <rect key="frame" x="0.0" y="126.33333333333331" width="406" height="63"/>
+                            <state key="normal" title="Contact Developer">
+                                <attributedString key="attributedTitle">
+                                    <fragment content="Contact Developer">
+                                        <attributes>
+                                            <color key="NSColor" red="0.027436967940000001" green="0.027523037050000001" blue="0.019605956970000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <font key="NSFont" size="40" name="Copperplate-Bold"/>
+                                            <integer key="NSUnderline" value="1"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                            </state>
+                        </button>
+                    </subviews>
+                </stackView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tdx-6W-DKt">
+                    <rect key="frame" x="89" y="282" width="116" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="116" id="5WU-Nk-ffp"/>
+                        <constraint firstAttribute="height" constant="50" id="Dh5-cf-IyH"/>
+                    </constraints>
+                    <state key="normal">
+                        <attributedString key="attributedTitle">
+                            <fragment content="Back">
+                                <attributes>
+                                    <color key="NSColor" red="0.027436967940000001" green="0.027523037050000001" blue="0.019605956970000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <font key="NSFont" size="36" name="Copperplate-Bold"/>
+                                    <integer key="NSUnderline" value="1"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                    </state>
+                </button>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="3Xa-pY-O7z"/>
+            <color key="backgroundColor" red="0.79046171899999995" green="0.69538801910000003" blue="0.53327715399999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <constraints>
+                <constraint firstItem="3Xa-pY-O7z" firstAttribute="bottom" secondItem="Tdx-6W-DKt" secondAttribute="bottom" constant="40" id="2dv-bA-Xzd"/>
+                <constraint firstItem="iRd-7f-0pV" firstAttribute="centerX" secondItem="On2-vb-JuQ" secondAttribute="centerX" id="3Ka-4B-GSi"/>
+                <constraint firstItem="Tdx-6W-DKt" firstAttribute="leading" secondItem="3Xa-pY-O7z" secondAttribute="leading" constant="30" id="5Xc-qJ-cjK"/>
+                <constraint firstItem="IUt-UW-pIL" firstAttribute="leading" secondItem="3Xa-pY-O7z" secondAttribute="leading" constant="30" id="CpA-l6-swL"/>
+                <constraint firstItem="iRd-7f-0pV" firstAttribute="top" secondItem="IUt-UW-pIL" secondAttribute="bottom" id="UbF-BP-sdP"/>
+                <constraint firstItem="iRd-7f-0pV" firstAttribute="bottom" secondItem="Tdx-6W-DKt" secondAttribute="top" id="dv9-d4-cKt"/>
+                <constraint firstItem="IUt-UW-pIL" firstAttribute="top" secondItem="3Xa-pY-O7z" secondAttribute="top" constant="50" id="fIg-X7-kT3"/>
+            </constraints>
+            <point key="canvasLocation" x="22" y="21"/>
+        </view>
+    </objects>
+</document>

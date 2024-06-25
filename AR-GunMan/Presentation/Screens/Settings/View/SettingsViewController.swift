@@ -11,25 +11,27 @@ import RxCocoa
 
 final class SettingsViewController: UIViewController {
     var presenter: SettingsPresenterInterface!
+    private let contentView = SettingsContentView()
     private let disposeBag = DisposeBag()
 
-    @IBOutlet private weak var worldRankingButton: UIButton!
-    @IBOutlet private weak var privacyPolicyButton: UIButton!
-    @IBOutlet private weak var developerContactButton: UIButton!
-    @IBOutlet private weak var backButton: UIButton!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        bindViewModel()
+        setView()
+        bind()
     }
     
-    private func bindViewModel() {
+    private func setView() {
+        view.addSubview(contentView)
+        view.addConstraints(for: contentView)
+    }
+    
+    private func bind() {
         let controllerInput = SettingsControllerInput(
-            worldRankingButtonTapped: worldRankingButton.rx.tap.asObservable(),
-            privacyPolicyButtonTapped: privacyPolicyButton.rx.tap.asObservable(),
-            developerConctactButtonTapped: developerContactButton.rx.tap.asObservable(),
-            backButtonTapped: backButton.rx.tap.asObservable()
+            worldRankingButtonTapped: contentView.worldRankingButton.rx.tap.asObservable(),
+            privacyPolicyButtonTapped: contentView.privacyPolicyButton.rx.tap.asObservable(),
+            developerConctactButtonTapped: contentView.developerContactButton.rx.tap.asObservable(),
+            backButtonTapped: contentView.backButton.rx.tap.asObservable()
         )
         presenter.transform(input: controllerInput)
     }

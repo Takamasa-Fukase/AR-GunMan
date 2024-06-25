@@ -23,8 +23,7 @@ final class SettingsNavigator: SettingsNavigatorInterface {
     }
     
     static func assembleModules() -> UIViewController {
-        let storyboard: UIStoryboard = UIStoryboard(name: SettingsViewController.className, bundle: nil)
-        let vc = storyboard.instantiateInitialViewController() as! SettingsViewController
+        let vc = SettingsViewController()
         vc.presenter = SettingsPresenter(
             navigator: SettingsNavigator(viewController: vc)
         )
