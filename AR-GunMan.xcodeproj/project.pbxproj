@@ -251,6 +251,8 @@
 		BC2B11672977F90C009F4DC4 /* UIScrollView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2B11662977F90C009F4DC4 /* UIScrollView+Extension.swift */; };
 		BC2EBB692C2A468D00EB1400 /* TutorialPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EBB682C2A468D00EB1400 /* TutorialPresenter.swift */; };
 		BC2EBB6A2C2A468D00EB1400 /* TutorialPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EBB682C2A468D00EB1400 /* TutorialPresenter.swift */; };
+		BC2EBB6D2C2A52AA00EB1400 /* WeaponSelectPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EBB6C2C2A52AA00EB1400 /* WeaponSelectPresenter.swift */; };
+		BC2EBB6E2C2A52AA00EB1400 /* WeaponSelectPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EBB6C2C2A52AA00EB1400 /* WeaponSelectPresenter.swift */; };
 		BC482DDB2C19664400FAF079 /* ResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DDA2C19664400FAF079 /* ResultViewModel.swift */; };
 		BC482DDC2C19664400FAF079 /* ResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DDA2C19664400FAF079 /* ResultViewModel.swift */; };
 		BC482DDE2C196FB000FAF079 /* ResultConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DDD2C196FB000FAF079 /* ResultConst.swift */; };
@@ -454,6 +456,7 @@
 		BC22E0242C1C9B8800C59BAB /* UIViewController+BackgroundViewTapTrackable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+BackgroundViewTapTrackable.swift"; sourceTree = "<group>"; };
 		BC2B11662977F90C009F4DC4 /* UIScrollView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Extension.swift"; sourceTree = "<group>"; };
 		BC2EBB682C2A468D00EB1400 /* TutorialPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPresenter.swift; sourceTree = "<group>"; };
+		BC2EBB6C2C2A52AA00EB1400 /* WeaponSelectPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponSelectPresenter.swift; sourceTree = "<group>"; };
 		BC482DDA2C19664400FAF079 /* ResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewModel.swift; sourceTree = "<group>"; };
 		BC482DDD2C196FB000FAF079 /* ResultConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultConst.swift; sourceTree = "<group>"; };
 		BC482DE02C19D53F00FAF079 /* NameRegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameRegisterViewModel.swift; sourceTree = "<group>"; };
@@ -1102,6 +1105,7 @@
 		BC2EBB6B2C2A4EF300EB1400 /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
+				BC2EBB6C2C2A52AA00EB1400 /* WeaponSelectPresenter.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -1515,6 +1519,7 @@
 				BC0BBE402C16D31800789349 /* NSObject+Extension.swift in Sources */,
 				BC92C854297061FE00E49BD5 /* WeaponType.swift in Sources */,
 				BC03F9F62C21CB1400E27C01 /* FireMotionFilterUseCase.swift in Sources */,
+				BC2EBB6D2C2A52AA00EB1400 /* WeaponSelectPresenter.swift in Sources */,
 				BCD1C2572C06B60C008975EB /* CompositeCalculator.swift in Sources */,
 				BC03F9DF2C21704300E27C01 /* TimerStreamCreator.swift in Sources */,
 				BC2B11672977F90C009F4DC4 /* UIScrollView+Extension.swift in Sources */,
@@ -1601,6 +1606,7 @@
 				BCCD447E2C12AB4500BF541D /* UIColor+Extension.swift in Sources */,
 				BC0BBE392C15F19D00789349 /* ViewModelEventHandlerType.swift in Sources */,
 				BCD89DA22C1EA1E800BBBB99 /* KeyboardOverlapCalculator.swift in Sources */,
+				BC2EBB6E2C2A52AA00EB1400 /* WeaponSelectPresenter.swift in Sources */,
 				BC03FA092C21CB6000E27C01 /* GameStartUseCase.swift in Sources */,
 				BC03F9D42C21534100E27C01 /* TopPresenter.swift in Sources */,
 				8606465A2BF5999F00906DA0 /* ARContentController.swift in Sources */,

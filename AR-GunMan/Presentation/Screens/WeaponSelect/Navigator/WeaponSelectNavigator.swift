@@ -23,12 +23,10 @@ final class WeaponSelectNavigator: WeaponSelectNavigatorInterface {
     ) -> UIViewController {
         let storyboard = UIStoryboard(name: WeaponSelectViewController.className, bundle: nil)
         let vc = storyboard.instantiateInitialViewController() as! WeaponSelectViewController
-        let navigator = WeaponSelectNavigator(viewController: vc)
-        let viewModel = WeaponSelectViewModel(
-            navigator: navigator,
+        vc.presenter = WeaponSelectPresenter(
+            navigator: WeaponSelectNavigator(viewController: vc),
             weaponSelectEventReceiver: weaponSelectEventReceiver
         )
-        vc.viewModel = viewModel
         return vc
     }
     

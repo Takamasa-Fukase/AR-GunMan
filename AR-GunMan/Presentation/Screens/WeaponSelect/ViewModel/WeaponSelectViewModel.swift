@@ -8,7 +8,7 @@
 import RxSwift
 import RxCocoa
 
-final class WeaponSelectViewModel: ViewModelType {
+final class WeaponSelectViewModel2: ViewModelType {
     struct Input {
         let viewDidLayoutSubviews: Observable<Void>
         let itemSelected: Observable<Int>

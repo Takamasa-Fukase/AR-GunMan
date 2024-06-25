@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 
 final class TutorialViewController: UIViewController, BackgroundViewTapTrackable {
-    var presenter: TutorialPresenter!
+    var presenter: TutorialPresenterInterface!
     private let disposeBag = DisposeBag()
     
     @IBOutlet private weak var scrollView: UIScrollView!
