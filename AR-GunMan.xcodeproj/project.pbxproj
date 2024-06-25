@@ -20,7 +20,6 @@
 		59484C8A25664FEC00F9C6A8 /* bazookaHit.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 59484C8925664FEB00F9C6A8 /* bazookaHit.mp3 */; };
 		5952F64025EA0E1900ADB85B /* Font+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5952F63F25EA0E1800ADB85B /* Font+Extension.swift */; };
 		595E6987256C0190002B4F3E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595E6986256C0190002B4F3E /* SettingsViewController.swift */; };
-		595E698F256C01A4002B4F3E /* SettingsViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 595E698E256C01A4002B4F3E /* SettingsViewController.storyboard */; };
 		5961B6D5256EC44700B6D736 /* taimei-san.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5961B6D4256EC44700B6D736 /* taimei-san.jpg */; };
 		5961B6DA256ECAEF00B6D736 /* kyuiin.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5961B6D9256ECAEF00B6D736 /* kyuiin.mp3 */; };
 		59940B882552F54900EC20C1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 59940B872552F54900EC20C1 /* GoogleService-Info.plist */; };
@@ -246,6 +245,12 @@
 		BC2EBB7E2C2A6BCE00EB1400 /* RankingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EBB7C2C2A6BCE00EB1400 /* RankingPresenter.swift */; };
 		BC2EBB812C2A6F7800EB1400 /* NameRegisterPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EBB802C2A6F7800EB1400 /* NameRegisterPresenter.swift */; };
 		BC2EBB822C2A6F7800EB1400 /* NameRegisterPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EBB802C2A6F7800EB1400 /* NameRegisterPresenter.swift */; };
+		BC2EBB852C2A899D00EB1400 /* SettingsContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EBB842C2A899D00EB1400 /* SettingsContentView.swift */; };
+		BC2EBB862C2A899D00EB1400 /* SettingsContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EBB842C2A899D00EB1400 /* SettingsContentView.swift */; };
+		BC2EBB882C2A8A1800EB1400 /* SettingsContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC2EBB872C2A8A1800EB1400 /* SettingsContentView.xib */; };
+		BC2EBB892C2A8A1800EB1400 /* SettingsContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC2EBB872C2A8A1800EB1400 /* SettingsContentView.xib */; };
+		BC2EBB8B2C2A8E7D00EB1400 /* UIView+NibLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EBB8A2C2A8E7D00EB1400 /* UIView+NibLoading.swift */; };
+		BC2EBB8C2C2A8E7D00EB1400 /* UIView+NibLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EBB8A2C2A8E7D00EB1400 /* UIView+NibLoading.swift */; };
 		BC482DDE2C196FB000FAF079 /* ResultConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DDD2C196FB000FAF079 /* ResultConst.swift */; };
 		BC482DDF2C196FB000FAF079 /* ResultConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DDD2C196FB000FAF079 /* ResultConst.swift */; };
 		BC482DE72C1A74F800FAF079 /* ObservableErrorTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DE62C1A74F800FAF079 /* ObservableErrorTracker.swift */; };
@@ -330,7 +335,6 @@
 		59484C8925664FEB00F9C6A8 /* bazookaHit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bazookaHit.mp3; sourceTree = "<group>"; };
 		5952F63F25EA0E1800ADB85B /* Font+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Extension.swift"; sourceTree = "<group>"; };
 		595E6986256C0190002B4F3E /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		595E698E256C01A4002B4F3E /* SettingsViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SettingsViewController.storyboard; sourceTree = "<group>"; };
 		5961B6D4256EC44700B6D736 /* taimei-san.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "taimei-san.jpg"; sourceTree = "<group>"; };
 		5961B6D9256ECAEF00B6D736 /* kyuiin.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = kyuiin.mp3; sourceTree = "<group>"; };
 		59940B872552F54900EC20C1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -442,6 +446,9 @@
 		BC2EBB742C2A62F000EB1400 /* SettingsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPresenter.swift; sourceTree = "<group>"; };
 		BC2EBB7C2C2A6BCE00EB1400 /* RankingPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingPresenter.swift; sourceTree = "<group>"; };
 		BC2EBB802C2A6F7800EB1400 /* NameRegisterPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameRegisterPresenter.swift; sourceTree = "<group>"; };
+		BC2EBB842C2A899D00EB1400 /* SettingsContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsContentView.swift; sourceTree = "<group>"; };
+		BC2EBB872C2A8A1800EB1400 /* SettingsContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsContentView.xib; sourceTree = "<group>"; };
+		BC2EBB8A2C2A8E7D00EB1400 /* UIView+NibLoading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+NibLoading.swift"; sourceTree = "<group>"; };
 		BC482DDD2C196FB000FAF079 /* ResultConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultConst.swift; sourceTree = "<group>"; };
 		BC482DE62C1A74F800FAF079 /* ObservableErrorTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableErrorTracker.swift; sourceTree = "<group>"; };
 		BC482DE92C1AAB7400FAF079 /* NameRegisterNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameRegisterNavigator.swift; sourceTree = "<group>"; };
@@ -518,6 +525,7 @@
 				59D2D5392552E1D2006DDB70 /* Storyboard+Extension.swift */,
 				5952F63F25EA0E1800ADB85B /* Font+Extension.swift */,
 				BC482DFB2C1B09C900FAF079 /* UIView+Constraint.swift */,
+				BC2EBB8A2C2A8E7D00EB1400 /* UIView+NibLoading.swift */,
 				866675D3275215AF007CB4D6 /* UIViewController+Extension.swift */,
 				BC0BBE432C1745EB00789349 /* UIViewController+PanModalPresentable.swift */,
 				BC22E0242C1C9B8800C59BAB /* UIViewController+BackgroundViewTapTrackable.swift */,
@@ -838,7 +846,8 @@
 			isa = PBXGroup;
 			children = (
 				595E6986256C0190002B4F3E /* SettingsViewController.swift */,
-				595E698E256C01A4002B4F3E /* SettingsViewController.storyboard */,
+				BC2EBB842C2A899D00EB1400 /* SettingsContentView.swift */,
+				BC2EBB872C2A8A1800EB1400 /* SettingsContentView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1258,6 +1267,7 @@
 				59D2D55D2552E2CC006DDB70 /* pistol-fire.mp3 in Resources */,
 				59484C8A25664FEC00F9C6A8 /* bazookaHit.mp3 in Resources */,
 				59940BB12552FAAF00EC20C1 /* NameRegisterViewController.storyboard in Resources */,
+				BC2EBB882C2A8A1800EB1400 /* SettingsContentView.xib in Resources */,
 				BC482DF92C1ABB6900FAF079 /* RankingListView.xib in Resources */,
 				59D2D5942552E718006DDB70 /* WeaponSelectCell.xib in Resources */,
 				5961B6D5256EC44700B6D736 /* taimei-san.jpg in Resources */,
@@ -1268,7 +1278,6 @@
 				59D2D55F2552E2CC006DDB70 /* pistol-reload.mp3 in Resources */,
 				59D2D4E52552DE67006DDB70 /* LaunchScreen.storyboard in Resources */,
 				5903192F256D82BA005C30EF /* westernPistolShoot.mp3 in Resources */,
-				595E698F256C01A4002B4F3E /* SettingsViewController.storyboard in Resources */,
 				BC03FA242C2808A900E27C01 /* GameContentView.xib in Resources */,
 				5921A209255D6A4E001D8C39 /* RankingCell.xib in Resources */,
 				59D2D5422552E24D006DDB70 /* art.scnassets in Resources */,
@@ -1309,6 +1318,7 @@
 				860646A92BF599FB00906DA0 /* bazookaShoot.mp3 in Resources */,
 				860646A82BF599FB00906DA0 /* pistol-slide.mp3 in Resources */,
 				860646BF2BF59A3900906DA0 /* Assets.xcassets in Resources */,
+				BC2EBB892C2A8A1800EB1400 /* SettingsContentView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1455,6 +1465,7 @@
 				BC2EBB7D2C2A6BCE00EB1400 /* RankingPresenter.swift in Sources */,
 				BC7FF24A2C2983D20014CDCE /* SceneDelegate.swift in Sources */,
 				BC03F9FC2C21CB2A00E27C01 /* WeaponChangeUseCase.swift in Sources */,
+				BC2EBB852C2A899D00EB1400 /* SettingsContentView.swift in Sources */,
 				86594DCC2BCD75E100971D1A /* ReplayRepository.swift in Sources */,
 				BC92C85E297420CD00E49BD5 /* UserDefaults+Extension.swift in Sources */,
 				67DB2C6127C17F8D00B8CB3C /* GameConst.swift in Sources */,
@@ -1507,6 +1518,7 @@
 				59D2D5952552E718006DDB70 /* WeaponSelectViewController.swift in Sources */,
 				BCC512CA2C15CFBF00D77305 /* ParticleSystemType.swift in Sources */,
 				BC482DFC2C1B09C900FAF079 /* UIView+Constraint.swift in Sources */,
+				BC2EBB8B2C2A8E7D00EB1400 /* UIView+NibLoading.swift in Sources */,
 				BC03F9F02C21CAFF00E27C01 /* WeaponAutoReloadFilterUseCase.swift in Sources */,
 				BCC512C62C15CF7300D77305 /* WeaponTypeConst.swift in Sources */,
 				BC03F9D92C21634A00E27C01 /* CameraPermissionCheckUseCase.swift in Sources */,
@@ -1641,6 +1653,7 @@
 				BC03F9DA2C21634A00E27C01 /* CameraPermissionCheckUseCase.swift in Sources */,
 				BCD1C2292C01B9E2008975EB /* WeaponFiringEventTransformerTests.swift in Sources */,
 				BC0BBE3D2C16B7E100789349 /* Double+Extension.swift in Sources */,
+				BC2EBB8C2C2A8E7D00EB1400 /* UIView+NibLoading.swift in Sources */,
 				BC482DF72C1ABB5F00FAF079 /* RankingListView.swift in Sources */,
 				BC03F9E02C21704300E27C01 /* TimerStreamCreator.swift in Sources */,
 				BC0BBE4D2C174B3000789349 /* TutorialViewController.swift in Sources */,
@@ -1656,6 +1669,7 @@
 				8606467A2BF599D500906DA0 /* NameRegisterViewController.swift in Sources */,
 				8606461D2BF5996700906DA0 /* ErrorConst.swift in Sources */,
 				BC0BBE412C16D31800789349 /* NSObject+Extension.swift in Sources */,
+				BC2EBB862C2A899D00EB1400 /* SettingsContentView.swift in Sources */,
 				860645F72BF5994C00906DA0 /* Font+Extension.swift in Sources */,
 				BC03F9E32C217A1400E27C01 /* TopNavigator.swift in Sources */,
 				BCCD44832C12BF1B00BF541D /* CollisionInfo.swift in Sources */,
