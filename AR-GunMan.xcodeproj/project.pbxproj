@@ -26,7 +26,6 @@
 		59940BAC2552FAA600EC20C1 /* NameRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59940BAB2552FAA600EC20C1 /* NameRegisterViewController.swift */; };
 		59940BB12552FAAF00EC20C1 /* NameRegisterViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59940BB02552FAAF00EC20C1 /* NameRegisterViewController.storyboard */; };
 		59945100256AD55900560202 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 599450FF256AD55900560202 /* TutorialViewController.swift */; };
-		59945108256AD57300560202 /* TutorialViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59945107256AD57300560202 /* TutorialViewController.storyboard */; };
 		59A01134255AF580008996E3 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A01133255AF580008996E3 /* ResultViewController.swift */; };
 		59A01139255AF588008996E3 /* ResultViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59A01138255AF588008996E3 /* ResultViewController.storyboard */; };
 		59D2D4D92552DE66006DDB70 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2D4D82552DE66006DDB70 /* AppDelegate.swift */; };
@@ -230,8 +229,8 @@
 		BC22E0172C1B281300C59BAB /* Observable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22E0152C1B281300C59BAB /* Observable+Extension.swift */; };
 		BC22E0222C1C71E900C59BAB /* UITapGestureRecognizer+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22E0212C1C71E900C59BAB /* UITapGestureRecognizer+Rx.swift */; };
 		BC22E0232C1C71E900C59BAB /* UITapGestureRecognizer+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22E0212C1C71E900C59BAB /* UITapGestureRecognizer+Rx.swift */; };
-		BC22E0252C1C9B8800C59BAB /* UIViewController+BackgroundViewTapTrackable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22E0242C1C9B8800C59BAB /* UIViewController+BackgroundViewTapTrackable.swift */; };
-		BC22E0262C1C9B8800C59BAB /* UIViewController+BackgroundViewTapTrackable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22E0242C1C9B8800C59BAB /* UIViewController+BackgroundViewTapTrackable.swift */; };
+		BC22E0252C1C9B8800C59BAB /* UIView+UIViewController+BackgroundViewTapTrackable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22E0242C1C9B8800C59BAB /* UIView+UIViewController+BackgroundViewTapTrackable.swift */; };
+		BC22E0262C1C9B8800C59BAB /* UIView+UIViewController+BackgroundViewTapTrackable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22E0242C1C9B8800C59BAB /* UIView+UIViewController+BackgroundViewTapTrackable.swift */; };
 		BC2B11672977F90C009F4DC4 /* UIScrollView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2B11662977F90C009F4DC4 /* UIScrollView+Extension.swift */; };
 		BC2EBB692C2A468D00EB1400 /* TutorialPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EBB682C2A468D00EB1400 /* TutorialPresenter.swift */; };
 		BC2EBB6A2C2A468D00EB1400 /* TutorialPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EBB682C2A468D00EB1400 /* TutorialPresenter.swift */; };
@@ -251,6 +250,10 @@
 		BC2EBB892C2A8A1800EB1400 /* SettingsContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC2EBB872C2A8A1800EB1400 /* SettingsContentView.xib */; };
 		BC2EBB8B2C2A8E7D00EB1400 /* UIView+NibLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EBB8A2C2A8E7D00EB1400 /* UIView+NibLoading.swift */; };
 		BC2EBB8C2C2A8E7D00EB1400 /* UIView+NibLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EBB8A2C2A8E7D00EB1400 /* UIView+NibLoading.swift */; };
+		BC2EBB8E2C2A8F8C00EB1400 /* TutorialContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EBB8D2C2A8F8C00EB1400 /* TutorialContentView.swift */; };
+		BC2EBB8F2C2A8F8C00EB1400 /* TutorialContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EBB8D2C2A8F8C00EB1400 /* TutorialContentView.swift */; };
+		BC2EBB912C2A8FA800EB1400 /* TutorialContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC2EBB902C2A8FA800EB1400 /* TutorialContentView.xib */; };
+		BC2EBB922C2A8FA800EB1400 /* TutorialContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC2EBB902C2A8FA800EB1400 /* TutorialContentView.xib */; };
 		BC482DDE2C196FB000FAF079 /* ResultConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DDD2C196FB000FAF079 /* ResultConst.swift */; };
 		BC482DDF2C196FB000FAF079 /* ResultConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DDD2C196FB000FAF079 /* ResultConst.swift */; };
 		BC482DE72C1A74F800FAF079 /* ObservableErrorTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DE62C1A74F800FAF079 /* ObservableErrorTracker.swift */; };
@@ -341,7 +344,6 @@
 		59940BAB2552FAA600EC20C1 /* NameRegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameRegisterViewController.swift; sourceTree = "<group>"; };
 		59940BB02552FAAF00EC20C1 /* NameRegisterViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NameRegisterViewController.storyboard; sourceTree = "<group>"; };
 		599450FF256AD55900560202 /* TutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
-		59945107256AD57300560202 /* TutorialViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TutorialViewController.storyboard; sourceTree = "<group>"; };
 		59A01133255AF580008996E3 /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		59A01138255AF588008996E3 /* ResultViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ResultViewController.storyboard; sourceTree = "<group>"; };
 		59D2D4D52552DE66006DDB70 /* AR-GunMan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AR-GunMan.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -438,7 +440,7 @@
 		BC0BBE462C17474800789349 /* WeaponAutoReloadHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponAutoReloadHandlerTests.swift; sourceTree = "<group>"; };
 		BC22E0152C1B281300C59BAB /* Observable+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+Extension.swift"; sourceTree = "<group>"; };
 		BC22E0212C1C71E900C59BAB /* UITapGestureRecognizer+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITapGestureRecognizer+Rx.swift"; sourceTree = "<group>"; };
-		BC22E0242C1C9B8800C59BAB /* UIViewController+BackgroundViewTapTrackable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+BackgroundViewTapTrackable.swift"; sourceTree = "<group>"; };
+		BC22E0242C1C9B8800C59BAB /* UIView+UIViewController+BackgroundViewTapTrackable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+UIViewController+BackgroundViewTapTrackable.swift"; sourceTree = "<group>"; };
 		BC2B11662977F90C009F4DC4 /* UIScrollView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Extension.swift"; sourceTree = "<group>"; };
 		BC2EBB682C2A468D00EB1400 /* TutorialPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPresenter.swift; sourceTree = "<group>"; };
 		BC2EBB6C2C2A52AA00EB1400 /* WeaponSelectPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponSelectPresenter.swift; sourceTree = "<group>"; };
@@ -449,6 +451,8 @@
 		BC2EBB842C2A899D00EB1400 /* SettingsContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsContentView.swift; sourceTree = "<group>"; };
 		BC2EBB872C2A8A1800EB1400 /* SettingsContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsContentView.xib; sourceTree = "<group>"; };
 		BC2EBB8A2C2A8E7D00EB1400 /* UIView+NibLoading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+NibLoading.swift"; sourceTree = "<group>"; };
+		BC2EBB8D2C2A8F8C00EB1400 /* TutorialContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialContentView.swift; sourceTree = "<group>"; };
+		BC2EBB902C2A8FA800EB1400 /* TutorialContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TutorialContentView.xib; sourceTree = "<group>"; };
 		BC482DDD2C196FB000FAF079 /* ResultConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultConst.swift; sourceTree = "<group>"; };
 		BC482DE62C1A74F800FAF079 /* ObservableErrorTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableErrorTracker.swift; sourceTree = "<group>"; };
 		BC482DE92C1AAB7400FAF079 /* NameRegisterNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameRegisterNavigator.swift; sourceTree = "<group>"; };
@@ -528,7 +532,7 @@
 				BC2EBB8A2C2A8E7D00EB1400 /* UIView+NibLoading.swift */,
 				866675D3275215AF007CB4D6 /* UIViewController+Extension.swift */,
 				BC0BBE432C1745EB00789349 /* UIViewController+PanModalPresentable.swift */,
-				BC22E0242C1C9B8800C59BAB /* UIViewController+BackgroundViewTapTrackable.swift */,
+				BC22E0242C1C9B8800C59BAB /* UIView+UIViewController+BackgroundViewTapTrackable.swift */,
 				BC92C85D297420CD00E49BD5 /* UserDefaults+Extension.swift */,
 				BC92C85F2975A2A800E49BD5 /* UIViewController+RxLifeCycleEvents.swift */,
 				BC2B11662977F90C009F4DC4 /* UIScrollView+Extension.swift */,
@@ -755,7 +759,8 @@
 			isa = PBXGroup;
 			children = (
 				599450FF256AD55900560202 /* TutorialViewController.swift */,
-				59945107256AD57300560202 /* TutorialViewController.storyboard */,
+				BC2EBB8D2C2A8F8C00EB1400 /* TutorialContentView.swift */,
+				BC2EBB902C2A8FA800EB1400 /* TutorialContentView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1261,7 +1266,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				59484C7025657E2B00F9C6A8 /* rankingAppear.mp3 in Resources */,
-				59945108256AD57300560202 /* TutorialViewController.storyboard in Resources */,
 				59A01139255AF588008996E3 /* ResultViewController.storyboard in Resources */,
 				59484C7D256584B000F9C6A8 /* startWhistle.mp3 in Resources */,
 				59D2D55D2552E2CC006DDB70 /* pistol-fire.mp3 in Resources */,
@@ -1280,6 +1284,7 @@
 				5903192F256D82BA005C30EF /* westernPistolShoot.mp3 in Resources */,
 				BC03FA242C2808A900E27C01 /* GameContentView.xib in Resources */,
 				5921A209255D6A4E001D8C39 /* RankingCell.xib in Resources */,
+				BC2EBB912C2A8FA800EB1400 /* TutorialContentView.xib in Resources */,
 				59D2D5422552E24D006DDB70 /* art.scnassets in Resources */,
 				59484C6B25657E1C00F9C6A8 /* endWhistle.mp3 in Resources */,
 				59940B882552F54900EC20C1 /* GoogleService-Info.plist in Resources */,
@@ -1318,6 +1323,7 @@
 				860646A92BF599FB00906DA0 /* bazookaShoot.mp3 in Resources */,
 				860646A82BF599FB00906DA0 /* pistol-slide.mp3 in Resources */,
 				860646BF2BF59A3900906DA0 /* Assets.xcassets in Resources */,
+				BC2EBB922C2A8FA800EB1400 /* TutorialContentView.xib in Resources */,
 				BC2EBB892C2A8A1800EB1400 /* SettingsContentView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1487,7 +1493,7 @@
 				BCD89DA12C1EA1E800BBBB99 /* KeyboardOverlapCalculator.swift in Sources */,
 				BC482DF62C1ABB5F00FAF079 /* RankingListView.swift in Sources */,
 				BC03FA2D2C293B3100E27C01 /* GameUseCasesComposer.swift in Sources */,
-				BC22E0252C1C9B8800C59BAB /* UIViewController+BackgroundViewTapTrackable.swift in Sources */,
+				BC22E0252C1C9B8800C59BAB /* UIView+UIViewController+BackgroundViewTapTrackable.swift in Sources */,
 				BC03F9D62C215AC400E27C01 /* ReplayNecessityCheckUseCase.swift in Sources */,
 				677DF1F127A7C096007512F6 /* RankingRepository.swift in Sources */,
 				BCD9675E2979E55400E33587 /* UIImageView+Extension.swift in Sources */,
@@ -1556,6 +1562,7 @@
 				86594DCA2BCD558E00971D1A /* AVPermissionRepository.swift in Sources */,
 				5952F64025EA0E1900ADB85B /* Font+Extension.swift in Sources */,
 				86299BA02BEC7E9600BAA2B3 /* ARContentConst.swift in Sources */,
+				BC2EBB8E2C2A8F8C00EB1400 /* TutorialContentView.swift in Sources */,
 				8627F6302BCDFEB40003D374 /* SettingsNavigator.swift in Sources */,
 				BC0BBE3C2C16B7E100789349 /* Double+Extension.swift in Sources */,
 				8627F6372BCE86850003D374 /* WeaponSelectNavigator.swift in Sources */,
@@ -1611,6 +1618,7 @@
 				BC03FA062C21CB5700E27C01 /* TutorialNecessityCheckUseCase.swift in Sources */,
 				BC22E0232C1C71E900C59BAB /* UITapGestureRecognizer+Rx.swift in Sources */,
 				BC0BBE4B2C174B2800789349 /* TutorialNavigator.swift in Sources */,
+				BC2EBB8F2C2A8F8C00EB1400 /* TutorialContentView.swift in Sources */,
 				BCD89DA52C1EA56400BBBB99 /* Notification+Extension.swift in Sources */,
 				860646112BF5996200906DA0 /* SceneNodeUtil.swift in Sources */,
 				860646122BF5996200906DA0 /* SafariViewUtil.swift in Sources */,
@@ -1632,7 +1640,7 @@
 				BC482DFD2C1B09C900FAF079 /* UIView+Constraint.swift in Sources */,
 				860646752BF599D500906DA0 /* ResultNavigator.swift in Sources */,
 				8606466E2BF599BC00906DA0 /* WeaponSelectCell.swift in Sources */,
-				BC22E0262C1C9B8800C59BAB /* UIViewController+BackgroundViewTapTrackable.swift in Sources */,
+				BC22E0262C1C9B8800C59BAB /* UIView+UIViewController+BackgroundViewTapTrackable.swift in Sources */,
 				BC03F9D72C215AC400E27C01 /* ReplayNecessityCheckUseCase.swift in Sources */,
 				BC03FA0C2C21CB6900E27C01 /* GameTimerHandlingUseCase.swift in Sources */,
 				BCD1C2582C06B60C008975EB /* CompositeCalculator.swift in Sources */,
