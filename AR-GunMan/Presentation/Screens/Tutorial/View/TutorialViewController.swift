@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 
 final class TutorialViewController: UIViewController, BackgroundViewTapTrackable {
-    var viewModel: TutorialViewModel!
+    var presenter: TutorialPresenter!
     private let disposeBag = DisposeBag()
     
     @IBOutlet private weak var scrollView: UIScrollView!
@@ -23,23 +23,8 @@ final class TutorialViewController: UIViewController, BackgroundViewTapTrackable
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let pageIndexWhenScrollViewScrolled = scrollView.rx.didScroll
-            .map({ [weak self] _ in
-                guard let self = self else { return 0 }
-                return self.scrollView.horizontalPageIndex
-            })
-            .startWith(0) // 初期値として0を流している
-            .asObservable()
-        
-        let input = TutorialViewModel.Input(
-            viewDidLoad: .just(()),
-            viewDidDisappear: rx.viewDidDisappear,
-            pageIndexWhenScrollViewScrolled: pageIndexWhenScrollViewScrolled,
-            bottomButtonTapped: bottomButton.rx.tap.asObservable(),
-            backgroundViewTapped: trackBackgroundViewTap()
-        )
-        let output = viewModel.transform(input: input)
-        bind(output: output)
+        setupUI()
+        bind()
     }
     
     private func setupUI() {
@@ -51,27 +36,34 @@ final class TutorialViewController: UIViewController, BackgroundViewTapTrackable
             duration: 0.8)
     }
     
-    private func bind(output: TutorialViewModel.Output) {
-        let viewModelAction = output.viewModelAction
-        let outputToView = output.outputToView
+    private func bind() {
+        let pageIndexWhenScrollViewScrolled = scrollView.rx.didScroll
+            .map({ [weak self] _ in
+                guard let self = self else { return 0 }
+                return self.scrollView.horizontalPageIndex
+            })
+            .startWith(0) // 初期値として0を流している
+            .asObservable()
+
+        let controllerInput = TutorialControllerInput(
+            viewDidLoad: .just(()),
+            viewDidDisappear: rx.viewDidDisappear,
+            pageIndexWhenScrollViewScrolled: pageIndexWhenScrollViewScrolled,
+            bottomButtonTapped: bottomButton.rx.tap.asObservable(),
+            backgroundViewTapped: trackBackgroundViewTap()
+        )
+        let viewModel = presenter.transform(input: controllerInput)
         
         disposeBag.insert {
-            viewModelAction.viewDismissed.subscribe()
-            viewModelAction.tutorialEndEventSent.subscribe()
-            
-            outputToView.setupUI
-                .subscribe(onNext: { [weak self] _ in
-                    self?.setupUI()
-                })
-            outputToView.insertBlurEffectView
+            viewModel.insertBlurEffectView
                 .subscribe(onNext: { [weak self] _ in
                     self?.insertBlurEffectView()
                 })
-            outputToView.buttonText
+            viewModel.buttonText
                 .bind(to: bottomButton.rx.title(for: .normal))
-            outputToView.pageControllIndex
+            viewModel.pageControlIndex
                 .bind(to: pageControl.rx.currentPage)
-            outputToView.scrollToNextPage
+            viewModel.scrollToNextPage
                 .subscribe(onNext: { [weak self] _ in
                     self?.scrollView.scrollHorizontallyToNextPage()
                 })

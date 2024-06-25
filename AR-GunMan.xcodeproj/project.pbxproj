@@ -249,8 +249,8 @@
 		BC22E0252C1C9B8800C59BAB /* UIViewController+BackgroundViewTapTrackable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22E0242C1C9B8800C59BAB /* UIViewController+BackgroundViewTapTrackable.swift */; };
 		BC22E0262C1C9B8800C59BAB /* UIViewController+BackgroundViewTapTrackable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22E0242C1C9B8800C59BAB /* UIViewController+BackgroundViewTapTrackable.swift */; };
 		BC2B11672977F90C009F4DC4 /* UIScrollView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2B11662977F90C009F4DC4 /* UIScrollView+Extension.swift */; };
-		BC482DD82C184E5800FAF079 /* TutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DD72C184E5800FAF079 /* TutorialViewModel.swift */; };
-		BC482DD92C184E5800FAF079 /* TutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DD72C184E5800FAF079 /* TutorialViewModel.swift */; };
+		BC2EBB692C2A468D00EB1400 /* TutorialPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EBB682C2A468D00EB1400 /* TutorialPresenter.swift */; };
+		BC2EBB6A2C2A468D00EB1400 /* TutorialPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EBB682C2A468D00EB1400 /* TutorialPresenter.swift */; };
 		BC482DDB2C19664400FAF079 /* ResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DDA2C19664400FAF079 /* ResultViewModel.swift */; };
 		BC482DDC2C19664400FAF079 /* ResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DDA2C19664400FAF079 /* ResultViewModel.swift */; };
 		BC482DDE2C196FB000FAF079 /* ResultConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DDD2C196FB000FAF079 /* ResultConst.swift */; };
@@ -453,7 +453,7 @@
 		BC22E0212C1C71E900C59BAB /* UITapGestureRecognizer+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITapGestureRecognizer+Rx.swift"; sourceTree = "<group>"; };
 		BC22E0242C1C9B8800C59BAB /* UIViewController+BackgroundViewTapTrackable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+BackgroundViewTapTrackable.swift"; sourceTree = "<group>"; };
 		BC2B11662977F90C009F4DC4 /* UIScrollView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Extension.swift"; sourceTree = "<group>"; };
-		BC482DD72C184E5800FAF079 /* TutorialViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewModel.swift; sourceTree = "<group>"; };
+		BC2EBB682C2A468D00EB1400 /* TutorialPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPresenter.swift; sourceTree = "<group>"; };
 		BC482DDA2C19664400FAF079 /* ResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewModel.swift; sourceTree = "<group>"; };
 		BC482DDD2C196FB000FAF079 /* ResultConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultConst.swift; sourceTree = "<group>"; };
 		BC482DE02C19D53F00FAF079 /* NameRegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameRegisterViewModel.swift; sourceTree = "<group>"; };
@@ -582,7 +582,7 @@
 			isa = PBXGroup;
 			children = (
 				86A6CB2A2BCC0ED900628C61 /* Navigator */,
-				86A6CB292BCC0ED300628C61 /* ViewModel */,
+				BC2EBB672C2A467300EB1400 /* Presenter */,
 				86A6CB282BCC0ECD00628C61 /* View */,
 			);
 			path = Tutorial;
@@ -767,14 +767,6 @@
 				59945107256AD57300560202 /* TutorialViewController.storyboard */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		86A6CB292BCC0ED300628C61 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				BC482DD72C184E5800FAF079 /* TutorialViewModel.swift */,
-			);
-			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		86A6CB2A2BCC0ED900628C61 /* Navigator */ = {
@@ -1096,6 +1088,14 @@
 				BC35B1FE2C159E2B00131483 /* DeviceMotion */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		BC2EBB672C2A467300EB1400 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				BC2EBB682C2A468D00EB1400 /* TutorialPresenter.swift */,
+			);
+			path = Presenter;
 			sourceTree = "<group>";
 		};
 		BC35B1FC2C159E1A00131483 /* ARContent */ = {
@@ -1481,13 +1481,13 @@
 				BC03FA082C21CB6000E27C01 /* GameStartUseCase.swift in Sources */,
 				860C94992BD3D2980042D52C /* NameRegisterUseCase.swift in Sources */,
 				67DB2C5B27C17EBE00B8CB3C /* SoundType.swift in Sources */,
+				BC2EBB692C2A468D00EB1400 /* TutorialPresenter.swift in Sources */,
 				86F1573B2BD7B71E00BE979C /* RankingNavigator.swift in Sources */,
 				BC92C8602975A2A800E49BD5 /* UIViewController+RxLifeCycleEvents.swift in Sources */,
 				677DF1F427A7C100007512F6 /* Ranking.swift in Sources */,
 				BCD89D9E2C1EA01A00BBBB99 /* NotificationCenter+Extension.swift in Sources */,
 				BC92C85A297348D500E49BD5 /* ScoreCalculator.swift in Sources */,
 				86F1573F2BD9329600BE979C /* CustomError.swift in Sources */,
-				BC482DD82C184E5800FAF079 /* TutorialViewModel.swift in Sources */,
 				BC03F9F92C21CB1E00E27C01 /* ReloadMotionFilterUseCase.swift in Sources */,
 				8627F6322BCE454C0003D374 /* TutorialNavigator.swift in Sources */,
 				BC03F9ED2C21CAF200E27C01 /* WeaponFireUseCase.swift in Sources */,
@@ -1610,7 +1610,6 @@
 				BCC512C32C15B5F000D77305 /* Extension+SCNNode.swift in Sources */,
 				BC7FF24B2C2983D20014CDCE /* SceneDelegate.swift in Sources */,
 				860646142BF5996200906DA0 /* ObservableActivityTracker.swift in Sources */,
-				BC482DD92C184E5800FAF079 /* TutorialViewModel.swift in Sources */,
 				860646CA2BF59CF100906DA0 /* WeaponType.swift in Sources */,
 				BC22E0172C1B281300C59BAB /* Observable+Extension.swift in Sources */,
 				860646132BF5996200906DA0 /* SceneAnimationUtil.swift in Sources */,
@@ -1673,6 +1672,7 @@
 				BC482DF72C1ABB5F00FAF079 /* RankingListView.swift in Sources */,
 				BC03F9E02C21704300E27C01 /* TimerStreamCreator.swift in Sources */,
 				BC0BBE4D2C174B3000789349 /* TutorialViewController.swift in Sources */,
+				BC2EBB6A2C2A468D00EB1400 /* TutorialPresenter.swift in Sources */,
 				860646162BF5996200906DA0 /* TimeCountUtil.swift in Sources */,
 				8606461E2BF5996700906DA0 /* TopConst.swift in Sources */,
 				BC03FA032C21CB4F00E27C01 /* TargetHitHandlingUseCase.swift in Sources */,

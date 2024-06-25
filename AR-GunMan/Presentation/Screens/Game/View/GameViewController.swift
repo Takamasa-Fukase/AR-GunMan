@@ -30,7 +30,7 @@ class GameViewController: UIViewController {
     }
     
     private func bind() {
-        let input = GameControllerInput(
+        let controllerInput = GameControllerInput(
             inputFromViewController: GameControllerInput.InputFromViewController(
                 viewDidLoad: .just(()),
                 viewWillAppear: rx.viewWillAppear,
@@ -47,7 +47,7 @@ class GameViewController: UIViewController {
                 gyroUpdated: deviceMotionController.gyroUpdated
             )
         )
-        let viewModel = presenter.transform(input: input)
+        let viewModel = presenter.transform(input: controllerInput)
         bindOutputToViewComponents(viewModel.outputToView)
         bindOutputToARContentController(viewModel.outputToARContent)
         bindOutputToDeviceMotionController(viewModel.outputToDeviceMotion)
