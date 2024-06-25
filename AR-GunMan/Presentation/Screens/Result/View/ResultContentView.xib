@@ -13,7 +13,7 @@
                 <outlet property="homeButton" destination="uGt-am-aLD" id="w8o-KX-COd"/>
                 <outlet property="rankingListBaseView" destination="FZj-zP-hRH" id="JEn-7A-Mfv"/>
                 <outlet property="replayButton" destination="FOo-O2-UvU" id="Yfg-2A-cwk"/>
-                <outlet property="rightButtonsStackView" destination="DlY-pT-CRC" id="NkD-61-r0W"/>
+                <outlet property="rightButtonsStackView" destination="EuE-fV-ZxO" id="wD3-lz-OIw"/>
                 <outlet property="scoreLabel" destination="DKz-xR-KDl" id="lEC-rC-cB0"/>
             </connections>
         </placeholder>
@@ -179,7 +179,6 @@
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="thQ-vU-o26"/>
-            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="XIk-fy-7xc" firstAttribute="centerX" secondItem="IPc-xO-NTC" secondAttribute="centerX" id="0q1-sO-FlF"/>
                 <constraint firstItem="thQ-vU-o26" firstAttribute="trailing" secondItem="M5z-Wh-bxm" secondAttribute="trailing" id="2m2-Nv-WUA"/>
