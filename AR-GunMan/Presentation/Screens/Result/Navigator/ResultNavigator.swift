@@ -27,8 +27,7 @@ final class ResultNavigator: ResultNavigatorInterface {
     }
     
     static func assembleModules(score: Double) -> UIViewController {
-        let storyboard = UIStoryboard(name: ResultViewController.className, bundle: nil)
-        let vc = storyboard.instantiateInitialViewController() as! ResultViewController
+        let vc = ResultViewController()
         vc.modalPresentationStyle = .fullScreen
         vc.presenter = ResultPresenter(
             rankingRepository: RankingRepository(),

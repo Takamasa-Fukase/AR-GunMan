@@ -11,73 +11,46 @@ import RxCocoa
 
 final class ResultViewController: UIViewController {
     var presenter: ResultPresenterInterface!
-    private let rankingListView = RankingListView()
+    private let contentView = ResultContentView()
     private let disposeBag = DisposeBag()
-    
-    @IBOutlet private weak var rankingListBaseView: UIView!
-    @IBOutlet private weak var scoreLabel: UILabel!
-    @IBOutlet private weak var rightButtonsStackView: UIStackView!
-    @IBOutlet private weak var replayButton: UIButton!
-    @IBOutlet private weak var homeButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupUI()
+        setView()
         bind()
+    }
+    
+    private func setView() {
+        view.addSubview(contentView)
+        view.addConstraints(for: contentView)
     }
     
     private func bind() {
         let controllerInput = ResultControllerInput(
             viewWillAppear: rx.viewWillAppear,
-            replayButtonTapped: replayButton.rx.tap.asObservable(),
-            toHomeButtonTapped: homeButton.rx.tap.asObservable()
+            replayButtonTapped: contentView.replayButton.rx.tap.asObservable(),
+            toHomeButtonTapped: contentView.homeButton.rx.tap.asObservable()
         )
         let viewModel = presenter.transform(input: controllerInput)
         
         disposeBag.insert {
             viewModel.scoreText
-                .bind(to: scoreLabel.rx.text)
+                .bind(to: contentView.scoreLabel.rx.text)
             viewModel.showButtons
                 .subscribe(onNext: { [weak self] _ in
                     guard let self = self else {return}
-                    self.showButtons()
+                    self.contentView.showButtons()
                 })
             viewModel.scrollCellToCenter
                 .subscribe(onNext: { [weak self] indexPath in
                     guard let self = self else {return}
-                    self.rankingListView.scrollCellToCenterVertically(at: indexPath)
+                    self.contentView.rankingListView.scrollCellToCenterVertically(at: indexPath)
                 })
-            rankingListView.bind(
+            contentView.rankingListView.bind(
                 rankingList: viewModel.rankingList,
                 isLoading: viewModel.isLoadingRankingList
             )
         }
-    }
-    
-    private func setupUI() {
-        insertBlurEffectView()
-        rightButtonsStackView.isHidden = true
-        replayButton.alpha = 0
-        homeButton.alpha = 0
-        
-        rankingListBaseView.addSubview(rankingListView)
-        rankingListBaseView.addConstraints(for: rankingListView)
-    }
-
-    private func showButtons() {
-        UIView.animate(withDuration: 0.6, delay: 0.1) {
-            self.rightButtonsStackView.isHidden = false
-            
-        } completion: { (Bool) in
-            UIView.animate(withDuration: 0.2, delay: 0) {
-                self.replayButton.alpha = 1
-                self.homeButton.alpha = 1
-            }
-        }
-    }
-    
-    private func highlightCell(at indexPath: IndexPath) {
-        // TODO: ハイライト実装
     }
 }

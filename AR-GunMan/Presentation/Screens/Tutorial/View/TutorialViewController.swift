@@ -47,7 +47,7 @@ final class TutorialViewController: UIViewController {
         disposeBag.insert {
             viewModel.insertBlurEffectView
                 .subscribe(onNext: { [weak self] _ in
-                    self?.insertBlurEffectView()
+                    self?.view.insertBlurEffectView()
                 })
             viewModel.buttonText
                 .bind(to: contentView.bottomButton.rx.title(for: .normal))

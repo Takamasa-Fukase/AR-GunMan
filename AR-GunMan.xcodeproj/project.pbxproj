@@ -27,7 +27,6 @@
 		59940BB12552FAAF00EC20C1 /* NameRegisterViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59940BB02552FAAF00EC20C1 /* NameRegisterViewController.storyboard */; };
 		59945100256AD55900560202 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 599450FF256AD55900560202 /* TutorialViewController.swift */; };
 		59A01134255AF580008996E3 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A01133255AF580008996E3 /* ResultViewController.swift */; };
-		59A01139255AF588008996E3 /* ResultViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59A01138255AF588008996E3 /* ResultViewController.storyboard */; };
 		59D2D4D92552DE66006DDB70 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2D4D82552DE66006DDB70 /* AppDelegate.swift */; };
 		59D2D4E52552DE67006DDB70 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59D2D4E32552DE67006DDB70 /* LaunchScreen.storyboard */; };
 		59D2D53A2552E1D2006DDB70 /* Storyboard+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2D5392552E1D2006DDB70 /* Storyboard+Extension.swift */; };
@@ -146,7 +145,7 @@
 		86594DCA2BCD558E00971D1A /* AVPermissionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86594DC92BCD558E00971D1A /* AVPermissionRepository.swift */; };
 		86594DCC2BCD75E100971D1A /* ReplayRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86594DCB2BCD75E100971D1A /* ReplayRepository.swift */; };
 		86627DE6273FD5E30044A980 /* RankingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86627DE5273FD5E30044A980 /* RankingViewController.swift */; };
-		866675D4275215AF007CB4D6 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866675D3275215AF007CB4D6 /* UIViewController+Extension.swift */; };
+		866675D4275215AF007CB4D6 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866675D3275215AF007CB4D6 /* UIView+Extension.swift */; };
 		86B8A3A62B7E0D1F005ED2F8 /* RankingUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B8A3A52B7E0D1F005ED2F8 /* RankingUtil.swift */; };
 		86C421B82BB040C300EFD791 /* TutorialRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C421B72BB040C300EFD791 /* TutorialRepository.swift */; };
 		86C5AB982AB8819C00CB161D /* UIAlertController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C5AB972AB8819C00CB161D /* UIAlertController+Extension.swift */; };
@@ -220,7 +219,7 @@
 		BC0BBE402C16D31800789349 /* NSObject+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0BBE3F2C16D31800789349 /* NSObject+Extension.swift */; };
 		BC0BBE412C16D31800789349 /* NSObject+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0BBE3F2C16D31800789349 /* NSObject+Extension.swift */; };
 		BC0BBE442C1745EB00789349 /* UIViewController+PanModalPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0BBE432C1745EB00789349 /* UIViewController+PanModalPresentable.swift */; };
-		BC0BBE452C17460A00789349 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866675D3275215AF007CB4D6 /* UIViewController+Extension.swift */; };
+		BC0BBE452C17460A00789349 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866675D3275215AF007CB4D6 /* UIView+Extension.swift */; };
 		BC0BBE472C17474800789349 /* WeaponAutoReloadHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0BBE462C17474800789349 /* WeaponAutoReloadHandlerTests.swift */; };
 		BC0BBE4B2C174B2800789349 /* TutorialNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8627F6312BCE454C0003D374 /* TutorialNavigator.swift */; };
 		BC0BBE4D2C174B3000789349 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 599450FF256AD55900560202 /* TutorialViewController.swift */; };
@@ -257,6 +256,10 @@
 		BC2EBB952C2A962500EB1400 /* WeaponSelectContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EBB932C2A962500EB1400 /* WeaponSelectContentView.swift */; };
 		BC2EBB972C2A963B00EB1400 /* WeaponSelectContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC2EBB962C2A963B00EB1400 /* WeaponSelectContentView.xib */; };
 		BC2EBB982C2A963B00EB1400 /* WeaponSelectContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC2EBB962C2A963B00EB1400 /* WeaponSelectContentView.xib */; };
+		BC2EBB9A2C2A992500EB1400 /* ResultContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EBB992C2A992500EB1400 /* ResultContentView.swift */; };
+		BC2EBB9B2C2A992500EB1400 /* ResultContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EBB992C2A992500EB1400 /* ResultContentView.swift */; };
+		BC2EBB9D2C2A994100EB1400 /* ResultContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC2EBB9C2C2A994100EB1400 /* ResultContentView.xib */; };
+		BC2EBB9E2C2A994100EB1400 /* ResultContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC2EBB9C2C2A994100EB1400 /* ResultContentView.xib */; };
 		BC482DDE2C196FB000FAF079 /* ResultConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DDD2C196FB000FAF079 /* ResultConst.swift */; };
 		BC482DDF2C196FB000FAF079 /* ResultConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DDD2C196FB000FAF079 /* ResultConst.swift */; };
 		BC482DE72C1A74F800FAF079 /* ObservableErrorTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DE62C1A74F800FAF079 /* ObservableErrorTracker.swift */; };
@@ -348,7 +351,6 @@
 		59940BB02552FAAF00EC20C1 /* NameRegisterViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NameRegisterViewController.storyboard; sourceTree = "<group>"; };
 		599450FF256AD55900560202 /* TutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 		59A01133255AF580008996E3 /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
-		59A01138255AF588008996E3 /* ResultViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ResultViewController.storyboard; sourceTree = "<group>"; };
 		59D2D4D52552DE66006DDB70 /* AR-GunMan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AR-GunMan.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		59D2D4D82552DE66006DDB70 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		59D2D4E42552DE67006DDB70 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -397,7 +399,7 @@
 		86594DC92BCD558E00971D1A /* AVPermissionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPermissionRepository.swift; sourceTree = "<group>"; };
 		86594DCB2BCD75E100971D1A /* ReplayRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplayRepository.swift; sourceTree = "<group>"; };
 		86627DE5273FD5E30044A980 /* RankingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingViewController.swift; sourceTree = "<group>"; };
-		866675D3275215AF007CB4D6 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
+		866675D3275215AF007CB4D6 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		86B8A3A52B7E0D1F005ED2F8 /* RankingUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingUtil.swift; sourceTree = "<group>"; };
 		86C421B72BB040C300EFD791 /* TutorialRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialRepository.swift; sourceTree = "<group>"; };
 		86C5AB972AB8819C00CB161D /* UIAlertController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extension.swift"; sourceTree = "<group>"; };
@@ -457,6 +459,8 @@
 		BC2EBB902C2A8FA800EB1400 /* TutorialContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TutorialContentView.xib; sourceTree = "<group>"; };
 		BC2EBB932C2A962500EB1400 /* WeaponSelectContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponSelectContentView.swift; sourceTree = "<group>"; };
 		BC2EBB962C2A963B00EB1400 /* WeaponSelectContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeaponSelectContentView.xib; sourceTree = "<group>"; };
+		BC2EBB992C2A992500EB1400 /* ResultContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultContentView.swift; sourceTree = "<group>"; };
+		BC2EBB9C2C2A994100EB1400 /* ResultContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResultContentView.xib; sourceTree = "<group>"; };
 		BC482DDD2C196FB000FAF079 /* ResultConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultConst.swift; sourceTree = "<group>"; };
 		BC482DE62C1A74F800FAF079 /* ObservableErrorTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableErrorTracker.swift; sourceTree = "<group>"; };
 		BC482DE92C1AAB7400FAF079 /* NameRegisterNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameRegisterNavigator.swift; sourceTree = "<group>"; };
@@ -534,7 +538,7 @@
 				5952F63F25EA0E1800ADB85B /* Font+Extension.swift */,
 				BC482DFB2C1B09C900FAF079 /* UIView+Constraint.swift */,
 				BC2EBB8A2C2A8E7D00EB1400 /* UIView+NibLoading.swift */,
-				866675D3275215AF007CB4D6 /* UIViewController+Extension.swift */,
+				866675D3275215AF007CB4D6 /* UIView+Extension.swift */,
 				BC0BBE432C1745EB00789349 /* UIViewController+PanModalPresentable.swift */,
 				BC22E0242C1C9B8800C59BAB /* UIView+UIViewController+BackgroundViewTapTrackable.swift */,
 				BC92C85D297420CD00E49BD5 /* UserDefaults+Extension.swift */,
@@ -801,7 +805,8 @@
 			isa = PBXGroup;
 			children = (
 				59A01133255AF580008996E3 /* ResultViewController.swift */,
-				59A01138255AF588008996E3 /* ResultViewController.storyboard */,
+				BC2EBB992C2A992500EB1400 /* ResultContentView.swift */,
+				BC2EBB9C2C2A994100EB1400 /* ResultContentView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1271,7 +1276,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				59484C7025657E2B00F9C6A8 /* rankingAppear.mp3 in Resources */,
-				59A01139255AF588008996E3 /* ResultViewController.storyboard in Resources */,
 				59484C7D256584B000F9C6A8 /* startWhistle.mp3 in Resources */,
 				59D2D55D2552E2CC006DDB70 /* pistol-fire.mp3 in Resources */,
 				59484C8A25664FEC00F9C6A8 /* bazookaHit.mp3 in Resources */,
@@ -1290,6 +1294,7 @@
 				BC03FA242C2808A900E27C01 /* GameContentView.xib in Resources */,
 				5921A209255D6A4E001D8C39 /* RankingCell.xib in Resources */,
 				BC2EBB912C2A8FA800EB1400 /* TutorialContentView.xib in Resources */,
+				BC2EBB9D2C2A994100EB1400 /* ResultContentView.xib in Resources */,
 				59D2D5422552E24D006DDB70 /* art.scnassets in Resources */,
 				59484C6B25657E1C00F9C6A8 /* endWhistle.mp3 in Resources */,
 				59940B882552F54900EC20C1 /* GoogleService-Info.plist in Resources */,
@@ -1313,6 +1318,7 @@
 				BC03FA252C2808A900E27C01 /* GameContentView.xib in Resources */,
 				BC2EBB982C2A963B00EB1400 /* WeaponSelectContentView.xib in Resources */,
 				860646A32BF599FB00906DA0 /* bazookaSet.mp3 in Resources */,
+				BC2EBB9E2C2A994100EB1400 /* ResultContentView.xib in Resources */,
 				8606469F2BF599FB00906DA0 /* pistol-out-bullets.mp3 in Resources */,
 				860646AB2BF599FB00906DA0 /* rankingAppear.mp3 in Resources */,
 				BC03F9CE2C214E9900E27C01 /* TopContentView.xib in Resources */,
@@ -1522,6 +1528,7 @@
 				BCCD447D2C12AB4500BF541D /* UIColor+Extension.swift in Sources */,
 				BC03F9DC2C2166D800E27C01 /* TopPageButtonIconChangeUseCase.swift in Sources */,
 				863FE7EE2BEA6D8D00E104F5 /* FirebaseConst.swift in Sources */,
+				BC2EBB9A2C2A992500EB1400 /* ResultContentView.swift in Sources */,
 				BCC512C22C15B5F000D77305 /* Extension+SCNNode.swift in Sources */,
 				59945100256AD55900560202 /* TutorialViewController.swift in Sources */,
 				8627F6432BD16BB60003D374 /* ObservableActivityTracker.swift in Sources */,
@@ -1553,7 +1560,7 @@
 				BC482DEA2C1AAB7400FAF079 /* NameRegisterNavigator.swift in Sources */,
 				BC03FA1B2C24279700E27C01 /* GamePresenter.swift in Sources */,
 				59D2D4D92552DE66006DDB70 /* AppDelegate.swift in Sources */,
-				866675D4275215AF007CB4D6 /* UIViewController+Extension.swift in Sources */,
+				866675D4275215AF007CB4D6 /* UIView+Extension.swift in Sources */,
 				861B87752BFE0F6100D0882D /* SoundPlayer.swift in Sources */,
 				59D2D53A2552E1D2006DDB70 /* Storyboard+Extension.swift in Sources */,
 				BC03FA1E2C242E5200E27C01 /* TutorialEndHandlingUseCase.swift in Sources */,
@@ -1586,7 +1593,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BC0BBE452C17460A00789349 /* UIViewController+Extension.swift in Sources */,
+				BC0BBE452C17460A00789349 /* UIView+Extension.swift in Sources */,
 				860646762BF599D500906DA0 /* ResultViewController.swift in Sources */,
 				BC03F9F72C21CB1400E27C01 /* FireMotionFilterUseCase.swift in Sources */,
 				860646972BF599E900906DA0 /* SettingsViewController.swift in Sources */,
@@ -1630,6 +1637,7 @@
 				BCD89DA52C1EA56400BBBB99 /* Notification+Extension.swift in Sources */,
 				860646112BF5996200906DA0 /* SceneNodeUtil.swift in Sources */,
 				860646122BF5996200906DA0 /* SafariViewUtil.swift in Sources */,
+				BC2EBB9B2C2A992500EB1400 /* ResultContentView.swift in Sources */,
 				BC03FA222C2808A100E27C01 /* GameContentView.swift in Sources */,
 				860646982BF599E900906DA0 /* SettingsNavigator.swift in Sources */,
 				8606466B2BF599BC00906DA0 /* WeaponSelectViewController.swift in Sources */,

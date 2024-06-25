@@ -66,7 +66,7 @@ final class NameRegisterViewController: UIViewController, BackgroundViewTapTrack
                     guard let self = self,
                           let keyboardFrameEnd = notification.keyboardFrameEnd,
                           let duration = notification.keyboardAnimationDuration else { return }
-                    self.handleActiveTextFieldOverlapWhenKeyboardWillShow(
+                    self.view.handleActiveTextFieldOverlapWhenKeyboardWillShow(
                         keyboardFrameEnd: keyboardFrameEnd,
                         keyboardAnimationDuration: duration,
                         activeTextField: self.nameTextField
@@ -76,7 +76,7 @@ final class NameRegisterViewController: UIViewController, BackgroundViewTapTrack
                 .subscribe(onNext: { [weak self] notification in
                     guard let self = self,
                           let duration = notification.keyboardAnimationDuration else { return }
-                    self.resetViewTransform(with: duration)
+                    self.view.resetViewTransform(with: duration)
                 })
         }
     }

@@ -1,5 +1,5 @@
 //
-//  UIViewController+Extension.swift
+//  UIView+Extension.swift
 //  AR-GunMan
 //
 //  Created by Takahiro Fukase on 2021/11/27.
@@ -7,12 +7,12 @@
 
 import UIKit
 
-extension UIViewController {
+extension UIView {
     func insertBlurEffectView() {
         let blurEffect = UIBlurEffect(style: .dark)
         let visualEffectView = UIVisualEffectView(effect: blurEffect)
-        visualEffectView.frame = view.frame
-        view.insertSubview(visualEffectView, at: 0)
+        visualEffectView.frame = frame
+        insertSubview(visualEffectView, at: 0)
     }
     
     func handleActiveTextFieldOverlapWhenKeyboardWillShow(
@@ -24,7 +24,7 @@ extension UIViewController {
         let overlapCalcultaionResult = KeyboardOverlapCalculator.calculate(
             keyboardFrameEnd: keyboardFrameEnd,
             activieTextField: activeTextField,
-            backgroundView: view
+            backgroundView: self
         )
         guard overlapCalcultaionResult.isTextFieldOverlapped else { return }
         let distanceToMove = -(overlapCalcultaionResult.overlap) - CGFloat(inset)
@@ -34,18 +34,18 @@ extension UIViewController {
     
     func transformView(_ transform: CGAffineTransform, with duration: TimeInterval) {
         UIView.animate(withDuration: duration) { [weak self] in
-            self?.view.transform = transform
+            self?.transform = transform
         }
     }
     
     func resetViewTransform(with duration: TimeInterval) {
         UIView.animate(withDuration: duration) { [weak self] in
-            self?.view.transform = CGAffineTransform.identity
+            self?.transform = CGAffineTransform.identity
         }
     }
     
     open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-        view.endEditing(true)
+        endEditing(true)
     }
 }
