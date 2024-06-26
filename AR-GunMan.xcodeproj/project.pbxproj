@@ -641,6 +641,9 @@
 		59D2D4EE2552DE67006DDB70 /* AR-GunManTests */ = {
 			isa = PBXGroup;
 			children = (
+				BC7F6FD32C2C04DD00480833 /* Presentation */,
+				BC7F6FD42C2C04F200480833 /* Domain */,
+				BC7F6FD52C2C04F600480833 /* Data */,
 				BCD1C2282C01B9E2008975EB /* WeaponFiringEventTransformerTests.swift */,
 				BCD1C2372C043924008975EB /* WeaponReloadingEventTransformerTests.swift */,
 				BC0BBE462C17474800789349 /* WeaponAutoReloadHandlerTests.swift */,
@@ -1119,6 +1122,131 @@
 				BC03FA292C280D3600E27C01 /* DeviceMotionController.swift */,
 			);
 			path = DeviceMotion;
+			sourceTree = "<group>";
+		};
+		BC7F6FD32C2C04DD00480833 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				BC7F6FD62C2C04FF00480833 /* Screens */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		BC7F6FD42C2C04F200480833 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				BC7F6FE02C2C055F00480833 /* UseCase */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		BC7F6FD52C2C04F600480833 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				BC7F6FDF2C2C055A00480833 /* Repository */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		BC7F6FD62C2C04FF00480833 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				BC7F6FD72C2C050F00480833 /* Top */,
+				BC7F6FD82C2C051500480833 /* Game */,
+				BC7F6FD92C2C051900480833 /* Settings */,
+				BC7F6FDA2C2C051F00480833 /* Tutorial */,
+				BC7F6FDB2C2C052600480833 /* WeaponSelect */,
+				BC7F6FDC2C2C052D00480833 /* Result */,
+				BC7F6FDD2C2C053200480833 /* NameRegister */,
+				BC7F6FDE2C2C053600480833 /* Ranking */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		BC7F6FD72C2C050F00480833 /* Top */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Top;
+			sourceTree = "<group>";
+		};
+		BC7F6FD82C2C051500480833 /* Game */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
+		BC7F6FD92C2C051900480833 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		BC7F6FDA2C2C051F00480833 /* Tutorial */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Tutorial;
+			sourceTree = "<group>";
+		};
+		BC7F6FDB2C2C052600480833 /* WeaponSelect */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = WeaponSelect;
+			sourceTree = "<group>";
+		};
+		BC7F6FDC2C2C052D00480833 /* Result */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Result;
+			sourceTree = "<group>";
+		};
+		BC7F6FDD2C2C053200480833 /* NameRegister */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = NameRegister;
+			sourceTree = "<group>";
+		};
+		BC7F6FDE2C2C053600480833 /* Ranking */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Ranking;
+			sourceTree = "<group>";
+		};
+		BC7F6FDF2C2C055A00480833 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		BC7F6FE02C2C055F00480833 /* UseCase */ = {
+			isa = PBXGroup;
+			children = (
+				BC7F6FE12C2C056700480833 /* Top */,
+				BC7F6FE22C2C056B00480833 /* Game */,
+			);
+			path = UseCase;
+			sourceTree = "<group>";
+		};
+		BC7F6FE12C2C056700480833 /* Top */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Top;
+			sourceTree = "<group>";
+		};
+		BC7F6FE22C2C056B00480833 /* Game */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Game;
 			sourceTree = "<group>";
 		};
 		BCC512CD2C15DD6000D77305 /* Enums */ = {
