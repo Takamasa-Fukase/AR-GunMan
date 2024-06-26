@@ -15,14 +15,14 @@ final class WeaponFireUseCaseTests: XCTestCase {
     var scheduler: TestScheduler!
     var disposeBag: DisposeBag!
     var soundPlayer: SoundPlayerMock!
-    var weaponFireUseCase: WeaponFireUseCaseInterface!
+    var weaponFireUseCase: WeaponFireUseCase!
     
     override func setUp() {
         super.setUp()
         scheduler = TestScheduler(initialClock: 0)
         disposeBag = DisposeBag()
         soundPlayer = SoundPlayerMock()
-        weaponFireUseCase = WeaponFireUseCase(soundPlayer: soundPlayer)
+        weaponFireUseCase = .init(soundPlayer: soundPlayer)
     }
     
     override func tearDown() {
@@ -34,16 +34,11 @@ final class WeaponFireUseCaseTests: XCTestCase {
     
     func test_全ての武器で_入力の弾が1で出力の弾が0_入出力の武器が同じ_各武器ごとの発射音声が再生されたら成功() {
         let allWeaponFireTriggers = scheduler.createHotObservable([
-            .next(1, WeaponType.pistol),
-            .next(2, WeaponType.bazooka)
-        ])
-        let allWeaponBulletsCounts = scheduler.createHotObservable([
-            .next(0, 1),
-            .next(0, 1)
+            .next(1, (weaponType: WeaponType.pistol, bulletsCount: 1)),
+            .next(2, (weaponType: WeaponType.bazooka, bulletsCount: 1))
         ])
         let input = WeaponFireInput(
-            weaponFiringTrigger: allWeaponFireTriggers.asObservable(),
-            bulletsCount: allWeaponBulletsCounts.asObservable()
+            weaponFiringTrigger: allWeaponFireTriggers.asObservable()
         )
         let output = weaponFireUseCase.transform(input: input)
         let updateBulletsCountObserver = scheduler.createObserver(Int.self)
@@ -77,16 +72,11 @@ final class WeaponFireUseCaseTests: XCTestCase {
     
     func test_全ての武器で_入力の弾が0の場合は弾も武器種別もイベントの出力はされず_ピストルだけは弾切れ音声が再生されてバズーカは何も再生されなければ成功() {
         let allWeaponFireTriggers = scheduler.createHotObservable([
-            .next(1, WeaponType.pistol),
-            .next(2, WeaponType.bazooka)
-        ])
-        let allWeaponBulletsCounts = scheduler.createHotObservable([
-            .next(0, 0),
-            .next(0, 0)
+            .next(1, (weaponType: WeaponType.pistol, bulletsCount: 0)),
+            .next(2, (weaponType: WeaponType.bazooka, bulletsCount: 0))
         ])
         let input = WeaponFireInput(
-            weaponFiringTrigger: allWeaponFireTriggers.asObservable(),
-            bulletsCount: allWeaponBulletsCounts.asObservable()
+            weaponFiringTrigger: allWeaponFireTriggers.asObservable()
         )
         let output = weaponFireUseCase.transform(input: input)
         let updateBulletsCountObserver = scheduler.createObserver(Int.self)
