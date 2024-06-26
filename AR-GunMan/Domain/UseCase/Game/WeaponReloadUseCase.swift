@@ -9,8 +9,7 @@ import RxSwift
 import RxCocoa
 
 struct WeaponReloadInput {
-    let weaponReloadingTrigger: Observable<WeaponType>
-    let bulletsCount: Observable<Int>
+    let weaponReloadingTrigger: Observable<(weaponType: WeaponType, bulletsCount: Int)>
     let isWeaponReloading: Observable<Bool>
 }
 
@@ -33,13 +32,10 @@ final class WeaponReloadUseCase: WeaponReloadUseCaseInterface {
     
     func transform(input: WeaponReloadInput) -> WeaponReloadOutput {
         let isWeaponReloadingRelay = PublishRelay<Bool>()
-        
+
         let weaponTypeAndBulletsCountAndReloadingFlag = input.weaponReloadingTrigger
-            .withLatestFrom(Observable.combineLatest(
-                input.bulletsCount,
-                input.isWeaponReloading
-            )) {
-                return (weaponType: $0, bulletsCount: $1.0, isWeaponReloading: $1.1)
+            .withLatestFrom(input.isWeaponReloading) {
+                return (weaponType: $0.0, bulletsCount: $0.1, isWeaponReloading: $1)
             }
             .share()
         

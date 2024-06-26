@@ -9,8 +9,7 @@ import RxSwift
 import RxCocoa
 
 struct WeaponAutoReloadFilterInput {
-    let weaponFired: Observable<WeaponType>
-    let bulletsCount: Observable<Int>
+    let weaponFired: Observable<(weaponType: WeaponType, bulletsCount: Int)>
 }
 
 struct WeaponAutoReloadFilterOutput {
@@ -24,7 +23,6 @@ protocol WeaponAutoReloadFilterUseCaseInterface {
 final class WeaponAutoReloadFilterUseCase: WeaponAutoReloadFilterUseCaseInterface {
     func transform(input: WeaponAutoReloadFilterInput) -> WeaponAutoReloadFilterOutput {
         let reloadWeaponAutomatically = input.weaponFired
-            .withLatestFrom(input.bulletsCount) { (weaponType: $0, bulletsCount: $1) }
             .filter({ $0.bulletsCount == 0 && $0.weaponType.reloadType == .auto })
             .map({ $0.weaponType })
 

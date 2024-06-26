@@ -9,8 +9,7 @@ import RxSwift
 import RxCocoa
 
 struct TargetHitHandlingInput {
-    let targetHit: Observable<(weaponType: WeaponType, collisionInfo: CollisionInfo)>
-    let currentScore: Observable<Double>
+    let targetHit: Observable<(weaponType: WeaponType, collisionInfo: CollisionInfo, currentScore: Double)>
 }
 
 struct TargetHitHandlingOutput {
@@ -33,9 +32,6 @@ final class TargetHitHandlingUseCase: TargetHitHandlingUseCaseInterface {
     
     func transform(input: TargetHitHandlingInput) -> TargetHitHandlingOutput {
         let updateScore = input.targetHit
-            .withLatestFrom(input.currentScore) {
-                return (weaponType: $0.weaponType, currentScore: $1)
-            }
             .map({
                 return ScoreCalculator.getUpdatedScoreAfterHit(
                     currentScore: $0.currentScore,

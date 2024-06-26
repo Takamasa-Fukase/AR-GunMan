@@ -9,8 +9,7 @@ import RxSwift
 import RxCocoa
 
 struct ReloadMotionDetectionCountInput {
-    let reloadMotionDetected: Observable<Void>
-    let currentCount: Observable<Int>
+    let currentCountWhenReloadMotionDetected: Observable<Int>
 }
 
 struct ReloadMotionDetectionCountOutput {
@@ -35,14 +34,10 @@ final class ReloadMotionDetectionCountUseCase: ReloadMotionDetectionCountUseCase
     func transform(
         input: ReloadMotionDetectionCountInput
     ) -> ReloadMotionDetectionCountOutput {
-        let currentCountWhenReloadMotionDetected = input.reloadMotionDetected
-            .withLatestFrom(input.currentCount)
-            .share()
-        
-        let updateCount = currentCountWhenReloadMotionDetected
+        let updateCount = input.currentCountWhenReloadMotionDetected
             .map({ $0 + 1 })
                 
-        let changeTargetsAppearance = currentCountWhenReloadMotionDetected
+        let changeTargetsAppearance = input.currentCountWhenReloadMotionDetected
             .filter({ $0 == GameConst.targetsAppearanceChangingLimit })
             .mapToVoid()
             .share()

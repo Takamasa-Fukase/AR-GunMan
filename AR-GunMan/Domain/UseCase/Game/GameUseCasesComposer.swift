@@ -130,8 +130,7 @@ final class GameUseCasesComposer: GameUseCasesComposerInterface {
         
         let weaponAutoReloadFilterUseCaseOutput = useCases.weaponAutoReloadFilterUseCase
             .transform(input: .init(
-                weaponFired: weaponFired,
-                bulletsCount: input.bulletsCount
+                weaponFired: weaponFired.withLatestFrom(input.bulletsCount) { ($0, $1) }
             ))
         
         let weaponReloadTrigger = Observable
@@ -142,8 +141,8 @@ final class GameUseCasesComposer: GameUseCasesComposerInterface {
 
         let weaponReloadUseCaseOutput = useCases.weaponReloadUseCase
             .transform(input: .init(
-                weaponReloadingTrigger: weaponReloadTrigger,
-                bulletsCount: input.bulletsCount,
+                weaponReloadingTrigger: weaponReloadTrigger
+                    .withLatestFrom(input.bulletsCount) { ($0, $1) },
                 isWeaponReloading: input.isWeaponReloading
             ))
                 
@@ -162,14 +161,14 @@ final class GameUseCasesComposer: GameUseCasesComposerInterface {
         
         let targetHitHandlingUseCaseOutput = useCases.targetHitHandlingUseCase
             .transform(input: .init(
-                targetHit: targetHitFilterUseCaseOutput.targetHit,
-                currentScore: input.score
+                targetHit: targetHitFilterUseCaseOutput.targetHit
+                    .withLatestFrom(input.score) { ($0.0, $0.1, $1) }
             ))
         
         let reloadMotionDetectionCountUseCaseOutput = useCases.reloadMotionDetectionCountUseCase
             .transform(input: .init(
-                reloadMotionDetected: reloadMotionDetected,
-                currentCount: input.reloadingMotionDetectedCount
+                currentCountWhenReloadMotionDetected: reloadMotionDetected
+                    .withLatestFrom(input.reloadingMotionDetectedCount)
             ))
         
         let updateBulletsCount = Observable
