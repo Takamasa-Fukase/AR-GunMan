@@ -9,8 +9,7 @@ import RxSwift
 import RxCocoa
 
 struct WeaponFireInput {
-    let weaponFiringTrigger: Observable<WeaponType>
-    let bulletsCount: Observable<Int>
+    let weaponFiringTrigger: Observable<(weaponType: WeaponType, bulletsCount: Int)>
 }
 
 struct WeaponFireOutput {
@@ -34,16 +33,10 @@ final class WeaponFireUseCase: WeaponFireUseCaseInterface {
         let updateBulletsCountRelay = PublishRelay<Int>()
         let weaponFiredRelay = PublishRelay<WeaponType>()
 
-        let weaponTypeAndBulletsCount = input.weaponFiringTrigger
-            .withLatestFrom(input.bulletsCount) {
-                return (weaponType: $0, bulletsCount: $1)
-            }
-            .share()
-        
-        let noBullets = weaponTypeAndBulletsCount
+        let noBullets = input.weaponFiringTrigger
             .filter({ $0.bulletsCount <= 0 })
 
-        let fire = weaponTypeAndBulletsCount
+        let fire = input.weaponFiringTrigger
             .filter({ $0.bulletsCount > 0 })
             .share()
 

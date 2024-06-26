@@ -117,8 +117,12 @@ final class GameUseCasesComposer: GameUseCasesComposerInterface {
         
         let weaponFireUseCaseOutput = useCases.weaponFireUseCase
             .transform(input: .init(
-                weaponFiringTrigger: fireMotionDetected.withLatestFrom(input.weaponType),
-                bulletsCount: input.bulletsCount
+                weaponFiringTrigger: fireMotionDetected.withLatestFrom(
+                    Observable.combineLatest(
+                        input.weaponType,
+                        input.bulletsCount
+                    )
+                ) { ($1.0, $1.1) }
             ))
         
         let weaponFired = weaponFireUseCaseOutput.weaponFired
