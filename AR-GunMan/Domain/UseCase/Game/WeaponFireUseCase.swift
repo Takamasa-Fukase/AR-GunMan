@@ -8,18 +8,18 @@
 import RxSwift
 import RxCocoa
 
-struct WeaponFireUseCaseInput {
+struct WeaponFireInput {
     let weaponFiringTrigger: Observable<WeaponType>
     let bulletsCount: Observable<Int>
 }
 
-struct WeaponFireUseCaseOutput {
+struct WeaponFireOutput {
     let updateBulletsCount: Observable<Int>
     let weaponFired: Observable<WeaponType>
 }
 
 protocol WeaponFireUseCaseInterface {
-    func transform(input: WeaponFireUseCaseInput) -> WeaponFireUseCaseOutput
+    func transform(input: WeaponFireInput) -> WeaponFireOutput
 }
 
 final class WeaponFireUseCase: WeaponFireUseCaseInterface {
@@ -30,7 +30,7 @@ final class WeaponFireUseCase: WeaponFireUseCaseInterface {
         self.soundPlayer = soundPlayer
     }
     
-    func transform(input: WeaponFireUseCaseInput) -> WeaponFireUseCaseOutput {
+    func transform(input: WeaponFireInput) -> WeaponFireOutput {
         let updateBulletsCountRelay = PublishRelay<Int>()
         let weaponFiredRelay = PublishRelay<WeaponType>()
 
@@ -63,7 +63,7 @@ final class WeaponFireUseCase: WeaponFireUseCaseInterface {
                 })
         }
         
-        return WeaponFireUseCaseOutput(
+        return WeaponFireOutput(
             updateBulletsCount: updateBulletsCountRelay.asObservable(),
             weaponFired: weaponFiredRelay.asObservable()
         )
