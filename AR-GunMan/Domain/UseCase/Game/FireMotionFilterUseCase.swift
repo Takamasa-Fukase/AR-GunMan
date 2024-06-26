@@ -9,8 +9,7 @@ import RxSwift
 import RxCocoa
 
 struct FireMotionFilterInput {
-    let accelerationUpdated: Observable<Vector>
-    let gyroUpdated: Observable<Vector>
+    let accelerationUpdated: Observable<(acceleration: Vector, latestGyro: Vector)>
 }
 
 struct FireMotionFilterOutput {
@@ -24,7 +23,6 @@ protocol FireMotionFilterUseCaseInterface {
 final class FireMotionFilterUseCase: FireMotionFilterUseCaseInterface {
     func transform(input: FireMotionFilterInput) -> FireMotionFilterOutput {
         let fireMotionDetected = input.accelerationUpdated
-            .withLatestFrom(input.gyroUpdated) { ($0, $1) }
             .map{ (acceleration, gyro) in
                 return (
                     CompositeCalculator.getCompositeValue(x: 0, y: acceleration.y, z: acceleration.z),

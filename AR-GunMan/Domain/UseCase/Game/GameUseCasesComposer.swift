@@ -103,8 +103,8 @@ final class GameUseCasesComposer: GameUseCasesComposerInterface {
         
         let fireMotionDetected = useCases.fireMotionFilterUseCase
             .transform(input: .init(
-                accelerationUpdated: input.accelerationUpdated,
-                gyroUpdated: input.gyroUpdated
+                accelerationUpdated: input.accelerationUpdated
+                    .withLatestFrom(input.gyroUpdated) { ($0, $1) }
             ))
             .fireMotionDetected
         
