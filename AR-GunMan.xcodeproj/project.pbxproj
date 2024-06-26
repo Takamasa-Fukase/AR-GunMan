@@ -215,7 +215,6 @@
 		BC0BBE412C16D31800789349 /* NSObject+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0BBE3F2C16D31800789349 /* NSObject+Extension.swift */; };
 		BC0BBE442C1745EB00789349 /* UIViewController+PanModalPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0BBE432C1745EB00789349 /* UIViewController+PanModalPresentable.swift */; };
 		BC0BBE452C17460A00789349 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866675D3275215AF007CB4D6 /* UIView+Extension.swift */; };
-		BC0BBE472C17474800789349 /* WeaponAutoReloadHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0BBE462C17474800789349 /* WeaponAutoReloadHandlerTests.swift */; };
 		BC0BBE4B2C174B2800789349 /* TutorialNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8627F6312BCE454C0003D374 /* TutorialNavigator.swift */; };
 		BC0BBE4D2C174B3000789349 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 599450FF256AD55900560202 /* TutorialViewController.swift */; };
 		BC22E0162C1B281300C59BAB /* Observable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22E0152C1B281300C59BAB /* Observable+Extension.swift */; };
@@ -277,6 +276,7 @@
 		BC482DFD2C1B09C900FAF079 /* UIView+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC482DFB2C1B09C900FAF079 /* UIView+Constraint.swift */; };
 		BC62CE0A2C15607D00070B49 /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC62CE092C15607D00070B49 /* Vector.swift */; };
 		BC62CE0B2C15607D00070B49 /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC62CE092C15607D00070B49 /* Vector.swift */; };
+		BC7F6FE42C2C05C300480833 /* WeaponFireUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7F6FE32C2C05C300480833 /* WeaponFireUseCaseTests.swift */; };
 		BC7FF24A2C2983D20014CDCE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7FF2492C2983D20014CDCE /* SceneDelegate.swift */; };
 		BC7FF24B2C2983D20014CDCE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7FF2492C2983D20014CDCE /* SceneDelegate.swift */; };
 		BC92C854297061FE00E49BD5 /* WeaponType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C853297061FE00E49BD5 /* WeaponType.swift */; };
@@ -297,8 +297,6 @@
 		BCCD44882C12C8C000BF541D /* GameObjectInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCD44862C12C8C000BF541D /* GameObjectInfo.swift */; };
 		BCCD44932C13F93900BF541D /* CustomSCNNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCD44922C13F93900BF541D /* CustomSCNNode.swift */; };
 		BCCD44942C13F93900BF541D /* CustomSCNNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCD44922C13F93900BF541D /* CustomSCNNode.swift */; };
-		BCD1C2292C01B9E2008975EB /* WeaponFiringEventTransformerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD1C2282C01B9E2008975EB /* WeaponFiringEventTransformerTests.swift */; };
-		BCD1C2382C043924008975EB /* WeaponReloadingEventTransformerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD1C2372C043924008975EB /* WeaponReloadingEventTransformerTests.swift */; };
 		BCD1C2572C06B60C008975EB /* CompositeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD1C2562C06B60C008975EB /* CompositeCalculator.swift */; };
 		BCD1C2582C06B60C008975EB /* CompositeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD1C2562C06B60C008975EB /* CompositeCalculator.swift */; };
 		BCD89D9E2C1EA01A00BBBB99 /* NotificationCenter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD89D9D2C1EA01A00BBBB99 /* NotificationCenter+Extension.swift */; };
@@ -440,7 +438,6 @@
 		BC0BBE3B2C16B7E100789349 /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
 		BC0BBE3F2C16D31800789349 /* NSObject+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Extension.swift"; sourceTree = "<group>"; };
 		BC0BBE432C1745EB00789349 /* UIViewController+PanModalPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+PanModalPresentable.swift"; sourceTree = "<group>"; };
-		BC0BBE462C17474800789349 /* WeaponAutoReloadHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponAutoReloadHandlerTests.swift; sourceTree = "<group>"; };
 		BC22E0152C1B281300C59BAB /* Observable+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+Extension.swift"; sourceTree = "<group>"; };
 		BC22E0212C1C71E900C59BAB /* UITapGestureRecognizer+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITapGestureRecognizer+Rx.swift"; sourceTree = "<group>"; };
 		BC22E0242C1C9B8800C59BAB /* UIView+UIViewController+BackgroundViewTapTrackable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+UIViewController+BackgroundViewTapTrackable.swift"; sourceTree = "<group>"; };
@@ -471,6 +468,7 @@
 		BC482DF82C1ABB6900FAF079 /* RankingListView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RankingListView.xib; sourceTree = "<group>"; };
 		BC482DFB2C1B09C900FAF079 /* UIView+Constraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraint.swift"; sourceTree = "<group>"; };
 		BC62CE092C15607D00070B49 /* Vector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector.swift; sourceTree = "<group>"; };
+		BC7F6FE32C2C05C300480833 /* WeaponFireUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponFireUseCaseTests.swift; sourceTree = "<group>"; };
 		BC7FF2492C2983D20014CDCE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		BC92C853297061FE00E49BD5 /* WeaponType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponType.swift; sourceTree = "<group>"; };
 		BC92C859297348D500E49BD5 /* ScoreCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCalculator.swift; sourceTree = "<group>"; };
@@ -483,8 +481,6 @@
 		BCCD44812C12BF1A00BF541D /* CollisionInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollisionInfo.swift; sourceTree = "<group>"; };
 		BCCD44862C12C8C000BF541D /* GameObjectInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameObjectInfo.swift; sourceTree = "<group>"; };
 		BCCD44922C13F93900BF541D /* CustomSCNNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSCNNode.swift; sourceTree = "<group>"; };
-		BCD1C2282C01B9E2008975EB /* WeaponFiringEventTransformerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponFiringEventTransformerTests.swift; sourceTree = "<group>"; };
-		BCD1C2372C043924008975EB /* WeaponReloadingEventTransformerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponReloadingEventTransformerTests.swift; sourceTree = "<group>"; };
 		BCD1C2562C06B60C008975EB /* CompositeCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeCalculator.swift; sourceTree = "<group>"; };
 		BCD89D9D2C1EA01A00BBBB99 /* NotificationCenter+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationCenter+Extension.swift"; sourceTree = "<group>"; };
 		BCD89DA02C1EA1E800BBBB99 /* KeyboardOverlapCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardOverlapCalculator.swift; sourceTree = "<group>"; };
@@ -644,10 +640,6 @@
 				BC7F6FD32C2C04DD00480833 /* Presentation */,
 				BC7F6FD42C2C04F200480833 /* Domain */,
 				BC7F6FD52C2C04F600480833 /* Data */,
-				BCD1C2282C01B9E2008975EB /* WeaponFiringEventTransformerTests.swift */,
-				BCD1C2372C043924008975EB /* WeaponReloadingEventTransformerTests.swift */,
-				BC0BBE462C17474800789349 /* WeaponAutoReloadHandlerTests.swift */,
-				861B87782BFE258100D0882D /* SoundPlayerMock.swift */,
 				59D2D4F12552DE67006DDB70 /* Info.plist */,
 			);
 			path = "AR-GunManTests";
@@ -1128,6 +1120,7 @@
 			isa = PBXGroup;
 			children = (
 				BC7F6FD62C2C04FF00480833 /* Screens */,
+				BC7F6FE52C2C1BF200480833 /* Common */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -1245,8 +1238,17 @@
 		BC7F6FE22C2C056B00480833 /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				BC7F6FE32C2C05C300480833 /* WeaponFireUseCaseTests.swift */,
 			);
 			path = Game;
+			sourceTree = "<group>";
+		};
+		BC7F6FE52C2C1BF200480833 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				861B87782BFE258100D0882D /* SoundPlayerMock.swift */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 		BCC512CD2C15DD6000D77305 /* Enums */ = {
@@ -1744,9 +1746,7 @@
 				BCCD44882C12C8C000BF541D /* GameObjectInfo.swift in Sources */,
 				8606466A2BF599BC00906DA0 /* WeaponSelectNavigator.swift in Sources */,
 				BC2EBB762C2A62F000EB1400 /* SettingsPresenter.swift in Sources */,
-				BC0BBE472C17474800789349 /* WeaponAutoReloadHandlerTests.swift in Sources */,
 				BC03FA0F2C21CB7100E27C01 /* GameTimerEndHandlingUseCase.swift in Sources */,
-				BCD1C2382C043924008975EB /* WeaponReloadingEventTransformerTests.swift in Sources */,
 				BC03F9F42C21CB0B00E27C01 /* WeaponReloadUseCase.swift in Sources */,
 				BCC512CB2C15CFBF00D77305 /* ParticleSystemType.swift in Sources */,
 				BCC512C32C15B5F000D77305 /* Extension+SCNNode.swift in Sources */,
@@ -1764,6 +1764,7 @@
 				BC03FA282C2809D500E27C01 /* GameViewController.swift in Sources */,
 				BC03FA062C21CB5700E27C01 /* TutorialNecessityCheckUseCase.swift in Sources */,
 				BC22E0232C1C71E900C59BAB /* UITapGestureRecognizer+Rx.swift in Sources */,
+				BC7F6FE42C2C05C300480833 /* WeaponFireUseCaseTests.swift in Sources */,
 				BC0BBE4B2C174B2800789349 /* TutorialNavigator.swift in Sources */,
 				BC2EBB8F2C2A8F8C00EB1400 /* TutorialContentView.swift in Sources */,
 				BC2EBB952C2A962500EB1400 /* WeaponSelectContentView.swift in Sources */,
@@ -1807,7 +1808,6 @@
 				BC03FA2B2C280D3600E27C01 /* DeviceMotionController.swift in Sources */,
 				860645FF2BF5995800906DA0 /* UIScrollView+Extension.swift in Sources */,
 				BC03F9DA2C21634A00E27C01 /* CameraPermissionCheckUseCase.swift in Sources */,
-				BCD1C2292C01B9E2008975EB /* WeaponFiringEventTransformerTests.swift in Sources */,
 				BC0BBE3D2C16B7E100789349 /* Double+Extension.swift in Sources */,
 				BC2EBB8C2C2A8E7D00EB1400 /* UIView+NibLoading.swift in Sources */,
 				BC482DF72C1ABB5F00FAF079 /* RankingListView.swift in Sources */,
