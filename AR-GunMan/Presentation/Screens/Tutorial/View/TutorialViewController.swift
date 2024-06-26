@@ -47,15 +47,15 @@ final class TutorialViewController: UIViewController {
         
         disposeBag.insert {
             viewModel.insertBlurEffectView
-                .subscribe(onNext: { [weak self] _ in
+                .drive(onNext: { [weak self] _ in
                     self?.view.insertBlurEffectView()
                 })
             viewModel.buttonText
-                .bind(to: contentView.bottomButton.rx.title(for: .normal))
+                .drive(contentView.bottomButton.rx.title(for: .normal))
             viewModel.pageControlIndex
-                .bind(to: contentView.pageControl.rx.currentPage)
+                .drive(contentView.pageControl.rx.currentPage)
             viewModel.scrollToNextPage
-                .subscribe(onNext: { [weak self] _ in
+                .drive(onNext: { [weak self] _ in
                     self?.contentView.scrollView.scrollHorizontallyToNextPage()
                 })
         }

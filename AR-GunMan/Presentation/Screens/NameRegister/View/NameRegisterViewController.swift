@@ -41,20 +41,20 @@ final class NameRegisterViewController: UIViewController, BackgroundViewTapTrack
         
         disposeBag.insert {
             viewModel.temporaryRankText
-                .bind(to: contentView.rankLabel.rx.text)
+                .drive(contentView.rankLabel.rx.text)
             viewModel.temporaryRankText
                 .map({ $0.isEmpty })
-                .bind(to: contentView.rankLabelSpinner.rx.isAnimating)
+                .drive(contentView.rankLabelSpinner.rx.isAnimating)
             viewModel.scoreText
-                .bind(to: contentView.scoreLabel.rx.text)
+                .drive(contentView.scoreLabel.rx.text)
             viewModel.isRegisterButtonEnabled
-                .bind(to: contentView.registerButton.rx.isEnabled)
+                .drive(contentView.registerButton.rx.isEnabled)
             viewModel.isRegistering
-                .bind(to: contentView.registerButton.rx.isHidden)
+                .drive(contentView.registerButton.rx.isHidden)
             viewModel.isRegistering
-                .bind(to: contentView.registerButtonSpinner.rx.isAnimating)
+                .drive(contentView.registerButtonSpinner.rx.isAnimating)
             viewModel.handleActiveTextFieldOverlapWhenKeyboardWillShow
-                .subscribe(onNext: { [weak self] notification in
+                .drive(onNext: { [weak self] notification in
                     guard let self = self,
                           let keyboardFrameEnd = notification.keyboardFrameEnd,
                           let duration = notification.keyboardAnimationDuration else { return }
@@ -65,7 +65,7 @@ final class NameRegisterViewController: UIViewController, BackgroundViewTapTrack
                     )
                 })
             viewModel.resetActiveTextFieldPositionWhenKeyboardWillHide
-                .subscribe(onNext: { [weak self] notification in
+                .drive(onNext: { [weak self] notification in
                     guard let self = self,
                           let duration = notification.keyboardAnimationDuration else { return }
                     self.view.resetViewTransform(with: duration)

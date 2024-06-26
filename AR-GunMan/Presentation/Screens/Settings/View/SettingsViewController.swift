@@ -12,7 +12,6 @@ import RxCocoa
 final class SettingsViewController: UIViewController {
     var presenter: SettingsPresenterInterface!
     private var contentView: SettingsContentView!
-    private let disposeBag = DisposeBag()
 
     override func viewDidLoad() {
         super.viewDidLoad()

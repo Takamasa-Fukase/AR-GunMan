@@ -15,11 +15,11 @@ struct ResultControllerInput {
 }
 
 struct ResultViewModel {
-    let rankingList: Observable<[Ranking]>
-    let scoreText: Observable<String>
-    let showButtons: Observable<Void>
-    let scrollCellToCenter: Observable<IndexPath>
-    let isLoadingRankingList: Observable<Bool>
+    let rankingList: Driver<[Ranking]>
+    let scoreText: Driver<String>
+    let showButtons: Driver<Void>
+    let scrollCellToCenter: Driver<IndexPath>
+    let isLoadingRankingList: Driver<Bool>
 }
 
 protocol ResultPresenterInterface {
@@ -150,11 +150,16 @@ final class ResultPresenter: ResultPresenterInterface {
             .map({ IndexPath(row: $0, section: 0) })
                 
         return ResultViewModel(
-            rankingList: rankingList,
-            scoreText: Observable.just(score.scoreText),
-            showButtons: nameRegisterEventReceiver.onClose.asObservable(),
-            scrollCellToCenter: scrollCellToCenter,
+            rankingList: rankingList
+                .asDriverOnErrorJustComplete(),
+            scoreText: Observable.just(score.scoreText)
+                .asDriverOnErrorJustComplete(),
+            showButtons: nameRegisterEventReceiver.onClose.asObservable()
+                .asDriverOnErrorJustComplete(),
+            scrollCellToCenter: scrollCellToCenter
+                .asDriverOnErrorJustComplete(),
             isLoadingRankingList: rankingLoadActivityTracker.asObservable()
+                .asDriverOnErrorJustComplete()
         )
     }
 }

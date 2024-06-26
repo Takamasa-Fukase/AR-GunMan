@@ -23,19 +23,19 @@ final class RankingListView: UIView {
     }
     
     func bind(
-        rankingList: Observable<[Ranking]>,
-        isLoading: Observable<Bool>
+        rankingList: Driver<[Ranking]>,
+        isLoading: Driver<Bool>
     ) -> Cancelable {
         return Disposables.create(
             rankingList
-                .bind(to: tableView.rx.items(
+                .drive(tableView.rx.items(
                     cellIdentifier: RankingCell.className,
                     cellType: RankingCell.self
                 )) { row, element, cell in
                     cell.configure(ranking: element, row: row)
                 },
             isLoading
-                .bind(to: activityIndicatorView.rx.isAnimating)
+                .drive(activityIndicatorView.rx.isAnimating)
         )
     }
     

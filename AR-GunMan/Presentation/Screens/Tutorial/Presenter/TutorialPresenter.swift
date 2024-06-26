@@ -17,10 +17,10 @@ struct TutorialControllerInput {
 }
 
 struct TutorialViewModel {
-    let insertBlurEffectView: Observable<Void>
-    let buttonText: Observable<String>
-    let pageControlIndex: Observable<Int>
-    let scrollToNextPage: Observable<Void>
+    let insertBlurEffectView: Driver<Void>
+    let buttonText: Driver<String>
+    let pageControlIndex: Driver<Int>
+    let scrollToNextPage: Driver<Void>
 }
 
 protocol TutorialPresenterInterface {
@@ -84,10 +84,14 @@ final class TutorialPresenter: TutorialPresenterInterface {
             .mapToVoid()
         
         return TutorialViewModel(
-            insertBlurEffectView: insertBlurEffectView,
-            buttonText: buttonText,
-            pageControlIndex: input.pageIndexWhenScrollViewScrolled,
+            insertBlurEffectView: insertBlurEffectView
+                .asDriverOnErrorJustComplete(),
+            buttonText: buttonText
+                .asDriverOnErrorJustComplete(),
+            pageControlIndex: input.pageIndexWhenScrollViewScrolled
+                .asDriverOnErrorJustComplete(),
             scrollToNextPage: scrollToNextPage
+                .asDriverOnErrorJustComplete()
         )
     }
 }

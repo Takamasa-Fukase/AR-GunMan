@@ -60,17 +60,17 @@ class GameViewController: UIViewController {
         disposeBag.insert {
             outputToView.sightImageName
                 .map({ UIImage(named: $0) })
-                .bind(to: contentView.sightImageView.rx.image)
+                .drive(contentView.sightImageView.rx.image)
             outputToView.sightImageColorHexCode
                 .map({ UIColor(hexString: $0) })
-                .bind(to: contentView.sightImageView.rx.tintColor)
+                .drive(contentView.sightImageView.rx.tintColor)
             outputToView.timeCountText
-                .bind(to: contentView.timeCountLabel.rx.text)
+                .drive(contentView.timeCountLabel.rx.text)
             outputToView.bulletsCountImageName
                 .map({ UIImage(named: $0) })
-                .bind(to: contentView.bulletsCountImageView.rx.image)
+                .drive(contentView.bulletsCountImageView.rx.image)
             outputToView.isWeaponChangeButtonEnabled
-                .bind(to: contentView.weaponChangeButton.rx.isEnabled)
+                .drive(contentView.weaponChangeButton.rx.isEnabled)
         }
     }
     
@@ -79,53 +79,53 @@ class GameViewController: UIViewController {
     ) {
         disposeBag.insert {
             outputToARContent.setupSceneView
-                .subscribe(onNext: { [weak self] _ in
+                .drive(onNext: { [weak self] _ in
                     guard let self = self else { return }
                     let sceneView = self.arContentController.setupSceneView(with: self.view.frame)
                     self.view.insertSubview(sceneView, at: 0)
                 })
             outputToARContent.renderAllTargets
-                .subscribe(onNext: { [weak self] count in
+                .drive(onNext: { [weak self] count in
                     guard let self = self else { return }
                     self.arContentController.showTargets(count: count)
                 })
             outputToARContent.startSceneSession
-                .subscribe(onNext: { [weak self] _ in
+                .drive(onNext: { [weak self] _ in
                     guard let self = self else { return }
                     self.arContentController.startSession()
                 })
             outputToARContent.pauseSceneSession
-                .subscribe(onNext: { [weak self] _ in
+                .drive(onNext: { [weak self] _ in
                     guard let self = self else { return }
                     self.arContentController.pauseSession()
                 })
             outputToARContent.renderSelectedWeapon
-                .subscribe(onNext: { [weak self] type in
+                .drive(onNext: { [weak self] type in
                     guard let self = self else { return }
                     self.arContentController.showWeapon(type)
                 })
             outputToARContent.renderWeaponFiring
-                .subscribe(onNext: { [weak self] type in
+                .drive(onNext: { [weak self] type in
                     guard let self = self else { return }
                     self.arContentController.fireWeapon(type)
                 })
             outputToARContent.renderTargetsAppearanceChanging
-                .subscribe(onNext: { [weak self] _ in
+                .drive(onNext: { [weak self] _ in
                     guard let self = self else { return }
                     self.arContentController.changeTargetsToTaimeisan()
                 })
             outputToARContent.moveWeaponToFPSPosition
-                .subscribe(onNext: { [weak self] type in
+                .drive(onNext: { [weak self] type in
                     guard let self = self else { return }
                     self.arContentController.moveWeaponToFPSPosition(currentWeapon: type)
                 })
             outputToARContent.removeContactedTargetAndBullet
-                .subscribe(onNext: { [weak self] in
+                .drive(onNext: { [weak self] in
                     guard let self = self else { return }
                     self.arContentController.removeContactedTargetAndBullet(targetId: $0.targetId, bulletId: $0.bulletId)
                 })
             outputToARContent.renderTargetHitParticleToContactPoint
-                .subscribe(onNext: { [weak self] in
+                .drive(onNext: { [weak self] in
                     guard let self = self else { return }
                     self.arContentController.showTargetHitParticleToContactPoint(weaponType: $0.weaponType, contactPoint: $0.contactPoint)
                 })
@@ -137,12 +137,12 @@ class GameViewController: UIViewController {
     ) {
         disposeBag.insert {
             outputToDeviceMotion.startMotionDetection
-                .subscribe(onNext: { [weak self] _ in
+                .drive(onNext: { [weak self] _ in
                     guard let self = self else { return }
                     self.deviceMotionController.startUpdate()
                 })
             outputToDeviceMotion.stopMotionDetection
-                .subscribe(onNext: { [weak self] _ in
+                .drive(onNext: { [weak self] _ in
                     guard let self = self else { return }
                     self.deviceMotionController.stopUpdate()
                 })

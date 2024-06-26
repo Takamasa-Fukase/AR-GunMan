@@ -39,13 +39,13 @@ class TopViewController: UIViewController {
         disposeBag.insert {
             viewModel.isStartButtonIconSwitched
                 .map({ TopConst.targetIcon(isSwitched: $0) })
-                .bind(to: contentView.startButtonIcon.rx.image)
+                .drive(contentView.startButtonIcon.rx.image)
             viewModel.isSettingsButtonIconSwitched
                 .map({ TopConst.targetIcon(isSwitched: $0) })
-                .bind(to: contentView.settingsButtonIcon.rx.image)
+                .drive(contentView.settingsButtonIcon.rx.image)
             viewModel.isHowToPlayButtonIconSwitched
                 .map({ TopConst.targetIcon(isSwitched: $0) })
-                .bind(to: contentView.howToPlayButtonIcon.rx.image)
+                .drive(contentView.howToPlayButtonIcon.rx.image)
         }
     }
 }

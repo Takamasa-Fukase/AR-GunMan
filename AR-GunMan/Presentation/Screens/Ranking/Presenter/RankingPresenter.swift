@@ -15,8 +15,8 @@ struct RankingControllerInput {
 }
 
 struct RankingViewModel {
-    let rankingList: Observable<[Ranking]>
-    let isLoadingRankingList: Observable<Bool>
+    let rankingList: Driver<[Ranking]>
+    let isLoadingRankingList: Driver<Bool>
 }
 
 protocol RankingPresenterInterface {
@@ -69,8 +69,10 @@ final class RankingPresenter: RankingPresenterInterface {
             })
         
         return RankingViewModel(
-            rankingList: rankingList,
+            rankingList: rankingList
+                .asDriverOnErrorJustComplete(),
             isLoadingRankingList: rankingLoadActivityTracker.asObservable()
+                .asDriverOnErrorJustComplete()
         )
     }
 }

@@ -37,14 +37,14 @@ final class ResultViewController: UIViewController {
         
         disposeBag.insert {
             viewModel.scoreText
-                .bind(to: contentView.scoreLabel.rx.text)
+                .drive(contentView.scoreLabel.rx.text)
             viewModel.showButtons
-                .subscribe(onNext: { [weak self] _ in
+                .drive(onNext: { [weak self] _ in
                     guard let self = self else {return}
                     self.contentView.showButtons()
                 })
             viewModel.scrollCellToCenter
-                .subscribe(onNext: { [weak self] indexPath in
+                .drive(onNext: { [weak self] indexPath in
                     guard let self = self else {return}
                     self.contentView.rankingListView.scrollCellToCenterVertically(at: indexPath)
                 })

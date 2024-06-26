@@ -17,9 +17,9 @@ struct TopControllerInput {
 
 struct TopViewModel {
     // TODO: ここでBoolに応じたImageNameに変換したい（systemImageとImageなのでそこを解消する必要あり）
-    let isStartButtonIconSwitched: Observable<Bool>
-    let isSettingsButtonIconSwitched: Observable<Bool>
-    let isHowToPlayButtonIconSwitched: Observable<Bool>
+    let isStartButtonIconSwitched: Driver<Bool>
+    let isSettingsButtonIconSwitched: Driver<Bool>
+    let isHowToPlayButtonIconSwitched: Driver<Bool>
 }
 
 protocol TopPresenterInterface {
@@ -90,9 +90,12 @@ final class TopPresenter: TopPresenterInterface {
         }
         
         return TopViewModel(
-            isStartButtonIconSwitched: startButtonIconChangeUseCaseOutput.isButtonIconSwitched,
-            isSettingsButtonIconSwitched: settingsButtonIconChangeUseCaseOutput.isButtonIconSwitched,
+            isStartButtonIconSwitched: startButtonIconChangeUseCaseOutput.isButtonIconSwitched
+                .asDriverOnErrorJustComplete(),
+            isSettingsButtonIconSwitched: settingsButtonIconChangeUseCaseOutput.isButtonIconSwitched
+                .asDriverOnErrorJustComplete(),
             isHowToPlayButtonIconSwitched: howToPlayButtonIconChangeUseCaseOutput.isButtonIconSwitched
+                .asDriverOnErrorJustComplete()
         )
     }
 }

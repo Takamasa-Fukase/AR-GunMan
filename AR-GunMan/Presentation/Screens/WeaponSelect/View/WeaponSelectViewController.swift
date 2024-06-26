@@ -42,7 +42,7 @@ final class WeaponSelectViewController: UIViewController {
                     return CGSize(width: self.view.frame.width * 0.5,
                                   height: self.view.frame.height * 0.8)
                 })
-                .bind(to: contentView.pagerView.rx.itemSize)
+                .drive(contentView.pagerView.rx.itemSize)
         }
     }
 }

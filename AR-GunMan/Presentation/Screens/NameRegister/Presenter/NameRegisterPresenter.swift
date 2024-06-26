@@ -24,12 +24,12 @@ struct NameRegisterControllerInput {
 }
 
 struct NameRegisterViewModel {
-    let temporaryRankText: Observable<String>
-    let scoreText: Observable<String>
-    let isRegisterButtonEnabled: Observable<Bool>
-    let isRegistering: Observable<Bool>
-    let handleActiveTextFieldOverlapWhenKeyboardWillShow: Observable<Notification>
-    let resetActiveTextFieldPositionWhenKeyboardWillHide: Observable<Notification>
+    let temporaryRankText: Driver<String>
+    let scoreText: Driver<String>
+    let isRegisterButtonEnabled: Driver<Bool>
+    let isRegistering: Driver<Bool>
+    let handleActiveTextFieldOverlapWhenKeyboardWillShow: Driver<Notification>
+    let resetActiveTextFieldPositionWhenKeyboardWillHide: Driver<Notification>
 }
 
 protocol NameRegisterPresenterInterface {
@@ -100,12 +100,18 @@ final class NameRegisterPresenter: NameRegisterPresenterInterface {
         }
         
         return NameRegisterViewModel(
-            temporaryRankText: temporaryRankTextObservable,
-            scoreText: Observable.just("Score: \(score.scoreText)"),
-            isRegisterButtonEnabled: input.nameTextFieldChanged.map({ !$0.isEmpty }),
-            isRegistering: registerActivityTracker.asObservable(),
-            handleActiveTextFieldOverlapWhenKeyboardWillShow: input.keyboardWillShowNotificationReceived,
+            temporaryRankText: temporaryRankTextObservable
+                .asDriverOnErrorJustComplete(),
+            scoreText: Observable.just("Score: \(score.scoreText)")
+                .asDriverOnErrorJustComplete(),
+            isRegisterButtonEnabled: input.nameTextFieldChanged.map({ !$0.isEmpty })
+                .asDriverOnErrorJustComplete(),
+            isRegistering: registerActivityTracker.asObservable()
+                .asDriverOnErrorJustComplete(),
+            handleActiveTextFieldOverlapWhenKeyboardWillShow: input.keyboardWillShowNotificationReceived
+                .asDriverOnErrorJustComplete(),
             resetActiveTextFieldPositionWhenKeyboardWillHide: input.keyboardWillHideNotificationReceived
+                .asDriverOnErrorJustComplete()
         )
     }
 }

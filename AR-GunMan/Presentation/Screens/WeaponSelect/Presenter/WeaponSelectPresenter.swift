@@ -14,7 +14,7 @@ struct WeaponSelectControllerInput {
 }
 
 struct WeaponSelectViewModel {
-    let adjustPageViewItemSize: Observable<Void>
+    let adjustPageViewItemSize: Driver<Void>
 }
 
 protocol WeaponSelectPresenterInterface {
@@ -51,6 +51,7 @@ final class WeaponSelectPresenter: WeaponSelectPresenterInterface {
         
         return WeaponSelectViewModel(
             adjustPageViewItemSize: input.viewDidLayoutSubviews
+                .asDriverOnErrorJustComplete()
         )
     }
 }
