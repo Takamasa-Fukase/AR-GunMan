@@ -31,15 +31,11 @@ final class Tests: XCTestCase {
         soundPlayer = nil
         weaponReloadUseCase = nil
     }
-    
-    func test_ピストルで_入力の弾が0で出力の弾が7_入力のリロード中フラグはfalseのまま変わらずで更新の出力は無し_ピストルのリロード音声が再生されれば成功() {
+
+    func test_ピストルで_入力の弾が0で出力の弾が7_入力のリロード中フラグはfalseのまま変わらずで更新の出力は無し_ピストルのリロード音声が再生されれば成功_1() {
         let isWeaponReloadingRelay = BehaviorRelay<Bool>(value: false)
         
-//        let initialWeaponReloadingFlag = scheduler.createHotObservable([
-//            .next(0, false),
-//            .next(1, true),
-//        ])
-        let weaponReloadingTrigger = scheduler.createHotObservable([
+        let weaponReloadingTrigger = scheduler.createColdObservable([
             .next(1, (weaponType: WeaponType.pistol, bulletsCount: 0))
         ])
         let input = WeaponReloadInput(
@@ -48,12 +44,13 @@ final class Tests: XCTestCase {
         )
         let output = weaponReloadUseCase.transform(input: input)
         let updateBulletsCountObserver = scheduler.createObserver(Int.self)
-//        let updateWeaponReloadingFlagObserver = scheduler.createObserver(Bool.self)
+        let updateWeaponReloadingFlagObserver = scheduler.createObserver(Bool.self)
+
         disposeBag.insert {
             output.updateBulletsCount
                 .subscribe(updateBulletsCountObserver)
-//            output.updateWeaponReloadingFlag
-//                .subscribe(updateWeaponReloadingFlagObserver)
+            output.updateWeaponReloadingFlag
+                .subscribe(updateWeaponReloadingFlagObserver)
             output.updateWeaponReloadingFlag
                 .bind(to: isWeaponReloadingRelay)
         }
@@ -63,15 +60,16 @@ final class Tests: XCTestCase {
         let updateBulletsCountObserverExpectedEvents: [Recorded] = [
             .next(1, 7)
         ]
-//        let updateWeaponReloadingFlagObserverExpectedEvents: [Recorded] = [
-//            .next(1, true)
-//        ]
+        let updateWeaponReloadingFlagObserverExpectedEvents: [Recorded] = [
+            .next(1, true),
+            .next(1, false)
+        ]
         let expectedPlayedSounds: [SoundType] = [
             .pistolReload
         ]
         
         XCTAssertEqual(updateBulletsCountObserver.events, updateBulletsCountObserverExpectedEvents)
-//        XCTAssertEqual(updateWeaponReloadingFlagObserver.events, updateWeaponReloadingFlagObserverExpectedEvents)
+        XCTAssertEqual(updateWeaponReloadingFlagObserver.events, updateWeaponReloadingFlagObserverExpectedEvents)
         XCTAssertEqual(soundPlayer.playedSounds, expectedPlayedSounds)
     }
 }

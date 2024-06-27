@@ -47,11 +47,12 @@ final class WeaponReloadUseCase: WeaponReloadUseCaseInterface {
         // falseにリセットされるので、リロード完了時点の最新値を取得してフィルターする
         let weaponReloadWaitTimeEnded = reload
             .flatMapLatest({ (weaponType, _, _) in
-                return TimerStreamCreator
-                    .create(
-                        milliSec: weaponType.reloadWaitingTimeMillisec,
-                        isRepeated: false
-                    )
+//                return TimerStreamCreator
+//                    .create(
+//                        milliSec: weaponType.reloadWaitingTimeMillisec,
+//                        isRepeated: false
+//                    )
+                return Observable.just(())
                     .withLatestFrom(input.isWeaponReloading) {
                         return (weaponType: weaponType, isWeaponReloading: $1)
                     }
