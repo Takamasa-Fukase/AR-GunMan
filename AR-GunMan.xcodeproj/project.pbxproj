@@ -278,6 +278,8 @@
 		BC62CE0B2C15607D00070B49 /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC62CE092C15607D00070B49 /* Vector.swift */; };
 		BC7F6FE42C2C05C300480833 /* WeaponFireUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7F6FE32C2C05C300480833 /* WeaponFireUseCaseTests.swift */; };
 		BC7F6FE72C2C1EDA00480833 /* WeaponReloadUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7F6FE62C2C1EDA00480833 /* WeaponReloadUseCaseTests.swift */; };
+		BC7F6FEC2C2D496900480833 /* MockRankingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7F6FEB2C2D496900480833 /* MockRankingRepository.swift */; };
+		BC7F6FED2C2D496900480833 /* MockRankingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7F6FEB2C2D496900480833 /* MockRankingRepository.swift */; };
 		BC7FF24A2C2983D20014CDCE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7FF2492C2983D20014CDCE /* SceneDelegate.swift */; };
 		BC7FF24B2C2983D20014CDCE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7FF2492C2983D20014CDCE /* SceneDelegate.swift */; };
 		BC92C854297061FE00E49BD5 /* WeaponType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C853297061FE00E49BD5 /* WeaponType.swift */; };
@@ -471,6 +473,7 @@
 		BC62CE092C15607D00070B49 /* Vector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector.swift; sourceTree = "<group>"; };
 		BC7F6FE32C2C05C300480833 /* WeaponFireUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponFireUseCaseTests.swift; sourceTree = "<group>"; };
 		BC7F6FE62C2C1EDA00480833 /* WeaponReloadUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponReloadUseCaseTests.swift; sourceTree = "<group>"; };
+		BC7F6FEB2C2D496900480833 /* MockRankingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRankingRepository.swift; sourceTree = "<group>"; };
 		BC7FF2492C2983D20014CDCE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		BC92C853297061FE00E49BD5 /* WeaponType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponType.swift; sourceTree = "<group>"; };
 		BC92C859297348D500E49BD5 /* ScoreCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCalculator.swift; sourceTree = "<group>"; };
@@ -642,6 +645,7 @@
 				BC7F6FD32C2C04DD00480833 /* Presentation */,
 				BC7F6FD42C2C04F200480833 /* Domain */,
 				BC7F6FD52C2C04F600480833 /* Data */,
+				BC7F6FEA2C2D400700480833 /* Mock */,
 				59D2D4F12552DE67006DDB70 /* Info.plist */,
 			);
 			path = "AR-GunManTests";
@@ -1249,9 +1253,17 @@
 		BC7F6FE52C2C1BF200480833 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				861B87782BFE258100D0882D /* MockSoundPlayer.swift */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		BC7F6FEA2C2D400700480833 /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				861B87782BFE258100D0882D /* MockSoundPlayer.swift */,
+				BC7F6FEB2C2D496900480833 /* MockRankingRepository.swift */,
+			);
+			path = Mock;
 			sourceTree = "<group>";
 		};
 		BCC512CD2C15DD6000D77305 /* Enums */ = {
@@ -1670,6 +1682,7 @@
 				BC2EBB712C2A611000EB1400 /* ResultPresenter.swift in Sources */,
 				BC03F9F62C21CB1400E27C01 /* FireMotionFilterUseCase.swift in Sources */,
 				BC2EBB6D2C2A52AA00EB1400 /* WeaponSelectPresenter.swift in Sources */,
+				BC7F6FEC2C2D496900480833 /* MockRankingRepository.swift in Sources */,
 				BCD1C2572C06B60C008975EB /* CompositeCalculator.swift in Sources */,
 				BC03F9DF2C21704300E27C01 /* TimerStreamCreator.swift in Sources */,
 				BC2B11672977F90C009F4DC4 /* UIScrollView+Extension.swift in Sources */,
@@ -1747,6 +1760,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BC2EBBA12C2AA5DA00EB1400 /* NameRegisterContentView.swift in Sources */,
+				BC7F6FED2C2D496900480833 /* MockRankingRepository.swift in Sources */,
 				BC0BBE452C17460A00789349 /* UIView+Extension.swift in Sources */,
 				860646762BF599D500906DA0 /* ResultViewController.swift in Sources */,
 				BC03F9F72C21CB1400E27C01 /* FireMotionFilterUseCase.swift in Sources */,
