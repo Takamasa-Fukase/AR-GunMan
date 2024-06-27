@@ -15,7 +15,7 @@ final class WeaponReloadUseCaseTests: XCTestCase {
     var scheduler: TestScheduler!
     var disposeBag: DisposeBag!
     var timerStreamCreator: TimerStreamCreator!
-    var soundPlayer: SoundPlayerMock!
+    var soundPlayer: MockSoundPlayer!
     var weaponReloadUseCase: WeaponReloadUseCase!
     
     override func setUp() {

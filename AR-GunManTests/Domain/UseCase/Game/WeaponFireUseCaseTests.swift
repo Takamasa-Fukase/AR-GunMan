@@ -14,14 +14,18 @@ import RxCocoa
 final class WeaponFireUseCaseTests: XCTestCase {
     var scheduler: TestScheduler!
     var disposeBag: DisposeBag!
-    var soundPlayer: SoundPlayerMock!
+    var soundPlayer: MockSoundPlayer!
     var weaponFireUseCase: WeaponFireUseCase!
     
     override func setUp() {
         super.setUp()
-        scheduler = TestScheduler(initialClock: 0)
+        scheduler = TestScheduler(
+            initialClock: 0,
+            // 仮想時間をmillisecondsにする
+            resolution: 0.001
+        )
         disposeBag = DisposeBag()
-        soundPlayer = SoundPlayerMock()
+        soundPlayer = .init()
         weaponFireUseCase = .init(soundPlayer: soundPlayer)
     }
     

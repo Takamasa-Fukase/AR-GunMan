@@ -130,7 +130,7 @@
 		860646CA2BF59CF100906DA0 /* WeaponType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C853297061FE00E49BD5 /* WeaponType.swift */; };
 		861B87752BFE0F6100D0882D /* SoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 861B87742BFE0F6100D0882D /* SoundPlayer.swift */; };
 		861B87762BFE1E4700D0882D /* SoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 861B87742BFE0F6100D0882D /* SoundPlayer.swift */; };
-		861B87792BFE258100D0882D /* SoundPlayerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 861B87782BFE258100D0882D /* SoundPlayerMock.swift */; };
+		861B87792BFE258100D0882D /* MockSoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 861B87782BFE258100D0882D /* MockSoundPlayer.swift */; };
 		8627F6302BCDFEB40003D374 /* SettingsNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8627F62F2BCDFEB40003D374 /* SettingsNavigator.swift */; };
 		8627F6322BCE454C0003D374 /* TutorialNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8627F6312BCE454C0003D374 /* TutorialNavigator.swift */; };
 		8627F6372BCE86850003D374 /* WeaponSelectNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8627F6362BCE86850003D374 /* WeaponSelectNavigator.swift */; };
@@ -386,7 +386,7 @@
 		67DB2C6027C17F8D00B8CB3C /* GameConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameConst.swift; sourceTree = "<group>"; };
 		82CB4F049BB35C36EAA5A632 /* Pods_AR_GunManTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_GunManTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		861B87742BFE0F6100D0882D /* SoundPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundPlayer.swift; sourceTree = "<group>"; };
-		861B87782BFE258100D0882D /* SoundPlayerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundPlayerMock.swift; sourceTree = "<group>"; };
+		861B87782BFE258100D0882D /* MockSoundPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSoundPlayer.swift; sourceTree = "<group>"; };
 		8627F62F2BCDFEB40003D374 /* SettingsNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsNavigator.swift; sourceTree = "<group>"; };
 		8627F6312BCE454C0003D374 /* TutorialNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialNavigator.swift; sourceTree = "<group>"; };
 		8627F6362BCE86850003D374 /* WeaponSelectNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponSelectNavigator.swift; sourceTree = "<group>"; };
@@ -1249,7 +1249,7 @@
 		BC7F6FE52C2C1BF200480833 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				861B87782BFE258100D0882D /* SoundPlayerMock.swift */,
+				861B87782BFE258100D0882D /* MockSoundPlayer.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1779,7 +1779,7 @@
 				860646292BF5996E00906DA0 /* Ranking.swift in Sources */,
 				BCD89D9F2C1EA01A00BBBB99 /* NotificationCenter+Extension.swift in Sources */,
 				8606468C2BF599DF00906DA0 /* RankingCell.swift in Sources */,
-				861B87792BFE258100D0882D /* SoundPlayerMock.swift in Sources */,
+				861B87792BFE258100D0882D /* MockSoundPlayer.swift in Sources */,
 				BC62CE0B2C15607D00070B49 /* Vector.swift in Sources */,
 				BC03FA282C2809D500E27C01 /* GameViewController.swift in Sources */,
 				BC03FA062C21CB5700E27C01 /* TutorialNecessityCheckUseCase.swift in Sources */,
