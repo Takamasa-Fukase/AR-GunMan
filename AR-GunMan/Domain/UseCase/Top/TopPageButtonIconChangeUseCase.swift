@@ -22,10 +22,15 @@ protocol TopPageButtonIconChangeUseCaseInterface {
 }
 
 final class TopPageButtonIconChangeUseCase: TopPageButtonIconChangeUseCaseInterface {
+    private let timerStreamCreator: TimerStreamCreator
     private let soundPlayer: SoundPlayerInterface
     private let disposeBag = DisposeBag()
 
-    init(soundPlayer: SoundPlayerInterface = SoundPlayer.shared) {
+    init(
+        timerStreamCreator: TimerStreamCreator = TimerStreamCreator(),
+        soundPlayer: SoundPlayerInterface = SoundPlayer.shared
+    ) {
+        self.timerStreamCreator = timerStreamCreator
         self.soundPlayer = soundPlayer
     }
     
@@ -33,8 +38,9 @@ final class TopPageButtonIconChangeUseCase: TopPageButtonIconChangeUseCaseInterf
         let isButtonIconSwitchedRelay = PublishRelay<Bool>()
 
         let iconRevertWaitTimeEnded = input.buttonTapped
-            .flatMapLatest({ _ in
-                return TimerStreamCreator
+            .flatMapLatest({ [weak self] _ -> Observable<Void> in
+                guard let self = self else { return .empty() }
+                return self.timerStreamCreator
                     .create(
                         milliSec: TopConst.iconRevertWaitingTimeMillisec,
                         isRepeated: false

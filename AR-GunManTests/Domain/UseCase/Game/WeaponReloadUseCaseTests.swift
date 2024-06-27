@@ -11,10 +11,10 @@ import RxSwift
 import RxCocoa
 @testable import AR_GunMan
 
-final class Tests: XCTestCase {
+final class WeaponReloadUseCaseTests: XCTestCase {
     var scheduler: TestScheduler!
     var disposeBag: DisposeBag!
-    var timerStreamCreator: TimerStreamCreator2!
+    var timerStreamCreator: TimerStreamCreator!
     var soundPlayer: SoundPlayerMock!
     var weaponReloadUseCase: WeaponReloadUseCase!
     

@@ -29,6 +29,7 @@ protocol ResultPresenterInterface {
 final class ResultPresenter: ResultPresenterInterface {
     private let rankingRepository: RankingRepositoryInterface
     private let replayRepository: ReplayRepositoryInterface
+    private let timerStreamCreator: TimerStreamCreator
     private let navigator: ResultNavigatorInterface
     private let score: Double
     private let nameRegisterEventReceiver: NameRegisterEventReceiver
@@ -37,12 +38,14 @@ final class ResultPresenter: ResultPresenterInterface {
     init(
         rankingRepository: RankingRepositoryInterface,
         replayRepository: ReplayRepositoryInterface,
+        timerStreamCreator: TimerStreamCreator = TimerStreamCreator(),
         navigator: ResultNavigatorInterface,
         score: Double,
         nameRegisterEventReceiver: NameRegisterEventReceiver = NameRegisterEventReceiver()
     ) {
         self.rankingRepository = rankingRepository
         self.replayRepository = replayRepository
+        self.timerStreamCreator = timerStreamCreator
         self.navigator = navigator
         self.score = score
         self.nameRegisterEventReceiver = nameRegisterEventReceiver
@@ -103,8 +106,9 @@ final class ResultPresenter: ResultPresenterInterface {
             // MARK: Transitions
             input.viewWillAppear
                 .take(1)
-                .flatMapLatest({ _ in
-                    return TimerStreamCreator
+                .flatMapLatest({ [weak self] _ -> Observable<Void> in
+                    guard let self = self else { return .empty() }
+                    return self.timerStreamCreator
                         .create(
                             milliSec: ResultConst.showNameRegisterWaitingTimeMillisec,
                             isRepeated: false

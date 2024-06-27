@@ -23,12 +23,12 @@ protocol WeaponReloadUseCaseInterface {
 }
 
 final class WeaponReloadUseCase: WeaponReloadUseCaseInterface {
-    private let timerStreamCreator: TimerStreamCreator2
+    private let timerStreamCreator: TimerStreamCreator
     private let soundPlayer: SoundPlayerInterface
     private let disposeBag = DisposeBag()
     
     init(
-        timerStreamCreator: TimerStreamCreator2 = TimerStreamCreator2(),
+        timerStreamCreator: TimerStreamCreator = TimerStreamCreator(),
         soundPlayer: SoundPlayerInterface = SoundPlayer.shared
     ) {
         self.timerStreamCreator = timerStreamCreator

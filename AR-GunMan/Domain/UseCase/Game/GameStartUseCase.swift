@@ -22,17 +22,23 @@ protocol GameStartUseCaseInterface {
 }
 
 final class GameStartUseCase: GameStartUseCaseInterface {
+    private let timerStreamCreator: TimerStreamCreator
     private let soundPlayer: SoundPlayerInterface
     private let disposeBag = DisposeBag()
     
-    init(soundPlayer: SoundPlayerInterface = SoundPlayer.shared) {
+    init(
+        timerStreamCreator: TimerStreamCreator = TimerStreamCreator(),
+        soundPlayer: SoundPlayerInterface = SoundPlayer.shared
+    ) {
+        self.timerStreamCreator = timerStreamCreator
         self.soundPlayer = soundPlayer
     }
     
     func transform(input: GameStartInput) -> GameStartOutput {
         let timerStartWaitTimeEnded = input.trigger
-            .flatMapLatest({ _ in
-                return TimerStreamCreator
+            .flatMapLatest({ [weak self] _ -> Observable<Void> in
+                guard let self = self else { return .empty() }
+                return self.timerStreamCreator
                     .create(
                         milliSec: GameConst.timerStartWaitingTimeMillisec,
                         isRepeated: false

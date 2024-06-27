@@ -22,10 +22,15 @@ protocol GameTimerHandlingUseCaseInterface {
 }
 
 final class GameTimerHandlingUseCase: GameTimerHandlingUseCaseInterface {
+    private let timerStreamCreator: TimerStreamCreator
     private let soundPlayer: SoundPlayerInterface
     private let disposeBag = DisposeBag()
-    
-    init(soundPlayer: SoundPlayerInterface = SoundPlayer.shared) {
+
+    init(
+        timerStreamCreator: TimerStreamCreator = TimerStreamCreator(),
+        soundPlayer: SoundPlayerInterface = SoundPlayer.shared
+    ) {
+        self.timerStreamCreator = timerStreamCreator
         self.soundPlayer = soundPlayer
     }
     
@@ -40,8 +45,9 @@ final class GameTimerHandlingUseCase: GameTimerHandlingUseCaseInterface {
                     self.soundPlayer.play(.startWhistle)
                 })
             input.timerStartTrigger
-                .flatMapLatest({ _ in
-                    return TimerStreamCreator
+                .flatMapLatest({ [weak self] _ -> Observable<Double> in
+                    guard let self = self else { return .empty() }
+                    return self.timerStreamCreator
                         .create(
                             milliSec: GameConst.timeCountUpdateDurationMillisec,
                             isRepeated: true
