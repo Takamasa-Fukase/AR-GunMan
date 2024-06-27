@@ -14,20 +14,30 @@ import RxCocoa
 final class Tests: XCTestCase {
     var scheduler: TestScheduler!
     var disposeBag: DisposeBag!
+    var timerStreamCreator: TimerStreamCreator2!
     var soundPlayer: SoundPlayerMock!
     var weaponReloadUseCase: WeaponReloadUseCase!
     
     override func setUp() {
         super.setUp()
-        scheduler = TestScheduler(initialClock: 0)
+        scheduler = TestScheduler(
+            initialClock: 0,
+            // 仮想時間をmillisecondsにする
+            resolution: 0.001
+        )
         disposeBag = DisposeBag()
-        soundPlayer = SoundPlayerMock()
-        weaponReloadUseCase = .init(soundPlayer: soundPlayer)
+        timerStreamCreator = .init(scheduler: scheduler)
+        soundPlayer = .init()
+        weaponReloadUseCase = .init(
+            timerStreamCreator: timerStreamCreator,
+            soundPlayer: soundPlayer
+        )
     }
     
     override func tearDown() {
         scheduler = nil
         disposeBag = nil
+        timerStreamCreator = nil
         soundPlayer = nil
         weaponReloadUseCase = nil
     }
@@ -58,11 +68,13 @@ final class Tests: XCTestCase {
         scheduler.start()
         
         let updateBulletsCountObserverExpectedEvents: [Recorded] = [
-            .next(1, 7)
+            // MEMO: pistolのリロード待ち時間は0 millisecだが、
+            // timerを使うと0でも最低+1経過するので+1している（0=>1, 1=>1, 2=>2...)
+            .next(2, 7)
         ]
         let updateWeaponReloadingFlagObserverExpectedEvents: [Recorded] = [
             .next(1, true),
-            .next(1, false)
+            .next(2, false)
         ]
         let expectedPlayedSounds: [SoundType] = [
             .pistolReload

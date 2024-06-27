@@ -23,10 +23,15 @@ protocol WeaponReloadUseCaseInterface {
 }
 
 final class WeaponReloadUseCase: WeaponReloadUseCaseInterface {
+    private let timerStreamCreator: TimerStreamCreator2
     private let soundPlayer: SoundPlayerInterface
     private let disposeBag = DisposeBag()
     
-    init(soundPlayer: SoundPlayerInterface = SoundPlayer.shared) {
+    init(
+        timerStreamCreator: TimerStreamCreator2 = TimerStreamCreator2(),
+        soundPlayer: SoundPlayerInterface = SoundPlayer.shared
+    ) {
+        self.timerStreamCreator = timerStreamCreator
         self.soundPlayer = soundPlayer
     }
     
@@ -46,13 +51,15 @@ final class WeaponReloadUseCase: WeaponReloadUseCaseInterface {
         // MEMO: リロードの待ち時間の間に武器が変更された場合はisWeaponReloadingが
         // falseにリセットされるので、リロード完了時点の最新値を取得してフィルターする
         let weaponReloadWaitTimeEnded = reload
-            .flatMapLatest({ (weaponType, _, _) in
-//                return TimerStreamCreator
-//                    .create(
-//                        milliSec: weaponType.reloadWaitingTimeMillisec,
-//                        isRepeated: false
-//                    )
-                return Observable.just(())
+            .flatMapLatest({ [weak self] (weaponType, _, _) in
+                guard let self = self else {
+                    return Observable<(weaponType: WeaponType, isWeaponReloading: Bool)>.empty()
+                }
+                return self.timerStreamCreator
+                    .create(
+                        milliSec: weaponType.reloadWaitingTimeMillisec,
+                        isRepeated: false
+                    )
                     .withLatestFrom(input.isWeaponReloading) {
                         return (weaponType: weaponType, isWeaponReloading: $1)
                     }
