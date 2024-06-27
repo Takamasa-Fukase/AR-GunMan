@@ -996,6 +996,7 @@
 		BC03F9EB2C21C5AE00E27C01 /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				BC03FA2C2C293B3100E27C01 /* GameUseCasesComposer.swift */,
 				BC03FA042C21CB5700E27C01 /* TutorialNecessityCheckUseCase.swift */,
 				BC03FA1D2C242E5200E27C01 /* TutorialEndHandlingUseCase.swift */,
 				BC03FA072C21CB6000E27C01 /* GameStartUseCase.swift */,
@@ -1010,7 +1011,6 @@
 				BC03F9FE2C21CB4500E27C01 /* TargetHitFilterUseCase.swift */,
 				BC03FA012C21CB4F00E27C01 /* TargetHitHandlingUseCase.swift */,
 				BC03FA0D2C21CB7100E27C01 /* GameTimerEndHandlingUseCase.swift */,
-				BC03FA2C2C293B3100E27C01 /* GameUseCasesComposer.swift */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -1330,6 +1330,7 @@
 				59D2D4E72552DE67006DDB70 /* Sources */,
 				59D2D4E82552DE67006DDB70 /* Frameworks */,
 				59D2D4E92552DE67006DDB70 /* Resources */,
+				E82902856F772496ADB6FB49 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1392,8 +1393,6 @@
 				Base,
 			);
 			mainGroup = 59D2D4CC2552DE66006DDB70;
-			packageReferences = (
-			);
 			productRefGroup = 59D2D4D62552DE66006DDB70 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1603,6 +1602,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AR-GunMan-AR-GunManUITests/Pods-AR-GunMan-AR-GunManUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E82902856F772496ADB6FB49 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AR-GunManTests/Pods-AR-GunManTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AR-GunManTests/Pods-AR-GunManTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AR-GunManTests/Pods-AR-GunManTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

@@ -21,12 +21,13 @@ target 'AR-GunMan' do
  pod 'Gecco'
  pod 'RxSwift', '~> 6.7.0'
  pod 'RxCocoa', '~> 6.7.0'
- pod 'RxTest', '~> 6.7.0'
  pod 'PanModal'
 
   target 'AR-GunManTests' do
     inherit! :search_paths
     # Pods for testing
+    pod 'RxTest', '~> 6.7.0'
+    pod 'RxBlocking', '~> 6.7.0'
   end
 
   target 'AR-GunManUITests' do
