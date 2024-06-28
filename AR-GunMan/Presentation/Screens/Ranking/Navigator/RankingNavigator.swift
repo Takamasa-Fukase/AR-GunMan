@@ -21,8 +21,13 @@ final class RankingNavigator: RankingNavigatorInterface {
     
     static func assembleModules() -> UIViewController {
         let vc = RankingViewController()
+        let getRankingUseCase = GetRankingUseCase(
+            rankingRepository: RankingRepository2(
+                apiRequestor: APIRequestor<Ranking>()
+            )
+        )
         vc.presenter = RankingPresenter(
-            rankingRepository: RankingRepository(),
+            getRankingUseCase: getRankingUseCase,
             navigator: RankingNavigator(viewController: vc)
         )
         return vc

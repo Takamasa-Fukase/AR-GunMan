@@ -24,15 +24,15 @@ protocol RankingPresenterInterface {
 }
 
 final class RankingPresenter: RankingPresenterInterface {
-    private let rankingRepository: RankingRepositoryInterface
+    private let getRankingUseCase: GetRankingUseCaseInterface
     private let navigator: RankingNavigatorInterface
     private let disposeBag = DisposeBag()
     
     init(
-        rankingRepository: RankingRepositoryInterface,
+        getRankingUseCase: GetRankingUseCaseInterface,
         navigator: RankingNavigatorInterface
     ) {
-        self.rankingRepository = rankingRepository
+        self.getRankingUseCase = getRankingUseCase
         self.navigator = navigator
     }
 
@@ -62,7 +62,8 @@ final class RankingPresenter: RankingPresenterInterface {
             .take(1)
             .flatMapLatest({ [weak self] _ -> Observable<[Ranking]> in
                 guard let self = self else { return .empty() }
-                return self.rankingRepository.getRanking()
+                return self.getRankingUseCase.execute()
+                    .rankingList
                     .trackActivity(rankingLoadActivityTracker)
                     .trackError(errorTracker)
                     .catchErrorJustComplete()
