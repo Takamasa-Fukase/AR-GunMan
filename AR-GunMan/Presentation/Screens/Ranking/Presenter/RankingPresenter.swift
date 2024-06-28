@@ -15,7 +15,7 @@ struct RankingControllerInput {
 }
 
 struct RankingViewModel {
-    let rankingList: Driver<[Ranking]>
+    let rankingList: Driver<[RankingListItemModel]>
     let isLoadingRankingList: Driver<Bool>
 }
 
@@ -60,9 +60,10 @@ final class RankingPresenter: RankingPresenterInterface {
         
         let rankingList = input.viewWillAppear
             .take(1)
-            .flatMapLatest({ [weak self] _ -> Observable<[Ranking]> in
+            .flatMapLatest({ [weak self] _ -> Observable<[RankingListItemModel]> in
                 guard let self = self else { return .empty() }
-                return self.getRankingUseCase.execute()
+                return self.getRankingUseCase
+                    .execute()
                     .rankingList
                     .trackActivity(rankingLoadActivityTracker)
                     .trackError(errorTracker)

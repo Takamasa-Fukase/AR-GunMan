@@ -9,7 +9,7 @@ import RxSwift
 import RxCocoa
 
 final class NameRegisterEventReceiver {
-    let onRegisterComplete = PublishRelay<Ranking>()
+    let onRegisterComplete = PublishRelay<RankingListItemModel>()
     let onClose = PublishRelay<Void>()
 }
 
@@ -37,7 +37,7 @@ protocol NameRegisterPresenterInterface {
 }
 
 final class NameRegisterPresenter: NameRegisterPresenterInterface {
-    private let rankingRepository: RankingRepositoryInterface
+    private let registerRankingUseCase: RegisterRankingUseCaseInterface
     private let navigator: NameRegisterNavigatorInterface
     private let score: Double
     private let temporaryRankTextObservable: Observable<String>
@@ -45,13 +45,13 @@ final class NameRegisterPresenter: NameRegisterPresenterInterface {
     private let disposeBag = DisposeBag()
 
     init(
-        rankingRepository: RankingRepositoryInterface,
+        registerRankingUseCase: RegisterRankingUseCaseInterface,
         navigator: NameRegisterNavigatorInterface,
         score: Double,
         temporaryRankTextObservable: Observable<String>,
         eventReceiver: NameRegisterEventReceiver?
     ) {
-        self.rankingRepository = rankingRepository
+        self.registerRankingUseCase = registerRankingUseCase
         self.navigator = navigator
         self.score = score
         self.temporaryRankTextObservable = temporaryRankTextObservable
@@ -64,10 +64,12 @@ final class NameRegisterPresenter: NameRegisterPresenterInterface {
         
         let rankingRegistered = input.registerButtonTapped
             .withLatestFrom(input.nameTextFieldChanged)
-            .flatMapLatest({ [weak self] userName -> Observable<Ranking> in
+            .flatMapLatest({ [weak self] userName -> Observable<RankingListItemModel> in
                 guard let self = self else { return .empty() }
-                let ranking = Ranking(score: self.score, userName: userName)
-                return self.rankingRepository.registerRanking(ranking)
+                let ranking = RankingListItemModel(score: self.score, userName: userName)
+                return self.registerRankingUseCase
+                    .execute(input: .init(ranking: ranking))
+                    .registered
                     .map({ _ in ranking })
                     .trackActivity(registerActivityTracker)
                     .trackError(errorTracker)
@@ -80,7 +82,7 @@ final class NameRegisterPresenter: NameRegisterPresenterInterface {
             input.viewWillDisappear
                 .bind(to: eventReceiver?.onClose ?? PublishRelay<Void>())
             rankingRegistered
-                .bind(to: eventReceiver?.onRegisterComplete ?? PublishRelay<Ranking>())
+                .bind(to: eventReceiver?.onRegisterComplete ?? PublishRelay<RankingListItemModel>())
             
             // MARK: Transitions
             Observable

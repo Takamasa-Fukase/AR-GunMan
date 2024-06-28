@@ -15,7 +15,7 @@ struct ResultControllerInput {
 }
 
 struct ResultViewModel {
-    let rankingList: Driver<[Ranking]>
+    let rankingList: Driver<[RankingListItemModel]>
     let scoreText: Driver<String>
     let showButtons: Driver<Void>
     let scrollCellToCenter: Driver<IndexPath>
@@ -58,9 +58,10 @@ final class ResultPresenter: ResultPresenterInterface {
         
         let loadedRankingList = input.viewWillAppear
             .take(1)
-            .flatMapLatest({ [weak self] _ -> Observable<[Ranking]> in
+            .flatMapLatest({ [weak self] _ -> Observable<[RankingListItemModel]> in
                 guard let self = self else { return .empty() }
-                return self.getRankingUseCase.execute()
+                return self.getRankingUseCase
+                    .execute()
                     .rankingList
                     .trackActivity(rankingLoadActivityTracker)
                     .trackError(errorTracker)

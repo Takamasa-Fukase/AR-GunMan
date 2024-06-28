@@ -20,7 +20,7 @@ final class RankingUtil {
     
     // 取得したランキング順位の中から今回のスコア（まだ未登録）を差し込むと暫定何位になるかを計算して返却
     static func getTemporaryRankIndex(
-        rankingList: [Ranking],
+        rankingList: [RankingListItemModel],
         score: Double
     ) -> Int {
         // スコアの高い順になっているリストの中から最初に引数のscore以下のランクのindex番号を取得

@@ -23,7 +23,7 @@ final class RankingListView: UIView {
     }
     
     func bind(
-        rankingList: Driver<[Ranking]>,
+        rankingList: Driver<[RankingListItemModel]>,
         isLoading: Driver<Bool>
     ) -> Cancelable {
         return Disposables.create(

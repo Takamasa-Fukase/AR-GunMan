@@ -20,7 +20,7 @@ final class RankingCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    func configure(ranking: Ranking, row: Int) {
+    func configure(ranking: RankingListItemModel, row: Int) {
         nameLabel.text = ranking.userName
         scoreLabel.text = ranking.score.scoreText
         rankLabel.text = String(row + 1)

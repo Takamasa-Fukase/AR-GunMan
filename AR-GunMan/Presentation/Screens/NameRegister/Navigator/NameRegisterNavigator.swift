@@ -26,8 +26,11 @@ final class NameRegisterNavigator: NameRegisterNavigatorInterface {
     ) -> UIViewController {
         let vc = NameRegisterViewController()
         vc.modalPresentationStyle = .overCurrentContext
+        let registerRankingUseCase = RegisterRankingUseCase(
+            rankingRepository: RankingRepository(apiRequestor: APIRequestor<Ranking>())
+        )
         vc.presenter = NameRegisterPresenter(
-            rankingRepository: RankingRepository(apiRequestor: APIRequestor<Ranking>()),
+            registerRankingUseCase: registerRankingUseCase,
             navigator: NameRegisterNavigator(viewController: vc),
             score: score,
             temporaryRankTextObservable: temporaryRankTextObservable,

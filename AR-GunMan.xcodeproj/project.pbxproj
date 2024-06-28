@@ -290,6 +290,8 @@
 		BC7F70022C2E5E1C00480833 /* TutorialRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7F70002C2E5E1C00480833 /* TutorialRepositoryInterface.swift */; };
 		BC7F70042C2E5E3900480833 /* ReplayRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7F70032C2E5E3900480833 /* ReplayRepositoryInterface.swift */; };
 		BC7F70052C2E5E3900480833 /* ReplayRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7F70032C2E5E3900480833 /* ReplayRepositoryInterface.swift */; };
+		BC7F70132C2E92D600480833 /* RegisterRankingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7F70122C2E92D600480833 /* RegisterRankingUseCase.swift */; };
+		BC7F70142C2E92D600480833 /* RegisterRankingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7F70122C2E92D600480833 /* RegisterRankingUseCase.swift */; };
 		BC7FF24A2C2983D20014CDCE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7FF2492C2983D20014CDCE /* SceneDelegate.swift */; };
 		BC7FF24B2C2983D20014CDCE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7FF2492C2983D20014CDCE /* SceneDelegate.swift */; };
 		BC92C854297061FE00E49BD5 /* WeaponType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C853297061FE00E49BD5 /* WeaponType.swift */; };
@@ -489,6 +491,7 @@
 		BC7F6FFD2C2E5BB400480833 /* RankingRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingRepositoryInterface.swift; sourceTree = "<group>"; };
 		BC7F70002C2E5E1C00480833 /* TutorialRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialRepositoryInterface.swift; sourceTree = "<group>"; };
 		BC7F70032C2E5E3900480833 /* ReplayRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplayRepositoryInterface.swift; sourceTree = "<group>"; };
+		BC7F70122C2E92D600480833 /* RegisterRankingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterRankingUseCase.swift; sourceTree = "<group>"; };
 		BC7FF2492C2983D20014CDCE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		BC92C853297061FE00E49BD5 /* WeaponType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponType.swift; sourceTree = "<group>"; };
 		BC92C859297348D500E49BD5 /* ScoreCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCalculator.swift; sourceTree = "<group>"; };
@@ -1288,6 +1291,7 @@
 			isa = PBXGroup;
 			children = (
 				BC7F6FF92C2E34C900480833 /* GetRankingUseCase.swift */,
+				BC7F70122C2E92D600480833 /* RegisterRankingUseCase.swift */,
 			);
 			path = Ranking;
 			sourceTree = "<group>";
@@ -1300,6 +1304,16 @@
 				BC7F70032C2E5E3900480833 /* ReplayRepositoryInterface.swift */,
 			);
 			path = RepositoryInterfaces;
+			sourceTree = "<group>";
+		};
+		BC7F700C2C2E8A1E00480833 /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				BCCD44812C12BF1A00BF541D /* CollisionInfo.swift */,
+				BCCD44862C12C8C000BF541D /* GameObjectInfo.swift */,
+				BC62CE092C15607D00070B49 /* Vector.swift */,
+			);
+			path = Game;
 			sourceTree = "<group>";
 		};
 		BCC512CD2C15DD6000D77305 /* Enums */ = {
@@ -1331,9 +1345,7 @@
 		BCCD44802C12BE8B00BF541D /* DataModels */ = {
 			isa = PBXGroup;
 			children = (
-				BCCD44812C12BF1A00BF541D /* CollisionInfo.swift */,
-				BCCD44862C12C8C000BF541D /* GameObjectInfo.swift */,
-				BC62CE092C15607D00070B49 /* Vector.swift */,
+				BC7F700C2C2E8A1E00480833 /* Game */,
 			);
 			path = DataModels;
 			sourceTree = "<group>";
@@ -1693,6 +1705,7 @@
 				BC2EBB692C2A468D00EB1400 /* TutorialPresenter.swift in Sources */,
 				86F1573B2BD7B71E00BE979C /* RankingNavigator.swift in Sources */,
 				BC92C8602975A2A800E49BD5 /* UIViewController+RxLifeCycleEvents.swift in Sources */,
+				BC7F70132C2E92D600480833 /* RegisterRankingUseCase.swift in Sources */,
 				677DF1F427A7C100007512F6 /* Ranking.swift in Sources */,
 				BCD89D9E2C1EA01A00BBBB99 /* NotificationCenter+Extension.swift in Sources */,
 				BC92C85A297348D500E49BD5 /* ScoreCalculator.swift in Sources */,
@@ -1892,6 +1905,7 @@
 				BC482DF72C1ABB5F00FAF079 /* RankingListView.swift in Sources */,
 				BC03F9E02C21704300E27C01 /* TimerStreamCreator.swift in Sources */,
 				BC0BBE4D2C174B3000789349 /* TutorialViewController.swift in Sources */,
+				BC7F70142C2E92D600480833 /* RegisterRankingUseCase.swift in Sources */,
 				BC2EBB6A2C2A468D00EB1400 /* TutorialPresenter.swift in Sources */,
 				860646162BF5996200906DA0 /* TimeCountUtil.swift in Sources */,
 				8606461E2BF5996700906DA0 /* TopConst.swift in Sources */,

@@ -7,8 +7,13 @@
 
 import RxSwift
 
+struct RankingListItemModel {
+    let score: Double
+    let userName: String
+}
+
 struct GetRankingOutput {
-    let rankingList: Single<[Ranking]>
+    let rankingList: Single<[RankingListItemModel]>
 }
 
 protocol GetRankingUseCaseInterface {
@@ -25,7 +30,13 @@ final class GetRankingUseCase: GetRankingUseCaseInterface {
     func execute() -> GetRankingOutput {
         let sortedRankingList = rankingRepository.getRanking()
             .map({ rankingList in
-                return rankingList.sorted(by: { $0.score > $1.score })
+                // スコアの高い順にソート
+                let sortedList = rankingList.sorted(by: { $0.score > $1.score })
+                // Presentation層用のデータモデルに変換
+                let listItemModels = sortedList.map({
+                    return RankingListItemModel(score: $0.score, userName: $0.userName)
+                })
+                return listItemModels
             })
         return GetRankingOutput(
             rankingList: sortedRankingList
