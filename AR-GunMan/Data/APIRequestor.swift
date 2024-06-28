@@ -39,7 +39,7 @@ final class APIRequestor<ResponseEntity: Decodable> {
     func postItem(_ path: String, parameters: [String: Any]) -> Single<Void> {
         return Single.create { [weak self] observer in
             self?.firestoreDB
-                .collection(FirebaseConst.rankingListCollectionName)
+                .collection(path)
                 .document()
                 .setData(parameters) { error in
                     if let error = error {
