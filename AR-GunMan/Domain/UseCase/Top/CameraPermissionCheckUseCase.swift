@@ -7,6 +7,7 @@
 
 import RxSwift
 import RxCocoa
+import AVFoundation
 
 struct CameraPermissionCheckInput {
     let checkIsCameraAccessPermitted: Observable<Void>
@@ -22,18 +23,9 @@ protocol CameraPermissionCheckUseCaseInterface {
 }
 
 final class CameraPermissionCheckUseCase: CameraPermissionCheckUseCaseInterface {
-    private let avPermissionRepository: AVPermissionRepositoryInterface
-    
-    init(avPermissionRepository: AVPermissionRepositoryInterface) {
-        self.avPermissionRepository = avPermissionRepository
-    }
-    
     func transform(input: CameraPermissionCheckInput) -> CameraPermissionCheckOutput {
         let isPermitted = input.checkIsCameraAccessPermitted
-            .flatMapLatest({ [weak self] _ -> Observable<Bool> in
-                guard let self = self else { return .empty() }
-                return self.avPermissionRepository.getIsCameraAccessPermitted()
-            })
+            .map({ AVCaptureDevice.authorizationStatus(for: .video) == .authorized })
             .share()
         
         let showGame = isPermitted

@@ -29,9 +29,7 @@ final class TopNavigator: TopNavigatorInterface {
                 replayRepository: ReplayRepository()
             ),
             buttonIconChangeUseCase: TopPageButtonIconChangeUseCase(),
-            cameraPermissionCheckUseCase: CameraPermissionCheckUseCase(
-                avPermissionRepository: AVPermissionRepository()
-            ),
+            cameraPermissionCheckUseCase: CameraPermissionCheckUseCase(),
             navigator: TopNavigator(viewController: vc)
         )
         return vc
