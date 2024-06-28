@@ -20,15 +20,11 @@ final class RankingRepository: RankingRepositoryInterface {
     }
     
     func getRanking() -> Single<[Ranking]> {
-        return apiRequestor.getItems(
-            FirebaseConst.rankingListCollectionName
-        )
+        return apiRequestor.getItems(APIConst.WORLD_RANKING)
     }
     
     func registerRanking(_ ranking: Ranking) -> Single<Void> {
-        return apiRequestor.postItem(
-            FirebaseConst.rankingListCollectionName,
-            parameters: ranking.toJson()
-        )
+        return apiRequestor.postItem(APIConst.WORLD_RANKING,
+                                     parameters: ranking.toJson())
     }
 }

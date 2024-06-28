@@ -71,7 +71,7 @@
 		8606461C2BF5996700906DA0 /* SoundType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DB2C5A27C17EBE00B8CB3C /* SoundType.swift */; };
 		8606461D2BF5996700906DA0 /* ErrorConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86F157402BD93C1E00BE979C /* ErrorConst.swift */; };
 		8606461E2BF5996700906DA0 /* TopConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DB2C5C27C17EF300B8CB3C /* TopConst.swift */; };
-		8606461F2BF5996700906DA0 /* FirebaseConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 863FE7ED2BEA6D8D00E104F5 /* FirebaseConst.swift */; };
+		8606461F2BF5996700906DA0 /* APIConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 863FE7ED2BEA6D8D00E104F5 /* APIConst.swift */; };
 		860646202BF5996700906DA0 /* ARContentConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86299B9F2BEC7E9600BAA2B3 /* ARContentConst.swift */; };
 		860646292BF5996E00906DA0 /* Ranking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 677DF1F327A7C100007512F6 /* Ranking.swift */; };
 		8606462E2BF5997200906DA0 /* TutorialRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C421B72BB040C300EFD791 /* TutorialRepository.swift */; };
@@ -136,7 +136,7 @@
 		8627F6432BD16BB60003D374 /* ObservableActivityTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8627F6422BD16BB60003D374 /* ObservableActivityTracker.swift */; };
 		86299BA02BEC7E9600BAA2B3 /* ARContentConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86299B9F2BEC7E9600BAA2B3 /* ARContentConst.swift */; };
 		8629E1032BF22916004FFEBD /* ARContentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8629E1022BF22916004FFEBD /* ARContentController.swift */; };
-		863FE7EE2BEA6D8D00E104F5 /* FirebaseConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 863FE7ED2BEA6D8D00E104F5 /* FirebaseConst.swift */; };
+		863FE7EE2BEA6D8D00E104F5 /* APIConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 863FE7ED2BEA6D8D00E104F5 /* APIConst.swift */; };
 		86594DCA2BCD558E00971D1A /* AVPermissionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86594DC92BCD558E00971D1A /* AVPermissionRepository.swift */; };
 		86594DCC2BCD75E100971D1A /* ReplayRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86594DCB2BCD75E100971D1A /* ReplayRepository.swift */; };
 		86627DE6273FD5E30044A980 /* RankingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86627DE5273FD5E30044A980 /* RankingViewController.swift */; };
@@ -401,7 +401,7 @@
 		8627F6422BD16BB60003D374 /* ObservableActivityTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableActivityTracker.swift; sourceTree = "<group>"; };
 		86299B9F2BEC7E9600BAA2B3 /* ARContentConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARContentConst.swift; sourceTree = "<group>"; };
 		8629E1022BF22916004FFEBD /* ARContentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARContentController.swift; sourceTree = "<group>"; };
-		863FE7ED2BEA6D8D00E104F5 /* FirebaseConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseConst.swift; sourceTree = "<group>"; };
+		863FE7ED2BEA6D8D00E104F5 /* APIConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConst.swift; sourceTree = "<group>"; };
 		86594DC92BCD558E00971D1A /* AVPermissionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPermissionRepository.swift; sourceTree = "<group>"; };
 		86594DCB2BCD75E100971D1A /* ReplayRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplayRepository.swift; sourceTree = "<group>"; };
 		86627DE5273FD5E30044A980 /* RankingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingViewController.swift; sourceTree = "<group>"; };
@@ -581,7 +581,7 @@
 				86299B9F2BEC7E9600BAA2B3 /* ARContentConst.swift */,
 				BCC512C52C15CF7300D77305 /* WeaponTypeConst.swift */,
 				86F157402BD93C1E00BE979C /* ErrorConst.swift */,
-				863FE7ED2BEA6D8D00E104F5 /* FirebaseConst.swift */,
+				863FE7ED2BEA6D8D00E104F5 /* APIConst.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -1715,7 +1715,7 @@
 				BCCD44822C12BF1A00BF541D /* CollisionInfo.swift in Sources */,
 				BCCD447D2C12AB4500BF541D /* UIColor+Extension.swift in Sources */,
 				BC03F9DC2C2166D800E27C01 /* TopPageButtonIconChangeUseCase.swift in Sources */,
-				863FE7EE2BEA6D8D00E104F5 /* FirebaseConst.swift in Sources */,
+				863FE7EE2BEA6D8D00E104F5 /* APIConst.swift in Sources */,
 				BC2EBB9A2C2A992500EB1400 /* ResultContentView.swift in Sources */,
 				BCC512C22C15B5F000D77305 /* Extension+SCNNode.swift in Sources */,
 				59945100256AD55900560202 /* TutorialViewController.swift in Sources */,
@@ -1841,7 +1841,7 @@
 				BC03FA1C2C24279700E27C01 /* GamePresenter.swift in Sources */,
 				860646002BF5995800906DA0 /* UIImageView+Extension.swift in Sources */,
 				860645FD2BF5995800906DA0 /* UIAlertController+Extension.swift in Sources */,
-				8606461F2BF5996700906DA0 /* FirebaseConst.swift in Sources */,
+				8606461F2BF5996700906DA0 /* APIConst.swift in Sources */,
 				BC03F9FD2C21CB2A00E27C01 /* WeaponChangeUseCase.swift in Sources */,
 				860646302BF5997200906DA0 /* AVPermissionRepository.swift in Sources */,
 				8606461B2BF5996700906DA0 /* SettingsConst.swift in Sources */,
