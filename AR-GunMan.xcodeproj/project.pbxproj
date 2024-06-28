@@ -918,21 +918,21 @@
 			isa = PBXGroup;
 			children = (
 				677DF1F227A7C0EE007512F6 /* Entities */,
-				BCCD44802C12BE8B00BF541D /* DataModel */,
-				86DA331A2BFDE21B00186C04 /* UseCase */,
+				BCCD44802C12BE8B00BF541D /* DataModels */,
+				86DA331A2BFDE21B00186C04 /* UseCases */,
 				BC7F6FFC2C2E5B1A00480833 /* RepositoryInterfaces */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
 		};
-		86DA331A2BFDE21B00186C04 /* UseCase */ = {
+		86DA331A2BFDE21B00186C04 /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
 				BC03F9E82C21A44F00E27C01 /* Top */,
 				BC03F9EB2C21C5AE00E27C01 /* Game */,
 				BC7F6FF82C2E34AF00480833 /* Ranking */,
 			);
-			path = UseCase;
+			path = UseCases;
 			sourceTree = "<group>";
 		};
 		86DA331B2BFE0AE100186C04 /* Common */ = {
@@ -1328,14 +1328,14 @@
 			path = Enums;
 			sourceTree = "<group>";
 		};
-		BCCD44802C12BE8B00BF541D /* DataModel */ = {
+		BCCD44802C12BE8B00BF541D /* DataModels */ = {
 			isa = PBXGroup;
 			children = (
 				BCCD44812C12BF1A00BF541D /* CollisionInfo.swift */,
 				BCCD44862C12C8C000BF541D /* GameObjectInfo.swift */,
 				BC62CE092C15607D00070B49 /* Vector.swift */,
 			);
-			path = DataModel;
+			path = DataModels;
 			sourceTree = "<group>";
 		};
 		BCD96C01297C6F4000E33587 /* Result */ = {
