@@ -30,7 +30,7 @@ final class ResultNavigator: ResultNavigatorInterface {
         let vc = ResultViewController()
         vc.modalPresentationStyle = .fullScreen
         let getRankingUseCase = GetRankingUseCase(
-            rankingRepository: RankingRepository2(
+            rankingRepository: RankingRepository(
                 apiRequestor: APIRequestor<Ranking>()
             )
         )

@@ -68,6 +68,7 @@ final class NameRegisterPresenter: NameRegisterPresenterInterface {
                 guard let self = self else { return .empty() }
                 let ranking = Ranking(score: self.score, userName: userName)
                 return self.rankingRepository.registerRanking(ranking)
+                    .map({ _ in ranking })
                     .trackActivity(registerActivityTracker)
                     .trackError(errorTracker)
                     .catchErrorJustComplete()

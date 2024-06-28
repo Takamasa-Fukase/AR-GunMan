@@ -42,7 +42,6 @@
 		5F0F53972765C07884597855 /* Pods_AR_GunManTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82CB4F049BB35C36EAA5A632 /* Pods_AR_GunManTests.framework */; };
 		67684E6D27B988C0000B2B5C /* SceneViewSettingUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67684E6C27B988C0000B2B5C /* SceneViewSettingUtil.swift */; };
 		677DF1EE27A710A8007512F6 /* SafariViewUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 677DF1ED27A710A8007512F6 /* SafariViewUtil.swift */; };
-		677DF1F127A7C096007512F6 /* RankingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 677DF1F027A7C096007512F6 /* RankingRepository.swift */; };
 		677DF1F427A7C100007512F6 /* Ranking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 677DF1F327A7C100007512F6 /* Ranking.swift */; };
 		67B685EF27AAD8B300D7F413 /* TimeCountUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B685EE27AAD8B300D7F413 /* TimeCountUtil.swift */; };
 		67DB2C5727BFD01900B8CB3C /* SceneNodeUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DB2C5627BFD01900B8CB3C /* SceneNodeUtil.swift */; };
@@ -75,7 +74,6 @@
 		8606461F2BF5996700906DA0 /* FirebaseConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 863FE7ED2BEA6D8D00E104F5 /* FirebaseConst.swift */; };
 		860646202BF5996700906DA0 /* ARContentConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86299B9F2BEC7E9600BAA2B3 /* ARContentConst.swift */; };
 		860646292BF5996E00906DA0 /* Ranking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 677DF1F327A7C100007512F6 /* Ranking.swift */; };
-		8606462D2BF5997200906DA0 /* RankingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 677DF1F027A7C096007512F6 /* RankingRepository.swift */; };
 		8606462E2BF5997200906DA0 /* TutorialRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C421B72BB040C300EFD791 /* TutorialRepository.swift */; };
 		8606462F2BF5997200906DA0 /* ReplayRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86594DCB2BCD75E100971D1A /* ReplayRepository.swift */; };
 		860646302BF5997200906DA0 /* AVPermissionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86594DC92BCD558E00971D1A /* AVPermissionRepository.swift */; };
@@ -284,10 +282,10 @@
 		BC7F6FF12C2DB20200480833 /* APIRequestor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7F6FEF2C2DB20200480833 /* APIRequestor.swift */; };
 		BC7F6FF32C2E31CD00480833 /* Encodable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7F6FF22C2E31CD00480833 /* Encodable+Extension.swift */; };
 		BC7F6FF42C2E31CD00480833 /* Encodable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7F6FF22C2E31CD00480833 /* Encodable+Extension.swift */; };
-		BC7F6FF62C2E326500480833 /* RankingRepository2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7F6FF52C2E326500480833 /* RankingRepository2.swift */; };
-		BC7F6FF72C2E326500480833 /* RankingRepository2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7F6FF52C2E326500480833 /* RankingRepository2.swift */; };
-		BC7F6FFA2C2E34C900480833 /* RankingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7F6FF92C2E34C900480833 /* RankingUseCase.swift */; };
-		BC7F6FFB2C2E34C900480833 /* RankingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7F6FF92C2E34C900480833 /* RankingUseCase.swift */; };
+		BC7F6FF62C2E326500480833 /* RankingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7F6FF52C2E326500480833 /* RankingRepository.swift */; };
+		BC7F6FF72C2E326500480833 /* RankingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7F6FF52C2E326500480833 /* RankingRepository.swift */; };
+		BC7F6FFA2C2E34C900480833 /* GetRankingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7F6FF92C2E34C900480833 /* GetRankingUseCase.swift */; };
+		BC7F6FFB2C2E34C900480833 /* GetRankingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7F6FF92C2E34C900480833 /* GetRankingUseCase.swift */; };
 		BC7FF24A2C2983D20014CDCE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7FF2492C2983D20014CDCE /* SceneDelegate.swift */; };
 		BC7FF24B2C2983D20014CDCE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7FF2492C2983D20014CDCE /* SceneDelegate.swift */; };
 		BC92C854297061FE00E49BD5 /* WeaponType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C853297061FE00E49BD5 /* WeaponType.swift */; };
@@ -385,7 +383,6 @@
 		5AB32EC76FF682FB7040AD4D /* Pods-AR-GunMan-AR-GunManUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-GunMan-AR-GunManUITests.release.xcconfig"; path = "Target Support Files/Pods-AR-GunMan-AR-GunManUITests/Pods-AR-GunMan-AR-GunManUITests.release.xcconfig"; sourceTree = "<group>"; };
 		67684E6C27B988C0000B2B5C /* SceneViewSettingUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneViewSettingUtil.swift; sourceTree = "<group>"; };
 		677DF1ED27A710A8007512F6 /* SafariViewUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariViewUtil.swift; sourceTree = "<group>"; };
-		677DF1F027A7C096007512F6 /* RankingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingRepository.swift; sourceTree = "<group>"; };
 		677DF1F327A7C100007512F6 /* Ranking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ranking.swift; sourceTree = "<group>"; };
 		67B685EE27AAD8B300D7F413 /* TimeCountUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCountUtil.swift; sourceTree = "<group>"; };
 		67DB2C5627BFD01900B8CB3C /* SceneNodeUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneNodeUtil.swift; sourceTree = "<group>"; };
@@ -484,8 +481,8 @@
 		BC7F6FEB2C2D496900480833 /* MockRankingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRankingRepository.swift; sourceTree = "<group>"; };
 		BC7F6FEF2C2DB20200480833 /* APIRequestor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequestor.swift; sourceTree = "<group>"; };
 		BC7F6FF22C2E31CD00480833 /* Encodable+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+Extension.swift"; sourceTree = "<group>"; };
-		BC7F6FF52C2E326500480833 /* RankingRepository2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingRepository2.swift; sourceTree = "<group>"; };
-		BC7F6FF92C2E34C900480833 /* RankingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingUseCase.swift; sourceTree = "<group>"; };
+		BC7F6FF52C2E326500480833 /* RankingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingRepository.swift; sourceTree = "<group>"; };
+		BC7F6FF92C2E34C900480833 /* GetRankingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetRankingUseCase.swift; sourceTree = "<group>"; };
 		BC7FF2492C2983D20014CDCE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		BC92C853297061FE00E49BD5 /* WeaponType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponType.swift; sourceTree = "<group>"; };
 		BC92C859297348D500E49BD5 /* ScoreCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCalculator.swift; sourceTree = "<group>"; };
@@ -754,8 +751,7 @@
 		677DF1EF27A7C07A007512F6 /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
-				677DF1F027A7C096007512F6 /* RankingRepository.swift */,
-				BC7F6FF52C2E326500480833 /* RankingRepository2.swift */,
+				BC7F6FF52C2E326500480833 /* RankingRepository.swift */,
 				86C421B72BB040C300EFD791 /* TutorialRepository.swift */,
 				86594DCB2BCD75E100971D1A /* ReplayRepository.swift */,
 				86594DC92BCD558E00971D1A /* AVPermissionRepository.swift */,
@@ -897,9 +893,9 @@
 		86DA33172BFDDD5500186C04 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				BC7F6FEF2C2DB20200480833 /* APIRequestor.swift */,
 				677DF1EF27A7C07A007512F6 /* Repositories */,
 				BCC512CE2C15DDE500D77305 /* Common */,
-				BC7F6FEF2C2DB20200480833 /* APIRequestor.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -1285,7 +1281,7 @@
 		BC7F6FF82C2E34AF00480833 /* Ranking */ = {
 			isa = PBXGroup;
 			children = (
-				BC7F6FF92C2E34C900480833 /* RankingUseCase.swift */,
+				BC7F6FF92C2E34C900480833 /* GetRankingUseCase.swift */,
 			);
 			path = Ranking;
 			sourceTree = "<group>";
@@ -1698,7 +1694,6 @@
 				BC03FA2D2C293B3100E27C01 /* GameUseCasesComposer.swift in Sources */,
 				BC22E0252C1C9B8800C59BAB /* UIView+UIViewController+BackgroundViewTapTrackable.swift in Sources */,
 				BC03F9D62C215AC400E27C01 /* ReplayNecessityCheckUseCase.swift in Sources */,
-				677DF1F127A7C096007512F6 /* RankingRepository.swift in Sources */,
 				BCD9675E2979E55400E33587 /* UIImageView+Extension.swift in Sources */,
 				BC2EBB812C2A6F7800EB1400 /* NameRegisterPresenter.swift in Sources */,
 				BC0BBE442C1745EB00789349 /* UIViewController+PanModalPresentable.swift in Sources */,
@@ -1724,7 +1719,7 @@
 				BC2EBB9A2C2A992500EB1400 /* ResultContentView.swift in Sources */,
 				BCC512C22C15B5F000D77305 /* Extension+SCNNode.swift in Sources */,
 				59945100256AD55900560202 /* TutorialViewController.swift in Sources */,
-				BC7F6FF62C2E326500480833 /* RankingRepository2.swift in Sources */,
+				BC7F6FF62C2E326500480833 /* RankingRepository.swift in Sources */,
 				8627F6432BD16BB60003D374 /* ObservableActivityTracker.swift in Sources */,
 				BCD89DA42C1EA56400BBBB99 /* Notification+Extension.swift in Sources */,
 				86627DE6273FD5E30044A980 /* RankingViewController.swift in Sources */,
@@ -1746,7 +1741,7 @@
 				BC03F9CA2C214E7D00E27C01 /* TopContentView.swift in Sources */,
 				86C421B82BB040C300EFD791 /* TutorialRepository.swift in Sources */,
 				BCCD44872C12C8C000BF541D /* GameObjectInfo.swift in Sources */,
-				BC7F6FFA2C2E34C900480833 /* RankingUseCase.swift in Sources */,
+				BC7F6FFA2C2E34C900480833 /* GetRankingUseCase.swift in Sources */,
 				BC03FA182C24273200E27C01 /* GameNavigator.swift in Sources */,
 				BC7F6FF02C2DB20200480833 /* APIRequestor.swift in Sources */,
 				BC03F9F32C21CB0B00E27C01 /* WeaponReloadUseCase.swift in Sources */,
@@ -1808,7 +1803,7 @@
 				8606466A2BF599BC00906DA0 /* WeaponSelectNavigator.swift in Sources */,
 				BC2EBB762C2A62F000EB1400 /* SettingsPresenter.swift in Sources */,
 				BC03FA0F2C21CB7100E27C01 /* GameTimerEndHandlingUseCase.swift in Sources */,
-				BC7F6FFB2C2E34C900480833 /* RankingUseCase.swift in Sources */,
+				BC7F6FFB2C2E34C900480833 /* GetRankingUseCase.swift in Sources */,
 				BC03F9F42C21CB0B00E27C01 /* WeaponReloadUseCase.swift in Sources */,
 				BCC512CB2C15CFBF00D77305 /* ParticleSystemType.swift in Sources */,
 				BC7F6FE72C2C1EDA00480833 /* WeaponReloadUseCaseTests.swift in Sources */,
@@ -1882,8 +1877,7 @@
 				8606461E2BF5996700906DA0 /* TopConst.swift in Sources */,
 				BC03FA032C21CB4F00E27C01 /* TargetHitHandlingUseCase.swift in Sources */,
 				BC7F6FF42C2E31CD00480833 /* Encodable+Extension.swift in Sources */,
-				8606462D2BF5997200906DA0 /* RankingRepository.swift in Sources */,
-				BC7F6FF72C2E326500480833 /* RankingRepository2.swift in Sources */,
+				BC7F6FF72C2E326500480833 /* RankingRepository.swift in Sources */,
 				8606461C2BF5996700906DA0 /* SoundType.swift in Sources */,
 				BCC512C72C15CF7300D77305 /* WeaponTypeConst.swift in Sources */,
 				BC03F9FA2C21CB1E00E27C01 /* ReloadMotionFilterUseCase.swift in Sources */,

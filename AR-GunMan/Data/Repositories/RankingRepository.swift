@@ -2,71 +2,33 @@
 //  RankingRepository.swift
 //  AR-GunMan
 //
-//  Created by ウルトラ深瀬 on 2022/01/31.
+//  Created by ウルトラ深瀬 on 28/6/24.
 //
 
-import Foundation
-import Firebase
 import RxSwift
-import FirebaseFirestoreSwift
 
 protocol RankingRepositoryInterface {
     func getRanking() -> Single<[Ranking]>
-    func registerRanking(_ ranking: Ranking) -> Single<Ranking>
+    func registerRanking(_ ranking: Ranking) -> Single<Void>
 }
 
 final class RankingRepository: RankingRepositoryInterface {
-    private let firestoreDataBase = Firestore.firestore()
+    private let apiRequestor: APIRequestor<Ranking>
     
-    func getRanking() -> Single<[Ranking]> {
-        return Single.create { [weak self] observer in
-            self?.firestoreDataBase
-                .collection(FirebaseConst.rankingListCollectionName)
-                .order(by: FirebaseConst.scoreFieldName, descending: true)
-                .getDocuments { querySnapshot, error in
-                    guard let querySnapshot = querySnapshot else {
-                        if let error = error {
-                            observer(.failure(CustomError.apiClientError(error)))
-                        }else {
-                            observer(.failure(CustomError.manualError(ErrorConst.unknownErrorMessage)))
-                        }
-                        return
-                    }
-                    let rankings = querySnapshot
-                        .documents
-                        .compactMap({ queryDocSnapshot in
-                            return try? queryDocSnapshot.data(as: Ranking.self)
-                        })
-                    observer(.success(rankings))
-                }
-            return Disposables.create()
-        }
+    init(apiRequestor: APIRequestor<Ranking>) {
+        self.apiRequestor = apiRequestor
     }
     
-    func registerRanking(_ ranking: Ranking) -> Single<Ranking> {
-        // TODO: 何とかもう少し綺麗にしたい
-        return Single.create { [weak self] observer in
-            do {
-                let data = try JSONEncoder().encode(ranking)
-                if let dict = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed) as? [String: Any] {
-                    self?.firestoreDataBase
-                        .collection(FirebaseConst.rankingListCollectionName)
-                        .document()
-                        .setData(dict) { error in
-                            if let error = error {
-                                observer(.failure(CustomError.apiClientError(error)))
-                            }else {
-                                observer(.success(ranking))
-                            }
-                        }
-                }else {
-                    observer(.failure(CustomError.manualError(ErrorConst.unknownErrorMessage)))
-                }
-            } catch {
-                // TODO: ネットワークエラーとサーバーエラーのハンドリング
-                observer(.failure(CustomError.apiClientError(error)))
-            }
-            return Disposables.create()
-        }
+    func getRanking() -> Single<[Ranking]> {
+        return apiRequestor.getItems(
+            FirebaseConst.rankingListCollectionName
+        )
+    }
+    
+    func registerRanking(_ ranking: Ranking) -> Single<Void> {
+        return apiRequestor.postItem(
+            FirebaseConst.rankingListCollectionName,
+            parameters: ranking.toJson()
+        )
     }
 }

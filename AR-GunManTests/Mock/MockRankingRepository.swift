@@ -23,9 +23,9 @@ final class MockRankingRepository: RankingRepositoryInterface {
             .delay(.milliseconds(1500), scheduler: scheduler)
     }
     
-    func registerRanking(_ ranking: Ranking) -> Single<Ranking> {
+    func registerRanking(_ ranking: Ranking) -> Single<Void> {
         return Single
-            .just(ranking)
+            .just(())
             .delay(.milliseconds(1500), scheduler: scheduler)
     }
 }

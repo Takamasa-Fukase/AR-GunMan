@@ -1,5 +1,5 @@
 //
-//  RankingUseCase.swift
+//  GetRankingUseCase.swift
 //  AR-GunMan
 //
 //  Created by ウルトラ深瀬 on 28/6/24.
@@ -16,9 +16,9 @@ protocol GetRankingUseCaseInterface {
 }
 
 final class GetRankingUseCase: GetRankingUseCaseInterface {
-    private let rankingRepository: RankingRepositoryInterface2
+    private let rankingRepository: RankingRepositoryInterface
     
-    init(rankingRepository: RankingRepositoryInterface2) {
+    init(rankingRepository: RankingRepositoryInterface) {
         self.rankingRepository = rankingRepository
     }
     
