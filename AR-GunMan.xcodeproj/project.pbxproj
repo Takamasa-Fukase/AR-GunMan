@@ -920,7 +920,7 @@
 				677DF1F227A7C0EE007512F6 /* Entities */,
 				BCCD44802C12BE8B00BF541D /* DataModel */,
 				86DA331A2BFDE21B00186C04 /* UseCase */,
-				BC7F6FFC2C2E5B1A00480833 /* Repositories */,
+				BC7F6FFC2C2E5B1A00480833 /* RepositoryInterfaces */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -1292,14 +1292,14 @@
 			path = Ranking;
 			sourceTree = "<group>";
 		};
-		BC7F6FFC2C2E5B1A00480833 /* Repositories */ = {
+		BC7F6FFC2C2E5B1A00480833 /* RepositoryInterfaces */ = {
 			isa = PBXGroup;
 			children = (
 				BC7F6FFD2C2E5BB400480833 /* RankingRepositoryInterface.swift */,
 				BC7F70002C2E5E1C00480833 /* TutorialRepositoryInterface.swift */,
 				BC7F70032C2E5E3900480833 /* ReplayRepositoryInterface.swift */,
 			);
-			path = Repositories;
+			path = RepositoryInterfaces;
 			sourceTree = "<group>";
 		};
 		BCC512CD2C15DD6000D77305 /* Enums */ = {
