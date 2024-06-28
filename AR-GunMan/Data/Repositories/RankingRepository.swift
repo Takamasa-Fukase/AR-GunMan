@@ -7,11 +7,6 @@
 
 import RxSwift
 
-protocol RankingRepositoryInterface {
-    func getRanking() -> Single<[Ranking]>
-    func registerRanking(_ ranking: Ranking) -> Single<Void>
-}
-
 final class RankingRepository: RankingRepositoryInterface {
     private let apiRequestor: APIRequestor<Ranking>
     
