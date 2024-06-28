@@ -29,9 +29,14 @@ final class ResultNavigator: ResultNavigatorInterface {
     static func assembleModules(score: Double) -> UIViewController {
         let vc = ResultViewController()
         vc.modalPresentationStyle = .fullScreen
+        let getRankingUseCase = GetRankingUseCase(
+            rankingRepository: RankingRepository2(
+                apiRequestor: APIRequestor<Ranking>()
+            )
+        )
         vc.presenter = ResultPresenter(
-            rankingRepository: RankingRepository(),
             replayRepository: ReplayRepository(),
+            getRankingUseCase: getRankingUseCase,
             navigator: ResultNavigator(viewController: vc),
             score: score
         )

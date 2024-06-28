@@ -27,8 +27,8 @@ protocol ResultPresenterInterface {
 }
 
 final class ResultPresenter: ResultPresenterInterface {
-    private let rankingRepository: RankingRepositoryInterface
     private let replayRepository: ReplayRepositoryInterface
+    private let getRankingUseCase: GetRankingUseCaseInterface
     private let timerStreamCreator: TimerStreamCreator
     private let navigator: ResultNavigatorInterface
     private let score: Double
@@ -36,15 +36,15 @@ final class ResultPresenter: ResultPresenterInterface {
     private let disposeBag = DisposeBag()
     
     init(
-        rankingRepository: RankingRepositoryInterface,
         replayRepository: ReplayRepositoryInterface,
+        getRankingUseCase: GetRankingUseCaseInterface,
         timerStreamCreator: TimerStreamCreator = TimerStreamCreator(),
         navigator: ResultNavigatorInterface,
         score: Double,
         nameRegisterEventReceiver: NameRegisterEventReceiver = NameRegisterEventReceiver()
     ) {
-        self.rankingRepository = rankingRepository
         self.replayRepository = replayRepository
+        self.getRankingUseCase = getRankingUseCase
         self.timerStreamCreator = timerStreamCreator
         self.navigator = navigator
         self.score = score
@@ -60,7 +60,8 @@ final class ResultPresenter: ResultPresenterInterface {
             .take(1)
             .flatMapLatest({ [weak self] _ -> Observable<[Ranking]> in
                 guard let self = self else { return .empty() }
-                return self.rankingRepository.getRanking()
+                return self.getRankingUseCase.execute()
+                    .rankingList
                     .trackActivity(rankingLoadActivityTracker)
                     .trackError(errorTracker)
                     .catchErrorJustComplete()
