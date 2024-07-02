@@ -2,15 +2,15 @@
 //  RankingViewController.swift
 //  AR-GunMan
 //
-//  Created by Takahiro Fukase on 2021/11/13.
+//  Created by ウルトラ深瀬 on 28/6/24.
 //
 
 import UIKit
 import RxSwift
 import RxCocoa
 
-final class RankingViewController: UIViewController, BackgroundViewTapTrackable {
-    var presenter: RankingPresenterInterface!
+final class RankingViewController: UIViewController {
+    var presenter: RankingPresenter!
     private var contentView: RankingContentView!
     private let disposeBag = DisposeBag()
     
@@ -28,12 +28,12 @@ final class RankingViewController: UIViewController, BackgroundViewTapTrackable 
     }
     
     private func bind() {
-        let controllerInput = RankingControllerInput(
+        let controllerEvents = RankingPresenter.ControllerEvents(
             viewWillAppear: rx.viewWillAppear,
             closeButtonTapped: contentView.closeButton.rx.tap.asObservable(),
             backgroundViewTapped: contentView.trackBackgroundViewTap()
         )
-        let viewModel = presenter.transform(input: controllerInput)
+        let viewModel = presenter.transform(from: controllerEvents)
         
         disposeBag.insert {
             contentView.rankingListView.bind(

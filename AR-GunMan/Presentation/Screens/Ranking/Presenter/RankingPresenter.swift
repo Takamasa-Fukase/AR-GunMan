@@ -2,28 +2,23 @@
 //  RankingPresenter.swift
 //  AR-GunMan
 //
-//  Created by ウルトラ深瀬 on 25/6/24.
+//  Created by ウルトラ深瀬 on 2/7/24.
 //
 
 import RxSwift
 import RxCocoa
 
-struct RankingControllerInput {
-    let viewWillAppear: Observable<Void>
-    let closeButtonTapped: Observable<Void>
-    let backgroundViewTapped: Observable<Void>
-}
-
-struct RankingViewModel {
-    let rankingList: Driver<[RankingListItemModel]>
-    let isLoadingRankingList: Driver<Bool>
-}
-
-protocol RankingPresenterInterface {
-    func transform(input: RankingControllerInput) -> RankingViewModel
-}
-
-final class RankingPresenter: RankingPresenterInterface {
+final class RankingPresenter: PresenterType {
+    struct ControllerEvents {
+        let viewWillAppear: Observable<Void>
+        let closeButtonTapped: Observable<Void>
+        let backgroundViewTapped: Observable<Void>
+    }
+    struct ViewModel {
+        let rankingList: Driver<[RankingListItemModel]>
+        let isLoadingRankingList: Driver<Bool>
+    }
+    
     private let getRankingUseCase: GetRankingUseCaseInterface
     private let navigator: RankingNavigatorInterface
     private let disposeBag = DisposeBag()
@@ -36,7 +31,7 @@ final class RankingPresenter: RankingPresenterInterface {
         self.navigator = navigator
     }
 
-    func transform(input: RankingControllerInput) -> RankingViewModel {
+    func transform(from input: ControllerEvents) -> ViewModel {
         let rankingLoadActivityTracker = ObservableActivityTracker()
         let errorTracker = ObservableErrorTracker()
         
@@ -70,7 +65,7 @@ final class RankingPresenter: RankingPresenterInterface {
                     .catchErrorJustComplete()
             })
         
-        return RankingViewModel(
+        return ViewModel(
             rankingList: rankingList
                 .asDriverOnErrorJustComplete(),
             isLoadingRankingList: rankingLoadActivityTracker.asObservable()
