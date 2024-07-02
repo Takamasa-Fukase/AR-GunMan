@@ -66,7 +66,7 @@ final class GamePresenter: PresenterType {
     class State {
         let timeCountRelay = BehaviorRelay<Double>(value: GameConst.timeCount)
         let weaponTypeRelay = BehaviorRelay<WeaponType>(value: .pistol)
-        var isWeaponReloadingRelay = BehaviorRelay<Bool>(value: false)
+        let isWeaponReloadingRelay = BehaviorRelay<Bool>(value: false)
         let bulletsCountRelay = BehaviorRelay<Int>(value: WeaponType.pistol.bulletsCapacity)
         let scoreRelay = BehaviorRelay<Double>(value: 0)
         let reloadingMotionDetectedCountRelay = BehaviorRelay<Int>(value: 0)
