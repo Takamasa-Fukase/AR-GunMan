@@ -31,7 +31,7 @@ final class RankingPresenter: PresenterType {
         self.navigator = navigator
     }
 
-    func transform(from input: ControllerEvents) -> ViewModel {
+    func generateViewModel(from input: ControllerEvents) -> ViewModel {
         let rankingLoadActivityTracker = ObservableActivityTracker()
         let errorTracker = ObservableErrorTracker()
         

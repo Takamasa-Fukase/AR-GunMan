@@ -11,5 +11,5 @@ protocol PresenterType {
     associatedtype ControllerEvents
     associatedtype ViewModel
     
-    func transform(from input: ControllerEvents) -> ViewModel
+    func generateViewModel(from input: ControllerEvents) -> ViewModel
 }

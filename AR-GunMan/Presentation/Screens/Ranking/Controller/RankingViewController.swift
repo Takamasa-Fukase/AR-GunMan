@@ -33,7 +33,7 @@ final class RankingViewController: UIViewController {
             closeButtonTapped: contentView.closeButton.rx.tap.asObservable(),
             backgroundViewTapped: contentView.trackBackgroundViewTap()
         )
-        let viewModel = presenter.transform(from: controllerEvents)
+        let viewModel = presenter.generateViewModel(from: controllerEvents)
         
         disposeBag.insert {
             contentView.rankingListView.bind(
