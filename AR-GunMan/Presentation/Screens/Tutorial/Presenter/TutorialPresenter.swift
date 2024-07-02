@@ -8,26 +8,20 @@
 import RxSwift
 import RxCocoa
 
-struct TutorialControllerInput {
-    let viewDidLoad: Observable<Void>
-    let viewDidDisappear: Observable<Void>
-    let pageIndexWhenScrollViewScrolled: Observable<Int>
-    let bottomButtonTapped: Observable<Void>
-    let backgroundViewTapped: Observable<Void>
-}
-
-struct TutorialViewModel {
-    let insertBlurEffectView: Driver<Void>
-    let buttonText: Driver<String>
-    let pageControlIndex: Driver<Int>
-    let scrollToNextPage: Driver<Void>
-}
-
-protocol TutorialPresenterInterface {
-    func transform(input: TutorialControllerInput) -> TutorialViewModel
-}
-
-final class TutorialPresenter: TutorialPresenterInterface {
+final class TutorialPresenter: PresenterType {
+    struct ControllerEvents {
+        let viewDidLoad: Observable<Void>
+        let viewDidDisappear: Observable<Void>
+        let pageIndexWhenScrollViewScrolled: Observable<Int>
+        let bottomButtonTapped: Observable<Void>
+        let backgroundViewTapped: Observable<Void>
+    }
+    struct ViewModel {
+        let insertBlurEffectView: Driver<Void>
+        let buttonText: Driver<String>
+        let pageControlIndex: Driver<Int>
+        let scrollToNextPage: Driver<Void>
+    }
     enum TransitType {
         case topPage
         case gamePage
@@ -48,7 +42,7 @@ final class TutorialPresenter: TutorialPresenterInterface {
         self.tutorialEndEventReceiver = tutorialEndEventReceiver
     }
     
-    func transform(input: TutorialControllerInput) -> TutorialViewModel {
+    func generateViewModel(from input: ControllerEvents) -> ViewModel {
         disposeBag.insert {
             // MARK: Event posts
             input.viewDidDisappear
@@ -83,7 +77,7 @@ final class TutorialPresenter: TutorialPresenterInterface {
             .filter({ $0 < 2 })
             .mapToVoid()
         
-        return TutorialViewModel(
+        return ViewModel(
             insertBlurEffectView: insertBlurEffectView
                 .asDriverOnErrorJustComplete(),
             buttonText: buttonText

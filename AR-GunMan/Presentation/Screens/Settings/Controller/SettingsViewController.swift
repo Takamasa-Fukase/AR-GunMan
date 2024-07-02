@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 
 final class SettingsViewController: UIViewController {
-    var presenter: SettingsPresenterInterface!
+    var presenter: SettingsPresenter!
     private var contentView: SettingsContentView!
 
     override func viewDidLoad() {
@@ -27,12 +27,12 @@ final class SettingsViewController: UIViewController {
     }
     
     private func bind() {
-        let controllerInput = SettingsControllerInput(
+        let controllerEvents = SettingsPresenter.ControllerEvents(
             worldRankingButtonTapped: contentView.worldRankingButton.rx.tap.asObservable(),
             privacyPolicyButtonTapped: contentView.privacyPolicyButton.rx.tap.asObservable(),
             developerConctactButtonTapped: contentView.developerContactButton.rx.tap.asObservable(),
             backButtonTapped: contentView.backButton.rx.tap.asObservable()
         )
-        presenter.transform(input: controllerInput)
+        _ = presenter.generateViewModel(from: controllerEvents)
     }
 }

@@ -13,30 +13,25 @@ final class NameRegisterEventReceiver {
     let onClose = PublishRelay<Void>()
 }
 
-struct NameRegisterControllerInput {
-    let viewWillDisappear: Observable<Void>
-    let nameTextFieldChanged: Observable<String>
-    let registerButtonTapped: Observable<Void>
-    let noButtonTapped: Observable<Void>
-    let backgroundViewTapped: Observable<Void>
-    let keyboardWillShowNotificationReceived: Observable<Notification>
-    let keyboardWillHideNotificationReceived: Observable<Notification>
-}
-
-struct NameRegisterViewModel {
-    let temporaryRankText: Driver<String>
-    let scoreText: Driver<String>
-    let isRegisterButtonEnabled: Driver<Bool>
-    let isRegistering: Driver<Bool>
-    let handleActiveTextFieldOverlapWhenKeyboardWillShow: Driver<Notification>
-    let resetActiveTextFieldPositionWhenKeyboardWillHide: Driver<Notification>
-}
-
-protocol NameRegisterPresenterInterface {
-    func transform(input: NameRegisterControllerInput) -> NameRegisterViewModel
-}
-
-final class NameRegisterPresenter: NameRegisterPresenterInterface {
+final class NameRegisterPresenter: PresenterType {
+    struct ControllerEvents {
+        let viewWillDisappear: Observable<Void>
+        let nameTextFieldChanged: Observable<String>
+        let registerButtonTapped: Observable<Void>
+        let noButtonTapped: Observable<Void>
+        let backgroundViewTapped: Observable<Void>
+        let keyboardWillShowNotificationReceived: Observable<Notification>
+        let keyboardWillHideNotificationReceived: Observable<Notification>
+    }
+    struct ViewModel {
+        let temporaryRankText: Driver<String>
+        let scoreText: Driver<String>
+        let isRegisterButtonEnabled: Driver<Bool>
+        let isRegistering: Driver<Bool>
+        let handleActiveTextFieldOverlapWhenKeyboardWillShow: Driver<Notification>
+        let resetActiveTextFieldPositionWhenKeyboardWillHide: Driver<Notification>
+    }
+    
     private let registerRankingUseCase: RegisterRankingUseCaseInterface
     private let navigator: NameRegisterNavigatorInterface
     private let score: Double
@@ -58,7 +53,7 @@ final class NameRegisterPresenter: NameRegisterPresenterInterface {
         self.eventReceiver = eventReceiver
     }
     
-    func transform(input: NameRegisterControllerInput) -> NameRegisterViewModel {
+    func generateViewModel(from input: ControllerEvents) -> ViewModel {
         let registerActivityTracker = ObservableActivityTracker()
         let errorTracker = ObservableErrorTracker()
         
@@ -102,7 +97,7 @@ final class NameRegisterPresenter: NameRegisterPresenterInterface {
                 })
         }
         
-        return NameRegisterViewModel(
+        return ViewModel(
             temporaryRankText: temporaryRankTextObservable
                 .asDriverOnErrorJustComplete(),
             scoreText: Observable.just("Score: \(score.scoreText)")

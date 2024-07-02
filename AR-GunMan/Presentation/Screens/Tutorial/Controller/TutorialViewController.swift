@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 
 final class TutorialViewController: UIViewController {
-    var presenter: TutorialPresenterInterface!
+    var presenter: TutorialPresenter!
     private var contentView: TutorialContentView!
     private let disposeBag = DisposeBag()
     
@@ -36,15 +36,15 @@ final class TutorialViewController: UIViewController {
             .startWith(0) // 初期値として0を流している
             .asObservable()
 
-        let controllerInput = TutorialControllerInput(
+        let controllerEvents = TutorialPresenter.ControllerEvents(
             viewDidLoad: .just(()),
             viewDidDisappear: rx.viewDidDisappear,
             pageIndexWhenScrollViewScrolled: pageIndexWhenScrollViewScrolled,
             bottomButtonTapped: contentView.bottomButton.rx.tap.asObservable(),
             backgroundViewTapped: contentView.trackBackgroundViewTap()
         )
-        let viewModel = presenter.transform(input: controllerInput)
-        
+        let viewModel = presenter.generateViewModel(from: controllerEvents)
+
         disposeBag.insert {
             viewModel.insertBlurEffectView
                 .drive(onNext: { [weak self] _ in

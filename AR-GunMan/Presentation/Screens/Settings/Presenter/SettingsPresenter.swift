@@ -8,18 +8,15 @@
 import RxSwift
 import RxCocoa
 
-struct SettingsControllerInput {
-    let worldRankingButtonTapped: Observable<Void>
-    let privacyPolicyButtonTapped: Observable<Void>
-    let developerConctactButtonTapped: Observable<Void>
-    let backButtonTapped: Observable<Void>
-}
-
-protocol SettingsPresenterInterface {
-    func transform(input: SettingsControllerInput)
-}
-
-final class SettingsPresenter: SettingsPresenterInterface {
+final class SettingsPresenter: PresenterType {
+    struct ControllerEvents {
+        let worldRankingButtonTapped: Observable<Void>
+        let privacyPolicyButtonTapped: Observable<Void>
+        let developerConctactButtonTapped: Observable<Void>
+        let backButtonTapped: Observable<Void>
+    }
+    struct ViewModel {}
+    
     private let navigator: SettingsNavigatorInterface
     private let disposeBag = DisposeBag()
     
@@ -27,7 +24,7 @@ final class SettingsPresenter: SettingsPresenterInterface {
         self.navigator = navigator
     }
     
-    func transform(input: SettingsControllerInput) {
+    func generateViewModel(from input: ControllerEvents) -> ViewModel {
         disposeBag.insert {
             // MARK: Transitions
             input.worldRankingButtonTapped
@@ -51,5 +48,7 @@ final class SettingsPresenter: SettingsPresenterInterface {
                     self.navigator.dismiss()
                 })
         }
+        
+        return ViewModel()
     }
 }

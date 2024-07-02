@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 
 final class WeaponSelectViewController: UIViewController {
-    var presenter: WeaponSelectPresenterInterface!
+    var presenter: WeaponSelectPresenter!
     private var contentView: WeaponSelectContentView!
     private let disposeBag = DisposeBag()
         
@@ -29,12 +29,12 @@ final class WeaponSelectViewController: UIViewController {
     }
     
     private func bind() {
-        let controllerInput = WeaponSelectControllerInput(
+        let controllerEvents = WeaponSelectPresenter.ControllerEvents(
             viewDidLayoutSubviews: rx.viewDidLayoutSubviews,
             itemSelected: contentView.itemSelectedRelay.asObservable()
         )
-        let viewModel = presenter.transform(input: controllerInput)
-        
+        let viewModel = presenter.generateViewModel(from: controllerEvents)
+
         disposeBag.insert {
             viewModel.adjustPageViewItemSize
                 .map({ [weak self] _ in

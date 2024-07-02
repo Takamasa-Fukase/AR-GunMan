@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 
 final class NameRegisterViewController: UIViewController, BackgroundViewTapTrackable {
-    var presenter: NameRegisterPresenterInterface!
+    var presenter: NameRegisterPresenter!
     private var contentView: NameRegisterContentView!
     private let disposeBag = DisposeBag()
     
@@ -28,7 +28,7 @@ final class NameRegisterViewController: UIViewController, BackgroundViewTapTrack
     }
     
     private func bind() {
-        let controllerInput = NameRegisterControllerInput(
+        let controllerEvents = NameRegisterPresenter.ControllerEvents(
             viewWillDisappear: rx.viewWillDisappear,
             nameTextFieldChanged: contentView.nameTextField.rx.text.orEmpty.asObservable(),
             registerButtonTapped: contentView.registerButton.rx.tap.asObservable(),
@@ -37,8 +37,8 @@ final class NameRegisterViewController: UIViewController, BackgroundViewTapTrack
             keyboardWillShowNotificationReceived: NotificationCenter.keyboardWillShow,
             keyboardWillHideNotificationReceived: NotificationCenter.keyboardWillHide
         )
-        let viewModel = presenter.transform(input: controllerInput)
-        
+        let viewModel = presenter.generateViewModel(from: controllerEvents)
+
         disposeBag.insert {
             viewModel.temporaryRankText
                 .drive(contentView.rankLabel.rx.text)

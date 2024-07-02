@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 
 final class ResultViewController: UIViewController {
-    var presenter: ResultPresenterInterface!
+    var presenter: ResultPresenter!
     private var contentView: ResultContentView!
     private let disposeBag = DisposeBag()
     
@@ -28,13 +28,13 @@ final class ResultViewController: UIViewController {
     }
     
     private func bind() {
-        let controllerInput = ResultControllerInput(
+        let controllerEvents = ResultPresenter.ControllerEvents(
             viewWillAppear: rx.viewWillAppear,
             replayButtonTapped: contentView.replayButton.rx.tap.asObservable(),
             toHomeButtonTapped: contentView.homeButton.rx.tap.asObservable()
         )
-        let viewModel = presenter.transform(input: controllerInput)
-        
+        let viewModel = presenter.generateViewModel(from: controllerEvents)
+
         disposeBag.insert {
             viewModel.scoreText
                 .drive(contentView.scoreLabel.rx.text)

@@ -8,20 +8,15 @@
 import RxSwift
 import RxCocoa
 
-struct WeaponSelectControllerInput {
-    let viewDidLayoutSubviews: Observable<Void>
-    let itemSelected: Observable<Int>
-}
-
-struct WeaponSelectViewModel {
-    let adjustPageViewItemSize: Driver<Void>
-}
-
-protocol WeaponSelectPresenterInterface {
-    func transform(input: WeaponSelectControllerInput) -> WeaponSelectViewModel
-}
-
-final class WeaponSelectPresenter: WeaponSelectPresenterInterface {
+final class WeaponSelectPresenter: PresenterType {
+    struct ControllerEvents {
+        let viewDidLayoutSubviews: Observable<Void>
+        let itemSelected: Observable<Int>
+    }
+    struct ViewModel {
+        let adjustPageViewItemSize: Driver<Void>
+    }
+    
     private let navigator: WeaponSelectNavigatorInterface
     private weak var weaponSelectEventReceiver: PublishRelay<WeaponType>?
     private let disposeBag = DisposeBag()
@@ -34,7 +29,7 @@ final class WeaponSelectPresenter: WeaponSelectPresenterInterface {
         self.weaponSelectEventReceiver = weaponSelectEventReceiver
     }
     
-    func transform(input: WeaponSelectControllerInput) -> WeaponSelectViewModel {
+    func generateViewModel(from input: ControllerEvents) -> ViewModel {
         disposeBag.insert {
             // MARK: Event posts
             input.itemSelected
@@ -49,7 +44,7 @@ final class WeaponSelectPresenter: WeaponSelectPresenterInterface {
                 })
         }
         
-        return WeaponSelectViewModel(
+        return ViewModel(
             adjustPageViewItemSize: input.viewDidLayoutSubviews
                 .asDriverOnErrorJustComplete()
         )

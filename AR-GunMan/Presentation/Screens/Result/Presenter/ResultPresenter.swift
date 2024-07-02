@@ -8,25 +8,20 @@
 import RxSwift
 import RxCocoa
 
-struct ResultControllerInput {
-    let viewWillAppear: Observable<Void>
-    let replayButtonTapped: Observable<Void>
-    let toHomeButtonTapped: Observable<Void>
-}
-
-struct ResultViewModel {
-    let rankingList: Driver<[RankingListItemModel]>
-    let scoreText: Driver<String>
-    let showButtons: Driver<Void>
-    let scrollCellToCenter: Driver<IndexPath>
-    let isLoadingRankingList: Driver<Bool>
-}
-
-protocol ResultPresenterInterface {
-    func transform(input: ResultControllerInput) -> ResultViewModel
-}
-
-final class ResultPresenter: ResultPresenterInterface {
+final class ResultPresenter: PresenterType {
+    struct ControllerEvents {
+        let viewWillAppear: Observable<Void>
+        let replayButtonTapped: Observable<Void>
+        let toHomeButtonTapped: Observable<Void>
+    }
+    struct ViewModel {
+        let rankingList: Driver<[RankingListItemModel]>
+        let scoreText: Driver<String>
+        let showButtons: Driver<Void>
+        let scrollCellToCenter: Driver<IndexPath>
+        let isLoadingRankingList: Driver<Bool>
+    }
+    
     private let replayRepository: ReplayRepositoryInterface
     private let getRankingUseCase: GetRankingUseCaseInterface
     private let timerStreamCreator: TimerStreamCreator
@@ -51,7 +46,7 @@ final class ResultPresenter: ResultPresenterInterface {
         self.nameRegisterEventReceiver = nameRegisterEventReceiver
     }
     
-    func transform(input: ResultControllerInput) -> ResultViewModel {
+    func generateViewModel(from input: ControllerEvents) -> ViewModel {
         let rankingLoadActivityTracker = ObservableActivityTracker()
         let errorTracker = ObservableErrorTracker()
         let temporaryRankTextRelay = BehaviorRelay<String>(value: "")
@@ -155,7 +150,7 @@ final class ResultPresenter: ResultPresenterInterface {
             .withLatestFrom(temporaryRankIndex)
             .map({ IndexPath(row: $0, section: 0) })
                 
-        return ResultViewModel(
+        return ViewModel(
             rankingList: rankingList
                 .asDriverOnErrorJustComplete(),
             scoreText: Observable.just(score.scoreText)
