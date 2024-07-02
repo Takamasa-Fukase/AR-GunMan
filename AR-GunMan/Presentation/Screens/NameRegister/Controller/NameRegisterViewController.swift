@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-final class NameRegisterViewController: UIViewController, BackgroundViewTapTrackable {
+final class NameRegisterViewController: UIViewController {
     var presenter: NameRegisterPresenter!
     private var contentView: NameRegisterContentView!
     private let disposeBag = DisposeBag()
