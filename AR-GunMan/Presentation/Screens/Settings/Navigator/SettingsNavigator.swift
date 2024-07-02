@@ -22,16 +22,8 @@ final class SettingsNavigator: SettingsNavigatorInterface {
         self.viewController = viewController
     }
     
-    static func assembleModules() -> UIViewController {
-        let vc = SettingsViewController()
-        vc.presenter = SettingsPresenter(
-            navigator: SettingsNavigator(viewController: vc)
-        )
-        return vc
-    }
-    
     func showRanking() {
-        let vc = RankingNavigator.assembleModules()
+        let vc = RankingAssembler.assembleComponents()
         viewController.presentPanModal(vc)
     }
     

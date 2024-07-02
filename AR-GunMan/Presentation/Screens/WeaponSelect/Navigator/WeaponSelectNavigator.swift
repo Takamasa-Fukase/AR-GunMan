@@ -5,7 +5,7 @@
 //  Created by 深瀬 on 2024/04/16.
 //
 
-import RxCocoa
+import UIKit
 
 protocol WeaponSelectNavigatorInterface {
     func dismiss()
@@ -16,17 +16,6 @@ final class WeaponSelectNavigator: WeaponSelectNavigatorInterface {
     
     init(viewController: UIViewController) {
         self.viewController = viewController
-    }
-    
-    static func assembleModules(
-        weaponSelectEventReceiver: PublishRelay<WeaponType>?
-    ) -> UIViewController {
-        let vc = WeaponSelectViewController()
-        vc.presenter = WeaponSelectPresenter(
-            navigator: WeaponSelectNavigator(viewController: vc),
-            weaponSelectEventReceiver: weaponSelectEventReceiver
-        )
-        return vc
     }
     
     func dismiss() {

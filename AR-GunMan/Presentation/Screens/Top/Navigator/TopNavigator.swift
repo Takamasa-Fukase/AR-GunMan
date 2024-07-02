@@ -23,17 +23,17 @@ final class TopNavigator: TopNavigatorInterface {
     }
     
     func showGame() {
-        let vc = GameNavigator.assembleModules()
+        let vc = GameAssembler.assembleComponents()
         viewController.present(vc, animated: true)
     }
     
     func showSettings() {
-        let vc = SettingsNavigator.assembleModules()
+        let vc = SettingsAssembler.assembleComponents()
         viewController.presentPanModal(vc)
     }
     
     func showTutorial() {
-        let vc = TutorialNavigator.assembleModules(transitionType: .topPage)
+        let vc = TutorialAssembler.assembleComponents(transitionType: .topPage)
         viewController.presentPanModal(vc)
     }
     

@@ -5,7 +5,7 @@
 //  Created by ウルトラ深瀬 on 13/6/24.
 //
 
-import RxSwift
+import UIKit
 
 protocol NameRegisterNavigatorInterface {
     func dismiss()
@@ -17,26 +17,6 @@ final class NameRegisterNavigator: NameRegisterNavigatorInterface {
     
     init(viewController: UIViewController) {
         self.viewController = viewController
-    }
-    
-    static func assembleModules(
-        score: Double,
-        temporaryRankTextObservable: Observable<String>,
-        eventReceiver: NameRegisterEventReceiver
-    ) -> UIViewController {
-        let vc = NameRegisterViewController()
-        vc.modalPresentationStyle = .overCurrentContext
-        let registerRankingUseCase = RegisterRankingUseCase(
-            rankingRepository: RankingRepository(apiRequestor: APIRequestor<Ranking>())
-        )
-        vc.presenter = NameRegisterPresenter(
-            registerRankingUseCase: registerRankingUseCase,
-            navigator: NameRegisterNavigator(viewController: vc),
-            score: score,
-            temporaryRankTextObservable: temporaryRankTextObservable,
-            eventReceiver: eventReceiver
-        )
-        return vc
     }
     
     func dismiss() {

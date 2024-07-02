@@ -26,29 +26,12 @@ final class ResultNavigator: ResultNavigatorInterface {
         self.viewController = viewController
     }
     
-    static func assembleModules(score: Double) -> UIViewController {
-        let vc = ResultViewController()
-        vc.modalPresentationStyle = .fullScreen
-        let getRankingUseCase = GetRankingUseCase(
-            rankingRepository: RankingRepository(
-                apiRequestor: APIRequestor<Ranking>()
-            )
-        )
-        vc.presenter = ResultPresenter(
-            replayRepository: ReplayRepository(),
-            getRankingUseCase: getRankingUseCase,
-            navigator: ResultNavigator(viewController: vc),
-            score: score
-        )
-        return vc
-    }
-    
     func showNameRegister(
         score: Double,
         temporaryRankTextObservable: Observable<String>,
         eventReceiver: NameRegisterEventReceiver
     ) {
-        let vc = NameRegisterNavigator.assembleModules(
+        let vc = NameRegisterAssembler.assembleComponents(
             score: score,
             temporaryRankTextObservable: temporaryRankTextObservable,
             eventReceiver: eventReceiver

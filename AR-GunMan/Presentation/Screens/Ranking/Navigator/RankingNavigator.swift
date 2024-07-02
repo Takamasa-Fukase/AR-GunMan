@@ -19,20 +19,6 @@ final class RankingNavigator: RankingNavigatorInterface {
         self.viewController = viewController
     }
     
-    static func assembleModules() -> UIViewController {
-        let vc = RankingViewController()
-        let getRankingUseCase = GetRankingUseCase(
-            rankingRepository: RankingRepository(
-                apiRequestor: APIRequestor<Ranking>()
-            )
-        )
-        vc.presenter = RankingPresenter(
-            getRankingUseCase: getRankingUseCase,
-            navigator: RankingNavigator(viewController: vc)
-        )
-        return vc
-    }
-    
     func dismiss() {
         viewController.dismiss(animated: true)
     }
