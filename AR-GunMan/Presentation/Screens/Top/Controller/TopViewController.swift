@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 
 class TopViewController: UIViewController {
-    var presenter: TopPresenterInterface!
+    var presenter: TopPresenter!
     private var contentView: TopContentView!
     private let disposeBag = DisposeBag()
 
@@ -28,14 +28,14 @@ class TopViewController: UIViewController {
     }
     
     private func bind() {
-        let controllerInput = TopControllerInput(
+        let controllerEvents = TopPresenter.ControllerEvents(
             viewDidAppear: rx.viewDidAppear,
             startButtonTapped: contentView.startButton.rx.tap.asObservable(),
             settingsButtonTapped: contentView.settingsButton.rx.tap.asObservable(),
             howToPlayButtonTapped: contentView.howToPlayButton.rx.tap.asObservable()
         )
-        let viewModel = presenter.transform(input: controllerInput)
-        
+        let viewModel = presenter.generateViewModel(from: controllerEvents)
+
         disposeBag.insert {
             viewModel.isStartButtonIconSwitched
                 .map({ TopConst.targetIcon(isSwitched: $0) })

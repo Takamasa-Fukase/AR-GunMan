@@ -8,25 +8,20 @@
 import RxSwift
 import RxCocoa
 
-struct TopControllerInput {
-    let viewDidAppear: Observable<Void>
-    let startButtonTapped: Observable<Void>
-    let settingsButtonTapped: Observable<Void>
-    let howToPlayButtonTapped: Observable<Void>
-}
-
-struct TopViewModel {
-    // TODO: ここでBoolに応じたImageNameに変換したい（systemImageとImageなのでそこを解消する必要あり）
-    let isStartButtonIconSwitched: Driver<Bool>
-    let isSettingsButtonIconSwitched: Driver<Bool>
-    let isHowToPlayButtonIconSwitched: Driver<Bool>
-}
-
-protocol TopPresenterInterface {
-    func transform(input: TopControllerInput) -> TopViewModel
-}
-
-final class TopPresenter: TopPresenterInterface {
+final class TopPresenter: PresenterType {
+    struct ControllerEvents {
+        let viewDidAppear: Observable<Void>
+        let startButtonTapped: Observable<Void>
+        let settingsButtonTapped: Observable<Void>
+        let howToPlayButtonTapped: Observable<Void>
+    }
+    struct ViewModel {
+        // TODO: ここでBoolに応じたImageNameに変換したい（systemImageとImageなのでそこを解消する必要あり）
+        let isStartButtonIconSwitched: Driver<Bool>
+        let isSettingsButtonIconSwitched: Driver<Bool>
+        let isHowToPlayButtonIconSwitched: Driver<Bool>
+    }
+    
     private let replayNecessityCheckUseCase: ReplayNecessityCheckUseCaseInterface
     private let buttonIconChangeUseCase: TopPageButtonIconChangeUseCaseInterface
     private let cameraPermissionCheckUseCase: CameraPermissionCheckUseCaseInterface
@@ -45,7 +40,7 @@ final class TopPresenter: TopPresenterInterface {
         self.navigator = navigator
     }
     
-    func transform(input: TopControllerInput) -> TopViewModel {
+    func generateViewModel(from input: ControllerEvents) -> ViewModel {
         let replayNecessityCheckUseCaseOutput = replayNecessityCheckUseCase
             .transform(input: .init(checkNeedsReplay: input.viewDidAppear))
         
@@ -89,7 +84,7 @@ final class TopPresenter: TopPresenterInterface {
                 })
         }
         
-        return TopViewModel(
+        return ViewModel(
             isStartButtonIconSwitched: startButtonIconChangeUseCaseOutput.isButtonIconSwitched
                 .asDriverOnErrorJustComplete(),
             isSettingsButtonIconSwitched: settingsButtonIconChangeUseCaseOutput.isButtonIconSwitched

@@ -981,6 +981,7 @@
 			children = (
 				BC03F9E52C21A3B600E27C01 /* Navigator */,
 				BC03F9E62C21A3C000E27C01 /* Presenter */,
+				BC7F70222C34080000480833 /* Controller */,
 				BC03F9E72C21A3CA00E27C01 /* View */,
 			);
 			path = Top;
@@ -1005,7 +1006,6 @@
 		BC03F9E72C21A3CA00E27C01 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				BC03F9CF2C2151C200E27C01 /* TopViewController.swift */,
 				BC03F9C92C214E7D00E27C01 /* TopContentView.swift */,
 				BC03F9CC2C214E9900E27C01 /* TopContentView.xib */,
 			);
@@ -1324,6 +1324,14 @@
 			isa = PBXGroup;
 			children = (
 				BC7F70182C2EA21A00480833 /* RankingViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		BC7F70222C34080000480833 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				BC03F9CF2C2151C200E27C01 /* TopViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
