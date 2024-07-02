@@ -300,6 +300,8 @@
 		BC92C85A297348D500E49BD5 /* ScoreCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C859297348D500E49BD5 /* ScoreCalculator.swift */; };
 		BC92C85E297420CD00E49BD5 /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C85D297420CD00E49BD5 /* UserDefaults+Extension.swift */; };
 		BC92C8602975A2A800E49BD5 /* UIViewController+RxLifeCycleEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C85F2975A2A800E49BD5 /* UIViewController+RxLifeCycleEvents.swift */; };
+		BCBE79952C341D9D006683A3 /* TopAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBE79942C341D9D006683A3 /* TopAssembler.swift */; };
+		BCBE79962C341D9D006683A3 /* TopAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBE79942C341D9D006683A3 /* TopAssembler.swift */; };
 		BCC512C22C15B5F000D77305 /* Extension+SCNNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC512C12C15B5F000D77305 /* Extension+SCNNode.swift */; };
 		BCC512C32C15B5F000D77305 /* Extension+SCNNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC512C12C15B5F000D77305 /* Extension+SCNNode.swift */; };
 		BCC512C62C15CF7300D77305 /* WeaponTypeConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC512C52C15CF7300D77305 /* WeaponTypeConst.swift */; };
@@ -500,6 +502,7 @@
 		BC92C859297348D500E49BD5 /* ScoreCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCalculator.swift; sourceTree = "<group>"; };
 		BC92C85D297420CD00E49BD5 /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
 		BC92C85F2975A2A800E49BD5 /* UIViewController+RxLifeCycleEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+RxLifeCycleEvents.swift"; sourceTree = "<group>"; };
+		BCBE79942C341D9D006683A3 /* TopAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopAssembler.swift; sourceTree = "<group>"; };
 		BCC512C12C15B5F000D77305 /* Extension+SCNNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+SCNNode.swift"; sourceTree = "<group>"; };
 		BCC512C52C15CF7300D77305 /* WeaponTypeConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponTypeConst.swift; sourceTree = "<group>"; };
 		BCC512C92C15CFBF00D77305 /* ParticleSystemType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticleSystemType.swift; sourceTree = "<group>"; };
@@ -978,6 +981,7 @@
 		BC03F9E42C21A3A000E27C01 /* Top */ = {
 			isa = PBXGroup;
 			children = (
+				BCBE79932C341D70006683A3 /* Assembler */,
 				BC03F9E52C21A3B600E27C01 /* Navigator */,
 				BC03F9E62C21A3C000E27C01 /* Presenter */,
 				BC7F70222C34080000480833 /* Controller */,
@@ -1383,6 +1387,14 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
+		BCBE79932C341D70006683A3 /* Assembler */ = {
+			isa = PBXGroup;
+			children = (
+				BCBE79942C341D9D006683A3 /* TopAssembler.swift */,
+			);
+			path = Assembler;
+			sourceTree = "<group>";
+		};
 		BCC512CD2C15DD6000D77305 /* Enums */ = {
 			isa = PBXGroup;
 			children = (
@@ -1769,6 +1781,7 @@
 				67DB2C6127C17F8D00B8CB3C /* GameConst.swift in Sources */,
 				BC03FA082C21CB6000E27C01 /* GameStartUseCase.swift in Sources */,
 				67DB2C5B27C17EBE00B8CB3C /* SoundType.swift in Sources */,
+				BCBE79952C341D9D006683A3 /* TopAssembler.swift in Sources */,
 				BC2EBB692C2A468D00EB1400 /* TutorialPresenter.swift in Sources */,
 				86F1573B2BD7B71E00BE979C /* RankingNavigator.swift in Sources */,
 				BC92C8602975A2A800E49BD5 /* UIViewController+RxLifeCycleEvents.swift in Sources */,
@@ -1912,6 +1925,7 @@
 				BC7FF24B2C2983D20014CDCE /* SceneDelegate.swift in Sources */,
 				860646142BF5996200906DA0 /* ObservableActivityTracker.swift in Sources */,
 				BC7F70052C2E5E3900480833 /* ReplayRepositoryInterface.swift in Sources */,
+				BCBE79962C341D9D006683A3 /* TopAssembler.swift in Sources */,
 				BC2EBBA72C2AA9FE00EB1400 /* RankingContentView.swift in Sources */,
 				860646CA2BF59CF100906DA0 /* WeaponType.swift in Sources */,
 				BC22E0172C1B281300C59BAB /* Observable+Extension.swift in Sources */,

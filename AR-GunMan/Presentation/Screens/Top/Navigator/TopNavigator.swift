@@ -22,19 +22,6 @@ final class TopNavigator: TopNavigatorInterface {
         self.viewController = viewController
     }
     
-    static func assembleModules() -> UIViewController {
-        let vc = TopViewController()
-        vc.presenter = TopPresenter(
-            replayNecessityCheckUseCase: ReplayNecessityCheckUseCase(
-                replayRepository: ReplayRepository()
-            ),
-            buttonIconChangeUseCase: TopPageButtonIconChangeUseCase(),
-            cameraPermissionCheckUseCase: CameraPermissionCheckUseCase(),
-            navigator: TopNavigator(viewController: vc)
-        )
-        return vc
-    }
-    
     func showGame() {
         let vc = GameNavigator.assembleModules()
         viewController.present(vc, animated: true)
