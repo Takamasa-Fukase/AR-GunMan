@@ -89,7 +89,7 @@ final class ResultPresenter: PresenterType {
             })
         
         disposeBag.insert {
-            // MARK: Event sents
+            // MARK: Event sendings to receivers
             temporaryRankIndex
                 .withLatestFrom(loadedRankingList) { (rankIndex: $0, rankingList: $1) }
                 .map({

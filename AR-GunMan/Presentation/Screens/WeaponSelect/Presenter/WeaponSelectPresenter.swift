@@ -31,7 +31,7 @@ final class WeaponSelectPresenter: PresenterType {
     
     func generateViewModel(from input: ControllerEvents) -> ViewModel {
         disposeBag.insert {
-            // MARK: Event posts
+            // MARK: Event sendings to receivers
             input.itemSelected
                 .map({ WeaponType.allCases[$0] })
                 .bind(to: weaponSelectEventReceiver ?? PublishRelay<WeaponType>())

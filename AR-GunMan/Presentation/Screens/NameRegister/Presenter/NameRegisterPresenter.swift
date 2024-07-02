@@ -73,7 +73,7 @@ final class NameRegisterPresenter: PresenterType {
             .share()
         
         disposeBag.insert {
-            // MARK: Event posts
+            // MARK: Event sendings to receivers
             input.viewWillDisappear
                 .bind(to: eventReceiver?.onClose ?? PublishRelay<Void>())
             rankingRegistered

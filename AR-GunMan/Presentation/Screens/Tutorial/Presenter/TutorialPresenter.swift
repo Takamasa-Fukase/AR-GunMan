@@ -44,7 +44,7 @@ final class TutorialPresenter: PresenterType {
     
     func generateViewModel(from input: ControllerEvents) -> ViewModel {
         disposeBag.insert {
-            // MARK: Event posts
+            // MARK: Event sendings to receivers
             input.viewDidDisappear
                 .bind(to: tutorialEndEventReceiver ?? PublishRelay<Void>())
             
