@@ -8,67 +8,61 @@
 import RxSwift
 import RxCocoa
 
-struct GameControllerInput {
-    let inputFromViewController: InputFromViewController
-    let inputFromARContent: InputFromARContent
-    let inputFromDeviceMotion: InputFromDeviceMotion
+final class GamePresenter: PresenterType {
+    struct ControllerEvents {
+        let inputFromView: InputFromView
+        let inputFromARContent: InputFromARContent
+        let inputFromDeviceMotion: InputFromDeviceMotion
 
-    struct InputFromViewController {
-        let viewDidLoad: Observable<Void>
-        let viewWillAppear: Observable<Void>
-        let viewDidAppear: Observable<Void>
-        let viewWillDisappear: Observable<Void>
-        let weaponChangeButtonTapped: Observable<Void>
+        struct InputFromView {
+            let viewDidLoad: Observable<Void>
+            let viewWillAppear: Observable<Void>
+            let viewDidAppear: Observable<Void>
+            let viewWillDisappear: Observable<Void>
+            let weaponChangeButtonTapped: Observable<Void>
+        }
+        
+        struct InputFromARContent {
+            let rendererUpdated: Observable<Void>
+            let collisionOccurred: Observable<CollisionInfo>
+        }
+        
+        struct InputFromDeviceMotion {
+            let accelerationUpdated: Observable<Vector>
+            let gyroUpdated: Observable<Vector>
+        }
     }
-    
-    struct InputFromARContent {
-        let rendererUpdated: Observable<Void>
-        let collisionOccurred: Observable<CollisionInfo>
+    struct ViewModel {
+        let outputToView: OutputToView
+        let outputToARContent: OutputToARContent
+        let outputToDeviceMotion: OutputToDeviceMotion
+        
+        struct OutputToView {
+            let sightImageName: Driver<String>
+            let sightImageColorHexCode: Driver<String>
+            let timeCountText: Driver<String>
+            let bulletsCountImageName: Driver<String>
+            let isWeaponChangeButtonEnabled: Driver<Bool>
+        }
+        
+        struct OutputToARContent {
+            let setupSceneView: Driver<Void>
+            let renderAllTargets: Driver<Int>
+            let startSceneSession: Driver<Void>
+            let pauseSceneSession: Driver<Void>
+            let renderSelectedWeapon: Driver<WeaponType>
+            let renderWeaponFiring: Driver<WeaponType>
+            let renderTargetsAppearanceChanging: Driver<Void>
+            let moveWeaponToFPSPosition: Driver<WeaponType>
+            let removeContactedTargetAndBullet: Driver<(targetId: UUID, bulletId: UUID)>
+            let renderTargetHitParticleToContactPoint: Driver<(weaponType: WeaponType, contactPoint: Vector)>
+        }
+        
+        struct OutputToDeviceMotion {
+            let startMotionDetection: Driver<Void>
+            let stopMotionDetection: Driver<Void>
+        }
     }
-    
-    struct InputFromDeviceMotion {
-        let accelerationUpdated: Observable<Vector>
-        let gyroUpdated: Observable<Vector>
-    }
-}
-
-struct GameViewModel {
-    let outputToView: OutputToView
-    let outputToARContent: OutputToARContent
-    let outputToDeviceMotion: OutputToDeviceMotion
-    
-    struct OutputToView {
-        let sightImageName: Driver<String>
-        let sightImageColorHexCode: Driver<String>
-        let timeCountText: Driver<String>
-        let bulletsCountImageName: Driver<String>
-        let isWeaponChangeButtonEnabled: Driver<Bool>
-    }
-    
-    struct OutputToARContent {
-        let setupSceneView: Driver<Void>
-        let renderAllTargets: Driver<Int>
-        let startSceneSession: Driver<Void>
-        let pauseSceneSession: Driver<Void>
-        let renderSelectedWeapon: Driver<WeaponType>
-        let renderWeaponFiring: Driver<WeaponType>
-        let renderTargetsAppearanceChanging: Driver<Void>
-        let moveWeaponToFPSPosition: Driver<WeaponType>
-        let removeContactedTargetAndBullet: Driver<(targetId: UUID, bulletId: UUID)>
-        let renderTargetHitParticleToContactPoint: Driver<(weaponType: WeaponType, contactPoint: Vector)>
-    }
-    
-    struct OutputToDeviceMotion {
-        let startMotionDetection: Driver<Void>
-        let stopMotionDetection: Driver<Void>
-    }
-}
-
-protocol GamePresenterInterface {
-    func transform(input: GameControllerInput) -> GameViewModel
-}
-
-final class GamePresenter: GamePresenterInterface {
     class State {
         let timeCountRelay = BehaviorRelay<Double>(value: GameConst.timeCount)
         let weaponTypeRelay = BehaviorRelay<WeaponType>(value: .pistol)
@@ -99,10 +93,10 @@ final class GamePresenter: GamePresenterInterface {
         self.weaponSelectEventReceiver = weaponSelectEventReceiver
     }
     
-    func transform(input: GameControllerInput) -> GameViewModel {
+    func generateViewModel(from input: ControllerEvents) -> ViewModel {
         let composedGameUseCasesOutput = gameUseCasesComposer
             .transform(input: .init(
-                tutorialNecessityCheckTrigger: input.inputFromViewController.viewDidAppear.take(1),
+                tutorialNecessityCheckTrigger: input.inputFromView.viewDidAppear.take(1),
                 tutorialEnded: tutorialEndEventReceiver.asObservable(),
                 accelerationUpdated: input.inputFromDeviceMotion.accelerationUpdated,
                 gyroUpdated: input.inputFromDeviceMotion.gyroUpdated,
@@ -138,7 +132,7 @@ final class GamePresenter: GamePresenterInterface {
                         tutorialEndEventReceiver: self.tutorialEndEventReceiver
                     )
                 })
-            input.inputFromViewController.weaponChangeButtonTapped
+            input.inputFromView.weaponChangeButtonTapped
                 .subscribe(onNext: { [weak self] _ in
                     guard let self = self else { return }
                     self.navigator.showWeaponSelectView(
@@ -157,8 +151,8 @@ final class GamePresenter: GamePresenterInterface {
                 })
         }
 
-        return GameViewModel(
-            outputToView: GameViewModel.OutputToView(
+        return ViewModel(
+            outputToView: .init(
                 sightImageName: state.weaponTypeRelay
                     .map({ $0.sightImageName })
                     .asDriverOnErrorJustComplete(),
@@ -176,15 +170,15 @@ final class GamePresenter: GamePresenterInterface {
                     .map({ $0 < GameConst.timeCount && $0 > 0 })
                     .asDriverOnErrorJustComplete()
             ),
-            outputToARContent: GameViewModel.OutputToARContent(
-                setupSceneView: input.inputFromViewController.viewDidLoad
+            outputToARContent: .init(
+                setupSceneView: input.inputFromView.viewDidLoad
                     .asDriverOnErrorJustComplete(),
-                renderAllTargets: input.inputFromViewController.viewDidLoad
+                renderAllTargets: input.inputFromView.viewDidLoad
                     .map({ _ in GameConst.targetCount })
                     .asDriverOnErrorJustComplete(),
-                startSceneSession: input.inputFromViewController.viewWillAppear
+                startSceneSession: input.inputFromView.viewWillAppear
                     .asDriverOnErrorJustComplete(),
-                pauseSceneSession: input.inputFromViewController.viewWillDisappear
+                pauseSceneSession: input.inputFromView.viewWillDisappear
                     .asDriverOnErrorJustComplete(),
                 renderSelectedWeapon: composedGameUseCasesOutput.weaponChanged
                     .startWith(state.weaponTypeRelay.value)
@@ -201,7 +195,7 @@ final class GamePresenter: GamePresenterInterface {
                 renderTargetHitParticleToContactPoint: composedGameUseCasesOutput.renderTargetHitParticleToContactPoint
                     .asDriverOnErrorJustComplete()
             ),
-            outputToDeviceMotion: GameViewModel.OutputToDeviceMotion(
+            outputToDeviceMotion: .init(
                 startMotionDetection: composedGameUseCasesOutput.startMotionDetection
                     .asDriverOnErrorJustComplete(),
                 stopMotionDetection: composedGameUseCasesOutput.stopMotionDetection

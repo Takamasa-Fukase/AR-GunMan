@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 
 class GameViewController: UIViewController {
-    var presenter: GamePresenterInterface!
+    var presenter: GamePresenter!
     var arContentController: ARContentController!
     var deviceMotionController: DeviceMotionController!
     private var contentView: GameContentView!
@@ -31,31 +31,31 @@ class GameViewController: UIViewController {
     }
     
     private func bind() {
-        let controllerInput = GameControllerInput(
-            inputFromViewController: GameControllerInput.InputFromViewController(
+        let controllerEvents = GamePresenter.ControllerEvents(
+            inputFromView: .init(
                 viewDidLoad: .just(()),
                 viewWillAppear: rx.viewWillAppear,
                 viewDidAppear: rx.viewDidAppear,
                 viewWillDisappear: rx.viewWillDisappear,
                 weaponChangeButtonTapped: contentView.weaponChangeButton.rx.tap.asObservable()
             ),
-            inputFromARContent: GameControllerInput.InputFromARContent(
+            inputFromARContent: .init(
                 rendererUpdated: arContentController.rendererUpdated,
                 collisionOccurred: arContentController.collisionOccurred
             ),
-            inputFromDeviceMotion: GameControllerInput.InputFromDeviceMotion(
+            inputFromDeviceMotion: .init(
                 accelerationUpdated: deviceMotionController.accelerationUpdated,
                 gyroUpdated: deviceMotionController.gyroUpdated
             )
         )
-        let viewModel = presenter.transform(input: controllerInput)
+        let viewModel = presenter.generateViewModel(from: controllerEvents)
         bindOutputToViewComponents(viewModel.outputToView)
         bindOutputToARContentController(viewModel.outputToARContent)
         bindOutputToDeviceMotionController(viewModel.outputToDeviceMotion)
     }
     
     private func bindOutputToViewComponents(
-        _ outputToView: GameViewModel.OutputToView
+        _ outputToView: GamePresenter.ViewModel.OutputToView
     ) {
         disposeBag.insert {
             outputToView.sightImageName
@@ -75,7 +75,7 @@ class GameViewController: UIViewController {
     }
     
     private func bindOutputToARContentController(
-        _ outputToARContent: GameViewModel.OutputToARContent
+        _ outputToARContent: GamePresenter.ViewModel.OutputToARContent
     ) {
         disposeBag.insert {
             outputToARContent.setupSceneView
@@ -133,7 +133,7 @@ class GameViewController: UIViewController {
     }
     
     private func bindOutputToDeviceMotionController(
-        _ outputToDeviceMotion: GameViewModel.OutputToDeviceMotion
+        _ outputToDeviceMotion: GamePresenter.ViewModel.OutputToDeviceMotion
     ) {
         disposeBag.insert {
             outputToDeviceMotion.startMotionDetection
