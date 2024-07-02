@@ -603,7 +603,8 @@
 			children = (
 				86A6CB3E2BCC0FE500628C61 /* Navigator */,
 				BC2EBB732C2A62E000EB1400 /* Presenter */,
-				86A6CB3C2BCC0FDA00628C61 /* View */,
+				BC7F70242C340A2D00480833 /* Controller */,
+				86A6CB3C2BCC0FDA00628C61 /* Views */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -613,7 +614,8 @@
 			children = (
 				86A6CB2A2BCC0ED900628C61 /* Navigator */,
 				BC2EBB672C2A467300EB1400 /* Presenter */,
-				86A6CB282BCC0ECD00628C61 /* View */,
+				BC7F70252C340A5500480833 /* Controller */,
+				86A6CB282BCC0ECD00628C61 /* Views */,
 			);
 			path = Tutorial;
 			sourceTree = "<group>";
@@ -716,7 +718,8 @@
 			children = (
 				86A6CB362BCC0F7400628C61 /* Navigator */,
 				BC2EBB7F2C2A6F6600EB1400 /* Presenter */,
-				86A6CB342BCC0F6A00628C61 /* View */,
+				BC7F70282C340A9100480833 /* Controller */,
+				86A6CB342BCC0F6A00628C61 /* Views */,
 			);
 			path = NameRegister;
 			sourceTree = "<group>";
@@ -727,7 +730,7 @@
 				86A6CB3A2BCC0FC500628C61 /* Navigator */,
 				BC2EBB7B2C2A6BBE00EB1400 /* Presenter */,
 				BC7F70212C34001600480833 /* Controller */,
-				86A6CB382BCC0FBB00628C61 /* View */,
+				86A6CB382BCC0FBB00628C61 /* Views */,
 			);
 			path = Ranking;
 			sourceTree = "<group>";
@@ -737,7 +740,8 @@
 			children = (
 				86A6CB2E2BCC0F0E00628C61 /* Navigator */,
 				BC2EBB6B2C2A4EF300EB1400 /* Presenter */,
-				86A6CB2C2BCC0F0300628C61 /* View */,
+				BC7F70262C340A6900480833 /* Controller */,
+				86A6CB2C2BCC0F0300628C61 /* Views */,
 			);
 			path = WeaponSelect;
 			sourceTree = "<group>";
@@ -788,14 +792,13 @@
 			path = Presentation;
 			sourceTree = "<group>";
 		};
-		86A6CB282BCC0ECD00628C61 /* View */ = {
+		86A6CB282BCC0ECD00628C61 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				599450FF256AD55900560202 /* TutorialViewController.swift */,
 				BC2EBB8D2C2A8F8C00EB1400 /* TutorialContentView.swift */,
 				BC2EBB902C2A8FA800EB1400 /* TutorialContentView.xib */,
 			);
-			path = View;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		86A6CB2A2BCC0ED900628C61 /* Navigator */ = {
@@ -806,16 +809,15 @@
 			path = Navigator;
 			sourceTree = "<group>";
 		};
-		86A6CB2C2BCC0F0300628C61 /* View */ = {
+		86A6CB2C2BCC0F0300628C61 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				59D2D5912552E718006DDB70 /* WeaponSelectViewController.swift */,
 				BC2EBB932C2A962500EB1400 /* WeaponSelectContentView.swift */,
 				BC2EBB962C2A963B00EB1400 /* WeaponSelectContentView.xib */,
 				59D2D58F2552E717006DDB70 /* WeaponSelectCell.swift */,
 				59D2D5902552E718006DDB70 /* WeaponSelectCell.xib */,
 			);
-			path = View;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		86A6CB2E2BCC0F0E00628C61 /* Navigator */ = {
@@ -826,14 +828,13 @@
 			path = Navigator;
 			sourceTree = "<group>";
 		};
-		86A6CB302BCC0F4300628C61 /* View */ = {
+		86A6CB302BCC0F4300628C61 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				59A01133255AF580008996E3 /* ResultViewController.swift */,
 				BC2EBB992C2A992500EB1400 /* ResultContentView.swift */,
 				BC2EBB9C2C2A994100EB1400 /* ResultContentView.xib */,
 			);
-			path = View;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		86A6CB322BCC0F5300628C61 /* Navigator */ = {
@@ -844,14 +845,13 @@
 			path = Navigator;
 			sourceTree = "<group>";
 		};
-		86A6CB342BCC0F6A00628C61 /* View */ = {
+		86A6CB342BCC0F6A00628C61 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				59940BAB2552FAA600EC20C1 /* NameRegisterViewController.swift */,
 				BC2EBB9F2C2AA5DA00EB1400 /* NameRegisterContentView.swift */,
 				BC2EBBA22C2AA63F00EB1400 /* NameRegisterContentView.xib */,
 			);
-			path = View;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		86A6CB362BCC0F7400628C61 /* Navigator */ = {
@@ -862,7 +862,7 @@
 			path = Navigator;
 			sourceTree = "<group>";
 		};
-		86A6CB382BCC0FBB00628C61 /* View */ = {
+		86A6CB382BCC0FBB00628C61 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				BC2EBBA52C2AA9FE00EB1400 /* RankingContentView.swift */,
@@ -872,7 +872,7 @@
 				5921A206255D6A4E001D8C39 /* RankingCell.swift */,
 				5921A207255D6A4E001D8C39 /* RankingCell.xib */,
 			);
-			path = View;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		86A6CB3A2BCC0FC500628C61 /* Navigator */ = {
@@ -883,14 +883,13 @@
 			path = Navigator;
 			sourceTree = "<group>";
 		};
-		86A6CB3C2BCC0FDA00628C61 /* View */ = {
+		86A6CB3C2BCC0FDA00628C61 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				595E6986256C0190002B4F3E /* SettingsViewController.swift */,
 				BC2EBB842C2A899D00EB1400 /* SettingsContentView.swift */,
 				BC2EBB872C2A8A1800EB1400 /* SettingsContentView.xib */,
 			);
-			path = View;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		86A6CB3E2BCC0FE500628C61 /* Navigator */ = {
@@ -982,7 +981,7 @@
 				BC03F9E52C21A3B600E27C01 /* Navigator */,
 				BC03F9E62C21A3C000E27C01 /* Presenter */,
 				BC7F70222C34080000480833 /* Controller */,
-				BC03F9E72C21A3CA00E27C01 /* View */,
+				BC03F9E72C21A3CA00E27C01 /* Views */,
 			);
 			path = Top;
 			sourceTree = "<group>";
@@ -1003,13 +1002,13 @@
 			path = Presenter;
 			sourceTree = "<group>";
 		};
-		BC03F9E72C21A3CA00E27C01 /* View */ = {
+		BC03F9E72C21A3CA00E27C01 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				BC03F9C92C214E7D00E27C01 /* TopContentView.swift */,
 				BC03F9CC2C214E9900E27C01 /* TopContentView.xib */,
 			);
-			path = View;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		BC03F9E82C21A44F00E27C01 /* Top */ = {
@@ -1049,7 +1048,8 @@
 			children = (
 				BC03FA142C2426EE00E27C01 /* Navigator */,
 				BC03FA152C2426F900E27C01 /* Presenter */,
-				BC03FA162C2426FF00E27C01 /* View */,
+				BC7F70232C34095400480833 /* Controller */,
+				BC03FA162C2426FF00E27C01 /* Views */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -1070,16 +1070,13 @@
 			path = Presenter;
 			sourceTree = "<group>";
 		};
-		BC03FA162C2426FF00E27C01 /* View */ = {
+		BC03FA162C2426FF00E27C01 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				BC03FA262C2809D500E27C01 /* GameViewController.swift */,
 				BC03FA202C2808A100E27C01 /* GameContentView.swift */,
 				BC03FA232C2808A900E27C01 /* GameContentView.xib */,
-				BC35B1FC2C159E1A00131483 /* ARContent */,
-				BC35B1FE2C159E2B00131483 /* DeviceMotion */,
 			);
-			path = View;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		BC2EBB672C2A467300EB1400 /* Presenter */ = {
@@ -1336,6 +1333,56 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
+		BC7F70232C34095400480833 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				BC03FA262C2809D500E27C01 /* GameViewController.swift */,
+				BC35B1FC2C159E1A00131483 /* ARContent */,
+				BC35B1FE2C159E2B00131483 /* DeviceMotion */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		BC7F70242C340A2D00480833 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				595E6986256C0190002B4F3E /* SettingsViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		BC7F70252C340A5500480833 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				599450FF256AD55900560202 /* TutorialViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		BC7F70262C340A6900480833 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				59D2D5912552E718006DDB70 /* WeaponSelectViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		BC7F70272C340A8200480833 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				59A01133255AF580008996E3 /* ResultViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		BC7F70282C340A9100480833 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				59940BAB2552FAA600EC20C1 /* NameRegisterViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		BCC512CD2C15DD6000D77305 /* Enums */ = {
 			isa = PBXGroup;
 			children = (
@@ -1375,7 +1422,8 @@
 			children = (
 				86A6CB322BCC0F5300628C61 /* Navigator */,
 				BC2EBB6F2C2A610000EB1400 /* Presenter */,
-				86A6CB302BCC0F4300628C61 /* View */,
+				BC7F70272C340A8200480833 /* Controller */,
+				86A6CB302BCC0F4300628C61 /* Views */,
 			);
 			path = Result;
 			sourceTree = "<group>";
