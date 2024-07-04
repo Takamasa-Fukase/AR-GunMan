@@ -89,7 +89,7 @@ final class ResultPresenter: PresenterType {
             })
         
         disposeBag.insert {
-            // MARK: Event sendings to receivers
+            // MARK: レシーバーにイベントを通知
             temporaryRankIndex
                 .withLatestFrom(loadedRankingList) { (rankIndex: $0, rankingList: $1) }
                 .map({
@@ -100,7 +100,7 @@ final class ResultPresenter: PresenterType {
                 })
                 .bind(to: temporaryRankTextRelay)
             
-            // MARK: Transitions
+            // MARK: 画面遷移
             input.viewWillAppear
                 .take(1)
                 .flatMapLatest({ [weak self] _ -> Observable<Void> in

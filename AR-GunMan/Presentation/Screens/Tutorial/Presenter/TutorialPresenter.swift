@@ -44,11 +44,11 @@ final class TutorialPresenter: PresenterType {
     
     func generateViewModel(from input: ControllerEvents) -> ViewModel {
         disposeBag.insert {
-            // MARK: Event sendings to receivers
+            // MARK: レシーバーにイベントを通知
             input.viewDidDisappear
                 .bind(to: tutorialEndEventReceiver ?? PublishRelay<Void>())
             
-            // MARK: Transitions
+            // MARK: 画面遷移
             Observable
                 .merge(
                     input.bottomButtonTapped

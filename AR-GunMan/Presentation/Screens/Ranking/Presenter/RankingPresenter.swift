@@ -35,8 +35,20 @@ final class RankingPresenter: PresenterType {
         let rankingLoadActivityTracker = ObservableActivityTracker()
         let errorTracker = ObservableErrorTracker()
         
+        let rankingList = input.viewWillAppear
+            .take(1)
+            .flatMapLatest({ [weak self] _ -> Observable<[RankingListItemModel]> in
+                guard let self = self else { return .empty() }
+                return self.getRankingUseCase
+                    .execute()
+                    .rankingList
+                    .trackActivity(rankingLoadActivityTracker)
+                    .trackError(errorTracker)
+                    .catchErrorJustComplete()
+            })
+        
         disposeBag.insert {
-            // MARK: Transitions
+            // MARK: 画面遷移
             Observable
                 .merge(
                     input.closeButtonTapped,
@@ -52,18 +64,6 @@ final class RankingPresenter: PresenterType {
                     self.navigator.showErrorAlert($0)
                 })
         }
-        
-        let rankingList = input.viewWillAppear
-            .take(1)
-            .flatMapLatest({ [weak self] _ -> Observable<[RankingListItemModel]> in
-                guard let self = self else { return .empty() }
-                return self.getRankingUseCase
-                    .execute()
-                    .rankingList
-                    .trackActivity(rankingLoadActivityTracker)
-                    .trackError(errorTracker)
-                    .catchErrorJustComplete()
-            })
         
         return ViewModel(
             rankingList: rankingList

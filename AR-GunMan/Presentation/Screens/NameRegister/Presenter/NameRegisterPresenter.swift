@@ -73,13 +73,13 @@ final class NameRegisterPresenter: PresenterType {
             .share()
         
         disposeBag.insert {
-            // MARK: Event sendings to receivers
+            // MARK: レシーバーにイベントを通知
             input.viewWillDisappear
                 .bind(to: eventReceiver?.onClose ?? PublishRelay<Void>())
             rankingRegistered
                 .bind(to: eventReceiver?.onRegisterComplete ?? PublishRelay<RankingListItemModel>())
             
-            // MARK: Transitions
+            // MARK: 画面遷移
             Observable
                 .merge(
                     input.noButtonTapped,

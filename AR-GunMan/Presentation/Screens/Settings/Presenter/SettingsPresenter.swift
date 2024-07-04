@@ -26,7 +26,7 @@ final class SettingsPresenter: PresenterType {
     
     func generateViewModel(from input: ControllerEvents) -> ViewModel {
         disposeBag.insert {
-            // MARK: Transitions
+            // MARK: 画面遷移
             input.worldRankingButtonTapped
                 .subscribe(onNext: { [weak self] _ in
                     guard let self = self else { return }

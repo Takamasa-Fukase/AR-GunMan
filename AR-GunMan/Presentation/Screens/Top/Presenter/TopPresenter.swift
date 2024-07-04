@@ -57,7 +57,7 @@ final class TopPresenter: PresenterType {
             .transform(input: .init(checkIsCameraAccessPermitted: startButtonIconChangeUseCaseOutput.buttonIconReverted))
         
         disposeBag.insert {
-            // MARK: Transitions
+            // MARK: 画面遷移
             Observable
                 .merge(
                     replayNecessityCheckUseCaseOutput.showGameForReplay,

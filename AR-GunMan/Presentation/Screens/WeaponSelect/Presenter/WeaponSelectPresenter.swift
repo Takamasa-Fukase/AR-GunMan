@@ -31,12 +31,12 @@ final class WeaponSelectPresenter: PresenterType {
     
     func generateViewModel(from input: ControllerEvents) -> ViewModel {
         disposeBag.insert {
-            // MARK: Event sendings to receivers
+            // MARK: レシーバーにイベントを通知
             input.itemSelected
                 .map({ WeaponType.allCases[$0] })
                 .bind(to: weaponSelectEventReceiver ?? PublishRelay<WeaponType>())
             
-            // MARK: Transitions
+            // MARK: 画面遷移
             input.itemSelected
                 .subscribe(onNext: { [weak self] _ in
                     guard let self = self else {return}
