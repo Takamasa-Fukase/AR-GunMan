@@ -9,6 +9,8 @@ import XCTest
 import RxSwift
 @testable import AR_GunMan
 
+/// RxBlockingもRxTestも使わずにXCTestデフォルトのexpectationのみでの書き方
+
 final class RegisterRankingUseCaseTests_with_expectation: XCTestCase {
     var disposeBag: DisposeBag!
     var rankingRepository: MockRankingRepository!
@@ -29,7 +31,7 @@ final class RegisterRankingUseCaseTests_with_expectation: XCTestCase {
     }
     
     func test_例外が発生せずに成功レスポンスを受け取れば成功() {
-        let expectation = expectation(description: "test_例外が発生せずに完了すれば成功")
+        let expectation = expectation(description: "test_例外が発生せずに成功レスポンスを受け取れば成功")
         
         rankingRepository.registerRankingResponse = Single.just(())
         
@@ -56,7 +58,7 @@ final class RegisterRankingUseCaseTests_with_expectation: XCTestCase {
     }
     
     func test_流したエラーを受け取れば成功() {
-        let expectation = expectation(description: "test_例外が発生せずに完了すれば成功")
+        let expectation = expectation(description: "test_流したエラーを受け取れば成功")
         
         rankingRepository.registerRankingResponse = Single.error(CustomError.manualError("テストエラー"))
         

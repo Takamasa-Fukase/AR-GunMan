@@ -10,6 +10,8 @@ import RxBlocking
 import RxSwift
 @testable import AR_GunMan
 
+/// RxBlockingを使った場合の書き方
+
 final class RegisterRankingUseCaseTests_with_RxBlocking: XCTestCase {
     var rankingRepository: MockRankingRepository!
     var registerRankingUseCase: RegisterRankingUseCase!

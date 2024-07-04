@@ -57,11 +57,43 @@ final class GetRankingUseCaseTests_with_expectation: XCTestCase {
         
         disposeBag.insert {
             getRankingUseCase.generateOutput().rankingList
-                .subscribe(onSuccess: { list in
-                    response = list
-                    XCTAssertEqual(response, expectedSortedResponse)
-                    expectation.fulfill()
-                })
+                .subscribe(
+                    onSuccess: { list in
+                        response = list
+                        XCTAssertEqual(response, expectedSortedResponse)
+                        expectation.fulfill()
+                    },
+                    onFailure: { _ in
+                        XCTFail()
+                    }
+                )
+        }
+        wait(for: [expectation], timeout: 10)
+    }
+    
+    func test_流したエラーを受け取れば成功() {
+        let expectation = expectation(description: "test_例外が発生せずに完了すれば成功")
+        
+        rankingRepository.getRankingResponse = Single.error(CustomError.manualError("テストエラー"))
+             
+        disposeBag.insert {
+            getRankingUseCase.generateOutput().rankingList
+                .subscribe(
+                    onSuccess: { _ in
+                        XCTFail()
+                    },
+                    onFailure: { error in
+                        guard let customError = error as? CustomError,
+                              case .manualError(let message) = customError else {
+                            XCTFail("エラーの種別が期待していたCustomErrorではないため、テストを失敗させました。")
+                            return
+                        }
+                        XCTAssertEqual(message, "テストエラー")
+                        
+                        expectation.fulfill()
+                    }
+                )
+            
         }
         wait(for: [expectation], timeout: 10)
     }
