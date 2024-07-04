@@ -26,6 +26,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // カメラ（ARで使用）へのアクセス許可をユーザーにリクエストするダイアログを表示
         AVCaptureDevice.requestAccess(for: .video) { _ in }
         
+        #if DEBUG
+            print("Running on DEBUG")
+        #else
+            print("Running on RELEASE")
+        #endif
+        
         return true
     }
     
