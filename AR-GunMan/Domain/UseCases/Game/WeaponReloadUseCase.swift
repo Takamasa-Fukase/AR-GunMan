@@ -19,7 +19,7 @@ struct WeaponReloadOutput {
 }
 
 protocol WeaponReloadUseCaseInterface {
-    func transform(input: WeaponReloadInput) -> WeaponReloadOutput
+    func generateOutput(from input: WeaponReloadInput) -> WeaponReloadOutput
 }
 
 final class WeaponReloadUseCase: WeaponReloadUseCaseInterface {
@@ -35,7 +35,7 @@ final class WeaponReloadUseCase: WeaponReloadUseCaseInterface {
         self.soundPlayer = soundPlayer
     }
     
-    func transform(input: WeaponReloadInput) -> WeaponReloadOutput {
+    func generateOutput(from input: WeaponReloadInput) -> WeaponReloadOutput {
         let isWeaponReloadingRelay = PublishRelay<Bool>()
 
         let weaponTypeAndBulletsCountAndReloadingFlag = input.weaponReloadingTrigger

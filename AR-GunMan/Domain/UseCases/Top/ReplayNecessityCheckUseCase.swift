@@ -17,7 +17,7 @@ struct ReplayNecessityCheckOutput {
 }
 
 protocol ReplayNecessityCheckUseCaseInterface {
-    func transform(input: ReplayNecessityCheckInput) -> ReplayNecessityCheckOutput
+    func generateOutput(from input: ReplayNecessityCheckInput) -> ReplayNecessityCheckOutput
 }
 
 final class ReplayNecessityCheckUseCase: ReplayNecessityCheckUseCaseInterface {
@@ -27,7 +27,7 @@ final class ReplayNecessityCheckUseCase: ReplayNecessityCheckUseCaseInterface {
         self.replayRepository = replayRepository
     }
     
-    func transform(input: ReplayNecessityCheckInput) -> ReplayNecessityCheckOutput {
+    func generateOutput(from input: ReplayNecessityCheckInput) -> ReplayNecessityCheckOutput {
         let showGameForReplay = input.checkNeedsReplay
             .flatMapLatest({ [weak self] _ -> Observable<Bool> in
                 guard let self = self else { return .empty() }

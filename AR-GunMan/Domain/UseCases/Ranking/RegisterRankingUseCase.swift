@@ -17,7 +17,7 @@ struct RegisterRankingOutput {
 }
 
 protocol RegisterRankingUseCaseInterface {
-    func execute(input: RegisterRankingInput) -> RegisterRankingOutput
+    func generateOutput(from input: RegisterRankingInput) -> RegisterRankingOutput
 }
 
 final class RegisterRankingUseCase: RegisterRankingUseCaseInterface {
@@ -27,7 +27,7 @@ final class RegisterRankingUseCase: RegisterRankingUseCaseInterface {
         self.rankingRepository = rankingRepository
     }
     
-    func execute(input: RegisterRankingInput) -> RegisterRankingOutput {
+    func generateOutput(from input: RegisterRankingInput) -> RegisterRankingOutput {
         // Entityに変換
         let ranking = Ranking(
             score: input.ranking.score,

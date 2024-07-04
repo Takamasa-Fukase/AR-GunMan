@@ -19,7 +19,7 @@ struct TargetHitHandlingOutput {
 }
 
 protocol TargetHitHandlingUseCaseInterface {
-    func transform(input: TargetHitHandlingInput) -> TargetHitHandlingOutput
+    func generateOutput(from input: TargetHitHandlingInput) -> TargetHitHandlingOutput
 }
 
 final class TargetHitHandlingUseCase: TargetHitHandlingUseCaseInterface {
@@ -30,7 +30,7 @@ final class TargetHitHandlingUseCase: TargetHitHandlingUseCaseInterface {
         self.soundPlayer = soundPlayer
     }
     
-    func transform(input: TargetHitHandlingInput) -> TargetHitHandlingOutput {
+    func generateOutput(from input: TargetHitHandlingInput) -> TargetHitHandlingOutput {
         // 🟥 Stateの更新指示<スコアを更新>
         let updateScore = input.targetHit
             .map({

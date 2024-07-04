@@ -18,7 +18,7 @@ struct WeaponFireOutput {
 }
 
 protocol WeaponFireUseCaseInterface {
-    func transform(input: WeaponFireInput) -> WeaponFireOutput
+    func generateOutput(from input: WeaponFireInput) -> WeaponFireOutput
 }
 
 final class WeaponFireUseCase: WeaponFireUseCaseInterface {
@@ -29,7 +29,7 @@ final class WeaponFireUseCase: WeaponFireUseCaseInterface {
         self.soundPlayer = soundPlayer
     }
     
-    func transform(input: WeaponFireInput) -> WeaponFireOutput {
+    func generateOutput(from input: WeaponFireInput) -> WeaponFireOutput {
         let updateBulletsCountRelay = PublishRelay<Int>()
         let weaponFiredRelay = PublishRelay<WeaponType>()
 

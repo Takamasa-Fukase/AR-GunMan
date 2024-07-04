@@ -18,7 +18,7 @@ struct TopPageButtonIconChangeOutput {
 }
 
 protocol TopPageButtonIconChangeUseCaseInterface {
-    func transform(input: TopPageButtonIconChangeInput) -> TopPageButtonIconChangeOutput
+    func generateOutput(from input: TopPageButtonIconChangeInput) -> TopPageButtonIconChangeOutput
 }
 
 final class TopPageButtonIconChangeUseCase: TopPageButtonIconChangeUseCaseInterface {
@@ -34,7 +34,7 @@ final class TopPageButtonIconChangeUseCase: TopPageButtonIconChangeUseCaseInterf
         self.soundPlayer = soundPlayer
     }
     
-    func transform(input: TopPageButtonIconChangeInput) -> TopPageButtonIconChangeOutput {
+    func generateOutput(from input: TopPageButtonIconChangeInput) -> TopPageButtonIconChangeOutput {
         let isButtonIconSwitchedRelay = PublishRelay<Bool>()
 
         let iconRevertWaitTimeEnded = input.buttonTapped

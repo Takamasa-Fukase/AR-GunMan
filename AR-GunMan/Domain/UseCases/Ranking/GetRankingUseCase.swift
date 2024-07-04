@@ -17,7 +17,7 @@ struct GetRankingOutput {
 }
 
 protocol GetRankingUseCaseInterface {
-    func execute() -> GetRankingOutput
+    func generateOutput() -> GetRankingOutput
 }
 
 final class GetRankingUseCase: GetRankingUseCaseInterface {
@@ -27,7 +27,7 @@ final class GetRankingUseCase: GetRankingUseCaseInterface {
         self.rankingRepository = rankingRepository
     }
     
-    func execute() -> GetRankingOutput {
+    func generateOutput() -> GetRankingOutput {
         let sortedRankingList = rankingRepository.getRanking()
             .map({ rankingList in
                 // スコアの高い順にソート

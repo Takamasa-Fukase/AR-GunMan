@@ -41,43 +41,43 @@ final class TopPresenter: PresenterType {
     }
     
     func generateViewModel(from input: ControllerEvents) -> ViewModel {
-        let replayNecessityCheckUseCaseOutput = replayNecessityCheckUseCase
-            .transform(input: .init(checkNeedsReplay: input.viewDidAppear))
+        let replayNecessityCheckOutput = replayNecessityCheckUseCase
+            .generateOutput(from: .init(checkNeedsReplay: input.viewDidAppear))
         
-        let startButtonIconChangeUseCaseOutput = buttonIconChangeUseCase
-            .transform(input: .init(buttonTapped: input.startButtonTapped))
+        let startButtonIconChangeOutput = buttonIconChangeUseCase
+            .generateOutput(from: .init(buttonTapped: input.startButtonTapped))
         
-        let settingsButtonIconChangeUseCaseOutput = buttonIconChangeUseCase
-            .transform(input: .init(buttonTapped: input.settingsButtonTapped))
+        let settingsButtonIconChangeOutput = buttonIconChangeUseCase
+            .generateOutput(from: .init(buttonTapped: input.settingsButtonTapped))
         
-        let howToPlayButtonIconChangeUseCaseOutput = buttonIconChangeUseCase
-            .transform(input: .init(buttonTapped: input.howToPlayButtonTapped))
+        let howToPlayButtonIconChangeOutput = buttonIconChangeUseCase
+            .generateOutput(from: .init(buttonTapped: input.howToPlayButtonTapped))
         
-        let cameraPermissionCheckUseCaseOutput = cameraPermissionCheckUseCase
-            .transform(input: .init(checkIsCameraAccessPermitted: startButtonIconChangeUseCaseOutput.buttonIconReverted))
+        let cameraPermissionCheckOutput = cameraPermissionCheckUseCase
+            .generateOutput(from: .init(checkIsCameraAccessPermitted: startButtonIconChangeOutput.buttonIconReverted))
         
         disposeBag.insert {
             // MARK: 画面遷移
             Observable
                 .merge(
-                    replayNecessityCheckUseCaseOutput.showGameForReplay,
-                    cameraPermissionCheckUseCaseOutput.showGame
+                    replayNecessityCheckOutput.showGameForReplay,
+                    cameraPermissionCheckOutput.showGame
                 )
                 .subscribe(onNext: { [weak self] _ in
                     guard let self = self else { return }
                     self.navigator.showGame()
                 })
-            cameraPermissionCheckUseCaseOutput.showCameraPermissionDescriptionAlert
+            cameraPermissionCheckOutput.showCameraPermissionDescriptionAlert
                 .subscribe(onNext: { [weak self] _ in
                     guard let self = self else { return }
                     self.navigator.showCameraPermissionDescriptionAlert()
                 })
-            settingsButtonIconChangeUseCaseOutput.buttonIconReverted
+            settingsButtonIconChangeOutput.buttonIconReverted
                 .subscribe(onNext: { [weak self] _ in
                     guard let self = self else { return }
                     self.navigator.showSettings()
                 })
-            howToPlayButtonIconChangeUseCaseOutput.buttonIconReverted
+            howToPlayButtonIconChangeOutput.buttonIconReverted
                 .subscribe(onNext: { [weak self] _ in
                     guard let self = self else { return }
                     self.navigator.showTutorial()
@@ -85,11 +85,11 @@ final class TopPresenter: PresenterType {
         }
         
         return ViewModel(
-            isStartButtonIconSwitched: startButtonIconChangeUseCaseOutput.isButtonIconSwitched
+            isStartButtonIconSwitched: startButtonIconChangeOutput.isButtonIconSwitched
                 .asDriverOnErrorJustComplete(),
-            isSettingsButtonIconSwitched: settingsButtonIconChangeUseCaseOutput.isButtonIconSwitched
+            isSettingsButtonIconSwitched: settingsButtonIconChangeOutput.isButtonIconSwitched
                 .asDriverOnErrorJustComplete(),
-            isHowToPlayButtonIconSwitched: howToPlayButtonIconChangeUseCaseOutput.isButtonIconSwitched
+            isHowToPlayButtonIconSwitched: howToPlayButtonIconChangeOutput.isButtonIconSwitched
                 .asDriverOnErrorJustComplete()
         )
     }

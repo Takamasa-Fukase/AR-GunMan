@@ -20,7 +20,7 @@ struct WeaponChangeOutput {
 }
 
 protocol WeaponChangeUseCaseInterface {
-    func transform(input: WeaponChangeInput) -> WeaponChangeOutput
+    func generateOutput(from input: WeaponChangeInput) -> WeaponChangeOutput
 }
 
 final class WeaponChangeUseCase: WeaponChangeUseCaseInterface {
@@ -31,7 +31,7 @@ final class WeaponChangeUseCase: WeaponChangeUseCaseInterface {
         self.soundPlayer = soundPlayer
     }
     
-    func transform(input: WeaponChangeInput) -> WeaponChangeOutput {
+    func generateOutput(from input: WeaponChangeInput) -> WeaponChangeOutput {
         // 🟥 Stateの更新指示<武器種別を変更>
         let updateWeaponType = input.weaponSelected
         

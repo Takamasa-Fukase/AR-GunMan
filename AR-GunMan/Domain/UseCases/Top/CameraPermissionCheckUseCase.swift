@@ -19,11 +19,11 @@ struct CameraPermissionCheckOutput {
 }
 
 protocol CameraPermissionCheckUseCaseInterface {
-    func transform(input: CameraPermissionCheckInput) -> CameraPermissionCheckOutput
+    func generateOutput(from input: CameraPermissionCheckInput) -> CameraPermissionCheckOutput
 }
 
 final class CameraPermissionCheckUseCase: CameraPermissionCheckUseCaseInterface {
-    func transform(input: CameraPermissionCheckInput) -> CameraPermissionCheckOutput {
+    func generateOutput(from input: CameraPermissionCheckInput) -> CameraPermissionCheckOutput {
         let isPermitted = input.checkIsCameraAccessPermitted
             .map({ AVCaptureDevice.authorizationStatus(for: .video) == .authorized })
             .share()

@@ -18,8 +18,8 @@ struct ReloadMotionDetectionCountOutput {
 }
 
 protocol ReloadMotionDetectionCountUseCaseInterface {
-    func transform(
-        input: ReloadMotionDetectionCountInput
+    func generateOutput(
+        from input: ReloadMotionDetectionCountInput
     ) -> ReloadMotionDetectionCountOutput
 }
 
@@ -31,8 +31,8 @@ final class ReloadMotionDetectionCountUseCase: ReloadMotionDetectionCountUseCase
         self.soundPlayer = soundPlayer
     }
     
-    func transform(
-        input: ReloadMotionDetectionCountInput
+    func generateOutput(
+        from input: ReloadMotionDetectionCountInput
     ) -> ReloadMotionDetectionCountOutput {
         // 🟥 Stateの更新指示<検知回数を+1>
         let updateCount = input.currentCountWhenReloadMotionDetected

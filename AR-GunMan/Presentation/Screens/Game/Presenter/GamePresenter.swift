@@ -125,7 +125,7 @@ final class GamePresenter: PresenterType {
                 .withLatestFrom(input.inputFromDeviceMotion.gyroUpdated) { ($0, $1) }
         )
         let weaponFireOutput = weaponFireUseCase
-            .transform(input: .init(
+            .generateOutput(from: .init(
                 weaponFiringTrigger: weaponFireTrigger.withLatestFrom(
                     Observable.combineLatest(
                         state.weaponTypeRelay.asObservable(),
@@ -154,7 +154,7 @@ final class GamePresenter: PresenterType {
                 )
             )
         let weaponReloadOutput = weaponReloadUseCase
-            .transform(input: .init(
+            .generateOutput(from: .init(
                 weaponReloadingTrigger: combinedWeaponReloadTrigger
                     .withLatestFrom(
                         state.bulletsCountRelay.asObservable()
@@ -167,7 +167,7 @@ final class GamePresenter: PresenterType {
         
         // 武器変更関連の処理をハンドリングし、結果のアクションを生成
         let weaponChangeOutput = weaponChangeUseCase
-            .transform(input: .init(
+            .generateOutput(from: .init(
                 weaponSelected: weaponSelectEventReceiver.asObservable()
             ))
         let refillBulletsCountForNewWeapon = weaponChangeOutput.refillBulletsCountForNewWeapon
@@ -181,7 +181,7 @@ final class GamePresenter: PresenterType {
             collisionOccurred: input.inputFromARContent.collisionOccurred
         )
         let targetHitHandlingOutput = targetHitHandlingUseCase
-            .transform(input: .init(
+            .generateOutput(from: .init(
                 targetHit: targetHit.withLatestFrom(
                     state.scoreRelay.asObservable()
                 ) { ($0.0, $0.1, $1) }
@@ -193,7 +193,7 @@ final class GamePresenter: PresenterType {
         
         // リロードモーション検知回数関連の処理をハンドリングし、結果のアクションを生成
         let reloadMotionDetectionCountOutput = reloadMotionDetectionCountUseCase
-            .transform(input: .init(
+            .generateOutput(from: .init(
                 currentCountWhenReloadMotionDetected: weaponReloadTrigger
                     .withLatestFrom(state.reloadingMotionDetectedCountRelay.asObservable())
             ))

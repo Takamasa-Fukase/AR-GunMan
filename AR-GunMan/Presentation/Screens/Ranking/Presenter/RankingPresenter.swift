@@ -40,7 +40,7 @@ final class RankingPresenter: PresenterType {
             .flatMapLatest({ [weak self] _ -> Observable<[RankingListItemModel]> in
                 guard let self = self else { return .empty() }
                 return self.getRankingUseCase
-                    .execute()
+                    .generateOutput()
                     .rankingList
                     .trackActivity(rankingLoadActivityTracker)
                     .trackError(errorTracker)

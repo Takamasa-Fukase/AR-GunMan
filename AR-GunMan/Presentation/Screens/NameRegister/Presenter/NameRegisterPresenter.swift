@@ -63,7 +63,7 @@ final class NameRegisterPresenter: PresenterType {
                 guard let self = self else { return .empty() }
                 let ranking = RankingListItemModel(score: self.score, userName: userName)
                 return self.registerRankingUseCase
-                    .execute(input: .init(ranking: ranking))
+                    .generateOutput(from: .init(ranking: ranking))
                     .registered
                     .map({ _ in ranking })
                     .trackActivity(registerActivityTracker)
