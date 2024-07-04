@@ -43,41 +43,55 @@ final class TopPresenter: PresenterType {
     func generateViewModel(from input: ControllerEvents) -> ViewModel {
         let replayNecessityCheckOutput = replayNecessityCheckUseCase
             .generateOutput(from: .init(checkNeedsReplay: input.viewDidAppear))
+        let showGameForReplay = replayNecessityCheckOutput.showGameForReplay
+        
         
         let startButtonIconChangeOutput = buttonIconChangeUseCase
             .generateOutput(from: .init(buttonTapped: input.startButtonTapped))
+        let startButtonIconReverted = startButtonIconChangeOutput.buttonIconReverted
+        let isStartButtonIconSwitched = startButtonIconChangeOutput.isButtonIconSwitched
+        
         
         let settingsButtonIconChangeOutput = buttonIconChangeUseCase
             .generateOutput(from: .init(buttonTapped: input.settingsButtonTapped))
+        let settingsButtonIconReverted = settingsButtonIconChangeOutput.buttonIconReverted
+        let isSettingsButtonIconSwitched = settingsButtonIconChangeOutput.isButtonIconSwitched
+        
         
         let howToPlayButtonIconChangeOutput = buttonIconChangeUseCase
             .generateOutput(from: .init(buttonTapped: input.howToPlayButtonTapped))
+        let howToPlayButtonIconReverted = howToPlayButtonIconChangeOutput.buttonIconReverted
+        let isHowToPlayButtonIconSwitched = howToPlayButtonIconChangeOutput.isButtonIconSwitched
+        
         
         let cameraPermissionCheckOutput = cameraPermissionCheckUseCase
-            .generateOutput(from: .init(checkIsCameraAccessPermitted: startButtonIconChangeOutput.buttonIconReverted))
+            .generateOutput(from: .init(checkIsCameraAccessPermitted: startButtonIconReverted))
+        let showGame = cameraPermissionCheckOutput.showGame
+        let showCameraPermissionDescriptionAlert = cameraPermissionCheckOutput.showCameraPermissionDescriptionAlert
+        
         
         disposeBag.insert {
             // MARK: 画面遷移
             Observable
                 .merge(
-                    replayNecessityCheckOutput.showGameForReplay,
-                    cameraPermissionCheckOutput.showGame
+                    showGameForReplay,
+                    showGame
                 )
                 .subscribe(onNext: { [weak self] _ in
                     guard let self = self else { return }
                     self.navigator.showGame()
                 })
-            cameraPermissionCheckOutput.showCameraPermissionDescriptionAlert
+            showCameraPermissionDescriptionAlert
                 .subscribe(onNext: { [weak self] _ in
                     guard let self = self else { return }
                     self.navigator.showCameraPermissionDescriptionAlert()
                 })
-            settingsButtonIconChangeOutput.buttonIconReverted
+            settingsButtonIconReverted
                 .subscribe(onNext: { [weak self] _ in
                     guard let self = self else { return }
                     self.navigator.showSettings()
                 })
-            howToPlayButtonIconChangeOutput.buttonIconReverted
+            howToPlayButtonIconReverted
                 .subscribe(onNext: { [weak self] _ in
                     guard let self = self else { return }
                     self.navigator.showTutorial()
@@ -85,11 +99,11 @@ final class TopPresenter: PresenterType {
         }
         
         return ViewModel(
-            isStartButtonIconSwitched: startButtonIconChangeOutput.isButtonIconSwitched
+            isStartButtonIconSwitched: isStartButtonIconSwitched
                 .asDriverOnErrorJustComplete(),
-            isSettingsButtonIconSwitched: settingsButtonIconChangeOutput.isButtonIconSwitched
+            isSettingsButtonIconSwitched: isSettingsButtonIconSwitched
                 .asDriverOnErrorJustComplete(),
-            isHowToPlayButtonIconSwitched: howToPlayButtonIconChangeOutput.isButtonIconSwitched
+            isHowToPlayButtonIconSwitched: isHowToPlayButtonIconSwitched
                 .asDriverOnErrorJustComplete()
         )
     }
