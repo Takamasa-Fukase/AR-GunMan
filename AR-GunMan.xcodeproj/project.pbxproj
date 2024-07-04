@@ -378,7 +378,7 @@
 		59940BAB2552FAA600EC20C1 /* NameRegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameRegisterViewController.swift; sourceTree = "<group>"; };
 		599450FF256AD55900560202 /* TutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 		59A01133255AF580008996E3 /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
-		59D2D4D52552DE66006DDB70 /* AR-GunMan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AR-GunMan.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		59D2D4D52552DE66006DDB70 /* AR-GunMan Dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AR-GunMan Dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		59D2D4D82552DE66006DDB70 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		59D2D4E42552DE67006DDB70 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		59D2D4E62552DE67006DDB70 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -655,7 +655,7 @@
 		59D2D4D62552DE66006DDB70 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				59D2D4D52552DE66006DDB70 /* AR-GunMan.app */,
+				59D2D4D52552DE66006DDB70 /* AR-GunMan Dev.app */,
 				59D2D4EB2552DE67006DDB70 /* AR-GunManTests.xctest */,
 				59D2D4F62552DE67006DDB70 /* AR-GunManUITests.xctest */,
 			);
@@ -1456,7 +1456,7 @@
 			);
 			name = "AR-GunMan";
 			productName = "AR-GunMan";
-			productReference = 59D2D4D52552DE66006DDB70 /* AR-GunMan.app */;
+			productReference = 59D2D4D52552DE66006DDB70 /* AR-GunMan Dev.app */;
 			productType = "com.apple.product-type.application";
 		};
 		59D2D4EA2552DE67006DDB70 /* AR-GunManTests */ = {
@@ -2094,6 +2094,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DISPLAY_NAME_SUFFIX = Dev;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -2155,6 +2156,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DISPLAY_NAME_SUFFIX = "";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -2194,7 +2196,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.takamasafuksae.AR-GunMan";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "$(TARGET_NAME) ${DISPLAY_NAME_SUFFIX}";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "AR-GunMan_Development";
 				SWIFT_VERSION = 5.0;
@@ -2221,7 +2223,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.takamasafuksae.AR-GunMan";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "$(TARGET_NAME) ${DISPLAY_NAME_SUFFIX}";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "AR-GunMan_Development";
 				SWIFT_VERSION = 5.0;
