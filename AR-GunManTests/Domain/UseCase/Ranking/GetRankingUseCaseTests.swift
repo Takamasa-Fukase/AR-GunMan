@@ -63,7 +63,7 @@ final class GetRankingUseCaseTests: XCTestCase {
         XCTAssertEqual(rankingListResponse, expectedSortedResponse)
     }
     
-    func test_エラーを受け取れば成功() {
+    func test_流したエラーを受け取れば成功() {
         rankingRepository.getRankingResponse = Single.error(CustomError.manualError("テストエラー"))
         
         let rankingListResponse = getRankingUseCase.generateOutput().rankingList.toBlocking().materialize()
