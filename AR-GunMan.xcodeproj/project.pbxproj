@@ -2063,6 +2063,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_SUFFIX = .dev;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -2125,6 +2126,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_SUFFIX = "";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -2195,10 +2197,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.takamasafuksae.AR-GunMan";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.takamasafuksae.AR-GunMan${BUNDLE_SUFFIX}";
 				PRODUCT_NAME = "$(TARGET_NAME) ${DISPLAY_NAME_SUFFIX}";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "AR-GunMan_Development";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "AR-GunMan_Development_dev";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -2222,7 +2224,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.takamasafuksae.AR-GunMan";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.takamasafuksae.AR-GunMan${BUNDLE_SUFFIX}";
 				PRODUCT_NAME = "$(TARGET_NAME) ${DISPLAY_NAME_SUFFIX}";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "AR-GunMan_Development";
