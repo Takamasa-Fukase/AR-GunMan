@@ -52,7 +52,7 @@ final class WeaponReloadUseCaseTests: XCTestCase {
             weaponReloadingTrigger: weaponReloadingTrigger.asObservable(),
             isWeaponReloading: isWeaponReloadingRelay.asObservable()
         )
-        let output = weaponReloadUseCase.transform(input: input)
+        let output = weaponReloadUseCase.generateOutput(from: input)
         let updateBulletsCountObserver = scheduler.createObserver(Int.self)
         let updateWeaponReloadingFlagObserver = scheduler.createObserver(Bool.self)
 

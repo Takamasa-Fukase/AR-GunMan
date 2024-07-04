@@ -44,7 +44,7 @@ final class WeaponFireUseCaseTests: XCTestCase {
         let input = WeaponFireInput(
             weaponFiringTrigger: allWeaponFireTriggers.asObservable()
         )
-        let output = weaponFireUseCase.transform(input: input)
+        let output = weaponFireUseCase.generateOutput(from: input)
         let updateBulletsCountObserver = scheduler.createObserver(Int.self)
         let weaponFiredObserver = scheduler.createObserver(WeaponType.self)
         disposeBag.insert {
@@ -82,7 +82,7 @@ final class WeaponFireUseCaseTests: XCTestCase {
         let input = WeaponFireInput(
             weaponFiringTrigger: allWeaponFireTriggers.asObservable()
         )
-        let output = weaponFireUseCase.transform(input: input)
+        let output = weaponFireUseCase.generateOutput(from: input)
         let updateBulletsCountObserver = scheduler.createObserver(Int.self)
         let weaponFiredObserver = scheduler.createObserver(WeaponType.self)
         disposeBag.insert {
