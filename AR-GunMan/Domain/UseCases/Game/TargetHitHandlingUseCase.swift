@@ -31,6 +31,7 @@ final class TargetHitHandlingUseCase: TargetHitHandlingUseCaseInterface {
     }
     
     func transform(input: TargetHitHandlingInput) -> TargetHitHandlingOutput {
+        // 🟥 Stateの更新指示<スコアを更新>
         let updateScore = input.targetHit
             .map({
                 return ScoreCalculator.getUpdatedScoreAfterHit(
@@ -39,9 +40,11 @@ final class TargetHitHandlingUseCase: TargetHitHandlingUseCaseInterface {
                 )
             })
         
+        // 衝突したオブジェクトの削除指示
         let removeContactedTargetAndBullet = input.targetHit
             .map({ (targetId: $0.collisionInfo.firstObjectInfo.id, bulletId: $0.collisionInfo.secondObjectInfo.id) })
 
+        // 衝突地点に特殊効果の表示指示
         let renderTargetHitParticleToContactPoint = input.targetHit
             .filter({ $0.weaponType == .bazooka })
             .map({ (weaponType: $0.weaponType, contactPoint: $0.collisionInfo.contactPoint) })
@@ -50,6 +53,7 @@ final class TargetHitHandlingUseCase: TargetHitHandlingUseCaseInterface {
             input.targetHit
                 .subscribe(onNext: { [weak self] in
                     guard let self = self else {return}
+                    // 🟨 音声の再生<的へのヒット音声>
                     self.soundPlayer.play($0.weaponType.hitSound)
                 })
         }

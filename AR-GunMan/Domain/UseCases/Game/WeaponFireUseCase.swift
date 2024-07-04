@@ -45,13 +45,17 @@ final class WeaponFireUseCase: WeaponFireUseCaseInterface {
                 .filter({ $0.weaponType.reloadType == .manual })
                 .subscribe(onNext: { [weak self] _ in
                     guard let self = self else {return}
+                    // 🟨 音声の再生<弾切れ音声>
                     self.soundPlayer.play(.pistolOutBullets)
                 })
             fire
                 .subscribe(onNext: { [weak self] in
                     guard let self = self else {return}
+                    // 🟨 音声の再生<武器発射音声>
                     self.soundPlayer.play($0.weaponType.firingSound)
+                    // 🟥 Stateの更新指示<弾数を現在の値から-1>
                     updateBulletsCountRelay.accept($0.bulletsCount - 1)
+                    // 武器が発射されたことを通知
                     weaponFiredRelay.accept($0.weaponType)
                 })
         }

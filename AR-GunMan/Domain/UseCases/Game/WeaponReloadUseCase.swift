@@ -68,6 +68,7 @@ final class WeaponReloadUseCase: WeaponReloadUseCaseInterface {
             .map({ $0.weaponType })
             .share()
         
+        // 🟥 Stateの更新指示<弾数をMaxに補充>
         let updateBulletsCount = weaponReloadWaitTimeEnded
             .map({ $0.bulletsCapacity })
         
@@ -75,11 +76,14 @@ final class WeaponReloadUseCase: WeaponReloadUseCaseInterface {
             reload
                 .subscribe(onNext: { [weak self] in
                     guard let self = self else {return}
+                    // 🟨 音声の再生<リロード音声>
                     self.soundPlayer.play($0.weaponType.reloadingSound)
+                    // 🟥 Stateの更新指示<リロード中フラグをtrueに変更>
                     isWeaponReloadingRelay.accept(true)
                 })
             weaponReloadWaitTimeEnded
                 .subscribe(onNext: { _ in
+                    // 🟥 Stateの更新指示<リロード中フラグをfalseに変更>
                     isWeaponReloadingRelay.accept(false)
                 })
         }
