@@ -7,11 +7,6 @@
 
 import RxSwift
 
-struct RankingListItemModel {
-    let score: Double
-    let userName: String
-}
-
 struct GetRankingOutput {
     let rankingList: Single<[RankingListItemModel]>
 }
