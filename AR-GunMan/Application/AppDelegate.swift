@@ -13,7 +13,7 @@ import AVFoundation
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        FirebaseApp.configure()
+        setupFirebaseApp()
         Messaging.messaging().delegate = self
         UNUserNotificationCenter.current().delegate = self
         // プッシュ通知の送信許可をユーザーにリクエストするダイアログを表示
@@ -26,18 +26,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // カメラ（ARで使用）へのアクセス許可をユーザーにリクエストするダイアログを表示
         AVCaptureDevice.requestAccess(for: .video) { _ in }
         
-        #if DEBUG
-            print("Running on DEBUG")
-        #else
-            print("Running on RELEASE")
-        #endif
-        
         return true
     }
     
     // MARK: UISceneSession Lifecycle
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
+    }
+    
+    private func setupFirebaseApp() {
+        let configFileName: String = {
+            #if DEBUG
+                return "GoogleService-Info.dev"
+            #else
+                return "GoogleService-Info"
+            #endif
+        }()
+        guard let filePath = Bundle.main.path(forResource: configFileName, ofType: "plist"),
+              let options = FirebaseOptions(contentsOfFile: filePath) else {
+            fatalError("FirebaseInfoPlist file was not found")
+        }
+        FirebaseApp.configure(options: options)
     }
 }
 

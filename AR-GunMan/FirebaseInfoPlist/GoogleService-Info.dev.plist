@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyB0H1m5GK-v7Oe2B093MwIN987SPpBHc9A</string>
+	<key>GCM_SENDER_ID</key>
+	<string>215490131481</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.takamasafuksae.AR-GunMan.dev</string>
+	<key>PROJECT_ID</key>
+	<string>ar-gunman-dev</string>
+	<key>STORAGE_BUCKET</key>
+	<string>ar-gunman-dev.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:215490131481:ios:96ed532f4b4974be681c88</string>
+</dict>
+</plist>

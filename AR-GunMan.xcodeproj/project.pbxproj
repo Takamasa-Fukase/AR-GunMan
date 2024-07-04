@@ -278,6 +278,7 @@
 		BC92C85A297348D500E49BD5 /* ScoreCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C859297348D500E49BD5 /* ScoreCalculator.swift */; };
 		BC92C85E297420CD00E49BD5 /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C85D297420CD00E49BD5 /* UserDefaults+Extension.swift */; };
 		BC92C8602975A2A800E49BD5 /* UIViewController+RxLifeCycleEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C85F2975A2A800E49BD5 /* UIViewController+RxLifeCycleEvents.swift */; };
+		BCB93BA92C36DA9800DBFC46 /* GoogleService-Info.dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = BCB93BA82C36DA9800DBFC46 /* GoogleService-Info.dev.plist */; };
 		BCBE79952C341D9D006683A3 /* TopAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBE79942C341D9D006683A3 /* TopAssembler.swift */; };
 		BCBE79962C341D9D006683A3 /* TopAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBE79942C341D9D006683A3 /* TopAssembler.swift */; };
 		BCBE799D2C3429D4006683A3 /* SettingsAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBE799C2C3429D4006683A3 /* SettingsAssembler.swift */; };
@@ -499,6 +500,7 @@
 		BC92C859297348D500E49BD5 /* ScoreCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCalculator.swift; sourceTree = "<group>"; };
 		BC92C85D297420CD00E49BD5 /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
 		BC92C85F2975A2A800E49BD5 /* UIViewController+RxLifeCycleEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+RxLifeCycleEvents.swift"; sourceTree = "<group>"; };
+		BCB93BA82C36DA9800DBFC46 /* GoogleService-Info.dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.dev.plist"; sourceTree = "<group>"; };
 		BCBE79942C341D9D006683A3 /* TopAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopAssembler.swift; sourceTree = "<group>"; };
 		BCBE799C2C3429D4006683A3 /* SettingsAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAssembler.swift; sourceTree = "<group>"; };
 		BCBE79A02C342A26006683A3 /* TutorialAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialAssembler.swift; sourceTree = "<group>"; };
@@ -673,11 +675,11 @@
 				677DF1EC27A71086007512F6 /* Utilities */,
 				5952F64A25EA104D00ADB85B /* Constants */,
 				59D2D5462552E2CC006DDB70 /* Resources */,
+				BCB93BAA2C36DE7D00DBFC46 /* FirebaseInfoPlist */,
 				59D2D5412552E24D006DDB70 /* art.scnassets */,
 				59D2D5692552E31D006DDB70 /* Assets.xcassets */,
 				59D2D4E32552DE67006DDB70 /* LaunchScreen.storyboard */,
 				59D2D4E62552DE67006DDB70 /* Info.plist */,
-				59940B872552F54900EC20C1 /* GoogleService-Info.plist */,
 			);
 			path = "AR-GunMan";
 			sourceTree = "<group>";
@@ -1293,6 +1295,15 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
+		BCB93BAA2C36DE7D00DBFC46 /* FirebaseInfoPlist */ = {
+			isa = PBXGroup;
+			children = (
+				59940B872552F54900EC20C1 /* GoogleService-Info.plist */,
+				BCB93BA82C36DA9800DBFC46 /* GoogleService-Info.dev.plist */,
+			);
+			path = FirebaseInfoPlist;
+			sourceTree = "<group>";
+		};
 		BCBE79932C341D70006683A3 /* Assembler */ = {
 			isa = PBXGroup;
 			children = (
@@ -1568,6 +1579,7 @@
 				BC2EBB9D2C2A994100EB1400 /* ResultContentView.xib in Resources */,
 				59D2D5422552E24D006DDB70 /* art.scnassets in Resources */,
 				59484C6B25657E1C00F9C6A8 /* endWhistle.mp3 in Resources */,
+				BCB93BA92C36DA9800DBFC46 /* GoogleService-Info.dev.plist in Resources */,
 				59940B882552F54900EC20C1 /* GoogleService-Info.plist in Resources */,
 				59484C662565796400F9C6A8 /* bazookaReload.mp3 in Resources */,
 				59D2D55E2552E2CC006DDB70 /* headShot.mp3 in Resources */,
