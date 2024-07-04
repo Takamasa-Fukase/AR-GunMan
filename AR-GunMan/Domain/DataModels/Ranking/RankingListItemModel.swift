@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct RankingListItemModel {
+struct RankingListItemModel: Equatable {
     let score: Double
     let userName: String
 }

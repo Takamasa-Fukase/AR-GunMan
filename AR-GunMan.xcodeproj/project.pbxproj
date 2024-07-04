@@ -304,6 +304,9 @@
 		BCBE79C52C35589F006683A3 /* TargetHitFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBE79C32C35589F006683A3 /* TargetHitFilter.swift */; };
 		BCBE79CD2C363274006683A3 /* GameAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBE79CC2C363274006683A3 /* GameAssembler.swift */; };
 		BCBE79CE2C363274006683A3 /* GameAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBE79CC2C363274006683A3 /* GameAssembler.swift */; };
+		BCBE79D22C365923006683A3 /* GetRankingUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBE79D12C365923006683A3 /* GetRankingUseCaseTests.swift */; };
+		BCBE79D52C36597C006683A3 /* RankingListItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBE79D42C36597C006683A3 /* RankingListItemModel.swift */; };
+		BCBE79D62C36597C006683A3 /* RankingListItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBE79D42C36597C006683A3 /* RankingListItemModel.swift */; };
 		BCC512C22C15B5F000D77305 /* Extension+SCNNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC512C12C15B5F000D77305 /* Extension+SCNNode.swift */; };
 		BCC512C32C15B5F000D77305 /* Extension+SCNNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC512C12C15B5F000D77305 /* Extension+SCNNode.swift */; };
 		BCC512C62C15CF7300D77305 /* WeaponTypeConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC512C52C15CF7300D77305 /* WeaponTypeConst.swift */; };
@@ -506,6 +509,8 @@
 		BCBE79C02C3557E8006683A3 /* WeaponAutoReloadFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponAutoReloadFilter.swift; sourceTree = "<group>"; };
 		BCBE79C32C35589F006683A3 /* TargetHitFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetHitFilter.swift; sourceTree = "<group>"; };
 		BCBE79CC2C363274006683A3 /* GameAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameAssembler.swift; sourceTree = "<group>"; };
+		BCBE79D12C365923006683A3 /* GetRankingUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetRankingUseCaseTests.swift; sourceTree = "<group>"; };
+		BCBE79D42C36597C006683A3 /* RankingListItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingListItemModel.swift; sourceTree = "<group>"; };
 		BCC512C12C15B5F000D77305 /* Extension+SCNNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+SCNNode.swift"; sourceTree = "<group>"; };
 		BCC512C52C15CF7300D77305 /* WeaponTypeConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponTypeConst.swift; sourceTree = "<group>"; };
 		BCC512C92C15CFBF00D77305 /* ParticleSystemType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticleSystemType.swift; sourceTree = "<group>"; };
@@ -1142,7 +1147,6 @@
 			isa = PBXGroup;
 			children = (
 				BC7F6FD62C2C04FF00480833 /* Screens */,
-				BC7F6FE52C2C1BF200480833 /* Common */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -1246,6 +1250,7 @@
 			children = (
 				BC7F6FE12C2C056700480833 /* Top */,
 				BC7F6FE22C2C056B00480833 /* Game */,
+				BCBE79D02C36590C006683A3 /* Ranking */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -1264,13 +1269,6 @@
 				BC7F6FE62C2C1EDA00480833 /* WeaponReloadUseCaseTests.swift */,
 			);
 			path = Game;
-			sourceTree = "<group>";
-		};
-		BC7F6FE52C2C1BF200480833 /* Common */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Common;
 			sourceTree = "<group>";
 		};
 		BC7F6FEA2C2D400700480833 /* Mock */ = {
@@ -1454,6 +1452,22 @@
 			path = Game;
 			sourceTree = "<group>";
 		};
+		BCBE79D02C36590C006683A3 /* Ranking */ = {
+			isa = PBXGroup;
+			children = (
+				BCBE79D12C365923006683A3 /* GetRankingUseCaseTests.swift */,
+			);
+			path = Ranking;
+			sourceTree = "<group>";
+		};
+		BCBE79D32C36596A006683A3 /* Ranking */ = {
+			isa = PBXGroup;
+			children = (
+				BCBE79D42C36597C006683A3 /* RankingListItemModel.swift */,
+			);
+			path = Ranking;
+			sourceTree = "<group>";
+		};
 		BCC512CD2C15DD6000D77305 /* Enums */ = {
 			isa = PBXGroup;
 			children = (
@@ -1484,6 +1498,7 @@
 			isa = PBXGroup;
 			children = (
 				BC7F700C2C2E8A1E00480833 /* Game */,
+				BCBE79D32C36596A006683A3 /* Ranking */,
 			);
 			path = DataModels;
 			sourceTree = "<group>";
@@ -1867,6 +1882,7 @@
 				BCD9675E2979E55400E33587 /* UIImageView+Extension.swift in Sources */,
 				BC2EBB812C2A6F7800EB1400 /* NameRegisterPresenter.swift in Sources */,
 				BC0BBE442C1745EB00789349 /* UIViewController+PanModalPresentable.swift in Sources */,
+				BCBE79D52C36597C006683A3 /* RankingListItemModel.swift in Sources */,
 				BC7F70012C2E5E1C00480833 /* TutorialRepositoryInterface.swift in Sources */,
 				BC0BBE402C16D31800789349 /* NSObject+Extension.swift in Sources */,
 				BC92C854297061FE00E49BD5 /* WeaponType.swift in Sources */,
@@ -2027,6 +2043,7 @@
 				BCBE79A62C342AC5006683A3 /* WeaponSelectAssembler.swift in Sources */,
 				BCBE79AE2C342C0E006683A3 /* NameRegisterAssembler.swift in Sources */,
 				8606461F2BF5996700906DA0 /* APIConst.swift in Sources */,
+				BCBE79D22C365923006683A3 /* GetRankingUseCaseTests.swift in Sources */,
 				BC03F9FD2C21CB2A00E27C01 /* WeaponChangeUseCase.swift in Sources */,
 				8606461B2BF5996700906DA0 /* SettingsConst.swift in Sources */,
 				BC482DFD2C1B09C900FAF079 /* UIView+Constraint.swift in Sources */,
@@ -2034,6 +2051,7 @@
 				8606466E2BF599BC00906DA0 /* WeaponSelectCell.swift in Sources */,
 				BC22E0262C1C9B8800C59BAB /* UIView+UIViewController+BackgroundViewTapTrackable.swift in Sources */,
 				BC03F9D72C215AC400E27C01 /* ReplayNecessityCheckUseCase.swift in Sources */,
+				BCBE79D62C36597C006683A3 /* RankingListItemModel.swift in Sources */,
 				BCD1C2582C06B60C008975EB /* CompositeCalculator.swift in Sources */,
 				BC03FA122C21CB7900E27C01 /* ReloadMotionDetectionCountUseCase.swift in Sources */,
 				860645F52BF5994900906DA0 /* Storyboard+Extension.swift in Sources */,
