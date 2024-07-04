@@ -1,5 +1,5 @@
 //
-//  GetRankingUseCaseTests.swift
+//  GetRankingUseCaseTests_with_RxBlocking.swift
 //  AR-GunManTests
 //
 //  Created by ウルトラ深瀬 on 4/7/24.
@@ -10,7 +10,7 @@ import RxBlocking
 import RxSwift
 @testable import AR_GunMan
 
-final class GetRankingUseCaseTests: XCTestCase {
+final class GetRankingUseCaseTests_with_RxBlocking: XCTestCase {
     var disposeBag: DisposeBag!
     var rankingRepository: MockRankingRepository!
     var getRankingUseCase: GetRankingUseCase!
