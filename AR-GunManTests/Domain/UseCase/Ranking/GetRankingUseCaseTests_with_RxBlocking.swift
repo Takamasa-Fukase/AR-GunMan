@@ -13,20 +13,18 @@ import RxSwift
 /// RxBlockingを使った場合の書き方
 
 final class GetRankingUseCaseTests_with_RxBlocking: XCTestCase {
-    var disposeBag: DisposeBag!
     var rankingRepository: MockRankingRepository!
     var getRankingUseCase: GetRankingUseCase!
     
     override func setUp() {
         super.setUp()
-        disposeBag = DisposeBag()
         // MEMO: RxBlockingを使う時はRepositoryでTestSchedulerを使うとテストが終了しないので渡さない
         rankingRepository = MockRankingRepository()
         getRankingUseCase = GetRankingUseCase(rankingRepository: rankingRepository)
     }
     
     override func tearDown() {
-        disposeBag = nil
+        super.tearDown()
         rankingRepository = nil
         getRankingUseCase = nil
     }

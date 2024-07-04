@@ -32,6 +32,7 @@ final class GetRankingUseCaseTests_with_RxTest: XCTestCase {
     }
     
     override func tearDown() {
+        super.tearDown()
         scheduler = nil
         disposeBag = nil
         rankingRepository = nil

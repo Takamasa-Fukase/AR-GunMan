@@ -35,6 +35,7 @@ final class WeaponReloadUseCaseTests: XCTestCase {
     }
     
     override func tearDown() {
+        super.tearDown()
         scheduler = nil
         disposeBag = nil
         timerStreamCreator = nil

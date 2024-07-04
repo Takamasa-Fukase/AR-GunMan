@@ -30,6 +30,7 @@ final class WeaponFireUseCaseTests: XCTestCase {
     }
     
     override func tearDown() {
+        super.tearDown()
         scheduler = nil
         disposeBag = nil
         soundPlayer = nil
