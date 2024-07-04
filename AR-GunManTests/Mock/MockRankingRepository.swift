@@ -10,22 +10,25 @@ import RxSwift
 final class MockRankingRepository: RankingRepositoryInterface {
     private let scheduler: SchedulerType
     
+    var getRankingResponse = Single.just(
+        Array<Int>(1...100).map({ index in
+            return Ranking(score: Double(101 - index), userName: "ダミーユーザー\(index)")
+        })
+    )
+    var registerRankingResponse = Single.just(())
+    var responseDelayTime: RxTimeInterval = .milliseconds(1500)
+    
     init(scheduler: SchedulerType = MainScheduler.instance) {
         self.scheduler = scheduler
     }
     
     func getRanking() -> Single<[Ranking]> {
-        let dummyRankingList = Array<Int>(1...100).map({ index in
-            return Ranking(score: Double(101 - index), userName: "ダミーユーザー\(index)")
-        })
-        return Single
-            .just(dummyRankingList)
-            .delay(.milliseconds(1500), scheduler: scheduler)
+        return getRankingResponse
+            .delay(responseDelayTime, scheduler: scheduler)
     }
     
     func registerRanking(_ ranking: Ranking) -> Single<Void> {
-        return Single
-            .just(())
-            .delay(.milliseconds(1500), scheduler: scheduler)
+        return registerRankingResponse
+            .delay(responseDelayTime, scheduler: scheduler)
     }
 }
