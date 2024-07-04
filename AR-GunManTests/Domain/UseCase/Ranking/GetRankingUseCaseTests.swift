@@ -6,25 +6,17 @@
 //
 
 import XCTest
-import RxTest
 import RxBlocking
 import RxSwift
-import RxCocoa
 @testable import AR_GunMan
 
 final class GetRankingUseCaseTests: XCTestCase {
-    var scheduler: TestScheduler!
     var disposeBag: DisposeBag!
     var rankingRepository: MockRankingRepository!
     var getRankingUseCase: GetRankingUseCase!
     
     override func setUp() {
         super.setUp()
-        scheduler = TestScheduler(
-            initialClock: 0,
-            // 仮想時間をmillisecondsにする
-            resolution: 0.001
-        )
         disposeBag = DisposeBag()
         // MEMO: RxBlockingを使う時はRepositoryでTestSchedulerを使うとテストが終了しないので渡さない
         rankingRepository = MockRankingRepository()
@@ -32,7 +24,6 @@ final class GetRankingUseCaseTests: XCTestCase {
     }
     
     override func tearDown() {
-        scheduler = nil
         disposeBag = nil
         rankingRepository = nil
         getRankingUseCase = nil
