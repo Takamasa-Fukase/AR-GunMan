@@ -62,4 +62,22 @@ final class GetRankingUseCaseTests: XCTestCase {
         
         XCTAssertEqual(rankingListResponse, expectedSortedResponse)
     }
+    
+    func test_エラーを受け取れば成功() {
+        rankingRepository.getRankingResponse = Single.error(CustomError.manualError("テストエラー"))
+        
+        let rankingListResponse = getRankingUseCase.generateOutput().rankingList.toBlocking().materialize()
+        
+        switch rankingListResponse {
+        case .completed:
+            XCTFail("エラーが発生するべき箇所で発生しなかったためテストを失敗させました。")
+        case .failed(_, let error):
+            guard let customError = error as? CustomError,
+                  case .manualError(let message) = customError else {
+                XCTFail("エラーの種別が期待していたCustomErrorではないため、テストを失敗させました。")
+                return
+            }
+            XCTAssertEqual(message, "テストエラー")
+        }
+    }
 }
