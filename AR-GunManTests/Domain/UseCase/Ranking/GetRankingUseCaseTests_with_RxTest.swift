@@ -10,6 +10,8 @@ import RxTest
 import RxSwift
 @testable import AR_GunMan
 
+/// RxBlockingを使わずにRxTestのみでの書き方
+
 final class GetRankingUseCaseTests_with_RxTest: XCTestCase {
     var scheduler: TestScheduler!
     var disposeBag: DisposeBag!
