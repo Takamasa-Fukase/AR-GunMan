@@ -1080,6 +1080,7 @@
 				BC03FA0A2C21CB6900E27C01 /* GameTimerHandlingUseCase.swift */,
 				BC03F9F52C21CB1400E27C01 /* FireMotionFilterUseCase.swift */,
 				BC03F9F82C21CB1E00E27C01 /* ReloadMotionFilterUseCase.swift */,
+				BC03F9EF2C21CAFF00E27C01 /* WeaponAutoReloadFilterUseCase.swift */,
 				BC03F9FE2C21CB4500E27C01 /* TargetHitFilterUseCase.swift */,
 				BC03FA0D2C21CB7100E27C01 /* GameTimerEndHandlingUseCase.swift */,
 			);
@@ -1496,12 +1497,11 @@
 			isa = PBXGroup;
 			children = (
 				BCBE79B62C3518FF006683A3 /* GameScenarioHandlingUseCase.swift */,
-				BC03FA102C21CB7900E27C01 /* ReloadMotionDetectionCountUseCase.swift */,
 				BC03F9EC2C21CAF200E27C01 /* WeaponFireUseCase.swift */,
 				BC03F9F22C21CB0B00E27C01 /* WeaponReloadUseCase.swift */,
-				BC03F9EF2C21CAFF00E27C01 /* WeaponAutoReloadFilterUseCase.swift */,
 				BC03F9FB2C21CB2A00E27C01 /* WeaponChangeUseCase.swift */,
 				BC03FA012C21CB4F00E27C01 /* TargetHitHandlingUseCase.swift */,
+				BC03FA102C21CB7900E27C01 /* ReloadMotionDetectionCountUseCase.swift */,
 			);
 			path = Game2;
 			sourceTree = "<group>";
