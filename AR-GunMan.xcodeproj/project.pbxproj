@@ -309,6 +309,7 @@
 		BCBE79D62C36597C006683A3 /* RankingListItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBE79D42C36597C006683A3 /* RankingListItemModel.swift */; };
 		BCBE79DB2C367477006683A3 /* GetRankingUseCaseTests_with_RxTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBE79DA2C367477006683A3 /* GetRankingUseCaseTests_with_RxTest.swift */; };
 		BCBE79DD2C3685D4006683A3 /* RegisterRankingUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBE79DC2C3685D4006683A3 /* RegisterRankingUseCaseTests.swift */; };
+		BCBE79DF2C369059006683A3 /* GetRankingUseCaseTests_with_expectation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBE79DE2C369059006683A3 /* GetRankingUseCaseTests_with_expectation.swift */; };
 		BCC512C22C15B5F000D77305 /* Extension+SCNNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC512C12C15B5F000D77305 /* Extension+SCNNode.swift */; };
 		BCC512C32C15B5F000D77305 /* Extension+SCNNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC512C12C15B5F000D77305 /* Extension+SCNNode.swift */; };
 		BCC512C62C15CF7300D77305 /* WeaponTypeConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC512C52C15CF7300D77305 /* WeaponTypeConst.swift */; };
@@ -515,6 +516,7 @@
 		BCBE79D42C36597C006683A3 /* RankingListItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingListItemModel.swift; sourceTree = "<group>"; };
 		BCBE79DA2C367477006683A3 /* GetRankingUseCaseTests_with_RxTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetRankingUseCaseTests_with_RxTest.swift; sourceTree = "<group>"; };
 		BCBE79DC2C3685D4006683A3 /* RegisterRankingUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterRankingUseCaseTests.swift; sourceTree = "<group>"; };
+		BCBE79DE2C369059006683A3 /* GetRankingUseCaseTests_with_expectation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetRankingUseCaseTests_with_expectation.swift; sourceTree = "<group>"; };
 		BCC512C12C15B5F000D77305 /* Extension+SCNNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+SCNNode.swift"; sourceTree = "<group>"; };
 		BCC512C52C15CF7300D77305 /* WeaponTypeConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponTypeConst.swift; sourceTree = "<group>"; };
 		BCC512C92C15CFBF00D77305 /* ParticleSystemType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticleSystemType.swift; sourceTree = "<group>"; };
@@ -1461,6 +1463,7 @@
 			children = (
 				BCBE79D12C365923006683A3 /* GetRankingUseCaseTests_with_RxBlocking.swift */,
 				BCBE79DA2C367477006683A3 /* GetRankingUseCaseTests_with_RxTest.swift */,
+				BCBE79DE2C369059006683A3 /* GetRankingUseCaseTests_with_expectation.swift */,
 				BCBE79DC2C3685D4006683A3 /* RegisterRankingUseCaseTests.swift */,
 			);
 			path = Ranking;
@@ -2070,6 +2073,7 @@
 				BCBE79B22C342CF9006683A3 /* RankingAssembler.swift in Sources */,
 				860646102BF5996200906DA0 /* SceneViewSettingUtil.swift in Sources */,
 				861B87762BFE1E4700D0882D /* SoundPlayer.swift in Sources */,
+				BCBE79DF2C369059006683A3 /* GetRankingUseCaseTests_with_expectation.swift in Sources */,
 				BC03FA2B2C280D3600E27C01 /* DeviceMotionController.swift in Sources */,
 				BCBE79BE2C35568D006683A3 /* DeviceMotionFilter.swift in Sources */,
 				860645FF2BF5995800906DA0 /* UIScrollView+Extension.swift in Sources */,
