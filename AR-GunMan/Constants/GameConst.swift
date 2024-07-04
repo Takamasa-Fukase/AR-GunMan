@@ -9,7 +9,7 @@ final class GameConst {
     // ゲームの的の数
     static let targetCount: Int = 50
     // ゲームのタイムカウント
-    static let timeCount: Double = 0.01
+    static let timeCount: Double = 30.00
     // タイマー開始までの待ち時間
     static let timerStartWaitingTimeMillisec: Int = 1500
     // タイマー終了後に結果画面へ遷移するまでの待ち時間
