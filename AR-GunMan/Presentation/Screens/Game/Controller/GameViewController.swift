@@ -40,8 +40,7 @@ class GameViewController: UIViewController {
                 weaponChangeButtonTapped: contentView.weaponChangeButton.rx.tap.asObservable()
             ),
             inputFromARContent: .init(
-                rendererUpdated: arContentController.rendererUpdated,
-                collisionOccurred: arContentController.collisionOccurred
+                targetHit: arContentController.targetHit
             ),
             inputFromDeviceMotion: .init(
                 accelerationUpdated: deviceMotionController.accelerationUpdated,
@@ -113,21 +112,6 @@ class GameViewController: UIViewController {
                 .drive(onNext: { [weak self] _ in
                     guard let self = self else { return }
                     self.arContentController.changeTargetsToTaimeisan()
-                })
-            outputToARContent.moveWeaponToFPSPosition
-                .drive(onNext: { [weak self] type in
-                    guard let self = self else { return }
-                    self.arContentController.moveWeaponToFPSPosition(currentWeapon: type)
-                })
-            outputToARContent.removeContactedTargetAndBullet
-                .drive(onNext: { [weak self] in
-                    guard let self = self else { return }
-                    self.arContentController.removeContactedTargetAndBullet(targetId: $0.targetId, bulletId: $0.bulletId)
-                })
-            outputToARContent.renderTargetHitParticleToContactPoint
-                .drive(onNext: { [weak self] in
-                    guard let self = self else { return }
-                    self.arContentController.showTargetHitParticleToContactPoint(weaponType: $0.weaponType, contactPoint: $0.contactPoint)
                 })
         }
     }

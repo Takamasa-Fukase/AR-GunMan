@@ -9,13 +9,11 @@ import RxSwift
 import RxCocoa
 
 struct TargetHitHandlingInput {
-    let targetHit: Observable<(weaponType: WeaponType, collisionInfo: CollisionInfo, currentScore: Double)>
+    let targetHit: Observable<(weaponType: WeaponType, currentScore: Double)>
 }
 
 struct TargetHitHandlingOutput {
     let updateScore: Observable<Double>
-    let removeContactedTargetAndBullet: Observable<(targetId: UUID, bulletId: UUID)>
-    let renderTargetHitParticleToContactPoint: Observable<(weaponType: WeaponType, contactPoint: Vector)>
 }
 
 protocol TargetHitHandlingUseCaseInterface {
@@ -40,15 +38,6 @@ final class TargetHitHandlingUseCase: TargetHitHandlingUseCaseInterface {
                 )
             })
         
-        // 衝突したオブジェクトの削除指示
-        let removeContactedTargetAndBullet = input.targetHit
-            .map({ (targetId: $0.collisionInfo.firstObjectInfo.id, bulletId: $0.collisionInfo.secondObjectInfo.id) })
-
-        // 衝突地点に特殊効果の表示指示
-        let renderTargetHitParticleToContactPoint = input.targetHit
-            .filter({ $0.weaponType == .bazooka })
-            .map({ (weaponType: $0.weaponType, contactPoint: $0.collisionInfo.contactPoint) })
-        
         disposeBag.insert {
             input.targetHit
                 .subscribe(onNext: { [weak self] in
@@ -59,9 +48,7 @@ final class TargetHitHandlingUseCase: TargetHitHandlingUseCaseInterface {
         }
         
         return TargetHitHandlingOutput(
-            updateScore: updateScore,
-            removeContactedTargetAndBullet: removeContactedTargetAndBullet,
-            renderTargetHitParticleToContactPoint: renderTargetHitParticleToContactPoint
+            updateScore: updateScore
         )
     }
 }

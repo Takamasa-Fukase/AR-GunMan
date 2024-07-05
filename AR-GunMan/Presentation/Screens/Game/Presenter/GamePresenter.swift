@@ -22,8 +22,7 @@ final class GamePresenter: PresenterType {
             let weaponChangeButtonTapped: Observable<Void>
         }
         struct InputFromARContent {
-            let rendererUpdated: Observable<Void>
-            let collisionOccurred: Observable<CollisionInfo>
+            let targetHit: Observable<WeaponType>
         }
         struct InputFromDeviceMotion {
             let accelerationUpdated: Observable<Vector>
@@ -50,9 +49,6 @@ final class GamePresenter: PresenterType {
             let renderSelectedWeapon: Driver<WeaponType>
             let renderWeaponFiring: Driver<WeaponType>
             let renderTargetsAppearanceChanging: Driver<Void>
-            let moveWeaponToFPSPosition: Driver<WeaponType>
-            let removeContactedTargetAndBullet: Driver<(targetId: UUID, bulletId: UUID)>
-            let renderTargetHitParticleToContactPoint: Driver<(weaponType: WeaponType, contactPoint: Vector)>
         }
         struct OutputToDeviceMotion {
             let startMotionDetection: Driver<Void>
@@ -177,17 +173,11 @@ final class GamePresenter: PresenterType {
         
         
         // ターゲットヒット関連の処理をハンドリングし、結果のアクションを生成
-        let targetHit = TargetHitFilter.filter(
-            collisionOccurred: input.inputFromARContent.collisionOccurred
-        )
         let targetHitHandlingOutput = targetHitHandlingUseCase
             .generateOutput(from: .init(
-                targetHit: targetHit.withLatestFrom(
-                    state.scoreRelay.asObservable()
-                ) { ($0.0, $0.1, $1) }
+                targetHit: input.inputFromARContent.targetHit
+                    .withLatestFrom(state.scoreRelay.asObservable()) { ($0, $1) }
             ))
-        let removeContactedObjects = targetHitHandlingOutput.removeContactedTargetAndBullet
-        let renderTargetHitParticle = targetHitHandlingOutput.renderTargetHitParticleToContactPoint
         let updateScore = targetHitHandlingOutput.updateScore
         
         
@@ -291,13 +281,6 @@ final class GamePresenter: PresenterType {
                 renderWeaponFiring: weaponFired
                     .asDriverOnErrorJustComplete(),
                 renderTargetsAppearanceChanging: changeTargetsAppearance
-                    .asDriverOnErrorJustComplete(),
-                moveWeaponToFPSPosition: input.inputFromARContent.rendererUpdated
-                    .withLatestFrom(state.weaponTypeRelay)
-                    .asDriverOnErrorJustComplete(),
-                removeContactedTargetAndBullet: removeContactedObjects
-                    .asDriverOnErrorJustComplete(),
-                renderTargetHitParticleToContactPoint: renderTargetHitParticle
                     .asDriverOnErrorJustComplete()
             ),
             outputToDeviceMotion: .init(

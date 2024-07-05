@@ -12,15 +12,10 @@ import RxCocoa
 
 final class ARContentController: NSObject {
     private var sceneView: ARSCNView!
-    private let rendererUpdatedRelay = PublishRelay<Void>()
-    private let collisionOccurredRelay = PublishRelay<CollisionInfo>()
+    private let targetHitRelay = PublishRelay<WeaponType>()
     
-    var rendererUpdated: Observable<Void> {
-        return rendererUpdatedRelay.asObservable()
-    }
-    
-    var collisionOccurred: Observable<CollisionInfo> {
-        return collisionOccurredRelay.asObservable()
+    var targetHit: Observable<WeaponType> {
+        return targetHitRelay.asObservable()
     }
     
     private var originalBazookaHitExplosionParticle = SCNParticleSystem()
@@ -87,41 +82,6 @@ final class ARContentController: NSObject {
         })
     }
 
-    //現在表示中の武器をラップしている空のオブジェクトを常にカメラと同じPositionに移動させ続ける（それにより武器が常にFPS位置に保たれる）
-    func moveWeaponToFPSPosition(currentWeapon: WeaponType) {
-        var weaponParentNode: SCNNode {
-            switch currentWeapon {
-            case .pistol:
-                return pistolParentNode
-            case .bazooka:
-                return bazookaParentNode
-            }
-        }
-        weaponParentNode.position = SceneNodeUtil.getCameraPosition(sceneView)
-    }
-    
-    func removeContactedTargetAndBullet(targetId: UUID, bulletId: UUID) {
-        let targetNode = sceneView.scene.rootNode.childNodes.first(where: {
-            let node = $0 as? CustomSCNNode
-            return node?.gameObjectInfo.id == targetId
-        })
-        let bulletNode = sceneView.scene.rootNode.childNodes.first(where: {
-            let node = $0 as? CustomSCNNode
-            return node?.gameObjectInfo.id == bulletId
-        })
-        targetNode?.removeFromParentNode()
-        bulletNode?.removeFromParentNode()
-    }
-    
-    func showTargetHitParticleToContactPoint(weaponType: WeaponType, contactPoint: Vector) {
-        guard let targetHitParticleType = weaponType.targetHitParticleType else { return}
-        let targetHitParticleNode = createTargetHitParticleNode(type: targetHitParticleType)
-        targetHitParticleNode.position = contactPoint.sceneVector3
-        sceneView.scene.rootNode.addChildNode(targetHitParticleNode)
-        targetHitParticleNode.particleSystems?.first?.birthRate = targetHitParticleType.birthRate
-        targetHitParticleNode.particleSystems?.first?.loops = false
-    }
-
     private func setupWeaponNode(type: WeaponType) -> SCNNode {
         let weaponParentNode = SceneNodeUtil.loadScnFile(of: type.scnAssetsPath, nodeName: type.parentNodeName)
         SceneNodeUtil.addBillboardConstraint(weaponParentNode)
@@ -176,12 +136,27 @@ final class ARContentController: NSObject {
             }
         )
     }
+    
+    //現在表示中の武器をラップしている空のオブジェクトを常にカメラと同じPositionに移動させ続ける（それにより武器が常にFPS位置に保たれる）
+    private func moveWeaponToFPSPosition() {
+        pistolParentNode.position = SceneNodeUtil.getCameraPosition(sceneView)
+        bazookaParentNode.position = SceneNodeUtil.getCameraPosition(sceneView)
+    }
+    
+    private func showTargetHitParticleToContactPoint(weaponType: WeaponType, contactPoint: SCNVector3) {
+        guard let targetHitParticleType = weaponType.targetHitParticleType else { return}
+        let targetHitParticleNode = createTargetHitParticleNode(type: targetHitParticleType)
+        targetHitParticleNode.position = contactPoint
+        sceneView.scene.rootNode.addChildNode(targetHitParticleNode)
+        targetHitParticleNode.particleSystems?.first?.birthRate = targetHitParticleType.birthRate
+        targetHitParticleNode.particleSystems?.first?.loops = false
+    }
 }
 
 extension ARContentController: ARSCNViewDelegate {
     //常に更新され続けるdelegateメソッド
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
-        rendererUpdatedRelay.accept(Void())
+        moveWeaponToFPSPosition()
     }
 }
 
@@ -193,17 +168,23 @@ extension ARContentController: SCNPhysicsContactDelegate {
               let secondObject = contact.nodeB as? CustomSCNNode else {
             return
         }
-        let collisionInfo = CollisionInfo(
+        let (isTargetHit, weaponType) = TargetHitChecker.isTargetHit(
             firstObjectInfo: firstObject.gameObjectInfo,
-            secondObjectInfo: secondObject.gameObjectInfo,
-            contactPoint: contact.contactPoint.vector
+            secondObjectInfo: secondObject.gameObjectInfo
         )
-        collisionOccurredRelay.accept(collisionInfo)
-    }
-}
-
-extension Vector {
-    fileprivate var sceneVector3: SCNVector3 {
-        return SCNVector3(x: Float(x), y: Float(y), z: Float(z))
+        guard isTargetHit,
+              let weaponType = weaponType else {
+            return
+        }
+        // 衝突した2つのオブジェクトを削除
+        firstObject.removeFromParentNode()
+        secondObject.removeFromParentNode()
+        // 衝突検知座標に武器に応じた特殊効果を表示
+        showTargetHitParticleToContactPoint(
+            weaponType: weaponType,
+            contactPoint: contact.contactPoint
+        )
+        // 弾がターゲットにヒットしたことと、どの武器だったかを通知
+        targetHitRelay.accept(weaponType)
     }
 }

@@ -279,6 +279,8 @@
 		BC92C85E297420CD00E49BD5 /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C85D297420CD00E49BD5 /* UserDefaults+Extension.swift */; };
 		BC92C8602975A2A800E49BD5 /* UIViewController+RxLifeCycleEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92C85F2975A2A800E49BD5 /* UIViewController+RxLifeCycleEvents.swift */; };
 		BCB93BA92C36DA9800DBFC46 /* GoogleService-Info.dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = BCB93BA82C36DA9800DBFC46 /* GoogleService-Info.dev.plist */; };
+		BCB93BAD2C37A4F700DBFC46 /* TargetHitChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB93BAC2C37A4F700DBFC46 /* TargetHitChecker.swift */; };
+		BCB93BAE2C37A4F700DBFC46 /* TargetHitChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB93BAC2C37A4F700DBFC46 /* TargetHitChecker.swift */; };
 		BCBE79952C341D9D006683A3 /* TopAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBE79942C341D9D006683A3 /* TopAssembler.swift */; };
 		BCBE79962C341D9D006683A3 /* TopAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBE79942C341D9D006683A3 /* TopAssembler.swift */; };
 		BCBE799D2C3429D4006683A3 /* SettingsAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBE799C2C3429D4006683A3 /* SettingsAssembler.swift */; };
@@ -501,6 +503,7 @@
 		BC92C85D297420CD00E49BD5 /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
 		BC92C85F2975A2A800E49BD5 /* UIViewController+RxLifeCycleEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+RxLifeCycleEvents.swift"; sourceTree = "<group>"; };
 		BCB93BA82C36DA9800DBFC46 /* GoogleService-Info.dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.dev.plist"; sourceTree = "<group>"; };
+		BCB93BAC2C37A4F700DBFC46 /* TargetHitChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetHitChecker.swift; sourceTree = "<group>"; };
 		BCBE79942C341D9D006683A3 /* TopAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopAssembler.swift; sourceTree = "<group>"; };
 		BCBE799C2C3429D4006683A3 /* SettingsAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAssembler.swift; sourceTree = "<group>"; };
 		BCBE79A02C342A26006683A3 /* TutorialAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialAssembler.swift; sourceTree = "<group>"; };
@@ -786,6 +789,7 @@
 				BCBE79BC2C35568D006683A3 /* DeviceMotionFilter.swift */,
 				BCBE79C02C3557E8006683A3 /* WeaponAutoReloadFilter.swift */,
 				BCBE79C32C35589F006683A3 /* TargetHitFilter.swift */,
+				BCB93BAC2C37A4F700DBFC46 /* TargetHitChecker.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1776,6 +1780,7 @@
 				BCBE79952C341D9D006683A3 /* TopAssembler.swift in Sources */,
 				BC2EBB692C2A468D00EB1400 /* TutorialPresenter.swift in Sources */,
 				86F1573B2BD7B71E00BE979C /* RankingNavigator.swift in Sources */,
+				BCB93BAD2C37A4F700DBFC46 /* TargetHitChecker.swift in Sources */,
 				BC92C8602975A2A800E49BD5 /* UIViewController+RxLifeCycleEvents.swift in Sources */,
 				BC7F70132C2E92D600480833 /* RegisterRankingUseCase.swift in Sources */,
 				677DF1F427A7C100007512F6 /* Ranking.swift in Sources */,
@@ -2016,6 +2021,7 @@
 				BCBE799E2C3429D4006683A3 /* SettingsAssembler.swift in Sources */,
 				BC03F9CB2C214E7D00E27C01 /* TopContentView.swift in Sources */,
 				860646202BF5996700906DA0 /* ARContentConst.swift in Sources */,
+				BCB93BAE2C37A4F700DBFC46 /* TargetHitChecker.swift in Sources */,
 				BC03F9D12C2151C200E27C01 /* TopViewController.swift in Sources */,
 				860645F32BF5994400906DA0 /* CustomError.swift in Sources */,
 			);
