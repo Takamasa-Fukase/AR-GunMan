@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
             guard error == nil, granted else { return }
             DispatchQueue.main.async {
-                application.registerForRemoteNotifications()
+                UIApplication.shared.registerForRemoteNotifications()
             }
         }
         // カメラ（ARで使用）へのアクセス許可をユーザーにリクエストするダイアログを表示
