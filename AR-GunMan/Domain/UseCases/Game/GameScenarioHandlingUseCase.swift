@@ -118,7 +118,7 @@ final class GameScenarioHandlingUseCase: GameScenarioHandlingUseCaseInterface {
             .share()
         
         disposeBag.insert {
-            gameStartTrigger
+            combinedGameStartTrigger
                 .subscribe(onNext: { [weak self] _ in
                     guard let self = self else {return}
                     // 🟨 音声の再生<銃を構える音>
