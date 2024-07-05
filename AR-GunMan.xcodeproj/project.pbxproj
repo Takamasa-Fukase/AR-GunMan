@@ -303,8 +303,6 @@
 		BCBE79BE2C35568D006683A3 /* DeviceMotionFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBE79BC2C35568D006683A3 /* DeviceMotionFilter.swift */; };
 		BCBE79C12C3557E8006683A3 /* WeaponAutoReloadFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBE79C02C3557E8006683A3 /* WeaponAutoReloadFilter.swift */; };
 		BCBE79C22C3557E8006683A3 /* WeaponAutoReloadFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBE79C02C3557E8006683A3 /* WeaponAutoReloadFilter.swift */; };
-		BCBE79C42C35589F006683A3 /* TargetHitFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBE79C32C35589F006683A3 /* TargetHitFilter.swift */; };
-		BCBE79C52C35589F006683A3 /* TargetHitFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBE79C32C35589F006683A3 /* TargetHitFilter.swift */; };
 		BCBE79CD2C363274006683A3 /* GameAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBE79CC2C363274006683A3 /* GameAssembler.swift */; };
 		BCBE79CE2C363274006683A3 /* GameAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBE79CC2C363274006683A3 /* GameAssembler.swift */; };
 		BCBE79D22C365923006683A3 /* GetRankingUseCaseTests_with_RxBlocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBE79D12C365923006683A3 /* GetRankingUseCaseTests_with_RxBlocking.swift */; };
@@ -314,16 +312,12 @@
 		BCBE79DD2C3685D4006683A3 /* RegisterRankingUseCaseTests_with_RxBlocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBE79DC2C3685D4006683A3 /* RegisterRankingUseCaseTests_with_RxBlocking.swift */; };
 		BCBE79DF2C369059006683A3 /* GetRankingUseCaseTests_with_expectation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBE79DE2C369059006683A3 /* GetRankingUseCaseTests_with_expectation.swift */; };
 		BCBE79E12C36966C006683A3 /* RegisterRankingUseCaseTests_with_expectation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBE79E02C36966C006683A3 /* RegisterRankingUseCaseTests_with_expectation.swift */; };
-		BCC512C22C15B5F000D77305 /* Extension+SCNNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC512C12C15B5F000D77305 /* Extension+SCNNode.swift */; };
-		BCC512C32C15B5F000D77305 /* Extension+SCNNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC512C12C15B5F000D77305 /* Extension+SCNNode.swift */; };
 		BCC512C62C15CF7300D77305 /* WeaponTypeConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC512C52C15CF7300D77305 /* WeaponTypeConst.swift */; };
 		BCC512C72C15CF7300D77305 /* WeaponTypeConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC512C52C15CF7300D77305 /* WeaponTypeConst.swift */; };
 		BCC512CA2C15CFBF00D77305 /* ParticleSystemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC512C92C15CFBF00D77305 /* ParticleSystemType.swift */; };
 		BCC512CB2C15CFBF00D77305 /* ParticleSystemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC512C92C15CFBF00D77305 /* ParticleSystemType.swift */; };
 		BCCD447D2C12AB4500BF541D /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCD447C2C12AB4500BF541D /* UIColor+Extension.swift */; };
 		BCCD447E2C12AB4500BF541D /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCD447C2C12AB4500BF541D /* UIColor+Extension.swift */; };
-		BCCD44822C12BF1A00BF541D /* CollisionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCD44812C12BF1A00BF541D /* CollisionInfo.swift */; };
-		BCCD44832C12BF1B00BF541D /* CollisionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCD44812C12BF1A00BF541D /* CollisionInfo.swift */; };
 		BCCD44872C12C8C000BF541D /* GameObjectInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCD44862C12C8C000BF541D /* GameObjectInfo.swift */; };
 		BCCD44882C12C8C000BF541D /* GameObjectInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCD44862C12C8C000BF541D /* GameObjectInfo.swift */; };
 		BCCD44932C13F93900BF541D /* CustomSCNNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCD44922C13F93900BF541D /* CustomSCNNode.swift */; };
@@ -515,7 +509,6 @@
 		BCBE79B92C35309B006683A3 /* GamePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePresenter.swift; sourceTree = "<group>"; };
 		BCBE79BC2C35568D006683A3 /* DeviceMotionFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMotionFilter.swift; sourceTree = "<group>"; };
 		BCBE79C02C3557E8006683A3 /* WeaponAutoReloadFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponAutoReloadFilter.swift; sourceTree = "<group>"; };
-		BCBE79C32C35589F006683A3 /* TargetHitFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetHitFilter.swift; sourceTree = "<group>"; };
 		BCBE79CC2C363274006683A3 /* GameAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameAssembler.swift; sourceTree = "<group>"; };
 		BCBE79D12C365923006683A3 /* GetRankingUseCaseTests_with_RxBlocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetRankingUseCaseTests_with_RxBlocking.swift; sourceTree = "<group>"; };
 		BCBE79D42C36597C006683A3 /* RankingListItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingListItemModel.swift; sourceTree = "<group>"; };
@@ -523,11 +516,9 @@
 		BCBE79DC2C3685D4006683A3 /* RegisterRankingUseCaseTests_with_RxBlocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterRankingUseCaseTests_with_RxBlocking.swift; sourceTree = "<group>"; };
 		BCBE79DE2C369059006683A3 /* GetRankingUseCaseTests_with_expectation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetRankingUseCaseTests_with_expectation.swift; sourceTree = "<group>"; };
 		BCBE79E02C36966C006683A3 /* RegisterRankingUseCaseTests_with_expectation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterRankingUseCaseTests_with_expectation.swift; sourceTree = "<group>"; };
-		BCC512C12C15B5F000D77305 /* Extension+SCNNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+SCNNode.swift"; sourceTree = "<group>"; };
 		BCC512C52C15CF7300D77305 /* WeaponTypeConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponTypeConst.swift; sourceTree = "<group>"; };
 		BCC512C92C15CFBF00D77305 /* ParticleSystemType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticleSystemType.swift; sourceTree = "<group>"; };
 		BCCD447C2C12AB4500BF541D /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
-		BCCD44812C12BF1A00BF541D /* CollisionInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollisionInfo.swift; sourceTree = "<group>"; };
 		BCCD44862C12C8C000BF541D /* GameObjectInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameObjectInfo.swift; sourceTree = "<group>"; };
 		BCCD44922C13F93900BF541D /* CustomSCNNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSCNNode.swift; sourceTree = "<group>"; };
 		BCD1C2562C06B60C008975EB /* CompositeCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeCalculator.swift; sourceTree = "<group>"; };
@@ -594,7 +585,6 @@
 				BCD9675D2979E55400E33587 /* UIImageView+Extension.swift */,
 				86C5AB972AB8819C00CB161D /* UIAlertController+Extension.swift */,
 				BCCD447C2C12AB4500BF541D /* UIColor+Extension.swift */,
-				BCC512C12C15B5F000D77305 /* Extension+SCNNode.swift */,
 				BC0BBE3B2C16B7E100789349 /* Double+Extension.swift */,
 				BC0BBE3F2C16D31800789349 /* NSObject+Extension.swift */,
 				BC22E0152C1B281300C59BAB /* Observable+Extension.swift */,
@@ -788,7 +778,6 @@
 				BC03F9DE2C21704300E27C01 /* TimerStreamCreator.swift */,
 				BCBE79BC2C35568D006683A3 /* DeviceMotionFilter.swift */,
 				BCBE79C02C3557E8006683A3 /* WeaponAutoReloadFilter.swift */,
-				BCBE79C32C35589F006683A3 /* TargetHitFilter.swift */,
 				BCB93BAC2C37A4F700DBFC46 /* TargetHitChecker.swift */,
 			);
 			path = Utilities;
@@ -975,6 +964,7 @@
 				861B87742BFE0F6100D0882D /* SoundPlayer.swift */,
 				BC7F701E2C33FBA100480833 /* PresenterType.swift */,
 				BCC512CD2C15DD6000D77305 /* Enums */,
+				BCB93BAF2C37AF2400DBFC46 /* DataModels */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1210,9 +1200,6 @@
 		BC7F700C2C2E8A1E00480833 /* Game */ = {
 			isa = PBXGroup;
 			children = (
-				BCCD44812C12BF1A00BF541D /* CollisionInfo.swift */,
-				BCCD44862C12C8C000BF541D /* GameObjectInfo.swift */,
-				BC62CE092C15607D00070B49 /* Vector.swift */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -1290,6 +1277,15 @@
 				BCB93BA82C36DA9800DBFC46 /* GoogleService-Info.dev.plist */,
 			);
 			path = FirebaseInfoPlist;
+			sourceTree = "<group>";
+		};
+		BCB93BAF2C37AF2400DBFC46 /* DataModels */ = {
+			isa = PBXGroup;
+			children = (
+				BCCD44862C12C8C000BF541D /* GameObjectInfo.swift */,
+				BC62CE092C15607D00070B49 /* Vector.swift */,
+			);
+			path = DataModels;
 			sourceTree = "<group>";
 		};
 		BCBE79932C341D70006683A3 /* Assembler */ = {
@@ -1810,7 +1806,6 @@
 				BC0BBE402C16D31800789349 /* NSObject+Extension.swift in Sources */,
 				BC92C854297061FE00E49BD5 /* WeaponType.swift in Sources */,
 				BC2EBB712C2A611000EB1400 /* ResultPresenter.swift in Sources */,
-				BCBE79C42C35589F006683A3 /* TargetHitFilter.swift in Sources */,
 				BC2EBB6D2C2A52AA00EB1400 /* WeaponSelectPresenter.swift in Sources */,
 				BC7F6FEC2C2D496900480833 /* MockRankingRepository.swift in Sources */,
 				BCD1C2572C06B60C008975EB /* CompositeCalculator.swift in Sources */,
@@ -1823,12 +1818,10 @@
 				BCCD44932C13F93900BF541D /* CustomSCNNode.swift in Sources */,
 				67DB2C5727BFD01900B8CB3C /* SceneNodeUtil.swift in Sources */,
 				BC7F701F2C33FBA100480833 /* PresenterType.swift in Sources */,
-				BCCD44822C12BF1A00BF541D /* CollisionInfo.swift in Sources */,
 				BCCD447D2C12AB4500BF541D /* UIColor+Extension.swift in Sources */,
 				BC03F9DC2C2166D800E27C01 /* TopPageButtonIconChangeUseCase.swift in Sources */,
 				863FE7EE2BEA6D8D00E104F5 /* APIConst.swift in Sources */,
 				BC2EBB9A2C2A992500EB1400 /* ResultContentView.swift in Sources */,
-				BCC512C22C15B5F000D77305 /* Extension+SCNNode.swift in Sources */,
 				59945100256AD55900560202 /* TutorialViewController.swift in Sources */,
 				BC7F6FF62C2E326500480833 /* RankingRepository.swift in Sources */,
 				8627F6432BD16BB60003D374 /* ObservableActivityTracker.swift in Sources */,
@@ -1924,7 +1917,6 @@
 				BCBE79AA2C342B2E006683A3 /* ResultAssembler.swift in Sources */,
 				BCC512CB2C15CFBF00D77305 /* ParticleSystemType.swift in Sources */,
 				BC7F6FE72C2C1EDA00480833 /* WeaponReloadUseCaseTests.swift in Sources */,
-				BCC512C32C15B5F000D77305 /* Extension+SCNNode.swift in Sources */,
 				BC7FF24B2C2983D20014CDCE /* SceneDelegate.swift in Sources */,
 				860646142BF5996200906DA0 /* ObservableActivityTracker.swift in Sources */,
 				BC7F70052C2E5E3900480833 /* ReplayRepositoryInterface.swift in Sources */,
@@ -1946,7 +1938,6 @@
 				BC0BBE4B2C174B2800789349 /* TutorialNavigator.swift in Sources */,
 				BC2EBB8F2C2A8F8C00EB1400 /* TutorialContentView.swift in Sources */,
 				BC2EBB952C2A962500EB1400 /* WeaponSelectContentView.swift in Sources */,
-				BCBE79C52C35589F006683A3 /* TargetHitFilter.swift in Sources */,
 				BCD89DA52C1EA56400BBBB99 /* Notification+Extension.swift in Sources */,
 				860646112BF5996200906DA0 /* SceneNodeUtil.swift in Sources */,
 				BC7F6FF12C2DB20200480833 /* APIRequestor.swift in Sources */,
@@ -2012,7 +2003,6 @@
 				BC2EBB862C2A899D00EB1400 /* SettingsContentView.swift in Sources */,
 				860645F72BF5994C00906DA0 /* Font+Extension.swift in Sources */,
 				BC03F9E32C217A1400E27C01 /* TopNavigator.swift in Sources */,
-				BCCD44832C12BF1B00BF541D /* CollisionInfo.swift in Sources */,
 				BCBE79E12C36966C006683A3 /* RegisterRankingUseCaseTests_with_expectation.swift in Sources */,
 				860645FB2BF5995200906DA0 /* UserDefaults+Extension.swift in Sources */,
 				8606468E2BF599DF00906DA0 /* RankingNavigator.swift in Sources */,
