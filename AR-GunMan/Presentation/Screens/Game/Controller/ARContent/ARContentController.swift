@@ -26,6 +26,7 @@ final class ARContentController: NSObject {
     private var originalBazookaHitExplosionParticle = SCNParticleSystem()
     private var pistolParentNode = SCNNode()
     private var bazookaParentNode = SCNNode()
+    private var originalBulletNode = SceneNodeUtil.originalBulletNode()
 
     func setupSceneView(with frame: CGRect) -> UIView {
         sceneView = ARSCNView(frame: frame)
@@ -42,10 +43,12 @@ final class ARContentController: NSObject {
 
     // 的ノードをランダムな座標に設置
     func showTargets(count: Int) {
+        let originalTargetNode = SceneNodeUtil.originalTargetNode()
+        
         DispatchQueue.main.async {
             Array(0..<count).forEach { _ in
                 //メモリ節約のため、オリジナルをクローンして使う
-                let clonedTargetNode = ARContentConst.originalTargetNode.clone()
+                let clonedTargetNode = originalTargetNode.clone()
                 clonedTargetNode.position = SceneNodeUtil.getRandomTargetPosition()
                 SceneNodeUtil.addBillboardConstraint(clonedTargetNode)
                 self.sceneView.scene.rootNode.addChildNode(clonedTargetNode)
@@ -162,7 +165,7 @@ final class ARContentController: NSObject {
     private func shootBullet(of weaponType: WeaponType) {
         let clonedBulletNode = CustomSCNNode(
             //メモリ節約のため、オリジナルをクローンして使う
-            from: ARContentConst.originalBulletNode.clone(),
+            from: originalBulletNode.clone(),
             gameObjectInfo: .init(type: weaponType.gameObjectType)
         )
         clonedBulletNode.position = SceneNodeUtil.getCameraPosition(sceneView)

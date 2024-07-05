@@ -80,4 +80,45 @@ final class SceneNodeUtil {
         let diff = SCNVector3Make(pos1.x - pos2.x, pos1.y - pos2.y, pos1.z - pos2.z)
         return sqrt((diff.x * diff.x) + (diff.y * diff.y) + (diff.z * diff.z))
     }
+    
+    static func originalBulletNode() -> SCNNode {
+        let sphere: SCNGeometry = SCNSphere(radius: 0.05)
+        let customYellow = UIColor(red: 253/255, green: 202/255, blue: 119/255, alpha: 1)
+        sphere.firstMaterial?.diffuse.contents = customYellow
+        
+        let bulletNode = SCNNode(geometry: sphere)
+        bulletNode.scale = SCNVector3(x: 1, y: 1, z: 1)
+        
+        //当たり判定用のphysicBodyを追加
+        let shape = SCNPhysicsShape(geometry: sphere, options: nil)
+        bulletNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: shape)
+        bulletNode.physicsBody?.contactTestBitMask = 1
+        bulletNode.physicsBody?.isAffectedByGravity = false
+        return bulletNode
+    }
+    
+    static func originalTargetNode() -> CustomSCNNode {
+        let originalTargetNode = CustomSCNNode(
+            from: SceneNodeUtil.loadScnFile(
+                of: ARContentConst.targetScnAssetsPath,
+                nodeName: ARContentConst.targetNodeName
+            ),
+            gameObjectInfo: .init(type: .target)
+        )
+        
+        originalTargetNode.scale = SCNVector3(0.3, 0.3, 0.3)
+        
+        let targetNodeGeometry = (originalTargetNode.childNode(withName: "sphere", recursively: false)?.geometry) ?? SCNGeometry()
+        
+        //MARK: - 当たり判定の肝2つ
+        //①形状はラップしてる空のNodeではなく何か1つgeometryを持っているものにするを指定する
+        //②当たり判定のscaleはoptions: [SCNPhysicsShape.Option.scale: SCNVector3]で明示的に設定する（大体①のgeometryの元となっているNodeのscaleを代入すれば等しい当たり判定になる）
+        let shape = SCNPhysicsShape(geometry: targetNodeGeometry, options: [SCNPhysicsShape.Option.scale: originalTargetNode.scale])
+        
+        //当たり判定用のphysicBodyを追加
+        originalTargetNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: shape)
+        originalTargetNode.physicsBody?.isAffectedByGravity = false
+        
+        return originalTargetNode
+    }
 }
