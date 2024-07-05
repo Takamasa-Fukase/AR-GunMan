@@ -688,7 +688,6 @@
 			isa = PBXGroup;
 			children = (
 				BC7F6FD42C2C04F200480833 /* Domain */,
-				BC7F6FD52C2C04F600480833 /* Data */,
 				BC7F6FEA2C2D400700480833 /* Mock */,
 				59D2D4F12552DE67006DDB70 /* Info.plist */,
 			);
@@ -1156,21 +1155,6 @@
 				BC7F6FE02C2C055F00480833 /* UseCase */,
 			);
 			path = Domain;
-			sourceTree = "<group>";
-		};
-		BC7F6FD52C2C04F600480833 /* Data */ = {
-			isa = PBXGroup;
-			children = (
-				BC7F6FDF2C2C055A00480833 /* Repository */,
-			);
-			path = Data;
-			sourceTree = "<group>";
-		};
-		BC7F6FDF2C2C055A00480833 /* Repository */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Repository;
 			sourceTree = "<group>";
 		};
 		BC7F6FE02C2C055F00480833 /* UseCase */ = {
