@@ -68,7 +68,7 @@
 		BCFDED252D3B45BE0023DC8A /* WeaponSelectViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BCFDECE12D3B45BD0023DC8A /* WeaponSelectViewController.xib */; };
 		BCFDED262D3B45BE0023DC8A /* WeaponSelectViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECE22D3B45BD0023DC8A /* WeaponSelectViewFactory.swift */; };
 		BCFDED272D3B45BE0023DC8A /* WeaponSelectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECE32D3B45BD0023DC8A /* WeaponSelectViewModel.swift */; };
-		BCFDED282D3B45BE0023DC8A /* Sample_AR_GunMan_Replace_SwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECE62D3B45BD0023DC8A /* Sample_AR_GunMan_Replace_SwiftUIApp.swift */; };
+		BCFDED282D3B45BE0023DC8A /* AR_GunManApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECE62D3B45BD0023DC8A /* AR_GunManApp.swift */; };
 		BCFDED292D3B45BE0023DC8A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BCFDECE72D3B45BD0023DC8A /* Preview Assets.xcassets */; };
 		BCFDED2A2D3B45BE0023DC8A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BCFDECE92D3B45BD0023DC8A /* Assets.xcassets */; };
 		BCFDED2B2D3B45BE0023DC8A /* bazooka_appear.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BCFDECEA2D3B45BD0023DC8A /* bazooka_appear.mp3 */; };
@@ -178,7 +178,7 @@
 		BCFDECE12D3B45BD0023DC8A /* WeaponSelectViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WeaponSelectViewController.xib; sourceTree = "<group>"; };
 		BCFDECE22D3B45BD0023DC8A /* WeaponSelectViewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeaponSelectViewFactory.swift; sourceTree = "<group>"; };
 		BCFDECE32D3B45BD0023DC8A /* WeaponSelectViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeaponSelectViewModel.swift; sourceTree = "<group>"; };
-		BCFDECE62D3B45BD0023DC8A /* Sample_AR_GunMan_Replace_SwiftUIApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sample_AR_GunMan_Replace_SwiftUIApp.swift; sourceTree = "<group>"; };
+		BCFDECE62D3B45BD0023DC8A /* AR_GunManApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AR_GunManApp.swift; sourceTree = "<group>"; };
 		BCFDECE72D3B45BD0023DC8A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		BCFDECE92D3B45BD0023DC8A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BCFDECEA2D3B45BD0023DC8A /* bazooka_appear.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bazooka_appear.mp3; sourceTree = "<group>"; };
@@ -270,7 +270,6 @@
 				BCFDECE52D3B45BD0023DC8A /* PresentationLayer */,
 				BCFDECE82D3B45BD0023DC8A /* Preview Content */,
 				BCFDECF92D3B45BD0023DC8A /* Resources */,
-				BCFDECE62D3B45BD0023DC8A /* Sample_AR_GunMan_Replace_SwiftUIApp.swift */,
 				BCFDECFB2D3B45BD0023DC8A /* Utilities */,
 				BCB93BAA2C36DE7D00DBFC46 /* FirebaseInfoPlist */,
 				59D2D4E32552DE67006DDB70 /* LaunchScreen.storyboard */,
@@ -487,6 +486,7 @@
 		BCFDECE52D3B45BD0023DC8A /* PresentationLayer */ = {
 			isa = PBXGroup;
 			children = (
+				BCFDED3A2D3B46950023DC8A /* App */,
 				BCFDECBC2D3B45BD0023DC8A /* Common */,
 				BCFDECC02D3B45BD0023DC8A /* Game */,
 				BCFDECC42D3B45BD0023DC8A /* NameRegister */,
@@ -544,6 +544,14 @@
 				BCFDECFA2D3B45BD0023DC8A /* ColorTypeConverter.swift */,
 			);
 			path = Utilities;
+			sourceTree = "<group>";
+		};
+		BCFDED3A2D3B46950023DC8A /* App */ = {
+			isa = PBXGroup;
+			children = (
+				BCFDECE62D3B45BD0023DC8A /* AR_GunManApp.swift */,
+			);
+			path = App;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -862,7 +870,7 @@
 				BCFDECFE2D3B45BD0023DC8A /* Color+Extension.swift in Sources */,
 				BCFDED002D3B45BD0023DC8A /* NSObject+Extension.swift in Sources */,
 				BCFDED062D3B45BD0023DC8A /* StopMotionAnimationView.swift in Sources */,
-				BCFDED282D3B45BE0023DC8A /* Sample_AR_GunMan_Replace_SwiftUIApp.swift in Sources */,
+				BCFDED282D3B45BE0023DC8A /* AR_GunManApp.swift in Sources */,
 				BCFDED0E2D3B45BD0023DC8A /* RankingListeItem.swift in Sources */,
 				BCFDED102D3B45BE0023DC8A /* RankingView.swift in Sources */,
 				BCFDED232D3B45BE0023DC8A /* WeaponSelectView.swift in Sources */,

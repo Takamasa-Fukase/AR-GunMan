@@ -1,6 +1,6 @@
 //
-//  Sample_AR_GunMan_Replace_SwiftUIApp.swift
-//  Sample_AR-GunMan_Replace_SwiftUI
+//  AR_GunManApp.swift
+//  AR-GunMan
 //
 //  Created by ウルトラ深瀬 on 29/11/24.
 //
@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct Sample_AR_GunMan_Replace_SwiftUIApp: App {
+struct AR_GunManApp: App {
     var body: some Scene {
         WindowGroup {
             TopViewFactory.create()
