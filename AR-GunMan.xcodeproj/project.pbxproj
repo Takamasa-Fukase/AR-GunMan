@@ -267,7 +267,7 @@
 				BCFDECE92D3B45BD0023DC8A /* Assets.xcassets */,
 				BCFDECB42D3B45BC0023DC8A /* Extensions */,
 				BCFDECB02D3B45BC0023DC8A /* Factories */,
-				BCFDECE52D3B45BD0023DC8A /* PresentationLayer */,
+				BCFDECE52D3B45BD0023DC8A /* Presentation */,
 				BCFDECE82D3B45BD0023DC8A /* Preview Content */,
 				BCFDECF92D3B45BD0023DC8A /* Resources */,
 				BCFDECFB2D3B45BD0023DC8A /* Utilities */,
@@ -483,7 +483,7 @@
 			path = WeaponSelect;
 			sourceTree = "<group>";
 		};
-		BCFDECE52D3B45BD0023DC8A /* PresentationLayer */ = {
+		BCFDECE52D3B45BD0023DC8A /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
 				BCFDED3A2D3B46950023DC8A /* App */,
@@ -497,7 +497,7 @@
 				BCFDECDC2D3B45BD0023DC8A /* Tutorial */,
 				BCFDECE42D3B45BD0023DC8A /* WeaponSelect */,
 			);
-			path = PresentationLayer;
+			path = Presentation;
 			sourceTree = "<group>";
 		};
 		BCFDECE82D3B45BD0023DC8A /* Preview Content */ = {
