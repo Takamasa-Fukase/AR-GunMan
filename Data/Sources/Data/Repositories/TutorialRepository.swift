@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import DomainLayer
+import Domain
 
 public final class TutorialRepository: TutorialRepositoryInterface {
     public init() {}

@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import DomainLayer
+import Domain
 
 public final class WeaponRepository: WeaponRepositoryInterface {
     private let weapons: [Weapon] = WeaponDataSource.weapons

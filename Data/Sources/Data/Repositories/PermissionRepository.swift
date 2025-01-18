@@ -7,7 +7,7 @@
 
 import Foundation
 import AVFoundation
-import DomainLayer
+import Domain
 
 public final class PermissionRepository: PermissionRepositoryInterface {
     public init() {}
