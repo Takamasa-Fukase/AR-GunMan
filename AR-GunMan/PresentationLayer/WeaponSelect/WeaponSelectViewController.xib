@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="landscape" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WeaponSelectViewController" customModule="Sample_AR_GunMan_Replace" customModuleProvider="target">
+            <connections>
+                <outlet property="pagerView" destination="AhY-Fd-9fY" id="DES-mZ-c1c"/>
+                <outlet property="view" destination="ZXb-MU-Uqb" id="CQo-XT-WhM"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="ZXb-MU-Uqb">
+            <rect key="frame" x="0.0" y="0.0" width="852" height="393"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AhY-Fd-9fY" customClass="FSPagerView" customModule="FSPagerView">
+                    <rect key="frame" x="0.0" y="0.0" width="852" height="393"/>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="QYd-j4-I3q"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="AhY-Fd-9fY" secondAttribute="bottom" id="1wu-jR-frR"/>
+                <constraint firstItem="AhY-Fd-9fY" firstAttribute="leading" secondItem="ZXb-MU-Uqb" secondAttribute="leading" id="DWl-nQ-3vY"/>
+                <constraint firstAttribute="trailing" secondItem="AhY-Fd-9fY" secondAttribute="trailing" id="lzb-bx-y1M"/>
+                <constraint firstItem="AhY-Fd-9fY" firstAttribute="top" secondItem="QYd-j4-I3q" secondAttribute="top" id="y3m-sA-KZy"/>
+            </constraints>
+            <point key="canvasLocation" x="-222" y="-91"/>
+        </view>
+    </objects>
+</document>
