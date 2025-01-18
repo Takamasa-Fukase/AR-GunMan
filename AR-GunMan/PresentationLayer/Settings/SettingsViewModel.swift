@@ -1,6 +1,6 @@
 //
 //  SettingsViewModel.swift
-//  Sample_AR-GunMan_Replace_SwiftUI
+//  AR-GunMan
 //
 //  Created by ウルトラ深瀬 on 17/12/24.
 //

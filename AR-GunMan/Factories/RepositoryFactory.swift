@@ -1,6 +1,6 @@
 //
 //  RepositoryFactory.swift
-//  Sample_AR-GunMan_Replace
+//  AR-GunMan
 //
 //  Created by ウルトラ深瀬 on 19/11/24.
 //

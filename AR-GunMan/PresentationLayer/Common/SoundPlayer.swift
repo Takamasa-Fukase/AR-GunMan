@@ -1,6 +1,6 @@
 //
 //  SoundPlayer.swift
-//  WeaponFiringSimulator
+//  AR-GunMan
 //
 //  Created by 深瀬 on 2024/05/22.
 //

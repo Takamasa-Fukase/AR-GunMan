@@ -1,6 +1,6 @@
 //
 //  WeaponSelectViewController.swift
-//  Sample_AR-GunMan_Replace
+//  AR-GunMan
 //
 //  Created by ウルトラ深瀬 on 10/11/24.
 //

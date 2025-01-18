@@ -1,6 +1,6 @@
 //
 //  StopMotionAnimationView.swift
-//  Sample_AR-GunMan_Replace_SwiftUI
+//  AR-GunMan
 //
 //  Created by ウルトラ深瀬 on 22/12/24.
 //
