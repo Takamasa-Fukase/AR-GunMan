@@ -27,7 +27,7 @@ struct RankingListView: View {
                         .frame(height: 10)
                     
                     ForEach(Array(rankingList.enumerated()), id: \.offset) { (index, ranking) in
-                        RankingListeItem(rank: index + 1, score: ranking.score, userName: ranking.userName)
+                        RankingListItem(rank: index + 1, score: ranking.score, userName: ranking.userName)
                             .id(index) // 特定セルを画面中央までスクロールさせる制御の為にidが必要なので設定する
                     }
                     

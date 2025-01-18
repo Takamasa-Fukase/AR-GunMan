@@ -36,7 +36,7 @@
 		BCFDED0B2D3B45BD0023DC8A /* NameRegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECC12D3B45BD0023DC8A /* NameRegisterView.swift */; };
 		BCFDED0C2D3B45BD0023DC8A /* NameRegisterViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECC22D3B45BD0023DC8A /* NameRegisterViewFactory.swift */; };
 		BCFDED0D2D3B45BD0023DC8A /* NameRegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECC32D3B45BD0023DC8A /* NameRegisterViewModel.swift */; };
-		BCFDED0E2D3B45BD0023DC8A /* RankingListeItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECC52D3B45BD0023DC8A /* RankingListeItem.swift */; };
+		BCFDED0E2D3B45BD0023DC8A /* RankingListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECC52D3B45BD0023DC8A /* RankingListItem.swift */; };
 		BCFDED0F2D3B45BE0023DC8A /* RankingListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECC62D3B45BD0023DC8A /* RankingListView.swift */; };
 		BCFDED102D3B45BE0023DC8A /* RankingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECC72D3B45BD0023DC8A /* RankingView.swift */; };
 		BCFDED112D3B45BE0023DC8A /* RankingViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECC82D3B45BD0023DC8A /* RankingViewFactory.swift */; };
@@ -141,7 +141,7 @@
 		BCFDECC12D3B45BD0023DC8A /* NameRegisterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NameRegisterView.swift; sourceTree = "<group>"; };
 		BCFDECC22D3B45BD0023DC8A /* NameRegisterViewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NameRegisterViewFactory.swift; sourceTree = "<group>"; };
 		BCFDECC32D3B45BD0023DC8A /* NameRegisterViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NameRegisterViewModel.swift; sourceTree = "<group>"; };
-		BCFDECC52D3B45BD0023DC8A /* RankingListeItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankingListeItem.swift; sourceTree = "<group>"; };
+		BCFDECC52D3B45BD0023DC8A /* RankingListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankingListItem.swift; sourceTree = "<group>"; };
 		BCFDECC62D3B45BD0023DC8A /* RankingListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankingListView.swift; sourceTree = "<group>"; };
 		BCFDECC72D3B45BD0023DC8A /* RankingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankingView.swift; sourceTree = "<group>"; };
 		BCFDECC82D3B45BD0023DC8A /* RankingViewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankingViewFactory.swift; sourceTree = "<group>"; };
@@ -366,7 +366,7 @@
 		BCFDECCA2D3B45BD0023DC8A /* Ranking */ = {
 			isa = PBXGroup;
 			children = (
-				BCFDECC52D3B45BD0023DC8A /* RankingListeItem.swift */,
+				BCFDECC52D3B45BD0023DC8A /* RankingListItem.swift */,
 				BCFDECC62D3B45BD0023DC8A /* RankingListView.swift */,
 				BCFDECC72D3B45BD0023DC8A /* RankingView.swift */,
 				BCFDECC82D3B45BD0023DC8A /* RankingViewFactory.swift */,
@@ -824,7 +824,7 @@
 				BCFDED002D3B45BD0023DC8A /* NSObject+Extension.swift in Sources */,
 				BCFDED062D3B45BD0023DC8A /* StopMotionAnimationView.swift in Sources */,
 				BCFDED282D3B45BE0023DC8A /* AR_GunManApp.swift in Sources */,
-				BCFDED0E2D3B45BD0023DC8A /* RankingListeItem.swift in Sources */,
+				BCFDED0E2D3B45BD0023DC8A /* RankingListItem.swift in Sources */,
 				BCFDED102D3B45BE0023DC8A /* RankingView.swift in Sources */,
 				BCFDED232D3B45BE0023DC8A /* WeaponSelectView.swift in Sources */,
 				BCFDED122D3B45BE0023DC8A /* RankingViewModel.swift in Sources */,

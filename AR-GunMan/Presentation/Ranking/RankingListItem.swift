@@ -1,5 +1,5 @@
 //
-//  RankingListeItem.swift
+//  RankingListItem.swift
 //  AR-GunMan
 //
 //  Created by ウルトラ深瀬 on 23/12/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct RankingListeItem: View {
+struct RankingListItem: View {
     var rank: Int
     var score: Double
     var userName: String
@@ -87,12 +87,12 @@ struct RankingListeItem: View {
 #Preview {
     CenterPreviewView(backgroundColor: .black) {
         VStack(alignment: .center, spacing: 0) {
-            RankingListeItem(rank: 1, score: 100.00, userName: "マイケル")
-            RankingListeItem(rank: 2, score: 99.000, userName: "Adam")
-            RankingListeItem(rank: 3, score: 98.000, userName: "Jof")
-            RankingListeItem(rank: 4, score: 97.000, userName: "次郎")
-            RankingListeItem(rank: 5, score: 96.000, userName: "ジェシー")
-            RankingListeItem(rank: 6, score: 95.000, userName: "田中太郎")
+            RankingListItem(rank: 1, score: 100.00, userName: "マイケル")
+            RankingListItem(rank: 2, score: 99.000, userName: "Adam")
+            RankingListItem(rank: 3, score: 98.000, userName: "Jof")
+            RankingListItem(rank: 4, score: 97.000, userName: "次郎")
+            RankingListItem(rank: 5, score: 96.000, userName: "ジェシー")
+            RankingListItem(rank: 6, score: 95.000, userName: "田中太郎")
         }
         .frame(width: 341.33, height: 319)
     }
