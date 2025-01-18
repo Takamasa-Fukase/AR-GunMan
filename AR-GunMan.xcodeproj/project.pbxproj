@@ -14,6 +14,10 @@
 		860646C12BF59A3F00906DA0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59D2D4E32552DE67006DDB70 /* LaunchScreen.storyboard */; };
 		860646C22BF59A4000906DA0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59D2D4E32552DE67006DDB70 /* LaunchScreen.storyboard */; };
 		861B87792BFE258100D0882D /* MockSoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 861B87782BFE258100D0882D /* MockSoundPlayer.swift */; };
+		BC5F55FE2D3B533500EA397A /* ARShooting in Frameworks */ = {isa = PBXBuildFile; productRef = BC5F55FD2D3B533500EA397A /* ARShooting */; };
+		BC5F56002D3B533500EA397A /* Data in Frameworks */ = {isa = PBXBuildFile; productRef = BC5F55FF2D3B533500EA397A /* Data */; };
+		BC5F56022D3B533500EA397A /* Domain in Frameworks */ = {isa = PBXBuildFile; productRef = BC5F56012D3B533500EA397A /* Domain */; };
+		BC5F56042D3B533500EA397A /* WeaponControlMotion in Frameworks */ = {isa = PBXBuildFile; productRef = BC5F56032D3B533500EA397A /* WeaponControlMotion */; };
 		BC7F6FE42C2C05C300480833 /* WeaponFireUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7F6FE32C2C05C300480833 /* WeaponFireUseCaseTests.swift */; };
 		BC7F6FE72C2C1EDA00480833 /* WeaponReloadUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7F6FE62C2C1EDA00480833 /* WeaponReloadUseCaseTests.swift */; };
 		BC7F6FEC2C2D496900480833 /* MockRankingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7F6FEB2C2D496900480833 /* MockRankingRepository.swift */; };
@@ -207,7 +211,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC5F55FE2D3B533500EA397A /* ARShooting in Frameworks */,
 				D54734259EA1C7BF11A28908 /* Pods_AR_GunMan.framework in Frameworks */,
+				BC5F56022D3B533500EA397A /* Domain in Frameworks */,
+				BC5F56042D3B533500EA397A /* WeaponControlMotion in Frameworks */,
+				BC5F56002D3B533500EA397A /* Data in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -580,6 +588,12 @@
 			dependencies = (
 			);
 			name = "AR-GunMan";
+			packageProductDependencies = (
+				BC5F55FD2D3B533500EA397A /* ARShooting */,
+				BC5F55FF2D3B533500EA397A /* Data */,
+				BC5F56012D3B533500EA397A /* Domain */,
+				BC5F56032D3B533500EA397A /* WeaponControlMotion */,
+			);
 			productName = "AR-GunMan";
 			productReference = 59D2D4D52552DE66006DDB70 /* AR-GunMan Dev.app */;
 			productType = "com.apple.product-type.application";
@@ -1248,6 +1262,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		BC5F55FD2D3B533500EA397A /* ARShooting */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ARShooting;
+		};
+		BC5F55FF2D3B533500EA397A /* Data */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Data;
+		};
+		BC5F56012D3B533500EA397A /* Domain */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Domain;
+		};
+		BC5F56032D3B533500EA397A /* WeaponControlMotion */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = WeaponControlMotion;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 59D2D4CD2552DE66006DDB70 /* Project object */;
 }
