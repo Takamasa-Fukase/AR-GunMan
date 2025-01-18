@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 struct CenterPreviewView<Content: View>: View {
     let backgroundColor: Color
     let content: Content

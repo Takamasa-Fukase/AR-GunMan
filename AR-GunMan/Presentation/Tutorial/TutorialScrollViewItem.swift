@@ -8,11 +8,7 @@
 import SwiftUI
 
 struct TutorialScrollViewItem: View {
-    private let content: TutorialContent
-    
-    init(content: TutorialContent) {
-        self.content = content
-    }
+    let content: TutorialContent
     
     var body: some View {
         VStack(alignment: .center, spacing: 0) {

@@ -10,7 +10,7 @@ import Domain
 
 struct WeaponSelectView: View {
     @State var viewModel: WeaponSelectViewModel
-    var weaponSelected: ((Int) -> Void)
+    let weaponSelected: ((Int) -> Void)
     
     var body: some View {
         WeaponSelectViewControllerRepresentable(

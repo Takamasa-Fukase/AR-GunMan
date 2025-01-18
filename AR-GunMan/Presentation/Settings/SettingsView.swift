@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct SettingsView: View {
-    let viewModel: SettingsViewModel
     @Environment(\.dismiss) var dismiss
+    let viewModel: SettingsViewModel
     
     var body: some View {
         @Bindable var viewModel = viewModel

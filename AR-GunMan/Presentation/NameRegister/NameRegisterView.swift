@@ -11,8 +11,8 @@ import Domain
 
 struct NameRegisterView: View {
     @State var viewModel: NameRegisterViewModel
-    var dismissRequestReceiver: DismissRequestReceiver
-    var onRegistered: (Ranking) -> Void
+    let dismissRequestReceiver: DismissRequestReceiver
+    let onRegistered: (Ranking) -> Void
         
     var body: some View {
         @Bindable var viewModel = viewModel

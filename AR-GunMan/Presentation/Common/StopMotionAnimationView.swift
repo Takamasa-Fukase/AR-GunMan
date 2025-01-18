@@ -9,18 +9,10 @@ import SwiftUI
 
 // 任意のビューを指定した間隔でコマ送り表示するビュー
 struct StopMotionAnimationView: View {
-    private let updateInterval: TimeInterval
-    private let contentList: [AnyView]
     @State private var currentIndex = 0
     @State private var timer: Timer?
-    
-    init(
-        updateInterval: TimeInterval,
-        contentList: [AnyView]
-    ) {
-        self.updateInterval = updateInterval
-        self.contentList = contentList
-    }
+    let updateInterval: TimeInterval
+    let contentList: [AnyView]
     
     var body: some View {
         contentList[currentIndex]

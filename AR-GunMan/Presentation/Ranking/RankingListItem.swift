@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct RankingListItem: View {
-    var rank: Int
-    var score: Double
-    var userName: String
+    let rank: Int
+    let score: Double
+    let userName: String
     
     var body: some View {
         ZStack(alignment: .bottom) {
