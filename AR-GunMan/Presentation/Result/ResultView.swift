@@ -12,8 +12,8 @@ struct ResultView: View {
     @State var isButtonsBaseViewVisible = false
     @State var buttonsOpacity = 0.0
     @Environment(\.dismiss) var dismiss
-    let replayButtonTapped: (() -> Void)
-    let toHomeButtonTapped: (() -> Void)
+    let replayButtonTapped: () -> Void
+    let toHomeButtonTapped: () -> Void
     
     var body: some View {
         @Bindable var viewModel = viewModel

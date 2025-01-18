@@ -11,13 +11,13 @@ struct ContentFrameTrackableScrollView<Content: View>: View {
     let scrollDirections: Axis.Set
     let showsIndicator: Bool
     let content: Content
-    let onScroll: ((CGRect) -> Void)
+    let onScroll: (CGRect) -> Void
     
     init(
         scrollDirections: Axis.Set,
         showsIndicator: Bool = true,
         @ViewBuilder content: () -> Content,
-        onScroll: @escaping ((CGRect) -> Void)
+        onScroll: @escaping (CGRect) -> Void
     ) {
         self.scrollDirections = scrollDirections
         self.showsIndicator = showsIndicator

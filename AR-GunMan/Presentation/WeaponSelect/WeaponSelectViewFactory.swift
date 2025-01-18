@@ -8,7 +8,7 @@
 import Foundation
 
 final class WeaponSelectViewFactory {
-    static func create(weaponSelected: @escaping ((Int) -> Void)) -> WeaponSelectView {
+    static func create(weaponSelected: @escaping (Int) -> Void) -> WeaponSelectView {
         let viewModel = WeaponSelectViewModel(weaponResourceGetUseCase: UseCaseFactory.create())
         return WeaponSelectView(viewModel: viewModel, weaponSelected: weaponSelected)
     }
