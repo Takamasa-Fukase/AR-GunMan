@@ -125,6 +125,10 @@
 		82CB4F049BB35C36EAA5A632 /* Pods_AR_GunManTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_GunManTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		861B87782BFE258100D0882D /* MockSoundPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSoundPlayer.swift; sourceTree = "<group>"; };
 		90D4D1AD42BB6A3A0192887F /* Pods-AR-GunManTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-GunManTests.release.xcconfig"; path = "Target Support Files/Pods-AR-GunManTests/Pods-AR-GunManTests.release.xcconfig"; sourceTree = "<group>"; };
+		BC067F742D3B4CA400E58C56 /* ARShooting */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ARShooting; sourceTree = "<group>"; };
+		BC067F752D3B4CD700E58C56 /* WeaponControlMotion */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = WeaponControlMotion; sourceTree = "<group>"; };
+		BC067F762D3B4CEA00E58C56 /* Data */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Data; sourceTree = "<group>"; };
+		BC067F772D3B4CF900E58C56 /* Domain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Domain; sourceTree = "<group>"; };
 		BC7F6FE32C2C05C300480833 /* WeaponFireUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponFireUseCaseTests.swift; sourceTree = "<group>"; };
 		BC7F6FE62C2C1EDA00480833 /* WeaponReloadUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponReloadUseCaseTests.swift; sourceTree = "<group>"; };
 		BC7F6FEB2C2D496900480833 /* MockRankingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRankingRepository.swift; sourceTree = "<group>"; };
@@ -242,6 +246,10 @@
 		59D2D4CC2552DE66006DDB70 = {
 			isa = PBXGroup;
 			children = (
+				BC067F742D3B4CA400E58C56 /* ARShooting */,
+				BC067F762D3B4CEA00E58C56 /* Data */,
+				BC067F772D3B4CF900E58C56 /* Domain */,
+				BC067F752D3B4CD700E58C56 /* WeaponControlMotion */,
 				59D2D4D72552DE66006DDB70 /* AR-GunMan */,
 				59D2D4EE2552DE67006DDB70 /* AR-GunManTests */,
 				59D2D4F92552DE67006DDB70 /* AR-GunManUITests */,
