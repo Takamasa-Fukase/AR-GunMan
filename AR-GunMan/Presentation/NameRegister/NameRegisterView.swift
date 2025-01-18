@@ -7,7 +7,6 @@
 
 import SwiftUI
 import Combine
-import Data
 import Domain
 
 struct NameRegisterView: View {

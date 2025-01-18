@@ -6,10 +6,9 @@
 //
 
 import SwiftUI
-import Data
 
 struct SettingsView: View {
-    @State var viewModel: SettingsViewModel
+    let viewModel: SettingsViewModel
     @Environment(\.dismiss) var dismiss
     
     var body: some View {

@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Data
 
 struct RankingView: View {
     let viewModel: RankingViewModel

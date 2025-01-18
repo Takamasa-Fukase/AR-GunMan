@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Foundation
 
 struct TopView: View {
     @State var viewModel: TopViewModel

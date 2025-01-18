@@ -8,7 +8,6 @@
 import SwiftUI
 import ARShooting
 import WeaponControlMotion
-import Data
 
 struct GameView: View {
     @State var arController: ARShootingController

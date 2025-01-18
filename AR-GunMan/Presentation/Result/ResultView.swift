@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Data
 
 struct ResultView: View {
     @State var viewModel: ResultViewModel
