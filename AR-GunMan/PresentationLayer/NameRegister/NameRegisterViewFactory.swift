@@ -7,7 +7,7 @@
 
 import Foundation
 import Combine
-import DomainLayer
+import Domain
 
 final class NameRegisterViewFactory {
     static func create(

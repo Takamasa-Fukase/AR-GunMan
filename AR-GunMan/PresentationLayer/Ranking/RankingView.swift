@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import DataLayer
+import Data
 
 struct RankingView: View {
     @State var viewModel: RankingViewModel

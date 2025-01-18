@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import DomainLayer
+import Domain
 
 struct RankingListView: View {
     @State var rankingList: [Ranking]

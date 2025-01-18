@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import DataLayer
+import Data
 
 struct ResultView: View {
     @State var viewModel: ResultViewModel

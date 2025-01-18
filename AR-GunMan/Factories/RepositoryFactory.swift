@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import DataLayer
-import DomainLayer
+import Data
+import Domain
 
 final class RepositoryFactory {
     public init() {}

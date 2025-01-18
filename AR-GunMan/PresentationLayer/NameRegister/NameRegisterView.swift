@@ -7,8 +7,8 @@
 
 import SwiftUI
 import Combine
-import DataLayer
-import DomainLayer
+import Data
+import Domain
 
 struct NameRegisterView: View {
     @State var viewModel: NameRegisterViewModel

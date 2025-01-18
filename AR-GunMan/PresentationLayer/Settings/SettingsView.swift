@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import DataLayer
+import Data
 
 struct SettingsView: View {
     @State var viewModel: SettingsViewModel

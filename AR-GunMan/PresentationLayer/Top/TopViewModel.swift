@@ -8,7 +8,7 @@
 import Foundation
 import Observation
 import Combine
-import DomainLayer
+import Domain
 
 @Observable
 final class TopViewModel {
