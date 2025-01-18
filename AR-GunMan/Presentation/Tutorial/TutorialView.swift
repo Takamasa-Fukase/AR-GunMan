@@ -9,8 +9,8 @@ import SwiftUI
 
 struct TutorialView: View {
     @State var viewModel: TutorialViewModel
-    @State var dismissRequestReceiver: DismissRequestReceiver?
     @Environment(\.dismiss) var dismiss
+    var dismissRequestReceiver: DismissRequestReceiver?
     
     var body: some View {
         GeometryReader { geometry in

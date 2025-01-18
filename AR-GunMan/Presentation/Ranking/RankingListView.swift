@@ -9,7 +9,7 @@ import SwiftUI
 import Domain
 
 struct RankingListView: View {
-    var rankingList: [Ranking]
+    let rankingList: [Ranking]
     
     var body: some View {
         if rankingList.isEmpty {
