@@ -7,10 +7,6 @@ target 'AR-GunMan' do
 
   # Pods for AR-GunMan
  pod 'FSPagerView'
-# pod 'Firebase/Analytics'
-# pod 'Firebase/Core'
-# pod 'Firebase/Firestore'
-# pod 'FirebaseFirestoreSwift'
 
   target 'AR-GunManTests' do
     inherit! :search_paths
