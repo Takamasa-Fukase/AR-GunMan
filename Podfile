@@ -6,7 +6,7 @@ target 'AR-GunMan' do
   use_frameworks!
 
   # Pods for AR-GunMan
-# pod 'FSPagerView'
+ pod 'FSPagerView'
 # pod 'Firebase/Analytics'
 # pod 'Firebase/Core'
 # pod 'Firebase/Firestore'
