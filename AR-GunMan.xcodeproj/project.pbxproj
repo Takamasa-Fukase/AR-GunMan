@@ -538,7 +538,6 @@
 				59D2D4E72552DE67006DDB70 /* Sources */,
 				59D2D4E82552DE67006DDB70 /* Frameworks */,
 				59D2D4E92552DE67006DDB70 /* Resources */,
-				E82902856F772496ADB6FB49 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -758,23 +757,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AR-GunMan-AR-GunManUITests/Pods-AR-GunMan-AR-GunManUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E82902856F772496ADB6FB49 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AR-GunManTests/Pods-AR-GunManTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AR-GunManTests/Pods-AR-GunManTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AR-GunManTests/Pods-AR-GunManTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
