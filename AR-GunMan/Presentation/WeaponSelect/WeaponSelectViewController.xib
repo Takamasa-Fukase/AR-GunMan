@@ -9,6 +9,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WeaponSelectViewController" customModule="AR_GunMan_" customModuleProvider="target">
             <connections>
+                <outlet property="pagerView" destination="c8f-ni-Xsz" id="9F2-bb-47T"/>
                 <outlet property="view" destination="ZXb-MU-Uqb" id="CQo-XT-WhM"/>
             </connections>
         </placeholder>
@@ -16,9 +17,21 @@
         <view contentMode="scaleToFill" id="ZXb-MU-Uqb">
             <rect key="frame" x="0.0" y="0.0" width="852" height="393"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c8f-ni-Xsz" customClass="FSPagerView" customModule="FSPagerView">
+                    <rect key="frame" x="0.0" y="0.0" width="852" height="393"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
+            </subviews>
             <viewLayoutGuide key="safeArea" id="QYd-j4-I3q"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-            <point key="canvasLocation" x="-222" y="-91"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="c8f-ni-Xsz" secondAttribute="bottom" id="CRi-SW-0Vm"/>
+                <constraint firstAttribute="trailing" secondItem="c8f-ni-Xsz" secondAttribute="trailing" id="XWO-Uc-evm"/>
+                <constraint firstItem="c8f-ni-Xsz" firstAttribute="top" secondItem="QYd-j4-I3q" secondAttribute="top" id="iRr-c6-csg"/>
+                <constraint firstItem="c8f-ni-Xsz" firstAttribute="leading" secondItem="ZXb-MU-Uqb" secondAttribute="leading" id="ifW-1H-yCX"/>
+            </constraints>
+            <point key="canvasLocation" x="-222.53521126760563" y="-92.36641221374046"/>
         </view>
     </objects>
 </document>

@@ -7,21 +7,21 @@
 //
 
 import UIKit
-//import FSPagerView
+import FSPagerView
 
-//final class WeaponSelectCell: FSPagerViewCell {
-//    @IBOutlet private weak var weaponImageView: UIImageView!
-//    @IBOutlet private weak var commingSoonLabel: UILabel!
-//    
-//    override func awakeFromNib() {
-//        super.awakeFromNib()
-//    }
-//    
-//    func configure(
-//        weaponImage: UIImage?,
-//        isHiddenCommingSoonLabel: Bool
-//    ) {
-//        weaponImageView.image = weaponImage
-//        commingSoonLabel.isHidden = isHiddenCommingSoonLabel
-//    }
-//}
+final class WeaponSelectCell: FSPagerViewCell {
+    @IBOutlet private weak var weaponImageView: UIImageView!
+    @IBOutlet private weak var commingSoonLabel: UILabel!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+    }
+    
+    func configure(
+        weaponImage: UIImage?,
+        isHiddenCommingSoonLabel: Bool
+    ) {
+        weaponImageView.image = weaponImage
+        commingSoonLabel.isHidden = isHiddenCommingSoonLabel
+    }
+}
