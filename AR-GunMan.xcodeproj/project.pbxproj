@@ -204,13 +204,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		26FDCD73922E89484B8E520A /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		59D2D4CC2552DE66006DDB70 = {
 			isa = PBXGroup;
 			children = (
@@ -222,7 +215,6 @@
 				59D2D4EE2552DE67006DDB70 /* AR-GunManTests */,
 				59D2D4F92552DE67006DDB70 /* AR-GunManUITests */,
 				59D2D4D62552DE66006DDB70 /* Products */,
-				26FDCD73922E89484B8E520A /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
