@@ -304,12 +304,12 @@
 		BC0D545E2D432F8600D69795 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				BC0D545F2D432F9300D69795 /* mp3 */,
+				BC0D545F2D432F9300D69795 /* sounds */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		BC0D545F2D432F9300D69795 /* mp3 */ = {
+		BC0D545F2D432F9300D69795 /* sounds */ = {
 			isa = PBXGroup;
 			children = (
 				BC0D54602D432FAE00D69795 /* bazooka_appear.mp3 */,
@@ -327,7 +327,7 @@
 				BC0D546C2D432FAE00D69795 /* target_hit.mp3 */,
 				BC0D546D2D432FAE00D69795 /* western_pistol_fire.mp3 */,
 			);
-			path = mp3;
+			path = sounds;
 			sourceTree = "<group>";
 		};
 		BCB93BAA2C36DE7D00DBFC46 /* FirebaseInfoPlist */ = {
