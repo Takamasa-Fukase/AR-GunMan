@@ -11,7 +11,7 @@ import Domain
 
 @Observable
 final class WeaponSelectViewModel {
-    var weaponListItems = [WeaponListItem]()
+    var weaponListItems: [WeaponListItem] = []
     private let weaponResourceGetUseCase: WeaponResourceGetUseCaseInterface
     private let initialDisplayWeaponId: Int
     
