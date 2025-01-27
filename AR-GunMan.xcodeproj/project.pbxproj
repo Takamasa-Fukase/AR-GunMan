@@ -31,6 +31,7 @@
 		BC5F56002D3B533500EA397A /* Data in Frameworks */ = {isa = PBXBuildFile; productRef = BC5F55FF2D3B533500EA397A /* Data */; };
 		BC5F56022D3B533500EA397A /* Domain in Frameworks */ = {isa = PBXBuildFile; productRef = BC5F56012D3B533500EA397A /* Domain */; };
 		BC5F56042D3B533500EA397A /* WeaponControlMotion in Frameworks */ = {isa = PBXBuildFile; productRef = BC5F56032D3B533500EA397A /* WeaponControlMotion */; };
+		BC90ECE02D47BD3500B34E4B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC90ECDF2D47BD3400B34E4B /* AppDelegate.swift */; };
 		BCB93BA92C36DA9800DBFC46 /* GoogleService-Info.dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = BCB93BA82C36DA9800DBFC46 /* GoogleService-Info.dev.plist */; };
 		BCFDECFC2D3B45BD0023DC8A /* RepositoryFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECAE2D3B45BC0023DC8A /* RepositoryFactory.swift */; };
 		BCFDECFD2D3B45BD0023DC8A /* UseCaseFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECAF2D3B45BC0023DC8A /* UseCaseFactory.swift */; };
@@ -134,6 +135,7 @@
 		BC0D546B2D432FAE00D69795 /* target_appearance_change.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = target_appearance_change.mp3; sourceTree = "<group>"; };
 		BC0D546C2D432FAE00D69795 /* target_hit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = target_hit.mp3; sourceTree = "<group>"; };
 		BC0D546D2D432FAE00D69795 /* western_pistol_fire.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = western_pistol_fire.mp3; sourceTree = "<group>"; };
+		BC90ECDF2D47BD3400B34E4B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BCB93BA82C36DA9800DBFC46 /* GoogleService-Info.dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.dev.plist"; sourceTree = "<group>"; };
 		BCFDECAE2D3B45BC0023DC8A /* RepositoryFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryFactory.swift; sourceTree = "<group>"; };
 		BCFDECAF2D3B45BC0023DC8A /* UseCaseFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UseCaseFactory.swift; sourceTree = "<group>"; };
@@ -497,6 +499,7 @@
 			isa = PBXGroup;
 			children = (
 				BCFDECE62D3B45BD0023DC8A /* AR_GunManApp.swift */,
+				BC90ECDF2D47BD3400B34E4B /* AppDelegate.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -786,6 +789,7 @@
 				BCFDED082D3B45BD0023DC8A /* GameView.swift in Sources */,
 				BCFDED392D3B45BE0023DC8A /* ColorTypeConverter.swift in Sources */,
 				BCFDED1B2D3B45BE0023DC8A /* TopViewModel.swift in Sources */,
+				BC90ECE02D47BD3500B34E4B /* AppDelegate.swift in Sources */,
 				BCFDED1D2D3B45BE0023DC8A /* TutorialScrollViewItem.swift in Sources */,
 				BCFDED132D3B45BE0023DC8A /* ResultView.swift in Sources */,
 				BCFDED112D3B45BE0023DC8A /* RankingViewFactory.swift in Sources */,

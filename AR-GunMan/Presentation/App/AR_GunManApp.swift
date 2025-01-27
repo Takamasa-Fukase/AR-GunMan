@@ -9,6 +9,8 @@ import SwiftUI
 
 @main
 struct AR_GunManApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
     var body: some Scene {
         WindowGroup {
             TopViewFactory.create()
