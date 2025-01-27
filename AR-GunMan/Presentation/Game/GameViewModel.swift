@@ -155,30 +155,30 @@ final class GameViewModel {
         guard let currentWeaponData = self.currentWeaponData else { return }
         playSound.send(currentWeaponData.resources.appearingSound)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
             let request = GameTimerCreateRequest(
-                initialTimeCount: self?.timeCount ?? 0.0,
+                initialTimeCount: self.timeCount,
                 updateInterval: 0.01,
-                pauseController: self?.timerPauseController ?? .init()
+                pauseController: self.timerPauseController
             )
-            self?.gameTimerCreateUseCase.execute(
+            self.gameTimerCreateUseCase.execute(
                 request: request,
-                onTimerStarted: { [weak self] response in
-                    self?.playSound.send(response.startWhistleSound)
-                    self?.motionDetectorInputEvent.send(.startDeviceMotionDetection)
-                    self?.isWeaponChangeButtonEnabled = true
+                onTimerStarted: { response in
+                    self.playSound.send(response.startWhistleSound)
+                    self.motionDetectorInputEvent.send(.startDeviceMotionDetection)
+                    self.isWeaponChangeButtonEnabled = true
                 },
-                onTimerUpdated: { [weak self] response in
-                    self?.timeCount = response.timeCount
+                onTimerUpdated: { response in
+                    self.timeCount = response.timeCount
                 },
-                onTimerEnded: { [weak self] response in
-                    self?.playSound.send(response.endWhistleSound)
-                    self?.motionDetectorInputEvent.send(.stopDeviceMotionDetection)
-                    self?.isWeaponChangeButtonEnabled = false
+                onTimerEnded: { response in
+                    self.playSound.send(response.endWhistleSound)
+                    self.motionDetectorInputEvent.send(.stopDeviceMotionDetection)
+                    self.isWeaponChangeButtonEnabled = false
                     
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: { [weak self] in
-                        self?.playSound.send(response.rankingAppearSound)
-                        self?.isResultViewPresented = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
+                        self.playSound.send(response.rankingAppearSound)
+                        self.isResultViewPresented = true
                     })
                 })
         })
@@ -220,9 +220,9 @@ final class GameViewModel {
                 currentWeaponData?.state.isReloading = response.isReloading
                 playSound.send(currentWeaponData?.resources.reloadingSound ?? .pistolReload)
             },
-            onReloadEnded: { [weak self] response in
-                self?.currentWeaponData?.state.bulletsCount = response.bulletsCount
-                self?.currentWeaponData?.state.isReloading = response.isReloading
+            onReloadEnded: { response in
+                self.currentWeaponData?.state.bulletsCount = response.bulletsCount
+                self.currentWeaponData?.state.isReloading = response.isReloading
             })
     }
 }

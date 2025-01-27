@@ -44,12 +44,12 @@ final class SceneManager: NSObject {
     private func showTargetsToRandomPositions(count: Int) {
         let originalTargetNode = SceneNodeUtil.originalTargetNode()
         
-        DispatchQueue.main.async { [weak self] in
+        DispatchQueue.main.async {
             Array(0..<count).forEach { _ in
                 let clonedTargetNode = originalTargetNode.clone()
                 clonedTargetNode.position = SceneNodeUtil.getRandomTargetPosition()
                 SceneNodeUtil.addBillboardConstraint(clonedTargetNode)
-                self?.sceneView.scene.rootNode.addChildNode(clonedTargetNode)
+                self.sceneView.scene.rootNode.addChildNode(clonedTargetNode)
             }
         }
     }
