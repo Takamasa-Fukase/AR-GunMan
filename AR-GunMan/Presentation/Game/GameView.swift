@@ -178,7 +178,7 @@ struct GameView: View {
         let arController = ARShootingController(frame: .zero)
         let motionDetector = WeaponControlMotionDetector()
         let viewModel = GameViewModel(
-            tutorialUseCase: UseCaseFactory.create(),
+            tutorialRepository: RepositoryFactory.create(),
             gameTimerCreateUseCase: UseCaseFactory.create(),
             weaponResourceGetUseCase: UseCaseFactory.create(),
             weaponActionExecuteUseCase: UseCaseFactory.create()

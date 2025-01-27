@@ -28,14 +28,14 @@ final class TopViewModel {
     
     let playSound = PassthroughSubject<SoundType, Never>()
     
-    private let cameraUsagePermissionHandlingUseCase: CameraUsagePermissionHandlingUseCaseInterface
+    private let permissionRepository: PermissionRepositoryInterface
     
-    init(cameraUsagePermissionHandlingUseCase: CameraUsagePermissionHandlingUseCaseInterface) {
-        self.cameraUsagePermissionHandlingUseCase = cameraUsagePermissionHandlingUseCase
+    init(permissionRepository: PermissionRepositoryInterface) {
+        self.permissionRepository = permissionRepository
     }
     
     func onViewAppear() {
-        cameraUsagePermissionHandlingUseCase.requestPermission()
+        permissionRepository.requestCameraUsagePermission()
     }
 
     func startButtonTapped() {
@@ -67,7 +67,7 @@ final class TopViewModel {
             case .start:
                 self.isStartButtonIconSwitched = false
                 
-                let isCameraPermissionGranted = self.cameraUsagePermissionHandlingUseCase.checkGrantedFlag()
+                let isCameraPermissionGranted = self.permissionRepository.getCameraUsagePermissionGrantedFlag()
                 if isCameraPermissionGranted {
                     self.isGameViewPresented = true
                 }else {
