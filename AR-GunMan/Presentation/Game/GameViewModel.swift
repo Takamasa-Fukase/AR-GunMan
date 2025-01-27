@@ -30,6 +30,7 @@ final class GameViewModel {
     var isTutorialViewPresented = false
     var isWeaponSelectViewPresented = false
     var isResultViewPresented = false
+    var isWeaponChangeButtonEnabled = false
     
     let arControllerInputEvent = PassthroughSubject<ARControllerInputEventType, Never>()
     let motionDetectorInputEvent = PassthroughSubject<MotionDetectorInputEventType, Never>()
@@ -165,6 +166,7 @@ final class GameViewModel {
                 onTimerStarted: { [weak self] response in
                     self?.playSound.send(response.startWhistleSound)
                     self?.motionDetectorInputEvent.send(.startDeviceMotionDetection)
+                    self?.isWeaponChangeButtonEnabled = true
                 },
                 onTimerUpdated: { [weak self] response in
                     self?.timeCount = response.timeCount
@@ -172,6 +174,7 @@ final class GameViewModel {
                 onTimerEnded: { [weak self] response in
                     self?.playSound.send(response.endWhistleSound)
                     self?.motionDetectorInputEvent.send(.stopDeviceMotionDetection)
+                    self?.isWeaponChangeButtonEnabled = false
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: { [weak self] in
                         self?.playSound.send(response.rankingAppearSound)

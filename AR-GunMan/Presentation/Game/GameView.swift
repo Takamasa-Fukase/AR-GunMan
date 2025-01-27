@@ -65,6 +65,7 @@ struct GameView: View {
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 100, height: 100)
                     }
+                    .disabled(!viewModel.isWeaponChangeButtonEnabled)
                 }
                 .padding(EdgeInsets(top: 30, leading: 20, bottom: 0, trailing: 12))
                 
