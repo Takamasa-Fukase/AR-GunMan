@@ -35,7 +35,9 @@ struct NameRegisterView: View {
                     Group {
                         if viewModel.temporaryRankText.isEmpty {
                             // インジケーター
-                            progressView
+                            ProgressView()
+                                .progressViewStyle(.circular)
+                                .tint(Color.paper)
                             
                         } else {
                             // ランク表示
@@ -153,12 +155,6 @@ struct NameRegisterView: View {
         .onReceive(viewModel.dismiss) {
             dismissRequestReceiver.subject.send(())
         }
-    }
-    
-    var progressView: some View {
-        ProgressView()
-            .progressViewStyle(.circular)
-            .tint(Color.paper)
     }
 }
 
