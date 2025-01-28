@@ -107,7 +107,10 @@ struct CustomModalModifier: ViewModifier {
                 }
             }
         }
-        .ignoresSafeArea()
+        // SafeAreaを無視しつつ、キーボードの自動避けは有効にしたままにする
+        // （キーボード出現時はSafeArea.bottomの領域が上に広がる挙動になるが、
+        // それは無視しない（=要素が上に押されて避けてくれる）という設定にしている）
+        .ignoresSafeArea(.container)
     }
     
     func executeTransitionAnimation(isAppearing: Bool, _ geometry: GeometryProxy, completion: (() -> Void)? = nil) {
