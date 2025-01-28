@@ -265,6 +265,7 @@
 		59D2D4D72552DE66006DDB70 /* AR-GunMan */ = {
 			isa = PBXGroup;
 			children = (
+				BCFDED3A2D3B46950023DC8A /* App */,
 				BCFDECE92D3B45BD0023DC8A /* Assets.xcassets */,
 				BCFDECB42D3B45BC0023DC8A /* Extensions */,
 				BCFDECB02D3B45BC0023DC8A /* Factories */,
@@ -467,7 +468,6 @@
 		BCFDECE52D3B45BD0023DC8A /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				BCFDED3A2D3B46950023DC8A /* App */,
 				BCFDECBC2D3B45BD0023DC8A /* Common */,
 				BCFDECC02D3B45BD0023DC8A /* Game */,
 				BCFDECC42D3B45BD0023DC8A /* NameRegister */,
