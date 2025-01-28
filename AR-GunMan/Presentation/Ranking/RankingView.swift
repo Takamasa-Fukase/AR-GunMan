@@ -62,10 +62,14 @@ struct RankingView: View {
                 Spacer()
                     .frame(width: 60)
                 
+                Spacer()
+                
                 Text("WORLD RANKING")
                     .font(.custom("Copperplate Bold", size: 30))
                     .lineLimit(1)
                     .minimumScaleFactor(0.5) // 最大50%までは縮小を許可する
+                
+                Spacer()
                 
                 Button {
                     viewModel.closeButtonTapped()
