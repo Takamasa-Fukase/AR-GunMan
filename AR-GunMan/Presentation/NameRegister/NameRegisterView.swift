@@ -120,7 +120,9 @@ struct NameRegisterView: View {
                 } label: {
                     if viewModel.isRegistering {
                         // インジケーター
-                        progressView
+                        ProgressView()
+                            .progressViewStyle(.circular)
+                            .tint(Color.paper)
                         
                     } else {
                         Text("Register!")
