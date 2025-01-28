@@ -27,6 +27,7 @@
 		BC0D54792D432FAE00D69795 /* target_appearance_change.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BC0D546B2D432FAE00D69795 /* target_appearance_change.mp3 */; };
 		BC0D547A2D432FAE00D69795 /* bazooka_appear.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BC0D54602D432FAE00D69795 /* bazooka_appear.mp3 */; };
 		BC0D547B2D432FAE00D69795 /* bazooka_reload.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BC0D54632D432FAE00D69795 /* bazooka_reload.mp3 */; };
+		BC330B2B2D499261007C4501 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = BC330B2A2D499261007C4501 /* FirebaseFirestore */; };
 		BC5F55FE2D3B533500EA397A /* ARShooting in Frameworks */ = {isa = PBXBuildFile; productRef = BC5F55FD2D3B533500EA397A /* ARShooting */; };
 		BC5F56002D3B533500EA397A /* Data in Frameworks */ = {isa = PBXBuildFile; productRef = BC5F55FF2D3B533500EA397A /* Data */; };
 		BC5F56022D3B533500EA397A /* Domain in Frameworks */ = {isa = PBXBuildFile; productRef = BC5F56012D3B533500EA397A /* Domain */; };
@@ -199,6 +200,7 @@
 				BC5F56042D3B533500EA397A /* WeaponControlMotion in Frameworks */,
 				BC5F56002D3B533500EA397A /* Data in Frameworks */,
 				226019EB1C6C0B4EEDECE581 /* Pods_AR_GunMan.framework in Frameworks */,
+				BC330B2B2D499261007C4501 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -527,6 +529,7 @@
 				BC5F55FF2D3B533500EA397A /* Data */,
 				BC5F56012D3B533500EA397A /* Domain */,
 				BC5F56032D3B533500EA397A /* WeaponControlMotion */,
+				BC330B2A2D499261007C4501 /* FirebaseFirestore */,
 			);
 			productName = "AR-GunMan";
 			productReference = 59D2D4D52552DE66006DDB70 /* AR-GunMan Dev.app */;
@@ -602,6 +605,9 @@
 				Base,
 			);
 			mainGroup = 59D2D4CC2552DE66006DDB70;
+			packageReferences = (
+				BC330B292D499261007C4501 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = 59D2D4D62552DE66006DDB70 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1170,7 +1176,23 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		BC330B292D499261007C4501 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.7.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
+		BC330B2A2D499261007C4501 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BC330B292D499261007C4501 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
 		BC5F55FD2D3B533500EA397A /* ARShooting */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ARShooting;
