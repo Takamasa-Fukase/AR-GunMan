@@ -24,7 +24,7 @@ final class GameViewModel {
         case stopDeviceMotionDetection
     }
     
-    private(set) var timeCount: Double = 5.00
+    private(set) var timeCount: Double = 30.00
     private(set) var currentWeaponData: CurrentWeaponData?
     
     var isTutorialViewPresented = false
