@@ -58,11 +58,14 @@ struct RankingView: View {
                 .frame(height: 30)
                 .clipShape(RoundedRectangle(cornerRadius: 5))
             
-            Text("WORLD RANKING")
-                .font(.custom("Copperplate Bold", size: 30))
-            
-            HStack {
+            HStack(spacing: 0) {
                 Spacer()
+                    .frame(width: 60)
+                
+                Text("WORLD RANKING")
+                    .font(.custom("Copperplate Bold", size: 30))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5) // 最大50%までは縮小を許可する
                 
                 Button {
                     viewModel.closeButtonTapped()

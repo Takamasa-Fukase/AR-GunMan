@@ -44,7 +44,7 @@ struct TopView: View {
                             viewModel.howToPlayButtonTapped()
                         }
                     }
-                    .frame(width: (geometry.size.width) * 0.517327)
+                    .frame(width: (geometry.size.width) * 0.54)
                     .frame(maxHeight: .infinity)
                     
                     Image("top_page_pistol_icon", bundle: .main)
