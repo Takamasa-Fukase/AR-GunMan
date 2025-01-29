@@ -10,9 +10,16 @@ let package = Package(
             name: "WeaponControlMotion",
             targets: ["WeaponControlMotion"]),
     ],
+    dependencies: [
+        .package(path: "Core"),
+    ],
     targets: [
         .target(
-            name: "WeaponControlMotion"),
+            name: "WeaponControlMotion",
+            dependencies: [
+                "Core",
+            ]
+        ),
         .testTarget(
             name: "WeaponControlMotionTests",
             dependencies: ["WeaponControlMotion"]),

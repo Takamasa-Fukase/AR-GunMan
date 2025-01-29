@@ -10,9 +10,15 @@ let package = Package(
             name: "ARShooting",
             targets: ["ARShooting"]),
     ],
+    dependencies: [
+        .package(path: "Core"),
+    ],
     targets: [
         .target(
             name: "ARShooting",
+            dependencies: [
+                "Core",
+            ],
             resources: [
                 .process("Resources")
             ]

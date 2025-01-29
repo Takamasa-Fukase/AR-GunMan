@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Core
 import Domain
 
 public final class WeaponRepository: WeaponRepositoryInterface {

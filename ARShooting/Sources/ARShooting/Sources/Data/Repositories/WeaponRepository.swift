@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Core
 
 final class WeaponRepository: WeaponRepositoryInterface {
     private let weaponObjectDataList: [WeaponObjectData] = WeaponObjectDataSource.weaponObjectDataList

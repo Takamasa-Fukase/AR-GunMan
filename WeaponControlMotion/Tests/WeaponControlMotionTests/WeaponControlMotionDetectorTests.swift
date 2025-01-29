@@ -7,6 +7,7 @@
 
 import XCTest
 import CoreMotion
+import Core
 @testable import WeaponControlMotion
 
 final class WeaponControlMotionDetectorTests: XCTestCase {
