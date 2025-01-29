@@ -44,8 +44,8 @@ struct RankingView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .ignoresSafeArea()
-        .task {
-            await viewModel.getRanking()
+        .onAppear {
+            viewModel.onViewAppear()
         }
         .onReceive(viewModel.dismiss) {
             dismissRequestReceiver.subject.send(())

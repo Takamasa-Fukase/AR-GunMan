@@ -9,6 +9,7 @@ import Foundation
 import Observation
 import Combine
 import Domain
+import FirebaseFirestore
 
 @Observable
 final class RankingViewModel {
@@ -22,16 +23,33 @@ final class RankingViewModel {
         self.rankingRepository = rankingRepository
     }
     
-    func getRanking() async {
+    func onViewAppear() {
+        Task {
+            await getRankingAndUpdate()
+        }
+    }
+    
+    func closeButtonTapped() {
+        dismiss.send(())
+    }
+    
+    private func getRankingAndUpdate() async {
         do {
-            rankingList = try await rankingRepository.getRanking()
+//            rankingList = try await rankingRepository.getRanking()
+            rankingList = try await getRanking()
             
         } catch {
             print("getRanking error: \(error)")
         }
     }
     
-    func closeButtonTapped() {
-        dismiss.send(())
+    private func getRanking() async throws -> [Ranking] {
+        let firestoreDB = Firestore.firestore()
+        let docs = try await firestoreDB.collection("worldRanking").getDocuments().documents
+        let rankings = docs.compactMap { queryDocSnapshot in
+            return try? queryDocSnapshot.data(as: Ranking.self)
+        }
+        // スコアの高い順にソート
+        return rankings.sorted(by: { $0.score > $1.score })
     }
 }

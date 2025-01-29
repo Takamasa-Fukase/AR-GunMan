@@ -43,10 +43,6 @@ final class NameRegisterViewModel {
             .store(in: &cancellables)
     }
     
-    func onViewDisappear() {
-        
-    }
-
     func registerButtonTapped() {
         Task {
             let ranking = Ranking(score: score, userName: nameText)
