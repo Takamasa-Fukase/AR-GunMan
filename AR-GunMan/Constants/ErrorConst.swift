@@ -8,7 +8,7 @@
 import Foundation
 
 final class ErrorConst {
-    static let defaultAlertTitle = "WHOOPS, SOMETHING WENT WRONG!"
-    static let defaultCloseButtonTitle = "CLOSE"
-    static let unknownErrorMessage = "UNKNOWN ERROR OCCURRED"
+    static let defaultAlertTitle = "Whoops, something went wrong!"
+    static let defaultCloseButtonTitle = "Close"
+    static let unknownErrorMessage = "Unknown error occurred."
 }
