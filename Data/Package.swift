@@ -11,6 +11,7 @@ let package = Package(
             targets: ["Data"]),
     ],
     dependencies: [
+        .package(path: "Core"),
         .package(path: "Domain"),
         .package(
             url: "https://github.com/firebase/firebase-ios-sdk.git",
@@ -21,6 +22,7 @@ let package = Package(
         .target(
             name: "Data",
             dependencies: [
+                "Core",
                 "Domain",
                 .product(name: "FirebaseFirestore", package: "firebase-ios-sdk"),
             ]

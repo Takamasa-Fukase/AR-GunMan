@@ -28,6 +28,7 @@
 		BC0D547A2D432FAE00D69795 /* bazooka_appear.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BC0D54602D432FAE00D69795 /* bazooka_appear.mp3 */; };
 		BC0D547B2D432FAE00D69795 /* bazooka_reload.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BC0D54632D432FAE00D69795 /* bazooka_reload.mp3 */; };
 		BC2BF8862D49D97700E202F0 /* ErrorConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2BF8852D49D96800E202F0 /* ErrorConst.swift */; };
+		BC2BF8892D49DDE400E202F0 /* Core in Frameworks */ = {isa = PBXBuildFile; productRef = BC2BF8882D49DDE400E202F0 /* Core */; };
 		BC330B2B2D499261007C4501 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = BC330B2A2D499261007C4501 /* FirebaseFirestore */; };
 		BC5F55FE2D3B533500EA397A /* ARShooting in Frameworks */ = {isa = PBXBuildFile; productRef = BC5F55FD2D3B533500EA397A /* ARShooting */; };
 		BC5F56002D3B533500EA397A /* Data in Frameworks */ = {isa = PBXBuildFile; productRef = BC5F55FF2D3B533500EA397A /* Data */; };
@@ -203,6 +204,7 @@
 				BC5F56042D3B533500EA397A /* WeaponControlMotion in Frameworks */,
 				BC5F56002D3B533500EA397A /* Data in Frameworks */,
 				226019EB1C6C0B4EEDECE581 /* Pods_AR_GunMan.framework in Frameworks */,
+				BC2BF8892D49DDE400E202F0 /* Core in Frameworks */,
 				BC330B2B2D499261007C4501 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -543,6 +545,7 @@
 				BC5F56012D3B533500EA397A /* Domain */,
 				BC5F56032D3B533500EA397A /* WeaponControlMotion */,
 				BC330B2A2D499261007C4501 /* FirebaseFirestore */,
+				BC2BF8882D49DDE400E202F0 /* Core */,
 			);
 			productName = "AR-GunMan";
 			productReference = 59D2D4D52552DE66006DDB70 /* AR-GunMan Dev.app */;
@@ -1202,6 +1205,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		BC2BF8882D49DDE400E202F0 /* Core */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Core;
+		};
 		BC330B2A2D499261007C4501 /* FirebaseFirestore */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = BC330B292D499261007C4501 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
