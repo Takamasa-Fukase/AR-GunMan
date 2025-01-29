@@ -69,8 +69,10 @@ final class ResultViewModel {
                 }
                 group.addTask {
                     do {
-                        // ランキングの一覧を取得して代入
-                        self.rankingList = try await self.rankingRepository.getRanking()
+                        // ランキングの一覧を取得
+                        let rankingList = try await self.rankingRepository.getRanking()
+                        // スコアの高い順にソートして代入
+                        self.rankingList = rankingList.sorted(by: { $0.score > $1.score })
                         
                         // 今回のスコアが既存のランキングの中で何位に入り込むかを算出し、
                         // 名前登録画面に受け渡しているsubjectに流す
