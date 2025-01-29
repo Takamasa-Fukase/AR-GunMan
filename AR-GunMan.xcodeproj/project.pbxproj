@@ -27,13 +27,13 @@
 		BC0D54792D432FAE00D69795 /* target_appearance_change.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BC0D546B2D432FAE00D69795 /* target_appearance_change.mp3 */; };
 		BC0D547A2D432FAE00D69795 /* bazooka_appear.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BC0D54602D432FAE00D69795 /* bazooka_appear.mp3 */; };
 		BC0D547B2D432FAE00D69795 /* bazooka_reload.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BC0D54632D432FAE00D69795 /* bazooka_reload.mp3 */; };
-		BC2BF8862D49D97700E202F0 /* ErrorConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2BF8852D49D96800E202F0 /* ErrorConst.swift */; };
 		BC2BF8892D49DDE400E202F0 /* Core in Frameworks */ = {isa = PBXBuildFile; productRef = BC2BF8882D49DDE400E202F0 /* Core */; };
 		BC330B2B2D499261007C4501 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = BC330B2A2D499261007C4501 /* FirebaseFirestore */; };
 		BC5F55FE2D3B533500EA397A /* ARShooting in Frameworks */ = {isa = PBXBuildFile; productRef = BC5F55FD2D3B533500EA397A /* ARShooting */; };
 		BC5F56002D3B533500EA397A /* Data in Frameworks */ = {isa = PBXBuildFile; productRef = BC5F55FF2D3B533500EA397A /* Data */; };
 		BC5F56022D3B533500EA397A /* Domain in Frameworks */ = {isa = PBXBuildFile; productRef = BC5F56012D3B533500EA397A /* Domain */; };
 		BC5F56042D3B533500EA397A /* WeaponControlMotion in Frameworks */ = {isa = PBXBuildFile; productRef = BC5F56032D3B533500EA397A /* WeaponControlMotion */; };
+		BC7FBB7C2D4A434A00911B38 /* ErrorAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7FBB7B2D4A434A00911B38 /* ErrorAlert.swift */; };
 		BC90ECE02D47BD3500B34E4B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC90ECDF2D47BD3400B34E4B /* AppDelegate.swift */; };
 		BCB93BA92C36DA9800DBFC46 /* GoogleService-Info.dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = BCB93BA82C36DA9800DBFC46 /* GoogleService-Info.dev.plist */; };
 		BCFDECFC2D3B45BD0023DC8A /* RepositoryFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECAE2D3B45BC0023DC8A /* RepositoryFactory.swift */; };
@@ -138,8 +138,8 @@
 		BC0D546B2D432FAE00D69795 /* target_appearance_change.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = target_appearance_change.mp3; sourceTree = "<group>"; };
 		BC0D546C2D432FAE00D69795 /* target_hit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = target_hit.mp3; sourceTree = "<group>"; };
 		BC0D546D2D432FAE00D69795 /* western_pistol_fire.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = western_pistol_fire.mp3; sourceTree = "<group>"; };
-		BC2BF8852D49D96800E202F0 /* ErrorConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorConst.swift; sourceTree = "<group>"; };
 		BC2BF8872D49DB9600E202F0 /* Core */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Core; sourceTree = "<group>"; };
+		BC7FBB7B2D4A434A00911B38 /* ErrorAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlert.swift; sourceTree = "<group>"; };
 		BC90ECDF2D47BD3400B34E4B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BCB93BA82C36DA9800DBFC46 /* GoogleService-Info.dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.dev.plist"; sourceTree = "<group>"; };
 		BCFDECAE2D3B45BC0023DC8A /* RepositoryFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryFactory.swift; sourceTree = "<group>"; };
@@ -273,7 +273,6 @@
 			children = (
 				BCFDED3A2D3B46950023DC8A /* App */,
 				BCFDECE92D3B45BD0023DC8A /* Assets.xcassets */,
-				BC2BF8842D49D95C00E202F0 /* Constants */,
 				BCFDECB42D3B45BC0023DC8A /* Extensions */,
 				BCFDECB02D3B45BC0023DC8A /* Factories */,
 				BCB93BAA2C36DE7D00DBFC46 /* FirebaseInfoPlist */,
@@ -342,14 +341,6 @@
 			path = sounds;
 			sourceTree = "<group>";
 		};
-		BC2BF8842D49D95C00E202F0 /* Constants */ = {
-			isa = PBXGroup;
-			children = (
-				BC2BF8852D49D96800E202F0 /* ErrorConst.swift */,
-			);
-			path = Constants;
-			sourceTree = "<group>";
-		};
 		BCB93BAA2C36DE7D00DBFC46 /* FirebaseInfoPlist */ = {
 			isa = PBXGroup;
 			children = (
@@ -388,6 +379,7 @@
 				BCFDECB92D3B45BD0023DC8A /* SoundPlayer.swift */,
 				BCFDECBA2D3B45BD0023DC8A /* StopMotionAnimationView.swift */,
 				BCFDECBB2D3B45BD0023DC8A /* UIBlurEffectViewRepresentable.swift */,
+				BC7FBB7B2D4A434A00911B38 /* ErrorAlert.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -817,6 +809,7 @@
 				BCFDED112D3B45BE0023DC8A /* RankingViewFactory.swift in Sources */,
 				BCFDED1E2D3B45BE0023DC8A /* TutorialView.swift in Sources */,
 				BCFDED032D3B45BD0023DC8A /* CustomModalPresenter.swift in Sources */,
+				BC7FBB7C2D4A434A00911B38 /* ErrorAlert.swift in Sources */,
 				BCFDECFF2D3B45BD0023DC8A /* Double+Extension.swift in Sources */,
 				BCFDED042D3B45BD0023DC8A /* SafariViewControllerRepresentable.swift in Sources */,
 				BCFDED1A2D3B45BE0023DC8A /* TopViewFactory.swift in Sources */,
@@ -832,7 +825,6 @@
 				BCFDED062D3B45BD0023DC8A /* StopMotionAnimationView.swift in Sources */,
 				BCFDED282D3B45BE0023DC8A /* AR_GunManApp.swift in Sources */,
 				BCFDED0E2D3B45BD0023DC8A /* RankingListItem.swift in Sources */,
-				BC2BF8862D49D97700E202F0 /* ErrorConst.swift in Sources */,
 				BCFDED102D3B45BE0023DC8A /* RankingView.swift in Sources */,
 				BCFDED232D3B45BE0023DC8A /* WeaponSelectView.swift in Sources */,
 				BCFDED122D3B45BE0023DC8A /* RankingViewModel.swift in Sources */,
