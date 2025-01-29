@@ -10,9 +10,10 @@ import Domain
 
 struct RankingListView: View {
     let rankingList: [Ranking]
+    @Binding var isLoading: Bool
     
     var body: some View {
-        if rankingList.isEmpty {
+        if isLoading {
             // インジケーター
             ProgressView()
                 .progressViewStyle(.circular)
@@ -41,8 +42,11 @@ struct RankingListView: View {
 
 #Preview {
     CenterPreviewView(backgroundColor: .black) {
-        RankingListView(rankingList: Array<Int>(1...100).map({
-            return .init(score: Double(101 - $0), userName: "ユーザー\($0)")
-        }))
+        RankingListView(
+            rankingList: Array<Int>(1...100).map({
+                return .init(score: Double(101 - $0), userName: "ユーザー\($0)")
+            }),
+            isLoading: .constant(false)
+        )
     }
 }

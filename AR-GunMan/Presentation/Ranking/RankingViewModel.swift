@@ -14,6 +14,8 @@ import FirebaseFirestore
 @Observable
 final class RankingViewModel {
     private(set) var rankingList: [Ranking] = []
+    var isLoading = false
+    var isErrorAlertPresented = false
     
     let dismiss = PassthroughSubject<Void, Never>()
     
@@ -34,6 +36,7 @@ final class RankingViewModel {
     }
     
     private func getRankingAndUpdate() async {
+        isLoading = true
         do {
             let rankingList = try await rankingRepository.getRanking()
             // スコアの高い順にソートして代入
@@ -41,6 +44,8 @@ final class RankingViewModel {
             
         } catch {
             print("getRanking error: \(error)")
+            isErrorAlertPresented = true
         }
+        isLoading = false
     }
 }

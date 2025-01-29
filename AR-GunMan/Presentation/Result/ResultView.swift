@@ -36,13 +36,16 @@ struct ResultView: View {
                         ZStack {
                             ScrollViewReader { scrollProxy in
                                 // ランキング
-                                RankingListView(rankingList: viewModel.rankingList)
+                                RankingListView(
+                                    rankingList: viewModel.rankingList,
+                                    isLoading: $viewModel.isLoading
+                                )
                                 // MEMO: scrollProxyを使用する為この位置で.onReceiveしている
-                                    .onReceive(viewModel.scrollCellToCenter) { index in
-                                        withAnimation {
-                                            scrollProxy.scrollTo(index, anchor: .center)
-                                        }
+                                .onReceive(viewModel.scrollCellToCenter) { index in
+                                    withAnimation {
+                                        scrollProxy.scrollTo(index, anchor: .center)
                                     }
+                                }
                             }
                             
                             RoundedRectangle(cornerRadius: 1)

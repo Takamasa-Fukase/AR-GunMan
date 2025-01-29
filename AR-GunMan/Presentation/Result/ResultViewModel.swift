@@ -14,6 +14,7 @@ import Domain
 final class ResultViewModel {
     let score: Double
     private(set) var rankingList: [Ranking] = []
+    var isLoading = false
     var isNameRegisterViewPresented = false
     
     let showButtons = PassthroughSubject<Void, Never>()
@@ -68,6 +69,7 @@ final class ResultViewModel {
                     }
                 }
                 group.addTask {
+                    self.isLoading = true
                     do {
                         // ランキングの一覧を取得
                         let rankingList = try await self.rankingRepository.getRanking()
@@ -83,6 +85,7 @@ final class ResultViewModel {
                     } catch {
                         print("getRanking error: \(error)")
                     }
+                    self.isLoading = false
                 }
             }
         }

@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct RankingView: View {
-    let viewModel: RankingViewModel
+    @State var viewModel: RankingViewModel
     let dismissRequestReceiver: DismissRequestReceiver
     
     var body: some View {
+        @Bindable var viewModel = viewModel
+        
         GeometryReader { geometry in
             ZStack {
                 ZStack {
@@ -28,7 +30,10 @@ struct RankingView: View {
 
                         ZStack {
                             // ランキング
-                            RankingListView(rankingList: viewModel.rankingList)
+                            RankingListView(
+                                rankingList: viewModel.rankingList,
+                                isLoading: $viewModel.isLoading
+                            )
 
                             // 内側の枠線
                             RoundedRectangle(cornerRadius: 3)
@@ -50,6 +55,18 @@ struct RankingView: View {
         .onReceive(viewModel.dismiss) {
             dismissRequestReceiver.subject.send(())
         }
+        .alert(
+            ErrorConst.defaultAlertTitle,
+            isPresented: $viewModel.isErrorAlertPresented,
+            actions: {
+                Button(ErrorConst.defaultCloseButtonTitle) {
+//                    viewModel.isErrorAlertPresented = false
+                }
+            },
+            message: {
+                Text(ErrorConst.unknownErrorMessage)
+            }
+        )
     }
     
     private var titleView: some View {
