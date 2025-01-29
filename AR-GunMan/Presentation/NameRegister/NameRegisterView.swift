@@ -157,6 +157,10 @@ struct NameRegisterView: View {
         .onReceive(viewModel.dismiss) {
             dismissRequestReceiver.subject.send(())
         }
+        .errorAlert(
+            viewModel.error.error,
+            isPresented: $viewModel.error.isAlertPresented
+        )
     }
 }
 

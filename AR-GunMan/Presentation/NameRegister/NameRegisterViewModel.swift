@@ -16,6 +16,7 @@ final class NameRegisterViewModel {
     private(set) var temporaryRankText = ""
     private(set) var isRegistering = false
     private(set) var isRegisterButtonEnabled = false
+    var error: (error: Error?, isAlertPresented: Bool) = (nil, false)
     var nameText = "" {
         didSet {
             isRegisterButtonEnabled = !nameText.isEmpty
@@ -54,8 +55,7 @@ final class NameRegisterViewModel {
                 dismiss.send(())
                 
             } catch {
-                print("register error: \(error)")
-                // TODO: エラーをアラート表示
+                self.error = (error: error, isAlertPresented: true)
             }
             isRegistering = false
         }

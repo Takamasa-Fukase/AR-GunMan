@@ -190,6 +190,10 @@ struct ResultView: View {
                 }
             )
         }
+        .errorAlert(
+            viewModel.error.error,
+            isPresented: $viewModel.error.isAlertPresented
+        )
     }
     
     private var titleView: some View {

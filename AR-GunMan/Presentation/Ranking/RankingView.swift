@@ -55,17 +55,9 @@ struct RankingView: View {
         .onReceive(viewModel.dismiss) {
             dismissRequestReceiver.subject.send(())
         }
-        .alert(
-            ErrorConst.defaultAlertTitle,
-            isPresented: $viewModel.isErrorAlertPresented,
-            actions: {
-                Button(ErrorConst.defaultCloseButtonTitle) {
-//                    viewModel.isErrorAlertPresented = false
-                }
-            },
-            message: {
-                Text(ErrorConst.unknownErrorMessage)
-            }
+        .errorAlert(
+            viewModel.error.error,
+            isPresented: $viewModel.error.isAlertPresented
         )
     }
     

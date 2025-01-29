@@ -14,8 +14,9 @@ import Domain
 final class ResultViewModel {
     let score: Double
     private(set) var rankingList: [Ranking] = []
-    var isLoading = false
     var isNameRegisterViewPresented = false
+    var isLoading = false
+    var error: (error: Error?, isAlertPresented: Bool) = (nil, false)
     
     let showButtons = PassthroughSubject<Void, Never>()
     let dismissAndNotifyReplayButtonTap = PassthroughSubject<Void, Never>()
@@ -83,7 +84,7 @@ final class ResultViewModel {
                         self.temporaryRankTextSubject.send(temporaryRankText)
 
                     } catch {
-                        print("getRanking error: \(error)")
+                        self.error = (error: error, isAlertPresented: true)
                     }
                     self.isLoading = false
                 }

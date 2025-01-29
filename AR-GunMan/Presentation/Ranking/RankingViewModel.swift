@@ -15,7 +15,7 @@ import FirebaseFirestore
 final class RankingViewModel {
     private(set) var rankingList: [Ranking] = []
     var isLoading = false
-    var isErrorAlertPresented = false
+    var error: (error: Error?, isAlertPresented: Bool) = (nil, false)
     
     let dismiss = PassthroughSubject<Void, Never>()
     
@@ -43,8 +43,7 @@ final class RankingViewModel {
             self.rankingList = rankingList.sorted(by: { $0.score > $1.score })
             
         } catch {
-            print("getRanking error: \(error)")
-            isErrorAlertPresented = true
+            self.error = (error: error, isAlertPresented: true)
         }
         isLoading = false
     }
