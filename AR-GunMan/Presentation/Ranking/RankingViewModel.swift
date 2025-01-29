@@ -35,21 +35,12 @@ final class RankingViewModel {
     
     private func getRankingAndUpdate() async {
         do {
-//            rankingList = try await rankingRepository.getRanking()
-            rankingList = try await getRanking()
+            let rankingList = try await rankingRepository.getRanking()
+            // スコアの高い順にソートして代入
+            self.rankingList = rankingList.sorted(by: { $0.score > $1.score })
             
         } catch {
             print("getRanking error: \(error)")
         }
-    }
-    
-    private func getRanking() async throws -> [Ranking] {
-        let firestoreDB = Firestore.firestore()
-        let docs = try await firestoreDB.collection("worldRanking").getDocuments().documents
-        let rankings = docs.compactMap { queryDocSnapshot in
-            return try? queryDocSnapshot.data(as: Ranking.self)
-        }
-        // スコアの高い順にソート
-        return rankings.sorted(by: { $0.score > $1.score })
     }
 }

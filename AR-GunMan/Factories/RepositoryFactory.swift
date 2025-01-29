@@ -25,6 +25,6 @@ final class RepositoryFactory {
     }
     
     static func create() -> RankingRepositoryInterface {
-        return RankingRepositoryStub()
+        return RankingRepository(firestoreClient: FirestoreClient())
     }
 }
