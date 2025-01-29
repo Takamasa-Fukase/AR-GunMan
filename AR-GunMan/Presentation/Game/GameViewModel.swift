@@ -31,6 +31,7 @@ final class GameViewModel {
     var isWeaponSelectViewPresented = false
     var isResultViewPresented = false
     var isWeaponChangeButtonEnabled = false
+    var error: (error: Error?, isAlertPresented: Bool) = (nil, false)
     
     let arControllerInputEvent = PassthroughSubject<ARControllerInputEventType, Never>()
     let motionDetectorInputEvent = PassthroughSubject<MotionDetectorInputEventType, Never>()
@@ -66,7 +67,7 @@ final class GameViewModel {
             showSelectedWeapon(selectedWeaponData)
             
         } catch {
-            print("defaultWeaponGetUseCase error: \(error)")
+            self.error = (error: error, isAlertPresented: true)
         }
         
         arControllerInputEvent.send(.runSceneSession)
@@ -122,7 +123,7 @@ final class GameViewModel {
             showSelectedWeapon(selectedWeaponData)
             
         } catch {
-            print("WeaponDetailGetRequest error: \(error)")
+            self.error = (error: error, isAlertPresented: true)
         }
     }
     

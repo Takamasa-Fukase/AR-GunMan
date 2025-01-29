@@ -66,7 +66,7 @@ final class ResultViewModel {
                         self.isNameRegisterViewPresented = true
                         
                     } catch {
-                        print("showNameRegisterView error: \(error)")
+                        self.error = (error: error, isAlertPresented: true)
                     }
                 }
                 group.addTask {
