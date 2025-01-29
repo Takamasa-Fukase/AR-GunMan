@@ -244,8 +244,8 @@
 		59D2D4CC2552DE66006DDB70 = {
 			isa = PBXGroup;
 			children = (
-				BC2BF8872D49DB9600E202F0 /* Core */,
 				BC067F742D3B4CA400E58C56 /* ARShooting */,
+				BC2BF8872D49DB9600E202F0 /* Core */,
 				BC067F762D3B4CEA00E58C56 /* Data */,
 				BC067F772D3B4CF900E58C56 /* Domain */,
 				BC067F752D3B4CD700E58C56 /* WeaponControlMotion */,
@@ -271,18 +271,18 @@
 		59D2D4D72552DE66006DDB70 /* AR-GunMan */ = {
 			isa = PBXGroup;
 			children = (
-				BC2BF8842D49D95C00E202F0 /* Constants */,
 				BCFDED3A2D3B46950023DC8A /* App */,
 				BCFDECE92D3B45BD0023DC8A /* Assets.xcassets */,
+				BC2BF8842D49D95C00E202F0 /* Constants */,
 				BCFDECB42D3B45BC0023DC8A /* Extensions */,
 				BCFDECB02D3B45BC0023DC8A /* Factories */,
+				BCB93BAA2C36DE7D00DBFC46 /* FirebaseInfoPlist */,
+				59D2D4E62552DE67006DDB70 /* Info.plist */,
+				59D2D4E32552DE67006DDB70 /* LaunchScreen.storyboard */,
 				BCFDECE52D3B45BD0023DC8A /* Presentation */,
 				BCFDECE82D3B45BD0023DC8A /* Preview Content */,
 				BC0D545E2D432F8600D69795 /* Resources */,
 				BCFDECFB2D3B45BD0023DC8A /* Utilities */,
-				BCB93BAA2C36DE7D00DBFC46 /* FirebaseInfoPlist */,
-				59D2D4E32552DE67006DDB70 /* LaunchScreen.storyboard */,
-				59D2D4E62552DE67006DDB70 /* Info.plist */,
 			);
 			path = "AR-GunMan";
 			sourceTree = "<group>";
