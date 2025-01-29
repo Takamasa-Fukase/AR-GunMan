@@ -138,6 +138,7 @@
 		BC0D546C2D432FAE00D69795 /* target_hit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = target_hit.mp3; sourceTree = "<group>"; };
 		BC0D546D2D432FAE00D69795 /* western_pistol_fire.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = western_pistol_fire.mp3; sourceTree = "<group>"; };
 		BC2BF8852D49D96800E202F0 /* ErrorConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorConst.swift; sourceTree = "<group>"; };
+		BC2BF8872D49DB9600E202F0 /* Core */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Core; sourceTree = "<group>"; };
 		BC90ECDF2D47BD3400B34E4B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BCB93BA82C36DA9800DBFC46 /* GoogleService-Info.dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.dev.plist"; sourceTree = "<group>"; };
 		BCFDECAE2D3B45BC0023DC8A /* RepositoryFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryFactory.swift; sourceTree = "<group>"; };
@@ -241,6 +242,7 @@
 		59D2D4CC2552DE66006DDB70 = {
 			isa = PBXGroup;
 			children = (
+				BC2BF8872D49DB9600E202F0 /* Core */,
 				BC067F742D3B4CA400E58C56 /* ARShooting */,
 				BC067F762D3B4CEA00E58C56 /* Data */,
 				BC067F772D3B4CF900E58C56 /* Domain */,
