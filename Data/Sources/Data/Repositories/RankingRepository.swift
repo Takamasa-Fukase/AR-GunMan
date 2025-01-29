@@ -6,13 +6,25 @@
 //
 
 import Foundation
+import Domain
 
-//final class RankingRepository: RankingRepositoryInterface {
-//    func getRanking() -> [Ranking] {
-//        
-//    }
-//    
-//    func registerRanking(_ ranking: Ranking) {
-//        
-//    }
-//}
+final class RankingRepository: RankingRepositoryInterface {
+    private let firestoreClient: FirestoreClient
+    
+    init(firestoreClient: FirestoreClient) {
+        self.firestoreClient = firestoreClient
+    }
+    
+    func getRanking() async throws -> [Ranking] {
+        return try await firestoreClient
+            .getItems(collectionPath: APIConst.WORLD_RANKING)
+    }
+    
+    func registerRanking(_ ranking: Ranking) async throws {
+        try await firestoreClient
+            .addItem(
+                collectionPath: APIConst.WORLD_RANKING,
+                requestEntity: ranking
+            )
+    }
+}
