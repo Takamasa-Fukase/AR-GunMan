@@ -11,13 +11,18 @@ let package = Package(
             targets: ["Data"]),
     ],
     dependencies: [
-        .package(path: "Domain")
+        .package(path: "Domain"),
+        .package(
+            url: "https://github.com/firebase/firebase-ios-sdk.git",
+            .upToNextMinor(from: .init(11, 7, 0))
+        )
     ],
     targets: [
         .target(
             name: "Data",
             dependencies: [
-                "Domain"
+                "Domain",
+                .product(name: "FirebaseFirestore", package: "firebase-ios-sdk"),
             ]
         ),
         .testTarget(
