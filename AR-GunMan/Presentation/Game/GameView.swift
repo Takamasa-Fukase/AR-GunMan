@@ -122,7 +122,7 @@ struct GameView: View {
             SoundPlayer.shared.play(soundType)
         }
         // チュートリアル画面への遷移
-        .sheet(
+        .fullScreenCover(
             isPresented: $viewModel.isTutorialViewPresented,
             onDismiss: {
                 // チュートリアルの完了を通知
@@ -139,7 +139,7 @@ struct GameView: View {
             .presentationBackground(.clear)
         }
         // 武器選択画面に遷移
-        .sheet(isPresented: $viewModel.isWeaponSelectViewPresented) {
+        .fullScreenCover(isPresented: $viewModel.isWeaponSelectViewPresented) {
             WeaponSelectViewFactory.create(
                 initialDisplayWeaponId: viewModel.currentWeaponData?.id ?? 0,
                 weaponSelected: { weaponId in
@@ -151,7 +151,7 @@ struct GameView: View {
             .ignoresSafeArea()
         }
         // 結果画面に遷移
-        .sheet(isPresented: $viewModel.isResultViewPresented) {
+        .fullScreenCover(isPresented: $viewModel.isResultViewPresented) {
             ResultViewFactory.create(
                 score: viewModel.score,
                 replayButtonTapped: {

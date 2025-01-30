@@ -57,7 +57,7 @@ struct TopView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             // ゲーム画面への遷移
-            .sheet(isPresented: $viewModel.isGameViewPresented) {
+            .fullScreenCover(isPresented: $viewModel.isGameViewPresented) {
                 GameViewFactory.create(frame: geometry.frame(in: .global))
             }
         }
@@ -82,7 +82,7 @@ struct TopView: View {
             }
         )
         // 設定画面への遷移
-        .sheet(isPresented: $viewModel.isSettingsViewPresented) {
+        .fullScreenCover(isPresented: $viewModel.isSettingsViewPresented) {
             SettingsViewFactory.create()
         }
         // チュートリアル画面への遷移
