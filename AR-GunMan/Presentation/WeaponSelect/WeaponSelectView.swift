@@ -24,27 +24,19 @@ struct WeaponSelectView: View {
 }
 
 struct WeaponSelectViewControllerRepresentable: UIViewControllerRepresentable {
-    private var weaponSelected: (Int) -> Void
-    private var weaponListItems: [WeaponListItem]
+    let weaponSelected: (Int) -> Void
+    let weaponListItems: [WeaponListItem]
     @Environment(\.dismiss) private var dismiss
     
-    init(
-        weaponSelected: @escaping (Int) -> Void,
-        weaponListItems: [WeaponListItem]
-    ) {
-        self.weaponSelected = weaponSelected
-        self.weaponListItems = weaponListItems
-    }
-    
     func makeUIViewController(context: Context) -> WeaponSelectViewController {
-        let weaponSelectVC = WeaponSelectViewController()
-        weaponSelectVC.weaponSelected = { weaponId in
-            // このViewの利用側へ選択されたweaponIdをコールバック
-            weaponSelected(weaponId)
-            // 画面を閉じる
-            dismiss()
-        }
-        return weaponSelectVC
+        return WeaponSelectViewController(
+            weaponSelected: { weaponId in
+                // このViewの利用側へ選択されたweaponIdをコールバック
+                weaponSelected(weaponId)
+                // 画面を閉じる
+                dismiss()
+            }
+        )
     }
     
     func updateUIViewController(_ uiViewController: WeaponSelectViewController, context: Context) {
