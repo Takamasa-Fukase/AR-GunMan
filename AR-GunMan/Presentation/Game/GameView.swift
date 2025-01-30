@@ -139,7 +139,7 @@ struct GameView: View {
             .presentationBackground(.clear)
         }
         // 武器選択画面に遷移
-        .fullScreenCover(isPresented: $viewModel.isWeaponSelectViewPresented) {
+        .sheet(isPresented: $viewModel.isWeaponSelectViewPresented) {
             WeaponSelectViewFactory.create(
                 initialDisplayWeaponId: viewModel.currentWeaponData?.id ?? 0,
                 weaponSelected: { weaponId in
