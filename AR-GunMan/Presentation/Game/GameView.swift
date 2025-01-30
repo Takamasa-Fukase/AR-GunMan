@@ -96,6 +96,7 @@ struct GameView: View {
                     .foregroundStyle(ColorTypeConverter.fromColorType(viewModel.currentWeaponData?.resources.sightImageColorType ?? .red))
             }
         }
+        .background(Color.black)
         .onAppear {
             viewModel.onViewAppear()
         }
