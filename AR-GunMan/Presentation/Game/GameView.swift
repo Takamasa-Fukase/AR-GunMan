@@ -71,24 +71,30 @@ struct GameView: View {
                 
                 Spacer()
                 
-                // 弾数画像
-                HStack(spacing: 0) {
-                    Image(viewModel.currentWeaponData?.bulletsCountImageName() ?? "")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 210, height: 70, alignment: .bottom)
-                    
-                    Spacer()
+                // 武器変更画面の表示中は邪魔になって見ずらいので隠す
+                if !viewModel.isWeaponSelectViewPresented {
+                    // 弾数画像
+                    HStack(spacing: 0) {
+                        Image(viewModel.currentWeaponData?.bulletsCountImageName() ?? "")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 210, height: 70, alignment: .bottom)
+                        
+                        Spacer()
+                    }
                 }
             }
             
-            // 照準画像
-            Image(viewModel.currentWeaponData?.resources.sightImageName ?? "")
-                .renderingMode(.template)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 100, height: 100)
-                .foregroundStyle(ColorTypeConverter.fromColorType(viewModel.currentWeaponData?.resources.sightImageColorType ?? .red))
+            // 武器変更画面の表示中は邪魔になって見ずらいので隠す
+            if !viewModel.isWeaponSelectViewPresented {
+                // 照準画像
+                Image(viewModel.currentWeaponData?.resources.sightImageName ?? "")
+                    .renderingMode(.template)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 100, height: 100)
+                    .foregroundStyle(ColorTypeConverter.fromColorType(viewModel.currentWeaponData?.resources.sightImageColorType ?? .red))
+            }
         }
         .onAppear {
             viewModel.onViewAppear()
