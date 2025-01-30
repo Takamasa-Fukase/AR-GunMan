@@ -14,18 +14,16 @@ public final class WeaponRepository: WeaponRepositoryInterface {
     
     public init() {}
     
-    public func get(by id: Int) throws -> Weapon {
+    public func get(by id: Int) -> Weapon {
         guard let weapon = weapons.first(where: { $0.id == id }) else {
-            //　エラーをthrowする
-            throw CustomError.other(message: "武器が存在しません id: \(id)")
+            fatalError("WeaponDataSourceにid: \(id)の武器が存在しません")
         }
         return weapon
     }
     
-    public func getDefault() throws -> Weapon {
+    public func getDefault() -> Weapon {
         guard let weapon = weapons.first(where: { $0.isDefault }) else {
-            //　エラーをthrowする
-            throw CustomError.other(message: "デフォルトの武器が存在しません")
+            fatalError("WeaponDataSourceにisDefault=trueの武器が存在しません")
         }
         return weapon
     }

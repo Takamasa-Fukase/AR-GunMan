@@ -162,10 +162,6 @@ struct GameView: View {
                 }
             )
         }
-        .errorAlert(
-            viewModel.error.error,
-            isPresented: $viewModel.error.isAlertPresented
-        )
         .id(gameViewId)
     }
     

@@ -31,7 +31,6 @@ final class GameViewModel {
     var isWeaponSelectViewPresented = false
     var isResultViewPresented = false
     var isWeaponChangeButtonEnabled = false
-    var error: (error: Error?, isAlertPresented: Bool) = (nil, false)
     
     let arControllerInputEvent = PassthroughSubject<ARControllerInputEventType, Never>()
     let motionDetectorInputEvent = PassthroughSubject<MotionDetectorInputEventType, Never>()
@@ -62,13 +61,8 @@ final class GameViewModel {
     
     // MARK: ViewからのInput
     func onViewAppear() {
-        do {
-            let selectedWeaponData = try weaponResourceGetUseCase.getDefaultWeaponDetail()
-            showSelectedWeapon(selectedWeaponData)
-            
-        } catch {
-            self.error = (error: error, isAlertPresented: true)
-        }
+        let selectedWeaponData = weaponResourceGetUseCase.getDefaultWeaponDetail()
+        showSelectedWeapon(selectedWeaponData)
         
         arControllerInputEvent.send(.runSceneSession)
         
@@ -118,13 +112,8 @@ final class GameViewModel {
         // 既存のリロードをキャンセルする
         weaponReloadCanceller.isCancelled = true
         
-        do {
-            let selectedWeaponData = try weaponResourceGetUseCase.getWeaponDetail(of: weaponId)
-            showSelectedWeapon(selectedWeaponData)
-            
-        } catch {
-            self.error = (error: error, isAlertPresented: true)
-        }
+        let selectedWeaponData = weaponResourceGetUseCase.getWeaponDetail(of: weaponId)
+        showSelectedWeapon(selectedWeaponData)
     }
     
     func targetHit() {
