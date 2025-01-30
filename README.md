@@ -1,7 +1,7 @@
 # AR-GunMan
 
 AR-GunMan is an excellent intuitive shooting game application written in Swift with ARKit and CoreMotion.
-I promise you that your boring days at home would be extreme sensational.
+I promise you that your boring days at home would be extremely sensational.
 
 # Demo
 
@@ -26,4 +26,5 @@ https://apps.apple.com/jp/app/ar-gunman/id1542082005
 # Author
 
 * Takamasa Fukase (Ultra-Fukase)
-* ultrafukase@gmail.com
+* https://www.instagram.com/takamasa_fukase/
+* https://www.youtube.com/@UltraFukaseGekishibu
