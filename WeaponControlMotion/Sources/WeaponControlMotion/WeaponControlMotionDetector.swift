@@ -1,6 +1,6 @@
 //
 //  WeaponControlMotionDetector.swift
-//  Sample_AR-GunMan_Replace
+//  WeaponControlMotion
 //
 //  Created by ウルトラ深瀬 on 16/11/24.
 //

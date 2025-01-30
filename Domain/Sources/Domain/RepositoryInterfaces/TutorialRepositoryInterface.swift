@@ -1,6 +1,6 @@
 //
 //  TutorialRepositoryInterface.swift
-//  Sample_AR-GunMan_Replace
+//  Domain
 //
 //  Created by ウルトラ深瀬 on 11/11/24.
 //

@@ -1,6 +1,6 @@
 //
 //  WeaponListItem.swift
-//  WeaponFiringSimulator
+//  Domain
 //
 //  Created by ウルトラ深瀬 on 14/11/24.
 //

@@ -1,6 +1,6 @@
 //
 //  PermissionRepository.swift
-//  Sample_AR-GunMan_Replace_SwiftUI
+//  Data
 //
 //  Created by ウルトラ深瀬 on 21/12/24.
 //

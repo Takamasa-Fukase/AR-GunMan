@@ -1,6 +1,6 @@
 //
 //  DummyCMData.swift.swift
-//
+//  WeaponControlMotionTests
 //
 //  Created by ウルトラ深瀬 on 21/12/24.
 //

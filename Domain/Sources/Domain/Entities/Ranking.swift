@@ -1,6 +1,6 @@
 //
 //  Ranking.swift
-//  AR-GunMan
+//  Domain
 //
 //  Created by ウルトラ深瀬 on 2022/01/31.
 //

@@ -1,6 +1,6 @@
 //
 //  RankingRepositoryInterface.swift
-//  Sample_AR-GunMan_Replace_SwiftUI
+//  Domain
 //
 //  Created by ウルトラ深瀬 on 10/1/25.
 //

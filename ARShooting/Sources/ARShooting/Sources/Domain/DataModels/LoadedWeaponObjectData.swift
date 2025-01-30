@@ -1,6 +1,6 @@
 //
 //  LoadedWeaponObjectData.swift
-//  Sample_AR-GunMan_Replace
+//  ARShooting
 //
 //  Created by ウルトラ深瀬 on 15/11/24.
 //

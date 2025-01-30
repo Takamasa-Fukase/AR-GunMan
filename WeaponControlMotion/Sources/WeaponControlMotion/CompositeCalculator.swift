@@ -1,6 +1,6 @@
 //
 //  CompositeCalculator.swift
-//  AR-GunMan
+//  WeaponControlMotion
 //
 //  Created by ウルトラ深瀬 on 29/5/24.
 //

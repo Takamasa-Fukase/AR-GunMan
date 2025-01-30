@@ -1,6 +1,6 @@
 //
 //  WeaponControlMotionDetectorTests.swift
-//  
+//  WeaponControlMotionTests
 //
 //  Created by ウルトラ深瀬 on 20/12/24.
 //
