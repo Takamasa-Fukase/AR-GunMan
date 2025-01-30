@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Core
 import FirebaseFirestore
 
 public final class FirestoreClient {
@@ -14,21 +15,27 @@ public final class FirestoreClient {
     public init() {}
     
     public func getItems<ResponseEntity: Decodable>(collectionPath: String) async throws -> [ResponseEntity] {
-        // TODO: エラーをそのまま流すのではなく、ここでCustomErrorに変換する
-        return try await db
-            .collection(collectionPath)
-            .getDocuments()
-            .documents
-            .compactMap { queryDocSnapshot in
-                return try? queryDocSnapshot.data(as: ResponseEntity.self)
-            }
+        do {
+            return try await db
+                .collection(collectionPath)
+                .getDocuments()
+                .documents
+                .map { queryDocSnapshot in
+                    return try queryDocSnapshot.data(as: ResponseEntity.self)
+                }
+        } catch {
+            throw CustomError.apiClientError(error)
+        }
     }
     
     public func addItem(collectionPath: String, requestEntity: Encodable) async throws {
-        // TODO: エラーをそのまま流すのではなく、ここでCustomErrorに変換する
-        try await db
-            .collection(collectionPath)
-            .document()
-            .setData(requestEntity.toJson())
+        do {
+            try await db
+                .collection(collectionPath)
+                .document()
+                .setData(requestEntity.toJson())
+        } catch {
+            throw CustomError.apiClientError(error)
+        }
     }
 }
