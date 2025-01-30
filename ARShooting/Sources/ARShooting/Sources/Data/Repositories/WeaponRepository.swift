@@ -11,10 +11,9 @@ import Core
 final class WeaponRepository: WeaponRepositoryInterface {
     private let weaponObjectDataList: [WeaponObjectData] = WeaponObjectDataSource.weaponObjectDataList
     
-    func getWeaponObjectData(by id: Int) throws -> WeaponObjectData {
+    func getWeaponObjectData(by id: Int) -> WeaponObjectData {
         guard let weaponObjectData = weaponObjectDataList.first(where: { $0.weaponId == id }) else {
-            // エラーをthrowする
-            throw CustomError.other(message: "武器が存在しません id: \(id)")
+            fatalError("WeaponObjectDataSourceにid: \(id)の武器が存在しません")
         }
         return weaponObjectData
     }

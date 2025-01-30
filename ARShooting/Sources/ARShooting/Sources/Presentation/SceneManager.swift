@@ -164,15 +164,10 @@ extension SceneManager: SceneManagerInterface {
     func showWeaponObject(weaponId: Int) {
         // weaponIdを使ってDataSourceから該当のWeaponObjectDataを取り出す
         let repository = WeaponRepository()
-        do {
-            let objectData = try repository.getWeaponObjectData(by: weaponId)
-            currentWeaponId = objectData.weaponId
-            removeOtherWeapons(except: objectData.weaponId)
-            handleObjectLoadNecessity(objectData: objectData)
-            
-        } catch {
-            print("getWeaponObjectData error: \(error)")
-        }
+        let objectData = repository.getWeaponObjectData(by: weaponId)
+        currentWeaponId = objectData.weaponId
+        removeOtherWeapons(except: objectData.weaponId)
+        handleObjectLoadNecessity(objectData: objectData)
     }
     
     func renderWeaponFiring() {

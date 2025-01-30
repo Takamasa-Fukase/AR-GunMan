@@ -8,5 +8,5 @@
 import Foundation
 
 protocol WeaponRepositoryInterface {
-    func getWeaponObjectData(by id: Int) throws -> WeaponObjectData
+    func getWeaponObjectData(by id: Int) -> WeaponObjectData
 }
