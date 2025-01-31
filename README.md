@@ -1,7 +1,8 @@
 # AR-GunMan
 
-AR-GunMan is an excellent intuitive shooting game application for iOS written in Swift with ARKit and CoreMotion.
-I promise you that your boring days at home would be extremely sensational.
+AR-GunManはターゲットに向かって端末を振ったり、回転させたりすることで直感的に武器を操作できるARシューティングゲームです。
+
+iOSプラットフォーム向けにSwiftとARKit、CoreMotionを用いて開発されています。
 
 ### See Also
 * [AR-GunMan-Android](https://github.com/Takamasa-Fukase/AR-GunMan-Android)
