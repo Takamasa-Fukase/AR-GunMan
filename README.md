@@ -11,12 +11,14 @@ iOSプラットフォーム向けにSwiftとARKit、CoreMotionを用いて開発
 # Demo
 
 ### Video
-https://user-images.githubusercontent.com/58412688/155360010-e0dc3a8f-fa5c-49fd-bfd5-cc0ae6f66846.mov
+https://github.com/user-attachments/assets/d0370886-e9ef-4480-a99f-7301d9929bb8
 
 ### Images
 ![AR-GunMan_demo_image1](https://user-images.githubusercontent.com/58412688/155363994-46f9a5df-e486-4c1d-ad46-dea487d13d77.png)
 ![AR-GunMan_demo_image2](https://user-images.githubusercontent.com/58412688/155363998-05b6b3b9-5335-450e-b3f5-99ffac815314.png)
 ![AR-GunMan_demo_image3](https://github.com/user-attachments/assets/c65abc43-169d-47ea-84f1-5da72d3553c9)
+![AR-GunMan_demo_image4](https://github.com/user-attachments/assets/d5d1a41f-e3f0-4097-88fc-12fb98d8f4e6)
+![AR-GunMan_demo_image5](https://github.com/user-attachments/assets/ab826857-b46f-495e-a70e-36f8d7562e32)
 
 # Download
 
