@@ -22,7 +22,7 @@ https://github.com/user-attachments/assets/d0370886-e9ef-4480-a99f-7301d9929bb8
 
 # Download
 
-https://apps.apple.com/jp/app/ar-gunman/id1542082005
+[AppStoreでAR-GunManをダウンロード](https://apps.apple.com/jp/app/ar-gunman/id1542082005)
 
 [![AR-GunMan_appicon](https://github.com/user-attachments/assets/6e4635c5-474c-4d6a-8adc-ede5ee721eee)](https://apps.apple.com/jp/app/ar-gunman/id1542082005)
 
