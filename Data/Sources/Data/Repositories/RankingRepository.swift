@@ -9,11 +9,9 @@ import Foundation
 import Domain
 
 public final class RankingRepository: RankingRepositoryInterface {
-    private let firestoreClient: FirestoreClient
+    private let firestoreClient = FirestoreClient()
     
-    public init(firestoreClient: FirestoreClient) {
-        self.firestoreClient = firestoreClient
-    }
+    public init() {}
     
     public func getRanking() async throws -> [Ranking] {
         return try await firestoreClient
