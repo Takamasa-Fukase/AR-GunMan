@@ -30,9 +30,16 @@ https://github.com/user-attachments/assets/d0370886-e9ef-4480-a99f-7301d9929bb8
 
 # Architecture
 
-### RxSwift + MVVM
+### モジュール構成
+SwiftPackageを用いたマルチモジュール構成になっています。
+Data・Domain層、大きな機能であるAR実装部分、CoreMotionによる武器の操作モーション関連をパッケージとして切り出してそれぞれメインプロジェクトから呼び出して使用します。
 
-![AR-GunMan_Architecture](https://user-images.githubusercontent.com/58412688/155384096-484689ce-6b6c-48df-b8ea-f1e9cd9427ff.png)
+![AR-GunManモジュール構成図](https://github.com/user-attachments/assets/93ed7f0a-031d-40fe-8209-ab20fa7f3187)
+
+### アーキテクチャ構成
+クリーンアーキテクチャをベースとし、Presentation層はSwiftUIとObservation+Combineを用いたMVVM構成としています。
+
+![AR-GunManアーキテクチャ図](https://github.com/user-attachments/assets/e00a1757-1a06-4f7f-8caf-942ef981f108)
 
 # Author
 
