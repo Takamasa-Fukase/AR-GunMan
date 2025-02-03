@@ -32,7 +32,8 @@ https://github.com/user-attachments/assets/d0370886-e9ef-4480-a99f-7301d9929bb8
 
 ### モジュール構成
 SwiftPackageを用いたマルチモジュール構成になっています。
-Data・Domain層、大きな機能であるAR実装部分、CoreMotionによる武器の操作モーション関連をパッケージとして切り出してそれぞれメインプロジェクトから呼び出して使用します。
+
+Data層・Domain層、大きな機能であるAR実装部分、CoreMotionによる武器の操作モーション関連をパッケージとして切り出してそれぞれメインプロジェクトから呼び出して使用しています。
 
 ![AR-GunManモジュール構成図](https://github.com/user-attachments/assets/93ed7f0a-031d-40fe-8209-ab20fa7f3187)
 
