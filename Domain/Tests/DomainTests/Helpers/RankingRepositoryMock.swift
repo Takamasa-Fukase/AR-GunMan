@@ -1,5 +1,5 @@
 //
-//  RankingRepositoryStub.swift
+//  RankingRepositoryMock.swift
 //  Domain
 //
 //  Created by ウルトラ深瀬 on 4/2/25.
@@ -7,7 +7,7 @@
 
 import Domain
 
-final class RankingRepositorySpyStub: RankingRepositoryInterface {
+final class RankingRepositoryMock: RankingRepositoryInterface {
     var rankingList: [Ranking] = [
         .init(score: 9.000, userName: ""),
         .init(score: 100.00, userName: ""),

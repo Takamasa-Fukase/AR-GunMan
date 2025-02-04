@@ -9,20 +9,20 @@ import XCTest
 @testable import Domain
 
 final class RankingUseCaseTests: XCTestCase {
-    private var rankingRepositorySpyStub: RankingRepositorySpyStub!
+    private var rankingRepositoryMock: RankingRepositoryMock!
     private var rankingUseCase: RankingUseCase!
     
     override func setUp() {
-        rankingRepositorySpyStub = .init()
-        rankingUseCase = .init(rankingRepository: rankingRepositorySpyStub)
+        rankingRepositoryMock = .init()
+        rankingUseCase = .init(rankingRepository: rankingRepositoryMock)
     }
     
     override func tearDown() {
-        rankingRepositorySpyStub = nil
+        rankingRepositoryMock = nil
         rankingUseCase = nil
     }
     
-    func test_hoge() {
+    func test_getSortedRanking_() {
         
     }
 }
