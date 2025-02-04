@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Ranking: Codable, Identifiable {
+public struct Ranking: Codable, Identifiable, Equatable {
     public let id = UUID()
     public let score: Double
     public let userName: String
