@@ -14,7 +14,7 @@ public protocol WeaponResourceGetUseCaseInterface {
 }
 
 public final class WeaponResourceGetUseCase {
-    let weaponRepository: WeaponRepositoryInterface
+    private let weaponRepository: WeaponRepositoryInterface
     
     public init(weaponRepository: WeaponRepositoryInterface) {
         self.weaponRepository = weaponRepository
