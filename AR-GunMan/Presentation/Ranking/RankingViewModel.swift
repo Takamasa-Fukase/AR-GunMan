@@ -19,10 +19,10 @@ final class RankingViewModel {
     
     let dismiss = PassthroughSubject<Void, Never>()
     
-    private let rankingRepository: RankingRepositoryInterface
-    
-    init(rankingRepository: RankingRepositoryInterface) {
-        self.rankingRepository = rankingRepository
+    private let rankingUseCase: RankingUseCaseInterface
+
+    init(rankingUseCase: RankingUseCaseInterface) {
+        self.rankingUseCase = rankingUseCase
     }
     
     func onViewAppear() {
@@ -38,9 +38,7 @@ final class RankingViewModel {
     private func getRankingAndUpdate() async {
         isLoading = true
         do {
-            let rankingList = try await rankingRepository.getRanking()
-            // スコアの高い順にソートして代入
-            self.rankingList = rankingList.sorted(by: { $0.score > $1.score })
+            rankingList = try await rankingUseCase.getSortedRanking()
             
         } catch {
             self.error = (error: error, isAlertPresented: true)

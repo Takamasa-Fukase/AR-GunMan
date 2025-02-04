@@ -24,14 +24,14 @@ final class ResultViewModel {
     let scrollCellToCenter = PassthroughSubject<Int, Never>()
     let temporaryRankTextSubject = CurrentValueSubject<String, Never>("")
     
-    private let rankingRepository: RankingRepositoryInterface
+    private let rankingUseCase: RankingUseCaseInterface
     private var temporaryRankIndex = 0
     
     init(
-        rankingRepository: RankingRepositoryInterface,
+        rankingUseCase: RankingUseCaseInterface,
         score: Double
     ) {
-        self.rankingRepository = rankingRepository
+        self.rankingUseCase = rankingUseCase
         self.score = score
     }
     
@@ -72,9 +72,7 @@ final class ResultViewModel {
                 group.addTask {
                     self.isLoading = true
                     do {
-                        let rankingList = try await self.rankingRepository.getRanking()
-                        self.rankingList = rankingList.sorted(by: { $0.score > $1.score })
-                        
+                        self.rankingList = try await self.rankingUseCase.getSortedRanking()
                         self.calculateRankAndNotify()
 
                     } catch {

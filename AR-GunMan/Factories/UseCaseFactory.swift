@@ -13,15 +13,19 @@ final class UseCaseFactory {
         return GameTimerCreateUseCase()
     }
     
+    static func create() -> RankingUseCaseInterface {
+        return RankingUseCase(rankingRepository: RepositoryFactory.create())
+    }
+    
+    static func create() -> WeaponActionExecuteUseCaseInterface {
+        return WeaponActionExecuteUseCase(weaponStatusCheckUseCase: create())
+    }
+    
     static func create() -> WeaponResourceGetUseCaseInterface {
         return WeaponResourceGetUseCase(weaponRepository: RepositoryFactory.create())
     }
     
     static func create() -> WeaponStatusCheckUseCaseInterface {
         return WeaponStatusCheckUseCase()
-    }
-    
-    static func create() -> WeaponActionExecuteUseCaseInterface {
-        return WeaponActionExecuteUseCase(weaponStatusCheckUseCase: create())
     }
 }

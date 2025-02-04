@@ -26,15 +26,15 @@ final class NameRegisterViewModel {
     let notifyRegistrationCompletion = PassthroughSubject<Ranking, Never>()
     let dismiss = PassthroughSubject<Void, Never>()
     
-    private let rankingRepository: RankingRepositoryInterface
+    private let rankingUseCase: RankingUseCaseInterface
     private var cancellables = Set<AnyCancellable>()
     
     init(
-        rankingRepository: RankingRepositoryInterface,
+        rankingUseCase: RankingUseCaseInterface,
         score: Double,
         temporaryRankTextSubject: CurrentValueSubject<String, Never>
     ) {
-        self.rankingRepository = rankingRepository
+        self.rankingUseCase = rankingUseCase
         self.score = score
         
         temporaryRankTextSubject
@@ -50,7 +50,7 @@ final class NameRegisterViewModel {
             
             isRegistering = true
             do {
-                try await rankingRepository.registerRanking(ranking)
+                try await rankingUseCase.registerRanking(ranking)
                 notifyRegistrationCompletion.send(ranking)
                 dismiss.send(())
                 

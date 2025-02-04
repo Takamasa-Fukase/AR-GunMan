@@ -17,7 +17,7 @@ final class NameRegisterViewFactory {
         onRegistered: @escaping (Ranking) -> Void
     ) -> NameRegisterView {
         let viewModel = NameRegisterViewModel(
-            rankingRepository: RepositoryFactory.create(),
+            rankingUseCase: UseCaseFactory.create(),
             score: score,
             temporaryRankTextSubject: temporaryRankTextSubject
         )
