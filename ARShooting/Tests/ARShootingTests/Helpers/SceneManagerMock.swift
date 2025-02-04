@@ -1,5 +1,5 @@
 //
-//  SceneManagerStub.swift
+//  SceneManagerMock.swift
 //  ARShootingTests
 //
 //  Created by ウルトラ深瀬 on 20/12/24.
@@ -9,7 +9,7 @@ import Foundation
 import ARKit
 @testable import ARShooting
 
-final class SceneManagerStub: SceneManagerInterface {
+final class SceneManagerMock: SceneManagerInterface {
     var runSessionCalledCount = 0
     var pauseSessionCalledCount = 0
     var showWeaponObjectCalledValues = [Int]()
