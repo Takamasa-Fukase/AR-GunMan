@@ -12,37 +12,37 @@ import Core
 
 final class WeaponControlMotionDetectorTests: XCTestCase {
     private var motionDetector: WeaponControlMotionDetector!
-    private var coreMotionManagerStub: CoreMotionManagerStub!
+    private var coreMotionManagerMock: CoreMotionManagerMock!
 
     override func setUpWithError() throws {
-        coreMotionManagerStub = .init()
-        motionDetector = .init(coreMotionManager: coreMotionManagerStub)
+        coreMotionManagerMock = .init()
+        motionDetector = .init(coreMotionManager: coreMotionManagerMock)
     }
 
     override func tearDownWithError() throws {
-        coreMotionManagerStub = nil
+        coreMotionManagerMock = nil
         motionDetector = nil
     }
     
     func test_init() {
-        XCTAssertEqual(coreMotionManagerStub.accelerometerUpdateInterval, 0.2)
-        XCTAssertEqual(coreMotionManagerStub.gyroUpdateInterval, 0.2)
+        XCTAssertEqual(coreMotionManagerMock.accelerometerUpdateInterval, 0.2)
+        XCTAssertEqual(coreMotionManagerMock.gyroUpdateInterval, 0.2)
     }
     
     func test_startDetection() {
-        XCTAssertEqual(coreMotionManagerStub.startAccelerometerUpdatesCalledCount, 0)
-        XCTAssertEqual(coreMotionManagerStub.startGyroUpdatesCalledCount, 0)
+        XCTAssertEqual(coreMotionManagerMock.startAccelerometerUpdatesCalledCount, 0)
+        XCTAssertEqual(coreMotionManagerMock.startGyroUpdatesCalledCount, 0)
         motionDetector.startDetection()
-        XCTAssertEqual(coreMotionManagerStub.startAccelerometerUpdatesCalledCount, 1)
-        XCTAssertEqual(coreMotionManagerStub.startGyroUpdatesCalledCount, 1)
+        XCTAssertEqual(coreMotionManagerMock.startAccelerometerUpdatesCalledCount, 1)
+        XCTAssertEqual(coreMotionManagerMock.startGyroUpdatesCalledCount, 1)
     }
     
     func test_stopDetection() {
-        XCTAssertEqual(coreMotionManagerStub.stopAccelerometerUpdatesCalledCount, 0)
-        XCTAssertEqual(coreMotionManagerStub.stopGyroUpdatesCalledCount, 0)
+        XCTAssertEqual(coreMotionManagerMock.stopAccelerometerUpdatesCalledCount, 0)
+        XCTAssertEqual(coreMotionManagerMock.stopGyroUpdatesCalledCount, 0)
         motionDetector.stopDetection()
-        XCTAssertEqual(coreMotionManagerStub.stopAccelerometerUpdatesCalledCount, 1)
-        XCTAssertEqual(coreMotionManagerStub.stopGyroUpdatesCalledCount, 1)
+        XCTAssertEqual(coreMotionManagerMock.stopAccelerometerUpdatesCalledCount, 1)
+        XCTAssertEqual(coreMotionManagerMock.stopGyroUpdatesCalledCount, 1)
     }
     
     func test_fireMotionDetected() {
@@ -63,9 +63,9 @@ final class WeaponControlMotionDetectorTests: XCTestCase {
         isFireMotionDetectedCalled = false
         XCTAssertFalse(isFireMotionDetectedCalled)
         // ジャイロの最新値が使用されるため、先にジャイロハンドラーに成功データを流しておく
-        coreMotionManagerStub.gyroHander?(発射モーションジャイロ成功データ, nil)
+        coreMotionManagerMock.gyroHander?(発射モーションジャイロ成功データ, nil)
         // 加速度ハンドラーに成功データを流す
-        coreMotionManagerStub.accelerometerHander?(発射モーション加速度成功データ, nil)
+        coreMotionManagerMock.accelerometerHander?(発射モーション加速度成功データ, nil)
         XCTAssertTrue(isFireMotionDetectedCalled)
         
         
@@ -75,9 +75,9 @@ final class WeaponControlMotionDetectorTests: XCTestCase {
         isFireMotionDetectedCalled = false
         XCTAssertFalse(isFireMotionDetectedCalled)
         // ジャイロの最新値が使用されるため、先にジャイロハンドラーに成功データを流しておく
-        coreMotionManagerStub.gyroHander?(発射モーションジャイロ成功データ, nil)
+        coreMotionManagerMock.gyroHander?(発射モーションジャイロ成功データ, nil)
         // 加速度ハンドラーに失敗データを流す
-        coreMotionManagerStub.accelerometerHander?(発射モーション加速度失敗データ, nil)
+        coreMotionManagerMock.accelerometerHander?(発射モーション加速度失敗データ, nil)
         XCTAssertFalse(isFireMotionDetectedCalled)
         
         
@@ -87,9 +87,9 @@ final class WeaponControlMotionDetectorTests: XCTestCase {
         isFireMotionDetectedCalled = false
         XCTAssertFalse(isFireMotionDetectedCalled)
         // ジャイロの最新値が使用されるため、先にジャイロハンドラーに失敗データを流しておく
-        coreMotionManagerStub.gyroHander?(発射モーションジャイロ失敗データ, nil)
+        coreMotionManagerMock.gyroHander?(発射モーションジャイロ失敗データ, nil)
         // 加速度ハンドラーに成功データを流す
-        coreMotionManagerStub.accelerometerHander?(発射モーション加速度成功データ, nil)
+        coreMotionManagerMock.accelerometerHander?(発射モーション加速度成功データ, nil)
         XCTAssertFalse(isFireMotionDetectedCalled)
         
         
@@ -99,9 +99,9 @@ final class WeaponControlMotionDetectorTests: XCTestCase {
         isFireMotionDetectedCalled = false
         XCTAssertFalse(isFireMotionDetectedCalled)
         // ジャイロの最新値が使用されるため、先にジャイロハンドラーに失敗データを流しておく
-        coreMotionManagerStub.gyroHander?(発射モーションジャイロ失敗データ, nil)
+        coreMotionManagerMock.gyroHander?(発射モーションジャイロ失敗データ, nil)
         // 加速度ハンドラーに失敗データを流す
-        coreMotionManagerStub.accelerometerHander?(発射モーション加速度失敗データ, nil)
+        coreMotionManagerMock.accelerometerHander?(発射モーション加速度失敗データ, nil)
         XCTAssertFalse(isFireMotionDetectedCalled)
         
         
@@ -111,9 +111,9 @@ final class WeaponControlMotionDetectorTests: XCTestCase {
         isFireMotionDetectedCalled = false
         XCTAssertFalse(isFireMotionDetectedCalled)
         // ジャイロの最新値が使用されるため、先にジャイロハンドラーに成功データと一緒にエラーを流す
-        coreMotionManagerStub.gyroHander?(発射モーションジャイロ成功データ, CustomError.other(message: "ジャイロダミーエラー"))
+        coreMotionManagerMock.gyroHander?(発射モーションジャイロ成功データ, CustomError.other(message: "ジャイロダミーエラー"))
         // 加速度ハンドラーに成功データと一緒にエラーを流す
-        coreMotionManagerStub.accelerometerHander?(発射モーション加速度成功データ, CustomError.other(message: "加速度ダミーエラー"))
+        coreMotionManagerMock.accelerometerHander?(発射モーション加速度成功データ, CustomError.other(message: "加速度ダミーエラー"))
         XCTAssertFalse(isFireMotionDetectedCalled)
     }
     
@@ -135,7 +135,7 @@ final class WeaponControlMotionDetectorTests: XCTestCase {
         isReloadMotionDetectedCalled = false
         XCTAssertFalse(isReloadMotionDetectedCalled)
         // ジャイロハンドラーに成功データを流す
-        coreMotionManagerStub.gyroHander?(リロードモーションジャイロ成功データ, nil)
+        coreMotionManagerMock.gyroHander?(リロードモーションジャイロ成功データ, nil)
         XCTAssertTrue(isReloadMotionDetectedCalled)
         
         
@@ -145,7 +145,7 @@ final class WeaponControlMotionDetectorTests: XCTestCase {
         isReloadMotionDetectedCalled = false
         XCTAssertFalse(isReloadMotionDetectedCalled)
         // ジャイロハンドラーに失敗データを流す
-        coreMotionManagerStub.gyroHander?(リロードモーションジャイロ失敗データ, nil)
+        coreMotionManagerMock.gyroHander?(リロードモーションジャイロ失敗データ, nil)
         XCTAssertFalse(isReloadMotionDetectedCalled)
         
         
@@ -155,7 +155,7 @@ final class WeaponControlMotionDetectorTests: XCTestCase {
         isReloadMotionDetectedCalled = false
         XCTAssertFalse(isReloadMotionDetectedCalled)
         // ジャイロハンドラーに成功データと一緒にエラーを流す
-        coreMotionManagerStub.gyroHander?(リロードモーションジャイロ成功データ, CustomError.other(message: "ジャイロダミーエラー"))
+        coreMotionManagerMock.gyroHander?(リロードモーションジャイロ成功データ, CustomError.other(message: "ジャイロダミーエラー"))
         XCTAssertFalse(isReloadMotionDetectedCalled)
     }
 }

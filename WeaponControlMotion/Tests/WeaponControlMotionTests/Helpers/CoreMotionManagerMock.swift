@@ -1,5 +1,5 @@
 //
-//  CoreMotionManagerStub.swift
+//  CoreMotionManagerMock.swift
 //  WeaponControlMotionTests
 //
 //  Created by ウルトラ深瀬 on 20/12/24.
@@ -8,7 +8,7 @@
 import Foundation
 import CoreMotion
 
-final class CoreMotionManagerStub: CMMotionManager {
+final class CoreMotionManagerMock: CMMotionManager {
     var startAccelerometerUpdatesCalledCount = 0
     var startGyroUpdatesCalledCount = 0
     var stopAccelerometerUpdatesCalledCount = 0
