@@ -22,7 +22,7 @@ public final class WeaponResourceGetUseCase {
 }
 
 extension WeaponResourceGetUseCase: WeaponResourceGetUseCaseInterface {
-    public  func getDefaultWeaponDetail() -> CurrentWeaponData {
+    public func getDefaultWeaponDetail() -> CurrentWeaponData {
         let weapon = weaponRepository.getDefault()
         return CurrentWeaponData(
             id: weapon.id,
@@ -78,7 +78,7 @@ extension WeaponResourceGetUseCase: WeaponResourceGetUseCaseInterface {
         )
     }
     
-    public  func getWeaponListItems() -> [WeaponListItem] {
+    public func getWeaponListItems() -> [WeaponListItem] {
         let weapons = weaponRepository.getAll()
         return weapons.map { weapon in
             return WeaponListItem(weaponId: weapon.id,
