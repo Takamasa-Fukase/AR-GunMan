@@ -24,22 +24,23 @@ final class RankingUseCaseTests: XCTestCase {
     }
     
     func test_getSortedRanking() async throws {
+        let id = UUID()
         rankingRepositoryMock.rankingList = [
-            .init(score: 9.000, userName: ""),
-            .init(score: 100.00, userName: ""),
-            .init(score: 0.000, userName: ""),
-            .init(score: 50.000, userName: "")
+            .init(id: id, score: 9.000, userName: ""),
+            .init(id: id, score: 100.00, userName: ""),
+            .init(id: id, score: 0.000, userName: ""),
+            .init(id: id, score: 50.000, userName: "")
         ]
         let expectedRankingList: [Ranking] = [
-            .init(score: 100.00, userName: ""),
-            .init(score: 50.000, userName: ""),
-            .init(score: 9.000, userName: ""),
-            .init(score: 0.000, userName: "")
+            .init(id: id, score: 100.00, userName: ""),
+            .init(id: id, score: 50.000, userName: ""),
+            .init(id: id, score: 9.000, userName: ""),
+            .init(id: id, score: 0.000, userName: "")
         ]
         
         let rankingList = try await rankingUseCase.getSortedRanking()
         
-//        XCTAssertEqual(rankingList, expectedRankingList)
+        XCTAssertEqual(rankingList, expectedRankingList)
         
         let expectedErrorMessage = "test_getSortedRanking error"
         rankingRepositoryMock.error = CustomError.other(message: expectedErrorMessage)
