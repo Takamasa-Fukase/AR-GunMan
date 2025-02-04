@@ -72,16 +72,10 @@ final class ResultViewModel {
                 group.addTask {
                     self.isLoading = true
                     do {
-                        // ランキングの一覧を取得
                         let rankingList = try await self.rankingRepository.getRanking()
-                        // スコアの高い順にソートして代入
                         self.rankingList = rankingList.sorted(by: { $0.score > $1.score })
                         
-                        // 今回のスコアが既存のランキングの中で何位に入り込むかを算出し、
-                        // 名前登録画面に受け渡しているsubjectに流す
-                        self.temporaryRankIndex = self.rankingList.firstIndex(where: { $0.score <= self.score }) ?? 0
-                        let temporaryRankText = "\(self.temporaryRankIndex + 1) / \(self.rankingList.count)"
-                        self.temporaryRankTextSubject.send(temporaryRankText)
+                        self.calculateRankAndNotify()
 
                     } catch {
                         self.error = (error: error, isAlertPresented: true)
@@ -90,5 +84,12 @@ final class ResultViewModel {
                 }
             }
         }
+    }
+    
+    // 今回のスコアが既存のランキングの中で何位に入り込むかを算出し、名前登録画面に受け渡しているsubjectに流す
+    private func calculateRankAndNotify() {
+        temporaryRankIndex = rankingList.firstIndex(where: { $0.score <= score }) ?? 0
+        let temporaryRankText = "\(temporaryRankIndex + 1) / \(rankingList.count)"
+        temporaryRankTextSubject.send(temporaryRankText)
     }
 }
