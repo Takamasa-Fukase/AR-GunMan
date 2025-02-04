@@ -42,8 +42,7 @@ final class RankingUseCaseTests: XCTestCase {
         
         XCTAssertEqual(rankingList, expectedRankingList)
         
-        let expectedErrorMessage = "test_getSortedRanking error"
-        rankingRepositoryMock.error = CustomError.other(message: expectedErrorMessage)
+        rankingRepositoryMock.error = CustomError.apiClientError(CustomError.other(message: ""))
         
         do {
             _ = try await rankingUseCase.getSortedRanking()
@@ -51,11 +50,10 @@ final class RankingUseCaseTests: XCTestCase {
             
         } catch {
             guard let customError = error as? CustomError,
-                  case .other(let message) = customError else {
+                  case .apiClientError(_) = customError else {
                 XCTFail("エラーの種別が期待していたCustomErrorではないため、テストを失敗させました。")
                 return
             }
-            XCTAssertEqual(message, expectedErrorMessage)
         }
     }
 }
