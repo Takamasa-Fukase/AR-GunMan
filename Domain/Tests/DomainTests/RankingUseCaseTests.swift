@@ -72,4 +72,50 @@ final class RankingUseCaseTests: XCTestCase {
             }
         }
     }
+    
+    func test_registerRanking() async throws {
+        // MARK: 正常系のテスト
+        /*
+         テストしたいこと
+         引数で受け取ったランキングが配列に追加されていること（repositoryに渡されているかを見ている）
+         */
+        
+        let ranking = Ranking(score: 100.00, userName: "")
+        
+        XCTAssertEqual(rankingRepositoryMock.rankingList, [])
+        
+        try await rankingUseCase.registerRanking(ranking)
+        
+        XCTAssertEqual(rankingRepositoryMock.rankingList, [ranking])
+        
+        
+        // MARK: 異常系のテスト
+        /*
+         テストしたいこと
+         一度配列を空にして、apiClientErrorエラーをセットしてから登録しようとしたら、
+         - エラーをキャッチして、エラーのcaseが.apiClientErrorであること（他のcaseだとNG）
+         - 登録メソッドの次の行に進まないこと
+         - 配列が空のままであること
+         */
+        
+        rankingRepositoryMock.rankingList.removeAll()
+        
+        XCTAssertEqual(rankingRepositoryMock.rankingList, [])
+        
+        rankingRepositoryMock.error = CustomError.apiClientError(CustomError.other(message: ""))
+        
+        do {
+            _ = try await rankingUseCase.registerRanking(ranking)
+            XCTFail("エラーの発生を期待していたが発生せずに成功したため、テストを失敗させました。")
+            
+        } catch {
+            guard let customError = error as? CustomError,
+                  case .apiClientError(_) = customError else {
+                XCTFail("エラーの種別が期待していたCustomErrorではないため、テストを失敗させました。")
+                return
+            }
+        }
+        
+        XCTAssertEqual(rankingRepositoryMock.rankingList, [])
+    }
 }
