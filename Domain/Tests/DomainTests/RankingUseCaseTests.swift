@@ -24,6 +24,13 @@ final class RankingUseCaseTests: XCTestCase {
     }
     
     func test_getSortedRanking() async throws {
+        // MARK: 正常系のテスト
+        /*
+         テストしたいこと
+         スコア順バラバラなリストをセットして、それがスコアの高い順にソートされて取得されること
+         */
+        
+        // テストで比較可能にする為に、固定のidを使う
         let id = UUID()
         rankingRepositoryMock.rankingList = [
             .init(id: id, score: 9.000, userName: ""),
@@ -41,6 +48,15 @@ final class RankingUseCaseTests: XCTestCase {
         let rankingList = try await rankingUseCase.getSortedRanking()
         
         XCTAssertEqual(rankingList, expectedRankingList)
+        
+        
+        // MARK: 異常系のテスト
+        /*
+         テストしたいこと
+         apiClientErrorエラーをセットしてから取得しようとしたら、
+         - エラーをキャッチして、エラーのcaseが.apiClientErrorであること（他のcaseだとNG）
+         - 取得メソッドの次の行に進まないこと
+         */
         
         rankingRepositoryMock.error = CustomError.apiClientError(CustomError.other(message: ""))
         
