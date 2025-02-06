@@ -12,20 +12,20 @@ import Domain
 
 @Observable
 final class GameViewModel {
-    enum OutputEventType {
+    enum OutputEventType: Equatable {
         case arControllerInputEvent(ARControllerInputEventType)
         case motionDetectorInputEvent(MotionDetectorInputEventType)
         case playSound(SoundType)
         case executeAutoReload
     }
-    enum ARControllerInputEventType {
+    enum ARControllerInputEventType: Equatable {
         case runSceneSession
         case pauseSceneSession
         case renderWeaponFiring
         case showWeaponObject(weaponId: Int)
         case changeTargetsAppearance(imageName: String)
     }
-    enum MotionDetectorInputEventType {
+    enum MotionDetectorInputEventType: Equatable {
         case startDeviceMotionDetection
         case stopDeviceMotionDetection
     }
@@ -188,16 +188,13 @@ final class GameViewModel {
     }
     
     private func fireWeapon() {
-        print("VM fireWeapon")
         guard let currentWeapon = self.currentWeapon else { return }
         weaponActionExecuteUseCase.fireWeapon(
             bulletsCount: currentWeapon.state.bulletsCount,
             isReloading: currentWeapon.state.isReloading,
             reloadType: currentWeapon.weapon.spec.reloadType,
             onFired: { response in
-                print("VM onFired これから値を変更します 現在のbulletsCount: \(self.currentWeapon?.state.bulletsCount ?? 0), resのcount: \(response.bulletsCount)")
                 self.currentWeapon?.state.bulletsCount = response.bulletsCount
-                print("VM 変更した")
                 outputEvent.send(.arControllerInputEvent(.renderWeaponFiring))
                 outputEvent.send(.playSound(currentWeapon.weapon.resources.firingSound))
                 
