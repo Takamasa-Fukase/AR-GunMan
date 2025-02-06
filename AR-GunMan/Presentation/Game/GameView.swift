@@ -75,7 +75,7 @@ struct GameView: View {
                 if !viewModel.isWeaponSelectViewPresented {
                     // 弾数画像
                     HStack(spacing: 0) {
-                        Image(viewModel.currentWeaponData?.bulletsCountImageName() ?? "")
+                        Image(viewModel.currentWeapon?.bulletsCountImageName() ?? "")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 210, height: 70, alignment: .bottom)
@@ -88,12 +88,12 @@ struct GameView: View {
             // 武器変更画面の表示中は邪魔になって見ずらいので隠す
             if !viewModel.isWeaponSelectViewPresented {
                 // 照準画像
-                Image(viewModel.currentWeaponData?.resources.sightImageName ?? "")
+                Image(viewModel.currentWeapon?.weapon.resources.sightImageName ?? "")
                     .renderingMode(.template)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 100, height: 100)
-                    .foregroundStyle(ColorTypeConverter.fromColorType(viewModel.currentWeaponData?.resources.sightImageColorType ?? .red))
+                    .foregroundStyle(ColorTypeConverter.fromColorType(viewModel.currentWeapon?.weapon.resources.sightImageColorType ?? .red))
             }
         }
         .background(Color.black)
@@ -148,7 +148,7 @@ struct GameView: View {
         // 武器選択画面に遷移
         .sheet(isPresented: $viewModel.isWeaponSelectViewPresented) {
             WeaponSelectViewFactory.create(
-                initialDisplayWeaponId: viewModel.currentWeaponData?.id ?? 0,
+                initialDisplayWeaponId: viewModel.currentWeapon?.weapon.id ?? 0,
                 weaponSelected: { weaponId in
                     viewModel.weaponSelected(weaponId: weaponId)
                 }

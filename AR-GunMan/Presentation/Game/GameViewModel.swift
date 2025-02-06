@@ -25,15 +25,15 @@ final class GameViewModel {
     }
     
     private(set) var timeCount: Double = 30.00
-    private(set) var currentWeaponData: CurrentWeaponData?
+    private(set) var currentWeapon: CurrentWeapon?
     
     // MARK: ユニットテスト時のみアクセスする
 //    #if TEST
-    func getCurrentWeaponData() -> CurrentWeaponData? {
-        return currentWeaponData
+    func getCurrentWeapon() -> CurrentWeapon? {
+        return currentWeapon
     }
-    func setCurrentWeaponData(_ currentWeaponData: CurrentWeaponData?) {
-        self.currentWeaponData = currentWeaponData
+    func setCurrentWeapon(_ currentWeapon: CurrentWeapon?) {
+        self.currentWeapon = currentWeapon
     }
 //    #endif
     
@@ -71,8 +71,8 @@ final class GameViewModel {
     
     // MARK: ViewからのInput
     func onViewAppear() {
-        let selectedWeaponData = weaponResourceGetUseCase.getDefaultWeaponDetail()
-        showSelectedWeapon(selectedWeaponData)
+        let selectedWeapon = weaponResourceGetUseCase.getDefaultWeapon()
+        showSelectedWeapon(selectedWeapon)
         
         arControllerInputEvent.send(.runSceneSession)
         
@@ -122,40 +122,40 @@ final class GameViewModel {
         // 既存のリロードをキャンセルする
         weaponReloadCanceller.isCancelled = true
         
-        let selectedWeaponData = weaponResourceGetUseCase.getWeaponDetail(of: weaponId)
-        showSelectedWeapon(selectedWeaponData)
+        let selectedWeapon = weaponResourceGetUseCase.getWeapon(of: weaponId)
+        showSelectedWeapon(selectedWeapon)
     }
     
     func targetHit() {
         //ランキングがバラけるように、加算する得点自体に90%~100%の間の乱数を掛ける
-        let randomlyAdjustedHitPoint = Double(currentWeaponData?.spec.targetHitPoint ?? 0) * Double.random(in: 0.9...1)
+        let randomlyAdjustedHitPoint = Double(currentWeapon?.weapon.spec.targetHitPoint ?? 0) * Double.random(in: 0.9...1)
         // 100を超えない様に更新する
         score = min(score + randomlyAdjustedHitPoint, 100.0)
         
         playSound.send(.targetHit)
         
-        if let bulletHitSound = currentWeaponData?.resources.bulletHitSound {
+        if let bulletHitSound = currentWeapon?.weapon.resources.bulletHitSound {
             playSound.send(bulletHitSound)
         }
     }
     
     // MARK: Privateメソッド
-    private func showSelectedWeapon(_ selectedWeaponData: CurrentWeaponData) {
-        self.currentWeaponData = selectedWeaponData
+    private func showSelectedWeapon(_ selectedWeapon: CurrentWeapon) {
+        self.currentWeapon = selectedWeapon
         
-        guard let currentWeaponData = self.currentWeaponData else { return }
+        guard let currentWeapon = self.currentWeapon else { return }
         
-        arControllerInputEvent.send(.showWeaponObject(weaponId: currentWeaponData.id))
+        arControllerInputEvent.send(.showWeaponObject(weaponId: currentWeapon.weapon.id))
         
         if isCheckedTutorialCompletedFlag {
-            playSound.send(currentWeaponData.resources.appearingSound)
+            playSound.send(currentWeapon.weapon.resources.appearingSound)
         }
     }
     
     private func waitAndCreateTimer() {
-        guard let currentWeaponData = self.currentWeaponData else { return }
+        guard let currentWeapon = self.currentWeapon else { return }
         
-        playSound.send(currentWeaponData.resources.appearingSound)
+        playSound.send(currentWeapon.weapon.resources.appearingSound)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
             let request = GameTimerCreateRequest(
@@ -187,16 +187,16 @@ final class GameViewModel {
     }
     
     private func fireWeapon() {
-        guard let currentWeaponData = self.currentWeaponData else { return }
+        guard let currentWeapon = self.currentWeapon else { return }
 
         weaponActionExecuteUseCase.fireWeapon(
-            bulletsCount: currentWeaponData.state.bulletsCount,
-            isReloading: currentWeaponData.state.isReloading,
-            reloadType: currentWeaponData.spec.reloadType,
+            bulletsCount: currentWeapon.state.bulletsCount,
+            isReloading: currentWeapon.state.isReloading,
+            reloadType: currentWeapon.weapon.spec.reloadType,
             onFired: { response in
-                self.currentWeaponData?.state.bulletsCount = response.bulletsCount
+                self.currentWeapon?.state.bulletsCount = response.bulletsCount
                 arControllerInputEvent.send(.renderWeaponFiring)
-                playSound.send(currentWeaponData.resources.firingSound)
+                playSound.send(currentWeapon.weapon.resources.firingSound)
                 
                 if response.needsAutoReload {
                     // リロードを自動的に実行
@@ -204,31 +204,31 @@ final class GameViewModel {
                 }
             },
             onOutOfBullets: {
-                if let outOfBulletsSound = currentWeaponData.resources.outOfBulletsSound {
+                if let outOfBulletsSound = currentWeapon.weapon.resources.outOfBulletsSound {
                     playSound.send(outOfBulletsSound)
                 }
             })
     }
     
     private func reloadWeapon() {
-        guard let currentWeaponData = self.currentWeaponData else { return }
+        guard let currentWeapon = self.currentWeapon else { return }
         
         // falseにリセット
         weaponReloadCanceller.isCancelled = false
         
         weaponActionExecuteUseCase.reloadWeapon(
-            bulletsCount: currentWeaponData.state.bulletsCount,
-            isReloading: currentWeaponData.state.isReloading,
-            capacity: currentWeaponData.spec.capacity,
-            reloadWaitingTime: currentWeaponData.spec.reloadWaitingTime,
+            bulletsCount: currentWeapon.state.bulletsCount,
+            isReloading: currentWeapon.state.isReloading,
+            capacity: currentWeapon.weapon.spec.capacity,
+            reloadWaitingTime: currentWeapon.weapon.spec.reloadWaitingTime,
             reloadCanceller: weaponReloadCanceller,
             onReloadStarted: { response in
-                self.currentWeaponData?.state.isReloading = response.isReloading
-                playSound.send(currentWeaponData.resources.reloadingSound)
+                self.currentWeapon?.state.isReloading = response.isReloading
+                playSound.send(currentWeapon.weapon.resources.reloadingSound)
             },
             onReloadEnded: { response in
-                self.currentWeaponData?.state.bulletsCount = response.bulletsCount
-                self.currentWeaponData?.state.isReloading = response.isReloading
+                self.currentWeapon?.state.bulletsCount = response.bulletsCount
+                self.currentWeapon?.state.isReloading = response.isReloading
             })
     }
 }

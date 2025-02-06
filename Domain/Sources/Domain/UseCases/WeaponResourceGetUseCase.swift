@@ -8,8 +8,8 @@
 import Foundation
 
 public protocol WeaponResourceGetUseCaseInterface {
-    func getDefaultWeaponDetail() -> CurrentWeapon
-    func getWeaponDetail(of weaponId: Int) -> CurrentWeapon
+    func getDefaultWeapon() -> CurrentWeapon
+    func getWeapon(of weaponId: Int) -> CurrentWeapon
     func getWeaponListItems() -> [WeaponListItem]
 }
 
@@ -22,7 +22,7 @@ public final class WeaponResourceGetUseCase {
 }
 
 extension WeaponResourceGetUseCase: WeaponResourceGetUseCaseInterface {
-    public func getDefaultWeaponDetail() -> CurrentWeapon {
+    public func getDefaultWeapon() -> CurrentWeapon {
         let weapon = weaponRepository.getDefault()
         return CurrentWeapon(
             weapon: weapon,
@@ -33,7 +33,7 @@ extension WeaponResourceGetUseCase: WeaponResourceGetUseCaseInterface {
         )
     }
     
-    public func getWeaponDetail(of weaponId: Int) -> CurrentWeapon {
+    public func getWeapon(of weaponId: Int) -> CurrentWeapon {
         let weapon = weaponRepository.get(by: weaponId)
         return CurrentWeapon(
             weapon: weapon,
