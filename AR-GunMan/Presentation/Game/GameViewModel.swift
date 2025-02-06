@@ -53,9 +53,6 @@ final class GameViewModel {
     
     // MARK: ユニットテスト時のみアクセスする
     #if TEST
-    func getCurrentWeapon() -> CurrentWeapon? {
-        return currentWeapon
-    }
     func setCurrentWeapon(_ currentWeapon: CurrentWeapon?) {
         self.currentWeapon = currentWeapon
     }

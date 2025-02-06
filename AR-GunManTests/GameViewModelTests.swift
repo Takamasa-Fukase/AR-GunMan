@@ -60,9 +60,26 @@ final class GameViewModelTests: XCTestCase {
             )
         )
         gameViewModel.setCurrentWeapon(currentWeapon)
+                
+        var culletsCountChangedValues: [Int] = []
+        
+        func trackingCurrentWeapon() {
+            withObservationTracking {
+                _ = gameViewModel.currentWeapon
+            } onChange: {
+                guard let currentWeapon = gameViewModel.currentWeapon else { return }
+                print("onChanged currentWeapon.state: \(currentWeapon.state)")
+                culletsCountChangedValues.append(currentWeapon.state.bulletsCount)
+                print("culletsCountChangedValues: \(changedCurrentWeaponStates)")
+                
+                trackingCurrentWeapon()
+            }
+        }
+        trackingCurrentWeapon()
+        
         gameViewModel.fireMotionDetected()
         
-        XCTAssertEqual(gameViewModel.currentWeapon?.state.bulletsCount, 0)
-        
+        XCTAssertEqual(changedCurrentWeaponStates.first?.bulletsCount ?? 0, 0)
+        XCTAssertEqual(changedCurrentWeaponStates.count, 1)
     }
 }
