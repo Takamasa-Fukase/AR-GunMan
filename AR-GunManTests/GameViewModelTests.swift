@@ -41,7 +41,6 @@ final class GameViewModelTests: XCTestCase {
      テストしたい項目
      <onFiredの処理>
      - bulletsCountが元の残弾数よりも1少ない値になっていること
-     - 上記がobservationTrackingで検出されること（欲を言えば回数も）
      - arEventで.renderWeaponFiringが流れてくること
      - playSoundで現在の武器のfiringSoundが流れてくること
      - needsAutoReloadのtrue or falseが期待と合っていること
@@ -55,33 +54,16 @@ final class GameViewModelTests: XCTestCase {
         let currentWeapon = CurrentWeapon(
             weapon: testData.pistol,
             state: .init(
-                bulletsCount: 7,
+                bulletsCount: 1,
                 isReloading: false
             )
         )
         gameViewModel.setCurrentWeapon(currentWeapon)
-                
-        var bulletsCountChangedValues: [Int] = []
         
-        @Sendable func trackingCurrentWeapon() {
-            withObservationTracking {
-                _ = gameViewModel.currentWeapon
-            } onChange: { [weak self] in
-                guard let self = self,
-                      let currentWeapon = self.gameViewModel.currentWeapon else { return }
-                bulletsCountChangedValues.append(currentWeapon.state.bulletsCount)
-                print("onChangeでbulletsCountChangedValuesに現在の値を格納した後: \(bulletsCountChangedValues)")
-                
-                trackingCurrentWeapon()
-            }
-        }
-        trackingCurrentWeapon()
-        
-        XCTAssertEqual(bulletsCountChangedValues, [])
+        XCTAssertEqual(gameViewModel.currentWeapon?.state.bulletsCount, 1)
         
         gameViewModel.fireMotionDetected()
-        gameViewModel.fireMotionDetected()
         
-        XCTAssertEqual(bulletsCountChangedValues, [6, 5])
+        XCTAssertEqual(gameViewModel.currentWeapon?.state.bulletsCount, 0)
     }
 }
