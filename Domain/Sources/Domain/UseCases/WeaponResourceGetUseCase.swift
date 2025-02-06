@@ -8,8 +8,8 @@
 import Foundation
 
 public protocol WeaponResourceGetUseCaseInterface {
-    func getDefaultWeaponDetail() -> CurrentWeaponData
-    func getWeaponDetail(of weaponId: Int) -> CurrentWeaponData
+    func getDefaultWeaponDetail() -> CurrentWeapon
+    func getWeaponDetail(of weaponId: Int) -> CurrentWeapon
     func getWeaponListItems() -> [WeaponListItem]
 }
 
@@ -22,27 +22,10 @@ public final class WeaponResourceGetUseCase {
 }
 
 extension WeaponResourceGetUseCase: WeaponResourceGetUseCaseInterface {
-    public func getDefaultWeaponDetail() -> CurrentWeaponData {
+    public func getDefaultWeaponDetail() -> CurrentWeapon {
         let weapon = weaponRepository.getDefault()
-        return CurrentWeaponData(
-            id: weapon.id,
-            spec: .init(
-                capacity: weapon.spec.capacity,
-                reloadWaitingTime: weapon.spec.reloadWaitingTime,
-                reloadType: weapon.spec.reloadType,
-                targetHitPoint: weapon.spec.targetHitPoint
-            ),
-            resources: .init(
-                weaponImageName: weapon.resources.weaponImageName,
-                sightImageName: weapon.resources.sightImageName,
-                sightImageColorType: weapon.resources.sightImageColorType,
-                bulletsCountImageBaseName: weapon.resources.bulletsCountImageBaseName,
-                appearingSound: weapon.resources.appearingSound,
-                firingSound: weapon.resources.firingSound,
-                reloadingSound: weapon.resources.reloadingSound,
-                outOfBulletsSound: weapon.resources.outOfBulletsSound,
-                bulletHitSound: weapon.resources.bulletHitSound
-            ),
+        return CurrentWeapon(
+            weapon: weapon,
             state: .init(
                 bulletsCount: weapon.spec.capacity,
                 isReloading: false
@@ -50,27 +33,10 @@ extension WeaponResourceGetUseCase: WeaponResourceGetUseCaseInterface {
         )
     }
     
-    public func getWeaponDetail(of weaponId: Int) -> CurrentWeaponData {
+    public func getWeaponDetail(of weaponId: Int) -> CurrentWeapon {
         let weapon = weaponRepository.get(by: weaponId)
-        return CurrentWeaponData(
-            id: weapon.id,
-            spec: .init(
-                capacity: weapon.spec.capacity,
-                reloadWaitingTime: weapon.spec.reloadWaitingTime,
-                reloadType: weapon.spec.reloadType,
-                targetHitPoint: weapon.spec.targetHitPoint
-            ),
-            resources: .init(
-                weaponImageName: weapon.resources.weaponImageName,
-                sightImageName: weapon.resources.sightImageName,
-                sightImageColorType: weapon.resources.sightImageColorType,
-                bulletsCountImageBaseName: weapon.resources.bulletsCountImageBaseName,
-                appearingSound: weapon.resources.appearingSound,
-                firingSound: weapon.resources.firingSound,
-                reloadingSound: weapon.resources.reloadingSound,
-                outOfBulletsSound: weapon.resources.outOfBulletsSound,
-                bulletHitSound: weapon.resources.bulletHitSound
-            ),
+        return CurrentWeapon(
+            weapon: weapon,
             state: .init(
                 bulletsCount: weapon.spec.capacity,
                 isReloading: false

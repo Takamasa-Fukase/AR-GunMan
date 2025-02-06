@@ -20,14 +20,26 @@ public enum ReloadType {
 public struct Weapon {
     public let id: Int
     public let isDefault: Bool
-    let spec: Spec
-    let resources: Resources
+    public let spec: Spec
+    public let resources: Resources
+    
+    public init(
+        id: Int,
+        isDefault: Bool,
+        spec: Spec,
+        resources: Resources
+    ) {
+        self.id = id
+        self.isDefault = isDefault
+        self.spec = spec
+        self.resources = resources
+    }
     
     public struct Spec {
-        let capacity: Int
-        let reloadWaitingTime: TimeInterval
-        let reloadType: ReloadType
-        let targetHitPoint: Int
+        public let capacity: Int
+        public let reloadWaitingTime: TimeInterval
+        public let reloadType: ReloadType
+        public let targetHitPoint: Int
         
         public init(
             capacity: Int,
@@ -41,17 +53,17 @@ public struct Weapon {
             self.targetHitPoint = targetHitPoint
         }
     }
-    
+     
     public struct Resources {
-        let weaponImageName: String
-        let sightImageName: String
-        let sightImageColorType: ColorType
-        let bulletsCountImageBaseName: String
-        let appearingSound: SoundType
-        let firingSound: SoundType
-        let reloadingSound: SoundType
-        let outOfBulletsSound: SoundType?
-        let bulletHitSound: SoundType?
+        public let weaponImageName: String
+        public let sightImageName: String
+        public let sightImageColorType: ColorType
+        public let bulletsCountImageBaseName: String
+        public let appearingSound: SoundType
+        public let firingSound: SoundType
+        public let reloadingSound: SoundType
+        public let outOfBulletsSound: SoundType?
+        public let bulletHitSound: SoundType?
         
         public init(
             weaponImageName: String,
@@ -74,17 +86,5 @@ public struct Weapon {
             self.outOfBulletsSound = outOfBulletsSound
             self.bulletHitSound = bulletHitSound
         }
-    }
-    
-    public init(
-        id: Int,
-        isDefault: Bool,
-        spec: Spec,
-        resources: Resources
-    ) {
-        self.id = id
-        self.isDefault = isDefault
-        self.spec = spec
-        self.resources = resources
     }
 }
