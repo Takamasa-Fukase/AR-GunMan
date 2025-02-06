@@ -52,19 +52,17 @@ final class GameViewModelTests: XCTestCase {
     func test_fireMotionDetected() {
         // MARK: 残弾数 = 1以上, リロード中 = false, リロードタイプ = .manual の時
         
-        let currentWeaponData = CurrentWeaponData(
-            id: testData.pistolId,
-            spec: testData.pistolSpec,
-            resources: testData.pistolResources,
-            state: CurrentWeaponData.State(
+        let currentWeapon = CurrentWeapon(
+            weapon: testData.pistol,
+            state: .init(
                 bulletsCount: 1,
                 isReloading: false
             )
         )
-        gameViewModel.setCurrentWeaponData(currentWeaponData)
+        gameViewModel.setCurrentWeapon(currentWeapon)
         gameViewModel.fireMotionDetected()
         
-        XCTAssertEqual(gameViewModel.currentWeaponData?.state.bulletsCount, 0)
+        XCTAssertEqual(gameViewModel.currentWeapon?.state.bulletsCount, 0)
         
     }
 }
