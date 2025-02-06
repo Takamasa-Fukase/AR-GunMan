@@ -52,11 +52,11 @@ final class GameViewModel {
     @ObservationIgnored private var reloadingMotionDetecedCount: Int = 0
     
     // MARK: ユニットテスト時のみアクセスする
-    #if TEST
+//    #if TEST
     func setCurrentWeapon(_ currentWeapon: CurrentWeapon?) {
         self.currentWeapon = currentWeapon
     }
-    #endif
+//    #endif
     
     init(
         tutorialRepository: TutorialRepositoryInterface,
