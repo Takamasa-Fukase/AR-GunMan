@@ -188,14 +188,16 @@ final class GameViewModel {
     }
     
     private func fireWeapon() {
+        print("VM fireWeapon")
         guard let currentWeapon = self.currentWeapon else { return }
-        
         weaponActionExecuteUseCase.fireWeapon(
             bulletsCount: currentWeapon.state.bulletsCount,
             isReloading: currentWeapon.state.isReloading,
             reloadType: currentWeapon.weapon.spec.reloadType,
             onFired: { response in
+                print("VM onFired これから値を変更します 現在のbulletsCount: \(self.currentWeapon?.state.bulletsCount ?? 0), resのcount: \(response.bulletsCount)")
                 self.currentWeapon?.state.bulletsCount = response.bulletsCount
+                print("VM 変更した")
                 outputEvent.send(.arControllerInputEvent(.renderWeaponFiring))
                 outputEvent.send(.playSound(currentWeapon.weapon.resources.firingSound))
                 

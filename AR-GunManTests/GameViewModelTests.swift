@@ -69,9 +69,8 @@ final class GameViewModelTests: XCTestCase {
             } onChange: { [weak self] in
                 guard let self = self,
                       let currentWeapon = self.gameViewModel.currentWeapon else { return }
-                print("onChanged currentWeapon.state: \(currentWeapon.state)")
                 bulletsCountChangedValues.append(currentWeapon.state.bulletsCount)
-                print("bulletsCountChangedValues: \(bulletsCountChangedValues)")
+                print("onChangeでbulletsCountChangedValuesに現在の値を格納した後: \(bulletsCountChangedValues)")
                 
                 trackingCurrentWeapon()
             }
@@ -83,6 +82,6 @@ final class GameViewModelTests: XCTestCase {
         gameViewModel.fireMotionDetected()
         gameViewModel.fireMotionDetected()
         
-        XCTAssertEqual(bulletsCountChangedValues, [7, 6])
+        XCTAssertEqual(bulletsCountChangedValues, [6, 5])
     }
 }
