@@ -55,31 +55,34 @@ final class GameViewModelTests: XCTestCase {
         let currentWeapon = CurrentWeapon(
             weapon: testData.pistol,
             state: .init(
-                bulletsCount: 1,
+                bulletsCount: 7,
                 isReloading: false
             )
         )
         gameViewModel.setCurrentWeapon(currentWeapon)
                 
-        var culletsCountChangedValues: [Int] = []
+        var bulletsCountChangedValues: [Int] = []
         
-        func trackingCurrentWeapon() {
+        @Sendable func trackingCurrentWeapon() {
             withObservationTracking {
                 _ = gameViewModel.currentWeapon
-            } onChange: {
-                guard let currentWeapon = gameViewModel.currentWeapon else { return }
+            } onChange: { [weak self] in
+                guard let self = self,
+                      let currentWeapon = self.gameViewModel.currentWeapon else { return }
                 print("onChanged currentWeapon.state: \(currentWeapon.state)")
-                culletsCountChangedValues.append(currentWeapon.state.bulletsCount)
-                print("culletsCountChangedValues: \(changedCurrentWeaponStates)")
+                bulletsCountChangedValues.append(currentWeapon.state.bulletsCount)
+                print("bulletsCountChangedValues: \(bulletsCountChangedValues)")
                 
                 trackingCurrentWeapon()
             }
         }
         trackingCurrentWeapon()
         
+        XCTAssertEqual(bulletsCountChangedValues, [])
+        
+        gameViewModel.fireMotionDetected()
         gameViewModel.fireMotionDetected()
         
-        XCTAssertEqual(changedCurrentWeaponStates.first?.bulletsCount ?? 0, 0)
-        XCTAssertEqual(changedCurrentWeaponStates.count, 1)
+        XCTAssertEqual(bulletsCountChangedValues, [7, 6])
     }
 }
