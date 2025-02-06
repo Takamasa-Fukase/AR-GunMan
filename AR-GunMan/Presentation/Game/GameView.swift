@@ -103,30 +103,33 @@ struct GameView: View {
         .onDisappear {
             viewModel.onViewDisappear()
         }
-        .onReceive(viewModel.arControllerInputEvent) { eventType in
-            switch eventType {
-            case .runSceneSession:
-                arController.runSession()
-            case .pauseSceneSession:
-                arController.pauseSession()
-            case .renderWeaponFiring:
-                arController.renderWeaponFiring()
-            case .showWeaponObject(let weaponId):
-                arController.showWeaponObject(weaponId: weaponId)
-            case .changeTargetsAppearance(let imageName):
-                arController.changeTargetsAppearance(to: imageName)
+        .onReceive(viewModel.outputEvent) { outputEventType in
+            switch outputEventType {
+            case .arControllerInputEvent(let type):
+                switch type {
+                case .runSceneSession:
+                    arController.runSession()
+                case .pauseSceneSession:
+                    arController.pauseSession()
+                case .renderWeaponFiring:
+                    arController.renderWeaponFiring()
+                case .showWeaponObject(let weaponId):
+                    arController.showWeaponObject(weaponId: weaponId)
+                case .changeTargetsAppearance(let imageName):
+                    arController.changeTargetsAppearance(to: imageName)
+                }
+            case .motionDetectorInputEvent(let type):
+                switch type {
+                case .startDeviceMotionDetection:
+                    motionDetector.startDetection()
+                case .stopDeviceMotionDetection:
+                    motionDetector.stopDetection()
+                }
+            case .playSound(let soundType):
+                SoundPlayer.shared.play(soundType)
+            case .executeAutoReload:
+                viewModel.reloadMotionDetected()
             }
-        }
-        .onReceive(viewModel.motionDetectorInputEvent) { eventType in
-            switch eventType {
-            case .startDeviceMotionDetection:
-                motionDetector.startDetection()
-            case .stopDeviceMotionDetection:
-                motionDetector.stopDetection()
-            }
-        }
-        .onReceive(viewModel.playSound) { soundType in
-            SoundPlayer.shared.play(soundType)
         }
         // チュートリアル画面への遷移
         .fullScreenCover(

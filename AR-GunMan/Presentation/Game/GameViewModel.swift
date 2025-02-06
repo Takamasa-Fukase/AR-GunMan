@@ -12,6 +12,12 @@ import Domain
 
 @Observable
 final class GameViewModel {
+    enum OutputEvent {
+        case arControllerInputEvent(ARControllerInputEventType)
+        case motionDetectorInputEvent(MotionDetectorInputEventType)
+        case playSound(SoundType)
+        case executeAutoReload
+    }
     enum ARControllerInputEventType {
         case runSceneSession
         case pauseSceneSession
@@ -27,24 +33,12 @@ final class GameViewModel {
     private(set) var timeCount: Double = 30.00
     private(set) var currentWeapon: CurrentWeapon?
     
-    // MARK: ユニットテスト時のみアクセスする
-//    #if TEST
-    func getCurrentWeapon() -> CurrentWeapon? {
-        return currentWeapon
-    }
-    func setCurrentWeapon(_ currentWeapon: CurrentWeapon?) {
-        self.currentWeapon = currentWeapon
-    }
-//    #endif
-    
     var isTutorialViewPresented = false
     var isWeaponSelectViewPresented = false
     var isResultViewPresented = false
     var isWeaponChangeButtonEnabled = false
-    
-    let arControllerInputEvent = PassthroughSubject<ARControllerInputEventType, Never>()
-    let motionDetectorInputEvent = PassthroughSubject<MotionDetectorInputEventType, Never>()
-    let playSound = PassthroughSubject<SoundType, Never>()
+
+    let outputEvent = PassthroughSubject<OutputEvent, Never>()
     
     private let tutorialRepository: TutorialRepositoryInterface
     private let gameTimerCreateUseCase: GameTimerCreateUseCaseInterface
@@ -52,10 +46,20 @@ final class GameViewModel {
     private let weaponActionExecuteUseCase: WeaponActionExecuteUseCaseInterface
     private let timerPauseController = GameTimerCreateRequest.PauseController()
     private let weaponReloadCanceller = WeaponReloadCanceller()
-
+    
     @ObservationIgnored private(set) var score: Double = 0
     @ObservationIgnored private var isCheckedTutorialCompletedFlag = false
     @ObservationIgnored private var reloadingMotionDetecedCount: Int = 0
+    
+    // MARK: ユニットテスト時のみアクセスする
+    #if TEST
+    func getCurrentWeapon() -> CurrentWeapon? {
+        return currentWeapon
+    }
+    func setCurrentWeapon(_ currentWeapon: CurrentWeapon?) {
+        self.currentWeapon = currentWeapon
+    }
+    #endif
     
     init(
         tutorialRepository: TutorialRepositoryInterface,
@@ -74,7 +78,7 @@ final class GameViewModel {
         let selectedWeapon = weaponResourceGetUseCase.getDefaultWeapon()
         showSelectedWeapon(selectedWeapon)
         
-        arControllerInputEvent.send(.runSceneSession)
+        outputEvent.send(.arControllerInputEvent(.runSceneSession))
         
         if !isCheckedTutorialCompletedFlag {
             isCheckedTutorialCompletedFlag = true
@@ -89,7 +93,7 @@ final class GameViewModel {
     }
     
     func onViewDisappear() {
-        arControllerInputEvent.send(.pauseSceneSession)
+        outputEvent.send(.arControllerInputEvent(.pauseSceneSession))
     }
     
     func tutorialEnded() {
@@ -105,8 +109,8 @@ final class GameViewModel {
         reloadWeapon()
         reloadingMotionDetecedCount += 1
         if reloadingMotionDetecedCount == 20 {
-            playSound.send(.targetAppearanceChange)
-            arControllerInputEvent.send(.changeTargetsAppearance(imageName: "taimeisan.jpg"))
+            outputEvent.send(.playSound(.targetAppearanceChange))
+            outputEvent.send(.arControllerInputEvent(.changeTargetsAppearance(imageName: "taimeisan.jpg")))
         }
     }
     
@@ -132,10 +136,10 @@ final class GameViewModel {
         // 100を超えない様に更新する
         score = min(score + randomlyAdjustedHitPoint, 100.0)
         
-        playSound.send(.targetHit)
+        outputEvent.send(.playSound(.targetHit))
         
         if let bulletHitSound = currentWeapon?.weapon.resources.bulletHitSound {
-            playSound.send(bulletHitSound)
+            outputEvent.send(.playSound(bulletHitSound))
         }
     }
     
@@ -145,17 +149,17 @@ final class GameViewModel {
         
         guard let currentWeapon = self.currentWeapon else { return }
         
-        arControllerInputEvent.send(.showWeaponObject(weaponId: currentWeapon.weapon.id))
+        outputEvent.send(.arControllerInputEvent(.showWeaponObject(weaponId: currentWeapon.weapon.id)))
         
         if isCheckedTutorialCompletedFlag {
-            playSound.send(currentWeapon.weapon.resources.appearingSound)
+            outputEvent.send(.playSound(currentWeapon.weapon.resources.appearingSound))
         }
     }
     
     private func waitAndCreateTimer() {
         guard let currentWeapon = self.currentWeapon else { return }
         
-        playSound.send(currentWeapon.weapon.resources.appearingSound)
+        outputEvent.send(.playSound(currentWeapon.weapon.resources.appearingSound))
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
             let request = GameTimerCreateRequest(
@@ -166,20 +170,20 @@ final class GameViewModel {
             self.gameTimerCreateUseCase.execute(
                 request: request,
                 onTimerStarted: { response in
-                    self.playSound.send(response.startWhistleSound)
-                    self.motionDetectorInputEvent.send(.startDeviceMotionDetection)
+                    self.outputEvent.send(.playSound(response.startWhistleSound))
+                    self.outputEvent.send(.motionDetectorInputEvent(.startDeviceMotionDetection))
                     self.isWeaponChangeButtonEnabled = true
                 },
                 onTimerUpdated: { response in
                     self.timeCount = response.timeCount
                 },
                 onTimerEnded: { response in
-                    self.playSound.send(response.endWhistleSound)
-                    self.motionDetectorInputEvent.send(.stopDeviceMotionDetection)
+                    self.outputEvent.send(.playSound(response.endWhistleSound))
+                    self.outputEvent.send(.motionDetectorInputEvent(.stopDeviceMotionDetection))
                     self.isWeaponChangeButtonEnabled = false
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
-                        self.playSound.send(response.rankingAppearSound)
+                        self.outputEvent.send(.playSound(response.rankingAppearSound))
                         self.isResultViewPresented = true
                     })
                 })
@@ -188,15 +192,15 @@ final class GameViewModel {
     
     private func fireWeapon() {
         guard let currentWeapon = self.currentWeapon else { return }
-
+        
         weaponActionExecuteUseCase.fireWeapon(
             bulletsCount: currentWeapon.state.bulletsCount,
             isReloading: currentWeapon.state.isReloading,
             reloadType: currentWeapon.weapon.spec.reloadType,
             onFired: { response in
                 self.currentWeapon?.state.bulletsCount = response.bulletsCount
-                arControllerInputEvent.send(.renderWeaponFiring)
-                playSound.send(currentWeapon.weapon.resources.firingSound)
+                outputEvent.send(.arControllerInputEvent(.renderWeaponFiring))
+                outputEvent.send(.playSound(currentWeapon.weapon.resources.firingSound))
                 
                 if response.needsAutoReload {
                     // リロードを自動的に実行
@@ -205,7 +209,7 @@ final class GameViewModel {
             },
             onOutOfBullets: {
                 if let outOfBulletsSound = currentWeapon.weapon.resources.outOfBulletsSound {
-                    playSound.send(outOfBulletsSound)
+                    outputEvent.send(.playSound(outOfBulletsSound))
                 }
             })
     }
@@ -224,7 +228,7 @@ final class GameViewModel {
             reloadCanceller: weaponReloadCanceller,
             onReloadStarted: { response in
                 self.currentWeapon?.state.isReloading = response.isReloading
-                playSound.send(currentWeapon.weapon.resources.reloadingSound)
+                outputEvent.send(.playSound(currentWeapon.weapon.resources.reloadingSound))
             },
             onReloadEnded: { response in
                 self.currentWeapon?.state.bulletsCount = response.bulletsCount
