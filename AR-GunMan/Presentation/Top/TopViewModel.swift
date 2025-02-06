@@ -12,6 +12,9 @@ import Domain
 
 @Observable
 final class TopViewModel {
+    enum OutputEventType {
+        case playSound(SoundType)
+    }
     enum IconButtonType {
         case start
         case settings
@@ -26,8 +29,8 @@ final class TopViewModel {
     var isSettingsViewPresented = false
     var isTutorialViewPresented = false
     
-    let playSound = PassthroughSubject<SoundType, Never>()
-    
+    let outputEvent = PassthroughSubject<OutputEventType, Never>()
+
     private let permissionRepository: PermissionRepositoryInterface
     
     init(permissionRepository: PermissionRepositoryInterface) {
@@ -51,7 +54,7 @@ final class TopViewModel {
     }
     
     private func switchButtonIconAndRevert(type: IconButtonType) {
-        playSound.send(.westernPistolFire)
+        outputEvent.send(.playSound(.westernPistolFire))
         
         switch type {
         case .start:

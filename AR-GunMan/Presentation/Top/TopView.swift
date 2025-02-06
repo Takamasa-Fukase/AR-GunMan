@@ -65,8 +65,11 @@ struct TopView: View {
         .onAppear {
             viewModel.onViewAppear()
         }
-        .onReceive(viewModel.playSound) { soundType in
-            SoundPlayer.shared.play(soundType)
+        .onReceive(viewModel.outputEvent) { outputEventType in
+            switch outputEventType {
+            case .playSound(let soundType):
+                SoundPlayer.shared.play(soundType)
+            }
         }
         .alert(
             "Camera Permission Required",

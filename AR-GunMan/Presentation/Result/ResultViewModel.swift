@@ -12,16 +12,20 @@ import Domain
 
 @Observable
 final class ResultViewModel {
+    enum OutputEventType {
+        case showButtons
+        case dismissAndNotifyReplayButtonTap
+        case notifyHomeButtonTap
+        case scrollCellToCenter(index: Int)
+    }
+    
     let score: Double
     private(set) var rankingList: [Ranking] = []
     var isNameRegisterViewPresented = false
     var isLoading = false
     var error: (error: Error?, isAlertPresented: Bool) = (nil, false)
     
-    let showButtons = PassthroughSubject<Void, Never>()
-    let dismissAndNotifyReplayButtonTap = PassthroughSubject<Void, Never>()
-    let notifyHomeButtonTap = PassthroughSubject<Void, Never>()
-    let scrollCellToCenter = PassthroughSubject<Int, Never>()
+    let outputEvent = PassthroughSubject<OutputEventType, Never>()
     let temporaryRankTextSubject = CurrentValueSubject<String, Never>("")
     
     private let rankingUseCase: RankingUseCaseInterface
@@ -41,19 +45,19 @@ final class ResultViewModel {
     
     func rankingRegistered(_ ranking: Ranking) {
         rankingList.insert(ranking, at: temporaryRankIndex)
-        scrollCellToCenter.send(temporaryRankIndex)
+        outputEvent.send(.scrollCellToCenter(index: temporaryRankIndex))
     }
     
     func nameRegisterViewClosed() {
-        showButtons.send(())
+        outputEvent.send(.showButtons)
     }
     
     func replayButtonTapped() {
-        dismissAndNotifyReplayButtonTap.send(())
+        outputEvent.send(.dismissAndNotifyReplayButtonTap)
     }
     
     func toHomeButtonTapped() {
-        notifyHomeButtonTap.send(())
+        outputEvent.send(.notifyHomeButtonTap)
     }
     
     private func executeSimultaneously() {

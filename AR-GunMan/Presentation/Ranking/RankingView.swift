@@ -52,8 +52,11 @@ struct RankingView: View {
         .onAppear {
             viewModel.onViewAppear()
         }
-        .onReceive(viewModel.dismiss) {
-            dismissRequestReceiver.subject.send(())
+        .onReceive(viewModel.outputEvent) { outputEventType in
+            switch outputEventType {
+            case .dismiss:
+                dismissRequestReceiver.subject.send(())
+            }
         }
         .errorAlert(
             viewModel.error.error,

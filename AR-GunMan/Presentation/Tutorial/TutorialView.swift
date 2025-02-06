@@ -15,7 +15,7 @@ struct TutorialView: View {
     var body: some View {
         GeometryReader { geometry in
             VStack(alignment: .center, spacing: 0) {
-                ScrollViewReader { proxy in
+                ScrollViewReader { scrollProxy in
                     // 横向きのスクロールビュー（PagerView的な）
                     ContentFrameTrackableScrollView(
                         scrollDirections: .horizontal,
@@ -42,10 +42,16 @@ struct TutorialView: View {
                         RoundedRectangle(cornerRadius: 20)
                             .stroke(Color.goldLeaf, lineWidth: 5)
                     }
-                    .onReceive(viewModel.scrollToPageIndex) { pageIndex in
-                        // 受け取ったpageIndexまでアニメーション付きでスクロールさせる
-                        withAnimation {
-                            proxy.scrollTo(pageIndex)
+                    // MEMO: scrollProxyを使用する為この位置で.onReceiveしている
+                    .onReceive(viewModel.outputEvent) { outputEventType in
+                        switch outputEventType {
+                        case .scrollToPageIndex(let pageIndex):
+                            // 受け取ったpageIndexまでアニメーション付きでスクロールさせる
+                            withAnimation {
+                                scrollProxy.scrollTo(pageIndex)
+                            }
+                        default:
+                            break
                         }
                     }
                 }
@@ -85,11 +91,17 @@ struct TutorialView: View {
             .padding(EdgeInsets(top: 20, leading: 0, bottom: 24, trailing: 0))
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
-        .onReceive(viewModel.dismiss) {
-            if let dismissRequestReceiver = dismissRequestReceiver {
-                dismissRequestReceiver.subject.send(())
-            }else {
-                dismiss()
+        .onReceive(viewModel.outputEvent) { outputEventType in
+            switch outputEventType {
+            case .dismiss:
+                if let dismissRequestReceiver = dismissRequestReceiver {
+                    dismissRequestReceiver.subject.send(())
+                }else {
+                    dismiss()
+                }
+            default:
+                // MEMO: case .scrollToPageIndexはscrollProxyを使用する関係で別の場所でonReceiveしている
+                break
             }
         }
     }

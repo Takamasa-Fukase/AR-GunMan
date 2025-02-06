@@ -12,6 +12,11 @@ import Domain
 
 @Observable
 final class NameRegisterViewModel {
+    enum OutputEventType {
+        case notifyRegistrationCompletion(Ranking)
+        case dismiss
+    }
+    
     let score: Double
     private(set) var temporaryRankText = ""
     private(set) var isRegistering = false
@@ -23,8 +28,7 @@ final class NameRegisterViewModel {
         }
     }
     
-    let notifyRegistrationCompletion = PassthroughSubject<Ranking, Never>()
-    let dismiss = PassthroughSubject<Void, Never>()
+    let outputEvent = PassthroughSubject<OutputEventType, Never>()
     
     private let rankingUseCase: RankingUseCaseInterface
     private var cancellables = Set<AnyCancellable>()
@@ -51,8 +55,8 @@ final class NameRegisterViewModel {
             isRegistering = true
             do {
                 try await rankingUseCase.registerRanking(ranking)
-                notifyRegistrationCompletion.send(ranking)
-                dismiss.send(())
+                outputEvent.send(.notifyRegistrationCompletion(ranking))
+                outputEvent.send(.dismiss)
                 
             } catch {
                 self.error = (error: error, isAlertPresented: true)
@@ -62,6 +66,6 @@ final class NameRegisterViewModel {
     }
     
     func noButtonTapped() {
-        dismiss.send(())
+        outputEvent.send(.dismiss)
     }
 }

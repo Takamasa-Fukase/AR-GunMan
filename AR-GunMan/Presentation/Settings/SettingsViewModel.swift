@@ -11,11 +11,15 @@ import Combine
 
 @Observable
 final class SettingsViewModel {
+    enum OutputEventType {
+        case dismiss
+    }
+    
     var isRankingViewPresented = false
     var isPrivacyPolicyViewPresented = false
     var isDeveloperContactViewPresented = false
     
-    let dismiss = PassthroughSubject<Void, Never>()
+    let outputEvent = PassthroughSubject<OutputEventType, Never>()
 
     func worldRankingButtonTapped() {
         isRankingViewPresented = true
@@ -30,6 +34,6 @@ final class SettingsViewModel {
     }
     
     func backButtonTapped() {
-        dismiss.send(())
+        outputEvent.send(.dismiss)
     }
 }

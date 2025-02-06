@@ -12,7 +12,7 @@ import Domain
 
 @Observable
 final class GameViewModel {
-    enum OutputEvent {
+    enum OutputEventType {
         case arControllerInputEvent(ARControllerInputEventType)
         case motionDetectorInputEvent(MotionDetectorInputEventType)
         case playSound(SoundType)
@@ -38,7 +38,7 @@ final class GameViewModel {
     var isResultViewPresented = false
     var isWeaponChangeButtonEnabled = false
 
-    let outputEvent = PassthroughSubject<OutputEvent, Never>()
+    let outputEvent = PassthroughSubject<OutputEventType, Never>()
     
     private let tutorialRepository: TutorialRepositoryInterface
     private let gameTimerCreateUseCase: GameTimerCreateUseCaseInterface

@@ -57,8 +57,11 @@ struct SettingsView: View {
             )
             .ignoresSafeArea()
         }
-        .onReceive(viewModel.dismiss) {
-            dismiss()
+        .onReceive(viewModel.outputEvent) { outputEventType in
+            switch outputEventType {
+            case .dismiss:
+                dismiss()
+            }
         }
     }
     

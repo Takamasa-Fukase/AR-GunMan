@@ -151,11 +151,13 @@ struct NameRegisterView: View {
             RoundedRectangle(cornerRadius: 5)
                 .stroke(Color.paper, lineWidth: 2)
         }
-        .onReceive(viewModel.notifyRegistrationCompletion) { ranking in
-            onRegistered(ranking)
-        }
-        .onReceive(viewModel.dismiss) {
-            dismissRequestReceiver.subject.send(())
+        .onReceive(viewModel.outputEvent) { outputEventType in
+            switch outputEventType {
+            case .notifyRegistrationCompletion(let ranking):
+                onRegistered(ranking)
+            case .dismiss:
+                dismissRequestReceiver.subject.send(())
+            }
         }
         .errorAlert(
             viewModel.error.error,

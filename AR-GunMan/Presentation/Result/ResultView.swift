@@ -41,9 +41,14 @@ struct ResultView: View {
                                     isLoading: $viewModel.isLoading
                                 )
                                 // MEMO: scrollProxyを使用する為この位置で.onReceiveしている
-                                .onReceive(viewModel.scrollCellToCenter) { index in
-                                    withAnimation {
-                                        scrollProxy.scrollTo(index, anchor: .center)
+                                .onReceive(viewModel.outputEvent) { outputEventType in
+                                    switch outputEventType {
+                                    case .scrollCellToCenter(let index):
+                                        withAnimation {
+                                            scrollProxy.scrollTo(index, anchor: .center)
+                                        }
+                                    default:
+                                        break
                                     }
                                 }
                             }
@@ -153,26 +158,33 @@ struct ResultView: View {
         .onAppear {
             viewModel.onViewAppear()
         }
-        .onReceive(viewModel.showButtons) { _ in
-            withAnimation(.linear(duration: 0.6)) {
-                isButtonsBaseViewVisible = true
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.35, execute: {
-                withAnimation(.linear(duration: 0.25)) {
-                    buttonsOpacity = 1
+        .onReceive(viewModel.outputEvent) { outputEventType in
+            switch outputEventType {
+            case .showButtons:
+                withAnimation(.linear(duration: 0.6)) {
+                    isButtonsBaseViewVisible = true
                 }
-            })
-        }
-        .onReceive(viewModel.dismissAndNotifyReplayButtonTap) { _ in
-            var transaction = Transaction()
-            transaction.disablesAnimations = true
-            withTransaction(transaction) {
-                dismiss()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.35, execute: {
+                    withAnimation(.linear(duration: 0.25)) {
+                        buttonsOpacity = 1
+                    }
+                })
+                
+            case .dismissAndNotifyReplayButtonTap:
+                var transaction = Transaction()
+                transaction.disablesAnimations = true
+                withTransaction(transaction) {
+                    dismiss()
+                }
+                replayButtonTapped()
+                
+            case .notifyHomeButtonTap:
+                toHomeButtonTapped()
+                
+            default:
+                // MEMO: case .scrollCellToCenterはscrollProxyを使用する関係で別の場所でonReceiveしている
+                break
             }
-            replayButtonTapped()
-        }
-        .onReceive(viewModel.notifyHomeButtonTap) { _ in
-            toHomeButtonTapped()
         }
         // 名前登録画面へ遷移
         .showCustomModal(

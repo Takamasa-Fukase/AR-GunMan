@@ -13,12 +13,16 @@ import FirebaseFirestore
 
 @Observable
 final class RankingViewModel {
+    enum OutputEventType {
+        case dismiss
+    }
+    
     private(set) var rankingList: [Ranking] = []
     var isLoading = false
     var error: (error: Error?, isAlertPresented: Bool) = (nil, false)
     
-    let dismiss = PassthroughSubject<Void, Never>()
-    
+    let outputEvent = PassthroughSubject<OutputEventType, Never>()
+
     private let rankingUseCase: RankingUseCaseInterface
 
     init(rankingUseCase: RankingUseCaseInterface) {
@@ -32,7 +36,7 @@ final class RankingViewModel {
     }
     
     func closeButtonTapped() {
-        dismiss.send(())
+        outputEvent.send(.dismiss)
     }
     
     private func getRankingAndUpdate() async {
