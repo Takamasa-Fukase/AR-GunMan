@@ -30,24 +30,27 @@ final class RankingUseCaseTests: XCTestCase {
          スコア順バラバラなリストをセットして、それがスコアの高い順にソートされて取得されること
          */
         
-        // テストで比較可能にする為に、固定のidを使う
-        let id = UUID()
-        rankingRepositoryMock.rankingList = [
-            .init(id: id, score: 9.000, userName: ""),
-            .init(id: id, score: 100.00, userName: ""),
-            .init(id: id, score: 0.000, userName: ""),
-            .init(id: id, score: 50.000, userName: "")
+        let scores = [
+            9.000,
+            100.00,
+            0.000,
+            50.000
         ]
-        let expectedRankingList: [Ranking] = [
-            .init(id: id, score: 100.00, userName: ""),
-            .init(id: id, score: 50.000, userName: ""),
-            .init(id: id, score: 9.000, userName: ""),
-            .init(id: id, score: 0.000, userName: "")
+        let expectedSortedScores = [
+            100.00,
+            50.000,
+            9.000,
+            0.000
         ]
+        
+        rankingRepositoryMock.rankingList = scores.map({ score in
+            return Ranking(score: score, userName: "")
+        })
         
         let rankingList = try await rankingUseCase.getSortedRanking()
+        let gotScores = rankingList.map { $0.score }
         
-        XCTAssertEqual(rankingList, expectedRankingList)
+        XCTAssertEqual(gotScores, expectedSortedScores)
         
         
         // MARK: 異常系のテスト
