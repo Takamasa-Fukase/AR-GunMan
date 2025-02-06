@@ -204,7 +204,7 @@ final class GameViewModel {
                 
                 if response.needsAutoReload {
                     // リロードを自動的に実行
-                    reloadWeapon()
+                    outputEvent.send(.executeAutoReload)
                 }
             },
             onOutOfBullets: {
