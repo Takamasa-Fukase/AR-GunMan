@@ -6,10 +6,12 @@
 //
 
 import XCTest
+import Domain
 @testable import AR_GunMan_Dev
 
 final class GameViewModelTests: XCTestCase {
     private var gameViewModel: GameViewModel!
+    private let testData = GameViewModelTestsTestData()
     
     override func setUp() {
         gameViewModel = .init(
@@ -24,7 +26,45 @@ final class GameViewModelTests: XCTestCase {
         gameViewModel = nil
     }
     
-    func test_example() {
-        XCTAssertEqual(gameViewModel.score, 0.0)
+    
+    /*
+     テストしたいパターン一覧
+     - 残弾数 = 1以上, リロード中 = false, リロードタイプ = .manual の時
+     - 残弾数 = 1以上, リロード中 = true , リロードタイプ = .manual の時
+     - 残弾数 = 0　　, リロード中 = false, リロードタイプ = .manual の時
+     - 残弾数 = 0　　, リロード中 = true , リロードタイプ = .manual の時
+     - 残弾数 = 1以上, リロード中 = false, リロードタイプ = .auto   の時
+     - 残弾数 = 1以上, リロード中 = true , リロードタイプ = .auto   の時
+     - 残弾数 = 0　　, リロード中 = false, リロードタイプ = .auto   の時
+     - 残弾数 = 0　　, リロード中 = true , リロードタイプ = .auto   の時
+     
+     テストしたい項目
+     <onFiredの処理>
+     - bulletsCountが元の残弾数よりも1少ない値になっていること
+     - 上記がobservationTrackingで検出されること（欲を言えば回数も）
+     - arEventで.renderWeaponFiringが流れてくること
+     - playSoundで現在の武器のfiringSoundが流れてくること
+     - needsAutoReloadのtrue or falseが期待と合っていること
+     - trueの時にreloadWeaponが呼ばれること
+     <onOutOfBulletsの処理>
+     - 現在の武器に弾切れ音声が存在する場合にplaySoundで弾切れ音声が流れること
+     */
+    func test_fireMotionDetected() {
+        // MARK: 残弾数 = 1以上, リロード中 = false, リロードタイプ = .manual の時
+        
+        let currentWeaponData = CurrentWeaponData(
+            id: testData.pistolId,
+            spec: testData.pistolSpec,
+            resources: testData.pistolResources,
+            state: CurrentWeaponData.State(
+                bulletsCount: 1,
+                isReloading: false
+            )
+        )
+        gameViewModel.setCurrentWeaponData(currentWeaponData)
+        gameViewModel.fireMotionDetected()
+        
+        XCTAssertEqual(gameViewModel.currentWeaponData?.state.bulletsCount, 0)
+        
     }
 }

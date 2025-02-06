@@ -27,6 +27,16 @@ final class GameViewModel {
     private(set) var timeCount: Double = 30.00
     private(set) var currentWeaponData: CurrentWeaponData?
     
+    // MARK: ユニットテスト時のみアクセスする
+//    #if TEST
+    func getCurrentWeaponData() -> CurrentWeaponData? {
+        return currentWeaponData
+    }
+    func setCurrentWeaponData(_ currentWeaponData: CurrentWeaponData?) {
+        self.currentWeaponData = currentWeaponData
+    }
+//    #endif
+    
     var isTutorialViewPresented = false
     var isWeaponSelectViewPresented = false
     var isResultViewPresented = false
