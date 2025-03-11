@@ -14,10 +14,10 @@ final class GameViewFactory {
         let arController = ARShootingController(frame: frame)
         let motionDetector = WeaponControlMotionDetector()
         let viewModel = GameViewModel(
-            tutorialRepository: RepositoryFactory.create(),
-            gameTimerCreateUseCase: UseCaseFactory.create(),
-            weaponResourceGetUseCase: UseCaseFactory.create(),
-            weaponActionExecuteUseCase: UseCaseFactory.create()
+            tutorialRepository: Factory.create(),
+            gameTimerCreateUseCase: Factory.create(),
+            weaponResourceGetUseCase: Factory.create(),
+            weaponActionExecuteUseCase: Factory.create()
         )
         return GameView(
             arController: arController,

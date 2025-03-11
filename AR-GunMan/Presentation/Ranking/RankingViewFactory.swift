@@ -11,7 +11,7 @@ final class RankingViewFactory {
     static func create(
         dismissRequestReceiver: DismissRequestReceiver
     ) -> RankingView {
-        let viewModel = RankingViewModel(rankingUseCase: UseCaseFactory.create())
+        let viewModel = RankingViewModel(rankingUseCase: Factory.create())
         return RankingView(
             viewModel: viewModel,
             dismissRequestReceiver: dismissRequestReceiver

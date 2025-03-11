@@ -34,12 +34,13 @@
 		BC5F56022D3B533500EA397A /* Domain in Frameworks */ = {isa = PBXBuildFile; productRef = BC5F56012D3B533500EA397A /* Domain */; };
 		BC5F56042D3B533500EA397A /* WeaponControlMotion in Frameworks */ = {isa = PBXBuildFile; productRef = BC5F56032D3B533500EA397A /* WeaponControlMotion */; };
 		BC7FBB7C2D4A434A00911B38 /* ErrorAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7FBB7B2D4A434A00911B38 /* ErrorAlert.swift */; };
+		BC8F93152D800E43000CA6DA /* Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8F93142D800E28000CA6DA /* Factory.swift */; };
+		BC8F93172D8017EF000CA6DA /* ProdFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8F93162D8017B6000CA6DA /* ProdFactory.swift */; };
+		BC8F93192D801870000CA6DA /* MockFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8F93182D80186D000CA6DA /* MockFactory.swift */; };
 		BC90ECE02D47BD3500B34E4B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC90ECDF2D47BD3400B34E4B /* AppDelegate.swift */; };
 		BCB93BA92C36DA9800DBFC46 /* GoogleService-Info.dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = BCB93BA82C36DA9800DBFC46 /* GoogleService-Info.dev.plist */; };
 		BCBCFC3D2D53373B00499C21 /* GameViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2C98412D5312EF000E3D4B /* GameViewModelTests.swift */; };
 		BCBCFC402D53A0C900499C21 /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBCFC3F2D53A0BD00499C21 /* TestData.swift */; };
-		BCFDECFC2D3B45BD0023DC8A /* RepositoryFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECAE2D3B45BC0023DC8A /* RepositoryFactory.swift */; };
-		BCFDECFD2D3B45BD0023DC8A /* UseCaseFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECAF2D3B45BC0023DC8A /* UseCaseFactory.swift */; };
 		BCFDECFE2D3B45BD0023DC8A /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECB12D3B45BC0023DC8A /* Color+Extension.swift */; };
 		BCFDECFF2D3B45BD0023DC8A /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECB22D3B45BC0023DC8A /* Double+Extension.swift */; };
 		BCFDED002D3B45BD0023DC8A /* NSObject+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECB32D3B45BC0023DC8A /* NSObject+Extension.swift */; };
@@ -143,11 +144,12 @@
 		BC2BF8872D49DB9600E202F0 /* Core */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Core; sourceTree = "<group>"; };
 		BC2C98412D5312EF000E3D4B /* GameViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModelTests.swift; sourceTree = "<group>"; };
 		BC7FBB7B2D4A434A00911B38 /* ErrorAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlert.swift; sourceTree = "<group>"; };
+		BC8F93142D800E28000CA6DA /* Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factory.swift; sourceTree = "<group>"; };
+		BC8F93162D8017B6000CA6DA /* ProdFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProdFactory.swift; sourceTree = "<group>"; };
+		BC8F93182D80186D000CA6DA /* MockFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFactory.swift; sourceTree = "<group>"; };
 		BC90ECDF2D47BD3400B34E4B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BCB93BA82C36DA9800DBFC46 /* GoogleService-Info.dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.dev.plist"; sourceTree = "<group>"; };
 		BCBCFC3F2D53A0BD00499C21 /* TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
-		BCFDECAE2D3B45BC0023DC8A /* RepositoryFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryFactory.swift; sourceTree = "<group>"; };
-		BCFDECAF2D3B45BC0023DC8A /* UseCaseFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UseCaseFactory.swift; sourceTree = "<group>"; };
 		BCFDECB12D3B45BC0023DC8A /* Color+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		BCFDECB22D3B45BC0023DC8A /* Double+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
 		BCFDECB32D3B45BC0023DC8A /* NSObject+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+Extension.swift"; sourceTree = "<group>"; };
@@ -367,8 +369,9 @@
 		BCFDECB02D3B45BC0023DC8A /* Factories */ = {
 			isa = PBXGroup;
 			children = (
-				BCFDECAE2D3B45BC0023DC8A /* RepositoryFactory.swift */,
-				BCFDECAF2D3B45BC0023DC8A /* UseCaseFactory.swift */,
+				BC8F93142D800E28000CA6DA /* Factory.swift */,
+				BC8F93162D8017B6000CA6DA /* ProdFactory.swift */,
+				BC8F93182D80186D000CA6DA /* MockFactory.swift */,
 			);
 			path = Factories;
 			sourceTree = "<group>";
@@ -809,9 +812,7 @@
 				BCFDED1F2D3B45BE0023DC8A /* TutorialViewFactory.swift in Sources */,
 				BCFDED0A2D3B45BD0023DC8A /* GameViewModel.swift in Sources */,
 				BCFDED172D3B45BE0023DC8A /* SettingsViewFactory.swift in Sources */,
-				BCFDECFC2D3B45BD0023DC8A /* RepositoryFactory.swift in Sources */,
 				BCFDED142D3B45BE0023DC8A /* ResultViewFactory.swift in Sources */,
-				BCFDECFD2D3B45BD0023DC8A /* UseCaseFactory.swift in Sources */,
 				BCFDED262D3B45BE0023DC8A /* WeaponSelectViewFactory.swift in Sources */,
 				BCFDED0F2D3B45BE0023DC8A /* RankingListView.swift in Sources */,
 				BCFDED082D3B45BD0023DC8A /* GameView.swift in Sources */,
@@ -820,6 +821,8 @@
 				BC90ECE02D47BD3500B34E4B /* AppDelegate.swift in Sources */,
 				BCFDED1D2D3B45BE0023DC8A /* TutorialScrollViewItem.swift in Sources */,
 				BCFDED132D3B45BE0023DC8A /* ResultView.swift in Sources */,
+				BC8F93152D800E43000CA6DA /* Factory.swift in Sources */,
+				BC8F93192D801870000CA6DA /* MockFactory.swift in Sources */,
 				BCFDED112D3B45BE0023DC8A /* RankingViewFactory.swift in Sources */,
 				BCFDED1E2D3B45BE0023DC8A /* TutorialView.swift in Sources */,
 				BCFDED032D3B45BD0023DC8A /* CustomModalPresenter.swift in Sources */,
@@ -832,6 +835,7 @@
 				BCFDED152D3B45BE0023DC8A /* ResultViewModel.swift in Sources */,
 				BCFDED202D3B45BE0023DC8A /* TutorialViewModel.swift in Sources */,
 				BCFDED1C2D3B45BE0023DC8A /* TutorialConst.swift in Sources */,
+				BC8F93172D8017EF000CA6DA /* ProdFactory.swift in Sources */,
 				BCFDED0B2D3B45BD0023DC8A /* NameRegisterView.swift in Sources */,
 				BCFDED162D3B45BE0023DC8A /* SettingsView.swift in Sources */,
 				BCFDECFE2D3B45BD0023DC8A /* Color+Extension.swift in Sources */,

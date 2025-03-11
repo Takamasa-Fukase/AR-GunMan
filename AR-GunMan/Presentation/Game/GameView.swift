@@ -192,10 +192,10 @@ struct GameView: View {
         let arController = ARShootingController(frame: .zero)
         let motionDetector = WeaponControlMotionDetector()
         let viewModel = GameViewModel(
-            tutorialRepository: RepositoryFactory.create(),
-            gameTimerCreateUseCase: UseCaseFactory.create(),
-            weaponResourceGetUseCase: UseCaseFactory.create(),
-            weaponActionExecuteUseCase: UseCaseFactory.create()
+            tutorialRepository: Factory.create(),
+            gameTimerCreateUseCase: Factory.create(),
+            weaponResourceGetUseCase: Factory.create(),
+            weaponActionExecuteUseCase: Factory.create()
         )
         self.arController = arController
         self.motionDetector = motionDetector

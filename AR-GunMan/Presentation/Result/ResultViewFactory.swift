@@ -14,7 +14,7 @@ final class ResultViewFactory {
         toHomeButtonTapped: @escaping () -> Void
     ) -> ResultView {
         let viewModel = ResultViewModel(
-            rankingUseCase: UseCaseFactory.create(),
+            rankingUseCase: Factory.create(),
             score: score
         )
         return ResultView(

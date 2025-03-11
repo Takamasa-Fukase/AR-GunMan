@@ -13,7 +13,7 @@ final class WeaponSelectViewFactory {
         weaponSelected: @escaping (Int) -> Void
     ) -> WeaponSelectView {
         let viewModel = WeaponSelectViewModel(
-            weaponResourceGetUseCase: UseCaseFactory.create(),
+            weaponResourceGetUseCase: Factory.create(),
             initialDisplayWeaponId: initialDisplayWeaponId
         )
         return WeaponSelectView(viewModel: viewModel, weaponSelected: weaponSelected)

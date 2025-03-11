@@ -10,7 +10,7 @@ import Foundation
 final class TopViewFactory {
     static func create() -> TopView {
         let viewModel = TopViewModel(
-            permissionRepository: RepositoryFactory.create()
+            permissionRepository: Factory.create()
         )
         return TopView(viewModel: viewModel)
     }
