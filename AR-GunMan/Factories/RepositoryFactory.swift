@@ -10,8 +10,6 @@ import Data
 import Domain
 
 final class RepositoryFactory {
-    public init() {}
-
     static func create() -> WeaponRepositoryInterface {
         return WeaponRepository()
     }
