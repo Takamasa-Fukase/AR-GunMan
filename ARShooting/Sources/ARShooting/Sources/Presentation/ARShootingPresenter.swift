@@ -18,6 +18,7 @@ protocol ARShootingPresenterInterface {
 }
 
 final class ARShootingPresenter: ARShootingPresenterInterface {
+    private let weaponRepository: WeaponRepositoryInterface
     private var loadedWeapons: [WeaponInfo] = []
     private weak var view: ARShootingViewInterface?
     private(set) var currentWeaponId: Int = 0
@@ -27,9 +28,11 @@ final class ARShootingPresenter: ARShootingPresenterInterface {
     }
     
     init(
+        weaponRepository: WeaponRepositoryInterface,
         view: ARShootingViewInterface,
         targetCount: Int
     ) {
+        self.weaponRepository = weaponRepository
         self.view = view
         view.setup(targetCount: targetCount)
     }
@@ -66,9 +69,8 @@ final class ARShootingPresenter: ARShootingPresenterInterface {
         }
         // まだロードしていない場合
         else {
-            // idを使ってDataSourceから該当のWeaponInfoを取り出す
-            let repository = WeaponRepository()
-            let weaponInfo = repository.getWeaponInfo(by: id)
+            // idを使って該当のWeaponInfoを取得
+            let weaponInfo = weaponRepository.getWeaponInfo(by: id)
             
             // そのWeaponInfoを使って実際に3Dオブジェクト群（Node）をロードさせる
             view?.prepareWeaponNodes(

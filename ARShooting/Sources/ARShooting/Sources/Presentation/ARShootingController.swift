@@ -19,11 +19,13 @@ public final class ARShootingController {
         delegate: ARShootingDelegate,
         targetCount: Int
     ) {
+        let weaponRepository = WeaponRepository()
         let view = ARShootingView(
             frame: frame,
             delegate: delegate
         )
         presenter = ARShootingPresenter(
+            weaponRepository: weaponRepository,
             view: view,
             targetCount: targetCount
         )
