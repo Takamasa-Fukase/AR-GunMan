@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Core
 
 final class WeaponRepository: WeaponRepositoryInterface {
     private let weaponObjectDataList: [WeaponObjectData] = WeaponObjectDataSource.weaponObjectDataList
@@ -16,5 +15,12 @@ final class WeaponRepository: WeaponRepositoryInterface {
             fatalError("WeaponObjectDataSourceにid: \(id)の武器が存在しません")
         }
         return weaponObjectData
+    }
+    
+    func getWeaponInfo(by id: Int) -> WeaponInfo {
+        guard let weaponInfo = WeaponInfoDataSource.list.first(where: { $0.id == id }) else {
+            fatalError("WeaponInfoDataSourceにid: \(id)の武器情報が存在しません")
+        }
+        return weaponInfo
     }
 }

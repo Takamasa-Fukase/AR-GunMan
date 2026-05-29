@@ -109,6 +109,8 @@
 
 /* Begin PBXFileReference section */
 		279BF58C8346A5E3B5866A1B /* Pods-AR-GunManTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-GunManTests.debug.xcconfig"; path = "Target Support Files/Pods-AR-GunManTests/Pods-AR-GunManTests.debug.xcconfig"; sourceTree = "<group>"; };
+		27B22FD5F51C9E86E2161240 /* Pods-AR-GunMan.test.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-GunMan.test.xcconfig"; path = "Target Support Files/Pods-AR-GunMan/Pods-AR-GunMan.test.xcconfig"; sourceTree = "<group>"; };
+		486BFFA827CE9F2E5AD9BB20 /* Pods-AR-GunMan-AR-GunManUITests.test.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-GunMan-AR-GunManUITests.test.xcconfig"; path = "Target Support Files/Pods-AR-GunMan-AR-GunManUITests/Pods-AR-GunMan-AR-GunManUITests.test.xcconfig"; sourceTree = "<group>"; };
 		59940B872552F54900EC20C1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		59D2D4D52552DE66006DDB70 /* AR-GunMan Dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AR-GunMan Dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		59D2D4E42552DE67006DDB70 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 		BCFDECE72D3B45BD0023DC8A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		BCFDECE92D3B45BD0023DC8A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BCFDECFA2D3B45BD0023DC8A /* ColorTypeConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorTypeConverter.swift; sourceTree = "<group>"; };
+		C0D6D2E34680E66FD3B0D563 /* Pods-AR-GunManTests.test.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-GunManTests.test.xcconfig"; path = "Target Support Files/Pods-AR-GunManTests/Pods-AR-GunManTests.test.xcconfig"; sourceTree = "<group>"; };
 		F04E46645750BF2C9B420DED /* Pods-AR-GunMan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-GunMan.release.xcconfig"; path = "Target Support Files/Pods-AR-GunMan/Pods-AR-GunMan.release.xcconfig"; sourceTree = "<group>"; };
 		F878AB940BB378E586D8EE82 /* Pods-AR-GunMan-AR-GunManUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-GunMan-AR-GunManUITests.release.xcconfig"; path = "Target Support Files/Pods-AR-GunMan-AR-GunManUITests/Pods-AR-GunMan-AR-GunManUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -243,6 +246,9 @@
 				F878AB940BB378E586D8EE82 /* Pods-AR-GunMan-AR-GunManUITests.release.xcconfig */,
 				279BF58C8346A5E3B5866A1B /* Pods-AR-GunManTests.debug.xcconfig */,
 				922E5AAB43CC9536D84EF020 /* Pods-AR-GunManTests.release.xcconfig */,
+				27B22FD5F51C9E86E2161240 /* Pods-AR-GunMan.test.xcconfig */,
+				486BFFA827CE9F2E5AD9BB20 /* Pods-AR-GunMan-AR-GunManUITests.test.xcconfig */,
+				C0D6D2E34680E66FD3B0D563 /* Pods-AR-GunManTests.test.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -700,9 +706,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AR-GunMan/Pods-AR-GunMan-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AR-GunMan/Pods-AR-GunMan-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -717,9 +727,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AR-GunMan-AR-GunManUITests/Pods-AR-GunMan-AR-GunManUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AR-GunMan-AR-GunManUITests/Pods-AR-GunMan-AR-GunManUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1025,7 +1039,7 @@
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 37MFDT4LMQ;
 				INFOPLIST_FILE = "AR-GunMan/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1052,7 +1066,7 @@
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 37MFDT4LMQ;
 				INFOPLIST_FILE = "AR-GunMan/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1229,7 +1243,7 @@
 		};
 		BCBCFC422D54561D00499C21 /* Test */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 78CFE59EF646A91CDD65B43D /* Pods-AR-GunMan.debug.xcconfig */;
+			baseConfigurationReference = 27B22FD5F51C9E86E2161240 /* Pods-AR-GunMan.test.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1240,7 +1254,7 @@
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 37MFDT4LMQ;
 				INFOPLIST_FILE = "AR-GunMan/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1256,7 +1270,7 @@
 		};
 		BCBCFC432D54561D00499C21 /* Test */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 279BF58C8346A5E3B5866A1B /* Pods-AR-GunManTests.debug.xcconfig */;
+			baseConfigurationReference = C0D6D2E34680E66FD3B0D563 /* Pods-AR-GunManTests.test.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1281,7 +1295,7 @@
 		};
 		BCBCFC442D54561D00499C21 /* Test */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7CD697C6E134C845527E1E4C /* Pods-AR-GunMan-AR-GunManUITests.debug.xcconfig */;
+			baseConfigurationReference = 486BFFA827CE9F2E5AD9BB20 /* Pods-AR-GunMan-AR-GunManUITests.test.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
