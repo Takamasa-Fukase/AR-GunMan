@@ -7,8 +7,8 @@
 
 import Foundation
 
-final class WeaponInfoDataSource {
-    static let list: [WeaponInfo] = [
+final class WeaponInfoDataSource: WeaponInfoDataSourceInterface {
+    let list: [WeaponInfo] = [
         PistolInfo(
             id: 0,
             nodeFileName: "pistol",
