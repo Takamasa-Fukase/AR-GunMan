@@ -8,6 +8,5 @@
 import Foundation
 
 protocol WeaponRepositoryInterface {
-    func getWeaponObjectData(by id: Int) -> WeaponObjectData
     func getWeaponInfo(by id: Int) -> WeaponInfo
 }

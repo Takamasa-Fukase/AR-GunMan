@@ -2,51 +2,50 @@
 //  ARShootingController.swift
 //  ARShooting
 //
-//  Created by ウルトラ深瀬 on 15/12/24.
+//  Created by ウルトラ深瀬 on 2026/05/29.
 //
 
-import UIKit
 import SwiftUI
 
 public final class ARShootingController {
-    public var targetHit: (() -> Void)? {
-        didSet {
-            sceneManager.targetHit = targetHit
-        }
-    }
+    private let presenter: ARShootingPresenterInterface
+    
     public var view: some View {
-        return SceneViewRepresentable(view: sceneManager.getSceneView())
-    }
-    private var sceneManager: SceneManagerInterface
-    
-    public init(frame: CGRect) {
-        sceneManager = SceneManager(frame: frame)
+        return ARSCNViewRepresentable(view: presenter.sceneView)
     }
     
-    // MARK: ユニットテスト時のみアクセスする
-    #if DEBUG
-    init(sceneManager: SceneManagerInterface) {
-        self.sceneManager = sceneManager
+    public init(
+        frame: CGRect,
+        delegate: ARShootingDelegate,
+        targetCount: Int
+    ) {
+        let view = ARShootingView(
+            frame: frame,
+            delegate: delegate
+        )
+        presenter = ARShootingPresenter(
+            view: view,
+            targetCount: targetCount
+        )
     }
-    #endif
     
     public func runSession() {
-        sceneManager.runSession()
+        presenter.runSession()
     }
     
     public func pauseSession() {
-        sceneManager.pauseSession()
+        presenter.pauseSession()
     }
     
-    public func showWeaponObject(weaponId: Int) {
-        sceneManager.showWeaponObject(weaponId: weaponId)
+    public func showWeapon(of id: Int) {
+        presenter.showWeapon(of: id)
     }
     
     public func renderWeaponFiring() {
-        sceneManager.renderWeaponFiring()
+        presenter.renderWeaponFiring()
     }
     
     public func changeTargetsAppearance(to imageName: String) {
-        sceneManager.changeTargetsAppearance(to: imageName)
+        presenter.changeTargetsAppearance(to: imageName)
     }
 }
