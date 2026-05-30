@@ -1,23 +1,13 @@
 //
-//  Weapon.swift
+//  Bazooka.swift
 //  Domain
 //
-//  Created by ウルトラ深瀬 on 5/11/24.
+//  Created by ウルトラ深瀬 on 2026/05/30.
 //
 
 import Foundation
 
-public enum ColorType {
-    case red
-    case green
-}
-
-public enum ReloadType {
-    case manual
-    case auto
-}
-
-public struct Weapon {
+public struct Bazooka: Weapon {
     public let id: Int
     public let isDefault: Bool
     public let spec: Spec
@@ -35,7 +25,7 @@ public struct Weapon {
         self.resources = resources
     }
     
-    public struct Spec {
+    public struct Spec: WeaponSpec {
         public let capacity: Int
         public let reloadWaitingTime: TimeInterval
         public let reloadType: ReloadType
@@ -53,8 +43,8 @@ public struct Weapon {
             self.targetHitPoint = targetHitPoint
         }
     }
-     
-    public struct Resources {
+    
+    public struct Resources: WeaponResources {
         public let weaponImageName: String
         public let sightImageName: String
         public let sightImageColorType: ColorType
@@ -62,7 +52,6 @@ public struct Weapon {
         public let appearingSound: SoundType
         public let firingSound: SoundType
         public let reloadingSound: SoundType
-        public let outOfBulletsSound: SoundType?
         public let bulletHitSound: SoundType?
         
         public init(
@@ -73,7 +62,6 @@ public struct Weapon {
             appearingSound: SoundType,
             firingSound: SoundType,
             reloadingSound: SoundType,
-            outOfBulletsSound: SoundType?,
             bulletHitSound: SoundType?
         ) {
             self.weaponImageName = weaponImageName
@@ -83,7 +71,6 @@ public struct Weapon {
             self.appearingSound = appearingSound
             self.firingSound = firingSound
             self.reloadingSound = reloadingSound
-            self.outOfBulletsSound = outOfBulletsSound
             self.bulletHitSound = bulletHitSound
         }
     }

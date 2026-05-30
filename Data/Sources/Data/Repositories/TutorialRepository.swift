@@ -9,13 +9,17 @@ import Foundation
 import Domain
 
 public final class TutorialRepository: TutorialRepositoryInterface {
-    public init() {}
+    private var userDefaultsDataSource: UserDefaultsDataSourceInterface
+    
+    public init(userDefaultsDataSource: UserDefaultsDataSourceInterface) {
+        self.userDefaultsDataSource = userDefaultsDataSource
+    }
     
     public func getTutorialCompletedFlag() -> Bool {
-        return UserDefaults.isTutorialCompleted
+        return userDefaultsDataSource.isTutorialCompleted
     }
     
     public func updateTutorialCompletedFlag(isCompleted: Bool) {
-        UserDefaults.isTutorialCompleted = isCompleted
+        userDefaultsDataSource.isTutorialCompleted = isCompleted
     }
 }

@@ -7,9 +7,10 @@
 
 import Foundation
 import Core
+import Data
 import FirebaseFirestore
 
-final class FirestoreClient {
+final class FirestoreClient: FirestoreClientInterface {
     private let db = Firestore.firestore()
         
     func getItems<ResponseEntity: Decodable>(collectionPath: String) async throws -> [ResponseEntity] {

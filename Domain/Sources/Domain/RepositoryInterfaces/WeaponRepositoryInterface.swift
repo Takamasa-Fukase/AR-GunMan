@@ -8,7 +8,7 @@
 import Foundation
 
 public protocol WeaponRepositoryInterface {
-    func get(by id: Int) -> Weapon
-    func getDefault() -> Weapon
-    func getAll() -> [Weapon]
+    func get(by id: Int) -> any Weapon
+    func getDefault() -> any Weapon
+    func getAll() -> [any Weapon]
 }

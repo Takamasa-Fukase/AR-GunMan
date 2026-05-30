@@ -8,11 +8,11 @@
 import Foundation
 
 public struct CurrentWeapon {
-    public let weapon: Weapon
+    public let weapon: any Weapon
     public var state: State
     
     public init(
-        weapon: Weapon,
+        weapon: any Weapon,
         state: State
     ) {
         self.weapon = weapon

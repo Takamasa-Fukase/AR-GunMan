@@ -6,20 +6,21 @@
 //
 
 import Foundation
+import Data
 import Domain
 
-final class WeaponDataSource {
-    static let weapons: [Weapon] = [
-        .init(
+final class WeaponDataSource: WeaponDataSourceInterface {
+    let list: [any Weapon] = [
+        Pistol(
             id: 0,
             isDefault: true,
-            spec: .init(
+            spec: Pistol.Spec(
                 capacity: 7,
                 reloadWaitingTime: 0,
                 reloadType: .manual,
                 targetHitPoint: 5
             ),
-            resources: .init(
+            resources: Pistol.Resources(
                 weaponImageName: "pistol",
                 sightImageName: "pistol_sight",
                 sightImageColorType: .red,
@@ -27,20 +28,19 @@ final class WeaponDataSource {
                 appearingSound: .pistolAppear,
                 firingSound: .pistolFire,
                 reloadingSound: .pistolReload,
-                outOfBulletsSound: .pistolOutOfBullets,
-                bulletHitSound: nil
+                outOfBulletsSound: .pistolOutOfBullets
             )
         ),
-        .init(
+        Bazooka(
             id: 1,
             isDefault: false,
-            spec: .init(
+            spec: Bazooka.Spec(
                 capacity: 1,
                 reloadWaitingTime: 3.2,
                 reloadType: .auto,
                 targetHitPoint: 12
             ),
-            resources: .init(
+            resources: Bazooka.Resources(
                 weaponImageName: "bazooka",
                 sightImageName: "bazooka_sight",
                 sightImageColorType: .green,
@@ -48,7 +48,6 @@ final class WeaponDataSource {
                 appearingSound: .bazookaAppear,
                 firingSound: .bazookaFire,
                 reloadingSound: .bazookaReload,
-                outOfBulletsSound: nil,
                 bulletHitSound: .bazookaExplosion
             )
         )

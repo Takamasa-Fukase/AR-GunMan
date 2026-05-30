@@ -6,15 +6,16 @@
 //
 
 import Foundation
+import Data
 
-extension UserDefaults {
-    private static let defaults = UserDefaults.standard
+final class UserDefaultsDataSource: UserDefaultsDataSourceInterface {
+    private let defaults = UserDefaults.standard
 
     private enum Keys {
         static let isTutorialCompleted = "isTutorialCompleted"
     }
 
-    static var isTutorialCompleted: Bool {
+    var isTutorialCompleted: Bool {
         get {
             return defaults.bool(forKey: Keys.isTutorialCompleted)
         }
