@@ -33,6 +33,7 @@
 		BC5F56022D3B533500EA397A /* Domain in Frameworks */ = {isa = PBXBuildFile; productRef = BC5F56012D3B533500EA397A /* Domain */; };
 		BC5F56042D3B533500EA397A /* WeaponControlMotion in Frameworks */ = {isa = PBXBuildFile; productRef = BC5F56032D3B533500EA397A /* WeaponControlMotion */; };
 		BC7B6CA72FCFF4D4001A2CFA /* ARShootingLib in Frameworks */ = {isa = PBXBuildFile; productRef = BC7B6CA62FCFF4D4001A2CFA /* ARShootingLib */; };
+		BC7B6CA92FCFF5C4001A2CFA /* Infrastructure in Frameworks */ = {isa = PBXBuildFile; productRef = BC7B6CA82FCFF5C4001A2CFA /* Infrastructure */; };
 		BC7FBB7C2D4A434A00911B38 /* ErrorAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7FBB7B2D4A434A00911B38 /* ErrorAlert.swift */; };
 		BC8F93152D800E43000CA6DA /* Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8F93142D800E28000CA6DA /* Factory.swift */; };
 		BC8F93172D8017EF000CA6DA /* ProdFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8F93162D8017B6000CA6DA /* ProdFactory.swift */; };
@@ -216,6 +217,7 @@
 				BC7B6CA72FCFF4D4001A2CFA /* ARShootingLib in Frameworks */,
 				BC2BF8892D49DDE400E202F0 /* Core in Frameworks */,
 				BC330B2B2D499261007C4501 /* FirebaseFirestore in Frameworks */,
+				BC7B6CA92FCFF5C4001A2CFA /* Infrastructure in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -563,6 +565,7 @@
 				BC330B2A2D499261007C4501 /* FirebaseFirestore */,
 				BC2BF8882D49DDE400E202F0 /* Core */,
 				BC7B6CA62FCFF4D4001A2CFA /* ARShootingLib */,
+				BC7B6CA82FCFF5C4001A2CFA /* Infrastructure */,
 			);
 			productName = "AR-GunMan";
 			productReference = 59D2D4D52552DE66006DDB70 /* AR-GunMan Dev.app */;
@@ -1400,6 +1403,10 @@
 		BC7B6CA62FCFF4D4001A2CFA /* ARShootingLib */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ARShootingLib;
+		};
+		BC7B6CA82FCFF5C4001A2CFA /* Infrastructure */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Infrastructure;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
