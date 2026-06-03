@@ -29,10 +29,10 @@
 		BC0D547B2D432FAE00D69795 /* bazooka_reload.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BC0D54632D432FAE00D69795 /* bazooka_reload.mp3 */; };
 		BC2BF8892D49DDE400E202F0 /* Core in Frameworks */ = {isa = PBXBuildFile; productRef = BC2BF8882D49DDE400E202F0 /* Core */; };
 		BC330B2B2D499261007C4501 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = BC330B2A2D499261007C4501 /* FirebaseFirestore */; };
-		BC5F55FE2D3B533500EA397A /* ARShooting in Frameworks */ = {isa = PBXBuildFile; productRef = BC5F55FD2D3B533500EA397A /* ARShooting */; };
 		BC5F56002D3B533500EA397A /* Data in Frameworks */ = {isa = PBXBuildFile; productRef = BC5F55FF2D3B533500EA397A /* Data */; };
 		BC5F56022D3B533500EA397A /* Domain in Frameworks */ = {isa = PBXBuildFile; productRef = BC5F56012D3B533500EA397A /* Domain */; };
 		BC5F56042D3B533500EA397A /* WeaponControlMotion in Frameworks */ = {isa = PBXBuildFile; productRef = BC5F56032D3B533500EA397A /* WeaponControlMotion */; };
+		BC7B6CA72FCFF4D4001A2CFA /* ARShootingLib in Frameworks */ = {isa = PBXBuildFile; productRef = BC7B6CA62FCFF4D4001A2CFA /* ARShootingLib */; };
 		BC7FBB7C2D4A434A00911B38 /* ErrorAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7FBB7B2D4A434A00911B38 /* ErrorAlert.swift */; };
 		BC8F93152D800E43000CA6DA /* Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8F93142D800E28000CA6DA /* Factory.swift */; };
 		BC8F93172D8017EF000CA6DA /* ProdFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8F93162D8017B6000CA6DA /* ProdFactory.swift */; };
@@ -209,11 +209,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BC5F55FE2D3B533500EA397A /* ARShooting in Frameworks */,
 				BC5F56022D3B533500EA397A /* Domain in Frameworks */,
 				BC5F56042D3B533500EA397A /* WeaponControlMotion in Frameworks */,
 				BC5F56002D3B533500EA397A /* Data in Frameworks */,
 				226019EB1C6C0B4EEDECE581 /* Pods_AR_GunMan.framework in Frameworks */,
+				BC7B6CA72FCFF4D4001A2CFA /* ARShootingLib in Frameworks */,
 				BC2BF8892D49DDE400E202F0 /* Core in Frameworks */,
 				BC330B2B2D499261007C4501 /* FirebaseFirestore in Frameworks */,
 			);
@@ -557,12 +557,12 @@
 			);
 			name = "AR-GunMan";
 			packageProductDependencies = (
-				BC5F55FD2D3B533500EA397A /* ARShooting */,
 				BC5F55FF2D3B533500EA397A /* Data */,
 				BC5F56012D3B533500EA397A /* Domain */,
 				BC5F56032D3B533500EA397A /* WeaponControlMotion */,
 				BC330B2A2D499261007C4501 /* FirebaseFirestore */,
 				BC2BF8882D49DDE400E202F0 /* Core */,
+				BC7B6CA62FCFF4D4001A2CFA /* ARShootingLib */,
 			);
 			productName = "AR-GunMan";
 			productReference = 59D2D4D52552DE66006DDB70 /* AR-GunMan Dev.app */;
@@ -1385,10 +1385,6 @@
 			package = BC330B292D499261007C4501 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
 		};
-		BC5F55FD2D3B533500EA397A /* ARShooting */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ARShooting;
-		};
 		BC5F55FF2D3B533500EA397A /* Data */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Data;
@@ -1400,6 +1396,10 @@
 		BC5F56032D3B533500EA397A /* WeaponControlMotion */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = WeaponControlMotion;
+		};
+		BC7B6CA62FCFF4D4001A2CFA /* ARShootingLib */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ARShootingLib;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
