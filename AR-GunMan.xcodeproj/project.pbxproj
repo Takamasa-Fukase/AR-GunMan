@@ -149,7 +149,7 @@
 		BC8F93162D8017B6000CA6DA /* ProdFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProdFactory.swift; sourceTree = "<group>"; };
 		BC8F93182D80186D000CA6DA /* MockFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFactory.swift; sourceTree = "<group>"; };
 		BC90ECDF2D47BD3400B34E4B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		BCAD29752FC9D07400E5D2AB /* ARShooting */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ARShooting; sourceTree = "<group>"; };
+		BCAD29752FC9D07400E5D2AB /* ARShootingLib */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ARShootingLib; sourceTree = "<group>"; };
 		BCAD29762FC9D13900E5D2AB /* Infrastructure */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Infrastructure; sourceTree = "<group>"; };
 		BCB93BA82C36DA9800DBFC46 /* GoogleService-Info.dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.dev.plist"; sourceTree = "<group>"; };
 		BCBCFC3F2D53A0BD00499C21 /* TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
@@ -257,7 +257,7 @@
 		59D2D4CC2552DE66006DDB70 = {
 			isa = PBXGroup;
 			children = (
-				BCAD29752FC9D07400E5D2AB /* ARShooting */,
+				BCAD29752FC9D07400E5D2AB /* ARShootingLib */,
 				BC2BF8872D49DB9600E202F0 /* Core */,
 				BC067F762D3B4CEA00E58C56 /* Data */,
 				BC067F772D3B4CF900E58C56 /* Domain */,
