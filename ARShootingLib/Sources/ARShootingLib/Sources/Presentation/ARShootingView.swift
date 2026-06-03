@@ -14,6 +14,7 @@ public protocol ARShootingDelegate: AnyObject {
 protocol ARShootingViewInterface: AnyObject {
     var sceneView: ARSCNView { get }
     func inject(presenter: ARShootingPresenterInterface)
+    func inject(delegate: ARShootingDelegate)
     func setup(targetCount: Int)
     func showTargetsToRandomPositions(count: Int)
     func runSession()
@@ -45,17 +46,19 @@ final class ARShootingView: NSObject, ARShootingViewInterface {
     private weak var delegate: ARShootingDelegate?
     
     init(
-        frame: CGRect,
-        delegate: ARShootingDelegate
+        frame: CGRect
     ) {
         // MEMO: 予めframeを渡して初期化することで、モーダル出現アニメーションの途中時点から既に正しい比率でSceneオブジェクトを表示した状態で一緒にアニメーションさせられるので遷移の見た目が綺麗になる（遷移前に予め表示予定領域のframeが確定している場合）
         sceneView = ARSCNView(frame: frame)
-        self.delegate = delegate
         super.init()
     }
     
     func inject(presenter: ARShootingPresenterInterface) {
         self.presenter = presenter
+    }
+    
+    func inject(delegate: ARShootingDelegate) {
+        self.delegate = delegate
     }
     
     func setup(targetCount: Int) {

@@ -10,6 +10,7 @@ import Foundation
 protocol ARShootingPresenterInterface {
     var sceneView: AnyObject? { get }
     var currentWeaponId: Int { get }
+    func inject(delegate: ARShootingDelegate)
     func runSession()
     func pauseSession()
     func showWeapon(of id: Int)
@@ -35,6 +36,10 @@ final class ARShootingPresenter: ARShootingPresenterInterface {
         self.weaponRepository = weaponRepository
         self.view = view
         view.setup(targetCount: targetCount)
+    }
+    
+    func inject(delegate: ARShootingDelegate) {
+        view?.inject(delegate: delegate)
     }
     
     func runSession() {

@@ -7,23 +7,36 @@
 
 import SwiftUI
 
-public final class ARShootingController {
+public protocol ARShootingControllerInterface {
+    associatedtype ARView: View
+    func getARView() -> ARView
+    func inject(delegate: ARShootingDelegate)
+    func runSession()
+    func pauseSession()
+    func showWeapon(of id: Int)
+    func renderWeaponFiring()
+    func changeTargetsAppearance(to imageName: String)
+}
+
+public final class ARShootingController: ARShootingControllerInterface {
     private let presenter: ARShootingPresenterInterface
-    
-    public var view: some View {
-        return ARSCNViewRepresentable(view: presenter.sceneView)
-    }
     
     public init(
         frame: CGRect,
-        delegate: ARShootingDelegate,
         targetCount: Int
     ) {
         presenter = ARShootingPresenterBuilder.build(
             frame: frame,
-            delegate: delegate,
             targetCount: targetCount
         )
+    }
+    
+    public func getARView() -> some View {
+        return ARSCNViewRepresentable(view: presenter.sceneView)
+    }
+    
+    public func inject(delegate: ARShootingDelegate) {
+        presenter.inject(delegate: delegate)
     }
     
     public func runSession() {

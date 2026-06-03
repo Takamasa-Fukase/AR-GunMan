@@ -10,21 +10,19 @@ import Foundation
 struct ARShootingPresenterBuilder {
     static func build(
         frame: CGRect,
-        delegate: ARShootingDelegate,
         targetCount: Int
     ) -> ARShootingPresenter {
         let weaponInfoDataSource = WeaponInfoDataSource()
         let weaponRepository = WeaponRepository(
             weaponInfoDataSource: weaponInfoDataSource
         )
-        let view = ARShootingView(
-            frame: frame,
-            delegate: delegate
-        )
-        return ARShootingPresenter(
+        let view = ARShootingView(frame: frame)
+        let presenter = ARShootingPresenter(
             weaponRepository: weaponRepository,
             view: view,
             targetCount: targetCount
         )
+        view.inject(presenter: presenter)
+        return presenter
     }
 }
