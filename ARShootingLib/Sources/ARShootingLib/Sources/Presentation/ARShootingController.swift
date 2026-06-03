@@ -32,7 +32,7 @@ public final class ARShootingController: ARShootingControllerInterface {
     }
     
     public func getARView() -> some View {
-        return ARSCNViewRepresentable(view: presenter.sceneView)
+        return ARSCNViewRepresentable(view: presenter.arView)
     }
     
     public func inject(delegate: ARShootingDelegate) {

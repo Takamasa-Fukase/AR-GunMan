@@ -12,7 +12,7 @@ public protocol ARShootingDelegate: AnyObject {
 }
 
 protocol ARShootingViewInterface: AnyObject {
-    var sceneView: ARSCNView { get }
+    var arView: ARSCNView { get }
     func inject(presenter: ARShootingPresenterInterface)
     func inject(delegate: ARShootingDelegate)
     func setup(targetCount: Int)
@@ -39,7 +39,7 @@ protocol ARShootingViewInterface: AnyObject {
 }
 
 final class ARShootingView: NSObject, ARShootingViewInterface {
-    let sceneView: ARSCNView
+    let arView: ARSCNView
     private let originalBulletNode = SceneNodeUtil.originalBulletNode()
     private var loadedWeaponNodeDataList: [LoadedWeaponNodeData] = []
     private var presenter: ARShootingPresenterInterface?
@@ -49,7 +49,7 @@ final class ARShootingView: NSObject, ARShootingViewInterface {
         frame: CGRect
     ) {
         // MEMO: 予めframeを渡して初期化することで、モーダル出現アニメーションの途中時点から既に正しい比率でSceneオブジェクトを表示した状態で一緒にアニメーションさせられるので遷移の見た目が綺麗になる（遷移前に予め表示予定領域のframeが確定している場合）
-        sceneView = ARSCNView(frame: frame)
+        arView = ARSCNView(frame: frame)
         super.init()
     }
     
@@ -62,10 +62,10 @@ final class ARShootingView: NSObject, ARShootingViewInterface {
     }
     
     func setup(targetCount: Int) {
-        sceneView.scene = SCNScene()
-        sceneView.autoenablesDefaultLighting = true
-        sceneView.delegate = self
-        sceneView.scene.physicsWorld.contactDelegate = self
+        arView.scene = SCNScene()
+        arView.autoenablesDefaultLighting = true
+        arView.delegate = self
+        arView.scene.physicsWorld.contactDelegate = self
         
         showTargetsToRandomPositions(count: targetCount)
     }
@@ -78,7 +78,7 @@ final class ARShootingView: NSObject, ARShootingViewInterface {
                 let clonedTargetNode = originalTargetNode.clone()
                 clonedTargetNode.position = SceneNodeUtil.getRandomTargetPosition()
                 SceneNodeUtil.addBillboardConstraint(clonedTargetNode)
-                self.sceneView.scene.rootNode.addChildNode(clonedTargetNode)
+                self.arView.scene.rootNode.addChildNode(clonedTargetNode)
             }
         }
     }
@@ -86,11 +86,11 @@ final class ARShootingView: NSObject, ARShootingViewInterface {
     func runSession() {
         let configuration = ARWorldTrackingConfiguration()
         configuration.planeDetection = .horizontal
-        sceneView.session.run(configuration)
+        arView.session.run(configuration)
     }
     
     func pauseSession() {
-        sceneView.session.pause()
+        arView.session.pause()
     }
     
     func prepareWeaponNodes(
@@ -146,7 +146,7 @@ final class ARShootingView: NSObject, ARShootingViewInterface {
     
     func showWeaponNode(of id: Int) {
         guard let loadedWeaponNodeData = loadedWeaponNodeDataList.first(where: { $0.weaponId == id }) else { return }
-        sceneView.scene.rootNode.addChildNode(loadedWeaponNodeData.weaponParentNode)
+        arView.scene.rootNode.addChildNode(loadedWeaponNodeData.weaponParentNode)
     }
     
     func removeOtherWeaponNodes(except id: Int) {
@@ -160,9 +160,9 @@ final class ARShootingView: NSObject, ARShootingViewInterface {
     func renderWeaponFiring(isRecoilAnimationEnabled: Bool) {
         // 弾の発射アニメーションを描画
         let clonedBulletNode = originalBulletNode.clone()
-        clonedBulletNode.position = SceneNodeUtil.getCameraPosition(sceneView)
-        sceneView.scene.rootNode.addChildNode(clonedBulletNode)
-        clonedBulletNode.runAction(SceneAnimationUtil.bulletShootingAnimation(sceneView.pointOfView)) {
+        clonedBulletNode.position = SceneNodeUtil.getCameraPosition(arView)
+        arView.scene.rootNode.addChildNode(clonedBulletNode)
+        clonedBulletNode.runAction(SceneAnimationUtil.bulletShootingAnimation(arView.pointOfView)) {
             clonedBulletNode.removeFromParentNode()
         }
         
@@ -173,7 +173,7 @@ final class ARShootingView: NSObject, ARShootingViewInterface {
     }
     
     func changeTargetsAppearance(to imageName: String) {
-        sceneView.scene.rootNode.childNodes.forEach({ node in
+        arView.scene.rootNode.childNodes.forEach({ node in
             if node.name == "target" {
                 while node.childNode(withName: "torus", recursively: false) != nil {
                     //ドーナツ型の白い線のパーツを削除
@@ -193,7 +193,7 @@ final class ARShootingView: NSObject, ARShootingViewInterface {
     ) -> (parentNode: SCNNode, weaponNode: SCNNode) {
         let weaponParentNode = SceneNodeUtil.loadScnNode(fileName: fileName, nodeName: parentNodeName)
         SceneNodeUtil.addBillboardConstraint(weaponParentNode)
-        weaponParentNode.position = SceneNodeUtil.getCameraPosition(sceneView)
+        weaponParentNode.position = SceneNodeUtil.getCameraPosition(arView)
         let weaponNode = weaponParentNode.childNode(withName: nodeName, recursively: false) ?? SCNNode()
         return (weaponParentNode, weaponNode)
     }
@@ -209,14 +209,14 @@ final class ARShootingView: NSObject, ARShootingViewInterface {
             clonedParticleNode.position = position
             clonedParticleNode.particleSystems?.first?.birthRate = 300
             clonedParticleNode.particleSystems?.first?.loops = false
-            sceneView.scene.rootNode.addChildNode(clonedParticleNode)
+            arView.scene.rootNode.addChildNode(clonedParticleNode)
         }
     }
 }
 
 extension ARShootingView: ARSCNViewDelegate {
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
-        getCurrentDisplayingWeaponNodeData()?.weaponParentNode.position = SceneNodeUtil.getCameraPosition(sceneView)
+        getCurrentDisplayingWeaponNodeData()?.weaponParentNode.position = SceneNodeUtil.getCameraPosition(arView)
     }
 }
 
