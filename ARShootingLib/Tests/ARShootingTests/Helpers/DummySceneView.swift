@@ -1,6 +1,6 @@
 //
 //  DummySceneView.swift
-//  ARShootingTests
+//  ARShootingLibTests
 //
 //  Created by ウルトラ深瀬 on 21/12/24.
 //

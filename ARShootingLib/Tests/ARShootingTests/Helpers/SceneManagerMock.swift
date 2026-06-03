@@ -1,13 +1,13 @@
 //
 //  SceneManagerMock.swift
-//  ARShootingTests
+//  ARShootingLibTests
 //
 //  Created by ウルトラ深瀬 on 20/12/24.
 //
 
 import Foundation
 import ARKit
-@testable import ARShooting
+@testable import ARShootingLib
 
 final class SceneManagerMock: SceneManagerInterface {
     var runSessionCalledCount = 0

@@ -1,12 +1,12 @@
 //
 //  ARShootingControllerTests.swift
-//  ARShootingTests
+//  ARShootingLibTests
 //
 //  Created by ウルトラ深瀬 on 20/12/24.
 //
 
 import XCTest
-@testable import ARShooting
+@testable import ARShootingLib
 
 final class ARShootingControllerTests: XCTestCase {
     private var arController: ARShootingController!
