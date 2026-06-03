@@ -3,22 +3,22 @@
 import PackageDescription
 
 let package = Package(
-    name: "ARShooting",
+    name: "ARShootingLib",
     platforms: [.iOS(.v17)],
     products: [
         .library(
-            name: "ARShooting",
-            targets: ["ARShooting"]),
+            name: "ARShootingLib",
+            targets: ["ARShootingLib"]),
     ],
     targets: [
         .target(
-            name: "ARShooting",
+            name: "ARShootingLib",
             resources: [
                 .process("Resources")
             ]
         ),
         .testTarget(
-            name: "ARShootingTests",
-            dependencies: ["ARShooting"]),
+            name: "ARShootingLibTests",
+            dependencies: ["ARShootingLib"]),
     ]
 )

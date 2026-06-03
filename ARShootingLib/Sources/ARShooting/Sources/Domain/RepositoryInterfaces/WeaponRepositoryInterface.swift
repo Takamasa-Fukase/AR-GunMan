@@ -1,6 +1,6 @@
 //
 //  WeaponRepositoryInterface.swift
-//  ARShooting
+//  ARShootingLib
 //
 //  Created by ウルトラ深瀬 on 18/12/24.
 //
