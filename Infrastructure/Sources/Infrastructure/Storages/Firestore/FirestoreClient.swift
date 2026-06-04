@@ -10,10 +10,12 @@ import Core
 import Data
 import FirebaseFirestore
 
-final class FirestoreClient: FirestoreClientInterface {
+public final class FirestoreClient: FirestoreClientInterface {
     private let db = Firestore.firestore()
+    
+    public init() {}
         
-    func getItems<ResponseEntity: Decodable>(collectionPath: String) async throws -> [ResponseEntity] {
+    public func getItems<ResponseEntity: Decodable>(collectionPath: String) async throws -> [ResponseEntity] {
         do {
             return try await db
                 .collection(collectionPath)
@@ -27,7 +29,7 @@ final class FirestoreClient: FirestoreClientInterface {
         }
     }
     
-    func addItem(collectionPath: String, requestEntity: Encodable) async throws {
+    public func addItem(collectionPath: String, requestEntity: Encodable) async throws {
         do {
             try await db
                 .collection(collectionPath)

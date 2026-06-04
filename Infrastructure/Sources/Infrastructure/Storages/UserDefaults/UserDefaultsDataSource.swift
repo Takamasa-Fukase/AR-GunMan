@@ -8,14 +8,16 @@
 import Foundation
 import Data
 
-final class UserDefaultsDataSource: UserDefaultsDataSourceInterface {
+public final class UserDefaultsDataSource: UserDefaultsDataSourceInterface {
     private let defaults = UserDefaults.standard
+    
+    public init() {}
 
     private enum Keys {
         static let isTutorialCompleted = "isTutorialCompleted"
     }
 
-    var isTutorialCompleted: Bool {
+    public var isTutorialCompleted: Bool {
         get {
             return defaults.bool(forKey: Keys.isTutorialCompleted)
         }

@@ -9,8 +9,10 @@ import Foundation
 import Data
 import Domain
 
-final class WeaponDataSource: WeaponDataSourceInterface {
-    let list: [any Weapon] = [
+public final class WeaponDataSource: WeaponDataSourceInterface {
+    public init() {}
+    
+    public let list: [any Weapon] = [
         Pistol(
             id: 0,
             isDefault: true,
