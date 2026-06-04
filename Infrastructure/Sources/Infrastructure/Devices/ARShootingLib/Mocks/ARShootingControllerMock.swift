@@ -14,8 +14,8 @@ public class ARShootingControllerMock: ARShootingControllerInterface {
     
     public init() {}
     
-    public func getARView() -> any View {
-        return EmptyView()
+    public func getARView() -> ARSCNViewRepresentable {
+        return ARSCNViewRepresentable.createMock()
     }
     
     public func runSession() {}

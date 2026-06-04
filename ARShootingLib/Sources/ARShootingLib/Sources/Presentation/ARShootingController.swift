@@ -8,10 +8,8 @@
 import SwiftUI
 
 public protocol ARShootingControllerInterface: AnyObject {
-    associatedtype ARView = View
-    
     var targetHit: (() -> Void)? { get set }
-    func getARView() -> ARView
+    func getARView() -> ARSCNViewRepresentable
     func runSession()
     func pauseSession()
     func showWeapon(of id: Int)
@@ -34,7 +32,7 @@ public final class ARShootingController: ARShootingControllerInterface {
     
     public var targetHit: (() -> Void)?
     
-    public func getARView() -> some View {
+    public func getARView() -> ARSCNViewRepresentable {
         return ARSCNViewRepresentable(view: presenter.getARView())
     }
     

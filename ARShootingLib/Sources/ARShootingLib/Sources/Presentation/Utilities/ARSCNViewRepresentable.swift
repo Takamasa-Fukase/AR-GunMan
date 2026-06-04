@@ -8,23 +8,29 @@
 import ARKit
 import SwiftUI
 
-struct ARSCNViewRepresentable: UIViewRepresentable {
+public struct ARSCNViewRepresentable: UIViewRepresentable {
     private let view: ARSCNView
     
-    init(view: AnyObject?) {
+    public init(view: AnyObject?) {
         self.view = view as! ARSCNView
     }
     
-    func makeUIView(context: Context) -> ARSCNView {
+    public func makeUIView(context: Context) -> ARSCNView {
         return view
     }
     
-    func updateUIView(_ view: ARSCNView, context: Context) {}
-    
+    public func updateUIView(_ view: ARSCNView, context: Context) {}
+}
+
+extension ARSCNViewRepresentable {
     // MARK: ユニットテスト時のみアクセスする
     #if DEBUG
-    func getView() -> ARSCNView {
+    public func getView() -> ARSCNView {
         return view
     }
     #endif
+    
+    public static func createMock() -> ARSCNViewRepresentable {
+        return .init(view: ARSCNView(frame: .zero))
+    }
 }
