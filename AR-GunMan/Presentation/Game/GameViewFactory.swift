@@ -6,21 +6,29 @@
 //
 
 import Foundation
+import SwiftUI
 import ARShootingLib
 import WeaponControlMotion
+import Infrastructure
 
 final class GameViewFactory {
-    static func create(frame: CGRect) -> GameView {
-        let arController = ARShootingController(frame: frame)
+    static func create(frame: CGRect) -> GameView<ARSCNViewRepresentable> {
+        
+        let (arShootingLibHandler, arView) = Factory.create(
+            frame: frame,
+            targetCount: 50
+        )
         let motionDetector = WeaponControlMotionDetector()
         let viewModel = GameViewModel(
+            arShootingLibHandler: arShootingLibHandler,
             tutorialRepository: Factory.create(),
             gameTimerCreateUseCase: Factory.create(),
             weaponResourceGetUseCase: Factory.create(),
             weaponActionExecuteUseCase: Factory.create()
         )
+        arShootingLibHandler.inject(delegate: viewModel)
         return GameView(
-            arController: arController,
+            arView: arView,
             motionDetector: motionDetector,
             viewModel: viewModel
         )

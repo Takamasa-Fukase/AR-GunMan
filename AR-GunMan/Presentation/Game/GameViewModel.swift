@@ -13,17 +13,9 @@ import Domain
 @Observable
 final class GameViewModel {
     enum OutputEventType: Equatable {
-        case arControllerInputEvent(ARControllerInputEventType)
         case motionDetectorInputEvent(MotionDetectorInputEventType)
         case playSound(SoundType)
         case executeAutoReload
-    }
-    enum ARControllerInputEventType: Equatable {
-        case runSceneSession
-        case pauseSceneSession
-        case renderWeaponFiring
-        case showWeaponObject(weaponId: Int)
-        case changeTargetsAppearance(imageName: String)
     }
     enum MotionDetectorInputEventType: Equatable {
         case startDeviceMotionDetection
@@ -40,6 +32,7 @@ final class GameViewModel {
 
     let outputEvent = PassthroughSubject<OutputEventType, Never>()
     
+    private let arShootingLibHandler: ARShootingLibHandlerInterface
     private let tutorialRepository: TutorialRepositoryInterface
     private let gameTimerCreateUseCase: GameTimerCreateUseCaseInterface
     private let weaponResourceGetUseCase: WeaponResourceGetUseCaseInterface
@@ -59,11 +52,13 @@ final class GameViewModel {
 //    #endif
     
     init(
+        arShootingLibHandler: ARShootingLibHandlerInterface,
         tutorialRepository: TutorialRepositoryInterface,
         gameTimerCreateUseCase: GameTimerCreateUseCaseInterface,
         weaponResourceGetUseCase: WeaponResourceGetUseCaseInterface,
         weaponActionExecuteUseCase: WeaponActionExecuteUseCaseInterface
     ) {
+        self.arShootingLibHandler = arShootingLibHandler
         self.tutorialRepository = tutorialRepository
         self.gameTimerCreateUseCase = gameTimerCreateUseCase
         self.weaponResourceGetUseCase = weaponResourceGetUseCase
@@ -75,7 +70,7 @@ final class GameViewModel {
         let selectedWeapon = weaponResourceGetUseCase.getDefaultWeapon()
         showSelectedWeapon(selectedWeapon)
         
-        outputEvent.send(.arControllerInputEvent(.runSceneSession))
+        arShootingLibHandler.runSession()
         
         if !isCheckedTutorialCompletedFlag {
             isCheckedTutorialCompletedFlag = true
@@ -90,7 +85,7 @@ final class GameViewModel {
     }
     
     func onViewDisappear() {
-        outputEvent.send(.arControllerInputEvent(.pauseSceneSession))
+        arShootingLibHandler.pauseSession()
     }
     
     func tutorialEnded() {
@@ -107,7 +102,7 @@ final class GameViewModel {
         reloadingMotionDetecedCount += 1
         if reloadingMotionDetecedCount == 20 {
             outputEvent.send(.playSound(.targetAppearanceChange))
-            outputEvent.send(.arControllerInputEvent(.changeTargetsAppearance(imageName: "taimeisan.jpg")))
+            arShootingLibHandler.changeTargetsAppearance(to: "taimeisan.jpg")
         }
     }
     
@@ -127,26 +122,13 @@ final class GameViewModel {
         showSelectedWeapon(selectedWeapon)
     }
     
-    func targetHit() {
-        //ランキングがバラけるように、加算する得点自体に90%~100%の間の乱数を掛ける
-        let randomlyAdjustedHitPoint = Double(currentWeapon?.weapon.spec.targetHitPoint ?? 0) * Double.random(in: 0.9...1)
-        // 100を超えない様に更新する
-        score = min(score + randomlyAdjustedHitPoint, 100.0)
-        
-        outputEvent.send(.playSound(.targetHit))
-        
-        if let bulletHitSound = currentWeapon?.weapon.resources.bulletHitSound {
-            outputEvent.send(.playSound(bulletHitSound))
-        }
-    }
-    
     // MARK: Privateメソッド
     private func showSelectedWeapon(_ selectedWeapon: CurrentWeapon) {
         self.currentWeapon = selectedWeapon
         
         guard let currentWeapon = self.currentWeapon else { return }
         
-        outputEvent.send(.arControllerInputEvent(.showWeaponObject(weaponId: currentWeapon.weapon.id)))
+        arShootingLibHandler.showWeapon(of: currentWeapon.weapon.id)
         
         if isCheckedTutorialCompletedFlag {
             outputEvent.send(.playSound(currentWeapon.weapon.resources.appearingSound))
@@ -195,7 +177,7 @@ final class GameViewModel {
             reloadType: currentWeapon.weapon.spec.reloadType,
             onFired: { response in
                 self.currentWeapon?.state.bulletsCount = response.bulletsCount
-                outputEvent.send(.arControllerInputEvent(.renderWeaponFiring))
+                arShootingLibHandler.renderWeaponFiring()
                 outputEvent.send(.playSound(currentWeapon.weapon.resources.firingSound))
                 
                 if response.needsAutoReload {
@@ -230,5 +212,20 @@ final class GameViewModel {
                 self.currentWeapon?.state.bulletsCount = response.bulletsCount
                 self.currentWeapon?.state.isReloading = response.isReloading
             })
+    }
+}
+
+extension GameViewModel: ARShootingLibHandlerDelegate {
+    func targetHit() {
+        //ランキングがバラけるように、加算する得点自体に90%~100%の間の乱数を掛ける
+        let randomlyAdjustedHitPoint = Double(currentWeapon?.weapon.spec.targetHitPoint ?? 0) * Double.random(in: 0.9...1)
+        // 100を超えない様に更新する
+        score = min(score + randomlyAdjustedHitPoint, 100.0)
+        
+        outputEvent.send(.playSound(.targetHit))
+        
+        if let bulletHitSound = currentWeapon?.weapon.resources.bulletHitSound {
+            outputEvent.send(.playSound(bulletHitSound))
+        }
     }
 }

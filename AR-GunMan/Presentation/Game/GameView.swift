@@ -6,22 +6,21 @@
 //
 
 import SwiftUI
-import ARShooting
 import WeaponControlMotion
 
-struct GameView: View {
-    @State var arController: ARShootingController
+struct GameView<ARView: View>: View {
+    let arView: ARView
     @State var motionDetector: WeaponControlMotionDetector
     @State var viewModel: GameViewModel
     @State var gameViewId = UUID()
     @Environment(\.dismiss) var dismiss
     
     init(
-        arController: ARShootingController,
+        arView: ARView,
         motionDetector: WeaponControlMotionDetector,
         viewModel: GameViewModel
     ) {
-        self.arController = arController
+        self.arView = arView
         self.motionDetector = motionDetector
         self.viewModel = viewModel
         connectDependencyCallbacksToViewModel()
@@ -32,7 +31,7 @@ struct GameView: View {
         
         ZStack(alignment: .center) {
             // ARコンテンツ部分
-            arController.view
+            arView
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .ignoresSafeArea()
             
@@ -105,19 +104,6 @@ struct GameView: View {
         }
         .onReceive(viewModel.outputEvent) { outputEventType in
             switch outputEventType {
-            case .arControllerInputEvent(let type):
-                switch type {
-                case .runSceneSession:
-                    arController.runSession()
-                case .pauseSceneSession:
-                    arController.pauseSession()
-                case .renderWeaponFiring:
-                    arController.renderWeaponFiring()
-                case .showWeaponObject(let weaponId):
-                    arController.showWeaponObject(weaponId: weaponId)
-                case .changeTargetsAppearance(let imageName):
-                    arController.changeTargetsAppearance(to: imageName)
-                }
             case .motionDetectorInputEvent(let type):
                 switch type {
                 case .startDeviceMotionDetection:
@@ -176,9 +162,6 @@ struct GameView: View {
     }
     
     private func connectDependencyCallbacksToViewModel() {
-        arController.targetHit = {
-            viewModel.targetHit()
-        }
         motionDetector.fireMotionDetected = {
             viewModel.fireMotionDetected()
         }
@@ -187,23 +170,29 @@ struct GameView: View {
         }
     }
     
+    // TODO: リトライ時には画面自体を外側から丸ごと初期化し直させるようにしたい
     private func resetAllAndRestartGame() {
         // 依存を初期化し直してリセット
-        let arController = ARShootingController(frame: .zero)
-        let motionDetector = WeaponControlMotionDetector()
-        let viewModel = GameViewModel(
-            tutorialRepository: Factory.create(),
-            gameTimerCreateUseCase: Factory.create(),
-            weaponResourceGetUseCase: Factory.create(),
-            weaponActionExecuteUseCase: Factory.create()
-        )
-        self.arController = arController
-        self.motionDetector = motionDetector
-        self.viewModel = viewModel
-        // 依存先からのコールバックをVMに接続しなおし
-        connectDependencyCallbacksToViewModel()
-        // ルート階層のidを更新してビューを丸ごと再描画し、onAppearを呼ばせることでゲームをリスタートさせる
-        gameViewId = UUID()
+//        let (arShootingLibHandler, arView) = Factory.create(
+//            frame: .zero,
+//            // TODO: targetCountはConstにしたい
+//            targetCount: 50
+//        )
+//        self.arView = arView as! ARView
+//        let viewModel = GameViewModel(
+//            arShootingLibHandler: arShootingLibHandler,
+//            tutorialRepository: Factory.create(),
+//            gameTimerCreateUseCase: Factory.create(),
+//            weaponResourceGetUseCase: Factory.create(),
+//            weaponActionExecuteUseCase: Factory.create()
+//        )
+//        let motionDetector = WeaponControlMotionDetector()
+//        self.motionDetector = motionDetector
+//        self.viewModel = viewModel
+//        // 依存先からのコールバックをVMに接続しなおし
+//        connectDependencyCallbacksToViewModel()
+//        // ルート階層のidを更新してビューを丸ごと再描画し、onAppearを呼ばせることでゲームをリスタートさせる
+//        gameViewId = UUID()
     }
 }
 
