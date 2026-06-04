@@ -5,17 +5,43 @@
 //  Created by ウルトラ深瀬 on 11/3/25.
 //
 
+import Foundation
+import ARShootingLib
 import Data
 import Domain
+import Infrastructure
 
 final class ProdFactory: FactoryInterface {
+    // MARK: Devices
+    static func create(frame: CGRect, targetCount: Int) -> ARShootingLibHandlerInterface {
+        return ARShootingLibHandler(
+            arShootingController: ARShootingController(
+                frame: frame,
+                targetCount: targetCount
+            )
+        )
+    }
+    
+    // MARK: Storages
+    static func create() -> FirestoreClientInterface {
+        return FirestoreClient()
+    }
+    
+    static func create() -> UserDefaultsDataSourceInterface {
+        return UserDefaultsDataSource()
+    }
+    
+    static func create() -> WeaponDataSourceInterface {
+        return WeaponDataSource()
+    }
+    
     // MARK: Repositories
     static func create() -> WeaponRepositoryInterface {
-        return WeaponRepository()
+        return WeaponRepository(weaponDataSource: create())
     }
     
     static func create() -> TutorialRepositoryInterface {
-        return TutorialRepository()
+        return TutorialRepository(userDefaultsDataSource: create())
     }
     
     static func create() -> PermissionRepositoryInterface {
@@ -23,7 +49,7 @@ final class ProdFactory: FactoryInterface {
     }
     
     static func create() -> RankingRepositoryInterface {
-        return RankingRepository()
+        return RankingRepository(firestoreClient: create())
     }
     
     // MARK: UseCases

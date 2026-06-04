@@ -5,17 +5,39 @@
 //  Created by ウルトラ深瀬 on 11/3/25.
 //
 
+import Foundation
 import Data
 import Domain
+import Infrastructure
 
 final class MockFactory: FactoryInterface {
+    // MARK: Devices
+    static func create(frame: CGRect, targetCount: Int) -> ARShootingLibHandlerInterface {
+        return ARShootingLibHandler(
+            arShootingController: ARShootingControllerMock()
+        )
+    }
+    
+    // MARK: Storages
+    static func create() -> FirestoreClientInterface {
+        return FirestoreClient()
+    }
+    
+    static func create() -> UserDefaultsDataSourceInterface {
+        return UserDefaultsDataSource()
+    }
+    
+    static func create() -> WeaponDataSourceInterface {
+        return WeaponDataSource()
+    }
+    
     // MARK: Repositories
     static func create() -> WeaponRepositoryInterface {
-        return WeaponRepository()
+        return WeaponRepository(weaponDataSource: create())
     }
     
     static func create() -> TutorialRepositoryInterface {
-        return TutorialRepository()
+        return TutorialRepository(userDefaultsDataSource: create())
     }
     
     static func create() -> PermissionRepositoryInterface {

@@ -5,8 +5,10 @@
 //  Created by ウルトラ深瀬 on 11/3/25.
 //
 
+import Foundation
 import Data
 import Domain
+import Infrastructure
 
 #if DEBUG
 // TODO: FirebaseはProdとDevで両方用意してあるので、ビルド環境にMockを用意して、Prod, Dev, Mockみたいに3つに分けたい
@@ -16,10 +18,21 @@ typealias Factory = ProdFactory
 #endif
 
 protocol FactoryInterface {
+    // MARK: Devices
+    static func create(frame: CGRect, targetCount: Int) -> ARShootingLibHandlerInterface
+
+    // MARK: Storages
+    static func create() -> FirestoreClientInterface
+    static func create() -> UserDefaultsDataSourceInterface
+    static func create() -> WeaponDataSourceInterface
+    
+    // MARK: Repositories
     static func create() -> WeaponRepositoryInterface
     static func create() -> TutorialRepositoryInterface
     static func create() -> PermissionRepositoryInterface
     static func create() -> RankingRepositoryInterface
+    
+    // MARK: UseCases
     static func create() -> GameTimerCreateUseCaseInterface
     static func create() -> RankingUseCaseInterface
     static func create() -> WeaponActionExecuteUseCaseInterface
