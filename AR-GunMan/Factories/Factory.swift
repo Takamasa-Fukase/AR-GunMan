@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ARShootingLib
 import Data
 import Domain
 import Infrastructure
@@ -19,7 +20,7 @@ typealias Factory = ProdFactory
 
 protocol FactoryInterface {
     // MARK: Devices
-    static func create(frame: CGRect, targetCount: Int) -> ARShootingLibHandlerInterface
+    static func create(frame: CGRect, targetCount: Int) -> (ARShootingLibHandlerInterface, ARSCNViewRepresentable)
 
     // MARK: Storages
     static func create() -> FirestoreClientInterface

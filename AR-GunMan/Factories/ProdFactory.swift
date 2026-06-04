@@ -13,13 +13,16 @@ import Infrastructure
 
 final class ProdFactory: FactoryInterface {
     // MARK: Devices
-    static func create(frame: CGRect, targetCount: Int) -> ARShootingLibHandlerInterface {
-        return ARShootingLibHandler(
-            arShootingController: ARShootingController(
-                frame: frame,
-                targetCount: targetCount
-            )
+    static func create(frame: CGRect, targetCount: Int) -> (ARShootingLibHandlerInterface, ARSCNViewRepresentable) {
+        let arShootingController = ARShootingController(
+            frame: frame,
+            targetCount: targetCount
         )
+        let arShootingLibHandler = ARShootingLibHandler(
+            arShootingController: arShootingController
+        )
+        let arView = arShootingController.getARView()
+        return (arShootingLibHandler, arView)
     }
     
     // MARK: Storages

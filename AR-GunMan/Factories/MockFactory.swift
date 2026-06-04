@@ -6,16 +6,20 @@
 //
 
 import Foundation
+import ARShootingLib
 import Data
 import Domain
 import Infrastructure
 
 final class MockFactory: FactoryInterface {
     // MARK: Devices
-    static func create(frame: CGRect, targetCount: Int) -> ARShootingLibHandlerInterface {
-        return ARShootingLibHandler(
-            arShootingController: ARShootingControllerMock()
+    static func create(frame: CGRect, targetCount: Int) -> (ARShootingLibHandlerInterface, ARSCNViewRepresentable) {
+        let arShootingController = ARShootingControllerMock()
+        let arShootingLibHandler = ARShootingLibHandler(
+            arShootingController: arShootingController
         )
+        let arView = arShootingController.getARView()
+        return (arShootingLibHandler, arView)
     }
     
     // MARK: Storages
