@@ -10,10 +10,10 @@ import ARShootingLib
 import Domain
 
 public final class ARShootingLibHandler: ARShootingLibHandlerInterface {
-    private let arShootingController: ARShootingController
+    private let arShootingController: any ARShootingControllerInterface
     private weak var delegate: ARShootingLibHandlerDelegate?
     
-    init(arShootingController: ARShootingController) {
+    public init(arShootingController: any ARShootingControllerInterface) {
         self.arShootingController = arShootingController
         self.arShootingController.targetHit = { [weak self] in
             self?.delegate?.targetHit()

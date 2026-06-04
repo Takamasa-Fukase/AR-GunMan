@@ -7,7 +7,19 @@
 
 import SwiftUI
 
-public final class ARShootingController {
+public protocol ARShootingControllerInterface: AnyObject {
+    associatedtype ARView = View
+    
+    var targetHit: (() -> Void)? { get set }
+    func getARView() -> ARView
+    func runSession()
+    func pauseSession()
+    func showWeapon(of id: Int)
+    func renderWeaponFiring()
+    func changeTargetsAppearance(to imageName: String)
+}
+
+public final class ARShootingController: ARShootingControllerInterface {
     private let presenter: ARShootingPresenterInterface
     
     public init(
