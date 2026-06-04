@@ -12,6 +12,7 @@ let package = Package(
         ),
     ],
     dependencies: [
+        .package(path: "ARShootingLib"),
         .package(path: "Core"),
         .package(path: "Data"),
         .package(path: "Domain"),
@@ -24,6 +25,7 @@ let package = Package(
         .target(
             name: "Infrastructure",
             dependencies: [
+                "ARShootingLib",
                 "Core",
                 "Data",
                 "Domain",

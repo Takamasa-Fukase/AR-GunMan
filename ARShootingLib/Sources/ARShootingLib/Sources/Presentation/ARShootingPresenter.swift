@@ -8,9 +8,9 @@
 import Foundation
 
 protocol ARShootingPresenterInterface {
-    var arView: AnyObject? { get }
     var currentWeaponId: Int { get }
-    func inject(delegate: ARShootingDelegate)
+    var targetHit: (() -> Void)? { get set }
+    func getARView() -> AnyObject?
     func runSession()
     func pauseSession()
     func showWeapon(of id: Int)
@@ -24,10 +24,8 @@ final class ARShootingPresenter: ARShootingPresenterInterface {
     private weak var view: ARShootingViewInterface?
     private(set) var currentWeaponId: Int = 0
     
-    var arView: AnyObject? {
-        return view?.arView
-    }
-    
+    var targetHit: (() -> Void)?
+
     init(
         weaponRepository: WeaponRepositoryInterface,
         view: ARShootingViewInterface,
@@ -38,8 +36,8 @@ final class ARShootingPresenter: ARShootingPresenterInterface {
         view.setup(targetCount: targetCount)
     }
     
-    func inject(delegate: ARShootingDelegate) {
-        view?.inject(delegate: delegate)
+    func getARView() -> AnyObject? {
+        return view?.arView
     }
     
     func runSession() {

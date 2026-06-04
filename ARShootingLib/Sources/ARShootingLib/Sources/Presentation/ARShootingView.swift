@@ -7,14 +7,10 @@
 
 import ARKit
 
-public protocol ARShootingDelegate: AnyObject {
-    func targetHit()
-}
-
 protocol ARShootingViewInterface: AnyObject {
     var arView: ARSCNView { get }
+    var targetHit: (() -> Void)? { get set }
     func inject(presenter: ARShootingPresenterInterface)
-    func inject(delegate: ARShootingDelegate)
     func setup(targetCount: Int)
     func showTargetsToRandomPositions(count: Int)
     func runSession()
@@ -40,10 +36,11 @@ protocol ARShootingViewInterface: AnyObject {
 
 final class ARShootingView: NSObject, ARShootingViewInterface {
     let arView: ARSCNView
+    var targetHit: (() -> Void)?
+    
     private let originalBulletNode = SceneNodeUtil.originalBulletNode()
     private var loadedWeaponNodeDataList: [LoadedWeaponNodeData] = []
     private var presenter: ARShootingPresenterInterface?
-    private weak var delegate: ARShootingDelegate?
     
     init(
         frame: CGRect
@@ -55,10 +52,6 @@ final class ARShootingView: NSObject, ARShootingViewInterface {
     
     func inject(presenter: ARShootingPresenterInterface) {
         self.presenter = presenter
-    }
-    
-    func inject(delegate: ARShootingDelegate) {
-        self.delegate = delegate
     }
     
     func setup(targetCount: Int) {
@@ -225,7 +218,7 @@ extension ARShootingView: SCNPhysicsContactDelegate {
         if contact.nodeA.name == "target" && contact.nodeB.name == "bullet"
             || contact.nodeB.name == "target" && contact.nodeA.name == "bullet" {
             // 弾がターゲットに命中したことを通知
-            delegate?.targetHit()
+            targetHit?()
             
             // 着弾時の特殊効果（爆発など）を描画
             renderTargetHitParticle(to: contact.contactPoint)
