@@ -60,7 +60,7 @@ fileprivate extension CMAcceleration  {
         // 地球の標準重力加速度 (m/s^2)
         let gravityEarth: Double = 9.80665
         // Android側の基準と同じになるように重力加速度を掛けて世界標準の規格に合わせる
-        VectorMotionData(
+        return VectorMotionData(
             x: self.x * gravityEarth,
             y: self.y * gravityEarth,
             z: self.z * gravityEarth
