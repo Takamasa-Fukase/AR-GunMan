@@ -6,17 +6,20 @@
 //
 
 import Foundation
-import AVFoundation
 import Domain
 
 public final class PermissionRepository: PermissionRepositoryInterface {
-    public init() {}
+    private let cameraPermissionHandler: CameraPermissionHandlerInterface
+    
+    public init(cameraPermissionHandler: CameraPermissionHandlerInterface) {
+        self.cameraPermissionHandler = cameraPermissionHandler
+    }
 
     public func getCameraUsagePermissionGrantedFlag() -> Bool {
-        return AVCaptureDevice.authorizationStatus(for: .video) == .authorized
+        return cameraPermissionHandler.getCameraUsagePermissionGrantedFlag()
     }
     
     public func requestCameraUsagePermission() {
-        AVCaptureDevice.requestAccess(for: .video) { _ in }
+        cameraPermissionHandler.requestCameraUsagePermission()
     }
 }
