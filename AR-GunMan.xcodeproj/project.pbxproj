@@ -31,7 +31,6 @@
 		BC330B2B2D499261007C4501 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = BC330B2A2D499261007C4501 /* FirebaseFirestore */; };
 		BC5F56002D3B533500EA397A /* Data in Frameworks */ = {isa = PBXBuildFile; productRef = BC5F55FF2D3B533500EA397A /* Data */; };
 		BC5F56022D3B533500EA397A /* Domain in Frameworks */ = {isa = PBXBuildFile; productRef = BC5F56012D3B533500EA397A /* Domain */; };
-		BC5F56042D3B533500EA397A /* WeaponControlMotion in Frameworks */ = {isa = PBXBuildFile; productRef = BC5F56032D3B533500EA397A /* WeaponControlMotion */; };
 		BC7B6CA72FCFF4D4001A2CFA /* ARShootingLib in Frameworks */ = {isa = PBXBuildFile; productRef = BC7B6CA62FCFF4D4001A2CFA /* ARShootingLib */; };
 		BC7B6CA92FCFF5C4001A2CFA /* Infrastructure in Frameworks */ = {isa = PBXBuildFile; productRef = BC7B6CA82FCFF5C4001A2CFA /* Infrastructure */; };
 		BC7FBB7C2D4A434A00911B38 /* ErrorAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7FBB7B2D4A434A00911B38 /* ErrorAlert.swift */; };
@@ -126,7 +125,6 @@
 		9A887CD7D51B34E100CB1D4A /* Pods_AR_GunMan_AR_GunManUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_GunMan_AR_GunManUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A15C5C6C4F21F49BA2045EAE /* Pods_AR_GunMan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_GunMan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B833C027CCAFA467D01B22BB /* Pods_AR_GunManTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_GunManTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BC067F752D3B4CD700E58C56 /* WeaponControlMotion */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = WeaponControlMotion; sourceTree = "<group>"; };
 		BC067F762D3B4CEA00E58C56 /* Data */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Data; sourceTree = "<group>"; };
 		BC067F772D3B4CF900E58C56 /* Domain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Domain; sourceTree = "<group>"; };
 		BC0D54602D432FAE00D69795 /* bazooka_appear.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bazooka_appear.mp3; sourceTree = "<group>"; };
@@ -211,7 +209,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				BC5F56022D3B533500EA397A /* Domain in Frameworks */,
-				BC5F56042D3B533500EA397A /* WeaponControlMotion in Frameworks */,
 				BC5F56002D3B533500EA397A /* Data in Frameworks */,
 				226019EB1C6C0B4EEDECE581 /* Pods_AR_GunMan.framework in Frameworks */,
 				BC7B6CA72FCFF4D4001A2CFA /* ARShootingLib in Frameworks */,
@@ -264,7 +261,6 @@
 				BC067F762D3B4CEA00E58C56 /* Data */,
 				BC067F772D3B4CF900E58C56 /* Domain */,
 				BCAD29762FC9D13900E5D2AB /* Infrastructure */,
-				BC067F752D3B4CD700E58C56 /* WeaponControlMotion */,
 				59D2D4D72552DE66006DDB70 /* AR-GunMan */,
 				59D2D4EE2552DE67006DDB70 /* AR-GunManTests */,
 				59D2D4F92552DE67006DDB70 /* AR-GunManUITests */,
@@ -561,7 +557,6 @@
 			packageProductDependencies = (
 				BC5F55FF2D3B533500EA397A /* Data */,
 				BC5F56012D3B533500EA397A /* Domain */,
-				BC5F56032D3B533500EA397A /* WeaponControlMotion */,
 				BC330B2A2D499261007C4501 /* FirebaseFirestore */,
 				BC2BF8882D49DDE400E202F0 /* Core */,
 				BC7B6CA62FCFF4D4001A2CFA /* ARShootingLib */,
@@ -1395,10 +1390,6 @@
 		BC5F56012D3B533500EA397A /* Domain */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Domain;
-		};
-		BC5F56032D3B533500EA397A /* WeaponControlMotion */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = WeaponControlMotion;
 		};
 		BC7B6CA62FCFF4D4001A2CFA /* ARShootingLib */ = {
 			isa = XCSwiftPackageProductDependency;
