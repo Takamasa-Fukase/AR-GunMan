@@ -10,17 +10,17 @@ import ARShootingLib
 import Domain
 
 public final class ARShootingLibHandler: ARShootingLibHandlerInterface {
-    private let arShootingController: any ARShootingControllerInterface
+    private let arShootingController: ARShootingControllerInterface
     private weak var delegate: ARShootingLibHandlerDelegate?
     
-    public init(arShootingController: any ARShootingControllerInterface) {
+    public init(arShootingController: ARShootingControllerInterface) {
         self.arShootingController = arShootingController
         self.arShootingController.targetHit = { [weak self] in
             self?.delegate?.targetHit()
         }
     }
     
-    public func inject(delegate: any ARShootingLibHandlerDelegate) {
+    public func inject(delegate: ARShootingLibHandlerDelegate) {
         self.delegate = delegate
     }
     

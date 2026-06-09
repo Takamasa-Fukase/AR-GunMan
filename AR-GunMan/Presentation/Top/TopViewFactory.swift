@@ -10,7 +10,8 @@ import Foundation
 final class TopViewFactory {
     static func create() -> TopView {
         let viewModel = TopViewModel(
-            permissionRepository: Factory.create()
+            cameraPermissionHandler: Factory.create(),
+            soundPlayer: Factory.create()
         )
         return TopView(viewModel: viewModel)
     }

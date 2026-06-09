@@ -13,6 +13,7 @@ public protocol WeaponControlMotionHandleUseCaseDelegate: AnyObject {
 }
 
 public protocol WeaponControlMotionHandleUseCaseInterface {
+    func inject(delegate: WeaponControlMotionHandleUseCaseDelegate)
     func startDetection()
     func stopDetection()
 }
@@ -23,12 +24,14 @@ public final class WeaponControlMotionHandleUseCase: WeaponControlMotionHandleUs
     private weak var delegate: WeaponControlMotionHandleUseCaseDelegate?
     
     public init(
-        coreMotionHandler: CoreMotionHandlerInterface,
-        delegate: WeaponControlMotionHandleUseCaseDelegate
+        coreMotionHandler: CoreMotionHandlerInterface
     ) {
         self.coreMotionHandler = coreMotionHandler
-        self.delegate = delegate
         handleUpdate()
+    }
+    
+    public func inject(delegate: WeaponControlMotionHandleUseCaseDelegate) {
+        self.delegate = delegate
     }
     
     public func startDetection() {

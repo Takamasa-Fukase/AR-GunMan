@@ -14,8 +14,8 @@ public class CoreMotionHandler: CoreMotionHandlerInterface {
     public var accelerationUpdated: ((VectorMotionData) -> Void)?
     public var gyroUpdated: ((VectorMotionData) -> Void)?
     
-    public init(coreMotionManager: CMMotionManager) {
-        self.coreMotionManager = coreMotionManager
+    public init() {
+        coreMotionManager = CMMotionManager()
         setup()
     }
     

@@ -12,16 +12,6 @@ import Domain
 
 @Observable
 final class GameViewModel {
-    enum OutputEventType: Equatable {
-        case motionDetectorInputEvent(MotionDetectorInputEventType)
-        case playSound(SoundType)
-        case executeAutoReload
-    }
-    enum MotionDetectorInputEventType: Equatable {
-        case startDeviceMotionDetection
-        case stopDeviceMotionDetection
-    }
-    
     private(set) var timeCount: Double = 30.00
     private(set) var currentWeapon: CurrentWeapon?
     
@@ -30,10 +20,10 @@ final class GameViewModel {
     var isResultViewPresented = false
     var isWeaponChangeButtonEnabled = false
 
-    let outputEvent = PassthroughSubject<OutputEventType, Never>()
-    
     private let arShootingLibHandler: ARShootingLibHandlerInterface
+    private let soundPlayer: SoundPlayerInterface
     private let tutorialRepository: TutorialRepositoryInterface
+    private let weaponControlMotionHandleUseCase: WeaponControlMotionHandleUseCaseInterface
     private let gameTimerCreateUseCase: GameTimerCreateUseCaseInterface
     private let weaponResourceGetUseCase: WeaponResourceGetUseCaseInterface
     private let weaponActionExecuteUseCase: WeaponActionExecuteUseCaseInterface
@@ -53,13 +43,17 @@ final class GameViewModel {
     
     init(
         arShootingLibHandler: ARShootingLibHandlerInterface,
+        soundPlayer: SoundPlayerInterface,
         tutorialRepository: TutorialRepositoryInterface,
+        weaponControlMotionHandleUseCase: WeaponControlMotionHandleUseCaseInterface,
         gameTimerCreateUseCase: GameTimerCreateUseCaseInterface,
         weaponResourceGetUseCase: WeaponResourceGetUseCaseInterface,
         weaponActionExecuteUseCase: WeaponActionExecuteUseCaseInterface
     ) {
         self.arShootingLibHandler = arShootingLibHandler
+        self.soundPlayer = soundPlayer
         self.tutorialRepository = tutorialRepository
+        self.weaponControlMotionHandleUseCase = weaponControlMotionHandleUseCase
         self.gameTimerCreateUseCase = gameTimerCreateUseCase
         self.weaponResourceGetUseCase = weaponResourceGetUseCase
         self.weaponActionExecuteUseCase = weaponActionExecuteUseCase
@@ -93,19 +87,6 @@ final class GameViewModel {
         waitAndCreateTimer()
     }
     
-    func fireMotionDetected() {
-        fireWeapon()
-    }
-    
-    func reloadMotionDetected() {
-        reloadWeapon()
-        reloadingMotionDetecedCount += 1
-        if reloadingMotionDetecedCount == 20 {
-            outputEvent.send(.playSound(.targetAppearanceChange))
-            arShootingLibHandler.changeTargetsAppearance(to: "taimeisan.jpg")
-        }
-    }
-    
     func weaponChangeButtonTapped() {
         // 武器選択中はタイムカウントの更新を止める
         timerPauseController.isPaused = true
@@ -131,14 +112,14 @@ final class GameViewModel {
         arShootingLibHandler.showWeapon(of: currentWeapon.weapon.id)
         
         if isCheckedTutorialCompletedFlag {
-            outputEvent.send(.playSound(currentWeapon.weapon.resources.appearingSound))
+            soundPlayer.play(currentWeapon.weapon.resources.appearingSound)
         }
     }
     
     private func waitAndCreateTimer() {
         guard let currentWeapon = self.currentWeapon else { return }
         
-        outputEvent.send(.playSound(currentWeapon.weapon.resources.appearingSound))
+        soundPlayer.play(currentWeapon.weapon.resources.appearingSound)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
             let request = GameTimerCreateRequest(
@@ -148,22 +129,22 @@ final class GameViewModel {
             )
             self.gameTimerCreateUseCase.execute(
                 request: request,
-                onTimerStarted: { response in
-                    self.outputEvent.send(.playSound(response.startWhistleSound))
-                    self.outputEvent.send(.motionDetectorInputEvent(.startDeviceMotionDetection))
-                    self.isWeaponChangeButtonEnabled = true
+                onTimerStarted: { [weak self] response in
+                    self?.soundPlayer.play(response.startWhistleSound)
+                    self?.weaponControlMotionHandleUseCase.startDetection()
+                    self?.isWeaponChangeButtonEnabled = true
                 },
-                onTimerUpdated: { response in
-                    self.timeCount = response.timeCount
+                onTimerUpdated: { [weak self] response in
+                    self?.timeCount = response.timeCount
                 },
-                onTimerEnded: { response in
-                    self.outputEvent.send(.playSound(response.endWhistleSound))
-                    self.outputEvent.send(.motionDetectorInputEvent(.stopDeviceMotionDetection))
-                    self.isWeaponChangeButtonEnabled = false
+                onTimerEnded: { [weak self] response in
+                    self?.soundPlayer.play(response.endWhistleSound)
+                    self?.weaponControlMotionHandleUseCase.stopDetection()
+                    self?.isWeaponChangeButtonEnabled = false
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
-                        self.outputEvent.send(.playSound(response.rankingAppearSound))
-                        self.isResultViewPresented = true
+                        self?.soundPlayer.play(response.rankingAppearSound)
+                        self?.isResultViewPresented = true
                     })
                 })
         })
@@ -171,23 +152,24 @@ final class GameViewModel {
     
     private func fireWeapon() {
         guard let currentWeapon = self.currentWeapon else { return }
+        
         weaponActionExecuteUseCase.fireWeapon(
             bulletsCount: currentWeapon.state.bulletsCount,
             isReloading: currentWeapon.state.isReloading,
             reloadType: currentWeapon.weapon.spec.reloadType,
-            onFired: { response in
-                self.currentWeapon?.state.bulletsCount = response.bulletsCount
-                arShootingLibHandler.renderWeaponFiring()
-                outputEvent.send(.playSound(currentWeapon.weapon.resources.firingSound))
+            onFired: { [weak self] response in
+                self?.currentWeapon?.state.bulletsCount = response.bulletsCount
+                self?.arShootingLibHandler.renderWeaponFiring()
+                self?.soundPlayer.play(currentWeapon.weapon.resources.firingSound)
                 
                 if response.needsAutoReload {
                     // リロードを自動的に実行
-                    outputEvent.send(.executeAutoReload)
+                    self?.reloadingMotionDetected()
                 }
             },
-            onOutOfBullets: {
+            onOutOfBullets: { [weak self] in
                 if let outOfBulletsSound = currentWeapon.weapon.resources.outOfBulletsSound {
-                    outputEvent.send(.playSound(outOfBulletsSound))
+                    self?.soundPlayer.play(outOfBulletsSound)
                 }
             })
     }
@@ -204,13 +186,13 @@ final class GameViewModel {
             capacity: currentWeapon.weapon.spec.capacity,
             reloadWaitingTime: currentWeapon.weapon.spec.reloadWaitingTime,
             reloadCanceller: weaponReloadCanceller,
-            onReloadStarted: { response in
-                self.currentWeapon?.state.isReloading = response.isReloading
-                outputEvent.send(.playSound(currentWeapon.weapon.resources.reloadingSound))
+            onReloadStarted: { [weak self] response in
+                self?.currentWeapon?.state.isReloading = response.isReloading
+                self?.soundPlayer.play(currentWeapon.weapon.resources.reloadingSound)
             },
-            onReloadEnded: { response in
-                self.currentWeapon?.state.bulletsCount = response.bulletsCount
-                self.currentWeapon?.state.isReloading = response.isReloading
+            onReloadEnded: { [weak self] response in
+                self?.currentWeapon?.state.bulletsCount = response.bulletsCount
+                self?.currentWeapon?.state.isReloading = response.isReloading
             })
     }
 }
@@ -222,10 +204,25 @@ extension GameViewModel: ARShootingLibHandlerDelegate {
         // 100を超えない様に更新する
         score = min(score + randomlyAdjustedHitPoint, 100.0)
         
-        outputEvent.send(.playSound(.targetHit))
+        soundPlayer.play(.targetHit)
         
         if let bulletHitSound = currentWeapon?.weapon.resources.bulletHitSound {
-            outputEvent.send(.playSound(bulletHitSound))
+            soundPlayer.play(bulletHitSound)
+        }
+    }
+}
+
+extension GameViewModel: WeaponControlMotionHandleUseCaseDelegate {
+    func firingMotionDetected() {
+        fireWeapon()
+    }
+    
+    func reloadingMotionDetected() {
+        reloadWeapon()
+        reloadingMotionDetecedCount += 1
+        if reloadingMotionDetecedCount == 20 {
+            soundPlayer.play(.targetAppearanceChange)
+            arShootingLibHandler.changeTargetsAppearance(to: "taimeisan.jpg")
         }
     }
 }

@@ -21,6 +21,9 @@ typealias Factory = ProdFactory
 protocol FactoryInterface {
     // MARK: Devices
     static func create(frame: CGRect, targetCount: Int) -> (ARShootingLibHandlerInterface, ARSCNViewRepresentable)
+    static func create() -> CameraPermissionHandlerInterface
+    static func create() -> CoreMotionHandlerInterface
+    static func create() -> SoundPlayerInterface
 
     // MARK: Storages
     static func create() -> FirestoreClientInterface
@@ -30,13 +33,13 @@ protocol FactoryInterface {
     // MARK: Repositories
     static func create() -> WeaponRepositoryInterface
     static func create() -> TutorialRepositoryInterface
-    static func create() -> PermissionRepositoryInterface
     static func create() -> RankingRepositoryInterface
     
     // MARK: UseCases
     static func create() -> GameTimerCreateUseCaseInterface
     static func create() -> RankingUseCaseInterface
     static func create() -> WeaponActionExecuteUseCaseInterface
+    static func create() -> WeaponControlMotionHandleUseCaseInterface
     static func create() -> WeaponResourceGetUseCaseInterface
     static func create() -> WeaponStatusCheckUseCaseInterface
 }

@@ -12,9 +12,6 @@ import Domain
 
 @Observable
 final class TopViewModel {
-    enum OutputEventType {
-        case playSound(SoundType)
-    }
     enum IconButtonType {
         case start
         case settings
@@ -29,16 +26,19 @@ final class TopViewModel {
     var isSettingsViewPresented = false
     var isTutorialViewPresented = false
     
-    let outputEvent = PassthroughSubject<OutputEventType, Never>()
+    private let cameraPermissionHandler: CameraPermissionHandlerInterface
+    private let soundPlayer: SoundPlayerInterface
 
-    private let permissionRepository: PermissionRepositoryInterface
-    
-    init(permissionRepository: PermissionRepositoryInterface) {
-        self.permissionRepository = permissionRepository
+    init(
+        cameraPermissionHandler: CameraPermissionHandlerInterface,
+        soundPlayer: SoundPlayerInterface
+    ) {
+        self.cameraPermissionHandler = cameraPermissionHandler
+        self.soundPlayer = soundPlayer
     }
     
     func onViewAppear() {
-        permissionRepository.requestCameraUsagePermission()
+        cameraPermissionHandler.requestCameraUsagePermission()
     }
 
     func startButtonTapped() {
@@ -54,7 +54,7 @@ final class TopViewModel {
     }
     
     private func switchButtonIconAndRevert(type: IconButtonType) {
-        outputEvent.send(.playSound(.westernPistolFire))
+        soundPlayer.play(.westernPistolFire)
         
         switch type {
         case .start:
@@ -70,7 +70,7 @@ final class TopViewModel {
             case .start:
                 self.isStartButtonIconSwitched = false
                 
-                let isCameraPermissionGranted = self.permissionRepository.getCameraUsagePermissionGrantedFlag()
+                let isCameraPermissionGranted = self.cameraPermissionHandler.getCameraUsagePermissionGrantedFlag()
                 if isCameraPermissionGranted {
                     self.isGameViewPresented = true
                 }else {

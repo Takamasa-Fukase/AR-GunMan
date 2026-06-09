@@ -6,24 +6,19 @@
 //
 
 import SwiftUI
-import WeaponControlMotion
 
 struct GameView<ARView: View>: View {
     let arView: ARView
-    @State var motionDetector: WeaponControlMotionDetector
     @State var viewModel: GameViewModel
     @State var gameViewId = UUID()
     @Environment(\.dismiss) var dismiss
     
     init(
         arView: ARView,
-        motionDetector: WeaponControlMotionDetector,
         viewModel: GameViewModel
     ) {
         self.arView = arView
-        self.motionDetector = motionDetector
         self.viewModel = viewModel
-        connectDependencyCallbacksToViewModel()
     }
     
     var body: some View {
@@ -102,21 +97,6 @@ struct GameView<ARView: View>: View {
         .onDisappear {
             viewModel.onViewDisappear()
         }
-        .onReceive(viewModel.outputEvent) { outputEventType in
-            switch outputEventType {
-            case .motionDetectorInputEvent(let type):
-                switch type {
-                case .startDeviceMotionDetection:
-                    motionDetector.startDetection()
-                case .stopDeviceMotionDetection:
-                    motionDetector.stopDetection()
-                }
-            case .playSound(let soundType):
-                SoundPlayer.shared.play(soundType)
-            case .executeAutoReload:
-                viewModel.reloadMotionDetected()
-            }
-        }
         // チュートリアル画面への遷移
         .fullScreenCover(
             isPresented: $viewModel.isTutorialViewPresented,
@@ -159,15 +139,6 @@ struct GameView<ARView: View>: View {
             )
         }
         .id(gameViewId)
-    }
-    
-    private func connectDependencyCallbacksToViewModel() {
-        motionDetector.fireMotionDetected = {
-            viewModel.fireMotionDetected()
-        }
-        motionDetector.reloadMotionDetected = {
-            viewModel.reloadMotionDetected()
-        }
     }
     
     // TODO: リトライ時には画面自体を外側から丸ごと初期化し直させるようにしたい

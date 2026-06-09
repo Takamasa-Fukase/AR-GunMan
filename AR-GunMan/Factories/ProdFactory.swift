@@ -25,6 +25,18 @@ final class ProdFactory: FactoryInterface {
         return (arShootingLibHandler, arView)
     }
     
+    static func create() -> CameraPermissionHandlerInterface {
+        return CameraPermissionHandler()
+    }
+    
+    static func create() -> CoreMotionHandlerInterface {
+        return CoreMotionHandler()
+    }
+
+    static func create() -> SoundPlayerInterface {
+        return SoundPlayer.shared
+    }
+    
     // MARK: Storages
     static func create() -> FirestoreClientInterface {
         return FirestoreClient()
@@ -47,10 +59,6 @@ final class ProdFactory: FactoryInterface {
         return TutorialRepository(userDefaultsDataSource: create())
     }
     
-    static func create() -> PermissionRepositoryInterface {
-        return PermissionRepository()
-    }
-    
     static func create() -> RankingRepositoryInterface {
         return RankingRepository(firestoreClient: create())
     }
@@ -68,6 +76,10 @@ final class ProdFactory: FactoryInterface {
         return WeaponActionExecuteUseCase(weaponStatusCheckUseCase: create())
     }
     
+    static func create() -> WeaponControlMotionHandleUseCaseInterface {
+        return WeaponControlMotionHandleUseCase(coreMotionHandler: create())
+    }
+
     static func create() -> WeaponResourceGetUseCaseInterface {
         return WeaponResourceGetUseCase(weaponRepository: create())
     }
