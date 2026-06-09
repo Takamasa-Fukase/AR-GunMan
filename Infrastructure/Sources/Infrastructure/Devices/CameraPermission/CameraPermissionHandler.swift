@@ -7,7 +7,7 @@
 
 import Foundation
 import AVFoundation
-import Data
+import Domain
 
 public final class CameraPermissionHandler: CameraPermissionHandlerInterface {
     public init() {}
