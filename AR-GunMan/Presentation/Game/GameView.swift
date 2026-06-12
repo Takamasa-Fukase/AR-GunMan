@@ -6,19 +6,24 @@
 //
 
 import SwiftUI
+import Domain
 
-struct GameView<ARView: View>: View {
+struct GameView<ARView: View, VM: GameViewModelInterface & Observable>: View {
     let arView: ARView
-    @State var viewModel: GameViewModel
+    @State var presenter: GamePresenter<VM>
     @State var gameViewId = UUID()
     @Environment(\.dismiss) var dismiss
     
+    private var viewModel: VM {
+        return presenter.viewModel
+    }
+    
     init(
         arView: ARView,
-        viewModel: GameViewModel
+        presenter: GamePresenter<VM>
     ) {
         self.arView = arView
-        self.viewModel = viewModel
+        self.presenter = presenter
     }
     
     var body: some View {
@@ -51,7 +56,7 @@ struct GameView<ARView: View>: View {
                     // 武器変更ボタン
                     Button {
                         // 武器選択画面を表示
-                        viewModel.weaponChangeButtonTapped()
+                        presenter.weaponChangeButtonTapped()
                         
                     } label: {
                         Image("weapon_change")
@@ -92,17 +97,17 @@ struct GameView<ARView: View>: View {
         }
         .background(Color.black)
         .onAppear {
-            viewModel.onViewAppear()
+            presenter.onViewAppear()
         }
         .onDisappear {
-            viewModel.onViewDisappear()
+            presenter.onViewDisappear()
         }
         // チュートリアル画面への遷移
         .fullScreenCover(
             isPresented: $viewModel.isTutorialViewPresented,
             onDismiss: {
                 // チュートリアルの完了を通知
-                viewModel.tutorialEnded()
+                presenter.tutorialEnded()
             }
         ) {
             ZStack(alignment: .center) {
@@ -119,7 +124,7 @@ struct GameView<ARView: View>: View {
             WeaponSelectViewFactory.create(
                 initialDisplayWeaponId: viewModel.currentWeapon?.weapon.id ?? 0,
                 weaponSelected: { weaponId in
-                    viewModel.weaponSelected(weaponId: weaponId)
+                    presenter.weaponSelected(weaponId: weaponId)
                 }
             )
             // sheetの背景を透過
