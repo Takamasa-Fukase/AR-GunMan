@@ -13,7 +13,8 @@ import Infrastructure
 
 #if DEBUG
 // TODO: FirebaseはProdとDevで両方用意してあるので、ビルド環境にMockを用意して、Prod, Dev, Mockみたいに3つに分けたい
-typealias Factory = MockFactory
+//typealias Factory = MockFactory
+typealias Factory = ProdFactory
 #else
 typealias Factory = ProdFactory
 #endif
