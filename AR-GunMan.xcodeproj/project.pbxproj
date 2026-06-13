@@ -1034,20 +1034,17 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "AR-GunMan/AR-GunMan.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 37MFDT4LMQ;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 35ABB4C9U4;
 				INFOPLIST_FILE = "AR-GunMan/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.takamasafuksae.AR-GunMan${BUNDLE_SUFFIX}";
+				PRODUCT_BUNDLE_IDENTIFIER = "fukase.arsaga-gmail.com-personal-team.AR-GunMan-dev";
 				PRODUCT_NAME = "$(TARGET_NAME) ${DISPLAY_NAME_SUFFIX}";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "AR-GunMan_Development_dev";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1061,20 +1058,17 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "AR-GunMan/AR-GunMan.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 37MFDT4LMQ;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 35ABB4C9U4;
 				INFOPLIST_FILE = "AR-GunMan/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.takamasafuksae.AR-GunMan${BUNDLE_SUFFIX}";
+				PRODUCT_BUNDLE_IDENTIFIER = "fukase.arsaga-gmail.com-personal-team.AR-GunMan";
 				PRODUCT_NAME = "$(TARGET_NAME) ${DISPLAY_NAME_SUFFIX}";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "AR-GunMan_Development";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1249,20 +1243,17 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "AR-GunMan/AR-GunMan.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 37MFDT4LMQ;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 35ABB4C9U4;
 				INFOPLIST_FILE = "AR-GunMan/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.takamasafuksae.AR-GunMan${BUNDLE_SUFFIX}";
+				PRODUCT_BUNDLE_IDENTIFIER = "fukase.arsaga-gmail.com-personal-team.AR-GunMan-dev";
 				PRODUCT_NAME = "$(TARGET_NAME) ${DISPLAY_NAME_SUFFIX}";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "AR-GunMan_Development_dev";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
