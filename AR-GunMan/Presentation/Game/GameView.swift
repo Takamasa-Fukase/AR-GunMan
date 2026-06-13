@@ -115,7 +115,7 @@ struct GameView<ARView: View>: View {
             .presentationBackground(.clear)
         }
         // 武器選択画面に遷移
-        .sheet(isPresented: $viewModel.isWeaponSelectViewPresented) {
+        .fullScreenCover(isPresented: $viewModel.isWeaponSelectViewPresented) {
             WeaponSelectViewFactory.create(
                 initialDisplayWeaponId: viewModel.currentWeapon?.weapon.id ?? 0,
                 weaponSelected: { weaponId in
