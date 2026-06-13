@@ -24,7 +24,11 @@ final class ARShootingPresenter: ARShootingPresenterInterface {
     private var loadedWeapons: [WeaponInfo] = []
     private(set) var currentWeaponId: Int = 0
     
-    var targetHit: (() -> Void)?
+    var targetHit: (() -> Void)? {
+        didSet {
+            view.targetHit = targetHit
+        }
+    }
 
     init(
         weaponRepository: WeaponRepositoryInterface,

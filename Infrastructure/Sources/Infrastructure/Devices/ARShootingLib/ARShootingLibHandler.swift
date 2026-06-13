@@ -15,13 +15,13 @@ public final class ARShootingLibHandler: ARShootingLibHandlerInterface {
     
     public init(arShootingController: ARShootingControllerInterface) {
         self.arShootingController = arShootingController
-        self.arShootingController.targetHit = { [weak self] in
-            self?.delegate?.targetHit()
-        }
     }
     
     public func inject(delegate: ARShootingLibHandlerDelegate) {
         self.delegate = delegate
+        arShootingController.targetHit = { [weak self] in
+            self?.delegate?.targetHit()
+        }
     }
     
     public func runSession() {

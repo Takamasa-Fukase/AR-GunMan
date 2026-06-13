@@ -45,7 +45,10 @@ final class ARShootingView: NSObject, ARShootingViewInterface {
     init(
         frame: CGRect
     ) {
-        // MEMO: 予めframeを渡して初期化することで、モーダル出現アニメーションの途中時点から既に正しい比率でSceneオブジェクトを表示した状態で一緒にアニメーションさせられるので遷移の見た目が綺麗になる（遷移前に予め表示予定領域のframeが確定している場合）
+        // MEMO: 予めframeを渡して初期化することで、
+        // モーダル出現アニメーションの途中時点から既に正しい比率で
+        // Sceneオブジェクトを表示した状態で一緒にアニメーションさせられるので
+        // 遷移の見た目が綺麗になる（遷移前に予め表示予定領域のframeが確定している場合）
         arView = ARSCNView(frame: frame)
         super.init()
     }

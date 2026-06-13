@@ -30,7 +30,11 @@ public final class ARShootingController: ARShootingControllerInterface {
         )
     }
     
-    public var targetHit: (() -> Void)?
+    public var targetHit: (() -> Void)? {
+        didSet {
+            presenter.targetHit = targetHit
+        }
+    }
     
     public func getARView() -> ARSCNViewRepresentable {
         return ARSCNViewRepresentable(view: presenter.getARView())
