@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol ARShootingPresenterInterface {
+protocol ARShootingPresenterInterface: AnyObject {
     var currentWeaponId: Int { get }
     var targetHit: (() -> Void)? { get set }
     func getARView() -> AnyObject?
@@ -20,8 +20,8 @@ protocol ARShootingPresenterInterface {
 
 final class ARShootingPresenter: ARShootingPresenterInterface {
     private let weaponRepository: WeaponRepositoryInterface
+    private let view: ARShootingViewInterface
     private var loadedWeapons: [WeaponInfo] = []
-    private weak var view: ARShootingViewInterface?
     private(set) var currentWeaponId: Int = 0
     
     var targetHit: (() -> Void)?
@@ -33,35 +33,35 @@ final class ARShootingPresenter: ARShootingPresenterInterface {
     ) {
         self.weaponRepository = weaponRepository
         self.view = view
-        view.setup(targetCount: targetCount)
+        self.view.setup(targetCount: targetCount)
     }
     
     func getARView() -> AnyObject? {
-        return view?.arView
+        return view.arView
     }
     
     func runSession() {
-        view?.runSession()
+        view.runSession()
     }
     
     func pauseSession() {
-        view?.pauseSession()
+        view.pauseSession()
     }
     
     func showWeapon(of id: Int) {
         let targetWeaponInfo = getWeaponInfo(of: id)
         currentWeaponId = targetWeaponInfo.id
-        view?.removeOtherWeaponNodes(except: targetWeaponInfo.id)
-        view?.showWeaponNode(of: targetWeaponInfo.id)
+        view.removeOtherWeaponNodes(except: targetWeaponInfo.id)
+        view.showWeaponNode(of: targetWeaponInfo.id)
     }
     
     func renderWeaponFiring() {
         let isRecoilAnimationEnabled = getWeaponInfo(of: currentWeaponId).isRecoilAnimationEnabled
-        view?.renderWeaponFiring(isRecoilAnimationEnabled: isRecoilAnimationEnabled)
+        view.renderWeaponFiring(isRecoilAnimationEnabled: isRecoilAnimationEnabled)
     }
     
     func changeTargetsAppearance(to imageName: String) {
-        view?.changeTargetsAppearance(to: imageName)
+        view.changeTargetsAppearance(to: imageName)
     }
     
     // MARK: Private Methods
@@ -76,7 +76,7 @@ final class ARShootingPresenter: ARShootingPresenterInterface {
             let weaponInfo = weaponRepository.getWeaponInfo(by: id)
             
             // そのWeaponInfoを使って実際に3Dオブジェクト群（Node）をロードさせる
-            view?.prepareWeaponNodes(
+            view.prepareWeaponNodes(
                 weaponId: id,
                 weaponNodeInfo: (
                     fileName: weaponInfo.nodeFileName,

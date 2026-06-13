@@ -40,7 +40,7 @@ final class ARShootingView: NSObject, ARShootingViewInterface {
     
     private let originalBulletNode = SceneNodeUtil.originalBulletNode()
     private var loadedWeaponNodeDataList: [LoadedWeaponNodeData] = []
-    private var presenter: ARShootingPresenterInterface?
+    private weak var presenter: ARShootingPresenterInterface?
     
     init(
         frame: CGRect
