@@ -14,12 +14,10 @@ import Infrastructure
 final class MockFactory: FactoryInterface {
     // MARK: Devices
     static func create(frame: CGRect, targetCount: Int) -> (ARShootingLibHandlerInterface, ARSCNViewRepresentable) {
-        let arShootingController = ARShootingControllerMock()
-        let arShootingLibHandler = ARShootingLibHandler(
-            arShootingController: arShootingController
-        )
-        let arView = arShootingController.getARView()
-        return (arShootingLibHandler, arView)
+        let mockController = ARShootingControllerMock()
+        let arShootingLibHandler = ARShootingLibHandler(arShootingController: mockController)
+        let mockARView = ARSCNViewRepresentable.createMock()
+        return (arShootingLibHandler, mockARView)
     }
     
     static func create() -> CameraPermissionHandlerInterface {
