@@ -11,8 +11,8 @@ import SwiftUI
 public struct ARSCNViewRepresentable: UIViewRepresentable {
     private let view: ARSCNView
     
-    public init(view: AnyObject?) {
-        self.view = view as! ARSCNView
+    init(view: ARSCNView) {
+        self.view = view
     }
     
     public func makeUIView(context: Context) -> ARSCNView {

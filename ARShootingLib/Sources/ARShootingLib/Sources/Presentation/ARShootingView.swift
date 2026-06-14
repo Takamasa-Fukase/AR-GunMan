@@ -8,10 +8,8 @@
 import ARKit
 
 protocol ARShootingViewInterface: AnyObject {
-    var arView: ARSCNView { get }
     var targetHit: (() -> Void)? { get set }
     func inject(presenter: ARShootingPresenterInterface)
-    func setup(targetCount: Int)
     func showTargetsToRandomPositions(count: Int)
     func runSession()
     func pauseSession()
@@ -43,7 +41,8 @@ final class ARShootingView: NSObject, ARShootingViewInterface {
     private weak var presenter: ARShootingPresenterInterface?
     
     init(
-        frame: CGRect
+        frame: CGRect,
+        targetCount: Int
     ) {
         // MEMO: 予めframeを渡して初期化することで、
         // モーダル出現アニメーションの途中時点から既に正しい比率で
@@ -51,19 +50,11 @@ final class ARShootingView: NSObject, ARShootingViewInterface {
         // 遷移の見た目が綺麗になる（遷移前に予め表示予定領域のframeが確定している場合）
         arView = ARSCNView(frame: frame)
         super.init()
+        setup(targetCount: targetCount)
     }
     
     func inject(presenter: ARShootingPresenterInterface) {
         self.presenter = presenter
-    }
-    
-    func setup(targetCount: Int) {
-        arView.scene = SCNScene()
-        arView.autoenablesDefaultLighting = true
-        arView.delegate = self
-        arView.scene.physicsWorld.contactDelegate = self
-        
-        showTargetsToRandomPositions(count: targetCount)
     }
     
     func showTargetsToRandomPositions(count: Int) {
@@ -182,6 +173,15 @@ final class ARShootingView: NSObject, ARShootingViewInterface {
     }
     
     // MARK: Private Methods
+    private func setup(targetCount: Int) {
+        arView.scene = SCNScene()
+        arView.autoenablesDefaultLighting = true
+        arView.delegate = self
+        arView.scene.physicsWorld.contactDelegate = self
+        
+        showTargetsToRandomPositions(count: targetCount)
+    }
+    
     private func createWeaponNode(
         fileName: String,
         parentNodeName: String,

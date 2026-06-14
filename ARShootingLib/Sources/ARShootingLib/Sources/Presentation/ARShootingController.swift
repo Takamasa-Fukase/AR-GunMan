@@ -9,7 +9,6 @@ import SwiftUI
 
 public protocol ARShootingControllerInterface: AnyObject {
     var targetHit: (() -> Void)? { get set }
-    func getARView() -> ARSCNViewRepresentable
     func runSession()
     func pauseSession()
     func showWeapon(of id: Int)
@@ -17,46 +16,36 @@ public protocol ARShootingControllerInterface: AnyObject {
     func changeTargetsAppearance(to imageName: String)
 }
 
-public final class ARShootingController: ARShootingControllerInterface {
+final class ARShootingController: ARShootingControllerInterface {
     private let presenter: ARShootingPresenterInterface
     
-    public init(
-        frame: CGRect,
-        targetCount: Int
-    ) {
-        presenter = ARShootingPresenterBuilder.build(
-            frame: frame,
-            targetCount: targetCount
-        )
+    init(presenter: ARShootingPresenterInterface) {
+        self.presenter = presenter
     }
     
-    public var targetHit: (() -> Void)? {
+    var targetHit: (() -> Void)? {
         didSet {
             presenter.targetHit = targetHit
         }
     }
     
-    public func getARView() -> ARSCNViewRepresentable {
-        return ARSCNViewRepresentable(view: presenter.getARView())
-    }
-    
-    public func runSession() {
+    func runSession() {
         presenter.runSession()
     }
     
-    public func pauseSession() {
+    func pauseSession() {
         presenter.pauseSession()
     }
     
-    public func showWeapon(of id: Int) {
+    func showWeapon(of id: Int) {
         presenter.showWeapon(of: id)
     }
     
-    public func renderWeaponFiring() {
+    func renderWeaponFiring() {
         presenter.renderWeaponFiring()
     }
     
-    public func changeTargetsAppearance(to imageName: String) {
+    func changeTargetsAppearance(to imageName: String) {
         presenter.changeTargetsAppearance(to: imageName)
     }
 }

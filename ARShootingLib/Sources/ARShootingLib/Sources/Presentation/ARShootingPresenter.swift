@@ -10,7 +10,6 @@ import Foundation
 protocol ARShootingPresenterInterface: AnyObject {
     var currentWeaponId: Int { get }
     var targetHit: (() -> Void)? { get set }
-    func getARView() -> AnyObject?
     func runSession()
     func pauseSession()
     func showWeapon(of id: Int)
@@ -32,16 +31,10 @@ final class ARShootingPresenter: ARShootingPresenterInterface {
 
     init(
         weaponRepository: WeaponRepositoryInterface,
-        view: ARShootingViewInterface,
-        targetCount: Int
+        view: ARShootingViewInterface
     ) {
         self.weaponRepository = weaponRepository
         self.view = view
-        self.view.setup(targetCount: targetCount)
-    }
-    
-    func getARView() -> AnyObject? {
-        return view.arView
     }
     
     func runSession() {
