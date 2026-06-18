@@ -10,24 +10,16 @@ import ARKit
 protocol ARShootingViewInterface: AnyObject {
     var targetHit: (() -> Void)? { get set }
     func inject(presenter: ARShootingPresenterInterface)
-    func showTargetsToRandomPositions(count: Int)
     func runSession()
     func pauseSession()
-    func prepareWeaponNodes(
+    func loadAndSetupWeaponObjects(
         weaponId: Int,
-        weaponNodeInfo: (
-            fileName: String,
-            parentNodeName: String,
-            nodeName: String
-        ),
-        isGunnerHandShakingAnimationEnabled: Bool,
-        particleNodeInfo: (
-            fileName: String?,
-            nodeName: String?
-        )
+        weaponResources: WeaponObjectResources,
+        particleResources: TargetHitParticleResources?,
+        isGunnerHandShakingAnimationEnabled: Bool
     )
-    func showWeaponNode(of id: Int)
-    func removeOtherWeaponNodes(except id: Int)
+    func showWeaponObject(of id: Int)
+    func removeOtherWeaponObjects(except id: Int)
     func renderWeaponFiring(isRecoilAnimationEnabled: Bool)
     func changeTargetsAppearance(to imageName: String)
 }
@@ -57,19 +49,6 @@ final class ARShootingView: NSObject, ARShootingViewInterface {
         self.presenter = presenter
     }
     
-    func showTargetsToRandomPositions(count: Int) {
-        let originalTargetNode = SceneNodeUtil.originalTargetNode()
-        
-        DispatchQueue.main.async {
-            Array(0..<count).forEach { _ in
-                let clonedTargetNode = originalTargetNode.clone()
-                clonedTargetNode.position = SceneNodeUtil.getRandomTargetPosition()
-                SceneNodeUtil.addBillboardConstraint(clonedTargetNode)
-                self.arView.scene.rootNode.addChildNode(clonedTargetNode)
-            }
-        }
-    }
-    
     func runSession() {
         let configuration = ARWorldTrackingConfiguration()
         configuration.planeDetection = .horizontal
@@ -80,24 +59,17 @@ final class ARShootingView: NSObject, ARShootingViewInterface {
         arView.session.pause()
     }
     
-    func prepareWeaponNodes(
+    func loadAndSetupWeaponObjects(
         weaponId: Int,
-        weaponNodeInfo: (
-            fileName: String,
-            parentNodeName: String,
-            nodeName: String
-        ),
-        isGunnerHandShakingAnimationEnabled: Bool,
-        particleNodeInfo: (
-            fileName: String?,
-            nodeName: String?
-        )
+        weaponResources: WeaponObjectResources,
+        particleResources: TargetHitParticleResources?,
+        isGunnerHandShakingAnimationEnabled: Bool
     ) {
         // 武器の親Nodeと武器自体のNodeをロード
         let (weaponParentNode, weaponNode) = createWeaponNode(
-            fileName: weaponNodeInfo.fileName,
-            parentNodeName: weaponNodeInfo.parentNodeName,
-            nodeName: weaponNodeInfo.nodeName
+            fileName: weaponResources.fileName,
+            parentNodeName: weaponResources.parentObjectName,
+            nodeName: weaponResources.objectName
         )
         
         // 武器を持つ手の揺れのアニメーションが有効な場合は描画
@@ -107,12 +79,10 @@ final class ARShootingView: NSObject, ARShootingViewInterface {
         
         // Particle情報がある場合はロード
         let targetHitParticleNode: SCNNode? = {
-            if let fileName = particleNodeInfo.fileName,
-               let nodeName = particleNodeInfo.nodeName
-            {
+            if let particleResources = particleResources {
                 let particleNode = SceneNodeUtil.loadScnNode(
-                    fileName: fileName,
-                    nodeName: nodeName
+                    fileName: particleResources.fileName,
+                    nodeName: particleResources.objectName
                 )
                 particleNode.particleSystems?.first?.birthRate = 0
                 return particleNode
@@ -131,12 +101,12 @@ final class ARShootingView: NSObject, ARShootingViewInterface {
         loadedWeaponNodeDataList.append(loadedWeaponNodeData)
     }
     
-    func showWeaponNode(of id: Int) {
+    func showWeaponObject(of id: Int) {
         guard let loadedWeaponNodeData = loadedWeaponNodeDataList.first(where: { $0.weaponId == id }) else { return }
         arView.scene.rootNode.addChildNode(loadedWeaponNodeData.weaponParentNode)
     }
     
-    func removeOtherWeaponNodes(except id: Int) {
+    func removeOtherWeaponObjects(except id: Int) {
         loadedWeaponNodeDataList.forEach { loadedWeaponNodeData in
             if loadedWeaponNodeData.weaponId != id {
                 loadedWeaponNodeData.weaponParentNode.removeFromParentNode()
@@ -180,6 +150,19 @@ final class ARShootingView: NSObject, ARShootingViewInterface {
         arView.scene.physicsWorld.contactDelegate = self
         
         showTargetsToRandomPositions(count: targetCount)
+    }
+    
+    private func showTargetsToRandomPositions(count: Int) {
+        let originalTargetNode = SceneNodeUtil.originalTargetNode()
+        
+        DispatchQueue.main.async {
+            Array(0..<count).forEach { _ in
+                let clonedTargetNode = originalTargetNode.clone()
+                clonedTargetNode.position = SceneNodeUtil.getRandomTargetPosition()
+                SceneNodeUtil.addBillboardConstraint(clonedTargetNode)
+                self.arView.scene.rootNode.addChildNode(clonedTargetNode)
+            }
+        }
     }
     
     private func createWeaponNode(

@@ -20,7 +20,7 @@ protocol ARShootingPresenterInterface: AnyObject {
 final class ARShootingPresenter: ARShootingPresenterInterface {
     private let weaponRepository: WeaponRepositoryInterface
     private let view: ARShootingViewInterface
-    private var loadedWeapons: [WeaponInfo] = []
+    private var loadedWeapons: [any WeaponObjectInfo] = []
     private(set) var currentWeaponId: Int = 0
     
     var targetHit: (() -> Void)? {
@@ -46,14 +46,14 @@ final class ARShootingPresenter: ARShootingPresenterInterface {
     }
     
     func showWeapon(of id: Int) {
-        let targetWeaponInfo = getWeaponInfo(of: id)
-        currentWeaponId = targetWeaponInfo.id
-        view.removeOtherWeaponNodes(except: targetWeaponInfo.id)
-        view.showWeaponNode(of: targetWeaponInfo.id)
+        let targetWeaponObjectInfo = getWeaponObjectInfo(of: id)
+        currentWeaponId = targetWeaponObjectInfo.id
+        view.removeOtherWeaponObjects(except: targetWeaponObjectInfo.id)
+        view.showWeaponObject(of: targetWeaponObjectInfo.id)
     }
     
     func renderWeaponFiring() {
-        let isRecoilAnimationEnabled = getWeaponInfo(of: currentWeaponId).isRecoilAnimationEnabled
+        let isRecoilAnimationEnabled = getWeaponObjectInfo(of: currentWeaponId).isRecoilAnimationEnabled
         view.renderWeaponFiring(isRecoilAnimationEnabled: isRecoilAnimationEnabled)
     }
     
@@ -62,34 +62,27 @@ final class ARShootingPresenter: ARShootingPresenterInterface {
     }
     
     // MARK: Private Methods
-    private func getWeaponInfo(of id: Int) -> WeaponInfo {
+    private func getWeaponObjectInfo(of id: Int) -> any WeaponObjectInfo {
         // 既にロード済みの場合
-        if let weaponInfo = loadedWeapons.first(where: { $0.id == id }) {
-            return weaponInfo
+        if let weaponObjectInfo = loadedWeapons.first(where: { $0.id == id }) {
+            return weaponObjectInfo
         }
         // まだロードしていない場合
         else {
             // idを使って該当のWeaponInfoを取得
-            let weaponInfo = weaponRepository.getWeaponInfo(by: id)
+            let weaponObjectInfo = weaponRepository.getWeaponObjectInfo(by: id)
             
             // そのWeaponInfoを使って実際に3Dオブジェクト群（Node）をロードさせる
-            view.prepareWeaponNodes(
-                weaponId: id,
-                weaponNodeInfo: (
-                    fileName: weaponInfo.nodeFileName,
-                    parentNodeName: weaponInfo.parentNodeName,
-                    nodeName: weaponInfo.nodeName
-                ),
-                isGunnerHandShakingAnimationEnabled: weaponInfo.isGunnerHandShakingAnimationEnabled,
-                particleNodeInfo: (
-                    fileName: weaponInfo.targetHitParticleFileName,
-                    nodeName: weaponInfo.targetHitParticleNodeName
-                )
+            view.loadAndSetupWeaponObjects(
+                weaponId: weaponObjectInfo.id,
+                weaponResources: weaponObjectInfo.weaponResources,
+                particleResources: weaponObjectInfo.particleResources,
+                isGunnerHandShakingAnimationEnabled: weaponObjectInfo.isGunnerHandShakingAnimationEnabled
             )
             
             // ロード済みの武器のWeaponInfoを配列に保持
-            loadedWeapons.append(weaponInfo)
-            return weaponInfo
+            loadedWeapons.append(weaponObjectInfo)
+            return weaponObjectInfo
         }
     }
 }
