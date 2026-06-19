@@ -8,5 +8,5 @@
 import Foundation
 
 protocol WeaponObjectInfoDataSourceInterface {
-    var list: [WeaponObjectInfo] { get }
+    var list: [any WeaponObjectInfo] { get }
 }

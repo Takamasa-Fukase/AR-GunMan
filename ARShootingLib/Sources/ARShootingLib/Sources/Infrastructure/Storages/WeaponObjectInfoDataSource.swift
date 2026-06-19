@@ -8,7 +8,7 @@
 import Foundation
 
 final class WeaponObjectInfoDataSource: WeaponObjectInfoDataSourceInterface {
-    let list: [WeaponObjectInfo] = [
+    let list: [any WeaponObjectInfo] = [
         PistolObjectInfo(
             id: 0,
             isGunnerHandShakingAnimationEnabled: true,
