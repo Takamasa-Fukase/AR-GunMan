@@ -5,7 +5,6 @@
 //  Created by ウルトラ深瀬 on 2022/02/18.
 //
 
-import Foundation
 import SceneKit
 
 final class SceneNodeUtil {

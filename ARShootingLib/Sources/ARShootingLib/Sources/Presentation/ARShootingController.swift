@@ -5,7 +5,7 @@
 //  Created by ウルトラ深瀬 on 2026/05/29.
 //
 
-import SwiftUI
+import Foundation
 
 public protocol ARShootingControllerInterface: AnyObject {
     var targetHit: (() -> Void)? { get set }
