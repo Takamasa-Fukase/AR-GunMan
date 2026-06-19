@@ -17,7 +17,7 @@ final class GameViewModel {
     var isWeaponChangeButtonEnabled = false
     var isTutorialViewPresented = false
     var isWeaponSelectViewPresented = false
-    var isResultViewPresented = (false, Double())
+    var isResultViewPresented: (isPresented: Bool, score: Double) = (false, 0.0)
     
     private let presenter: GamePresenter
     private var cancellables: Set<AnyCancellable> = []
