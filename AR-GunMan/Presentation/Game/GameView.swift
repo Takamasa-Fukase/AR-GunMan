@@ -127,9 +127,9 @@ struct GameView<ARView: View>: View {
             .ignoresSafeArea()
         }
         // 結果画面に遷移
-        .fullScreenCover(isPresented: $viewModel.isResultViewPresented) {
+        .fullScreenCover(isPresented: $viewModel.isResultViewPresented.0) {
             ResultViewFactory.create(
-                score: viewModel.score,
+                score: viewModel.isResultViewPresented.1,
                 replayButtonTapped: {
                     resetAllAndRestartGame()
                 },

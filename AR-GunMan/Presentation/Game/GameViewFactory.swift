@@ -10,6 +10,7 @@ import SwiftUI
 import ARShootingLib
 import Domain
 import Infrastructure
+import Presentation
 
 final class GameViewFactory {
     static func create(frame: CGRect) -> GameView<ARSCNViewRepresentable> {
@@ -18,7 +19,7 @@ final class GameViewFactory {
             targetCount: 50
         )
         let weaponControlMotionHandleUseCase: WeaponControlMotionHandleUseCaseInterface = Factory.create()
-        let viewModel = GameViewModel(
+        let presenter = GamePresenter(
             arShootingLibHandler: arShootingLibHandler,
             soundPlayer: Factory.create(),
             tutorialRepository: Factory.create(),
@@ -27,8 +28,9 @@ final class GameViewFactory {
             weaponResourceGetUseCase: Factory.create(),
             weaponActionExecuteUseCase: Factory.create()
         )
-        arShootingLibHandler.inject(delegate: viewModel)
-        weaponControlMotionHandleUseCase.inject(delegate: viewModel)
+        let viewModel = GameViewModel(presenter: presenter)
+        arShootingLibHandler.inject(delegate: presenter)
+        weaponControlMotionHandleUseCase.inject(delegate: presenter)
         return GameView(
             arView: arView,
             viewModel: viewModel
