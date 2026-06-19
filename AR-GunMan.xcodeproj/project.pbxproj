@@ -29,6 +29,7 @@
 		BC0D547B2D432FAE00D69795 /* bazooka_reload.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BC0D54632D432FAE00D69795 /* bazooka_reload.mp3 */; };
 		BC2BF8892D49DDE400E202F0 /* Core in Frameworks */ = {isa = PBXBuildFile; productRef = BC2BF8882D49DDE400E202F0 /* Core */; };
 		BC330B2B2D499261007C4501 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = BC330B2A2D499261007C4501 /* FirebaseFirestore */; };
+		BC348A9C2FE57AB800D06ACB /* Presentation in Frameworks */ = {isa = PBXBuildFile; productRef = BC348A9B2FE57AB800D06ACB /* Presentation */; };
 		BC5F56002D3B533500EA397A /* Data in Frameworks */ = {isa = PBXBuildFile; productRef = BC5F55FF2D3B533500EA397A /* Data */; };
 		BC5F56022D3B533500EA397A /* Domain in Frameworks */ = {isa = PBXBuildFile; productRef = BC5F56012D3B533500EA397A /* Domain */; };
 		BC7B6CA72FCFF4D4001A2CFA /* ARShootingLib in Frameworks */ = {isa = PBXBuildFile; productRef = BC7B6CA62FCFF4D4001A2CFA /* ARShootingLib */; };
@@ -209,6 +210,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC348A9C2FE57AB800D06ACB /* Presentation in Frameworks */,
 				BC5F56022D3B533500EA397A /* Domain in Frameworks */,
 				BC5F56002D3B533500EA397A /* Data in Frameworks */,
 				226019EB1C6C0B4EEDECE581 /* Pods_AR_GunMan.framework in Frameworks */,
@@ -563,6 +565,7 @@
 				BC2BF8882D49DDE400E202F0 /* Core */,
 				BC7B6CA62FCFF4D4001A2CFA /* ARShootingLib */,
 				BC7B6CA82FCFF5C4001A2CFA /* Infrastructure */,
+				BC348A9B2FE57AB800D06ACB /* Presentation */,
 			);
 			productName = "AR-GunMan";
 			productReference = 59D2D4D52552DE66006DDB70 /* AR-GunMan Dev.app */;
@@ -1375,6 +1378,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BC330B292D499261007C4501 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
+		};
+		BC348A9B2FE57AB800D06ACB /* Presentation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Presentation;
 		};
 		BC5F55FF2D3B533500EA397A /* Data */ = {
 			isa = XCSwiftPackageProductDependency;
