@@ -108,5 +108,5 @@ struct TutorialView: View {
 }
 
 #Preview {
-    TutorialViewFactory.create()
+    TutorialViewBuilder.build()
 }

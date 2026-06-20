@@ -41,7 +41,7 @@ struct SettingsView: View {
         .background(Color.goldLeaf)
         // ランキング画面へ遷移
         .showCustomModal(isPresented: $viewModel.isRankingViewPresented) { dismissRequestReceiver in
-            RankingViewFactory.create(dismissRequestReceiver: dismissRequestReceiver)
+            RankingViewBuilder.build(dismissRequestReceiver: dismissRequestReceiver)
         }
         // プライバシーポリシーをWebView表示
         .fullScreenCover(isPresented: $viewModel.isPrivacyPolicyViewPresented) {

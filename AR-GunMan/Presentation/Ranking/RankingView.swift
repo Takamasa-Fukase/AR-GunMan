@@ -97,7 +97,7 @@ struct RankingView: View {
 }
 
 #Preview {
-    RankingViewFactory.create(
+    RankingViewBuilder.build(
         dismissRequestReceiver: DismissRequestReceiver()
     )
     .background(.black)

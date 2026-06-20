@@ -1,5 +1,5 @@
 //
-//  WeaponSelectViewFactory.swift
+//  WeaponSelectViewBuilder.swift
 //  AR-GunMan
 //
 //  Created by ウルトラ深瀬 on 19/12/24.
@@ -7,8 +7,10 @@
 
 import Foundation
 
-final class WeaponSelectViewFactory {
-    static func create(
+struct WeaponSelectViewBuilder {
+    private init() {}
+
+    static func build(
         initialDisplayWeaponId: Int,
         weaponSelected: @escaping (Int) -> Void
     ) -> WeaponSelectView {
@@ -16,6 +18,9 @@ final class WeaponSelectViewFactory {
             weaponResourceGetUseCase: Factory.create(),
             initialDisplayWeaponId: initialDisplayWeaponId
         )
-        return WeaponSelectView(viewModel: viewModel, weaponSelected: weaponSelected)
+        return WeaponSelectView(
+            viewModel: viewModel,
+            weaponSelected: weaponSelected
+        )
     }
 }

@@ -193,7 +193,7 @@ struct ResultView: View {
                 viewModel.nameRegisterViewClosed()
             }
         ) { dismissRequestReceiver in
-            NameRegisterViewFactory.create(
+            NameRegisterViewBuilder.build(
                 score: viewModel.score,
                 temporaryRankTextSubject: viewModel.temporaryRankTextSubject,
                 dismissRequestReceiver: dismissRequestReceiver,
@@ -235,7 +235,7 @@ struct ResultView: View {
 
 #Preview {
     CenterPreviewView(backgroundColor: .black) {
-        ResultViewFactory.create(
+        ResultViewBuilder.build(
             score: 98.765,
             replayButtonTapped: {},
             toHomeButtonTapped: {}

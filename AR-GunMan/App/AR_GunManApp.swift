@@ -13,7 +13,7 @@ struct AR_GunManApp: App {
     
     var body: some Scene {
         WindowGroup {
-            TopViewFactory.create()
+            TopViewBuilder.build()
         }
     }
 }

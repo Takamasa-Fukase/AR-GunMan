@@ -53,36 +53,36 @@
 		BCFDED062D3B45BD0023DC8A /* StopMotionAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECBA2D3B45BD0023DC8A /* StopMotionAnimationView.swift */; };
 		BCFDED072D3B45BD0023DC8A /* UIBlurEffectViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECBB2D3B45BD0023DC8A /* UIBlurEffectViewRepresentable.swift */; };
 		BCFDED082D3B45BD0023DC8A /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECBD2D3B45BD0023DC8A /* GameView.swift */; };
-		BCFDED092D3B45BD0023DC8A /* GameViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECBE2D3B45BD0023DC8A /* GameViewFactory.swift */; };
+		BCFDED092D3B45BD0023DC8A /* GameViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECBE2D3B45BD0023DC8A /* GameViewBuilder.swift */; };
 		BCFDED0A2D3B45BD0023DC8A /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECBF2D3B45BD0023DC8A /* GameViewModel.swift */; };
 		BCFDED0B2D3B45BD0023DC8A /* NameRegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECC12D3B45BD0023DC8A /* NameRegisterView.swift */; };
-		BCFDED0C2D3B45BD0023DC8A /* NameRegisterViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECC22D3B45BD0023DC8A /* NameRegisterViewFactory.swift */; };
+		BCFDED0C2D3B45BD0023DC8A /* NameRegisterViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECC22D3B45BD0023DC8A /* NameRegisterViewBuilder.swift */; };
 		BCFDED0D2D3B45BD0023DC8A /* NameRegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECC32D3B45BD0023DC8A /* NameRegisterViewModel.swift */; };
 		BCFDED0E2D3B45BD0023DC8A /* RankingListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECC52D3B45BD0023DC8A /* RankingListItem.swift */; };
 		BCFDED0F2D3B45BE0023DC8A /* RankingListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECC62D3B45BD0023DC8A /* RankingListView.swift */; };
 		BCFDED102D3B45BE0023DC8A /* RankingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECC72D3B45BD0023DC8A /* RankingView.swift */; };
-		BCFDED112D3B45BE0023DC8A /* RankingViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECC82D3B45BD0023DC8A /* RankingViewFactory.swift */; };
+		BCFDED112D3B45BE0023DC8A /* RankingViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECC82D3B45BD0023DC8A /* RankingViewBuilder.swift */; };
 		BCFDED122D3B45BE0023DC8A /* RankingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECC92D3B45BD0023DC8A /* RankingViewModel.swift */; };
 		BCFDED132D3B45BE0023DC8A /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECCB2D3B45BD0023DC8A /* ResultView.swift */; };
-		BCFDED142D3B45BE0023DC8A /* ResultViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECCC2D3B45BD0023DC8A /* ResultViewFactory.swift */; };
+		BCFDED142D3B45BE0023DC8A /* ResultViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECCC2D3B45BD0023DC8A /* ResultViewBuilder.swift */; };
 		BCFDED152D3B45BE0023DC8A /* ResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECCD2D3B45BD0023DC8A /* ResultViewModel.swift */; };
 		BCFDED162D3B45BE0023DC8A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECCF2D3B45BD0023DC8A /* SettingsView.swift */; };
-		BCFDED172D3B45BE0023DC8A /* SettingsViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECD02D3B45BD0023DC8A /* SettingsViewFactory.swift */; };
+		BCFDED172D3B45BE0023DC8A /* SettingsViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECD02D3B45BD0023DC8A /* SettingsViewBuilder.swift */; };
 		BCFDED182D3B45BE0023DC8A /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECD12D3B45BD0023DC8A /* SettingsViewModel.swift */; };
 		BCFDED192D3B45BE0023DC8A /* TopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECD32D3B45BD0023DC8A /* TopView.swift */; };
-		BCFDED1A2D3B45BE0023DC8A /* TopViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECD42D3B45BD0023DC8A /* TopViewFactory.swift */; };
+		BCFDED1A2D3B45BE0023DC8A /* TopViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECD42D3B45BD0023DC8A /* TopViewBuilder.swift */; };
 		BCFDED1B2D3B45BE0023DC8A /* TopViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECD52D3B45BD0023DC8A /* TopViewModel.swift */; };
 		BCFDED1C2D3B45BE0023DC8A /* TutorialConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECD72D3B45BD0023DC8A /* TutorialConst.swift */; };
 		BCFDED1D2D3B45BE0023DC8A /* TutorialScrollViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECD82D3B45BD0023DC8A /* TutorialScrollViewItem.swift */; };
 		BCFDED1E2D3B45BE0023DC8A /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECD92D3B45BD0023DC8A /* TutorialView.swift */; };
-		BCFDED1F2D3B45BE0023DC8A /* TutorialViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECDA2D3B45BD0023DC8A /* TutorialViewFactory.swift */; };
+		BCFDED1F2D3B45BE0023DC8A /* TutorialViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECDA2D3B45BD0023DC8A /* TutorialViewBuilder.swift */; };
 		BCFDED202D3B45BE0023DC8A /* TutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECDB2D3B45BD0023DC8A /* TutorialViewModel.swift */; };
 		BCFDED212D3B45BE0023DC8A /* WeaponSelectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECDD2D3B45BD0023DC8A /* WeaponSelectCell.swift */; };
 		BCFDED222D3B45BE0023DC8A /* WeaponSelectCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BCFDECDE2D3B45BD0023DC8A /* WeaponSelectCell.xib */; };
 		BCFDED232D3B45BE0023DC8A /* WeaponSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECDF2D3B45BD0023DC8A /* WeaponSelectView.swift */; };
 		BCFDED242D3B45BE0023DC8A /* WeaponSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECE02D3B45BD0023DC8A /* WeaponSelectViewController.swift */; };
 		BCFDED252D3B45BE0023DC8A /* WeaponSelectViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BCFDECE12D3B45BD0023DC8A /* WeaponSelectViewController.xib */; };
-		BCFDED262D3B45BE0023DC8A /* WeaponSelectViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECE22D3B45BD0023DC8A /* WeaponSelectViewFactory.swift */; };
+		BCFDED262D3B45BE0023DC8A /* WeaponSelectViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECE22D3B45BD0023DC8A /* WeaponSelectViewBuilder.swift */; };
 		BCFDED272D3B45BE0023DC8A /* WeaponSelectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECE32D3B45BD0023DC8A /* WeaponSelectViewModel.swift */; };
 		BCFDED282D3B45BE0023DC8A /* AR_GunManApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECE62D3B45BD0023DC8A /* AR_GunManApp.swift */; };
 		BCFDED292D3B45BE0023DC8A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BCFDECE72D3B45BD0023DC8A /* Preview Assets.xcassets */; };
@@ -165,36 +165,36 @@
 		BCFDECBA2D3B45BD0023DC8A /* StopMotionAnimationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StopMotionAnimationView.swift; sourceTree = "<group>"; };
 		BCFDECBB2D3B45BD0023DC8A /* UIBlurEffectViewRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIBlurEffectViewRepresentable.swift; sourceTree = "<group>"; };
 		BCFDECBD2D3B45BD0023DC8A /* GameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
-		BCFDECBE2D3B45BD0023DC8A /* GameViewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewFactory.swift; sourceTree = "<group>"; };
+		BCFDECBE2D3B45BD0023DC8A /* GameViewBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewBuilder.swift; sourceTree = "<group>"; };
 		BCFDECBF2D3B45BD0023DC8A /* GameViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
 		BCFDECC12D3B45BD0023DC8A /* NameRegisterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NameRegisterView.swift; sourceTree = "<group>"; };
-		BCFDECC22D3B45BD0023DC8A /* NameRegisterViewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NameRegisterViewFactory.swift; sourceTree = "<group>"; };
+		BCFDECC22D3B45BD0023DC8A /* NameRegisterViewBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NameRegisterViewBuilder.swift; sourceTree = "<group>"; };
 		BCFDECC32D3B45BD0023DC8A /* NameRegisterViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NameRegisterViewModel.swift; sourceTree = "<group>"; };
 		BCFDECC52D3B45BD0023DC8A /* RankingListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankingListItem.swift; sourceTree = "<group>"; };
 		BCFDECC62D3B45BD0023DC8A /* RankingListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankingListView.swift; sourceTree = "<group>"; };
 		BCFDECC72D3B45BD0023DC8A /* RankingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankingView.swift; sourceTree = "<group>"; };
-		BCFDECC82D3B45BD0023DC8A /* RankingViewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankingViewFactory.swift; sourceTree = "<group>"; };
+		BCFDECC82D3B45BD0023DC8A /* RankingViewBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankingViewBuilder.swift; sourceTree = "<group>"; };
 		BCFDECC92D3B45BD0023DC8A /* RankingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankingViewModel.swift; sourceTree = "<group>"; };
 		BCFDECCB2D3B45BD0023DC8A /* ResultView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
-		BCFDECCC2D3B45BD0023DC8A /* ResultViewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultViewFactory.swift; sourceTree = "<group>"; };
+		BCFDECCC2D3B45BD0023DC8A /* ResultViewBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultViewBuilder.swift; sourceTree = "<group>"; };
 		BCFDECCD2D3B45BD0023DC8A /* ResultViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultViewModel.swift; sourceTree = "<group>"; };
 		BCFDECCF2D3B45BD0023DC8A /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		BCFDECD02D3B45BD0023DC8A /* SettingsViewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewFactory.swift; sourceTree = "<group>"; };
+		BCFDECD02D3B45BD0023DC8A /* SettingsViewBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewBuilder.swift; sourceTree = "<group>"; };
 		BCFDECD12D3B45BD0023DC8A /* SettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		BCFDECD32D3B45BD0023DC8A /* TopView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopView.swift; sourceTree = "<group>"; };
-		BCFDECD42D3B45BD0023DC8A /* TopViewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopViewFactory.swift; sourceTree = "<group>"; };
+		BCFDECD42D3B45BD0023DC8A /* TopViewBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopViewBuilder.swift; sourceTree = "<group>"; };
 		BCFDECD52D3B45BD0023DC8A /* TopViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopViewModel.swift; sourceTree = "<group>"; };
 		BCFDECD72D3B45BD0023DC8A /* TutorialConst.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialConst.swift; sourceTree = "<group>"; };
 		BCFDECD82D3B45BD0023DC8A /* TutorialScrollViewItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialScrollViewItem.swift; sourceTree = "<group>"; };
 		BCFDECD92D3B45BD0023DC8A /* TutorialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
-		BCFDECDA2D3B45BD0023DC8A /* TutorialViewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewFactory.swift; sourceTree = "<group>"; };
+		BCFDECDA2D3B45BD0023DC8A /* TutorialViewBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewBuilder.swift; sourceTree = "<group>"; };
 		BCFDECDB2D3B45BD0023DC8A /* TutorialViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewModel.swift; sourceTree = "<group>"; };
 		BCFDECDD2D3B45BD0023DC8A /* WeaponSelectCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeaponSelectCell.swift; sourceTree = "<group>"; };
 		BCFDECDE2D3B45BD0023DC8A /* WeaponSelectCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WeaponSelectCell.xib; sourceTree = "<group>"; };
 		BCFDECDF2D3B45BD0023DC8A /* WeaponSelectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeaponSelectView.swift; sourceTree = "<group>"; };
 		BCFDECE02D3B45BD0023DC8A /* WeaponSelectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeaponSelectViewController.swift; sourceTree = "<group>"; };
 		BCFDECE12D3B45BD0023DC8A /* WeaponSelectViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WeaponSelectViewController.xib; sourceTree = "<group>"; };
-		BCFDECE22D3B45BD0023DC8A /* WeaponSelectViewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeaponSelectViewFactory.swift; sourceTree = "<group>"; };
+		BCFDECE22D3B45BD0023DC8A /* WeaponSelectViewBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeaponSelectViewBuilder.swift; sourceTree = "<group>"; };
 		BCFDECE32D3B45BD0023DC8A /* WeaponSelectViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeaponSelectViewModel.swift; sourceTree = "<group>"; };
 		BCFDECE62D3B45BD0023DC8A /* AR_GunManApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AR_GunManApp.swift; sourceTree = "<group>"; };
 		BCFDECE72D3B45BD0023DC8A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -415,7 +415,7 @@
 			isa = PBXGroup;
 			children = (
 				BCFDECBD2D3B45BD0023DC8A /* GameView.swift */,
-				BCFDECBE2D3B45BD0023DC8A /* GameViewFactory.swift */,
+				BCFDECBE2D3B45BD0023DC8A /* GameViewBuilder.swift */,
 				BCFDECBF2D3B45BD0023DC8A /* GameViewModel.swift */,
 			);
 			path = Game;
@@ -425,7 +425,7 @@
 			isa = PBXGroup;
 			children = (
 				BCFDECC12D3B45BD0023DC8A /* NameRegisterView.swift */,
-				BCFDECC22D3B45BD0023DC8A /* NameRegisterViewFactory.swift */,
+				BCFDECC22D3B45BD0023DC8A /* NameRegisterViewBuilder.swift */,
 				BCFDECC32D3B45BD0023DC8A /* NameRegisterViewModel.swift */,
 			);
 			path = NameRegister;
@@ -437,7 +437,7 @@
 				BCFDECC52D3B45BD0023DC8A /* RankingListItem.swift */,
 				BCFDECC62D3B45BD0023DC8A /* RankingListView.swift */,
 				BCFDECC72D3B45BD0023DC8A /* RankingView.swift */,
-				BCFDECC82D3B45BD0023DC8A /* RankingViewFactory.swift */,
+				BCFDECC82D3B45BD0023DC8A /* RankingViewBuilder.swift */,
 				BCFDECC92D3B45BD0023DC8A /* RankingViewModel.swift */,
 			);
 			path = Ranking;
@@ -447,7 +447,7 @@
 			isa = PBXGroup;
 			children = (
 				BCFDECCB2D3B45BD0023DC8A /* ResultView.swift */,
-				BCFDECCC2D3B45BD0023DC8A /* ResultViewFactory.swift */,
+				BCFDECCC2D3B45BD0023DC8A /* ResultViewBuilder.swift */,
 				BCFDECCD2D3B45BD0023DC8A /* ResultViewModel.swift */,
 			);
 			path = Result;
@@ -457,7 +457,7 @@
 			isa = PBXGroup;
 			children = (
 				BCFDECCF2D3B45BD0023DC8A /* SettingsView.swift */,
-				BCFDECD02D3B45BD0023DC8A /* SettingsViewFactory.swift */,
+				BCFDECD02D3B45BD0023DC8A /* SettingsViewBuilder.swift */,
 				BCFDECD12D3B45BD0023DC8A /* SettingsViewModel.swift */,
 			);
 			path = Settings;
@@ -467,7 +467,7 @@
 			isa = PBXGroup;
 			children = (
 				BCFDECD32D3B45BD0023DC8A /* TopView.swift */,
-				BCFDECD42D3B45BD0023DC8A /* TopViewFactory.swift */,
+				BCFDECD42D3B45BD0023DC8A /* TopViewBuilder.swift */,
 				BCFDECD52D3B45BD0023DC8A /* TopViewModel.swift */,
 			);
 			path = Top;
@@ -479,7 +479,7 @@
 				BCFDECD72D3B45BD0023DC8A /* TutorialConst.swift */,
 				BCFDECD82D3B45BD0023DC8A /* TutorialScrollViewItem.swift */,
 				BCFDECD92D3B45BD0023DC8A /* TutorialView.swift */,
-				BCFDECDA2D3B45BD0023DC8A /* TutorialViewFactory.swift */,
+				BCFDECDA2D3B45BD0023DC8A /* TutorialViewBuilder.swift */,
 				BCFDECDB2D3B45BD0023DC8A /* TutorialViewModel.swift */,
 			);
 			path = Tutorial;
@@ -493,7 +493,7 @@
 				BCFDECDF2D3B45BD0023DC8A /* WeaponSelectView.swift */,
 				BCFDECE02D3B45BD0023DC8A /* WeaponSelectViewController.swift */,
 				BCFDECE12D3B45BD0023DC8A /* WeaponSelectViewController.xib */,
-				BCFDECE22D3B45BD0023DC8A /* WeaponSelectViewFactory.swift */,
+				BCFDECE22D3B45BD0023DC8A /* WeaponSelectViewBuilder.swift */,
 				BCFDECE32D3B45BD0023DC8A /* WeaponSelectViewModel.swift */,
 			);
 			path = WeaponSelect;
@@ -818,21 +818,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BCFDED092D3B45BD0023DC8A /* GameViewFactory.swift in Sources */,
+				BCFDED092D3B45BD0023DC8A /* GameViewBuilder.swift in Sources */,
 				BCFDED012D3B45BD0023DC8A /* CenterPreviewView.swift in Sources */,
 				BCFDED0D2D3B45BD0023DC8A /* NameRegisterViewModel.swift in Sources */,
 				BCFDED192D3B45BE0023DC8A /* TopView.swift in Sources */,
 				BCFDED022D3B45BD0023DC8A /* ContentFrameTrackableScrollView.swift in Sources */,
 				BCFDED272D3B45BE0023DC8A /* WeaponSelectViewModel.swift in Sources */,
-				BCFDED0C2D3B45BD0023DC8A /* NameRegisterViewFactory.swift in Sources */,
+				BCFDED0C2D3B45BD0023DC8A /* NameRegisterViewBuilder.swift in Sources */,
 				BCFDED182D3B45BE0023DC8A /* SettingsViewModel.swift in Sources */,
 				BCFDED242D3B45BE0023DC8A /* WeaponSelectViewController.swift in Sources */,
 				BCFDED052D3B45BD0023DC8A /* SoundPlayer.swift in Sources */,
-				BCFDED1F2D3B45BE0023DC8A /* TutorialViewFactory.swift in Sources */,
+				BCFDED1F2D3B45BE0023DC8A /* TutorialViewBuilder.swift in Sources */,
 				BCFDED0A2D3B45BD0023DC8A /* GameViewModel.swift in Sources */,
-				BCFDED172D3B45BE0023DC8A /* SettingsViewFactory.swift in Sources */,
-				BCFDED142D3B45BE0023DC8A /* ResultViewFactory.swift in Sources */,
-				BCFDED262D3B45BE0023DC8A /* WeaponSelectViewFactory.swift in Sources */,
+				BCFDED172D3B45BE0023DC8A /* SettingsViewBuilder.swift in Sources */,
+				BCFDED142D3B45BE0023DC8A /* ResultViewBuilder.swift in Sources */,
+				BCFDED262D3B45BE0023DC8A /* WeaponSelectViewBuilder.swift in Sources */,
 				BCFDED0F2D3B45BE0023DC8A /* RankingListView.swift in Sources */,
 				BCFDED082D3B45BD0023DC8A /* GameView.swift in Sources */,
 				BCFDED392D3B45BE0023DC8A /* ColorTypeConverter.swift in Sources */,
@@ -842,13 +842,13 @@
 				BCFDED132D3B45BE0023DC8A /* ResultView.swift in Sources */,
 				BC8F93152D800E43000CA6DA /* Factory.swift in Sources */,
 				BC8F93192D801870000CA6DA /* MockFactory.swift in Sources */,
-				BCFDED112D3B45BE0023DC8A /* RankingViewFactory.swift in Sources */,
+				BCFDED112D3B45BE0023DC8A /* RankingViewBuilder.swift in Sources */,
 				BCFDED1E2D3B45BE0023DC8A /* TutorialView.swift in Sources */,
 				BCFDED032D3B45BD0023DC8A /* CustomModalPresenter.swift in Sources */,
 				BC7FBB7C2D4A434A00911B38 /* ErrorAlert.swift in Sources */,
 				BCFDECFF2D3B45BD0023DC8A /* Double+Extension.swift in Sources */,
 				BCFDED042D3B45BD0023DC8A /* SafariViewControllerRepresentable.swift in Sources */,
-				BCFDED1A2D3B45BE0023DC8A /* TopViewFactory.swift in Sources */,
+				BCFDED1A2D3B45BE0023DC8A /* TopViewBuilder.swift in Sources */,
 				BCFDED072D3B45BD0023DC8A /* UIBlurEffectViewRepresentable.swift in Sources */,
 				BCFDED212D3B45BE0023DC8A /* WeaponSelectCell.swift in Sources */,
 				BCFDED152D3B45BE0023DC8A /* ResultViewModel.swift in Sources */,

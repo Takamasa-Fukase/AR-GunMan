@@ -168,7 +168,7 @@ struct NameRegisterView: View {
 
 #Preview {
     CenterPreviewView(backgroundColor: .black) {
-        NameRegisterViewFactory.create(
+        NameRegisterViewBuilder.build(
             score: 0.0,
             temporaryRankTextSubject: CurrentValueSubject<String, Never>(""),
             dismissRequestReceiver: DismissRequestReceiver(),

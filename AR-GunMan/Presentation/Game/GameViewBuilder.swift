@@ -1,5 +1,5 @@
 //
-//  GameViewFactory.swift
+//  GameViewBuilder.swift
 //  AR-GunMan
 //
 //  Created by ウルトラ深瀬 on 19/12/24.
@@ -12,8 +12,10 @@ import Domain
 import Infrastructure
 import Presentation
 
-final class GameViewFactory {
-    static func create(frame: CGRect) -> GameView<ARSCNViewRepresentable> {
+struct GameViewBuilder {
+    private init() {}
+    
+    static func build(frame: CGRect) -> GameView<ARSCNViewRepresentable> {
         let (arShootingLibHandler, arView) = Factory.create(
             frame: frame,
             targetCount: 50

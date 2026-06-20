@@ -108,7 +108,7 @@ struct GameView<ARView: View>: View {
             ZStack(alignment: .center) {
                 Color.black.opacity(0.7)
                 UIBlurEffectViewRepresentable()
-                TutorialViewFactory.create()
+                TutorialViewBuilder.build()
             }
             .ignoresSafeArea()
             // sheetの背景を透過
@@ -116,7 +116,7 @@ struct GameView<ARView: View>: View {
         }
         // 武器選択画面に遷移
         .fullScreenCover(isPresented: $viewModel.isWeaponSelectViewPresented) {
-            WeaponSelectViewFactory.create(
+            WeaponSelectViewBuilder.build(
                 initialDisplayWeaponId: viewModel.currentWeapon?.weapon.id ?? 0,
                 weaponSelected: { weaponId in
                     viewModel.weaponSelected(weaponId: weaponId)
@@ -128,7 +128,7 @@ struct GameView<ARView: View>: View {
         }
         // 結果画面に遷移
         .fullScreenCover(isPresented: $viewModel.isResultViewPresented.isPresented) {
-            ResultViewFactory.create(
+            ResultViewBuilder.build(
                 score: viewModel.isResultViewPresented.score,
                 replayButtonTapped: {
                     resetAllAndRestartGame()
@@ -168,5 +168,5 @@ struct GameView<ARView: View>: View {
 }
 
 #Preview {
-    GameViewFactory.create(frame: .zero)
+    GameViewBuilder.build(frame: .zero)
 }

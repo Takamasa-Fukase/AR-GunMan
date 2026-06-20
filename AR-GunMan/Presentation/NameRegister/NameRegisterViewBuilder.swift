@@ -1,5 +1,5 @@
 //
-//  NameRegisterViewFactory.swift
+//  NameRegisterViewBuilder.swift
 //  AR-GunMan
 //
 //  Created by ウルトラ深瀬 on 16/1/25.
@@ -9,8 +9,10 @@ import Foundation
 import Combine
 import Domain
 
-final class NameRegisterViewFactory {
-    static func create(
+struct NameRegisterViewBuilder {
+    private init() {}
+
+    static func build(
         score: Double,
         temporaryRankTextSubject: CurrentValueSubject<String, Never>,
         dismissRequestReceiver: DismissRequestReceiver,

@@ -58,7 +58,7 @@ struct TopView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             // ゲーム画面への遷移
             .fullScreenCover(isPresented: $viewModel.isGameViewPresented) {
-                GameViewFactory.create(frame: geometry.frame(in: .global))
+                GameViewBuilder.build(frame: geometry.frame(in: .global))
             }
         }
         .background(Color.goldLeaf)
@@ -80,13 +80,13 @@ struct TopView: View {
         )
         // 設定画面への遷移
         .fullScreenCover(isPresented: $viewModel.isSettingsViewPresented) {
-            SettingsViewFactory.create()
+            SettingsViewBuilder.build()
         }
         // チュートリアル画面への遷移
         .showCustomModal(
             isPresented: $viewModel.isTutorialViewPresented
         ) { dismissRequestReceiver in
-            TutorialViewFactory.create(
+            TutorialViewBuilder.build(
                 // 内部からのdismissリクエストをレシーバーに送信できる様に受け渡し
                 dismissRequestReceiver: dismissRequestReceiver
             )
@@ -143,5 +143,5 @@ struct TopView: View {
 }
 
 #Preview {
-    TopViewFactory.create()
+    TopViewBuilder.build()
 }
