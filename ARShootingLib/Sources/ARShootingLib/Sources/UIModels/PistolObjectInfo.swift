@@ -1,5 +1,5 @@
 //
-//  BazookaObjectInfo.swift
+//  PistolObjectInfo.swift
 //  ARShootingLib
 //
 //  Created by ウルトラ深瀬 on 2026/05/29.
@@ -7,21 +7,16 @@
 
 import Foundation
 
-struct BazookaObjectInfo: WeaponObjectInfo {
-    let id: Int
+struct PistolObjectInfo: WeaponObjectInfo {
+    typealias ParticleResources = EmptyParticleResources
+    
     let isGunnerHandShakingAnimationEnabled: Bool
     let isRecoilAnimationEnabled: Bool
     let weaponResources: WeaponResources
-    let particleResources: ParticleResources
-
+    
     struct WeaponResources: WeaponObjectResources {
         let fileName: String
         let parentObjectName: String
-        let objectName: String
-    }
-    
-    struct ParticleResources: TargetHitParticleResources {
-        let fileName: String
         let objectName: String
     }
 }

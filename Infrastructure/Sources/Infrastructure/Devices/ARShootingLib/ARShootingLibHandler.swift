@@ -32,8 +32,8 @@ public final class ARShootingLibHandler: ARShootingLibHandlerInterface {
         arShootingController.pauseSession()
     }
     
-    public func showWeapon(of id: Int) {
-        arShootingController.showWeapon(of: id)
+    public func showWeapon(of type: Domain.WeaponType) {
+        arShootingController.showWeapon(of: type.toARShootingLibWeaponType)
     }
     
     public func renderWeaponFiring() {
@@ -42,5 +42,16 @@ public final class ARShootingLibHandler: ARShootingLibHandlerInterface {
     
     public func changeTargetsAppearance(to imageName: String) {
         arShootingController.changeTargetsAppearance(to: imageName)
+    }
+}
+
+private extension Domain.WeaponType {
+    var toARShootingLibWeaponType: ARShootingLib.WeaponType {
+        switch self {
+        case .pistol:
+            return .pistol
+        case .bazooka:
+            return .bazooka
+        }
     }
 }

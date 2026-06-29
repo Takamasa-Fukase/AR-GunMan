@@ -7,6 +7,32 @@
 
 import Foundation
 
+public enum WeaponType {
+    case pistol
+    case bazooka
+    
+    // FIXME: 一時的な対応
+    public static func fromId(_ id: Int) -> Self? {
+        switch id {
+        case 0:
+            return .pistol
+        case 1:
+            return .bazooka
+        default:
+            return nil
+        }
+    }
+    
+    public var id: Int {
+        switch self {
+        case .pistol:
+            return 0
+        case .bazooka:
+            return 1
+        }
+    }
+}
+
 public enum ColorType {
     case red
     case green

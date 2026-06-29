@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import ARShootingLib
 import SwiftUI
+import ARShootingLib
 
 public class ARShootingControllerMock: ARShootingControllerInterface {
     public var targetHit: (() -> Void)?
@@ -22,7 +22,7 @@ public class ARShootingControllerMock: ARShootingControllerInterface {
     
     public func pauseSession() {}
     
-    public func showWeapon(of id: Int) {}
+    public func showWeapon(of type: WeaponType) {}
     
     public func renderWeaponFiring() {}
     

@@ -8,7 +8,7 @@
 import SceneKit
 
 struct LoadedWeaponNodeData {
-    let weaponId: Int
+    let weaponType: WeaponType
     let weaponParentNode: SCNNode
     let weaponNode: SCNNode
     let targetHitParticleNode: SCNNode?

@@ -1,5 +1,5 @@
 //
-//  ARShootingView.swift
+//  ARShootingController.swift
 //  ARShootingLib
 //
 //  Created by ウルトラ深瀬 on 2026/05/29.
@@ -7,13 +7,25 @@
 
 import ARKit
 
-final class ARShootingView: NSObject, ARShootingViewInterface {
+public protocol ARShootingControllerInterface: AnyObject {
+    var targetHit: (() -> Void)? { get set }
+    func runSession()
+    func pauseSession()
+    func showWeapon(of type: WeaponType)
+    func renderWeaponFiring()
+    func changeTargetsAppearance(to imageName: String)
+}
+
+final class ARShootingController: NSObject, ARShootingControllerInterface {
     let arView: ARSCNView
     var targetHit: (() -> Void)?
     
     private let originalBulletNode = SceneNodeUtil.originalBulletNode()
     private var loadedWeaponNodeDataList: [LoadedWeaponNodeData] = []
-    private weak var presenter: ARShootingPresenterInterface?
+    private var currentWeaponType: WeaponType = .pistol
+    private var currentDisplayingWeaponNodeData: LoadedWeaponNodeData? {
+        return loadedWeaponNodeDataList.first(where: { $0.weaponType == currentWeaponType })
+    }
     
     init(
         frame: CGRect,
@@ -28,10 +40,6 @@ final class ARShootingView: NSObject, ARShootingViewInterface {
         setup(targetCount: targetCount)
     }
     
-    func inject(presenter: ARShootingPresenterInterface) {
-        self.presenter = presenter
-    }
-    
     func runSession() {
         let configuration = ARWorldTrackingConfiguration()
         configuration.planeDetection = .horizontal
@@ -42,13 +50,60 @@ final class ARShootingView: NSObject, ARShootingViewInterface {
         arView.session.pause()
     }
     
-    func loadAndSetupWeaponObjects(
-        weaponId: Int,
+    func showWeapon(of type: WeaponType) {
+        currentWeaponType = type
+        
+        // まだ3Dオブジェクト群（Node）をロードしていない場合
+        if loadedWeaponNodeDataList.first(where: { $0.weaponType == type }) == nil {
+            loadAndSetupWeaponObjects(
+                weaponType: type,
+                weaponResources: type.objectInfo.weaponResources,
+                particleResources: type.objectInfo.particleResources,
+                isGunnerHandShakingAnimationEnabled: type.objectInfo.isGunnerHandShakingAnimationEnabled
+            )
+        }
+        
+        removeOtherWeaponObjects(except: type)
+        showWeaponObject(of: type)
+    }
+    
+    func renderWeaponFiring() {
+        // 弾の発射アニメーションを描画
+        let clonedBulletNode = originalBulletNode.clone()
+        clonedBulletNode.position = SceneNodeUtil.getCameraPosition(arView)
+        arView.scene.rootNode.addChildNode(clonedBulletNode)
+        clonedBulletNode.runAction(SceneAnimationUtil.bulletShootingAnimation(arView.pointOfView)) {
+            clonedBulletNode.removeFromParentNode()
+        }
+        
+        // 武器の反動アニメーションを描画
+        if currentWeaponType.objectInfo.isRecoilAnimationEnabled {
+            currentDisplayingWeaponNodeData?.weaponNode.runAction(
+                SceneAnimationUtil.recoilAnimation
+            )
+        }
+    }
+    
+    func changeTargetsAppearance(to imageName: String) {
+        arView.scene.rootNode.childNodes.forEach({ node in
+            if node.name == "target" {
+                while node.childNode(withName: "torus", recursively: false) != nil {
+                    //ドーナツ型の白い線のパーツを削除
+                    node.childNode(withName: "torus", recursively: false)?.removeFromParentNode()
+                }
+            }
+            node.childNode(withName: "sphere", recursively: false)?
+                .geometry?.firstMaterial?.diffuse.contents = UIImage(named: imageName, in: Bundle.module, with: nil)
+        })
+    }
+    
+    // MARK: Private Methods
+    private func loadAndSetupWeaponObjects(
+        weaponType: WeaponType,
         weaponResources: WeaponObjectResources,
         particleResources: TargetHitParticleResources?,
         isGunnerHandShakingAnimationEnabled: Bool
-    ) {
-        // 武器の親Nodeと武器自体のNodeをロード
+    ) {        // 武器の親Nodeと武器自体のNodeをロード
         let (weaponParentNode, weaponNode) = createWeaponNode(
             fileName: weaponResources.fileName,
             parentNodeName: weaponResources.parentObjectName,
@@ -76,7 +131,7 @@ final class ARShootingView: NSObject, ARShootingViewInterface {
         
         // ロード済みの武器に関するパーツ群を1つの構造体にまとめて配列に保持
         let loadedWeaponNodeData = LoadedWeaponNodeData(
-            weaponId: weaponId,
+            weaponType: weaponType,
             weaponParentNode: weaponParentNode,
             weaponNode: weaponNode,
             targetHitParticleNode: targetHitParticleNode
@@ -84,48 +139,19 @@ final class ARShootingView: NSObject, ARShootingViewInterface {
         loadedWeaponNodeDataList.append(loadedWeaponNodeData)
     }
     
-    func showWeaponObject(of id: Int) {
-        guard let loadedWeaponNodeData = loadedWeaponNodeDataList.first(where: { $0.weaponId == id }) else { return }
+    private func showWeaponObject(of type: WeaponType) {
+        guard let loadedWeaponNodeData = loadedWeaponNodeDataList.first(where: { $0.weaponType == type }) else { return }
         arView.scene.rootNode.addChildNode(loadedWeaponNodeData.weaponParentNode)
     }
     
-    func removeOtherWeaponObjects(except id: Int) {
+    private func removeOtherWeaponObjects(except type: WeaponType) {
         loadedWeaponNodeDataList.forEach { loadedWeaponNodeData in
-            if loadedWeaponNodeData.weaponId != id {
+            if loadedWeaponNodeData.weaponType != type {
                 loadedWeaponNodeData.weaponParentNode.removeFromParentNode()
             }
         }
     }
     
-    func renderWeaponFiring(isRecoilAnimationEnabled: Bool) {
-        // 弾の発射アニメーションを描画
-        let clonedBulletNode = originalBulletNode.clone()
-        clonedBulletNode.position = SceneNodeUtil.getCameraPosition(arView)
-        arView.scene.rootNode.addChildNode(clonedBulletNode)
-        clonedBulletNode.runAction(SceneAnimationUtil.bulletShootingAnimation(arView.pointOfView)) {
-            clonedBulletNode.removeFromParentNode()
-        }
-        
-        // 武器の反動アニメーションを描画
-        if isRecoilAnimationEnabled {
-            getCurrentDisplayingWeaponNodeData()?.weaponNode.runAction(SceneAnimationUtil.recoilAnimation)
-        }
-    }
-    
-    func changeTargetsAppearance(to imageName: String) {
-        arView.scene.rootNode.childNodes.forEach({ node in
-            if node.name == "target" {
-                while node.childNode(withName: "torus", recursively: false) != nil {
-                    //ドーナツ型の白い線のパーツを削除
-                    node.childNode(withName: "torus", recursively: false)?.removeFromParentNode()
-                }
-            }
-            node.childNode(withName: "sphere", recursively: false)?
-                .geometry?.firstMaterial?.diffuse.contents = UIImage(named: imageName, in: Bundle.module, with: nil)
-        })
-    }
-    
-    // MARK: Private Methods
     private func setup(targetCount: Int) {
         arView.scene = SCNScene()
         arView.autoenablesDefaultLighting = true
@@ -160,13 +186,8 @@ final class ARShootingView: NSObject, ARShootingViewInterface {
         return (weaponParentNode, weaponNode)
     }
     
-    private func getCurrentDisplayingWeaponNodeData() -> LoadedWeaponNodeData? {
-        let currentWeaponId = presenter?.currentWeaponId ?? 0
-        return loadedWeaponNodeDataList.first(where: { $0.weaponId == currentWeaponId })
-    }
-    
     private func renderTargetHitParticle(to position: SCNVector3) {
-        if let particleNode = getCurrentDisplayingWeaponNodeData()?.targetHitParticleNode {
+        if let particleNode = currentDisplayingWeaponNodeData?.targetHitParticleNode {
             let clonedParticleNode = particleNode.clone()
             clonedParticleNode.position = position
             clonedParticleNode.particleSystems?.first?.birthRate = 300
@@ -176,13 +197,13 @@ final class ARShootingView: NSObject, ARShootingViewInterface {
     }
 }
 
-extension ARShootingView: ARSCNViewDelegate {
+extension ARShootingController: ARSCNViewDelegate {
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
-        getCurrentDisplayingWeaponNodeData()?.weaponParentNode.position = SceneNodeUtil.getCameraPosition(arView)
+        currentDisplayingWeaponNodeData?.weaponParentNode.position = SceneNodeUtil.getCameraPosition(arView)
     }
 }
 
-extension ARShootingView: SCNPhysicsContactDelegate {
+extension ARShootingController: SCNPhysicsContactDelegate {
     func physicsWorld(_ world: SCNPhysicsWorld, didEnd contact: SCNPhysicsContact) {
         if contact.nodeA.name == "target" && contact.nodeB.name == "bullet"
             || contact.nodeB.name == "target" && contact.nodeA.name == "bullet" {

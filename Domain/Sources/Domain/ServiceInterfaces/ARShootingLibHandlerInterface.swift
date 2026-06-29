@@ -15,7 +15,7 @@ public protocol ARShootingLibHandlerInterface {
     func inject(delegate: ARShootingLibHandlerDelegate)
     func runSession()
     func pauseSession()
-    func showWeapon(of id: Int)
+    func showWeapon(of type: WeaponType)
     func renderWeaponFiring()
     func changeTargetsAppearance(to imageName: String)
 }

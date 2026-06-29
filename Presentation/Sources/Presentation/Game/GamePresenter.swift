@@ -111,8 +111,12 @@ public final class GamePresenter {
         
         guard let currentWeapon = currentWeaponSubject.value else { return }
         
-        arShootingLibHandler.showWeapon(of: currentWeapon.weapon.id)
-        
+        // FIXME: 一時的な対応
+        //        arShootingLibHandler.showWeapon(of: currentWeapon.weapon.id)
+        if let weaponType = WeaponType.fromId(currentWeapon.weapon.id) {
+            arShootingLibHandler.showWeapon(of: weaponType)
+        }
+                
         if isCheckedTutorialCompletedFlag {
             soundPlayer.play(currentWeapon.weapon.resources.appearingSound)
         }

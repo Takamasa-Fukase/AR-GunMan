@@ -22,7 +22,6 @@ protocol WeaponObjectInfo {
     associatedtype WeaponResources: WeaponObjectResources
     associatedtype ParticleResources: TargetHitParticleResources
     
-    var id: Int { get }
     var isGunnerHandShakingAnimationEnabled: Bool { get }
     var isRecoilAnimationEnabled: Bool { get }
     var weaponResources: WeaponResources { get }

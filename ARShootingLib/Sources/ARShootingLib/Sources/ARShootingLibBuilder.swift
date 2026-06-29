@@ -12,23 +12,11 @@ public struct ARShootingLibBuilder {
         frame: CGRect,
         targetCount: Int
     ) -> (ARShootingControllerInterface, ARSCNViewRepresentable) {
-        let weaponObjectInfoDataSource = WeaponObjectInfoDataSource()
-        let weaponRepository = WeaponRepository(
-            weaponObjectInfoDataSource: weaponObjectInfoDataSource
-        )
-        let view = ARShootingView(
+        let controller = ARShootingController(
             frame: frame,
             targetCount: targetCount
         )
-        let presenter = ARShootingPresenter(
-            weaponRepository: weaponRepository,
-            view: view,
-        )
-        view.inject(presenter: presenter)
-        let controller = ARShootingController(
-            presenter: presenter
-        )
-        let arView = ARSCNViewRepresentable(view: view.arView)
+        let arView = ARSCNViewRepresentable(view: controller.arView)
         return (controller, arView)
     }
 }
