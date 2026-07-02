@@ -8,9 +8,9 @@
 import Foundation
 import ARShootingLib
 import Data
+import Devices
 import Domain
 import Infrastructure
-import Presentation
 
 final class ProdFactory: FactoryInterface {
     // MARK: Devices
@@ -68,7 +68,7 @@ final class ProdFactory: FactoryInterface {
     }
     
     static func create() -> WeaponControlMotionHandleUseCaseInterface {
-        return WeaponControlMotionHandleUseCase(coreMotionHandler: create())
+        return WeaponControlMotionHandleUseCase()
     }
     
     static func create() -> WeaponStatusCheckUseCaseInterface {

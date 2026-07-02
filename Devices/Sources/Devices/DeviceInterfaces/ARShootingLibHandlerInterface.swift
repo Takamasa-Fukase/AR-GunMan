@@ -1,11 +1,12 @@
 //
 //  ARShootingLibHandlerInterface.swift
-//  Domain
+//  Devices
 //
 //  Created by ウルトラ深瀬 on 2026/06/03.
 //
 
 import Foundation
+import Domain
 
 public protocol ARShootingLibHandlerDelegate: AnyObject {
     func targetHit()

@@ -24,6 +24,7 @@ struct GameViewBuilder {
         let presenter = GamePresenter(
             arShootingLibHandler: arShootingLibHandler,
             soundPlayer: Factory.create(),
+            coreMotionHandler: Factory.create(),
             tutorialRepository: Factory.create(),
             weaponControlMotionHandleUseCase: weaponControlMotionHandleUseCase,
             gameTimerCreateUseCase: Factory.create(),

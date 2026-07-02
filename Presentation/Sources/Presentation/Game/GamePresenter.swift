@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import Devices
 import Domain
 
 public final class GamePresenter {
@@ -20,6 +21,7 @@ public final class GamePresenter {
     
     private let arShootingLibHandler: ARShootingLibHandlerInterface
     private let soundPlayer: SoundPlayerInterface
+    private let coreMotionHandler: CoreMotionHandlerInterface
     private let tutorialRepository: TutorialRepositoryInterface
     private let weaponControlMotionHandleUseCase: WeaponControlMotionHandleUseCaseInterface
     private let gameTimerCreateUseCase: GameTimerCreateUseCaseInterface
@@ -39,6 +41,7 @@ public final class GamePresenter {
     public init(
         arShootingLibHandler: ARShootingLibHandlerInterface,
         soundPlayer: SoundPlayerInterface,
+        coreMotionHandler: CoreMotionHandlerInterface,
         tutorialRepository: TutorialRepositoryInterface,
         weaponControlMotionHandleUseCase: WeaponControlMotionHandleUseCaseInterface,
         gameTimerCreateUseCase: GameTimerCreateUseCaseInterface,
@@ -46,6 +49,7 @@ public final class GamePresenter {
     ) {
         self.arShootingLibHandler = arShootingLibHandler
         self.soundPlayer = soundPlayer
+        self.coreMotionHandler = coreMotionHandler
         self.tutorialRepository = tutorialRepository
         self.weaponControlMotionHandleUseCase = weaponControlMotionHandleUseCase
         self.gameTimerCreateUseCase = gameTimerCreateUseCase
@@ -57,6 +61,13 @@ public final class GamePresenter {
         isTutorialViewPresentedPublisher = isTutorialViewPresentedSubject.eraseToAnyPublisher()
         isWeaponSelectViewPresentedPublisher = isWeaponSelectViewPresentedSubject.eraseToAnyPublisher()
         isResultViewPresentedPublisher = isResultViewPresentedSubject.eraseToAnyPublisher()
+        
+        coreMotionHandler.accelerationUpdated = { [weak self] acceleration in
+            self?.weaponControlMotionHandleUseCase.execute(acceleration: acceleration, gyro: nil)
+        }
+        coreMotionHandler.gyroUpdated = { [weak self] gyro in
+            self?.weaponControlMotionHandleUseCase.execute(acceleration: nil ,gyro: gyro)
+        }
     }
     
     // MARK: ViewからのInput
@@ -152,7 +163,7 @@ public final class GamePresenter {
                 request: request,
                 onTimerStarted: { [weak self] in
                     self?.soundPlayer.play(.startWhistle)
-                    self?.weaponControlMotionHandleUseCase.startDetection()
+                    self?.coreMotionHandler.startDetection()
                     self?.isWeaponChangeButtonEnabledSubject.send(true)
                 },
                 onTimerUpdated: { [weak self] response in
@@ -160,7 +171,7 @@ public final class GamePresenter {
                 },
                 onTimerEnded: { [weak self] in
                     self?.soundPlayer.play(.endWhistle)
-                    self?.weaponControlMotionHandleUseCase.stopDetection()
+                    self?.coreMotionHandler.stopDetection()
                     self?.isWeaponChangeButtonEnabledSubject.send(false)
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {

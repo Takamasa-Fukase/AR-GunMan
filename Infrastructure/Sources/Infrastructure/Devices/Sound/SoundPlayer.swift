@@ -6,7 +6,7 @@
 //
 
 import AVFoundation
-import Presentation
+import Devices
 
 public final class SoundPlayer: SoundPlayerInterface {
     public static let shared = SoundPlayer()

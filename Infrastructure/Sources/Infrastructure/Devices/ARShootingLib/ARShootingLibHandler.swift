@@ -7,6 +7,7 @@
 
 import Foundation
 import ARShootingLib
+import Devices
 import Domain
 
 public final class ARShootingLibHandler: ARShootingLibHandlerInterface {

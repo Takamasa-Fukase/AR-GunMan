@@ -1,6 +1,6 @@
 //
 //  WeaponType+Resources.swift
-//  Presentation
+//  Devices
 //
 //  Created by ウルトラ深瀬 on 2026/06/30.
 //
@@ -8,7 +8,7 @@
 import Foundation
 import Domain
 
-extension WeaponType {
+public extension WeaponType {
     var resources: any WeaponResources {
         switch self {
         case .pistol:

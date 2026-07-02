@@ -21,9 +21,4 @@ public struct LoadedWeapon {
         self.bulletsCount = bulletsCount
         self.isReloading = isReloading
     }
-    
-    // TODO: ResourcesをVMに移動後は、これも要らなくなるかも？
-//    public func bulletsCountImageName() -> String {
-//        return weaponType.weaponInfo.resources.bulletsCountImageBaseName + String(bulletsCount)
-//    }
 }

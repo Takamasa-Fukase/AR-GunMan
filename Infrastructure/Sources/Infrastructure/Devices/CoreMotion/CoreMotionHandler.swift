@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreMotion
+import Devices
 import Domain
 
 public class CoreMotionHandler: CoreMotionHandlerInterface {
