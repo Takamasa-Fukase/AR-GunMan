@@ -3,12 +3,12 @@
 import PackageDescription
 
 let package = Package(
-    name: "Devices",
+    name: "DeviceInterface",
     platforms: [.iOS(.v17)],
     products: [
         .library(
-            name: "Devices",
-            targets: ["Devices"]
+            name: "DeviceInterface",
+            targets: ["DeviceInterface"]
         ),
     ],
     dependencies: [
@@ -16,14 +16,14 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "Devices",
+            name: "DeviceInterface",
             dependencies: [
                 "Domain",
             ],
         ),
         .testTarget(
-            name: "DevicesTests",
-            dependencies: ["Devices"]
+            name: "DeviceInterfaceTests",
+            dependencies: ["DeviceInterface"]
         ),
     ],
 )

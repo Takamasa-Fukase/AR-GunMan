@@ -1,7 +1,7 @@
 import XCTest
-@testable import Devices
+@testable import DeviceInterface
 
-final class DevicesTests: XCTestCase {
+final class DeviceInterfaceTests: XCTestCase {
     func testExample() throws {
         // XCTest Documentation
         // https://developer.apple.com/documentation/xctest

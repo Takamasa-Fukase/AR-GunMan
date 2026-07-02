@@ -15,6 +15,7 @@ let package = Package(
         .package(path: "ARShootingLib"),
         .package(path: "Core"),
         .package(path: "Data"),
+        .package(path: "DeviceInterface"),
         .package(path: "Domain"),
         .package(
             url: "https://github.com/firebase/firebase-ios-sdk.git",
@@ -28,6 +29,7 @@ let package = Package(
                 "ARShootingLib",
                 "Core",
                 "Data",
+                "DeviceInterface",
                 "Domain",
                 .product(name: "FirebaseFirestore", package: "firebase-ios-sdk"),
             ]

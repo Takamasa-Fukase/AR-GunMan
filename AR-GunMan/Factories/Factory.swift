@@ -8,7 +8,7 @@
 import Foundation
 import ARShootingLib
 import Data
-import Devices
+import DeviceInterface
 import Domain
 import Infrastructure
 

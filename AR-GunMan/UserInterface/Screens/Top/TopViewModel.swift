@@ -8,7 +8,7 @@
 import Foundation
 import Observation
 import Combine
-import Devices
+import DeviceInterface
 
 @Observable
 final class TopViewModel {

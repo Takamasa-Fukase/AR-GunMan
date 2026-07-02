@@ -28,6 +28,7 @@
 		BC0D547A2D432FAE00D69795 /* bazooka_appear.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BC0D54602D432FAE00D69795 /* bazooka_appear.mp3 */; };
 		BC0D547B2D432FAE00D69795 /* bazooka_reload.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BC0D54632D432FAE00D69795 /* bazooka_reload.mp3 */; };
 		BC2BF8892D49DDE400E202F0 /* Core in Frameworks */ = {isa = PBXBuildFile; productRef = BC2BF8882D49DDE400E202F0 /* Core */; };
+		BC31075B2FF72D77005B48CD /* DeviceInterface in Frameworks */ = {isa = PBXBuildFile; productRef = BC31075A2FF72D77005B48CD /* DeviceInterface */; };
 		BC330B2B2D499261007C4501 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = BC330B2A2D499261007C4501 /* FirebaseFirestore */; };
 		BC348A9C2FE57AB800D06ACB /* Presentation in Frameworks */ = {isa = PBXBuildFile; productRef = BC348A9B2FE57AB800D06ACB /* Presentation */; };
 		BC5F56002D3B533500EA397A /* Data in Frameworks */ = {isa = PBXBuildFile; productRef = BC5F55FF2D3B533500EA397A /* Data */; };
@@ -44,7 +45,6 @@
 		BCA514062FF40622007B47E3 /* PistolResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA514052FF40622007B47E3 /* PistolResources.swift */; };
 		BCA514082FF40665007B47E3 /* BazookaResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA514072FF40665007B47E3 /* BazookaResources.swift */; };
 		BCA5140A2FF63010007B47E3 /* WeaponListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA514092FF63010007B47E3 /* WeaponListItem.swift */; };
-		BCA5140D2FF6B794007B47E3 /* Devices in Frameworks */ = {isa = PBXBuildFile; productRef = BCA5140C2FF6B794007B47E3 /* Devices */; };
 		BCB93BA92C36DA9800DBFC46 /* GoogleService-Info.dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = BCB93BA82C36DA9800DBFC46 /* GoogleService-Info.dev.plist */; };
 		BCBCFC3D2D53373B00499C21 /* GameViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2C98412D5312EF000E3D4B /* GameViewModelTests.swift */; };
 		BCBCFC402D53A0C900499C21 /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBCFC3F2D53A0BD00499C21 /* TestData.swift */; };
@@ -160,7 +160,7 @@
 		BCA514052FF40622007B47E3 /* PistolResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PistolResources.swift; sourceTree = "<group>"; };
 		BCA514072FF40665007B47E3 /* BazookaResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BazookaResources.swift; sourceTree = "<group>"; };
 		BCA514092FF63010007B47E3 /* WeaponListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponListItem.swift; sourceTree = "<group>"; };
-		BCA5140B2FF6A84F007B47E3 /* Devices */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Devices; sourceTree = "<group>"; };
+		BCA5140B2FF6A84F007B47E3 /* DeviceInterface */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DeviceInterface; sourceTree = "<group>"; };
 		BCAD29752FC9D07400E5D2AB /* ARShootingLib */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ARShootingLib; sourceTree = "<group>"; };
 		BCAD29762FC9D13900E5D2AB /* Infrastructure */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Infrastructure; sourceTree = "<group>"; };
 		BCB93BA82C36DA9800DBFC46 /* GoogleService-Info.dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.dev.plist"; sourceTree = "<group>"; };
@@ -220,7 +220,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BCA5140D2FF6B794007B47E3 /* Devices in Frameworks */,
+				BC31075B2FF72D77005B48CD /* DeviceInterface in Frameworks */,
 				BC348A9C2FE57AB800D06ACB /* Presentation in Frameworks */,
 				BC5F56022D3B533500EA397A /* Domain in Frameworks */,
 				BC5F56002D3B533500EA397A /* Data in Frameworks */,
@@ -273,7 +273,7 @@
 				BCAD29752FC9D07400E5D2AB /* ARShootingLib */,
 				BC2BF8872D49DB9600E202F0 /* Core */,
 				BC067F762D3B4CEA00E58C56 /* Data */,
-				BCA5140B2FF6A84F007B47E3 /* Devices */,
+				BCA5140B2FF6A84F007B47E3 /* DeviceInterface */,
 				BC067F772D3B4CF900E58C56 /* Domain */,
 				BCAD29762FC9D13900E5D2AB /* Infrastructure */,
 				BC348A9A2FE54EC400D06ACB /* Presentation */,
@@ -598,7 +598,7 @@
 				BC7B6CA62FCFF4D4001A2CFA /* ARShootingLib */,
 				BC7B6CA82FCFF5C4001A2CFA /* Infrastructure */,
 				BC348A9B2FE57AB800D06ACB /* Presentation */,
-				BCA5140C2FF6B794007B47E3 /* Devices */,
+				BC31075A2FF72D77005B48CD /* DeviceInterface */,
 			);
 			productName = "AR-GunMan";
 			productReference = 59D2D4D52552DE66006DDB70 /* AR-GunMan Dev.app */;
@@ -1411,6 +1411,10 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = Core;
 		};
+		BC31075A2FF72D77005B48CD /* DeviceInterface */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DeviceInterface;
+		};
 		BC330B2A2D499261007C4501 /* FirebaseFirestore */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = BC330B292D499261007C4501 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
@@ -1435,10 +1439,6 @@
 		BC7B6CA82FCFF5C4001A2CFA /* Infrastructure */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Infrastructure;
-		};
-		BCA5140C2FF6B794007B47E3 /* Devices */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Devices;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

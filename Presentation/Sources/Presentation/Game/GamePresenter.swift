@@ -7,7 +7,7 @@
 
 import Foundation
 import Combine
-import Devices
+import DeviceInterface
 import Domain
 
 public final class GamePresenter {

@@ -12,14 +12,14 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(path: "Devices"),
+        .package(path: "DeviceInterface"),
         .package(path: "Domain"),
     ],
     targets: [
         .target(
             name: "Presentation",
             dependencies: [
-                "Devices",
+                "DeviceInterface",
                 "Domain",
             ],
         ),
