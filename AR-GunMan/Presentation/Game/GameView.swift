@@ -71,8 +71,7 @@ struct GameView<ARView: View>: View {
                 if !viewModel.isWeaponSelectViewPresented {
                     // 弾数画像
                     HStack(spacing: 0) {
-//                        Image(viewModel.currentWeapon?.bulletsCountImageName() ?? "")
-                        Image(viewModel.currentWeapon?.weaponType.resources.bulletsCountImageBaseName ?? "" + String(viewModel.currentWeapon?.bulletsCount ?? 0))
+                        Image((viewModel.currentWeapon?.weaponType.resources.bulletsCountImageBaseName ?? "") + String(viewModel.currentWeapon?.bulletsCount ?? 0))
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 210, height: 70, alignment: .bottom)
