@@ -13,7 +13,7 @@ import Presentation
 @Observable
 final class GameViewModel {
     private(set) var timeCount: Double = 0
-    private(set) var currentWeapon: CurrentWeapon?
+    private(set) var currentWeapon: LoadedWeapon?
     var isWeaponChangeButtonEnabled = false
     var isTutorialViewPresented = false
     var isWeaponSelectViewPresented = false

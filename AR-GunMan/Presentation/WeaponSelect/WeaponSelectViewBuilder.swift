@@ -15,7 +15,6 @@ struct WeaponSelectViewBuilder {
         weaponSelected: @escaping (Int) -> Void
     ) -> WeaponSelectView {
         let viewModel = WeaponSelectViewModel(
-            weaponResourceGetUseCase: Factory.create(),
             initialDisplayWeaponId: initialDisplayWeaponId
         )
         return WeaponSelectView(

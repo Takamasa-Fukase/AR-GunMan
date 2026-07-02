@@ -1,0 +1,15 @@
+//
+//  BazookaResources.swift
+//  Presentation
+//
+//  Created by ウルトラ深瀬 on 2026/06/30.
+//
+
+import Foundation
+
+struct BazookaResources: WeaponResources {
+    public let appearingSound: SoundType
+    public let firingSound: SoundType
+    public let reloadingSound: SoundType
+    public let bulletHitSound: SoundType?
+}

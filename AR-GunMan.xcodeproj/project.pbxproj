@@ -39,6 +39,11 @@
 		BC8F93172D8017EF000CA6DA /* ProdFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8F93162D8017B6000CA6DA /* ProdFactory.swift */; };
 		BC8F93192D801870000CA6DA /* MockFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8F93182D80186D000CA6DA /* MockFactory.swift */; };
 		BC90ECE02D47BD3500B34E4B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC90ECDF2D47BD3400B34E4B /* AppDelegate.swift */; };
+		BCA513FE2FF402AD007B47E3 /* WeaponType+Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA513FD2FF402AD007B47E3 /* WeaponType+Resources.swift */; };
+		BCA514022FF405A0007B47E3 /* WeaponResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA514012FF405A0007B47E3 /* WeaponResources.swift */; };
+		BCA514062FF40622007B47E3 /* PistolResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA514052FF40622007B47E3 /* PistolResources.swift */; };
+		BCA514082FF40665007B47E3 /* BazookaResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA514072FF40665007B47E3 /* BazookaResources.swift */; };
+		BCA5140A2FF63010007B47E3 /* WeaponListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA514092FF63010007B47E3 /* WeaponListItem.swift */; };
 		BCB93BA92C36DA9800DBFC46 /* GoogleService-Info.dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = BCB93BA82C36DA9800DBFC46 /* GoogleService-Info.dev.plist */; };
 		BCBCFC3D2D53373B00499C21 /* GameViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2C98412D5312EF000E3D4B /* GameViewModelTests.swift */; };
 		BCBCFC402D53A0C900499C21 /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBCFC3F2D53A0BD00499C21 /* TestData.swift */; };
@@ -150,6 +155,11 @@
 		BC8F93162D8017B6000CA6DA /* ProdFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProdFactory.swift; sourceTree = "<group>"; };
 		BC8F93182D80186D000CA6DA /* MockFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFactory.swift; sourceTree = "<group>"; };
 		BC90ECDF2D47BD3400B34E4B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		BCA513FD2FF402AD007B47E3 /* WeaponType+Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WeaponType+Resources.swift"; sourceTree = "<group>"; };
+		BCA514012FF405A0007B47E3 /* WeaponResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponResources.swift; sourceTree = "<group>"; };
+		BCA514052FF40622007B47E3 /* PistolResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PistolResources.swift; sourceTree = "<group>"; };
+		BCA514072FF40665007B47E3 /* BazookaResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BazookaResources.swift; sourceTree = "<group>"; };
+		BCA514092FF63010007B47E3 /* WeaponListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponListItem.swift; sourceTree = "<group>"; };
 		BCAD29752FC9D07400E5D2AB /* ARShootingLib */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ARShootingLib; sourceTree = "<group>"; };
 		BCAD29762FC9D13900E5D2AB /* Infrastructure */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Infrastructure; sourceTree = "<group>"; };
 		BCB93BA82C36DA9800DBFC46 /* GoogleService-Info.dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.dev.plist"; sourceTree = "<group>"; };
@@ -359,6 +369,16 @@
 			path = sounds;
 			sourceTree = "<group>";
 		};
+		BCA514042FF405DF007B47E3 /* WeaponResources */ = {
+			isa = PBXGroup;
+			children = (
+				BCA514012FF405A0007B47E3 /* WeaponResources.swift */,
+				BCA514052FF40622007B47E3 /* PistolResources.swift */,
+				BCA514072FF40665007B47E3 /* BazookaResources.swift */,
+			);
+			path = WeaponResources;
+			sourceTree = "<group>";
+		};
 		BCB93BAA2C36DE7D00DBFC46 /* FirebaseInfoPlist */ = {
 			isa = PBXGroup;
 			children = (
@@ -495,6 +515,7 @@
 				BCFDECE12D3B45BD0023DC8A /* WeaponSelectViewController.xib */,
 				BCFDECE22D3B45BD0023DC8A /* WeaponSelectViewBuilder.swift */,
 				BCFDECE32D3B45BD0023DC8A /* WeaponSelectViewModel.swift */,
+				BCA514092FF63010007B47E3 /* WeaponListItem.swift */,
 			);
 			path = WeaponSelect;
 			sourceTree = "<group>";
@@ -511,6 +532,8 @@
 				BCFDECD62D3B45BD0023DC8A /* Top */,
 				BCFDECDC2D3B45BD0023DC8A /* Tutorial */,
 				BCFDECE42D3B45BD0023DC8A /* WeaponSelect */,
+				BCA513FD2FF402AD007B47E3 /* WeaponType+Resources.swift */,
+				BCA514042FF405DF007B47E3 /* WeaponResources */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -822,8 +845,10 @@
 				BCFDED012D3B45BD0023DC8A /* CenterPreviewView.swift in Sources */,
 				BCFDED0D2D3B45BD0023DC8A /* NameRegisterViewModel.swift in Sources */,
 				BCFDED192D3B45BE0023DC8A /* TopView.swift in Sources */,
+				BCA5140A2FF63010007B47E3 /* WeaponListItem.swift in Sources */,
 				BCFDED022D3B45BD0023DC8A /* ContentFrameTrackableScrollView.swift in Sources */,
 				BCFDED272D3B45BE0023DC8A /* WeaponSelectViewModel.swift in Sources */,
+				BCA514062FF40622007B47E3 /* PistolResources.swift in Sources */,
 				BCFDED0C2D3B45BD0023DC8A /* NameRegisterViewBuilder.swift in Sources */,
 				BCFDED182D3B45BE0023DC8A /* SettingsViewModel.swift in Sources */,
 				BCFDED242D3B45BE0023DC8A /* WeaponSelectViewController.swift in Sources */,
@@ -831,11 +856,13 @@
 				BCFDED1F2D3B45BE0023DC8A /* TutorialViewBuilder.swift in Sources */,
 				BCFDED0A2D3B45BD0023DC8A /* GameViewModel.swift in Sources */,
 				BCFDED172D3B45BE0023DC8A /* SettingsViewBuilder.swift in Sources */,
+				BCA514022FF405A0007B47E3 /* WeaponResources.swift in Sources */,
 				BCFDED142D3B45BE0023DC8A /* ResultViewBuilder.swift in Sources */,
 				BCFDED262D3B45BE0023DC8A /* WeaponSelectViewBuilder.swift in Sources */,
 				BCFDED0F2D3B45BE0023DC8A /* RankingListView.swift in Sources */,
 				BCFDED082D3B45BD0023DC8A /* GameView.swift in Sources */,
 				BCFDED392D3B45BE0023DC8A /* ColorTypeConverter.swift in Sources */,
+				BCA514082FF40665007B47E3 /* BazookaResources.swift in Sources */,
 				BCFDED1B2D3B45BE0023DC8A /* TopViewModel.swift in Sources */,
 				BC90ECE02D47BD3500B34E4B /* AppDelegate.swift in Sources */,
 				BCFDED1D2D3B45BE0023DC8A /* TutorialScrollViewItem.swift in Sources */,
@@ -857,6 +884,7 @@
 				BC8F93172D8017EF000CA6DA /* ProdFactory.swift in Sources */,
 				BCFDED0B2D3B45BD0023DC8A /* NameRegisterView.swift in Sources */,
 				BCFDED162D3B45BE0023DC8A /* SettingsView.swift in Sources */,
+				BCA513FE2FF402AD007B47E3 /* WeaponType+Resources.swift in Sources */,
 				BCFDECFE2D3B45BD0023DC8A /* Color+Extension.swift in Sources */,
 				BCFDED002D3B45BD0023DC8A /* NSObject+Extension.swift in Sources */,
 				BCFDED062D3B45BD0023DC8A /* StopMotionAnimationView.swift in Sources */,

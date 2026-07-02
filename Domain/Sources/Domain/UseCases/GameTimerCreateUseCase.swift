@@ -30,25 +30,16 @@ public struct GameTimerCreateRequest {
     }
 }
 
-public struct TimerStartedResponse {
-    public let startWhistleSound: SoundType
-}
-
 public struct TimerUpdatedResponse {
     public let timeCount: Double
-}
-
-public struct TimerEndedResponse {
-    public let endWhistleSound: SoundType
-    public let rankingAppearSound: SoundType
 }
 
 public protocol GameTimerCreateUseCaseInterface {
     func execute(
         request: GameTimerCreateRequest,
-        onTimerStarted: @escaping ((TimerStartedResponse) -> Void),
+        onTimerStarted: @escaping (() -> Void),
         onTimerUpdated: @escaping ((TimerUpdatedResponse) -> Void),
-        onTimerEnded: @escaping ((TimerEndedResponse) -> Void)
+        onTimerEnded: @escaping (() -> Void)
     )
 }
 
@@ -57,9 +48,9 @@ public final class GameTimerCreateUseCase: GameTimerCreateUseCaseInterface {
     
     public func execute(
         request: GameTimerCreateRequest,
-        onTimerStarted: @escaping ((TimerStartedResponse) -> Void),
+        onTimerStarted: @escaping (() -> Void),
         onTimerUpdated: @escaping ((TimerUpdatedResponse) -> Void),
-        onTimerEnded: @escaping ((TimerEndedResponse) -> Void)
+        onTimerEnded: @escaping (() -> Void)
     ) {
         // UseCase内での計算にはInt型のミリ秒に変換したものを使う（誤差の無い正確な計算を行う為）
         let initialTimeCountMillisec = Int(request.initialTimeCount * 1000)
@@ -78,7 +69,7 @@ public final class GameTimerCreateUseCase: GameTimerCreateUseCaseInterface {
             if (timeCountMillisec == initialTimeCountMillisec) {
                 
                 // タイマーが開始されたことをコールバックで通知
-                onTimerStarted(TimerStartedResponse(startWhistleSound: .startWhistle))
+                onTimerStarted()
             }
             
             // ポーズ中ではない場合
@@ -98,10 +89,7 @@ public final class GameTimerCreateUseCase: GameTimerCreateUseCaseInterface {
             if timeCountMillisec <= 0 {
                 
                 // タイマーが終了したことをコールバックで通知
-                onTimerEnded(TimerEndedResponse(
-                    endWhistleSound: .endWhistle,
-                    rankingAppearSound: .rankingAppear
-                ))
+                onTimerEnded()
                 
                 // タイマーを破棄する
                 timer.invalidate()

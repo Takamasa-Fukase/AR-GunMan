@@ -8,6 +8,6 @@
 import Foundation
 import Domain
 
-public protocol WeaponDataSourceInterface {
-    var list: [any Weapon] { get }
-}
+//public protocol WeaponDataSourceInterface {
+//    var list: [any Weapon] { get }
+//}

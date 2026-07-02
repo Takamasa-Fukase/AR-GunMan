@@ -9,6 +9,7 @@ import Foundation
 import Observation
 import Combine
 import Domain
+import Presentation
 
 @Observable
 final class TopViewModel {

@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import Presentation
+import Domain
 
 struct GameView<ARView: View>: View {
     let arView: ARView
@@ -69,7 +71,8 @@ struct GameView<ARView: View>: View {
                 if !viewModel.isWeaponSelectViewPresented {
                     // 弾数画像
                     HStack(spacing: 0) {
-                        Image(viewModel.currentWeapon?.bulletsCountImageName() ?? "")
+//                        Image(viewModel.currentWeapon?.bulletsCountImageName() ?? "")
+                        Image(viewModel.currentWeapon?.weaponType.resources.bulletsCountImageBaseName ?? "" + String(viewModel.currentWeapon?.bulletsCount ?? 0))
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 210, height: 70, alignment: .bottom)
@@ -82,12 +85,12 @@ struct GameView<ARView: View>: View {
             // 武器変更画面の表示中は邪魔になって見ずらいので隠す
             if !viewModel.isWeaponSelectViewPresented {
                 // 照準画像
-                Image(viewModel.currentWeapon?.weapon.resources.sightImageName ?? "")
+                Image(viewModel.currentWeapon?.weaponType.resources.sightImageName ?? "")
                     .renderingMode(.template)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 100, height: 100)
-                    .foregroundStyle(ColorTypeConverter.fromColorType(viewModel.currentWeapon?.weapon.resources.sightImageColorType ?? .red))
+                    .foregroundStyle(ColorTypeConverter.fromColorType(viewModel.currentWeapon?.weaponType.resources.sightImageColorType ?? .red))
             }
         }
         .background(Color.black)
@@ -117,7 +120,7 @@ struct GameView<ARView: View>: View {
         // 武器選択画面に遷移
         .fullScreenCover(isPresented: $viewModel.isWeaponSelectViewPresented) {
             WeaponSelectViewBuilder.build(
-                initialDisplayWeaponId: viewModel.currentWeapon?.weapon.id ?? 0,
+                initialDisplayWeaponId: viewModel.currentWeapon?.weaponType.id ?? 0,
                 weaponSelected: { weaponId in
                     viewModel.weaponSelected(weaponId: weaponId)
                 }

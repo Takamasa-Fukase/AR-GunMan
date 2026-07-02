@@ -27,7 +27,6 @@ struct GameViewBuilder {
             tutorialRepository: Factory.create(),
             weaponControlMotionHandleUseCase: weaponControlMotionHandleUseCase,
             gameTimerCreateUseCase: Factory.create(),
-            weaponResourceGetUseCase: Factory.create(),
             weaponActionExecuteUseCase: Factory.create()
         )
         let viewModel = GameViewModel(presenter: presenter)

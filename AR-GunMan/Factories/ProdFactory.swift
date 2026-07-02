@@ -10,6 +10,7 @@ import ARShootingLib
 import Data
 import Domain
 import Infrastructure
+import Presentation
 
 final class ProdFactory: FactoryInterface {
     // MARK: Devices
@@ -45,15 +46,6 @@ final class ProdFactory: FactoryInterface {
         return UserDefaultsDataSource()
     }
     
-    static func create() -> WeaponDataSourceInterface {
-        return WeaponDataSource()
-    }
-    
-    // MARK: Repositories
-    static func create() -> WeaponRepositoryInterface {
-        return WeaponRepository(weaponDataSource: create())
-    }
-    
     static func create() -> TutorialRepositoryInterface {
         return TutorialRepository(userDefaultsDataSource: create())
     }
@@ -77,10 +69,6 @@ final class ProdFactory: FactoryInterface {
     
     static func create() -> WeaponControlMotionHandleUseCaseInterface {
         return WeaponControlMotionHandleUseCase(coreMotionHandler: create())
-    }
-
-    static func create() -> WeaponResourceGetUseCaseInterface {
-        return WeaponResourceGetUseCase(weaponRepository: create())
     }
     
     static func create() -> WeaponStatusCheckUseCaseInterface {
