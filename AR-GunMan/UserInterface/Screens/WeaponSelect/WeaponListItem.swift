@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import Domain
 
 public struct WeaponListItem: Equatable {
-    public let weaponId: Int
+    public let weaponType: WeaponType
     public let weaponImageName: String
 }

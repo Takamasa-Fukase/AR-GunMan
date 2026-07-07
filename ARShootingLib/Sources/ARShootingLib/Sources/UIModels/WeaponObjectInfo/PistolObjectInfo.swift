@@ -13,6 +13,7 @@ struct PistolObjectInfo: WeaponObjectInfo {
     let isGunnerHandShakingAnimationEnabled: Bool
     let isRecoilAnimationEnabled: Bool
     let weaponResources: WeaponResources
+    let bulletName: String
     
     struct WeaponResources: WeaponObjectResources {
         let fileName: String

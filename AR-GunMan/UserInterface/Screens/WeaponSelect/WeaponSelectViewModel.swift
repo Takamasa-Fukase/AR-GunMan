@@ -13,19 +13,24 @@ import Presentation
 @Observable
 final class WeaponSelectViewModel {
     var weaponListItems: [WeaponListItem] = []
-    private let initialDisplayWeaponId: Int
+    private let initialDisplayWeaponType: WeaponType
     
     init(
-        initialDisplayWeaponId: Int
+        initialDisplayWeaponType: WeaponType
     ) {
-        self.initialDisplayWeaponId = initialDisplayWeaponId
+        self.initialDisplayWeaponType = initialDisplayWeaponType
     }
     
     func onViewAppear() {
-        var weaponListItems = WeaponType.allCases.map({ WeaponListItem(weaponId: $0.id, weaponImageName: $0.resources.weaponImageName) })
+        var weaponListItems = WeaponType.allCases.map({ weaponType in
+            return WeaponListItem(
+                weaponType: weaponType,
+                weaponImageName: weaponType.resources.weaponImageName
+            )
+        })
         // MEMO: 今は武器が2つしかないので簡素なロジックで初期表示武器を書き換えている
         // TODO: 今後武器の種類が3つ以上に増える時は現在の武器をリストの先頭にしてそれより前のidの武器は最後尾に配置させる
-        let indexOfInitialDisplayWeapon = weaponListItems.firstIndex(where: { $0.weaponId == initialDisplayWeaponId }) ?? 0
+        let indexOfInitialDisplayWeapon = weaponListItems.firstIndex(where: { $0.weaponType == initialDisplayWeaponType }) ?? 0
         let initialDisplayWeapon = weaponListItems[indexOfInitialDisplayWeapon]
         weaponListItems.remove(at: indexOfInitialDisplayWeapon)
         weaponListItems.insert(initialDisplayWeapon, at: 0)

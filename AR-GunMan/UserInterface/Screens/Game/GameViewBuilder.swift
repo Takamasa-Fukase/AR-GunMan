@@ -21,16 +21,38 @@ struct GameViewBuilder {
             targetCount: 50
         )
         let weaponControlMotionHandleUseCase: WeaponControlMotionHandleUseCaseInterface = Factory.create()
-        let presenter = GamePresenter(
+//        let presenter = GamePresenter(
+//            arShootingLibHandler: arShootingLibHandler,
+//            soundPlayer: Factory.create(),
+//            coreMotionHandler: Factory.create(),
+//            tutorialRepository: Factory.create(),
+//            weaponControlMotionHandleUseCase: weaponControlMotionHandleUseCase,
+//            gameTimerCreateUseCase: Factory.create(),
+//            weaponActionExecuteUseCase: Factory.create()
+//        )
+        
+        let weaponSession = WeaponSession()
+        let gameSession = GameSession()
+        let weaponChangeUseCase = WeaponChangeUseCase(weaponSession: weaponSession)
+        let scoreAddUseCase = ScoreAddUseCase(
+            weaponSession: weaponSession,
+            gameSession: gameSession
+        )
+        let scoreGetUseCase = ScoreGetUseCase(gameSession: gameSession)
+        
+        let presenter = GamePresenter2(
             arShootingLibHandler: arShootingLibHandler,
             soundPlayer: Factory.create(),
             coreMotionHandler: Factory.create(),
             tutorialRepository: Factory.create(),
             weaponControlMotionHandleUseCase: weaponControlMotionHandleUseCase,
             gameTimerCreateUseCase: Factory.create(),
-            weaponActionExecuteUseCase: Factory.create()
+            weaponActionExecuteUseCase: Factory.create(),
+            weaponChangeUseCase: weaponChangeUseCase,
+            scoreAddUseCase: scoreAddUseCase,
+            scoreGetUseCase: scoreGetUseCase
         )
-        let viewModel = GameViewModel(presenter: presenter)
+        let viewModel = GameViewModel2(presenter: presenter)
         arShootingLibHandler.inject(delegate: presenter)
         weaponControlMotionHandleUseCase.inject(delegate: presenter)
         return GameView(

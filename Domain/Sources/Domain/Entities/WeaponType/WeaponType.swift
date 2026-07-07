@@ -36,6 +36,13 @@ public enum WeaponType: CaseIterable {
         }
     }
     
+    public static var defaultType: Self {
+        guard let defaultWeaponType = allCases.first(where: { $0.weaponInfo.isDefault }) else {
+            fatalError("デフォルトのWeaponTypeが存在しません")
+        }
+        return defaultWeaponType
+    }
+    
     // FIXME: 一時的な対応
     public static func fromId(_ id: Int) -> Self? {
         switch id {

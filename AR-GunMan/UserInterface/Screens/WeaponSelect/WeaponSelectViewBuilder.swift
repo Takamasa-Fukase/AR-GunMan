@@ -6,16 +6,17 @@
 //
 
 import Foundation
+import Domain
 
 struct WeaponSelectViewBuilder {
     private init() {}
 
     static func build(
-        initialDisplayWeaponId: Int,
-        weaponSelected: @escaping (Int) -> Void
+        initialDisplayWeaponType: WeaponType,
+        weaponSelected: @escaping (WeaponType) -> Void
     ) -> WeaponSelectView {
         let viewModel = WeaponSelectViewModel(
-            initialDisplayWeaponId: initialDisplayWeaponId
+            initialDisplayWeaponType: initialDisplayWeaponType
         )
         return WeaponSelectView(
             viewModel: viewModel,

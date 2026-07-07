@@ -10,7 +10,7 @@ import Domain
 
 struct WeaponSelectView: View {
     @State var viewModel: WeaponSelectViewModel
-    let weaponSelected: (Int) -> Void
+    let weaponSelected: (WeaponType) -> Void
     
     var body: some View {
         WeaponSelectViewControllerRepresentable(
@@ -24,15 +24,15 @@ struct WeaponSelectView: View {
 }
 
 struct WeaponSelectViewControllerRepresentable: UIViewControllerRepresentable {
-    let weaponSelected: (Int) -> Void
+    let weaponSelected: (WeaponType) -> Void
     let weaponListItems: [WeaponListItem]
     @Environment(\.dismiss) private var dismiss
     
     func makeUIViewController(context: Context) -> WeaponSelectViewController {
         return WeaponSelectViewController(
-            weaponSelected: { weaponId in
-                // このViewの利用側へ選択されたweaponIdをコールバック
-                weaponSelected(weaponId)
+            weaponSelected: { weaponType in
+                // このViewの利用側へ選択されたweaponTypeをコールバック
+                weaponSelected(weaponType)
                 // 画面を閉じる
                 dismiss()
             }

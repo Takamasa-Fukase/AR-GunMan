@@ -11,13 +11,14 @@ import Domain
 
 struct GameView<ARView: View>: View {
     let arView: ARView
-    @State var viewModel: GameViewModel
+    @State var viewModel: GameViewModel2
+    // TODO: リトライ方法の再検討の時に消せるかどうか見直し
     @State var gameViewId = UUID()
     @Environment(\.dismiss) var dismiss
     
     init(
         arView: ARView,
-        viewModel: GameViewModel
+        viewModel: GameViewModel2
     ) {
         self.arView = arView
         self.viewModel = viewModel
@@ -39,7 +40,7 @@ struct GameView<ARView: View>: View {
                         .foregroundStyle(Color.goldLeaf.opacity(0.7))
                         .frame(width: 120, height: 50, alignment: .center)
                         .overlay {
-                            Text(viewModel.timeCount.timeCountText)
+                            Text(viewModel.timeCountText)
                                 .font(Font(UIFont.monospacedDigitSystemFont(ofSize: 35, weight: .regular)))
                                 .foregroundStyle(Color.paper)
                         }
@@ -71,7 +72,7 @@ struct GameView<ARView: View>: View {
                 if !viewModel.isWeaponSelectViewPresented {
                     // 弾数画像
                     HStack(spacing: 0) {
-                        Image((viewModel.currentWeapon?.weaponType.resources.bulletsCountImageBaseName ?? "") + String(viewModel.currentWeapon?.bulletsCount ?? 0))
+                        Image(viewModel.bulletsCountImageName)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 210, height: 70, alignment: .bottom)
@@ -84,12 +85,13 @@ struct GameView<ARView: View>: View {
             // 武器変更画面の表示中は邪魔になって見ずらいので隠す
             if !viewModel.isWeaponSelectViewPresented {
                 // 照準画像
-                Image(viewModel.currentWeapon?.weaponType.resources.sightImageName ?? "")
+                Image(viewModel.currentWeaponType.resources.sightImageName)
                     .renderingMode(.template)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 100, height: 100)
-                    .foregroundStyle(ColorTypeConverter.fromColorType(viewModel.currentWeapon?.weaponType.resources.sightImageColorType ?? .red))
+                // TODO: 普通に最初からColorをresourcesに持たせるようにする & 不要になったConverterを消す
+                    .foregroundStyle(ColorTypeConverter.fromColorType(viewModel.currentWeaponType.resources.sightImageColorType))
             }
         }
         .background(Color.black)
@@ -119,9 +121,9 @@ struct GameView<ARView: View>: View {
         // 武器選択画面に遷移
         .fullScreenCover(isPresented: $viewModel.isWeaponSelectViewPresented) {
             WeaponSelectViewBuilder.build(
-                initialDisplayWeaponId: viewModel.currentWeapon?.weaponType.id ?? 0,
-                weaponSelected: { weaponId in
-                    viewModel.weaponSelected(weaponId: weaponId)
+                initialDisplayWeaponType: viewModel.currentWeaponType,
+                weaponSelected: { weaponType in
+                    viewModel.weaponSelected(weaponType: weaponType)
                 }
             )
             // sheetの背景を透過

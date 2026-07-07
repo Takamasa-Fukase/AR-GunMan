@@ -13,6 +13,7 @@
 		7D666F75BEA91600FC5E086A /* Pods_AR_GunMan_AR_GunManUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A887CD7D51B34E100CB1D4A /* Pods_AR_GunMan_AR_GunManUITests.framework */; };
 		860646C12BF59A3F00906DA0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59D2D4E32552DE67006DDB70 /* LaunchScreen.storyboard */; };
 		860646C22BF59A4000906DA0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59D2D4E32552DE67006DDB70 /* LaunchScreen.storyboard */; };
+		BC0272F72FFD1AAD008D82EA /* GameViewModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0272F62FFD1AAD008D82EA /* GameViewModel2.swift */; };
 		BC0D546E2D432FAE00D69795 /* pistol_appear.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BC0D54652D432FAE00D69795 /* pistol_appear.mp3 */; };
 		BC0D546F2D432FAE00D69795 /* pistol_fire.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BC0D54662D432FAE00D69795 /* pistol_fire.mp3 */; };
 		BC0D54702D432FAE00D69795 /* bazooka_fire.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BC0D54622D432FAE00D69795 /* bazooka_fire.mp3 */; };
@@ -131,6 +132,7 @@
 		9A887CD7D51B34E100CB1D4A /* Pods_AR_GunMan_AR_GunManUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_GunMan_AR_GunManUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A15C5C6C4F21F49BA2045EAE /* Pods_AR_GunMan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_GunMan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B833C027CCAFA467D01B22BB /* Pods_AR_GunManTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_GunManTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BC0272F62FFD1AAD008D82EA /* GameViewModel2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel2.swift; sourceTree = "<group>"; };
 		BC067F762D3B4CEA00E58C56 /* Data */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Data; sourceTree = "<group>"; };
 		BC067F772D3B4CF900E58C56 /* Domain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Domain; sourceTree = "<group>"; };
 		BC0D54602D432FAE00D69795 /* bazooka_appear.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bazooka_appear.mp3; sourceTree = "<group>"; };
@@ -450,6 +452,7 @@
 				BCFDECBD2D3B45BD0023DC8A /* GameView.swift */,
 				BCFDECBE2D3B45BD0023DC8A /* GameViewBuilder.swift */,
 				BCFDECBF2D3B45BD0023DC8A /* GameViewModel.swift */,
+				BC0272F62FFD1AAD008D82EA /* GameViewModel2.swift */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -851,6 +854,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC0272F72FFD1AAD008D82EA /* GameViewModel2.swift in Sources */,
 				BCFDED092D3B45BD0023DC8A /* GameViewBuilder.swift in Sources */,
 				BCFDED012D3B45BD0023DC8A /* CenterPreviewView.swift in Sources */,
 				BCFDED0D2D3B45BD0023DC8A /* NameRegisterViewModel.swift in Sources */,

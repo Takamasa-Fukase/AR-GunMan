@@ -8,7 +8,7 @@
 import ARKit
 
 public protocol ARShootingControllerInterface: AnyObject {
-    var targetHit: (() -> Void)? { get set }
+    var targetHit: ((WeaponType) -> Void)? { get set }
     func runSession()
     func pauseSession()
     func showWeapon(of type: WeaponType)
@@ -18,7 +18,7 @@ public protocol ARShootingControllerInterface: AnyObject {
 
 final class ARShootingController: NSObject, ARShootingControllerInterface {
     let arView: ARSCNView
-    var targetHit: (() -> Void)?
+    var targetHit: ((WeaponType) -> Void)?
     
     private let originalBulletNode = SceneNodeUtil.originalBulletNode()
     private var loadedWeaponNodeDataList: [LoadedWeaponNodeData] = []
@@ -70,6 +70,7 @@ final class ARShootingController: NSObject, ARShootingControllerInterface {
     func renderWeaponFiring() {
         // 弾の発射アニメーションを描画
         let clonedBulletNode = originalBulletNode.clone()
+        clonedBulletNode.name = currentWeaponType.objectInfo.bulletName
         clonedBulletNode.position = SceneNodeUtil.getCameraPosition(arView)
         arView.scene.rootNode.addChildNode(clonedBulletNode)
         clonedBulletNode.runAction(SceneAnimationUtil.bulletShootingAnimation(arView.pointOfView)) {
@@ -205,17 +206,26 @@ extension ARShootingController: ARSCNViewDelegate {
 
 extension ARShootingController: SCNPhysicsContactDelegate {
     func physicsWorld(_ world: SCNPhysicsWorld, didEnd contact: SCNPhysicsContact) {
-        if contact.nodeA.name == "target" && contact.nodeB.name == "bullet"
-            || contact.nodeB.name == "target" && contact.nodeA.name == "bullet" {
+//        if contact.nodeA.name == "target" && contact.nodeB.name == "bullet"
+//            || contact.nodeB.name == "target" && contact.nodeA.name == "bullet" {
+        if let targetNode = [contact.nodeA, contact.nodeB].first(where: { $0.name == "target" }),
+           let bulletNode = [contact.nodeA, contact.nodeB].first(where: { ($0.name ?? "").contains("Bullet") }) {
+            // どの武器の弾かを判別
+            guard let weaponType = WeaponType.allCases.first(where: { $0.objectInfo.bulletName == bulletNode.name }) else {
+                fatalError("bulletNameが一致するWeaponTypeがありません")
+            }
+            
             // 弾がターゲットに命中したことを通知
-            targetHit?()
+            targetHit?(weaponType)
             
             // 着弾時の特殊効果（爆発など）を描画
             renderTargetHitParticle(to: contact.contactPoint)
             
             // 衝突した2つのNode（弾とターゲット）を削除
-            contact.nodeA.removeFromParentNode()
-            contact.nodeB.removeFromParentNode()
+//            contact.nodeA.removeFromParentNode()
+//            contact.nodeB.removeFromParentNode()
+            targetNode.removeFromParentNode()
+            bulletNode.removeFromParentNode()
         }
     }
 }

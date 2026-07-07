@@ -20,8 +20,10 @@ public final class ARShootingLibHandler: ARShootingLibHandlerInterface {
     
     public func inject(delegate: ARShootingLibHandlerDelegate) {
         self.delegate = delegate
-        arShootingController.targetHit = { [weak self] in
-            self?.delegate?.targetHit()
+        arShootingController.targetHit = { [weak self] weaponType in
+            self?.delegate?.targetHit(
+                weaponType: weaponType.toDomainWeaponType
+            )
         }
     }
     
@@ -48,6 +50,17 @@ public final class ARShootingLibHandler: ARShootingLibHandlerInterface {
 
 private extension Domain.WeaponType {
     var toARShootingLibWeaponType: ARShootingLib.WeaponType {
+        switch self {
+        case .pistol:
+            return .pistol
+        case .bazooka:
+            return .bazooka
+        }
+    }
+}
+
+private extension ARShootingLib.WeaponType {
+    var toDomainWeaponType: Domain.WeaponType {
         switch self {
         case .pistol:
             return .pistol

@@ -26,6 +26,7 @@ protocol WeaponObjectInfo {
     var isRecoilAnimationEnabled: Bool { get }
     var weaponResources: WeaponResources { get }
     var particleResources: ParticleResources? { get }
+    var bulletName: String { get }
 }
 
 extension WeaponObjectInfo {

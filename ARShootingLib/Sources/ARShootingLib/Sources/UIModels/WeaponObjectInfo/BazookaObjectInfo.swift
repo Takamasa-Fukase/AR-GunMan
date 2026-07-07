@@ -12,6 +12,7 @@ struct BazookaObjectInfo: WeaponObjectInfo {
     let isRecoilAnimationEnabled: Bool
     let weaponResources: WeaponResources
     let particleResources: ParticleResources
+    let bulletName: String
 
     struct WeaponResources: WeaponObjectResources {
         let fileName: String

@@ -10,12 +10,12 @@ import FSPagerView
 import Domain
 
 class WeaponSelectViewController: UIViewController {
-    private let weaponSelected: (Int) -> Void
+    private let weaponSelected: (WeaponType) -> Void
     private var weaponListItems: [WeaponListItem] = []
     
     @IBOutlet private weak var pagerView: FSPagerView!
     
-    init(weaponSelected: @escaping (Int) -> Void) {
+    init(weaponSelected: @escaping (WeaponType) -> Void) {
         self.weaponSelected = weaponSelected
         super.init(nibName: WeaponSelectViewController.className, bundle: nil)
     }
@@ -56,8 +56,8 @@ class WeaponSelectViewController: UIViewController {
 
 extension WeaponSelectViewController: FSPagerViewDelegate {
     func pagerView(_ pagerView: FSPagerView, didSelectItemAt index: Int) {
-        let weaponId = weaponListItems[index].weaponId
-        weaponSelected(weaponId)
+        let weaponType = weaponListItems[index].weaponType
+        weaponSelected(weaponType)
     }
 }
 

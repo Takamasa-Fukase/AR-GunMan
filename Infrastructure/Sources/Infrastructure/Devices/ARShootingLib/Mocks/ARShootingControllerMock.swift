@@ -10,7 +10,7 @@ import SwiftUI
 import ARShootingLib
 
 public class ARShootingControllerMock: ARShootingControllerInterface {
-    public var targetHit: (() -> Void)?
+    public var targetHit: ((WeaponType) -> Void)?
     
     public init() {}
     

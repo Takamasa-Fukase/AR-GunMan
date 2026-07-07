@@ -62,7 +62,7 @@ final class SceneNodeUtil {
         let bulletNode = SCNNode(geometry: sphere)
         bulletNode.scale = SCNVector3(x: 1, y: 1, z: 1)
         // 衝突検知時に判別する為の名前を設定
-        bulletNode.name = "bullet"
+//        bulletNode.name = "bullet"
         
         //当たり判定用のphysicBodyを追加
         let shape = SCNPhysicsShape(geometry: sphere, options: nil)

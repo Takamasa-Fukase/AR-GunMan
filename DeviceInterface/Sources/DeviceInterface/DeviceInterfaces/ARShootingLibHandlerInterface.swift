@@ -9,7 +9,7 @@ import Foundation
 import Domain
 
 public protocol ARShootingLibHandlerDelegate: AnyObject {
-    func targetHit()
+    func targetHit(weaponType: WeaponType)
 }
 
 public protocol ARShootingLibHandlerInterface {
