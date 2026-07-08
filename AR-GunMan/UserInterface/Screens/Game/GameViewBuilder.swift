@@ -33,6 +33,8 @@ struct GameViewBuilder {
         
         let weaponSession = WeaponSession()
         let gameSession = GameSession()
+        
+        let weaponFireUseCase = WeaponFireUseCase(weaponSession: weaponSession)
         let weaponChangeUseCase = WeaponChangeUseCase(weaponSession: weaponSession)
         let scoreAddUseCase = ScoreAddUseCase(
             weaponSession: weaponSession,
@@ -48,6 +50,7 @@ struct GameViewBuilder {
             weaponControlMotionHandleUseCase: weaponControlMotionHandleUseCase,
             gameTimerCreateUseCase: Factory.create(),
             weaponActionExecuteUseCase: Factory.create(),
+            weaponFireUseCase: weaponFireUseCase,
             weaponChangeUseCase: weaponChangeUseCase,
             scoreAddUseCase: scoreAddUseCase,
             scoreGetUseCase: scoreGetUseCase

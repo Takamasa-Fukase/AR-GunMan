@@ -7,15 +7,15 @@
 
 import Foundation
 
-public struct WeaponChangeUseCaseResponse {
-    public let newBulletsCount: Int
-}
-
 public protocol WeaponChangeUseCaseInterface {
-    func execute(newWeaponType: WeaponType) -> WeaponChangeUseCaseResponse
+    func execute(newWeaponType: WeaponType) -> WeaponChangeUseCase.Response
 }
 
 public final class WeaponChangeUseCase: WeaponChangeUseCaseInterface {
+    public struct Response {
+        public let newBulletsCount: Int
+    }
+    
     private let weaponSession: WeaponSession
 
     public init(
@@ -24,10 +24,8 @@ public final class WeaponChangeUseCase: WeaponChangeUseCaseInterface {
         self.weaponSession = weaponSession
     }
     
-    public func execute(newWeaponType: WeaponType) -> WeaponChangeUseCaseResponse {
+    public func execute(newWeaponType: WeaponType) -> Response {
         weaponSession.changeWeapon(newWeaponType: newWeaponType)
-        return WeaponChangeUseCaseResponse(
-            newBulletsCount: weaponSession.bulletsCount
-        )
+        return Response(newBulletsCount: weaponSession.bulletsCount)
     }
 }

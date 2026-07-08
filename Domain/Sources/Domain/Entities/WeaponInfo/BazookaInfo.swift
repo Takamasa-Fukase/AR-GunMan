@@ -22,17 +22,20 @@ public struct BazookaInfo: WeaponInfo {
     public struct Spec: WeaponSpec {
         public let capacity: Int
         public let reloadWaitingTime: TimeInterval
+        public let reloadWaitingTimeMillisec: Int
         public let reloadType: ReloadType
         public let targetHitPoint: Int
         
         public init(
             capacity: Int,
             reloadWaitingTime: TimeInterval,
+            reloadWaitingTimeMillisec: Int,
             reloadType: ReloadType,
             targetHitPoint: Int
         ) {
             self.capacity = capacity
             self.reloadWaitingTime = reloadWaitingTime
+            self.reloadWaitingTimeMillisec = reloadWaitingTimeMillisec
             self.reloadType = reloadType
             self.targetHitPoint = targetHitPoint
         }
