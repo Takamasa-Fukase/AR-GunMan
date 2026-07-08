@@ -28,6 +28,7 @@ public final class GamePresenter2 {
     private let gameTimerCreateUseCase: GameTimerCreateUseCaseInterface
     private let weaponActionExecuteUseCase: WeaponActionExecuteUseCaseInterface
     
+    private let weaponFireUseCase: WeaponFireUseCaseInterface
     private let weaponChangeUseCase: WeaponChangeUseCaseInterface
     private let scoreAddUseCase: ScoreAddUseCaseInterface
     private let scoreGetUseCase: ScoreGetUseCaseInterface
@@ -55,6 +56,7 @@ public final class GamePresenter2 {
         gameTimerCreateUseCase: GameTimerCreateUseCaseInterface,
         weaponActionExecuteUseCase: WeaponActionExecuteUseCaseInterface,
         
+        weaponFireUseCase: WeaponFireUseCaseInterface,
         weaponChangeUseCase: WeaponChangeUseCaseInterface,
         scoreAddUseCase: ScoreAddUseCaseInterface,
         scoreGetUseCase: ScoreGetUseCaseInterface
@@ -67,6 +69,7 @@ public final class GamePresenter2 {
         self.gameTimerCreateUseCase = gameTimerCreateUseCase
         self.weaponActionExecuteUseCase = weaponActionExecuteUseCase
         
+        self.weaponFireUseCase = weaponFireUseCase
         self.weaponChangeUseCase = weaponChangeUseCase
         self.scoreAddUseCase = scoreAddUseCase
         self.scoreGetUseCase = scoreGetUseCase
@@ -127,7 +130,8 @@ public final class GamePresenter2 {
         // 既存のリロードをキャンセルする
         weaponReloadCanceller.isCancelled = true
 
-        weaponChangeUseCase.execute(newWeaponType: weaponType)
+        let response = weaponChangeUseCase.execute(newWeaponType: weaponType)
+        bulletsCountSubject.send(String(response.newBulletsCount))
         showSelectedWeapon(weaponType)
     }
     
@@ -180,29 +184,27 @@ public final class GamePresenter2 {
     }
     
     private func fireWeapon() {
-//        guard let currentWeapon = currentWeaponSubject.value else { return }
-//
-//        weaponActionExecuteUseCase.fireWeapon(
-//            bulletsCount: currentWeapon.bulletsCount,
-//            isReloading: currentWeapon.isReloading,
-//            reloadType: currentWeapon.weaponType.weaponInfo.spec.reloadType,
-//            onFired: { [weak self] response in
-//                var modifiedCurrentWeapon = currentWeapon
-//                modifiedCurrentWeapon.bulletsCount = response.bulletsCount
-//                self?.currentWeaponSubject.send(modifiedCurrentWeapon)
-//                self?.arShootingLibHandler.renderWeaponFiring()
-//                self?.soundPlayer.play(currentWeapon.weaponType.resources.firingSound)
-//                
-//                if response.needsAutoReload {
-//                    // リロードを自動的に実行
-//                    self?.reloadingMotionDetected()
-//                }
-//            },
-//            onOutOfBullets: { [weak self] in
-//                if let outOfBulletsSound = currentWeapon.weaponType.resources.outOfBulletsSound {
-//                    self?.soundPlayer.play(outOfBulletsSound)
-//                }
-//            })
+        let result = weaponFireUseCase.execute()
+        switch result {
+        case .success(let needsAutoReload, let weaponType):
+            arShootingLibHandler.renderWeaponFiring()
+            soundPlayer.play(weaponType.resources.firingSound)
+            
+            if needsAutoReload {
+                // リロードを自動的に実行
+                reloadingMotionDetected()
+            }
+            
+        case .failure(let reason, let weaponType):
+            switch reason {
+            case .reloading:
+                break
+            case .outOfBullets:
+                if let outOfBulletsSound = weaponType.resources.outOfBulletsSound {
+                    soundPlayer.play(outOfBulletsSound)
+                }
+            }
+        }
     }
     
     private func reloadWeapon() {

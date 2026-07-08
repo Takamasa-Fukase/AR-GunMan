@@ -8,8 +8,8 @@
 import Foundation
 
 public enum WeaponFireResult {
-    case success(needsAutoReload: Bool)
-    case failure(reason: FailureReason)
+    case success(needsAutoReload: Bool, weaponType: WeaponType)
+    case failure(reason: FailureReason, weaponType: WeaponType)
     
     public enum FailureReason {
         case reloading
@@ -31,14 +31,15 @@ public final class WeaponFireUseCase: WeaponFireUseCaseInterface {
     }
     
     public func execute() -> WeaponFireResult {
+        let weaponType = weaponSession.currentWeaponType
         guard !weaponSession.isReloading else {
-            return .failure(reason: .reloading)
+            return .failure(reason: .reloading, weaponType: weaponType)
         }
         guard weaponSession.bulletsCount > 0 else {
-            return .failure(reason: .outOfBullets)
+            return .failure(reason: .outOfBullets, weaponType: weaponType)
         }
         weaponSession.bulletsCount -= 1
         let needsAutoReload = weaponSession.currentWeaponType.weaponInfo.spec.reloadType == .auto
-        return .success(needsAutoReload: needsAutoReload)
+        return .success(needsAutoReload: needsAutoReload, weaponType: weaponType)
     }
 }
