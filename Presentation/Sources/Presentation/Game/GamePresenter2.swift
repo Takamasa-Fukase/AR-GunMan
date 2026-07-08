@@ -90,13 +90,6 @@ public final class GamePresenter2 {
     
     // MARK: ViewからのInput
     public func onViewAppear() {
-        // FIXME: 暫定
-//        let defaultWeapon = LoadedWeapon(
-//            weaponType: defaultWeaponType,
-//            bulletsCount: defaultWeaponType.weaponInfo.spec.capacity,
-//            isReloading: false
-//        )
-        
         showSelectedWeapon(WeaponType.defaultType)
         
         arShootingLibHandler.runSession()
@@ -240,14 +233,9 @@ public final class GamePresenter2 {
 }
 
 extension GamePresenter2: ARShootingLibHandlerDelegate {
-    // TODO: やはりAR側で発射するBulletの名前に武器の識別可能な名前をつけて、衝突時の反映条件に追加した上で、アプリ側へのコールバックにもWeaponTypeを返すようにしたい
-    // そうれうばここはCurrentValueSubjectでのキャッシュがなくても良くなり、スッキリかける
     public func targetHit(weaponType: WeaponType) {
         scoreAddUseCase.execute()
-                
-        // TODO: 下記などの音声再生処理は要検討
         soundPlayer.play(.targetHit)
-        
         if let bulletHitSound = weaponType.resources.bulletHitSound {
             soundPlayer.play(bulletHitSound)
         }
