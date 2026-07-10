@@ -13,8 +13,13 @@ import Presentation
 @Observable
 final class GameViewModel2 {
     private(set) var timeCountText: String = ""
-    private(set) var currentWeaponType: WeaponType = .defaultType
-    private(set) var bulletsCountImageName: String = ""
+    var currentWeaponType: WeaponType {
+        return presenter.currentWeaponType
+    }
+    var bulletsCountImageName: String {
+        let imageName = currentWeaponType.resources.bulletsCountImageBaseName + presenter.bulletsCount
+        return imageName
+    }
 
     var isWeaponChangeButtonEnabled = false
     var isTutorialViewPresented = false
@@ -33,19 +38,6 @@ final class GameViewModel2 {
             }
             .store(in: &cancellables)
 
-        presenter.currentWeaponTypePublisher
-            .sink { [weak self] currentWeaponType in
-                self?.currentWeaponType = currentWeaponType
-            }
-            .store(in: &cancellables)
-        
-        presenter.bulletsCountPublisher
-            .sink { [weak self] bulletsCount in
-                let imageName = (self?.currentWeaponType.resources.bulletsCountImageBaseName ?? "") + bulletsCount
-                self?.bulletsCountImageName = imageName
-            }
-            .store(in: &cancellables)
-        
         presenter.isWeaponChangeButtonEnabledPublisher
             .sink { [weak self] isEnabled in
                 self?.isWeaponChangeButtonEnabled = isEnabled

@@ -14,5 +14,5 @@ import Domain
 public final class InMemoryWeaponStore: InMemoryWeaponStoreInterface {
     public init() {}
     
-    var weapon = Weapon()
+    public var weapon = Weapon()
 }

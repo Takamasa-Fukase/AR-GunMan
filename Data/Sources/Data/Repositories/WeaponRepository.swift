@@ -9,13 +9,18 @@ import Foundation
 import Domain
 
 public final class WeaponRepository: WeaponRepositoryInterface {
-    private let inMemoryWeaponStore: InMemoryWeaponStoreInterface
+    private var inMemoryWeaponStore: InMemoryWeaponStoreInterface
     
     public init(inMemoryWeaponStore: InMemoryWeaponStoreInterface) {
         self.inMemoryWeaponStore = inMemoryWeaponStore
     }
     
     public var weapon: Weapon {
-        return inMemoryWeaponStore.weapon
+        get {
+            return inMemoryWeaponStore.weapon
+        }
+        set {
+            inMemoryWeaponStore.weapon = newValue
+        }
     }
 }
