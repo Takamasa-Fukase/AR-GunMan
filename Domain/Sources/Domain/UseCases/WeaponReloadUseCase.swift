@@ -9,32 +9,38 @@ import Foundation
 import Combine
 
 public protocol WeaponReloadUseCaseInterface {
-    func execute() -> WeaponReloadUseCase.Response
+    func execute()
 }
 
 public final class WeaponReloadUseCase: WeaponReloadUseCaseInterface {
-    public enum Progress {
-        case started
-        case ended(newBulletsCount: String)
+    public struct State {
+        public let bulletsCount: Int
     }
-    public struct Response {
-        public let progressEvent: AsyncStream<Progress>
+    public struct Event {
         public let weaponType: WeaponType
+        public let progress: WeaponReloadProgress
     }
     
-    private let weapon: Weapon
+    public var state: State {
+        return State(bulletsCount: weaponRepository.weapon.bulletsCount)
+    }
+    
+    public let event = AsyncStream<Event> { continuation in
+        eventContinuation = continuation
+    }
+    
+    private let weaponRepository: WeaponRepositoryInterface
+    private let eventContinuation: AsyncStream<Event>.Continuation?
 
-    public init(
-        weapon: Weapon
-    ) {
-        self.weapon = weapon
+    public init(weaponRepository: WeaponRepositoryInterface) {
+        self.weaponRepository = weaponRepository
     }
     
-    public func execute() -> Response {
-        let weaponType = weapon.currentType
+    public func execute() {
+        let weaponType = weaponRepository.weapon.currentType
         
         let progressEvent = AsyncStream<Progress> { continuation in
-            weapon.isReloading = true
+            weaponRepository.weapon.startReload()
             continuation.yield(.started)
             
             let task = Task {
@@ -50,7 +56,7 @@ public final class WeaponReloadUseCase: WeaponReloadUseCaseInterface {
             }
             
             continuation.onTermination = { @Sendable [weak self] _ in
-                self?.weapon.isReloading = false
+                self?.weaponRepository.weapon.finishReload()
                 task.cancel()
             }
         }

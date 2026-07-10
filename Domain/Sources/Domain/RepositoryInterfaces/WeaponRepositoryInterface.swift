@@ -1,14 +1,13 @@
-////
-////  WeaponRepositoryInterface.swift
-////  Domain
-////
-////  Created by ウルトラ深瀬 on 6/11/24.
-////
 //
-//import Foundation
+//  WeaponRepositoryInterface.swift
+//  Domain
 //
-//public protocol WeaponRepositoryInterface {
-//    func get(by id: Int) -> any WeaponInfo
-//    func getDefault() -> any WeaponInfo
-//    func getAll() -> [any WeaponInfo]
-//}
+//  Created by ウルトラ深瀬 on 6/11/24.
+//
+
+import Foundation
+import Domain
+
+public protocol WeaponRepositoryInterface {
+    var weapon: Weapon { get set }
+}

@@ -8,24 +8,29 @@
 import Foundation
 
 public protocol WeaponChangeUseCaseInterface {
-    func execute(newWeaponType: WeaponType) -> WeaponChangeUseCase.Response
+    func execute(newType: WeaponType)
 }
 
 public final class WeaponChangeUseCase: WeaponChangeUseCaseInterface {
-    public struct Response {
-        public let newBulletsCount: Int
+    public struct State {
+        public let weaponType: WeaponType
+        public let bulletsCount: Int
     }
     
-    private let weapon: Weapon
+    public var state: State {
+        return State(
+            weaponType: weaponRepository.weapon.currentType,
+            bulletsCount: weaponRepository.weapon.bulletsCount
+        )
+    }
+    
+    private let weaponRepository: WeaponRepositoryInterface
 
-    public init(
-        weapon: Weapon
-    ) {
-        self.weapon = weapon
+    public init(weaponRepository: WeaponRepositoryInterface) {
+        self.weaponRepository = weaponRepository
     }
     
-    public func execute(newWeaponType: WeaponType) -> Response {
-        weapon.change(newWeaponType: newWeaponType)
-        return Response(newBulletsCount: weapon.bulletsCount)
+    public func execute(newType: WeaponType) {
+        weapon.change(newType: newType)
     }
 }

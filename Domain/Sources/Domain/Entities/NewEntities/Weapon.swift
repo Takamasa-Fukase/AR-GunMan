@@ -7,10 +7,10 @@
 
 import Foundation
 
-public final class Weapon {
-    var currentType: WeaponType
-    var bulletsCount: Int
-    var isReloading: Bool
+public struct Weapon {
+    private(set) var currentType: WeaponType
+    private(set) var bulletsCount: Int
+    private(set) var isReloading: Bool
     
     public init() {
         self.currentType = WeaponType.defaultType
@@ -18,7 +18,7 @@ public final class Weapon {
         self.isReloading = false
     }
     
-    public func fire() -> WeaponFireResult {
+    public mutating func fire() -> WeaponFireResult {
         guard !isReloading else {
             return .failure(reason: .reloading)
         }
@@ -30,11 +30,21 @@ public final class Weapon {
         return .success(needsAutoReload: needsAutoReload)
     }
     
-    public func reload() -> 
+    public mutating func startReload() -> WeaponReloadStartResult {
+        guard !isReloading && bulletsCount <= 0 else {
+            return .failure
+        }
+        isReloading = true
+        return .success
+    }
     
-    public func change(newWeaponType: WeaponType) {
-        currentType = newWeaponType
-        bulletsCount = newWeaponType.weaponInfo.spec.capacity
+    public mutating func finishReload() {
+        isReloading = false
+    }
+    
+    public mutating func change(newType: WeaponType) {
+        currentType = newType
+        bulletsCount = newType.weaponInfo.spec.capacity
         isReloading = false
     }
 }
@@ -47,4 +57,9 @@ public enum WeaponFireResult {
         case reloading
         case outOfBullets
     }
+}
+
+public enum WeaponReloadStartResult {
+    case success
+    case failure
 }

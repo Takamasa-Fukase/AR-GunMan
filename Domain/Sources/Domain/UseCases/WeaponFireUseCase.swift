@@ -7,29 +7,40 @@
 
 import Foundation
 
-public struct WeaponFireResponse {
-    public let weaponType: WeaponType
-    public let result: WeaponFireResult
-}
-
 public protocol WeaponFireUseCaseInterface {
-    func execute() -> WeaponFireResult
+    func execute()
 }
 
 public final class WeaponFireUseCase: WeaponFireUseCaseInterface {
-    private let weapon: Weapon
-
-    public init(
-        weapon: Weapon,
-    ) {
-        self.weapon = weapon
+    public struct State {
+        public let bulletsCount: Int
+    }
+    public struct Event {
+        public let weaponType: WeaponType
+        public let result: WeaponFireResult
     }
     
-    public func execute() -> WeaponFireResponse {
+    public var state: State {
+        return State(bulletsCount: weaponRepository.weapon.bulletsCount)
+    }
+    
+    public let event = AsyncStream<Event> { continuation in
+        eventContinuation = continuation
+    }
+    
+    private let weaponRepository: WeaponRepositoryInterface
+    private let eventContinuation: AsyncStream<Event>.Continuation?
+
+    public init(weaponRepository: WeaponRepositoryInterface) {
+        self.weaponRepository = weaponRepository
+    }
+    
+    public func execute() {
         let result = weapon.fire()
-        return WeaponFireResponse(
+        let event = Event(
             weaponType: weapon.currentType,
             result: result
         )
+        eventContinuation?.yield(event)
     }
 }
