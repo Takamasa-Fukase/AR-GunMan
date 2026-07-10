@@ -15,25 +15,26 @@ public protocol WeaponReloadUseCaseInterface {
 public final class WeaponReloadUseCase: WeaponReloadUseCaseInterface {
     public enum Progress {
         case started
-        case ended
+        case ended(newBulletsCount: String)
     }
     public struct Response {
         public let progressEvent: AsyncStream<Progress>
         public let weaponType: WeaponType
     }
     
-    private let weaponSession: WeaponSession
+    private let weapon: Weapon
 
     public init(
-        weaponSession: WeaponSession,
+        weapon: Weapon
     ) {
-        self.weaponSession = weaponSession
+        self.weapon = weapon
     }
     
     public func execute() -> Response {
-        let weaponType = weaponSession.currentWeaponType
+        let weaponType = weapon.currentType
         
         let progressEvent = AsyncStream<Progress> { continuation in
+            weapon.isReloading = true
             continuation.yield(.started)
             
             let task = Task {
@@ -48,7 +49,8 @@ public final class WeaponReloadUseCase: WeaponReloadUseCaseInterface {
                 }
             }
             
-            continuation.onTermination = { @Sendable _ in
+            continuation.onTermination = { @Sendable [weak self] _ in
+                self?.weapon.isReloading = false
                 task.cancel()
             }
         }

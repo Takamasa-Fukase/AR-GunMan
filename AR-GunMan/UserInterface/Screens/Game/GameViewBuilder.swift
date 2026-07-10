@@ -21,23 +21,14 @@ struct GameViewBuilder {
             targetCount: 50
         )
         let weaponControlMotionHandleUseCase: WeaponControlMotionHandleUseCaseInterface = Factory.create()
-//        let presenter = GamePresenter(
-//            arShootingLibHandler: arShootingLibHandler,
-//            soundPlayer: Factory.create(),
-//            coreMotionHandler: Factory.create(),
-//            tutorialRepository: Factory.create(),
-//            weaponControlMotionHandleUseCase: weaponControlMotionHandleUseCase,
-//            gameTimerCreateUseCase: Factory.create(),
-//            weaponActionExecuteUseCase: Factory.create()
-//        )
-        
-        let weaponSession = WeaponSession()
+        let weapon = Weapon()
         let gameSession = GameSession()
         
-        let weaponFireUseCase = WeaponFireUseCase(weaponSession: weaponSession)
-        let weaponChangeUseCase = WeaponChangeUseCase(weaponSession: weaponSession)
+        let weaponFireUseCase = WeaponFireUseCase(weapon: weapon)
+        let weaponReloadUseCase = WeaponReloadUseCase(weapon: weapon)
+        let weaponChangeUseCase = WeaponChangeUseCase(weapon: weapon)
         let scoreAddUseCase = ScoreAddUseCase(
-            weaponSession: weaponSession,
+            weapon: weapon,
             gameSession: gameSession
         )
         let scoreGetUseCase = ScoreGetUseCase(gameSession: gameSession)
@@ -51,6 +42,7 @@ struct GameViewBuilder {
             gameTimerCreateUseCase: Factory.create(),
             weaponActionExecuteUseCase: Factory.create(),
             weaponFireUseCase: weaponFireUseCase,
+            weaponReloadUseCase: weaponReloadUseCase,
             weaponChangeUseCase: weaponChangeUseCase,
             scoreAddUseCase: scoreAddUseCase,
             scoreGetUseCase: scoreGetUseCase

@@ -7,14 +7,9 @@
 
 import Foundation
 
-public enum WeaponFireResult {
-    case success(needsAutoReload: Bool, weaponType: WeaponType)
-    case failure(reason: FailureReason, weaponType: WeaponType)
-    
-    public enum FailureReason {
-        case reloading
-        case outOfBullets
-    }
+public struct WeaponFireResponse {
+    public let weaponType: WeaponType
+    public let result: WeaponFireResult
 }
 
 public protocol WeaponFireUseCaseInterface {
@@ -22,24 +17,19 @@ public protocol WeaponFireUseCaseInterface {
 }
 
 public final class WeaponFireUseCase: WeaponFireUseCaseInterface {
-    private let weaponSession: WeaponSession
+    private let weapon: Weapon
 
     public init(
-        weaponSession: WeaponSession,
+        weapon: Weapon,
     ) {
-        self.weaponSession = weaponSession
+        self.weapon = weapon
     }
     
-    public func execute() -> WeaponFireResult {
-        let weaponType = weaponSession.currentWeaponType
-        guard !weaponSession.isReloading else {
-            return .failure(reason: .reloading, weaponType: weaponType)
-        }
-        guard weaponSession.bulletsCount > 0 else {
-            return .failure(reason: .outOfBullets, weaponType: weaponType)
-        }
-        weaponSession.bulletsCount -= 1
-        let needsAutoReload = weaponSession.currentWeaponType.weaponInfo.spec.reloadType == .auto
-        return .success(needsAutoReload: needsAutoReload, weaponType: weaponType)
+    public func execute() -> WeaponFireResponse {
+        let result = weapon.fire()
+        return WeaponFireResponse(
+            weaponType: weapon.currentType,
+            result: result
+        )
     }
 }

@@ -29,12 +29,14 @@ public final class GamePresenter2 {
     private let weaponActionExecuteUseCase: WeaponActionExecuteUseCaseInterface
     
     private let weaponFireUseCase: WeaponFireUseCaseInterface
+    private let weaponReloadUseCase: WeaponReloadUseCaseInterface
     private let weaponChangeUseCase: WeaponChangeUseCaseInterface
     private let scoreAddUseCase: ScoreAddUseCaseInterface
     private let scoreGetUseCase: ScoreGetUseCaseInterface
     
     private let timerPauseController = GameTimerCreateRequest.PauseController()
     private let weaponReloadCanceller = WeaponReloadCanceller()
+    private let weaponReloadTask: Task<Void, Never>?
     
     private let timeCountTextSubject = PassthroughSubject<String, Never>()
     private let currentWeaponTypeSubject = PassthroughSubject<WeaponType, Never>()
@@ -57,6 +59,7 @@ public final class GamePresenter2 {
         weaponActionExecuteUseCase: WeaponActionExecuteUseCaseInterface,
         
         weaponFireUseCase: WeaponFireUseCaseInterface,
+        weaponReloadUseCase: WeaponReloadUseCaseInterface,
         weaponChangeUseCase: WeaponChangeUseCaseInterface,
         scoreAddUseCase: ScoreAddUseCaseInterface,
         scoreGetUseCase: ScoreGetUseCaseInterface
@@ -70,6 +73,7 @@ public final class GamePresenter2 {
         self.weaponActionExecuteUseCase = weaponActionExecuteUseCase
         
         self.weaponFireUseCase = weaponFireUseCase
+        self.weaponReloadUseCase = weaponReloadUseCase
         self.weaponChangeUseCase = weaponChangeUseCase
         self.scoreAddUseCase = scoreAddUseCase
         self.scoreGetUseCase = scoreGetUseCase
@@ -128,7 +132,8 @@ public final class GamePresenter2 {
         // タイムカウントの更新を再開する
         timerPauseController.isPaused = false
         // 既存のリロードをキャンセルする
-        weaponReloadCanceller.isCancelled = true
+        weaponReloadTask?.cancel()
+        weaponReloadTask = nil
 
         let response = weaponChangeUseCase.execute(newWeaponType: weaponType)
         bulletsCountSubject.send(String(response.newBulletsCount))
@@ -184,23 +189,23 @@ public final class GamePresenter2 {
     }
     
     private func fireWeapon() {
-        let result = weaponFireUseCase.execute()
-        switch result {
-        case .success(let needsAutoReload, let weaponType):
+        let response = weaponFireUseCase.execute()
+        switch response.result {
+        case .success(let needsAutoReload):
             arShootingLibHandler.renderWeaponFiring()
-            soundPlayer.play(weaponType.resources.firingSound)
+            soundPlayer.play(response.weaponType.resources.firingSound)
             
             if needsAutoReload {
                 // リロードを自動的に実行
                 reloadingMotionDetected()
             }
             
-        case .failure(let reason, let weaponType):
+        case .failure(let reason):
             switch reason {
             case .reloading:
                 break
             case .outOfBullets:
-                if let outOfBulletsSound = weaponType.resources.outOfBulletsSound {
+                if let outOfBulletsSound = response.weaponType.resources.outOfBulletsSound {
                     soundPlayer.play(outOfBulletsSound)
                 }
             }
@@ -208,6 +213,22 @@ public final class GamePresenter2 {
     }
     
     private func reloadWeapon() {
+        let response = weaponReloadUseCase.execute()
+        weaponReloadTask = Task {
+            for await progress in response.progressEvent {
+                switch progress {
+                case .started:
+                    soundPlayer.play(response.weaponType.resources.reloadingSound)
+                case .ended:
+                    
+                }
+            }
+            
+            if !Task.isCancelled {
+                self.weaponReloadTask = nil
+            }
+        }
+        
 //        guard let currentWeapon = currentWeaponSubject.value else { return }
 //
 //        // falseにリセット

@@ -12,11 +12,11 @@ public protocol ScoreAddUseCaseInterface {
 }
 
 public final class ScoreAddUseCase: ScoreAddUseCaseInterface {
-    private let weaponSession: WeaponSession
+    private let weapon: Weapon
     private let gameSession: GameSession
 
     public init(
-        weaponSession: WeaponSession,
+        weapon: Weapon,
         gameSession: GameSession
     ) {
         self.weaponSession = weaponSession
@@ -24,7 +24,7 @@ public final class ScoreAddUseCase: ScoreAddUseCaseInterface {
     }
     
     public func execute() {
-        let targetHitPoint = weaponSession.currentWeaponType.weaponInfo.spec.targetHitPoint
+        let targetHitPoint = weapon.currentType.weaponInfo.spec.targetHitPoint
         gameSession.score.add(targetHitPoint: targetHitPoint)
     }
 }
