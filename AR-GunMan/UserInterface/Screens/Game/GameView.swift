@@ -11,14 +11,14 @@ import Domain
 
 struct GameView<ARView: View>: View {
     let arView: ARView
-    @State var viewModel: GameViewModel2
+    @State var viewModel: GameViewModel
     // TODO: リトライ方法の再検討の時に消せるかどうか見直し
     @State var gameViewId = UUID()
     @Environment(\.dismiss) var dismiss
     
     init(
         arView: ARView,
-        viewModel: GameViewModel2
+        viewModel: GameViewModel
     ) {
         self.arView = arView
         self.viewModel = viewModel

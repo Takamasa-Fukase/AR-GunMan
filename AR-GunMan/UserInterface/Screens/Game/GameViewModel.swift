@@ -1,5 +1,5 @@
 //
-//  GameViewModel2.swift
+//  GameViewModel.swift
 //  AR-GunMan
 //
 //  Created by ウルトラ深瀬 on 29/11/24.
@@ -11,7 +11,7 @@ import Domain
 import Presentation
 
 @Observable
-final class GameViewModel2 {
+final class GameViewModel {
     private(set) var timeCountText: String = ""
     var currentWeaponType: WeaponType {
         return presenter.currentWeaponType
@@ -26,10 +26,10 @@ final class GameViewModel2 {
     var isWeaponSelectViewPresented = false
     var isResultViewPresented: (isPresented: Bool, score: Double) = (false, 0.0)
     
-    private let presenter: GamePresenter2
+    private let presenter: GamePresenter
     private var cancellables: Set<AnyCancellable> = []
 
-    init(presenter: GamePresenter2) {
+    init(presenter: GamePresenter) {
         self.presenter = presenter
         
         presenter.timeCountTextPublisher

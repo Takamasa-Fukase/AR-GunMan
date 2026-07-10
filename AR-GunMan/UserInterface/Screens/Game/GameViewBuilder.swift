@@ -35,7 +35,7 @@ struct GameViewBuilder {
         )
         let scoreGetUseCase = ScoreGetUseCase(gameSession: gameSession)
         
-        let presenter = GamePresenter2(
+        let presenter = GamePresenter(
             arShootingLibHandler: arShootingLibHandler,
             soundPlayer: Factory.create(),
             coreMotionHandler: Factory.create(),
@@ -49,7 +49,7 @@ struct GameViewBuilder {
             scoreAddUseCase: scoreAddUseCase,
             scoreGetUseCase: scoreGetUseCase
         )
-        let viewModel = GameViewModel2(presenter: presenter)
+        let viewModel = GameViewModel(presenter: presenter)
         arShootingLibHandler.inject(delegate: presenter)
         weaponControlMotionHandleUseCase.inject(delegate: presenter)
         return GameView(

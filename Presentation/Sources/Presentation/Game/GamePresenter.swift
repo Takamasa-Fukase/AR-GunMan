@@ -1,5 +1,5 @@
 //
-//  GamePresenter2.swift
+//  GamePresenter.swift
 //  Presentation
 //
 //  Created by ウルトラ深瀬 on 2026/06/19.
@@ -10,7 +10,7 @@ import Combine
 import DeviceInterface
 import Domain
 
-public final class GamePresenter2 {
+public final class GamePresenter {
     public let timeCountTextPublisher: AnyPublisher<String, Never>
     public var currentWeaponType: WeaponType {
         return weaponRepository.weapon.currentType
@@ -219,7 +219,7 @@ public final class GamePresenter2 {
     }
 }
 
-extension GamePresenter2: ARShootingLibHandlerDelegate {
+extension GamePresenter: ARShootingLibHandlerDelegate {
     public func targetHit(weaponType: WeaponType) {
         scoreAddUseCase.execute()
         soundPlayer.play(.targetHit)
@@ -229,7 +229,7 @@ extension GamePresenter2: ARShootingLibHandlerDelegate {
     }
 }
 
-extension GamePresenter2: WeaponControlMotionHandleUseCaseDelegate {
+extension GamePresenter: WeaponControlMotionHandleUseCaseDelegate {
     public func firingMotionDetected() {
         fireWeapon()
     }
