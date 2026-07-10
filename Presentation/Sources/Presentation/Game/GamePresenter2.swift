@@ -12,8 +12,12 @@ import Domain
 
 public final class GamePresenter2 {
     public let timeCountTextPublisher: AnyPublisher<String, Never>
-    public let currentWeaponTypePublisher: AnyPublisher<WeaponType, Never>
-    public let bulletsCountPublisher: AnyPublisher<String, Never>
+    public var currentWeaponType: WeaponType {
+        return weaponRepository.weapon.currentType
+    }
+    public var bulletsCount: String {
+        return String(weaponRepository.weapon.bulletsCount)
+    }
 
     public let isWeaponChangeButtonEnabledPublisher: AnyPublisher<Bool, Never>
     public let isTutorialViewPresentedPublisher: AnyPublisher<Bool, Never>
@@ -26,8 +30,8 @@ public final class GamePresenter2 {
     private let tutorialRepository: TutorialRepositoryInterface
     private let weaponControlMotionHandleUseCase: WeaponControlMotionHandleUseCaseInterface
     private let gameTimerCreateUseCase: GameTimerCreateUseCaseInterface
-    private let weaponActionExecuteUseCase: WeaponActionExecuteUseCaseInterface
     
+    private let weaponRepository: WeaponRepositoryInterface
     private let weaponFireUseCase: WeaponFireUseCaseInterface
     private let weaponReloadUseCase: WeaponReloadUseCaseInterface
     private let weaponChangeUseCase: WeaponChangeUseCaseInterface
@@ -36,12 +40,9 @@ public final class GamePresenter2 {
     
     private let timerPauseController = GameTimerCreateRequest.PauseController()
     private let weaponReloadCanceller = WeaponReloadCanceller()
-    private let weaponReloadTask: Task<Void, Never>?
+    private var weaponReloadTask: Task<Void, Never>?
     
     private let timeCountTextSubject = PassthroughSubject<String, Never>()
-    private let currentWeaponTypeSubject = PassthroughSubject<WeaponType, Never>()
-    private let bulletsCountSubject = PassthroughSubject<String, Never>()
-
     private let isWeaponChangeButtonEnabledSubject = CurrentValueSubject<Bool, Never>(false)
     private let isTutorialViewPresentedSubject = CurrentValueSubject<Bool, Never>(false)
     private let isWeaponSelectViewPresentedSubject = CurrentValueSubject<Bool, Never>(false)
@@ -56,8 +57,8 @@ public final class GamePresenter2 {
         tutorialRepository: TutorialRepositoryInterface,
         weaponControlMotionHandleUseCase: WeaponControlMotionHandleUseCaseInterface,
         gameTimerCreateUseCase: GameTimerCreateUseCaseInterface,
-        weaponActionExecuteUseCase: WeaponActionExecuteUseCaseInterface,
         
+        weaponRepository: WeaponRepositoryInterface,
         weaponFireUseCase: WeaponFireUseCaseInterface,
         weaponReloadUseCase: WeaponReloadUseCaseInterface,
         weaponChangeUseCase: WeaponChangeUseCaseInterface,
@@ -70,8 +71,8 @@ public final class GamePresenter2 {
         self.tutorialRepository = tutorialRepository
         self.weaponControlMotionHandleUseCase = weaponControlMotionHandleUseCase
         self.gameTimerCreateUseCase = gameTimerCreateUseCase
-        self.weaponActionExecuteUseCase = weaponActionExecuteUseCase
         
+        self.weaponRepository = weaponRepository
         self.weaponFireUseCase = weaponFireUseCase
         self.weaponReloadUseCase = weaponReloadUseCase
         self.weaponChangeUseCase = weaponChangeUseCase
@@ -79,9 +80,6 @@ public final class GamePresenter2 {
         self.scoreGetUseCase = scoreGetUseCase
         
         timeCountTextPublisher = timeCountTextSubject.eraseToAnyPublisher()
-        currentWeaponTypePublisher = currentWeaponTypeSubject.eraseToAnyPublisher()
-        bulletsCountPublisher = bulletsCountSubject.eraseToAnyPublisher()
-
         isWeaponChangeButtonEnabledPublisher = isWeaponChangeButtonEnabledSubject.eraseToAnyPublisher()
         isTutorialViewPresentedPublisher = isTutorialViewPresentedSubject.eraseToAnyPublisher()
         isWeaponSelectViewPresentedPublisher = isWeaponSelectViewPresentedSubject.eraseToAnyPublisher()
@@ -135,15 +133,12 @@ public final class GamePresenter2 {
         weaponReloadTask?.cancel()
         weaponReloadTask = nil
 
-        let response = weaponChangeUseCase.execute(newWeaponType: weaponType)
-        bulletsCountSubject.send(String(response.newBulletsCount))
+        weaponChangeUseCase.execute(newType: weaponType)
         showSelectedWeapon(weaponType)
     }
     
     // MARK: Privateメソッド
     private func showSelectedWeapon(_ selectedWeaponType: WeaponType) {
-        currentWeaponTypeSubject.send(selectedWeaponType)
-        
         arShootingLibHandler.showWeapon(of: selectedWeaponType)
                 
         if isCheckedTutorialCompletedFlag {
@@ -189,11 +184,11 @@ public final class GamePresenter2 {
     }
     
     private func fireWeapon() {
-        let response = weaponFireUseCase.execute()
-        switch response.result {
+        let result = weaponFireUseCase.execute()
+        switch result {
         case .success(let needsAutoReload):
             arShootingLibHandler.renderWeaponFiring()
-            soundPlayer.play(response.weaponType.resources.firingSound)
+            soundPlayer.play(weaponRepository.weapon.currentType.resources.firingSound)
             
             if needsAutoReload {
                 // リロードを自動的に実行
@@ -205,7 +200,7 @@ public final class GamePresenter2 {
             case .reloading:
                 break
             case .outOfBullets:
-                if let outOfBulletsSound = response.weaponType.resources.outOfBulletsSound {
+                if let outOfBulletsSound = weaponRepository.weapon.currentType.resources.outOfBulletsSound {
                     soundPlayer.play(outOfBulletsSound)
                 }
             }
@@ -214,44 +209,13 @@ public final class GamePresenter2 {
     
     private func reloadWeapon() {
         let response = weaponReloadUseCase.execute()
-        weaponReloadTask = Task {
-            for await progress in response.progressEvent {
-                switch progress {
-                case .started:
-                    soundPlayer.play(response.weaponType.resources.reloadingSound)
-                case .ended:
-                    
-                }
-            }
-            
-            if !Task.isCancelled {
-                self.weaponReloadTask = nil
-            }
+        weaponReloadTask = response.reloadTask
+        switch response.startResult {
+        case .success:
+            soundPlayer.play(weaponRepository.weapon.currentType.resources.reloadingSound)
+        case .failure:
+            break
         }
-        
-//        guard let currentWeapon = currentWeaponSubject.value else { return }
-//
-//        // falseにリセット
-//        weaponReloadCanceller.isCancelled = false
-//        
-//        weaponActionExecuteUseCase.reloadWeapon(
-//            bulletsCount: currentWeapon.bulletsCount,
-//            isReloading: currentWeapon.isReloading,
-//            capacity: currentWeapon.weaponType.weaponInfo.spec.capacity,
-//            reloadWaitingTime: currentWeapon.weaponType.weaponInfo.spec.reloadWaitingTime,
-//            reloadCanceller: weaponReloadCanceller,
-//            onReloadStarted: { [weak self] response in
-//                var modifiedCurrentWeapon = currentWeapon
-//                modifiedCurrentWeapon.isReloading = response.isReloading
-//                self?.currentWeaponSubject.send(modifiedCurrentWeapon)
-//                self?.soundPlayer.play(currentWeapon.weaponType.resources.reloadingSound)
-//            },
-//            onReloadEnded: { [weak self] response in
-//                var modifiedCurrentWeapon = currentWeapon
-//                modifiedCurrentWeapon.bulletsCount = response.bulletsCount
-//                modifiedCurrentWeapon.isReloading = response.isReloading
-//                self?.currentWeaponSubject.send(modifiedCurrentWeapon)
-//            })
     }
 }
 

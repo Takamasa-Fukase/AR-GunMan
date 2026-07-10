@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import ARShootingLib
+import Data
 import Domain
 import Infrastructure
 import Presentation
@@ -21,14 +22,15 @@ struct GameViewBuilder {
             targetCount: 50
         )
         let weaponControlMotionHandleUseCase: WeaponControlMotionHandleUseCaseInterface = Factory.create()
-        let weapon = Weapon()
+        let weaponStore = InMemoryWeaponStore()
+        let weaponRepository = WeaponRepository(inMemoryWeaponStore: weaponStore)
         let gameSession = GameSession()
         
-        let weaponFireUseCase = WeaponFireUseCase(weapon: weapon)
-        let weaponReloadUseCase = WeaponReloadUseCase(weapon: weapon)
-        let weaponChangeUseCase = WeaponChangeUseCase(weapon: weapon)
+        let weaponFireUseCase = WeaponFireUseCase(weaponRepository: weaponRepository)
+        let weaponReloadUseCase = WeaponReloadUseCase(weaponRepository: weaponRepository)
+        let weaponChangeUseCase = WeaponChangeUseCase(weaponRepository: weaponRepository)
         let scoreAddUseCase = ScoreAddUseCase(
-            weapon: weapon,
+            weaponRepository: weaponRepository,
             gameSession: gameSession
         )
         let scoreGetUseCase = ScoreGetUseCase(gameSession: gameSession)
@@ -40,7 +42,7 @@ struct GameViewBuilder {
             tutorialRepository: Factory.create(),
             weaponControlMotionHandleUseCase: weaponControlMotionHandleUseCase,
             gameTimerCreateUseCase: Factory.create(),
-            weaponActionExecuteUseCase: Factory.create(),
+            weaponRepository: weaponRepository,
             weaponFireUseCase: weaponFireUseCase,
             weaponReloadUseCase: weaponReloadUseCase,
             weaponChangeUseCase: weaponChangeUseCase,

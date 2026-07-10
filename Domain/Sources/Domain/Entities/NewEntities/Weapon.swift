@@ -8,9 +8,9 @@
 import Foundation
 
 public struct Weapon {
-    private(set) var currentType: WeaponType
-    private(set) var bulletsCount: Int
-    private(set) var isReloading: Bool
+    public private(set) var currentType: WeaponType
+    public private(set) var bulletsCount: Int
+    public private(set) var isReloading: Bool
     
     public init() {
         self.currentType = WeaponType.defaultType
@@ -18,7 +18,7 @@ public struct Weapon {
         self.isReloading = false
     }
     
-    public mutating func fire() -> WeaponFireResult {
+    mutating func fire() -> WeaponFireResult {
         guard !isReloading else {
             return .failure(reason: .reloading)
         }
@@ -30,7 +30,7 @@ public struct Weapon {
         return .success(needsAutoReload: needsAutoReload)
     }
     
-    public mutating func startReload() -> WeaponReloadStartResult {
+    mutating func startReload() -> WeaponReloadStartResult {
         guard !isReloading && bulletsCount <= 0 else {
             return .failure
         }
@@ -38,12 +38,12 @@ public struct Weapon {
         return .success
     }
     
-    public mutating func finishReload() {
+    mutating func finishReload() {
         bulletsCount = currentType.weaponInfo.spec.capacity
         isReloading = false
     }
     
-    public mutating func change(newType: WeaponType) {
+    mutating func change(newType: WeaponType) {
         currentType = newType
         finishReload()
     }
