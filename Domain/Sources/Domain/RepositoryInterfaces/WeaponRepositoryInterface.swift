@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Domain
 
 public protocol WeaponRepositoryInterface {
     var weapon: Weapon { get set }

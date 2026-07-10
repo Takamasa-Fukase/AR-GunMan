@@ -39,13 +39,13 @@ public struct Weapon {
     }
     
     public mutating func finishReload() {
+        bulletsCount = currentType.weaponInfo.spec.capacity
         isReloading = false
     }
     
     public mutating func change(newType: WeaponType) {
         currentType = newType
-        bulletsCount = newType.weaponInfo.spec.capacity
-        isReloading = false
+        finishReload()
     }
 }
 

@@ -6,64 +6,30 @@
 //
 
 import Foundation
-import Combine
 
 public protocol WeaponReloadUseCaseInterface {
-    func execute()
+    func execute() -> WeaponReloadStartResult
 }
 
 public final class WeaponReloadUseCase: WeaponReloadUseCaseInterface {
-    public struct State {
-        public let bulletsCount: Int
-    }
-    public struct Event {
-        public let weaponType: WeaponType
-        public let progress: WeaponReloadProgress
-    }
-    
-    public var state: State {
-        return State(bulletsCount: weaponRepository.weapon.bulletsCount)
-    }
-    
-    public let event = AsyncStream<Event> { continuation in
-        eventContinuation = continuation
-    }
-    
-    private let weaponRepository: WeaponRepositoryInterface
-    private let eventContinuation: AsyncStream<Event>.Continuation?
+    private var weaponRepository: WeaponRepositoryInterface
 
     public init(weaponRepository: WeaponRepositoryInterface) {
         self.weaponRepository = weaponRepository
     }
     
-    public func execute() {
-        let weaponType = weaponRepository.weapon.currentType
+    public func execute() -> WeaponReloadStartResult {
+        let startResult = weaponRepository.weapon.startReload()
+        let reloadWaitingTimeMillisec = weaponRepository.weapon.currentType.weaponInfo.spec.reloadWaitingTimeMillisec
         
-        let progressEvent = AsyncStream<Progress> { continuation in
-            weaponRepository.weapon.startReload()
-            continuation.yield(.started)
+        print("WeaponReloadUseCase started")
+        
+        Task {
+            try? await Task.sleep(for: .milliseconds(reloadWaitingTimeMillisec))
+            self.weaponRepository.weapon.finishReload()
             
-            let task = Task {
-                do {
-                    try await Task.sleep(for: .milliseconds(weaponType.weaponInfo.spec.reloadWaitingTimeMillisec))
-                    continuation.yield(.ended)
-                    continuation.finish()
-                    
-                } catch {
-                    print("リロード待ち時間の遅延処理がキャンセルされました")
-                    continuation.finish()
-                }
-            }
-            
-            continuation.onTermination = { @Sendable [weak self] _ in
-                self?.weaponRepository.weapon.finishReload()
-                task.cancel()
-            }
+            print("WeaponReloadUseCase finished")
         }
-        
-        return Response(
-            progressEvent: progressEvent,
-            weaponType: weaponType
-        )
+        return startResult
     }
 }
