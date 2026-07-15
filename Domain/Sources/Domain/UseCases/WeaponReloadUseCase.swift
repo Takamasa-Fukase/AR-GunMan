@@ -26,14 +26,9 @@ public final class WeaponReloadUseCase: WeaponReloadUseCaseInterface {
     public func execute() -> Response {
         let startResult = weaponRepository.weapon.startReload()
         let reloadWaitingTimeMillisec = weaponRepository.weapon.currentType.weaponInfo.spec.reloadWaitingTimeMillisec
-        
-        print("WeaponReloadUseCase started")
-        
         let task = Task {
             try? await Task.sleep(for: .milliseconds(reloadWaitingTimeMillisec))
             self.weaponRepository.weapon.finishReload()
-            
-            print("WeaponReloadUseCase finished")
         }
         return Response(
             reloadTask: task,
