@@ -20,6 +20,8 @@ public final class GamePresenter {
     }
 
     public let isWeaponChangeButtonEnabledPublisher: AnyPublisher<Bool, Never>
+    
+    // showTutorialViewPublisher: とかになる予定
     public let isTutorialViewPresentedPublisher: AnyPublisher<Bool, Never>
     public let isWeaponSelectViewPresentedPublisher: AnyPublisher<Bool, Never>
     public let isResultViewPresentedPublisher: AnyPublisher<(Bool, Double), Never>
@@ -27,9 +29,9 @@ public final class GamePresenter {
     private let arShootingLibHandler: ARShootingLibHandlerInterface
     private let soundPlayer: SoundPlayerInterface
     private let coreMotionHandler: CoreMotionHandlerInterface
-    private let tutorialRepository: TutorialRepositoryInterface
+    private let tutorialRepository: TutorialRepositoryInterface // 無くなる予定
     private let weaponControlMotionHandleUseCase: WeaponControlMotionHandleUseCaseInterface
-    private let gameTimerCreateUseCase: GameTimerCreateUseCaseInterface
+    private let gameTimerCreateUseCase: GameTimerCreateUseCaseInterface // 無くなる予定
     
     private let weaponRepository: WeaponRepositoryInterface
     private let weaponFireUseCase: WeaponFireUseCaseInterface
@@ -38,8 +40,7 @@ public final class GamePresenter {
     private let scoreAddUseCase: ScoreAddUseCaseInterface
     private let scoreGetUseCase: ScoreGetUseCaseInterface
     
-    private let timerPauseController = GameTimerCreateRequest.PauseController()
-    private let weaponReloadCanceller = WeaponReloadCanceller()
+    private let timerPauseController = GameTimerCreateRequest.PauseController() // 無くなる予定
     private var weaponReloadTask: Task<Void, Never>?
     
     private let timeCountTextSubject = PassthroughSubject<String, Never>()
@@ -47,8 +48,9 @@ public final class GamePresenter {
     private let isTutorialViewPresentedSubject = CurrentValueSubject<Bool, Never>(false)
     private let isWeaponSelectViewPresentedSubject = CurrentValueSubject<Bool, Never>(false)
     private let isResultViewPresentedSubject = CurrentValueSubject<(Bool, Double), Never>((false, 0.0))
-    private var isCheckedTutorialCompletedFlag = false
-    private var reloadingMotionDetecedCount: Int = 0
+    
+    private var isCheckedTutorialCompletedFlag = false // 無くなる予定
+    private var reloadingMotionDetecedCount: Int = 0 // 無くなる予定
     
     public init(
         arShootingLibHandler: ARShootingLibHandlerInterface,
