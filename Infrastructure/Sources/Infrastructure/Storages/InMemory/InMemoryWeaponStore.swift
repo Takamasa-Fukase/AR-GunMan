@@ -11,7 +11,7 @@ import Data
 import Domain
 
 @Observable
-public final class InMemoryWeaponStore: InMemoryWeaponStoreInterface {
+public final class InMemoryWeaponStore: WeaponStoreInterface {
     public init() {}
     
     public var weapon = Weapon()

@@ -23,7 +23,7 @@ struct GameViewBuilder {
         )
         let weaponControlMotionHandleUseCase: WeaponControlMotionHandleUseCaseInterface = Factory.create()
         let weaponStore = InMemoryWeaponStore()
-        let weaponRepository = WeaponRepository(inMemoryWeaponStore: weaponStore)
+        let weaponRepository = WeaponRepository(weaponStore: weaponStore)
         let gameSession = GameSession()
         
         let weaponFireUseCase = WeaponFireUseCase(weaponRepository: weaponRepository)
