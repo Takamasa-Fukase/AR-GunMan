@@ -33,12 +33,12 @@ public final class GamePresenter {
     private let weaponControlMotionHandleUseCase: WeaponControlMotionHandleUseCaseInterface
     private let gameTimerCreateUseCase: GameTimerCreateUseCaseInterface // 無くなる予定
     
+    private let gameSessionRepository: GameSessionRepositoryInterface
     private let weaponRepository: WeaponRepositoryInterface
     private let weaponFireUseCase: WeaponFireUseCaseInterface
     private let weaponReloadUseCase: WeaponReloadUseCaseInterface
     private let weaponChangeUseCase: WeaponChangeUseCaseInterface
     private let scoreAddUseCase: ScoreAddUseCaseInterface
-    private let scoreGetUseCase: ScoreGetUseCaseInterface
     
     private let timerPauseController = GameTimerCreateRequest.PauseController() // 無くなる予定
     private var weaponReloadTask: Task<Void, Never>?
@@ -60,12 +60,12 @@ public final class GamePresenter {
         weaponControlMotionHandleUseCase: WeaponControlMotionHandleUseCaseInterface,
         gameTimerCreateUseCase: GameTimerCreateUseCaseInterface,
         
+        gameSessionRepository: GameSessionRepositoryInterface,
         weaponRepository: WeaponRepositoryInterface,
         weaponFireUseCase: WeaponFireUseCaseInterface,
         weaponReloadUseCase: WeaponReloadUseCaseInterface,
         weaponChangeUseCase: WeaponChangeUseCaseInterface,
         scoreAddUseCase: ScoreAddUseCaseInterface,
-        scoreGetUseCase: ScoreGetUseCaseInterface
     ) {
         self.arShootingLibHandler = arShootingLibHandler
         self.soundPlayer = soundPlayer
@@ -74,12 +74,12 @@ public final class GamePresenter {
         self.weaponControlMotionHandleUseCase = weaponControlMotionHandleUseCase
         self.gameTimerCreateUseCase = gameTimerCreateUseCase
         
+        self.gameSessionRepository = gameSessionRepository
         self.weaponRepository = weaponRepository
         self.weaponFireUseCase = weaponFireUseCase
         self.weaponReloadUseCase = weaponReloadUseCase
         self.weaponChangeUseCase = weaponChangeUseCase
         self.scoreAddUseCase = scoreAddUseCase
-        self.scoreGetUseCase = scoreGetUseCase
         
         timeCountTextPublisher = timeCountTextSubject.eraseToAnyPublisher()
         isWeaponChangeButtonEnabledPublisher = isWeaponChangeButtonEnabledSubject.eraseToAnyPublisher()
@@ -178,7 +178,7 @@ public final class GamePresenter {
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
                         self?.soundPlayer.play(.rankingAppear)
-                        let score = self?.scoreGetUseCase.execute() ?? 0.0
+                        let score = self?.gameSessionRepository.session.score.value ?? 0.0
                         self?.isResultViewPresentedSubject.send((true, score))
                     })
                 })

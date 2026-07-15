@@ -12,6 +12,7 @@ import Domain
 
 @Observable
 public final class InMemoryGameSessionStore: GameSessionStoreInterface {
-    
+    public init() {}
+
     public var session = GameSession()
 }

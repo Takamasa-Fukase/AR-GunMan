@@ -22,18 +22,19 @@ struct GameViewBuilder {
             targetCount: 50
         )
         let weaponControlMotionHandleUseCase: WeaponControlMotionHandleUseCaseInterface = Factory.create()
+        
         let weaponStore = InMemoryWeaponStore()
         let weaponRepository = WeaponRepository(weaponStore: weaponStore)
-        let gameSession = GameSession()
+        let gameSessionStore = InMemoryGameSessionStore()
+        let gameSessionRepository = GameSessionRepository(gameSessionStore: gameSessionStore)
         
         let weaponFireUseCase = WeaponFireUseCase(weaponRepository: weaponRepository)
         let weaponReloadUseCase = WeaponReloadUseCase(weaponRepository: weaponRepository)
         let weaponChangeUseCase = WeaponChangeUseCase(weaponRepository: weaponRepository)
         let scoreAddUseCase = ScoreAddUseCase(
             weaponRepository: weaponRepository,
-            gameSession: gameSession
+            gameSessionRepository: gameSessionRepository
         )
-        let scoreGetUseCase = ScoreGetUseCase(gameSession: gameSession)
         
         let presenter = GamePresenter(
             arShootingLibHandler: arShootingLibHandler,
@@ -42,12 +43,12 @@ struct GameViewBuilder {
             tutorialRepository: Factory.create(),
             weaponControlMotionHandleUseCase: weaponControlMotionHandleUseCase,
             gameTimerCreateUseCase: Factory.create(),
+            gameSessionRepository: gameSessionRepository,
             weaponRepository: weaponRepository,
             weaponFireUseCase: weaponFireUseCase,
             weaponReloadUseCase: weaponReloadUseCase,
             weaponChangeUseCase: weaponChangeUseCase,
             scoreAddUseCase: scoreAddUseCase,
-            scoreGetUseCase: scoreGetUseCase
         )
         let viewModel = GameViewModel(presenter: presenter)
         arShootingLibHandler.inject(delegate: presenter)

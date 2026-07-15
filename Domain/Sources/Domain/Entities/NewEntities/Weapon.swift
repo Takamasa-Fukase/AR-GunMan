@@ -13,9 +13,9 @@ public struct Weapon {
     public private(set) var isReloading: Bool
     
     public init() {
-        self.currentType = WeaponType.defaultType
-        self.bulletsCount = WeaponType.defaultType.weaponInfo.spec.capacity
-        self.isReloading = false
+        currentType = WeaponType.defaultType
+        bulletsCount = WeaponType.defaultType.weaponInfo.spec.capacity
+        isReloading = false
     }
     
     mutating func fire() -> WeaponFireResult {

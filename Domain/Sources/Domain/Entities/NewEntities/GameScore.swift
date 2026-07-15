@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct GameScore {
-    private(set) var value: Double = 0.0
+public struct GameScore {
+    public private(set) var value: Double = 0.0
     
     mutating func add(targetHitPoint: Int) {
         //ランキングがバラけるように、加算する得点自体に90%~100%の間の乱数を掛ける
