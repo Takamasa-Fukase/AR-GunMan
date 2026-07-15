@@ -35,10 +35,12 @@ public final class GamePresenter {
     
     private let gameSessionRepository: GameSessionRepositoryInterface
     private let weaponRepository: WeaponRepositoryInterface
+    
     private let weaponFireUseCase: WeaponFireUseCaseInterface
     private let weaponReloadUseCase: WeaponReloadUseCaseInterface
     private let weaponChangeUseCase: WeaponChangeUseCaseInterface
     private let scoreAddUseCase: ScoreAddUseCaseInterface
+    private let reloadingMotionDetectedCountHandleUseCase: ReloadingMotionDetectedCountHandleUseCaseInterface
     
     private let timerPauseController = GameTimerCreateRequest.PauseController() // 無くなる予定
     private var weaponReloadTask: Task<Void, Never>?
@@ -50,7 +52,6 @@ public final class GamePresenter {
     private let isResultViewPresentedSubject = CurrentValueSubject<(Bool, Double), Never>((false, 0.0))
     
     private var isCheckedTutorialCompletedFlag = false // 無くなる予定
-    private var reloadingMotionDetecedCount: Int = 0 // 無くなる予定
     
     public init(
         arShootingLibHandler: ARShootingLibHandlerInterface,
@@ -66,6 +67,7 @@ public final class GamePresenter {
         weaponReloadUseCase: WeaponReloadUseCaseInterface,
         weaponChangeUseCase: WeaponChangeUseCaseInterface,
         scoreAddUseCase: ScoreAddUseCaseInterface,
+        reloadingMotionDetectedCountHandleUseCase: ReloadingMotionDetectedCountHandleUseCaseInterface,
     ) {
         self.arShootingLibHandler = arShootingLibHandler
         self.soundPlayer = soundPlayer
@@ -80,6 +82,7 @@ public final class GamePresenter {
         self.weaponReloadUseCase = weaponReloadUseCase
         self.weaponChangeUseCase = weaponChangeUseCase
         self.scoreAddUseCase = scoreAddUseCase
+        self.reloadingMotionDetectedCountHandleUseCase = reloadingMotionDetectedCountHandleUseCase
         
         timeCountTextPublisher = timeCountTextSubject.eraseToAnyPublisher()
         isWeaponChangeButtonEnabledPublisher = isWeaponChangeButtonEnabledSubject.eraseToAnyPublisher()
@@ -219,6 +222,17 @@ public final class GamePresenter {
             break
         }
     }
+    
+    private func handleReloadingMotionDetectedCount() {
+        let result = reloadingMotionDetectedCountHandleUseCase.execute()
+        switch result {
+        case .notExceededLimit:
+            break
+        case .exceededLimit:
+            soundPlayer.play(.targetAppearanceChange)
+            arShootingLibHandler.changeTargetsAppearance(to: "taimeisan.jpg")
+        }
+    }
 }
 
 extension GamePresenter: ARShootingLibHandlerDelegate {
@@ -238,12 +252,6 @@ extension GamePresenter: WeaponControlMotionHandleUseCaseDelegate {
     
     public func reloadingMotionDetected() {
         reloadWeapon()
-        
-        // TODO: このカウントもGameSessionに含めてStore管理にする
-        reloadingMotionDetecedCount += 1
-        if reloadingMotionDetecedCount == 20 {
-            soundPlayer.play(.targetAppearanceChange)
-            arShootingLibHandler.changeTargetsAppearance(to: "taimeisan.jpg")
-        }
+        handleReloadingMotionDetectedCount()
     }
 }

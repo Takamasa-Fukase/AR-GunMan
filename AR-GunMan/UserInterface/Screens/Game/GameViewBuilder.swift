@@ -35,6 +35,9 @@ struct GameViewBuilder {
             weaponRepository: weaponRepository,
             gameSessionRepository: gameSessionRepository
         )
+        let reloadingMotionDetectedCountHandleUseCase = ReloadingMotionDetectedCountHandleUseCase(
+            gameSessionRepository: gameSessionRepository
+        )
         
         let presenter = GamePresenter(
             arShootingLibHandler: arShootingLibHandler,
@@ -49,6 +52,7 @@ struct GameViewBuilder {
             weaponReloadUseCase: weaponReloadUseCase,
             weaponChangeUseCase: weaponChangeUseCase,
             scoreAddUseCase: scoreAddUseCase,
+            reloadingMotionDetectedCountHandleUseCase: reloadingMotionDetectedCountHandleUseCase,
         )
         let viewModel = GameViewModel(presenter: presenter)
         arShootingLibHandler.inject(delegate: presenter)

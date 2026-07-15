@@ -22,12 +22,16 @@ public struct GameSession {
         score.add(targetHitPoint: targetHitPoint)
     }
     
-    mutating func incrementMotionDetectedCount() {
+    mutating func incrementReloadingMotionDetectedCount() {
         reloadingMotionDetectedCount += 1
     }
     
-    func checkExceedsReloadingMotionDetectedCountLimit() -> Bool {
-        return reloadingMotionDetectedCount == 20
+    func checkExceedsReloadingMotionDetectedCountLimit() -> ReloadingMotionDetectedCountCheckResult {
+        if reloadingMotionDetectedCount == 20 {
+            return .exceededLimit
+        } else {
+            return .notExceededLimit
+        }
     }
 }
 
