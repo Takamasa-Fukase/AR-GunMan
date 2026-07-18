@@ -10,5 +10,4 @@ import Combine
 
 public protocol UserDefaultsDataSourceInterface {
     var isTutorialCompleted: Bool { get set }
-    var isTutorialCompletedPublisher: AnyPublisher<Bool, Never> { get }
 }

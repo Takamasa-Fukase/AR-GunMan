@@ -9,10 +9,6 @@ import Foundation
 import Domain
 
 public final class TutorialRepository: TutorialRepositoryInterface {
-    public var isTutorialCompletedPublisher: AnyPublisher<Bool, Never> {
-        return userDefaultsDataSource.isTutorialCompletedPublisher
-    }
-    
     private var userDefaultsDataSource: UserDefaultsDataSourceInterface
     
     public init(userDefaultsDataSource: UserDefaultsDataSourceInterface) {

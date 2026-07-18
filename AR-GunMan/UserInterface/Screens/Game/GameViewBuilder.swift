@@ -21,8 +21,7 @@ struct GameViewBuilder {
             frame: frame,
             targetCount: 50
         )
-        let weaponControlMotionHandleUseCase: WeaponControlMotionHandleUseCaseInterface = Factory.create()
-        
+        let tutorialRepository: TutorialRepositoryInterface = Factory.create()
         let weaponStore = InMemoryWeaponStore()
         let weaponRepository = WeaponRepository(weaponStore: weaponStore)
         let gameSessionStore = InMemoryGameSessionStore()
@@ -31,6 +30,10 @@ struct GameViewBuilder {
         let weaponFireUseCase = WeaponFireUseCase(weaponRepository: weaponRepository)
         let weaponReloadUseCase = WeaponReloadUseCase(weaponRepository: weaponRepository)
         let weaponChangeUseCase = WeaponChangeUseCase(weaponRepository: weaponRepository)
+        let gameFlowDriveUseCase = GameFlowDriveUseCase(
+            gameSessionRepository: gameSessionRepository,
+            tutorialRepository: tutorialRepository
+        )
         let scoreAddUseCase = ScoreAddUseCase(
             weaponRepository: weaponRepository,
             gameSessionRepository: gameSessionRepository
@@ -38,21 +41,22 @@ struct GameViewBuilder {
         let reloadingMotionDetectedCountHandleUseCase = ReloadingMotionDetectedCountHandleUseCase(
             gameSessionRepository: gameSessionRepository
         )
+        let weaponControlMotionHandleUseCase: WeaponControlMotionHandleUseCaseInterface = Factory.create()
         
         let presenter = GamePresenter(
             arShootingLibHandler: arShootingLibHandler,
             soundPlayer: Factory.create(),
             coreMotionHandler: Factory.create(),
-            tutorialRepository: Factory.create(),
-            weaponControlMotionHandleUseCase: weaponControlMotionHandleUseCase,
-            gameTimerCreateUseCase: Factory.create(),
+            tutorialRepository: tutorialRepository,
             gameSessionRepository: gameSessionRepository,
             weaponRepository: weaponRepository,
             weaponFireUseCase: weaponFireUseCase,
             weaponReloadUseCase: weaponReloadUseCase,
             weaponChangeUseCase: weaponChangeUseCase,
+            gameFlowDriveUseCase: gameFlowDriveUseCase,
             scoreAddUseCase: scoreAddUseCase,
             reloadingMotionDetectedCountHandleUseCase: reloadingMotionDetectedCountHandleUseCase,
+            weaponControlMotionHandleUseCase: weaponControlMotionHandleUseCase,
         )
         let viewModel = GameViewModel(presenter: presenter)
         arShootingLibHandler.inject(delegate: presenter)

@@ -6,18 +6,12 @@
 //
 
 import Foundation
-import Combine
 import Data
 
 public final class UserDefaultsDataSource: UserDefaultsDataSourceInterface {
-    public let isTutorialCompletedPublisher: AnyPublisher<Bool, Never>
-    
     private let defaults = UserDefaults.standard
-    private let isTutorialCompletedSubject = CurrentValueSubject<Bool, Never>(false)
     
-    public init() {
-        isTutorialCompletedPublisher = isTutorialCompletedSubject.eraseToAnyPublisher()
-    }
+    public init() {}
 
     private enum Keys {
         static let isTutorialCompleted = "isTutorialCompleted"
@@ -29,7 +23,6 @@ public final class UserDefaultsDataSource: UserDefaultsDataSourceInterface {
         }
         set {
             defaults.set(newValue, forKey: Keys.isTutorialCompleted)
-            isTutorialCompletedSubject.send(newValue)
         }
     }
 }
