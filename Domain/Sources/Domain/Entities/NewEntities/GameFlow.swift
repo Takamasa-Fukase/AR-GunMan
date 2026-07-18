@@ -13,7 +13,7 @@ public struct GameFlow {
     private let continuation: AsyncStream<GameFlowStatus>.Continuation
     
     init() {
-        (statusStream, continuation) = AsyncStream<GameFlowStatus>.makeStream()
+        (statusStream, continuation) = AsyncStream.makeStream()
     }
     
     func handle(input: GameFlowInputEvent) {
