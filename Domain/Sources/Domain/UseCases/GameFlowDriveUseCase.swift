@@ -19,12 +19,13 @@ public final class GameFlowDriveUseCase: GameFlowDriveUseCaseInterface {
     private var gameSessionRepository: GameSessionRepositoryInterface
     private var cancellables: Set<AnyCancellable> = []
     private var timerTask: Task<Void, Never>?
-//    private var gameFlow: GameFlow {
-//        return gameSessionRepository.session.gameFlow
-//    }
-//    private var status: GameFlowStatus {
-//        return gameFlow.status
-//    }
+    private var session: GameSession {
+        get { return gameSessionRepository.session }
+        set { gameSessionRepository.session = newValue }
+    }
+    private var status: GameFlowStatus {
+        return session.gameFlow.status
+    }
     
     public init(
         gameSessionRepository: GameSessionRepositoryInterface,
@@ -34,73 +35,70 @@ public final class GameFlowDriveUseCase: GameFlowDriveUseCaseInterface {
         self.tutorialRepository = tutorialRepository
         
         Task {
-            for await status in gameSessionRepository.session.gameFlow.statusStream {
+            for await status in session.gameFlow.statusStream {
                 handleStatus(status)
             }
         }
     }
     
     public func start() {
-        guard gameSessionRepository.session.gameFlow.status == .flowNotStarted else {
+        guard status == .flowNotStarted else {
             return
         }
-        gameSessionRepository.session.driveGameFlow(to: .checkingTutorialCompletedStatus)
+        session.driveGameFlow(to: .checkingTutorialCompletedStatus)
     }
     
     public func pauseTimer() {
-        guard gameSessionRepository.session.gameFlow.status == .timerStartedAndWaitingForTimerEnd else {
+        guard status == .timerStartedAndWaitingForTimerEnd else {
             return
         }
         disposeTimer()
-        gameSessionRepository.session.driveGameFlow(to: .blocked(reason: .timerPaused))
+        session.driveGameFlow(to: .blocked(reason: .timerPaused))
     }
     
     public func resolveBlocked() {
-        guard case .blocked(let reason) = gameSessionRepository.session.gameFlow.status else {
+        guard case .blocked(let reason) = status else {
             return
         }
         switch reason {
         case .tutorialNotCompleted:
-            gameSessionRepository.session.driveGameFlow(to: .waitingForTimerStart)
+            session.driveGameFlow(to: .waitingForTimerStart)
 
         case .timerPaused:
-            gameSessionRepository.session.driveGameFlow(to: .timerStartedAndWaitingForTimerEnd)
+            session.driveGameFlow(to: .timerStartedAndWaitingForTimerEnd)
         }
     }
     
     private func handleStatus(_ status: GameFlowStatus) {
         switch status {
-        case .flowNotStarted:
-            break
-            
         case .checkingTutorialCompletedStatus:
             let isTutorialCompleted = tutorialRepository.getTutorialCompletedFlag()
             if isTutorialCompleted {
-                gameSessionRepository.session.driveGameFlow(to: .waitingForTimerStart)
+                session.driveGameFlow(to: .waitingForTimerStart)
             } else {
-                gameSessionRepository.session.driveGameFlow(to: .blocked(reason: .tutorialNotCompleted))
+                session.driveGameFlow(to: .blocked(reason: .tutorialNotCompleted))
             }
             
         case .waitingForTimerStart:
             Task {
                 // 1.5秒待機
                 try? await Task.sleep(for: .milliseconds(1500))
-                gameSessionRepository.session.driveGameFlow(to: .timerStartedAndWaitingForTimerEnd)
+                session.driveGameFlow(to: .timerStartedAndWaitingForTimerEnd)
             }
             
         case .timerStartedAndWaitingForTimerEnd:
             timerTask = Task {
                 // タイマーループ開始
                 while !Task.isCancelled {
-                    if gameSessionRepository.session.timeCountMillisec <= 0 {
-                        gameSessionRepository.session.driveGameFlow(to: .timerEndedAndWaitingForFlowEnd)
+                    if session.timeCountMillisec <= 0 {
+                        session.driveGameFlow(to: .timerEndedAndWaitingForFlowEnd)
                         disposeTimer()
                         break
                     }
                     
                     // TODO: 減算する1msと待機の1msをconstで共通にしたい　両者の乖離のミスを防ぐため
                     try? await Task.sleep(for: .milliseconds(1))
-                    gameSessionRepository.session.decrementTimeCountMillisec()
+                    session.decrementTimeCountMillisec()
                 }
             }
             
@@ -108,13 +106,10 @@ public final class GameFlowDriveUseCase: GameFlowDriveUseCaseInterface {
             Task {
                 // 1.5秒待機
                 try? await Task.sleep(for: .milliseconds(1500))
-                gameSessionRepository.session.driveGameFlow(to: .flowEnded)
+                session.driveGameFlow(to: .flowEnded)
             }
             
-        case .flowEnded:
-            break
-            
-        case .blocked:
+        case .flowNotStarted, .flowEnded, .blocked:
             break
         }
     }

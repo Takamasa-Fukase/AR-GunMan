@@ -135,12 +135,6 @@ public final class GamePresenter {
     // MARK: Privateメソッド
     private func handleGameFlowStatus(_ status: GameFlowStatus) {
         switch status {
-        case .flowNotStarted:
-            break
-            
-        case .checkingTutorialCompletedStatus:
-            break
-            
         case .waitingForTimerStart:
             soundPlayer.play(WeaponType.defaultType.resources.appearingSound)
             
@@ -167,11 +161,14 @@ public final class GamePresenter {
             case .timerPaused:
                 break
             }
+            
+        case .flowNotStarted, .checkingTutorialCompletedStatus:
+            break
         }
     }
     
-    private func showSelectedWeapon(_ selectedWeaponType: WeaponType) {
-        arShootingLibHandler.showWeapon(of: selectedWeaponType)
+    private func showSelectedWeapon(_ type: WeaponType) {
+        arShootingLibHandler.showWeapon(of: type)
     }
     
     private func fireWeapon() {
