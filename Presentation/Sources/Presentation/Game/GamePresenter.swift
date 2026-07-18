@@ -11,9 +11,10 @@ import DeviceInterface
 import Domain
 
 public final class GamePresenter {
-    // TODO: observation経由に差し替え時に、ms -> double -> Stringへの変換(Extメソッド経由)にする
-    public let timeCountTextPublisher: AnyPublisher<String, Never>
-    
+    public var timeCountText: String {
+        let millisec = gameSessionRepository.session.timeCountMillisec
+        return (Double(millisec) / Double(1000)).timeCountText
+    }
     public var currentWeaponType: WeaponType {
         return weaponRepository.weapon.currentType
     }
@@ -44,7 +45,6 @@ public final class GamePresenter {
 
     private var weaponReloadTask: Task<Void, Never>?
     
-    private let timeCountTextSubject = PassthroughSubject<String, Never>()
     private let isWeaponChangeButtonEnabledSubject = CurrentValueSubject<Bool, Never>(false)
     private let isTutorialViewPresentedSubject = CurrentValueSubject<Bool, Never>(false)
     private let isWeaponSelectViewPresentedSubject = CurrentValueSubject<Bool, Never>(false)
@@ -79,7 +79,6 @@ public final class GamePresenter {
         self.reloadingMotionDetectedCountHandleUseCase = reloadingMotionDetectedCountHandleUseCase
         self.weaponControlMotionHandleUseCase = weaponControlMotionHandleUseCase
         
-        timeCountTextPublisher = timeCountTextSubject.eraseToAnyPublisher()
         isWeaponChangeButtonEnabledPublisher = isWeaponChangeButtonEnabledSubject.eraseToAnyPublisher()
         isTutorialViewPresentedPublisher = isTutorialViewPresentedSubject.eraseToAnyPublisher()
         isWeaponSelectViewPresentedPublisher = isWeaponSelectViewPresentedSubject.eraseToAnyPublisher()

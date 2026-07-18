@@ -12,7 +12,10 @@ import Presentation
 
 @Observable
 final class GameViewModel {
-    private(set) var timeCountText: String = ""
+//    private(set) var timeCountText: String = ""
+    var timeCountText: String {
+        return presenter.timeCountText
+    }
     var currentWeaponType: WeaponType {
         return presenter.currentWeaponType
     }
@@ -32,12 +35,6 @@ final class GameViewModel {
     init(presenter: GamePresenter) {
         self.presenter = presenter
         
-        presenter.timeCountTextPublisher
-            .sink { [weak self] timeCountText in
-                self?.timeCountText = timeCountText
-            }
-            .store(in: &cancellables)
-
         presenter.isWeaponChangeButtonEnabledPublisher
             .sink { [weak self] isEnabled in
                 self?.isWeaponChangeButtonEnabled = isEnabled
