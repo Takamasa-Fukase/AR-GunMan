@@ -23,7 +23,48 @@ public final class GameFlowDriveUseCase: GameFlowDriveUseCaseInterface {
     ) {
         self.gameSessionRepository = gameSessionRepository
         self.tutorialRepository = tutorialRepository
+        
+        Task {
+            for await status in gameSessionRepository.session.gameFlow.statusStream {
+                switch status {
+                case .waitingForTutorialComplete:
+                    let isTutorialCompleted = tutorialRepository.getTutorialCompletedFlag()
+                    
+                    if isTutorialCompleted {
+                        gameSessionRepository.session.gameFlow.handle(input: .tutorialCompleted)
+                    } else {
+                        gameSessionRepository.session.gameFlow.handle(input: .tutorialNotCompleted)
+                    }
+                    
+                case .waitingForTimerStart:
+                    
+                case .timerStartedAndWaitingForTimerEnd:
+                    
+                case .timerEndedAndWaitingForFlowEnd:
+                    
+                case .flowEnded:
+                    
+                }
+            }
+        }
     }
+    
+//    public func execute2() {
+//        switch gameSessionRepository.session.gameFlow.status {
+//        case .flowNotStarted:
+//            
+//        case .waitingForTutorialComplete:
+//            
+//        case .waitingForTimerStart:
+//            
+//        case .timerStartedAndWaitingForTimerEnd:
+//            
+//        case .timerEndedAndWaitingForFlowEnd:
+//            
+//        case .flowEnded:
+//            break
+//        }
+//    }
     
     public func execute() {
         let isTutorialCompleted = tutorialRepository.getTutorialCompletedFlag()

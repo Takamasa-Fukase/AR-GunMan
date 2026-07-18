@@ -8,7 +8,7 @@
 import Foundation
 
 public struct GameSession {
-    public let gameFlow = GameFlow()
+    public private(set) var gameFlow = GameFlow()
     public private(set) var timeCountMillisec: Int = 30000
     public private(set) var score = GameScore()
     public private(set) var reloadingMotionDetectedCount: Int = 0
