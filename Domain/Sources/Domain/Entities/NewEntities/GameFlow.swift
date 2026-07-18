@@ -27,33 +27,6 @@ public struct GameFlow {
             status = GameFlowStatus.allCases[currentIndex + 1]
         }
     }
-    
-    func handle(input: GameFlowInputEvent) {
-        switch input {
-        case .tutorialNotCompleted:
-            statusContinuation.yield(.waitingForTutorialComplete)
-            
-        case .tutorialCompleted:
-            statusContinuation.yield(.waitingForTimerStart)
-            
-        case .timerStartWaitingTimeElapsed:
-            statusContinuation.yield(.timerStartedAndWaitingForTimerEnd)
-            
-        case .timerEnded:
-            statusContinuation.yield(.timerEndedAndWaitingForFlowEnd)
-
-        case .flowEndWaitingTimeElapsed:
-            statusContinuation.yield(.flowEnded)
-        }
-    }
-}
-
-enum GameFlowInputEvent {
-    case tutorialNotCompleted
-    case tutorialCompleted
-    case timerStartWaitingTimeElapsed
-    case timerEnded
-    case flowEndWaitingTimeElapsed
 }
 
 public enum GameFlowStatus: CaseIterable {

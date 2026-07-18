@@ -15,6 +15,10 @@ public struct GameSession {
     
     public init() {}
     
+    mutating func driveGameFlow() {
+        gameFlow.drive()
+    }
+    
     mutating func decrementTimeCountMillisec() {
         timeCountMillisec = max(0, timeCountMillisec - 1)
     }
