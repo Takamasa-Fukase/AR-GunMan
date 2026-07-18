@@ -18,7 +18,7 @@ public struct GameFlow {
         self.continuation = continuation
     }
     
-    mutating func handle(input: GameFlowInputEvent) {
+    func handle(input: GameFlowInputEvent) {
         switch input {
         case .tutorialNotCompleted:
             continuation.yield(.waitingForTutorialComplete)

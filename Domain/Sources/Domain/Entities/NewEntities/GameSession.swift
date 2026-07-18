@@ -15,10 +15,6 @@ public struct GameSession {
     
     public init() {}
     
-    func dispatchGameFlowInputEvent(input: GameFlowInputEvent) {
-        gameFlow.handle(input: input)
-    }
-    
     mutating func decrementTimeCountMillisec() {
         timeCountMillisec = max(0, timeCountMillisec - 1)
     }
