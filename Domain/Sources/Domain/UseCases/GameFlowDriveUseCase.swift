@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 public protocol GameFlowDriveUseCaseInterface {
-    func execute()
+    func start()
     func pause()
     func resume()
 }
@@ -34,7 +34,7 @@ public final class GameFlowDriveUseCase: GameFlowDriveUseCaseInterface {
         }
     }
     
-    public func execute() {
+    public func start() {
         guard gameSessionRepository.session.gameFlow.status == .flowNotStarted else {
             return
         }

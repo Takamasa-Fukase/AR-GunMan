@@ -11,7 +11,9 @@ import DeviceInterface
 import Domain
 
 public final class GamePresenter {
+    // TODO: observation経由に差し替え時に、ms -> double -> Stringへの変換(Extメソッド経由)にする
     public let timeCountTextPublisher: AnyPublisher<String, Never>
+    
     public var currentWeaponType: WeaponType {
         return weaponRepository.weapon.currentType
     }
@@ -29,20 +31,17 @@ public final class GamePresenter {
     private let arShootingLibHandler: ARShootingLibHandlerInterface
     private let soundPlayer: SoundPlayerInterface
     private let coreMotionHandler: CoreMotionHandlerInterface
-    private let tutorialRepository: TutorialRepositoryInterface // 無くなる予定
-    private let weaponControlMotionHandleUseCase: WeaponControlMotionHandleUseCaseInterface
-    private let gameTimerCreateUseCase: GameTimerCreateUseCaseInterface // 無くなる予定
-    
+    private let tutorialRepository: TutorialRepositoryInterface
     private let gameSessionRepository: GameSessionRepositoryInterface
     private let weaponRepository: WeaponRepositoryInterface
-    
     private let weaponFireUseCase: WeaponFireUseCaseInterface
     private let weaponReloadUseCase: WeaponReloadUseCaseInterface
     private let weaponChangeUseCase: WeaponChangeUseCaseInterface
+    private let gameFlowDriveUseCase: GameFlowDriveUseCaseInterface
     private let scoreAddUseCase: ScoreAddUseCaseInterface
     private let reloadingMotionDetectedCountHandleUseCase: ReloadingMotionDetectedCountHandleUseCaseInterface
-    
-    private let timerPauseController = GameTimerCreateRequest.PauseController() // 無くなる予定
+    private let weaponControlMotionHandleUseCase: WeaponControlMotionHandleUseCaseInterface
+
     private var weaponReloadTask: Task<Void, Never>?
     
     private let timeCountTextSubject = PassthroughSubject<String, Never>()
@@ -50,39 +49,35 @@ public final class GamePresenter {
     private let isTutorialViewPresentedSubject = CurrentValueSubject<Bool, Never>(false)
     private let isWeaponSelectViewPresentedSubject = CurrentValueSubject<Bool, Never>(false)
     private let isResultViewPresentedSubject = CurrentValueSubject<(Bool, Double), Never>((false, 0.0))
-    
-    private var isCheckedTutorialCompletedFlag = false // 無くなる予定
-    
+        
     public init(
         arShootingLibHandler: ARShootingLibHandlerInterface,
         soundPlayer: SoundPlayerInterface,
         coreMotionHandler: CoreMotionHandlerInterface,
         tutorialRepository: TutorialRepositoryInterface,
-        weaponControlMotionHandleUseCase: WeaponControlMotionHandleUseCaseInterface,
-        gameTimerCreateUseCase: GameTimerCreateUseCaseInterface,
-        
         gameSessionRepository: GameSessionRepositoryInterface,
         weaponRepository: WeaponRepositoryInterface,
         weaponFireUseCase: WeaponFireUseCaseInterface,
         weaponReloadUseCase: WeaponReloadUseCaseInterface,
         weaponChangeUseCase: WeaponChangeUseCaseInterface,
+        gameFlowDriveUseCase: GameFlowDriveUseCaseInterface,
         scoreAddUseCase: ScoreAddUseCaseInterface,
         reloadingMotionDetectedCountHandleUseCase: ReloadingMotionDetectedCountHandleUseCaseInterface,
+        weaponControlMotionHandleUseCase: WeaponControlMotionHandleUseCaseInterface,
     ) {
         self.arShootingLibHandler = arShootingLibHandler
         self.soundPlayer = soundPlayer
         self.coreMotionHandler = coreMotionHandler
         self.tutorialRepository = tutorialRepository
-        self.weaponControlMotionHandleUseCase = weaponControlMotionHandleUseCase
-        self.gameTimerCreateUseCase = gameTimerCreateUseCase
-        
         self.gameSessionRepository = gameSessionRepository
         self.weaponRepository = weaponRepository
         self.weaponFireUseCase = weaponFireUseCase
         self.weaponReloadUseCase = weaponReloadUseCase
         self.weaponChangeUseCase = weaponChangeUseCase
+        self.gameFlowDriveUseCase = gameFlowDriveUseCase
         self.scoreAddUseCase = scoreAddUseCase
         self.reloadingMotionDetectedCountHandleUseCase = reloadingMotionDetectedCountHandleUseCase
+        self.weaponControlMotionHandleUseCase = weaponControlMotionHandleUseCase
         
         timeCountTextPublisher = timeCountTextSubject.eraseToAnyPublisher()
         isWeaponChangeButtonEnabledPublisher = isWeaponChangeButtonEnabledSubject.eraseToAnyPublisher()
@@ -96,24 +91,19 @@ public final class GamePresenter {
         coreMotionHandler.gyroUpdated = { [weak self] gyro in
             self?.weaponControlMotionHandleUseCase.execute(acceleration: nil ,gyro: gyro)
         }
+        
+        Task {
+            for await status in gameSessionRepository.session.gameFlow.statusStream {
+                handleGameFlowStatus(status)
+            }
+        }
     }
     
     // MARK: ViewからのInput
     public func onViewAppear() {
         showSelectedWeapon(WeaponType.defaultType)
-        
         arShootingLibHandler.runSession()
-        
-        if !isCheckedTutorialCompletedFlag {
-            isCheckedTutorialCompletedFlag = true
-            
-            let isTutorialCompleted = tutorialRepository.getTutorialCompletedFlag()
-            if isTutorialCompleted {
-                waitAndCreateTimer()
-            } else {
-                isTutorialViewPresentedSubject.send(true)
-            }
-        }
+        gameFlowDriveUseCase.start()
     }
     
     public func onViewDisappear() {
@@ -122,18 +112,18 @@ public final class GamePresenter {
     
     public func tutorialEnded() {
         tutorialRepository.updateTutorialCompletedFlag(isCompleted: true)
-        waitAndCreateTimer()
+        gameFlowDriveUseCase.resume()
     }
     
     public func weaponChangeButtonTapped() {
         // 武器選択中はタイムカウントの更新を止める
-        timerPauseController.isPaused = true
+        gameFlowDriveUseCase.pause()
         isWeaponSelectViewPresentedSubject.send(true)
     }
     
     public func weaponSelected(weaponType: WeaponType) {
         // タイムカウントの更新を再開する
-        timerPauseController.isPaused = false
+        gameFlowDriveUseCase.resume()
         // 既存のリロードをキャンセルする
         weaponReloadTask?.cancel()
         weaponReloadTask = nil
@@ -143,49 +133,37 @@ public final class GamePresenter {
     }
     
     // MARK: Privateメソッド
-    private func showSelectedWeapon(_ selectedWeaponType: WeaponType) {
-        arShootingLibHandler.showWeapon(of: selectedWeaponType)
-                
-        if isCheckedTutorialCompletedFlag {
-            soundPlayer.play(selectedWeaponType.resources.appearingSound)
+    private func handleGameFlowStatus(_ status: GameFlowStatus) {
+        switch status {
+        case .flowNotStarted:
+            break
+            
+        case .waitingForTutorialComplete:
+            // TODO: 通過済みの時も呼ばれちゃうかもなのでUseCase側を修正する
+            isTutorialViewPresentedSubject.send(true)
+            
+        case .waitingForTimerStart:
+            soundPlayer.play(WeaponType.defaultType.resources.appearingSound)
+            
+        case .timerStartedAndWaitingForTimerEnd:
+            soundPlayer.play(.startWhistle)
+            coreMotionHandler.startDetection()
+            isWeaponChangeButtonEnabledSubject.send(true)
+            
+        case .timerEndedAndWaitingForFlowEnd:
+            soundPlayer.play(.endWhistle)
+            coreMotionHandler.stopDetection()
+            isWeaponChangeButtonEnabledSubject.send(false)
+            
+        case .flowEnded:
+            soundPlayer.play(.rankingAppear)
+            let score = gameSessionRepository.session.score.value
+            isResultViewPresentedSubject.send((true, score))
         }
     }
     
-    private func waitAndCreateTimer() {
-        soundPlayer.play(WeaponType.defaultType.resources.appearingSound)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
-            let request = GameTimerCreateRequest(
-//                initialTimeCount: self.timeCountSubject.value,
-                // FIXME: ビルド通すための暫定対応
-                initialTimeCount: 30.00,
-                updateInterval: 0.01,
-                pauseController: self.timerPauseController
-            )
-            self.gameTimerCreateUseCase.execute(
-                request: request,
-                onTimerStarted: { [weak self] in
-                    self?.soundPlayer.play(.startWhistle)
-                    self?.coreMotionHandler.startDetection()
-                    self?.isWeaponChangeButtonEnabledSubject.send(true)
-                },
-                onTimerUpdated: { [weak self] response in
-//                    self?.timeCountSubject.send(response.timeCount)
-                    let timeCountText = response.timeCount.timeCountText
-                    self?.timeCountTextSubject.send(timeCountText)
-                },
-                onTimerEnded: { [weak self] in
-                    self?.soundPlayer.play(.endWhistle)
-                    self?.coreMotionHandler.stopDetection()
-                    self?.isWeaponChangeButtonEnabledSubject.send(false)
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
-                        self?.soundPlayer.play(.rankingAppear)
-                        let score = self?.gameSessionRepository.session.score.value ?? 0.0
-                        self?.isResultViewPresentedSubject.send((true, score))
-                    })
-                })
-        })
+    private func showSelectedWeapon(_ selectedWeaponType: WeaponType) {
+        arShootingLibHandler.showWeapon(of: selectedWeaponType)
     }
     
     private func fireWeapon() {
