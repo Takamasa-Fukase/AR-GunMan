@@ -6,8 +6,10 @@
 //
 
 import Foundation
+import Combine
 
 public protocol TutorialRepositoryInterface {
+    var isTutorialCompletedPublisher: AnyPublisher<Bool, Never> { get }
     func getTutorialCompletedFlag() -> Bool
     func updateTutorialCompletedFlag(isCompleted: Bool)
 }

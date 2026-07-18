@@ -20,9 +20,6 @@ public struct GameFlow {
     
     mutating func handle(input: GameFlowInputEvent) {
         switch input {
-        case .flowStarted:
-            continuation.yield(.checkingTutorialCompletedStatus)
-            
         case .tutorialNotCompleted:
             continuation.yield(.waitingForTutorialComplete)
             
@@ -42,7 +39,6 @@ public struct GameFlow {
 }
 
 enum GameFlowInputEvent {
-    case flowStarted
     case tutorialNotCompleted
     case tutorialCompleted
     case timerStartWaitingTimeElapsed
@@ -51,7 +47,6 @@ enum GameFlowInputEvent {
 }
 
 public enum GameFlowStatus {
-    case checkingTutorialCompletedStatus
     case waitingForTutorialComplete
     case waitingForTimerStart
     case timerStartedAndWaitingForTimerEnd
