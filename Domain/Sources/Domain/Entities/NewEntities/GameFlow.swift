@@ -10,28 +10,28 @@ import Foundation
 public struct GameFlow {
     public let statusStream: AsyncStream<GameFlowStatus>
     
-    private let continuation: AsyncStream<GameFlowStatus>.Continuation
+    private let statusContinuation: AsyncStream<GameFlowStatus>.Continuation
     
     init() {
-        (statusStream, continuation) = AsyncStream.makeStream()
+        (statusStream, statusContinuation) = AsyncStream.makeStream()
     }
     
     func handle(input: GameFlowInputEvent) {
         switch input {
         case .tutorialNotCompleted:
-            continuation.yield(.waitingForTutorialComplete)
+            statusContinuation.yield(.waitingForTutorialComplete)
             
         case .tutorialCompleted:
-            continuation.yield(.waitingForTimerStart)
+            statusContinuation.yield(.waitingForTimerStart)
             
         case .timerStartWaitingTimeElapsed:
-            continuation.yield(.timerStartedAndWaitingForTimerEnd)
+            statusContinuation.yield(.timerStartedAndWaitingForTimerEnd)
             
         case .timerEnded:
-            continuation.yield(.timerEndedAndWaitingForFlowEnd)
+            statusContinuation.yield(.timerEndedAndWaitingForFlowEnd)
 
         case .flowEndWaitingTimeElapsed:
-            continuation.yield(.flowEnded)
+            statusContinuation.yield(.flowEnded)
         }
     }
 }
