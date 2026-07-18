@@ -15,8 +15,8 @@ public struct GameSession {
     
     public init() {}
     
-    mutating func driveGameFlow() {
-        gameFlow.drive()
+    mutating func driveGameFlow(to nextStatus: GameFlowStatus) {
+        gameFlow.drive(to: nextStatus)
     }
     
     mutating func decrementTimeCountMillisec() {

@@ -10,8 +10,8 @@ import Combine
 
 public protocol GameFlowDriveUseCaseInterface {
     func start()
-    func pause()
-    func resume()
+    func pauseTimer()
+    func resolveBlocked()
 }
 
 public final class GameFlowDriveUseCase: GameFlowDriveUseCaseInterface {
@@ -19,6 +19,12 @@ public final class GameFlowDriveUseCase: GameFlowDriveUseCaseInterface {
     private var gameSessionRepository: GameSessionRepositoryInterface
     private var cancellables: Set<AnyCancellable> = []
     private var timerTask: Task<Void, Never>?
+//    private var gameFlow: GameFlow {
+//        return gameSessionRepository.session.gameFlow
+//    }
+//    private var status: GameFlowStatus {
+//        return gameFlow.status
+//    }
     
     public init(
         gameSessionRepository: GameSessionRepositoryInterface,
@@ -38,42 +44,48 @@ public final class GameFlowDriveUseCase: GameFlowDriveUseCaseInterface {
         guard gameSessionRepository.session.gameFlow.status == .flowNotStarted else {
             return
         }
-        handleStatus(gameSessionRepository.session.gameFlow.status)
+        gameSessionRepository.session.driveGameFlow(to: .checkingTutorialCompletedStatus)
     }
     
-    public func pause() {
+    public func pauseTimer() {
         guard gameSessionRepository.session.gameFlow.status == .timerStartedAndWaitingForTimerEnd else {
             return
         }
         disposeTimer()
+        gameSessionRepository.session.driveGameFlow(to: .blocked(reason: .timerPaused))
     }
     
-    public func resume() {
-        switch gameSessionRepository.session.gameFlow.status {
-        case .waitingForTutorialComplete, .timerStartedAndWaitingForTimerEnd:
-            handleStatus(gameSessionRepository.session.gameFlow.status)
-        default:
-            break
+    public func resolveBlocked() {
+        guard case .blocked(let reason) = gameSessionRepository.session.gameFlow.status else {
+            return
+        }
+        switch reason {
+        case .tutorialNotCompleted:
+            gameSessionRepository.session.driveGameFlow(to: .waitingForTimerStart)
+
+        case .timerPaused:
+            gameSessionRepository.session.driveGameFlow(to: .timerStartedAndWaitingForTimerEnd)
         }
     }
     
     private func handleStatus(_ status: GameFlowStatus) {
         switch status {
         case .flowNotStarted:
-            gameSessionRepository.session.driveGameFlow()
+            break
             
-        case .waitingForTutorialComplete:
+        case .checkingTutorialCompletedStatus:
             let isTutorialCompleted = tutorialRepository.getTutorialCompletedFlag()
-            guard isTutorialCompleted else {
-                return
+            if isTutorialCompleted {
+                gameSessionRepository.session.driveGameFlow(to: .waitingForTimerStart)
+            } else {
+                gameSessionRepository.session.driveGameFlow(to: .blocked(reason: .tutorialNotCompleted))
             }
-            gameSessionRepository.session.driveGameFlow()
             
         case .waitingForTimerStart:
             Task {
                 // 1.5秒待機
                 try? await Task.sleep(for: .milliseconds(1500))
-                gameSessionRepository.session.driveGameFlow()
+                gameSessionRepository.session.driveGameFlow(to: .timerStartedAndWaitingForTimerEnd)
             }
             
         case .timerStartedAndWaitingForTimerEnd:
@@ -81,7 +93,7 @@ public final class GameFlowDriveUseCase: GameFlowDriveUseCaseInterface {
                 // タイマーループ開始
                 while !Task.isCancelled {
                     if gameSessionRepository.session.timeCountMillisec <= 0 {
-                        gameSessionRepository.session.driveGameFlow()
+                        gameSessionRepository.session.driveGameFlow(to: .timerEndedAndWaitingForFlowEnd)
                         disposeTimer()
                         break
                     }
@@ -96,10 +108,13 @@ public final class GameFlowDriveUseCase: GameFlowDriveUseCaseInterface {
             Task {
                 // 1.5秒待機
                 try? await Task.sleep(for: .milliseconds(1500))
-                gameSessionRepository.session.driveGameFlow()
+                gameSessionRepository.session.driveGameFlow(to: .flowEnded)
             }
             
         case .flowEnded:
+            break
+            
+        case .blocked:
             break
         }
     }

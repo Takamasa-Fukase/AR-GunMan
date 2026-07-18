@@ -112,18 +112,18 @@ public final class GamePresenter {
     
     public func tutorialEnded() {
         tutorialRepository.updateTutorialCompletedFlag(isCompleted: true)
-        gameFlowDriveUseCase.resume()
+        gameFlowDriveUseCase.resolveBlocked()
     }
     
     public func weaponChangeButtonTapped() {
         // 武器選択中はタイムカウントの更新を止める
-        gameFlowDriveUseCase.pause()
+        gameFlowDriveUseCase.pauseTimer()
         isWeaponSelectViewPresentedSubject.send(true)
     }
     
     public func weaponSelected(weaponType: WeaponType) {
         // タイムカウントの更新を再開する
-        gameFlowDriveUseCase.resume()
+        gameFlowDriveUseCase.resolveBlocked()
         // 既存のリロードをキャンセルする
         weaponReloadTask?.cancel()
         weaponReloadTask = nil
@@ -138,9 +138,8 @@ public final class GamePresenter {
         case .flowNotStarted:
             break
             
-        case .waitingForTutorialComplete:
-            // TODO: 通過済みの時も呼ばれちゃうかもなのでUseCase側を修正する
-            isTutorialViewPresentedSubject.send(true)
+        case .checkingTutorialCompletedStatus:
+            break
             
         case .waitingForTimerStart:
             soundPlayer.play(WeaponType.defaultType.resources.appearingSound)
@@ -159,6 +158,15 @@ public final class GamePresenter {
             soundPlayer.play(.rankingAppear)
             let score = gameSessionRepository.session.score.value
             isResultViewPresentedSubject.send((true, score))
+            
+        case .blocked(let reason):
+            switch reason {
+            case .tutorialNotCompleted:
+                isTutorialViewPresentedSubject.send(true)
+                
+            case .timerPaused:
+                break
+            }
         }
     }
     

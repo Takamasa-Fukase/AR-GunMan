@@ -21,19 +21,22 @@ public struct GameFlow {
         (statusStream, statusContinuation) = AsyncStream.makeStream()
     }
     
-    mutating func drive() {
-        if let currentIndex = GameFlowStatus.allCases.firstIndex(of: status),
-           currentIndex < GameFlowStatus.allCases.count - 1 {
-            status = GameFlowStatus.allCases[currentIndex + 1]
-        }
+    mutating func drive(to nextStatus: GameFlowStatus) {
+        status = nextStatus
     }
 }
 
-public enum GameFlowStatus: CaseIterable {
+public enum GameFlowStatus: Equatable {
     case flowNotStarted
-    case waitingForTutorialComplete
+    case checkingTutorialCompletedStatus
     case waitingForTimerStart
     case timerStartedAndWaitingForTimerEnd
     case timerEndedAndWaitingForFlowEnd
     case flowEnded
+    case blocked(reason: BlockedReason)
+    
+    public enum BlockedReason: Equatable {
+        case tutorialNotCompleted
+        case timerPaused
+    }
 }
