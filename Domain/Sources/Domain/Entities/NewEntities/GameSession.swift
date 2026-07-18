@@ -8,12 +8,20 @@
 import Foundation
 
 public struct GameSession {
+    public let gameFlow = GameFlow()
     public private(set) var timeCountMillisec: Int = 30000
     public private(set) var score = GameScore()
     public private(set) var reloadingMotionDetectedCount: Int = 0
-    public let gameFlow = GameFlow()
     
     public init() {}
+    
+    func dispatchGameFlowInputEvent(input: GameFlowInputEvent) {
+        gameFlow.handle(input: input)
+    }
+    
+    mutating func decrementTimeCountMillisec() {
+        timeCountMillisec = max(0, timeCountMillisec - 1)
+    }
     
     mutating func addScore(targetHitPoint: Int) {
         score.add(targetHitPoint: targetHitPoint)
@@ -29,10 +37,6 @@ public struct GameSession {
         } else {
             return .notExceededLimit
         }
-    }
-    
-    func dispatchGameFlowInputEvent(input: GameFlowInputEvent) {
-        gameFlow.handle(input: input)
     }
 }
 

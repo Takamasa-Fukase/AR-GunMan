@@ -23,14 +23,6 @@ public final class GameFlowDriveUseCase: GameFlowDriveUseCaseInterface {
     ) {
         self.gameSessionRepository = gameSessionRepository
         self.tutorialRepository = tutorialRepository
-        
-//        tutorialRepository
-//            .isTutorialCompletedPublisher
-//            .sink { [weak self] isCompleted in
-//                
-//                
-//                
-//            }.store(in: &cancellables)
     }
     
     public func execute() {
@@ -43,12 +35,30 @@ public final class GameFlowDriveUseCase: GameFlowDriveUseCaseInterface {
         
         gameSessionRepository.session.gameFlow.handle(input: .tutorialCompleted)
         
-        // TODO: 1500ms遅延
-        
-        gameSessionRepository.session.gameFlow.handle(input: .timerStartWaitingTimeElapsed)
-        
-        // TODO: timerCreate & start
-        
-        
+        Task {
+            // 1.5秒待機
+            try? await Task.sleep(for: .milliseconds(1500))
+            
+            gameSessionRepository.session.gameFlow.handle(input: .timerStartWaitingTimeElapsed)
+            
+            // TODO: 武器選択画面表示中はタイマーを一時停止したいので考慮追加する
+            // タイマーループ開始
+            while !Task.isCancelled {
+                if gameSessionRepository.session.timeCountMillisec <= 0 {
+                    gameSessionRepository.session.gameFlow.handle(input: .timerEnded)
+                    break
+                }
+                
+                // TODO: 減算する1msと待機の1msをconstで共通にしたい　両者の乖離のミスを防ぐため
+                try? await Task.sleep(for: .milliseconds(1))
+                
+                gameSessionRepository.session.decrementTimeCountMillisec()
+            }
+            
+            // 1.5秒待機
+            try? await Task.sleep(for: .milliseconds(1500))
+            
+            gameSessionRepository.session.gameFlow.handle(input: .flowEndWaitingTimeElapsed)
+        }
     }
 }
