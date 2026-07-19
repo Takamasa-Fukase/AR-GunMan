@@ -10,6 +10,7 @@ import Combine
 import DeviceInterface
 import Domain
 
+@MainActor
 public final class GamePresenter {
     public var timeCountText: String {
         return gameRepository.timeCountMillisec.timeCountText

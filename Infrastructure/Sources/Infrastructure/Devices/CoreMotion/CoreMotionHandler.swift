@@ -15,11 +15,11 @@ public class CoreMotionHandler: CoreMotionHandlerInterface {
     public var gyroUpdated: ((VectorMotionData) -> Void)?
     
     private let coreMotionManager = CMMotionManager()
-//    private let operationQueue: OperationQueue = {
-//        let queue = OperationQueue()
-//        queue.maxConcurrentOperationCount = 1
-//        return queue
-//    }()
+    private let operationQueue: OperationQueue = {
+        let queue = OperationQueue()
+        queue.maxConcurrentOperationCount = 1
+        return queue
+    }()
     
     public init() {
         setup()
@@ -43,8 +43,7 @@ public class CoreMotionHandler: CoreMotionHandlerInterface {
     
     private func startAccelerometerUpdates() {
         guard !coreMotionManager.isAccelerometerActive else { return }
-        // TODO: 後でバックグラウンドで実行されるキューにして、Presenter側をMainActorにする
-        coreMotionManager.startAccelerometerUpdates(to: OperationQueue.main) { [weak self] data, error in
+        coreMotionManager.startAccelerometerUpdates(to: operationQueue) { [weak self] data, error in
             if let error = error { print(error); return }
             guard let acceleration = data?.acceleration else { return }
             self?.accelerationUpdated?(acceleration.vector)
@@ -53,8 +52,7 @@ public class CoreMotionHandler: CoreMotionHandlerInterface {
     
     private func startGyroUpdates() {
         guard !coreMotionManager.isGyroActive else { return }
-        // TODO: 後でバックグラウンドで実行されるキューにして、Presenter側をMainActorにする
-        coreMotionManager.startGyroUpdates(to: OperationQueue.main) { [weak self] data, error in
+        coreMotionManager.startGyroUpdates(to: operationQueue) { [weak self] data, error in
             if let error = error { print(error); return }
             guard let gyro = data?.rotationRate else { return }
             self?.gyroUpdated?(gyro.vector)

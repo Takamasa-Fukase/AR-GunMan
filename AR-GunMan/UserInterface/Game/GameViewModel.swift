@@ -11,6 +11,7 @@ import Domain
 import Presentation
 
 @Observable
+@MainActor
 final class GameViewModel {
     var timeCountText: String {
         return presenter.timeCountText

@@ -16,7 +16,7 @@ import Presentation
 struct GameViewBuilder {
     private init() {}
     
-    static func build(frame: CGRect) -> GameView<ARSCNViewRepresentable> {
+    @MainActor static func build(frame: CGRect) -> GameView<ARSCNViewRepresentable> {
         let (arShootingLibHandler, arView) = Factory.create(
             frame: frame,
             targetCount: 50
