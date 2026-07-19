@@ -9,12 +9,9 @@ import Foundation
 
 public struct GameSession {
     public private(set) var gameFlow = GameFlow()
-    public private(set) var timeCountMillisec: Int = 30000
+    public private(set) var timeCount = GameTimeCount()
     public private(set) var score = GameScore()
     public private(set) var reloadingMotionDetectedCount: Int = 0
-    
-    // 仮でここに置いている
-    static let timerUpdateIntervalMillisec: Int = 10
     
     public init() {}
     
@@ -22,8 +19,8 @@ public struct GameSession {
         gameFlow.drive(to: nextStatus)
     }
     
-    mutating func decrementTimeCountMillisec() {
-        timeCountMillisec = max(0, timeCountMillisec - timerUpdateIntervalMillisec)
+    mutating func decrementTimeCount() {
+        timeCount.decrement()
     }
     
     mutating func addScore(targetHitPoint: Int) {

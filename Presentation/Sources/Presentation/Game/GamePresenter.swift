@@ -12,7 +12,7 @@ import Domain
 
 public final class GamePresenter {
     public var timeCountText: String {
-        let millisec = gameSessionRepository.session.timeCountMillisec
+        let millisec = gameSessionRepository.session.timeCount.countMillisec
         return (Double(millisec) / Double(1000)).timeCountText
     }
     public var currentWeaponType: WeaponType {

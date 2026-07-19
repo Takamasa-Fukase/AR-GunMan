@@ -94,14 +94,14 @@ public final class GameFlowDriveUseCase: GameFlowDriveUseCaseInterface {
             timerTask = Task {
                 // タイマーループ開始
                 while !Task.isCancelled {
-                    if session.timeCountMillisec <= 0 {
+                    if session.timeCount.isTimeUp {
                         updateStatus(to: .timerEndedAndWaitingForFlowEnd)
                         disposeTimer()
                         break
                     }
                     
-                    try? await Task.sleep(for: .milliseconds(GameSession.timerUpdateIntervalMillisec))
-                    session.decrementTimeCountMillisec()
+                    try? await Task.sleep(for: .milliseconds(GameTimeCount.updateIntervalMillisec))
+                    session.decrementTimeCount()
                 }
             }
             
