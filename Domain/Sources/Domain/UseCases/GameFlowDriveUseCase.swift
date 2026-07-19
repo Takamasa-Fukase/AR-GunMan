@@ -56,7 +56,7 @@ public final class GameFlowDriveUseCase: GameFlowDriveUseCaseInterface {
             updateAndHandleNextStatus(nextStatus: .waitingForTimerStart)
 
         case .timerPaused:
-            updateAndHandleNextStatus(nextStatus: .timerStartedAndWaitingForTimerEnd)
+            updateAndHandleNextStatus(nextStatus: .timerResumedAndWaitingForTimerEnd)
         }
     }
     
@@ -83,7 +83,7 @@ public final class GameFlowDriveUseCase: GameFlowDriveUseCaseInterface {
                 updateAndHandleNextStatus(nextStatus: .timerStartedAndWaitingForTimerEnd)
             }
             
-        case .timerStartedAndWaitingForTimerEnd:
+        case .timerStartedAndWaitingForTimerEnd, .timerResumedAndWaitingForTimerEnd:
             timerTask = Task {
                 // タイマーループ開始
                 while !Task.isCancelled {

@@ -22,6 +22,7 @@ public enum GameFlowStatus: Equatable {
     case checkingTutorialCompletedStatus
     case waitingForTimerStart
     case timerStartedAndWaitingForTimerEnd
+    case timerResumedAndWaitingForTimerEnd
     case timerEndedAndWaitingForFlowEnd
     case flowEnded
     case blocked(reason: BlockedReason)

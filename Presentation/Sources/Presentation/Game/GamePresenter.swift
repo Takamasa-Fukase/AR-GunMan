@@ -21,7 +21,12 @@ public final class GamePresenter {
         return String(weaponRepository.bulletsCount)
     }
     public var isWeaponChangeButtonEnabled: Bool {
-        return gameRepository.gameFlowStatus == .timerStartedAndWaitingForTimerEnd
+        switch gameRepository.gameFlowStatus {
+        case .timerStartedAndWaitingForTimerEnd, .timerResumedAndWaitingForTimerEnd:
+            return true
+        default:
+            return false
+        }
     }
     
     // showTutorialViewPublisher: とかになる予定
@@ -117,17 +122,19 @@ public final class GamePresenter {
     }
     
     public func weaponChangeButtonTapped() {
+        isWeaponSelectViewPresentedSubject.send(true)
+
         // 武器選択中はタイムカウントの更新を止める
         gameFlowDriveUseCase.pauseTimer()
-        isWeaponSelectViewPresentedSubject.send(true)
     }
     
     public func weaponSelected(weaponType: WeaponType) {
-        // タイムカウントの更新を再開する
-        gameFlowDriveUseCase.resolveBlocked()
-
         weaponChangeUseCase.execute(newType: weaponType)
         arShootingLibHandler.showWeapon(of: weaponType)
+        soundPlayer.play(weaponType.resources.appearingSound)
+        
+        // タイムカウントの更新を再開する
+        gameFlowDriveUseCase.resolveBlocked()
     }
     
     // MARK: Privateメソッド
@@ -157,7 +164,7 @@ public final class GamePresenter {
                 break
             }
             
-        case .flowNotStarted, .checkingTutorialCompletedStatus:
+        case .flowNotStarted, .timerResumedAndWaitingForTimerEnd, .checkingTutorialCompletedStatus:
             break
         }
     }

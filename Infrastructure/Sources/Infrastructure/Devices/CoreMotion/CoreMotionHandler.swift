@@ -11,19 +11,23 @@ import DeviceInterface
 import Domain
 
 public class CoreMotionHandler: CoreMotionHandlerInterface {
-    private let coreMotionManager: CMMotionManager
     public var accelerationUpdated: ((VectorMotionData) -> Void)?
     public var gyroUpdated: ((VectorMotionData) -> Void)?
     
+    private let coreMotionManager = CMMotionManager()
+//    private let operationQueue: OperationQueue = {
+//        let queue = OperationQueue()
+//        queue.maxConcurrentOperationCount = 1
+//        return queue
+//    }()
+    
     public init() {
-        coreMotionManager = CMMotionManager()
         setup()
     }
     
     public func startDetection() {
-        guard let currentOperationQueue = OperationQueue.current else { return }
-        startAccelerometerUpdates(operationQueue: currentOperationQueue)
-        startGyroUpdates(operationQueue: currentOperationQueue)
+        startAccelerometerUpdates()
+        startGyroUpdates()
     }
     
     public func stopDetection() {
@@ -37,18 +41,20 @@ public class CoreMotionHandler: CoreMotionHandlerInterface {
         coreMotionManager.gyroUpdateInterval = 0.2
     }
     
-    private func startAccelerometerUpdates(operationQueue: OperationQueue) {
+    private func startAccelerometerUpdates() {
         guard !coreMotionManager.isAccelerometerActive else { return }
-        coreMotionManager.startAccelerometerUpdates(to: operationQueue) { [weak self] data, error in
+        // TODO: 後でバックグラウンドで実行されるキューにして、Presenter側をMainActorにする
+        coreMotionManager.startAccelerometerUpdates(to: OperationQueue.main) { [weak self] data, error in
             if let error = error { print(error); return }
             guard let acceleration = data?.acceleration else { return }
             self?.accelerationUpdated?(acceleration.vector)
         }
     }
     
-    private func startGyroUpdates(operationQueue: OperationQueue) {
+    private func startGyroUpdates() {
         guard !coreMotionManager.isGyroActive else { return }
-        coreMotionManager.startGyroUpdates(to: operationQueue) { [weak self] data, error in
+        // TODO: 後でバックグラウンドで実行されるキューにして、Presenter側をMainActorにする
+        coreMotionManager.startGyroUpdates(to: OperationQueue.main) { [weak self] data, error in
             if let error = error { print(error); return }
             guard let gyro = data?.rotationRate else { return }
             self?.gyroUpdated?(gyro.vector)
