@@ -42,12 +42,12 @@ final class ProdFactory: FactoryInterface {
         return FirestoreClient()
     }
     
-    static func create() -> UserDefaultsDataSourceInterface {
-        return UserDefaultsDataSource()
+    static func create() -> UserDefaultsClientInterface {
+        return UserDefaultsClient()
     }
     
     static func create() -> TutorialRepositoryInterface {
-        return TutorialRepository(userDefaultsDataSource: create())
+        return TutorialRepository(userDefaultsClient: create())
     }
     
     static func create() -> RankingRepositoryInterface {

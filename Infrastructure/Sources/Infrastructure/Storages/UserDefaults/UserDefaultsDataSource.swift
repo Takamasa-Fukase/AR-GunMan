@@ -1,5 +1,5 @@
 //
-//  UserDefaultsDataSource.swift
+//  UserDefaultsClient.swift
 //  Infrastructure
 //
 //  Created by ウルトラ深瀬 on 2026/05/30.
@@ -8,14 +8,14 @@
 import Foundation
 import Data
 
-public final class UserDefaultsDataSource: UserDefaultsDataSourceInterface {
+public final class UserDefaultsClient: UserDefaultsClientInterface {
+    private struct Keys {
+        static let isTutorialCompleted = "isTutorialCompleted"
+    }
+    
     private let defaults = UserDefaults.standard
     
     public init() {}
-
-    private enum Keys {
-        static let isTutorialCompleted = "isTutorialCompleted"
-    }
 
     public var isTutorialCompleted: Bool {
         get {

@@ -9,17 +9,17 @@ import Foundation
 import Domain
 
 public final class TutorialRepository: TutorialRepositoryInterface {
-    private var userDefaultsDataSource: UserDefaultsDataSourceInterface
+    private var userDefaultsClient: UserDefaultsClientInterface
     
-    public init(userDefaultsDataSource: UserDefaultsDataSourceInterface) {
-        self.userDefaultsDataSource = userDefaultsDataSource
+    public init(userDefaultsClient: UserDefaultsClientInterface) {
+        self.userDefaultsClient = userDefaultsClient
     }
     
     public func getTutorialCompletedFlag() -> Bool {
-        return userDefaultsDataSource.isTutorialCompleted
+        return userDefaultsClient.isTutorialCompleted
     }
     
     public func updateTutorialCompletedFlag(isCompleted: Bool) {
-        userDefaultsDataSource.isTutorialCompleted = isCompleted
+        userDefaultsClient.isTutorialCompleted = isCompleted
     }
 }

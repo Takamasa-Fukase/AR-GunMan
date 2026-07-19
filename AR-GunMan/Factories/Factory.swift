@@ -29,7 +29,7 @@ protocol FactoryInterface {
 
     // MARK: Storages
     static func create() -> FirestoreClientInterface
-    static func create() -> UserDefaultsDataSourceInterface
+    static func create() -> UserDefaultsClientInterface
     
     // MARK: Repositories
     static func create() -> TutorialRepositoryInterface

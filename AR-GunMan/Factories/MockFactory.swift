@@ -38,13 +38,13 @@ final class MockFactory: FactoryInterface {
         return FirestoreClient()
     }
     
-    static func create() -> UserDefaultsDataSourceInterface {
-        return UserDefaultsDataSource()
+    static func create() -> UserDefaultsClientInterface {
+        return UserDefaultsClient()
     }
     
     // MARK: Repositories
     static func create() -> TutorialRepositoryInterface {
-        return TutorialRepository(userDefaultsDataSource: create())
+        return TutorialRepository(userDefaultsClient: create())
     }
     
     static func create() -> RankingRepositoryInterface {
