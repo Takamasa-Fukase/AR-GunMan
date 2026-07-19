@@ -1,6 +1,6 @@
 //
 //  SoundConst.swift
-//  Devices
+//  DeviceInterface
 //
 //  Created by ウルトラ深瀬 on 2022/02/19.
 //
