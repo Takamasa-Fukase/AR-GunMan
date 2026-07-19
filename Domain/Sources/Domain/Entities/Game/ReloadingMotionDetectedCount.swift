@@ -8,14 +8,11 @@
 import Foundation
 
 public struct ReloadingMotionDetectedCount {
-    public enum Result {
-        case notExceededLimit
-        case exceededLimit
-    }
+    private var count: Int = 0
     
-    public private(set) var count: Int = 0
-    
-    mutating func update() -> Result {
+    public init() {}
+
+    public mutating func update() -> ReloadingMotionDetectedCountUpdateResult {
         count += 1
         if count == 20 {
             return .exceededLimit
@@ -23,4 +20,9 @@ public struct ReloadingMotionDetectedCount {
             return .notExceededLimit
         }
     }
+}
+
+public enum ReloadingMotionDetectedCountUpdateResult {
+    case notExceededLimit
+    case exceededLimit
 }

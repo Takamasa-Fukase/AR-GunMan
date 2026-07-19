@@ -12,11 +12,13 @@ public struct GameTimeCount {
     
     public private(set) var countMillisec: Int = 30000
     
-    var isTimeUp: Bool {
+    public var isTimeUp: Bool {
         return countMillisec <= 0
     }
         
-    mutating func decrement() {
+    public init() {}
+
+    public mutating func decrement() {
         countMillisec = max(0, countMillisec - GameTimeCount.updateIntervalMillisec)
     }
 }

@@ -24,22 +24,15 @@ struct GameViewBuilder {
         let tutorialRepository: TutorialRepositoryInterface = Factory.create()
         let weaponStore = InMemoryWeaponStore()
         let weaponRepository = WeaponRepository(weaponStore: weaponStore)
-        let gameSessionStore = InMemoryGameSessionStore()
-        let gameSessionRepository = GameSessionRepository(gameSessionStore: gameSessionStore)
+        let gameStore = InMemoryGameStore()
+        let gameRepository = GameRepository(gameStore: gameStore)
         
         let weaponFireUseCase = WeaponFireUseCase(weaponRepository: weaponRepository)
         let weaponReloadUseCase = WeaponReloadUseCase(weaponRepository: weaponRepository)
         let weaponChangeUseCase = WeaponChangeUseCase(weaponRepository: weaponRepository)
         let gameFlowDriveUseCase = GameFlowDriveUseCase(
-            gameSessionRepository: gameSessionRepository,
+            gameRepository: gameRepository,
             tutorialRepository: tutorialRepository
-        )
-        let scoreAddUseCase = ScoreAddUseCase(
-            weaponRepository: weaponRepository,
-            gameSessionRepository: gameSessionRepository
-        )
-        let reloadingMotionDetectedCountHandleUseCase = ReloadingMotionDetectedCountHandleUseCase(
-            gameSessionRepository: gameSessionRepository
         )
         let weaponControlMotionHandleUseCase: WeaponControlMotionHandleUseCaseInterface = Factory.create()
         
@@ -48,14 +41,12 @@ struct GameViewBuilder {
             soundPlayer: Factory.create(),
             coreMotionHandler: Factory.create(),
             tutorialRepository: tutorialRepository,
-            gameSessionRepository: gameSessionRepository,
+            gameRepository: gameRepository,
             weaponRepository: weaponRepository,
             weaponFireUseCase: weaponFireUseCase,
             weaponReloadUseCase: weaponReloadUseCase,
             weaponChangeUseCase: weaponChangeUseCase,
             gameFlowDriveUseCase: gameFlowDriveUseCase,
-            scoreAddUseCase: scoreAddUseCase,
-            reloadingMotionDetectedCountHandleUseCase: reloadingMotionDetectedCountHandleUseCase,
             weaponControlMotionHandleUseCase: weaponControlMotionHandleUseCase,
         )
         let viewModel = GameViewModel(presenter: presenter)

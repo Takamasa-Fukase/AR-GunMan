@@ -12,7 +12,7 @@ import Domain
 
 public final class GamePresenter {
     public var timeCountText: String {
-        return gameSessionRepository.session.timeCount.countMillisec.timeCountText
+        return gameRepository.timeCountMillisec.timeCountText
     }
     public var currentWeaponType: WeaponType {
         return weaponRepository.weapon.currentType
@@ -32,14 +32,12 @@ public final class GamePresenter {
     private let soundPlayer: SoundPlayerInterface
     private let coreMotionHandler: CoreMotionHandlerInterface
     private let tutorialRepository: TutorialRepositoryInterface
-    private let gameSessionRepository: GameSessionRepositoryInterface
+    private let gameRepository: GameRepositoryInterface
     private let weaponRepository: WeaponRepositoryInterface
     private let weaponFireUseCase: WeaponFireUseCaseInterface
     private let weaponReloadUseCase: WeaponReloadUseCaseInterface
     private let weaponChangeUseCase: WeaponChangeUseCaseInterface
     private let gameFlowDriveUseCase: GameFlowDriveUseCaseInterface
-    private let scoreAddUseCase: ScoreAddUseCaseInterface
-    private let reloadingMotionDetectedCountHandleUseCase: ReloadingMotionDetectedCountHandleUseCaseInterface
     private let weaponControlMotionHandleUseCase: WeaponControlMotionHandleUseCaseInterface
 
     private var weaponReloadTask: Task<Void, Never>?
@@ -54,28 +52,24 @@ public final class GamePresenter {
         soundPlayer: SoundPlayerInterface,
         coreMotionHandler: CoreMotionHandlerInterface,
         tutorialRepository: TutorialRepositoryInterface,
-        gameSessionRepository: GameSessionRepositoryInterface,
+        gameRepository: GameRepositoryInterface,
         weaponRepository: WeaponRepositoryInterface,
         weaponFireUseCase: WeaponFireUseCaseInterface,
         weaponReloadUseCase: WeaponReloadUseCaseInterface,
         weaponChangeUseCase: WeaponChangeUseCaseInterface,
         gameFlowDriveUseCase: GameFlowDriveUseCaseInterface,
-        scoreAddUseCase: ScoreAddUseCaseInterface,
-        reloadingMotionDetectedCountHandleUseCase: ReloadingMotionDetectedCountHandleUseCaseInterface,
         weaponControlMotionHandleUseCase: WeaponControlMotionHandleUseCaseInterface,
     ) {
         self.arShootingLibHandler = arShootingLibHandler
         self.soundPlayer = soundPlayer
         self.coreMotionHandler = coreMotionHandler
         self.tutorialRepository = tutorialRepository
-        self.gameSessionRepository = gameSessionRepository
+        self.gameRepository = gameRepository
         self.weaponRepository = weaponRepository
         self.weaponFireUseCase = weaponFireUseCase
         self.weaponReloadUseCase = weaponReloadUseCase
         self.weaponChangeUseCase = weaponChangeUseCase
         self.gameFlowDriveUseCase = gameFlowDriveUseCase
-        self.scoreAddUseCase = scoreAddUseCase
-        self.reloadingMotionDetectedCountHandleUseCase = reloadingMotionDetectedCountHandleUseCase
         self.weaponControlMotionHandleUseCase = weaponControlMotionHandleUseCase
         
         isWeaponChangeButtonEnabledPublisher = isWeaponChangeButtonEnabledSubject.eraseToAnyPublisher()
@@ -149,8 +143,7 @@ public final class GamePresenter {
             
         case .flowEnded:
             soundPlayer.play(.rankingAppear)
-            let score = gameSessionRepository.session.score.value
-            isResultViewPresentedSubject.send((true, score))
+            isResultViewPresentedSubject.send((true, gameRepository.score))
             
         case .blocked(let reason):
             switch reason {
@@ -206,7 +199,7 @@ public final class GamePresenter {
     }
     
     private func handleReloadingMotionDetectedCount() {
-        let result = reloadingMotionDetectedCountHandleUseCase.execute()
+        let result = gameRepository.updateReloadingMotionDetectedCount()
         switch result {
         case .notExceededLimit:
             break
@@ -219,7 +212,8 @@ public final class GamePresenter {
 
 extension GamePresenter: ARShootingLibHandlerDelegate {
     public func targetHit(weaponType: WeaponType) {
-        scoreAddUseCase.execute()
+        let targetHitPoint = weaponRepository.weapon.currentType.weaponInfo.spec.targetHitPoint
+        gameRepository.addScore(targetHitPoint: targetHitPoint)
         soundPlayer.play(.targetHit)
         if let bulletHitSound = weaponType.resources.bulletHitSound {
             soundPlayer.play(bulletHitSound)

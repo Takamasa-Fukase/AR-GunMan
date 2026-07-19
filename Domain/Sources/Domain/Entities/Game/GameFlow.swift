@@ -10,7 +10,9 @@ import Foundation
 public struct GameFlow {
     public private(set) var status: GameFlowStatus = .flowNotStarted
     
-    mutating func drive(to nextStatus: GameFlowStatus) {
+    public init() {}
+    
+    public mutating func drive(to nextStatus: GameFlowStatus) {
         status = nextStatus
     }
 }
