@@ -8,18 +8,7 @@
 import Foundation
 
 public struct GameFlow {
-    public private(set) var status: GameFlowStatus = .flowNotStarted {
-        didSet {
-            statusContinuation.yield(status)
-        }
-    }
-    public let statusStream: AsyncStream<GameFlowStatus>
-    
-    private let statusContinuation: AsyncStream<GameFlowStatus>.Continuation
-    
-    init() {
-        (statusStream, statusContinuation) = AsyncStream.makeStream()
-    }
+    public private(set) var status: GameFlowStatus = .flowNotStarted
     
     mutating func drive(to nextStatus: GameFlowStatus) {
         status = nextStatus

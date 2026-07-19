@@ -92,7 +92,8 @@ public final class GamePresenter {
         }
         
         Task {
-            for await status in gameSessionRepository.session.gameFlow.statusStream {
+            for await status in gameFlowDriveUseCase.statusStream {
+                print("GamePresenter ストリーム status: \(status)")
                 handleGameFlowStatus(status)
             }
         }
