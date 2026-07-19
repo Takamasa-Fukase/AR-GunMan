@@ -8,17 +8,13 @@
 import Foundation
 
 public struct Weapon {
-    public private(set) var currentType: WeaponType
-    public private(set) var bulletsCount: Int
-    public private(set) var isReloading: Bool
+    public private(set) var currentType: WeaponType = .defaultType
+    public private(set) var bulletsCount: Int = WeaponType.defaultType.weaponInfo.spec.capacity
+    public private(set) var isReloading: Bool = false
     
-    public init() {
-        currentType = WeaponType.defaultType
-        bulletsCount = WeaponType.defaultType.weaponInfo.spec.capacity
-        isReloading = false
-    }
+    public init() {}
     
-    mutating func fire() -> WeaponFireResult {
+    public mutating func fire() -> WeaponFireResult {
         guard !isReloading else {
             return .failure(reason: .reloading)
         }
@@ -26,11 +22,10 @@ public struct Weapon {
             return .failure(reason: .outOfBullets)
         }
         bulletsCount -= 1
-        let needsAutoReload = currentType.weaponInfo.spec.reloadType == .auto
-        return .success(needsAutoReload: needsAutoReload)
+        return .success
     }
     
-    mutating func startReload() -> WeaponReloadStartResult {
+    public mutating func startReload() -> WeaponReloadStartResult {
         guard !isReloading && bulletsCount <= 0 else {
             return .failure
         }
@@ -38,19 +33,19 @@ public struct Weapon {
         return .success
     }
     
-    mutating func finishReload() {
+    public mutating func finishReload() {
         bulletsCount = currentType.weaponInfo.spec.capacity
         isReloading = false
     }
     
-    mutating func change(newType: WeaponType) {
+    public mutating func change(to newType: WeaponType) {
         currentType = newType
         finishReload()
     }
 }
 
-public enum WeaponFireResult {
-    case success(needsAutoReload: Bool)
+public enum WeaponFireResult: Equatable {
+    case success
     case failure(reason: FailureReason)
     
     public enum FailureReason {

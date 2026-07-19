@@ -8,18 +8,33 @@
 import Foundation
 
 public protocol WeaponFireUseCaseInterface {
-    func execute() -> WeaponFireResult
+    var resultStream: AsyncStream<WeaponFireResult> { get }
+    func execute()
 }
 
 public final class WeaponFireUseCase: WeaponFireUseCaseInterface {
+    public let resultStream: AsyncStream<WeaponFireResult>
+    
     private var weaponRepository: WeaponRepositoryInterface
+    private let weaponReloadUseCase: WeaponReloadUseCaseInterface
+    private let resultContinuation: AsyncStream<WeaponFireResult>.Continuation
 
-    public init(weaponRepository: WeaponRepositoryInterface) {
+    public init(
+        weaponRepository: WeaponRepositoryInterface,
+        weaponReloadUseCase: WeaponReloadUseCaseInterface
+    ) {
         self.weaponRepository = weaponRepository
+        self.weaponReloadUseCase = weaponReloadUseCase
+        
+        (resultStream, resultContinuation) = AsyncStream.makeStream()
     }
     
-    public func execute() -> WeaponFireResult {
-        let result = weaponRepository.weapon.fire()
-        return result
+    public func execute() {
+        let result = weaponRepository.fire()
+        resultContinuation.yield(result)
+        if result == .success && weaponRepository.weaponType.weaponInfo.spec.reloadType == .auto {
+            // リロードを自動的に実行
+            weaponReloadUseCase.execute()
+        }
     }
 }

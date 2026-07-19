@@ -8,31 +8,40 @@
 import Foundation
 
 public protocol WeaponReloadUseCaseInterface {
-    func execute() -> WeaponReloadUseCase.Response
+    var startResultStream: AsyncStream<WeaponReloadStartResult> { get }
+    func execute()
+}
+
+extension WeaponReloadUseCaseInterface {
+    func stopCurrentReloadIfExists() {}
 }
 
 public final class WeaponReloadUseCase: WeaponReloadUseCaseInterface {
-    public struct Response {
-        public let reloadTask: Task<Void, Never>
-        public let startResult: WeaponReloadStartResult
-    }
+    public let startResultStream: AsyncStream<WeaponReloadStartResult>
     
     private var weaponRepository: WeaponRepositoryInterface
+    private let startResultContinuation: AsyncStream<WeaponReloadStartResult>.Continuation
+    private var reloadTask: Task<Void, Never>?
 
     public init(weaponRepository: WeaponRepositoryInterface) {
         self.weaponRepository = weaponRepository
+        
+        (startResultStream, startResultContinuation) = AsyncStream.makeStream()
     }
     
-    public func execute() -> Response {
-        let startResult = weaponRepository.weapon.startReload()
-        let reloadWaitingTimeMillisec = weaponRepository.weapon.currentType.weaponInfo.spec.reloadWaitingTimeMillisec
-        let task = Task {
+    public func execute() {
+        let startResult = weaponRepository.startReload()
+        startResultContinuation.yield(startResult)
+
+        let reloadWaitingTimeMillisec = weaponRepository.weaponType.weaponInfo.spec.reloadWaitingTimeMillisec
+        reloadTask = Task {
             try? await Task.sleep(for: .milliseconds(reloadWaitingTimeMillisec))
-            self.weaponRepository.weapon.finishReload()
+            weaponRepository.finishReload()
         }
-        return Response(
-            reloadTask: task,
-            startResult: startResult
-        )
+    }
+    
+    func stopCurrentReloadIfExists() {
+        reloadTask?.cancel()
+        reloadTask = nil
     }
 }

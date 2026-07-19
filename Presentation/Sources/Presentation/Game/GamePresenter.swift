@@ -15,10 +15,10 @@ public final class GamePresenter {
         return gameRepository.timeCountMillisec.timeCountText
     }
     public var currentWeaponType: WeaponType {
-        return weaponRepository.weapon.currentType
+        return weaponRepository.weaponType
     }
     public var bulletsCount: String {
-        return String(weaponRepository.weapon.bulletsCount)
+        return String(weaponRepository.bulletsCount)
     }
 
     public let isWeaponChangeButtonEnabledPublisher: AnyPublisher<Bool, Never>
@@ -39,8 +39,6 @@ public final class GamePresenter {
     private let weaponChangeUseCase: WeaponChangeUseCaseInterface
     private let gameFlowDriveUseCase: GameFlowDriveUseCaseInterface
     private let weaponControlMotionHandleUseCase: WeaponControlMotionHandleUseCaseInterface
-
-    private var weaponReloadTask: Task<Void, Never>?
     
     private let isWeaponChangeButtonEnabledSubject = CurrentValueSubject<Bool, Never>(false)
     private let isTutorialViewPresentedSubject = CurrentValueSubject<Bool, Never>(false)
@@ -86,15 +84,26 @@ public final class GamePresenter {
         
         Task {
             for await status in gameFlowDriveUseCase.statusStream {
-                print("GamePresenter ストリーム status: \(status)")
                 handleGameFlowStatus(status)
+            }
+        }
+        
+        Task {
+            for await result in weaponFireUseCase.resultStream {
+                handleFireResult(result)
+            }
+        }
+        
+        Task {
+            for await result in weaponReloadUseCase.startResultStream {
+                handleReloadStartResult(result)
             }
         }
     }
     
     // MARK: ViewからのInput
     public func onViewAppear() {
-        showSelectedWeapon(WeaponType.defaultType)
+        arShootingLibHandler.showWeapon(of: .defaultType)
         arShootingLibHandler.runSession()
         gameFlowDriveUseCase.start()
     }
@@ -117,12 +126,9 @@ public final class GamePresenter {
     public func weaponSelected(weaponType: WeaponType) {
         // タイムカウントの更新を再開する
         gameFlowDriveUseCase.resolveBlocked()
-        // 既存のリロードをキャンセルする
-        weaponReloadTask?.cancel()
-        weaponReloadTask = nil
 
         weaponChangeUseCase.execute(newType: weaponType)
-        showSelectedWeapon(weaponType)
+        arShootingLibHandler.showWeapon(of: weaponType)
     }
     
     // MARK: Privateメソッド
@@ -159,46 +165,34 @@ public final class GamePresenter {
         }
     }
     
-    private func showSelectedWeapon(_ type: WeaponType) {
-        arShootingLibHandler.showWeapon(of: type)
-    }
-    
-    private func fireWeapon() {
-        let result = weaponFireUseCase.execute()
+    private func handleFireResult(_ result: WeaponFireResult) {
         switch result {
-        case .success(let needsAutoReload):
+        case .success:
             arShootingLibHandler.renderWeaponFiring()
-            soundPlayer.play(weaponRepository.weapon.currentType.resources.firingSound)
-            
-            if needsAutoReload {
-                // リロードを自動的に実行
-                reloadingMotionDetected()
-            }
+            soundPlayer.play(weaponRepository.weaponType.resources.firingSound)
             
         case .failure(let reason):
             switch reason {
             case .reloading:
                 break
             case .outOfBullets:
-                if let outOfBulletsSound = weaponRepository.weapon.currentType.resources.outOfBulletsSound {
+                if let outOfBulletsSound = weaponRepository.weaponType.resources.outOfBulletsSound {
                     soundPlayer.play(outOfBulletsSound)
                 }
             }
         }
     }
     
-    private func reloadWeapon() {
-        let response = weaponReloadUseCase.execute()
-        weaponReloadTask = response.reloadTask
-        switch response.startResult {
+    private func handleReloadStartResult(_ result: WeaponReloadStartResult) {
+        switch result {
         case .success:
-            soundPlayer.play(weaponRepository.weapon.currentType.resources.reloadingSound)
+            soundPlayer.play(weaponRepository.weaponType.resources.reloadingSound)
         case .failure:
             break
         }
     }
     
-    private func handleReloadingMotionDetectedCount() {
+    private func updateReloadingMotionDetectedCount() {
         let result = gameRepository.updateReloadingMotionDetectedCount()
         switch result {
         case .notExceededLimit:
@@ -212,7 +206,7 @@ public final class GamePresenter {
 
 extension GamePresenter: ARShootingLibHandlerDelegate {
     public func targetHit(weaponType: WeaponType) {
-        let targetHitPoint = weaponRepository.weapon.currentType.weaponInfo.spec.targetHitPoint
+        let targetHitPoint = weaponRepository.weaponType.weaponInfo.spec.targetHitPoint
         gameRepository.addScore(targetHitPoint: targetHitPoint)
         soundPlayer.play(.targetHit)
         if let bulletHitSound = weaponType.resources.bulletHitSound {
@@ -223,11 +217,11 @@ extension GamePresenter: ARShootingLibHandlerDelegate {
 
 extension GamePresenter: WeaponControlMotionHandleUseCaseDelegate {
     public func firingMotionDetected() {
-        fireWeapon()
+        weaponFireUseCase.execute()
     }
     
     public func reloadingMotionDetected() {
-        reloadWeapon()
-        handleReloadingMotionDetectedCount()
+        weaponReloadUseCase.execute()
+        updateReloadingMotionDetectedCount()
     }
 }

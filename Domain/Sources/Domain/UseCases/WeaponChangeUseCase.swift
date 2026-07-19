@@ -14,12 +14,19 @@ public protocol WeaponChangeUseCaseInterface {
 public final class WeaponChangeUseCase: WeaponChangeUseCaseInterface {
     
     private var weaponRepository: WeaponRepositoryInterface
+    private let weaponReloadUseCase: WeaponReloadUseCaseInterface
 
-    public init(weaponRepository: WeaponRepositoryInterface) {
+    public init(
+        weaponRepository: WeaponRepositoryInterface,
+        weaponReloadUseCase: WeaponReloadUseCaseInterface
+    ) {
         self.weaponRepository = weaponRepository
+        self.weaponReloadUseCase = weaponReloadUseCase
     }
     
     public func execute(newType: WeaponType) {
-        weaponRepository.weapon.change(newType: newType)
+        // 既存のリロードをキャンセルする
+        weaponReloadUseCase.stopCurrentReloadIfExists()
+        weaponRepository.change(to: newType)
     }
 }

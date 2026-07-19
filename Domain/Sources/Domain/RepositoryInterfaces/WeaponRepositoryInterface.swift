@@ -8,5 +8,10 @@
 import Foundation
 
 public protocol WeaponRepositoryInterface {
-    var weapon: Weapon { get set }
+    var weaponType: WeaponType { get }
+    var bulletsCount: Int { get }
+    func fire() -> WeaponFireResult
+    func startReload() -> WeaponReloadStartResult
+    func finishReload()
+    func change(to newType: WeaponType)
 }

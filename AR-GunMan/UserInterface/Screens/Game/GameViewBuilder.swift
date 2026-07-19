@@ -27,9 +27,17 @@ struct GameViewBuilder {
         let gameStore = InMemoryGameStore()
         let gameRepository = GameRepository(gameStore: gameStore)
         
-        let weaponFireUseCase = WeaponFireUseCase(weaponRepository: weaponRepository)
-        let weaponReloadUseCase = WeaponReloadUseCase(weaponRepository: weaponRepository)
-        let weaponChangeUseCase = WeaponChangeUseCase(weaponRepository: weaponRepository)
+        let weaponReloadUseCase = WeaponReloadUseCase(
+            weaponRepository: weaponRepository
+        )
+        let weaponFireUseCase = WeaponFireUseCase(
+            weaponRepository: weaponRepository,
+            weaponReloadUseCase: weaponReloadUseCase
+        )
+        let weaponChangeUseCase = WeaponChangeUseCase(
+            weaponRepository: weaponRepository,
+            weaponReloadUseCase: weaponReloadUseCase
+        )
         let gameFlowDriveUseCase = GameFlowDriveUseCase(
             gameRepository: gameRepository,
             tutorialRepository: tutorialRepository

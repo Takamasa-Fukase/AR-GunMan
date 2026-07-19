@@ -11,16 +11,31 @@ import Domain
 public final class WeaponRepository: WeaponRepositoryInterface {
     private var weaponStore: WeaponStoreInterface
     
+    public var weaponType: WeaponType {
+        return weaponStore.weapon.currentType
+    }
+    
+    public var bulletsCount: Int {
+        return weaponStore.weapon.bulletsCount
+    }
+    
     public init(weaponStore: WeaponStoreInterface) {
         self.weaponStore = weaponStore
     }
     
-    public var weapon: Weapon {
-        get {
-            return weaponStore.weapon
-        }
-        set {
-            weaponStore.weapon = newValue
-        }
+    public func fire() -> WeaponFireResult {
+        return weaponStore.weapon.fire()
+    }
+    
+    public func startReload() -> WeaponReloadStartResult {
+        return weaponStore.weapon.startReload()
+    }
+    
+    public func finishReload() {
+        weaponStore.weapon.finishReload()
+    }
+    
+    public func change(to newType: WeaponType) {
+        weaponStore.weapon.change(to: newType)
     }
 }
