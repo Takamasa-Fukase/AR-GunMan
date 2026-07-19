@@ -13,6 +13,9 @@ public struct GameSession {
     public private(set) var score = GameScore()
     public private(set) var reloadingMotionDetectedCount: Int = 0
     
+    // 仮でここに置いている
+    static let timerUpdateIntervalMillisec: Int = 10
+    
     public init() {}
     
     mutating func driveGameFlow(to nextStatus: GameFlowStatus) {
@@ -20,7 +23,7 @@ public struct GameSession {
     }
     
     mutating func decrementTimeCountMillisec() {
-        timeCountMillisec = max(0, timeCountMillisec - 1)
+        timeCountMillisec = max(0, timeCountMillisec - timerUpdateIntervalMillisec)
     }
     
     mutating func addScore(targetHitPoint: Int) {

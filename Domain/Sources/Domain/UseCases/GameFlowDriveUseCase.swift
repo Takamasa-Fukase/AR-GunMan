@@ -100,8 +100,7 @@ public final class GameFlowDriveUseCase: GameFlowDriveUseCaseInterface {
                         break
                     }
                     
-                    // TODO: 減算する1msと待機の1msをconstで共通にしたい　両者の乖離のミスを防ぐため
-                    try? await Task.sleep(for: .milliseconds(1))
+                    try? await Task.sleep(for: .milliseconds(GameSession.timerUpdateIntervalMillisec))
                     session.decrementTimeCountMillisec()
                 }
             }
