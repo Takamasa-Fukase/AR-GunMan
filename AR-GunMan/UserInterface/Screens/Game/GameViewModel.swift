@@ -12,7 +12,6 @@ import Presentation
 
 @Observable
 final class GameViewModel {
-//    private(set) var timeCountText: String = ""
     var timeCountText: String {
         return presenter.timeCountText
     }
@@ -23,8 +22,10 @@ final class GameViewModel {
         let imageName = currentWeaponType.resources.bulletsCountImageBaseName + presenter.bulletsCount
         return imageName
     }
+    var isWeaponChangeButtonEnabled: Bool {
+        return presenter.isWeaponChangeButtonEnabled
+    }
 
-    var isWeaponChangeButtonEnabled = false
     var isTutorialViewPresented = false
     var isWeaponSelectViewPresented = false
     var isResultViewPresented: (isPresented: Bool, score: Double) = (false, 0.0)
@@ -34,12 +35,6 @@ final class GameViewModel {
 
     init(presenter: GamePresenter) {
         self.presenter = presenter
-        
-        presenter.isWeaponChangeButtonEnabledPublisher
-            .sink { [weak self] isEnabled in
-                self?.isWeaponChangeButtonEnabled = isEnabled
-            }
-            .store(in: &cancellables)
         
         presenter.isTutorialViewPresentedPublisher
             .sink { [weak self] isPresented in

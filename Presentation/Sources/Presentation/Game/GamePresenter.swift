@@ -20,8 +20,9 @@ public final class GamePresenter {
     public var bulletsCount: String {
         return String(weaponRepository.bulletsCount)
     }
-
-    public let isWeaponChangeButtonEnabledPublisher: AnyPublisher<Bool, Never>
+    public var isWeaponChangeButtonEnabled: Bool {
+        return gameRepository.gameFlowStatus == .timerStartedAndWaitingForTimerEnd
+    }
     
     // showTutorialViewPublisher: とかになる予定
     public let isTutorialViewPresentedPublisher: AnyPublisher<Bool, Never>
@@ -40,7 +41,6 @@ public final class GamePresenter {
     private let gameFlowDriveUseCase: GameFlowDriveUseCaseInterface
     private let weaponControlMotionHandleUseCase: WeaponControlMotionHandleUseCaseInterface
     
-    private let isWeaponChangeButtonEnabledSubject = CurrentValueSubject<Bool, Never>(false)
     private let isTutorialViewPresentedSubject = CurrentValueSubject<Bool, Never>(false)
     private let isWeaponSelectViewPresentedSubject = CurrentValueSubject<Bool, Never>(false)
     private let isResultViewPresentedSubject = CurrentValueSubject<(Bool, Double), Never>((false, 0.0))
@@ -70,7 +70,6 @@ public final class GamePresenter {
         self.gameFlowDriveUseCase = gameFlowDriveUseCase
         self.weaponControlMotionHandleUseCase = weaponControlMotionHandleUseCase
         
-        isWeaponChangeButtonEnabledPublisher = isWeaponChangeButtonEnabledSubject.eraseToAnyPublisher()
         isTutorialViewPresentedPublisher = isTutorialViewPresentedSubject.eraseToAnyPublisher()
         isWeaponSelectViewPresentedPublisher = isWeaponSelectViewPresentedSubject.eraseToAnyPublisher()
         isResultViewPresentedPublisher = isResultViewPresentedSubject.eraseToAnyPublisher()
@@ -90,13 +89,13 @@ public final class GamePresenter {
         
         Task {
             for await result in weaponFireUseCase.resultStream {
-                handleFireResult(result)
+                handleWeaponFireResult(result)
             }
         }
         
         Task {
             for await result in weaponReloadUseCase.startResultStream {
-                handleReloadStartResult(result)
+                handleWeaponReloadStartResult(result)
             }
         }
     }
@@ -140,12 +139,10 @@ public final class GamePresenter {
         case .timerStartedAndWaitingForTimerEnd:
             soundPlayer.play(.startWhistle)
             coreMotionHandler.startDetection()
-            isWeaponChangeButtonEnabledSubject.send(true)
             
         case .timerEndedAndWaitingForFlowEnd:
             soundPlayer.play(.endWhistle)
             coreMotionHandler.stopDetection()
-            isWeaponChangeButtonEnabledSubject.send(false)
             
         case .flowEnded:
             soundPlayer.play(.rankingAppear)
@@ -165,7 +162,7 @@ public final class GamePresenter {
         }
     }
     
-    private func handleFireResult(_ result: WeaponFireResult) {
+    private func handleWeaponFireResult(_ result: WeaponFireResult) {
         switch result {
         case .success:
             arShootingLibHandler.renderWeaponFiring()
@@ -183,7 +180,7 @@ public final class GamePresenter {
         }
     }
     
-    private func handleReloadStartResult(_ result: WeaponReloadStartResult) {
+    private func handleWeaponReloadStartResult(_ result: WeaponReloadStartResult) {
         switch result {
         case .success:
             soundPlayer.play(weaponRepository.weaponType.resources.reloadingSound)
