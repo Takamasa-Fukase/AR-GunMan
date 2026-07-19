@@ -11,10 +11,6 @@ import Domain
 public final class GameRepository: GameRepositoryInterface {
     private var gameStore: GameStoreInterface
     
-    public init(gameStore: GameStoreInterface) {
-        self.gameStore = gameStore
-    }
-    
     public var gameFlowStatus: GameFlowStatus {
         return gameStore.gameFlow.status
     }
@@ -29,6 +25,10 @@ public final class GameRepository: GameRepositoryInterface {
     
     public var score: Double {
         return gameStore.score.value
+    }
+    
+    public init(gameStore: GameStoreInterface) {
+        self.gameStore = gameStore
     }
     
     public func driveGameFlow(to nextStatus: GameFlowStatus) {

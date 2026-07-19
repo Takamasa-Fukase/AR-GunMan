@@ -12,7 +12,9 @@ import Domain
 
 @Observable
 public final class InMemoryGameStore: GameStoreInterface {
-    @ObservationIgnored public var gameFlow = GameFlow()
+    @ObservationIgnored
+    public var gameFlow = GameFlow()
+    
     public var timeCount = GameTimeCount()
     public var score = GameScore()
     public var reloadingMotionDetectedCount = ReloadingMotionDetectedCount()
