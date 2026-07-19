@@ -7,6 +7,7 @@
 
 import Foundation
 
+@MainActor
 public protocol GameFlowDriveUseCaseInterface {
     var statusStream: AsyncStream<GameFlowStatus> { get }
     func start()
@@ -14,6 +15,7 @@ public protocol GameFlowDriveUseCaseInterface {
     func resolveBlocked()
 }
 
+@MainActor
 public final class GameFlowDriveUseCase: GameFlowDriveUseCaseInterface {
     public let statusStream: AsyncStream<GameFlowStatus>
     

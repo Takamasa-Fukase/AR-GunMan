@@ -8,6 +8,7 @@
 import Foundation
 import Domain
 
+@MainActor
 public protocol WeaponStoreInterface {
     var weapon: Weapon { get set }
 }

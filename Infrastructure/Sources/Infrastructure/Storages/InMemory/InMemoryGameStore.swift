@@ -11,6 +11,7 @@ import Data
 import Domain
 
 @Observable
+@MainActor
 public final class InMemoryGameStore: GameStoreInterface {
     @ObservationIgnored
     public var gameFlow = GameFlow()

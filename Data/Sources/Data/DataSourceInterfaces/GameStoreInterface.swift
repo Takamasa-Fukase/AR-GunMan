@@ -8,6 +8,7 @@
 import Foundation
 import Domain
 
+@MainActor
 public protocol GameStoreInterface {
     var gameFlow: GameFlow { get set }
     var timeCount: GameTimeCount { get set }

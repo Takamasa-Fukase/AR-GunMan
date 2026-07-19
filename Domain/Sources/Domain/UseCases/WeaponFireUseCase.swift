@@ -7,11 +7,13 @@
 
 import Foundation
 
+@MainActor
 public protocol WeaponFireUseCaseInterface {
     var resultStream: AsyncStream<WeaponFireResult> { get }
     func execute()
 }
 
+@MainActor
 public final class WeaponFireUseCase: WeaponFireUseCaseInterface {
     public let resultStream: AsyncStream<WeaponFireResult>
     

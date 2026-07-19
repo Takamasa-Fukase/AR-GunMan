@@ -7,6 +7,7 @@
 
 import Foundation
 
+@MainActor
 public protocol WeaponReloadUseCaseInterface {
     var startResultStream: AsyncStream<WeaponReloadStartResult> { get }
     func execute()
@@ -16,6 +17,7 @@ extension WeaponReloadUseCaseInterface {
     func stopCurrentReloadIfExists() {}
 }
 
+@MainActor
 public final class WeaponReloadUseCase: WeaponReloadUseCaseInterface {
     public let startResultStream: AsyncStream<WeaponReloadStartResult>
     

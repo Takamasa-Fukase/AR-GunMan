@@ -7,6 +7,7 @@
 
 import Foundation
 
+@MainActor
 public protocol GameRepositoryInterface {
     var gameFlowStatus: GameFlowStatus { get }
     var timeCountMillisec: Int { get }

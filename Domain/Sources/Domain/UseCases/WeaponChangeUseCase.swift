@@ -7,10 +7,12 @@
 
 import Foundation
 
+@MainActor
 public protocol WeaponChangeUseCaseInterface {
     func execute(newType: WeaponType)
 }
 
+@MainActor
 public final class WeaponChangeUseCase: WeaponChangeUseCaseInterface {
     
     private var weaponRepository: WeaponRepositoryInterface

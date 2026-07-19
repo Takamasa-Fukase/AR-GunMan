@@ -11,6 +11,7 @@ import Data
 import Domain
 
 @Observable
+@MainActor
 public final class InMemoryWeaponStore: WeaponStoreInterface {
     public init() {}
     

@@ -8,6 +8,7 @@
 import Foundation
 import Domain
 
+@MainActor
 public final class GameRepository: GameRepositoryInterface {
     private var gameStore: GameStoreInterface
     

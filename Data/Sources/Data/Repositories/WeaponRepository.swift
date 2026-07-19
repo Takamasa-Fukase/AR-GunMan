@@ -8,6 +8,7 @@
 import Foundation
 import Domain
 
+@MainActor
 public final class WeaponRepository: WeaponRepositoryInterface {
     private var weaponStore: WeaponStoreInterface
     

@@ -7,6 +7,7 @@
 
 import Foundation
 
+@MainActor
 public protocol WeaponRepositoryInterface {
     var weaponType: WeaponType { get }
     var bulletsCount: Int { get }
