@@ -305,9 +305,9 @@
 				BCB93BAA2C36DE7D00DBFC46 /* FirebaseInfoPlist */,
 				59D2D4E62552DE67006DDB70 /* Info.plist */,
 				59D2D4E32552DE67006DDB70 /* LaunchScreen.storyboard */,
-				BCFDECE52D3B45BD0023DC8A /* UserInterface */,
 				BCFDECE82D3B45BD0023DC8A /* Preview Content */,
 				BC0D545E2D432F8600D69795 /* Resources */,
+				BCFDECE52D3B45BD0023DC8A /* UserInterface */,
 			);
 			path = "AR-GunMan";
 			sourceTree = "<group>";
@@ -379,22 +379,6 @@
 			path = WeaponResources;
 			sourceTree = "<group>";
 		};
-		BCA5140E2FF72682007B47E3 /* Screens */ = {
-			isa = PBXGroup;
-			children = (
-				BCFDECC02D3B45BD0023DC8A /* Game */,
-				BCFDECC42D3B45BD0023DC8A /* NameRegister */,
-				BCFDECCA2D3B45BD0023DC8A /* Ranking */,
-				BCFDECCE2D3B45BD0023DC8A /* Result */,
-				BCFDECD22D3B45BD0023DC8A /* Settings */,
-				BCFDECD62D3B45BD0023DC8A /* Top */,
-				BCFDECDC2D3B45BD0023DC8A /* Tutorial */,
-				BCFDECE42D3B45BD0023DC8A /* WeaponSelect */,
-				BCFDECBC2D3B45BD0023DC8A /* Common */,
-			);
-			path = Screens;
-			sourceTree = "<group>";
-		};
 		BCA5140F2FF726C3007B47E3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -430,18 +414,19 @@
 			path = Factories;
 			sourceTree = "<group>";
 		};
-		BCFDECBC2D3B45BD0023DC8A /* Common */ = {
+		BCFDECBC2D3B45BD0023DC8A /* Utillities */ = {
 			isa = PBXGroup;
 			children = (
 				BCFDECB52D3B45BD0023DC8A /* CenterPreviewView.swift */,
 				BCFDECB62D3B45BD0023DC8A /* ContentFrameTrackableScrollView.swift */,
+				BCFDECFA2D3B45BD0023DC8A /* ColorTypeConverter.swift */,
 				BCFDECB72D3B45BD0023DC8A /* CustomModalPresenter.swift */,
 				BCFDECB82D3B45BD0023DC8A /* SafariViewControllerRepresentable.swift */,
 				BCFDECBA2D3B45BD0023DC8A /* StopMotionAnimationView.swift */,
 				BCFDECBB2D3B45BD0023DC8A /* UIBlurEffectViewRepresentable.swift */,
 				BC7FBB7B2D4A434A00911B38 /* ErrorAlert.swift */,
 			);
-			path = Common;
+			path = Utillities;
 			sourceTree = "<group>";
 		};
 		BCFDECC02D3B45BD0023DC8A /* Game */ = {
@@ -450,6 +435,7 @@
 				BCFDECBD2D3B45BD0023DC8A /* GameView.swift */,
 				BCFDECBE2D3B45BD0023DC8A /* GameViewBuilder.swift */,
 				BC0272F62FFD1AAD008D82EA /* GameViewModel.swift */,
+				BCA5140F2FF726C3007B47E3 /* Models */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -536,9 +522,16 @@
 		BCFDECE52D3B45BD0023DC8A /* UserInterface */ = {
 			isa = PBXGroup;
 			children = (
-				BCA5140E2FF72682007B47E3 /* Screens */,
-				BCFDECFB2D3B45BD0023DC8A /* Utilities */,
-				BCA5140F2FF726C3007B47E3 /* Models */,
+				BCFDECC02D3B45BD0023DC8A /* Game */,
+				BCFDECC42D3B45BD0023DC8A /* NameRegister */,
+				BCFDECCA2D3B45BD0023DC8A /* Ranking */,
+				BCFDECCE2D3B45BD0023DC8A /* Result */,
+				BCFDECD22D3B45BD0023DC8A /* Settings */,
+				BCFDECD62D3B45BD0023DC8A /* Top */,
+				BCFDECDC2D3B45BD0023DC8A /* Tutorial */,
+				BCFDECE42D3B45BD0023DC8A /* WeaponSelect */,
+				BCFDECBC2D3B45BD0023DC8A /* Utillities */,
+				BCFDECFB2D3B45BD0023DC8A /* Extensions */,
 			);
 			path = UserInterface;
 			sourceTree = "<group>";
@@ -551,16 +544,15 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		BCFDECFB2D3B45BD0023DC8A /* Utilities */ = {
+		BCFDECFB2D3B45BD0023DC8A /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				BCFDECFA2D3B45BD0023DC8A /* ColorTypeConverter.swift */,
 				BCFDECB12D3B45BC0023DC8A /* Color+Extension.swift */,
 				BCFDECB22D3B45BC0023DC8A /* Double+Extension.swift */,
 				BCFDECB32D3B45BC0023DC8A /* NSObject+Extension.swift */,
 				BCA513FD2FF402AD007B47E3 /* WeaponType+Resources.swift */,
 			);
-			path = Utilities;
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		BCFDED3A2D3B46950023DC8A /* App */ = {
