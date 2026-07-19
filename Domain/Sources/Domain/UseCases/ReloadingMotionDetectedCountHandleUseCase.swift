@@ -8,7 +8,7 @@
 import Foundation
 
 public protocol ReloadingMotionDetectedCountHandleUseCaseInterface {
-    func execute() -> ReloadingMotionDetectedCountCheckResult
+    func execute() -> ReloadingMotionDetectedCount.Result
 }
 
 public final class ReloadingMotionDetectedCountHandleUseCase: ReloadingMotionDetectedCountHandleUseCaseInterface {
@@ -18,8 +18,7 @@ public final class ReloadingMotionDetectedCountHandleUseCase: ReloadingMotionDet
         self.gameSessionRepository = gameSessionRepository
     }
     
-    public func execute() -> ReloadingMotionDetectedCountCheckResult {
-        gameSessionRepository.session.incrementReloadingMotionDetectedCount()
-        return gameSessionRepository.session.checkExceedsReloadingMotionDetectedCountLimit()
+    public func execute() -> ReloadingMotionDetectedCount.Result {
+        return gameSessionRepository.session.updateReloadingMotionDetectedCount()
     }
 }

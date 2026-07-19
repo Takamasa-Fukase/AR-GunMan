@@ -11,7 +11,7 @@ public struct GameSession {
     public private(set) var gameFlow = GameFlow()
     public private(set) var timeCount = GameTimeCount()
     public private(set) var score = GameScore()
-    public private(set) var reloadingMotionDetectedCount: Int = 0
+    public private(set) var reloadingMotionDetectedCount = ReloadingMotionDetectedCount()
     
     public init() {}
     
@@ -27,20 +27,7 @@ public struct GameSession {
         score.add(targetHitPoint: targetHitPoint)
     }
     
-    mutating func incrementReloadingMotionDetectedCount() {
-        reloadingMotionDetectedCount += 1
+    mutating func updateReloadingMotionDetectedCount() -> ReloadingMotionDetectedCount.Result {
+        return reloadingMotionDetectedCount.update()
     }
-    
-    func checkExceedsReloadingMotionDetectedCountLimit() -> ReloadingMotionDetectedCountCheckResult {
-        if reloadingMotionDetectedCount == 20 {
-            return .exceededLimit
-        } else {
-            return .notExceededLimit
-        }
-    }
-}
-
-public enum ReloadingMotionDetectedCountCheckResult {
-    case notExceededLimit
-    case exceededLimit
 }
