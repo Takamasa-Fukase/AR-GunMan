@@ -8,7 +8,7 @@
 import Foundation
 
 @MainActor
-public protocol WeaponRepositoryInterface {
+public protocol WeaponRepositoryInterface: AnyObject {
     var weaponType: WeaponType { get }
     var bulletsCount: Int { get }
     func fire() -> WeaponFireResult

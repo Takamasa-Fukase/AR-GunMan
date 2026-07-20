@@ -9,6 +9,6 @@ import Foundation
 import Domain
 
 @MainActor
-public protocol WeaponStoreInterface {
+public protocol WeaponStoreInterface: AnyObject {
     var weapon: Weapon { get set }
 }

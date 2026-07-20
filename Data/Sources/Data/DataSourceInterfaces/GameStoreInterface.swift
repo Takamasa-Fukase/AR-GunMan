@@ -9,7 +9,7 @@ import Foundation
 import Domain
 
 @MainActor
-public protocol GameStoreInterface {
+public protocol GameStoreInterface: AnyObject {
     var gameFlow: GameFlow { get set }
     var timeCount: GameTimeCount { get set }
     var score: GameScore { get set }

@@ -8,7 +8,7 @@
 import Foundation
 
 @MainActor
-public protocol GameRepositoryInterface {
+public protocol GameRepositoryInterface: AnyObject {
     var gameFlowStatus: GameFlowStatus { get }
     var timeCountMillisec: Int { get }
     var isTimeUp: Bool { get }
