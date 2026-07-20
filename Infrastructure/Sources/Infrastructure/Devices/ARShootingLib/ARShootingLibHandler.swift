@@ -11,19 +11,17 @@ import DeviceInterface
 import Domain
 
 public final class ARShootingLibHandler: ARShootingLibHandlerInterface {
+    public let targetHitStream: AsyncStream<Domain.WeaponType>
+    
     private let arShootingController: ARShootingControllerInterface
-    private weak var delegate: ARShootingLibHandlerDelegate?
     
     public init(arShootingController: ARShootingControllerInterface) {
         self.arShootingController = arShootingController
-    }
-    
-    public func inject(delegate: ARShootingLibHandlerDelegate) {
-        self.delegate = delegate
-        arShootingController.targetHit = { [weak self] weaponType in
-            self?.delegate?.targetHit(
-                weaponType: weaponType.toDomainWeaponType
-            )
+        
+        targetHitStream = AsyncStream<Domain.WeaponType>() { continuation in
+            arShootingController.targetHit = { weaponType in
+                continuation.yield(weaponType.toDomainWeaponType)
+            }
         }
     }
     

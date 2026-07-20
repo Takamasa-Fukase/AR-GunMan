@@ -58,7 +58,6 @@ struct GameViewBuilder {
             weaponControlMotionHandleUseCase: weaponControlMotionHandleUseCase,
         )
         let viewModel = GameViewModel(presenter: presenter)
-        arShootingLibHandler.inject(delegate: presenter)
         weaponControlMotionHandleUseCase.inject(delegate: presenter)
         return GameView(
             arView: arView,

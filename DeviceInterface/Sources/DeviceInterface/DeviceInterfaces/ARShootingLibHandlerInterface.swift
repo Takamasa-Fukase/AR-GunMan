@@ -8,12 +8,8 @@
 import Foundation
 import Domain
 
-public protocol ARShootingLibHandlerDelegate: AnyObject {
-    func targetHit(weaponType: WeaponType)
-}
-
 public protocol ARShootingLibHandlerInterface {
-    func inject(delegate: ARShootingLibHandlerDelegate)
+    var targetHitStream: AsyncStream<WeaponType> { get }
     func runSession()
     func pauseSession()
     func showWeapon(of type: WeaponType)

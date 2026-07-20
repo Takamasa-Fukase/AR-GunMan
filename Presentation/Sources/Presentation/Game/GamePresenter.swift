@@ -80,6 +80,12 @@ public final class GamePresenter {
         isWeaponSelectViewPresentedPublisher = isWeaponSelectViewPresentedSubject.eraseToAnyPublisher()
         isResultViewPresentedPublisher = isResultViewPresentedSubject.eraseToAnyPublisher()
         
+        Task {
+            for await weaponType in arShootingLibHandler.targetHitStream {
+                handleTargetHit(weaponType)
+            }
+        }
+        
         coreMotionHandler.accelerationUpdated = { [weak self] acceleration in
             self?.weaponControlMotionHandleUseCase.execute(acceleration: acceleration, gyro: nil)
         }
@@ -139,6 +145,14 @@ public final class GamePresenter {
     }
     
     // MARK: Privateメソッド
+    private func handleTargetHit(_ weaponType: WeaponType) {
+        gameRepository.addScore(targetHitPoint: weaponType.weaponInfo.spec.targetHitPoint)
+        soundPlayer.play(.targetHit)
+        if let bulletHitSound = weaponType.resources.bulletHitSound {
+            soundPlayer.play(bulletHitSound)
+        }
+    }
+    
     private func handleGameFlowStatus(_ status: GameFlowStatus) {
         switch status {
         case .waitingForTimerStart:
@@ -205,17 +219,6 @@ public final class GamePresenter {
         case .exceededLimit:
             soundPlayer.play(.targetAppearanceChange)
             arShootingLibHandler.changeTargetsAppearance(to: "taimeisan.jpg")
-        }
-    }
-}
-
-extension GamePresenter: ARShootingLibHandlerDelegate {
-    public func targetHit(weaponType: WeaponType) {
-        let targetHitPoint = weaponRepository.weaponType.weaponInfo.spec.targetHitPoint
-        gameRepository.addScore(targetHitPoint: targetHitPoint)
-        soundPlayer.play(.targetHit)
-        if let bulletHitSound = weaponType.resources.bulletHitSound {
-            soundPlayer.play(bulletHitSound)
         }
     }
 }
