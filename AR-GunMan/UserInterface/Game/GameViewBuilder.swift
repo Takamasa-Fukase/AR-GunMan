@@ -42,7 +42,6 @@ struct GameViewBuilder {
             gameRepository: gameRepository,
             tutorialRepository: tutorialRepository
         )
-        let weaponControlMotionHandleUseCase: WeaponControlMotionHandleUseCaseInterface = Factory.create()
         
         let presenter = GamePresenter(
             arShootingLibHandler: arShootingLibHandler,
@@ -55,10 +54,9 @@ struct GameViewBuilder {
             weaponReloadUseCase: weaponReloadUseCase,
             weaponChangeUseCase: weaponChangeUseCase,
             gameFlowDriveUseCase: gameFlowDriveUseCase,
-            weaponControlMotionHandleUseCase: weaponControlMotionHandleUseCase,
+            weaponControlMotionDetectUseCase: Factory.create()
         )
         let viewModel = GameViewModel(presenter: presenter)
-        weaponControlMotionHandleUseCase.inject(delegate: presenter)
         return GameView(
             arView: arView,
             viewModel: viewModel

@@ -45,7 +45,7 @@ public final class GamePresenter {
     private let weaponReloadUseCase: WeaponReloadUseCaseInterface
     private let weaponChangeUseCase: WeaponChangeUseCaseInterface
     private let gameFlowDriveUseCase: GameFlowDriveUseCaseInterface
-    private let weaponControlMotionHandleUseCase: WeaponControlMotionHandleUseCaseInterface
+    private let weaponControlMotionDetectUseCase: WeaponControlMotionDetectUseCaseInterface
     
     private let isTutorialViewPresentedSubject = CurrentValueSubject<Bool, Never>(false)
     private let isWeaponSelectViewPresentedSubject = CurrentValueSubject<Bool, Never>(false)
@@ -62,7 +62,7 @@ public final class GamePresenter {
         weaponReloadUseCase: WeaponReloadUseCaseInterface,
         weaponChangeUseCase: WeaponChangeUseCaseInterface,
         gameFlowDriveUseCase: GameFlowDriveUseCaseInterface,
-        weaponControlMotionHandleUseCase: WeaponControlMotionHandleUseCaseInterface,
+        weaponControlMotionDetectUseCase: WeaponControlMotionDetectUseCaseInterface
     ) {
         self.arShootingLibHandler = arShootingLibHandler
         self.soundPlayer = soundPlayer
@@ -74,7 +74,7 @@ public final class GamePresenter {
         self.weaponReloadUseCase = weaponReloadUseCase
         self.weaponChangeUseCase = weaponChangeUseCase
         self.gameFlowDriveUseCase = gameFlowDriveUseCase
-        self.weaponControlMotionHandleUseCase = weaponControlMotionHandleUseCase
+        self.weaponControlMotionDetectUseCase = weaponControlMotionDetectUseCase
         
         isTutorialViewPresentedPublisher = isTutorialViewPresentedSubject.eraseToAnyPublisher()
         isWeaponSelectViewPresentedPublisher = isWeaponSelectViewPresentedSubject.eraseToAnyPublisher()
@@ -87,10 +87,17 @@ public final class GamePresenter {
         }
         
         coreMotionHandler.accelerationUpdated = { [weak self] acceleration in
-            self?.weaponControlMotionHandleUseCase.execute(acceleration: acceleration, gyro: nil)
+            self?.weaponControlMotionDetectUseCase.execute(acceleration: acceleration, gyro: nil)
         }
+        
         coreMotionHandler.gyroUpdated = { [weak self] gyro in
-            self?.weaponControlMotionHandleUseCase.execute(acceleration: nil ,gyro: gyro)
+            self?.weaponControlMotionDetectUseCase.execute(acceleration: nil ,gyro: gyro)
+        }
+        
+        Task {
+            for await motion in weaponControlMotionDetectUseCase.detectedMotionStream {
+                handleDetectedMotion(motion)
+            }
         }
         
         Task {
@@ -150,6 +157,17 @@ public final class GamePresenter {
         soundPlayer.play(.targetHit)
         if let bulletHitSound = weaponType.resources.bulletHitSound {
             soundPlayer.play(bulletHitSound)
+        }
+    }
+    
+    private func handleDetectedMotion(_ motion: WeaponControlMotion) {
+        switch motion {
+        case .fire:
+            weaponFireUseCase.execute()
+            
+        case .reload:
+            weaponReloadUseCase.execute()
+            updateReloadingMotionDetectedCount()
         }
     }
     
@@ -220,16 +238,5 @@ public final class GamePresenter {
             soundPlayer.play(.targetAppearanceChange)
             arShootingLibHandler.changeTargetsAppearance(to: "taimeisan.jpg")
         }
-    }
-}
-
-extension GamePresenter: WeaponControlMotionHandleUseCaseDelegate {
-    public func firingMotionDetected() {
-        weaponFireUseCase.execute()
-    }
-    
-    public func reloadingMotionDetected() {
-        weaponReloadUseCase.execute()
-        updateReloadingMotionDetectedCount()
     }
 }

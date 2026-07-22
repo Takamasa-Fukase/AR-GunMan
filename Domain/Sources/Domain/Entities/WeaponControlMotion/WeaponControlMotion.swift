@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum WeaponControlMotion {
+public enum WeaponControlMotion {
     case fire
     case reload
     

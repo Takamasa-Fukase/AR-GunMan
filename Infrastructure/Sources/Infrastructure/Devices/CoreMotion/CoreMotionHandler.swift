@@ -11,8 +11,8 @@ import DeviceInterface
 import Domain
 
 public class CoreMotionHandler: CoreMotionHandlerInterface {
-    public var accelerationUpdated: ((VectorMotionData) -> Void)?
-    public var gyroUpdated: ((VectorMotionData) -> Void)?
+    public var accelerationUpdated: ((Vector) -> Void)?
+    public var gyroUpdated: ((Vector) -> Void)?
     
     private let coreMotionManager = CMMotionManager()
     private let operationQueue: OperationQueue = {
@@ -61,11 +61,11 @@ public class CoreMotionHandler: CoreMotionHandlerInterface {
 }
 
 fileprivate extension CMAcceleration  {
-    var vector: VectorMotionData {
+    var vector: Vector {
         // 地球の標準重力加速度 (m/s^2)
         let gravityEarth: Double = 9.80665
         // Android側の基準と同じになるように重力加速度を掛けて世界標準の規格に合わせる
-        return VectorMotionData(
+        return Vector(
             x: self.x * gravityEarth,
             y: self.y * gravityEarth,
             z: self.z * gravityEarth
@@ -74,8 +74,8 @@ fileprivate extension CMAcceleration  {
 }
 
 fileprivate extension CMRotationRate {
-    var vector: VectorMotionData {
-        VectorMotionData(
+    var vector: Vector {
+        Vector(
             x: self.x,
             y: self.y,
             z: self.z
