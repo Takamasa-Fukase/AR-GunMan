@@ -25,7 +25,7 @@ public final class WeaponControlMotionDetectUseCase: WeaponControlMotionDetectUs
     public func execute(acceleration: Vector?, gyro: Vector?) {
         if let motion = WeaponControlMotion.from(
             acceleration: acceleration,
-            gyro: gyro
+            gyro: gyro ?? latestGyro
         ) {
             detectedMotionContinuation.yield(motion)
         }
