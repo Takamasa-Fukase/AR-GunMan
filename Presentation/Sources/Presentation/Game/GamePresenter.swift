@@ -86,12 +86,8 @@ public final class GamePresenter {
             }
         }
         
-        coreMotionHandler.accelerationUpdated = { [weak self] acceleration in
-            self?.weaponControlMotionDetectUseCase.execute(acceleration: acceleration, gyro: nil)
-        }
-        
-        coreMotionHandler.gyroUpdated = { [weak self] gyro in
-            self?.weaponControlMotionDetectUseCase.execute(acceleration: nil ,gyro: gyro)
+        coreMotionHandler.motionUpdated = { [weak self] motion in
+            self?.weaponControlMotionDetectUseCase.execute(motion: motion)
         }
         
         Task {

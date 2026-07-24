@@ -9,8 +9,7 @@ import Foundation
 import Domain
 
 public protocol CoreMotionHandlerInterface: AnyObject {
-    var accelerationUpdated: ((Vector) -> Void)? { get set }
-    var gyroUpdated: ((Vector) -> Void)? { get set }
+    var motionUpdated: ((Motion) -> Void)? { get set }
     func startDetection()
     func stopDetection()
 }
