@@ -44,9 +44,9 @@ struct GameViewBuilder {
         )
         
         let presenter = GamePresenter(
-            arShootingLibHandler: arShootingLibHandler,
+            arGameEngineHandler: arShootingLibHandler,
             soundPlayer: Factory.create(),
-            coreMotionHandler: Factory.create(),
+            motionSensorHandler: Factory.create(),
             tutorialRepository: tutorialRepository,
             gameRepository: gameRepository,
             weaponRepository: weaponRepository,

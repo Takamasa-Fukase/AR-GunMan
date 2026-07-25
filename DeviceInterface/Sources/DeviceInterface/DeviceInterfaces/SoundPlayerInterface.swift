@@ -7,6 +7,6 @@
 
 import Foundation
 
-public protocol SoundPlayerInterface {
+public protocol SoundPlayerInterface: AnyObject {
     func play(_ sound: SoundType)
 }

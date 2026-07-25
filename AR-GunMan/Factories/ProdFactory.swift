@@ -14,7 +14,7 @@ import Infrastructure
 
 final class ProdFactory: FactoryInterface {
     // MARK: Devices
-    static func create(frame: CGRect, targetCount: Int) -> (ARShootingLibHandlerInterface, ARSCNViewRepresentable) {
+    static func create(frame: CGRect, targetCount: Int) -> (ARGameEngineHandlerInterface, ARSCNViewRepresentable) {
         let (arShootingController, arView) = ARShootingLibBuilder.build(
             frame: frame,
             targetCount: targetCount
@@ -29,7 +29,7 @@ final class ProdFactory: FactoryInterface {
         return CameraPermissionHandler()
     }
     
-    static func create() -> CoreMotionHandlerInterface {
+    static func create() -> MotionSensorHandlerInterface {
         return CoreMotionHandler()
     }
 

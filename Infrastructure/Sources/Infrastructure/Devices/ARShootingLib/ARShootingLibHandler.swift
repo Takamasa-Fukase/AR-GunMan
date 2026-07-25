@@ -10,7 +10,7 @@ import ARShootingLib
 import DeviceInterface
 import Domain
 
-public final class ARShootingLibHandler: ARShootingLibHandlerInterface {
+public final class ARShootingLibHandler: ARGameEngineHandlerInterface {
     public let targetHitStream: AsyncStream<Domain.WeaponType>
     
     private let arShootingController: ARShootingControllerInterface

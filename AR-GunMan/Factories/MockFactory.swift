@@ -14,7 +14,7 @@ import Infrastructure
 
 final class MockFactory: FactoryInterface {
     // MARK: Devices
-    static func create(frame: CGRect, targetCount: Int) -> (ARShootingLibHandlerInterface, ARSCNViewRepresentable) {
+    static func create(frame: CGRect, targetCount: Int) -> (ARGameEngineHandlerInterface, ARSCNViewRepresentable) {
         let mockController = ARShootingControllerMock()
         let arShootingLibHandler = ARShootingLibHandler(arShootingController: mockController)
         let mockARView = ARSCNViewRepresentable.createMock()
@@ -25,7 +25,7 @@ final class MockFactory: FactoryInterface {
         return CameraPermissionHandler()
     }
     
-    static func create() -> CoreMotionHandlerInterface {
+    static func create() -> MotionSensorHandlerInterface {
         return CoreMotionHandler()
     }
 

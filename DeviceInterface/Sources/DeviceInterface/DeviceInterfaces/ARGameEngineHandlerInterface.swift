@@ -1,5 +1,5 @@
 //
-//  ARShootingLibHandlerInterface.swift
+//  ARGameEngineHandlerInterface.swift
 //  DeviceInterface
 //
 //  Created by ウルトラ深瀬 on 2026/06/03.
@@ -8,7 +8,7 @@
 import Foundation
 import Domain
 
-public protocol ARShootingLibHandlerInterface {
+public protocol ARGameEngineHandlerInterface: AnyObject {
     var targetHitStream: AsyncStream<WeaponType> { get }
     func runSession()
     func pauseSession()

@@ -35,9 +35,9 @@ public final class GamePresenter {
     public let isWeaponSelectViewPresentedPublisher: AnyPublisher<Bool, Never>
     public let isResultViewPresentedPublisher: AnyPublisher<(Bool, Double), Never>
     
-    private let arShootingLibHandler: ARShootingLibHandlerInterface
+    private let arGameEngineHandler: ARGameEngineHandlerInterface
     private let soundPlayer: SoundPlayerInterface
-    private let coreMotionHandler: CoreMotionHandlerInterface
+    private let motionSensorHandler: MotionSensorHandlerInterface
     private let tutorialRepository: TutorialRepositoryInterface
     private let gameRepository: GameRepositoryInterface
     private let weaponRepository: WeaponRepositoryInterface
@@ -52,9 +52,9 @@ public final class GamePresenter {
     private let isResultViewPresentedSubject = CurrentValueSubject<(Bool, Double), Never>((false, 0.0))
         
     public init(
-        arShootingLibHandler: ARShootingLibHandlerInterface,
+        arGameEngineHandler: ARGameEngineHandlerInterface,
         soundPlayer: SoundPlayerInterface,
-        coreMotionHandler: CoreMotionHandlerInterface,
+        motionSensorHandler: MotionSensorHandlerInterface,
         tutorialRepository: TutorialRepositoryInterface,
         gameRepository: GameRepositoryInterface,
         weaponRepository: WeaponRepositoryInterface,
@@ -64,9 +64,9 @@ public final class GamePresenter {
         gameFlowDriveUseCase: GameFlowDriveUseCaseInterface,
         weaponControlMotionDetectUseCase: WeaponControlMotionDetectUseCaseInterface
     ) {
-        self.arShootingLibHandler = arShootingLibHandler
+        self.arGameEngineHandler = arGameEngineHandler
         self.soundPlayer = soundPlayer
-        self.coreMotionHandler = coreMotionHandler
+        self.motionSensorHandler = motionSensorHandler
         self.tutorialRepository = tutorialRepository
         self.gameRepository = gameRepository
         self.weaponRepository = weaponRepository
@@ -81,12 +81,12 @@ public final class GamePresenter {
         isResultViewPresentedPublisher = isResultViewPresentedSubject.eraseToAnyPublisher()
         
         Task {
-            for await weaponType in arShootingLibHandler.targetHitStream {
+            for await weaponType in arGameEngineHandler.targetHitStream {
                 handleTargetHit(weaponType)
             }
         }
         
-        coreMotionHandler.motionUpdated = { [weak self] motion in
+        motionSensorHandler.motionUpdated = { [weak self] motion in
             self?.weaponControlMotionDetectUseCase.execute(motion: motion)
         }
         
@@ -117,13 +117,13 @@ public final class GamePresenter {
     
     // MARK: ViewからのInput
     public func onViewAppear() {
-        arShootingLibHandler.showWeapon(of: .defaultType)
-        arShootingLibHandler.runSession()
+        arGameEngineHandler.showWeapon(of: .defaultType)
+        arGameEngineHandler.runSession()
         gameFlowDriveUseCase.start()
     }
     
     public func onViewDisappear() {
-        arShootingLibHandler.pauseSession()
+        arGameEngineHandler.pauseSession()
     }
     
     public func tutorialEnded() {
@@ -140,7 +140,7 @@ public final class GamePresenter {
     
     public func weaponSelected(weaponType: WeaponType) {
         weaponChangeUseCase.execute(newType: weaponType)
-        arShootingLibHandler.showWeapon(of: weaponType)
+        arGameEngineHandler.showWeapon(of: weaponType)
         soundPlayer.play(weaponType.resources.appearingSound)
         
         // タイムカウントの更新を再開する
@@ -174,11 +174,11 @@ public final class GamePresenter {
             
         case .timerStartedAndWaitingForTimerEnd:
             soundPlayer.play(.startWhistle)
-            coreMotionHandler.startDetection()
+            motionSensorHandler.startDetection()
             
         case .timerEndedAndWaitingForFlowEnd:
             soundPlayer.play(.endWhistle)
-            coreMotionHandler.stopDetection()
+            motionSensorHandler.stopDetection()
             
         case .flowEnded:
             soundPlayer.play(.rankingAppear)
@@ -201,7 +201,7 @@ public final class GamePresenter {
     private func handleWeaponFireResult(_ result: WeaponFireResult) {
         switch result {
         case .success:
-            arShootingLibHandler.renderWeaponFiring()
+            arGameEngineHandler.renderWeaponFiring()
             soundPlayer.play(weaponRepository.weaponType.resources.firingSound)
             
         case .failure(let reason):
@@ -232,7 +232,7 @@ public final class GamePresenter {
             break
         case .exceededLimit:
             soundPlayer.play(.targetAppearanceChange)
-            arShootingLibHandler.changeTargetsAppearance(to: "taimeisan.jpg")
+            arGameEngineHandler.changeTargetsAppearance(to: "taimeisan.jpg")
         }
     }
 }

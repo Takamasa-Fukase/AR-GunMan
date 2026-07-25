@@ -10,7 +10,7 @@ import CoreMotion
 import DeviceInterface
 import Domain
 
-public class CoreMotionHandler: CoreMotionHandlerInterface {
+public class CoreMotionHandler: MotionSensorHandlerInterface {
     public var motionUpdated: ((Motion) -> Void)?
     
     private let coreMotionManager = CMMotionManager()

@@ -22,9 +22,9 @@ typealias Factory = ProdFactory
 
 protocol FactoryInterface {
     // MARK: Devices
-    static func create(frame: CGRect, targetCount: Int) -> (ARShootingLibHandlerInterface, ARSCNViewRepresentable)
+    static func create(frame: CGRect, targetCount: Int) -> (ARGameEngineHandlerInterface, ARSCNViewRepresentable)
     static func create() -> CameraPermissionHandlerInterface
-    static func create() -> CoreMotionHandlerInterface
+    static func create() -> MotionSensorHandlerInterface
     static func create() -> SoundPlayerInterface
 
     // MARK: Storages
