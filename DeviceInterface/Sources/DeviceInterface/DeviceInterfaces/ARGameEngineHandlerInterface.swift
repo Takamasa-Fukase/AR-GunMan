@@ -9,9 +9,9 @@ import Foundation
 import Domain
 
 public protocol ARGameEngineHandlerInterface: AnyObject {
-    var targetHitStream: AsyncStream<WeaponType> { get }
-    func runSession()
-    func pauseSession()
+    var targetHit: ((WeaponType) -> Void)? { get set }
+    func run()
+    func pause()
     func showWeapon(of type: WeaponType)
     func renderWeaponFiring()
     func changeTargetsAppearance(to imageName: String)

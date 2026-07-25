@@ -80,10 +80,8 @@ public final class GamePresenter {
         isWeaponSelectViewPresentedPublisher = isWeaponSelectViewPresentedSubject.eraseToAnyPublisher()
         isResultViewPresentedPublisher = isResultViewPresentedSubject.eraseToAnyPublisher()
         
-        Task {
-            for await weaponType in arGameEngineHandler.targetHitStream {
-                handleTargetHit(weaponType)
-            }
+        arGameEngineHandler.targetHit = { [weak self] weaponType in
+            self?.handleTargetHit(weaponType)
         }
         
         motionSensorHandler.motionUpdated = { [weak self] motion in
@@ -117,13 +115,14 @@ public final class GamePresenter {
     
     // MARK: ViewからのInput
     public func onViewAppear() {
+        // TODO: 検証 - 呼び出し順逆の方がいいか？
         arGameEngineHandler.showWeapon(of: .defaultType)
-        arGameEngineHandler.runSession()
+        arGameEngineHandler.run()
         gameFlowDriveUseCase.start()
     }
     
     public func onViewDisappear() {
-        arGameEngineHandler.pauseSession()
+        arGameEngineHandler.pause()
     }
     
     public func tutorialEnded() {

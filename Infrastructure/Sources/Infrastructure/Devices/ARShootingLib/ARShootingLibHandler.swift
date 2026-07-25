@@ -11,25 +11,23 @@ import DeviceInterface
 import Domain
 
 public final class ARShootingLibHandler: ARGameEngineHandlerInterface {
-    public let targetHitStream: AsyncStream<Domain.WeaponType>
+    public var targetHit: ((Domain.WeaponType) -> Void)?
     
     private let arShootingController: ARShootingControllerInterface
     
     public init(arShootingController: ARShootingControllerInterface) {
         self.arShootingController = arShootingController
         
-        targetHitStream = AsyncStream<Domain.WeaponType>() { continuation in
-            arShootingController.targetHit = { weaponType in
-                continuation.yield(weaponType.toDomainWeaponType)
-            }
+        arShootingController.targetHit = { [weak self] weaponType in
+            self?.targetHit?(weaponType.toDomainWeaponType)
         }
     }
     
-    public func runSession() {
+    public func run() {
         arShootingController.runSession()
     }
     
-    public func pauseSession() {
+    public func pause() {
         arShootingController.pauseSession()
     }
     
