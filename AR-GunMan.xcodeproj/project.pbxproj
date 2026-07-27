@@ -361,14 +361,6 @@
 			path = sounds;
 			sourceTree = "<group>";
 		};
-		BCA5140F2FF726C3007B47E3 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				BCA514012FF405A0007B47E3 /* WeaponResources.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
 		BCB93BAA2C36DE7D00DBFC46 /* FirebaseInfoPlist */ = {
 			isa = PBXGroup;
 			children = (
@@ -416,7 +408,7 @@
 				BCFDECBD2D3B45BD0023DC8A /* GameView.swift */,
 				BCFDECBE2D3B45BD0023DC8A /* GameViewBuilder.swift */,
 				BC0272F62FFD1AAD008D82EA /* GameViewModel.swift */,
-				BCA5140F2FF726C3007B47E3 /* Models */,
+				BCA514012FF405A0007B47E3 /* WeaponResources.swift */,
 			);
 			path = Game;
 			sourceTree = "<group>";
