@@ -9,20 +9,20 @@ import Foundation
 
 public protocol WeaponControlMotionDetectUseCaseInterface {
     var detectedMotionStream: AsyncStream<WeaponControlMotion> { get }
-    func execute(motion: Motion)
+    func execute(motion: PhysicalMotion)
 }
 
 public final class WeaponControlMotionDetectUseCase: WeaponControlMotionDetectUseCaseInterface {
     public let detectedMotionStream: AsyncStream<WeaponControlMotion>
 
-    private var latestGyro: Motion?
+    private var latestGyro: PhysicalMotion?
     private let detectedMotionContinuation: AsyncStream<WeaponControlMotion>.Continuation
 
     public init() {
         (detectedMotionStream, detectedMotionContinuation) = AsyncStream.makeStream()
     }
 
-    public func execute(motion: Motion) {
+    public func execute(motion: PhysicalMotion) {
         switch motion.type {
         case .acceleration:
             guard let firingMotion = WeaponControlMotion.from(acceleration: motion, gyro: latestGyro) else {

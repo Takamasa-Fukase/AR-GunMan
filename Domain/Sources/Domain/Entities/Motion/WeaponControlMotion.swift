@@ -11,7 +11,7 @@ public enum WeaponControlMotion {
     case fire
     case reload
     
-    static func from(acceleration: Motion, gyro: Motion?) -> Self? {
+    static func from(acceleration: PhysicalMotion, gyro: PhysicalMotion?) -> Self? {
         let accelerationComposite = acceleration.getCompositeValue(of: [.y, .z])
         let gyroComposite = gyro?.getCompositeValue(of: [.z]) ?? 0.0
         if isFiringMotion(accelerationComposite: accelerationComposite, gyroComposite: gyroComposite) {
@@ -21,7 +21,7 @@ public enum WeaponControlMotion {
         }
     }
     
-    static func from(gyro: Motion) -> Self? {
+    static func from(gyro: PhysicalMotion) -> Self? {
         let gyroComposite = gyro.getCompositeValue(of: [.z])
         if isReloadingMotion(gyroComposite: gyroComposite) {
             return .reload

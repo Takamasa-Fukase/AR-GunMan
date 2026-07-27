@@ -9,7 +9,7 @@ import Foundation
 import Domain
 
 public protocol MotionSensorHandlerInterface: AnyObject {
-    var motionUpdated: ((Motion) -> Void)? { get set }
+    var motionUpdated: ((PhysicalMotion) -> Void)? { get set }
     func startDetection()
     func stopDetection()
 }
