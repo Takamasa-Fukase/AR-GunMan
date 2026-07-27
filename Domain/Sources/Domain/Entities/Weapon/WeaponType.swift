@@ -11,35 +11,53 @@ public enum WeaponType: CaseIterable {
     case pistol
     case bazooka
     
-    public var weaponInfo: any WeaponInfo {
-        switch self {
-        case .pistol:
-            return PistolInfo(
-                isDefault: true,
-                spec: PistolInfo.Spec(
-                    capacity: 7,
-                    reloadWaitingTimeMillisec: 0,
-                    reloadType: .manual,
-                    targetHitPoint: 5
-                )
-            )
-        case .bazooka:
-            return BazookaInfo(
-                isDefault: false,
-                spec: BazookaInfo.Spec(
-                    capacity: 1,
-                    reloadWaitingTimeMillisec: 3200,
-                    reloadType: .auto,
-                    targetHitPoint: 12
-                )
-            )
-        }
-    }
-    
     public static var defaultType: Self {
-        guard let defaultWeaponType = allCases.first(where: { $0.weaponInfo.isDefault }) else {
+        guard let defaultWeaponType = allCases.first(where: { $0.isDefault }) else {
             fatalError("デフォルトのWeaponTypeが存在しません")
         }
         return defaultWeaponType
+    }
+    
+    public var isDefault: Bool {
+        return info.isDefault
+    }
+    
+    public var capacity: Int {
+        return info.capacity
+    }
+    
+    public var reloadWaitingTimeMillisec: Int {
+        return info.reloadWaitingTimeMillisec
+    }
+    
+    public var reloadType: WeaponInfo.ReloadType {
+        return info.reloadType
+    }
+    
+    public var targetHitPoint: Int {
+        return info.targetHitPoint
+    }
+}
+
+private extension WeaponType {
+    var info: WeaponInfo {
+        switch self {
+        case .pistol:
+            return WeaponInfo(
+                isDefault: true,
+                capacity: 7,
+                reloadWaitingTimeMillisec: 0,
+                reloadType: .manual,
+                targetHitPoint: 5
+            )
+        case .bazooka:
+            return WeaponInfo(
+                isDefault: false,
+                capacity: 1,
+                reloadWaitingTimeMillisec: 3200,
+                reloadType: .auto,
+                targetHitPoint: 12
+            )
+        }
     }
 }

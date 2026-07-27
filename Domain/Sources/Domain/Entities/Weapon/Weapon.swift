@@ -9,7 +9,7 @@ import Foundation
 
 public struct Weapon {
     public private(set) var currentType: WeaponType = .defaultType
-    public private(set) var bulletsCount: Int = WeaponType.defaultType.weaponInfo.spec.capacity
+    public private(set) var bulletsCount: Int = WeaponType.defaultType.capacity
     public private(set) var isReloading: Bool = false
     
     public init() {}
@@ -34,7 +34,7 @@ public struct Weapon {
     }
     
     public mutating func finishReload() {
-        bulletsCount = currentType.weaponInfo.spec.capacity
+        bulletsCount = currentType.capacity
         isReloading = false
     }
     

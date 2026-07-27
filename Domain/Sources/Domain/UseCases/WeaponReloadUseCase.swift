@@ -35,7 +35,7 @@ public final class WeaponReloadUseCase: WeaponReloadUseCaseInterface {
         let startResult = weaponRepository.startReload()
         startResultContinuation.yield(startResult)
 
-        let reloadWaitingTimeMillisec = weaponRepository.weaponType.weaponInfo.spec.reloadWaitingTimeMillisec
+        let reloadWaitingTimeMillisec = weaponRepository.weaponType.reloadWaitingTimeMillisec
         reloadTask = Task {
             try? await Task.sleep(for: .milliseconds(reloadWaitingTimeMillisec))
             weaponRepository.finishReload()

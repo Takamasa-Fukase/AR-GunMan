@@ -34,7 +34,7 @@ public final class WeaponFireUseCase: WeaponFireUseCaseInterface {
     public func execute() {
         let result = weaponRepository.fire()
         resultContinuation.yield(result)
-        if result == .success && weaponRepository.weaponType.weaponInfo.spec.reloadType == .auto {
+        if result == .success && weaponRepository.weaponType.reloadType == .auto {
             // リロードを自動的に実行
             weaponReloadUseCase.execute()
         }

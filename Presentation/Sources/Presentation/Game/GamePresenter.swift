@@ -148,7 +148,7 @@ public final class GamePresenter {
     
     // MARK: Privateメソッド
     private func handleTargetHit(_ weaponType: WeaponType) {
-        gameRepository.addScore(targetHitPoint: weaponType.weaponInfo.spec.targetHitPoint)
+        gameRepository.addScore(targetHitPoint: weaponType.targetHitPoint)
         soundPlayer.play(.targetHit)
         if let bulletHitSound = weaponType.resources.bulletHitSound {
             soundPlayer.play(bulletHitSound)
