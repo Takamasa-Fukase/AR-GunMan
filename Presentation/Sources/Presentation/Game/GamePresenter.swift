@@ -18,8 +18,8 @@ public final class GamePresenter {
     public var currentWeaponType: WeaponType {
         return weaponRepository.weaponType
     }
-    public var bulletsCount: String {
-        return String(weaponRepository.bulletsCount)
+    public var bulletsCount: Int {
+        return weaponRepository.bulletsCount
     }
     public var isWeaponChangeButtonEnabled: Bool {
         switch gameRepository.gameFlowStatus {

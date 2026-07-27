@@ -85,13 +85,12 @@ struct GameView<ARView: View>: View {
             // 武器変更画面の表示中は邪魔になって見ずらいので隠す
             if !viewModel.isWeaponSelectViewPresented {
                 // 照準画像
-                Image(viewModel.currentWeaponType.resources.sightImageName)
+                Image(viewModel.sightImageName)
                     .renderingMode(.template)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 100, height: 100)
-                // TODO: 普通に最初からColorをresourcesに持たせるようにする & 不要になったConverterを消す
-                    .foregroundStyle(ColorTypeConverter.fromColorType(viewModel.currentWeaponType.resources.sightImageColorType))
+                    .foregroundStyle(viewModel.sightImageColor)
             }
         }
         .background(Color.black)

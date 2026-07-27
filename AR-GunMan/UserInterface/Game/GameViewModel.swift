@@ -9,6 +9,7 @@ import Observation
 import Combine
 import Domain
 import Presentation
+import SwiftUI
 
 @Observable
 @MainActor
@@ -19,9 +20,14 @@ final class GameViewModel {
     var currentWeaponType: WeaponType {
         return presenter.currentWeaponType
     }
+    var sightImageName: String {
+        return currentWeaponType.resources.sightImageName
+    }
+    var sightImageColor: Color {
+        return currentWeaponType.resources.sightImageColor
+    }
     var bulletsCountImageName: String {
-        let imageName = currentWeaponType.resources.bulletsCountImageBaseName + presenter.bulletsCount
-        return imageName
+        return currentWeaponType.resources.bulletsCountImageName(presenter.bulletsCount)
     }
     var isWeaponChangeButtonEnabled: Bool {
         return presenter.isWeaponChangeButtonEnabled
@@ -74,5 +80,26 @@ final class GameViewModel {
     
     func weaponSelected(weaponType: WeaponType) {
         presenter.weaponSelected(weaponType: weaponType)
+    }
+}
+
+extension WeaponType {
+    var resources: WeaponResources {
+        switch self {
+        case .pistol:
+            return WeaponResources(
+                weaponImageName: "pistol",
+                sightImageName: "pistol_sight",
+                sightImageColor: Color(uiColor: .systemRed),
+                bulletsCountImageBaseName: "pistol_bullets_"
+            )
+        case .bazooka:
+            return WeaponResources(
+                weaponImageName: "bazooka",
+                sightImageName: "bazooka_sight",
+                sightImageColor: Color(uiColor: .systemGreen),
+                bulletsCountImageBaseName: "bazooka_bullets_"
+            )
+        }
     }
 }
