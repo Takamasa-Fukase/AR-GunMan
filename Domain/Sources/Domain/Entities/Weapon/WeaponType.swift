@@ -18,7 +18,6 @@ public enum WeaponType: CaseIterable {
                 isDefault: true,
                 spec: PistolInfo.Spec(
                     capacity: 7,
-                    reloadWaitingTime: 0, // TODO: 後で消す
                     reloadWaitingTimeMillisec: 0,
                     reloadType: .manual,
                     targetHitPoint: 5
@@ -29,7 +28,6 @@ public enum WeaponType: CaseIterable {
                 isDefault: false,
                 spec: BazookaInfo.Spec(
                     capacity: 1,
-                    reloadWaitingTime: 3.2, // TODO: 後で消す
                     reloadWaitingTimeMillisec: 3200,
                     reloadType: .auto,
                     targetHitPoint: 12
@@ -43,26 +41,5 @@ public enum WeaponType: CaseIterable {
             fatalError("デフォルトのWeaponTypeが存在しません")
         }
         return defaultWeaponType
-    }
-    
-    // FIXME: 一時的な対応
-    public static func fromId(_ id: Int) -> Self? {
-        switch id {
-        case 0:
-            return .pistol
-        case 1:
-            return .bazooka
-        default:
-            return nil
-        }
-    }
-    
-    public var id: Int {
-        switch self {
-        case .pistol:
-            return 0
-        case .bazooka:
-            return 1
-        }
     }
 }

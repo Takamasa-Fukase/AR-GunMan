@@ -14,7 +14,6 @@ public enum ReloadType {
 
 public protocol WeaponSpec {
     var capacity: Int { get }
-    var reloadWaitingTime: TimeInterval { get }
     var reloadWaitingTimeMillisec: Int { get }
     var reloadType: ReloadType { get }
     var targetHitPoint: Int { get }
