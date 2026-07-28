@@ -82,24 +82,3 @@ final class GameViewModel {
         presenter.weaponSelected(weaponType: weaponType)
     }
 }
-
-extension WeaponType {
-    var resources: WeaponResources {
-        switch self {
-        case .pistol:
-            return WeaponResources(
-                weaponImageName: "pistol",
-                sightImageName: "pistol_sight",
-                sightImageColor: Color(uiColor: .systemRed),
-                bulletsCountImageBaseName: "pistol_bullets_"
-            )
-        case .bazooka:
-            return WeaponResources(
-                weaponImageName: "bazooka",
-                sightImageName: "bazooka_sight",
-                sightImageColor: Color(uiColor: .systemGreen),
-                bulletsCountImageBaseName: "bazooka_bullets_"
-            )
-        }
-    }
-}

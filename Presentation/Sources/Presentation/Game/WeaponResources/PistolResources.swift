@@ -1,15 +1,16 @@
 //
-//  BazookaResources.swift
-//  DeviceInterface
+//  PistolResources.swift
+//  Presentation
 //
 //  Created by ウルトラ深瀬 on 2026/06/30.
 //
 
 import Foundation
+import DeviceInterface
 
-public struct BazookaResources: WeaponResources {
+public struct PistolResources: WeaponResources {
     public let appearingSound: SoundType
     public let firingSound: SoundType
     public let reloadingSound: SoundType
-    public let bulletHitSound: SoundType?
+    public let outOfBulletsSound: SoundType?
 }

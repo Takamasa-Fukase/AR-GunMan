@@ -1,11 +1,12 @@
 //
 //  WeaponResources.swift
-//  DeviceInterface
+//  Presentation
 //
 //  Created by ウルトラ深瀬 on 2026/06/30.
 //
 
 import Foundation
+import DeviceInterface
 
 public protocol WeaponResources {
     var appearingSound: SoundType { get }
