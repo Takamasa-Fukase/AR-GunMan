@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Combine
 import DeviceInterface
 import Domain
 
@@ -30,11 +29,11 @@ public final class GamePresenter {
         }
     }
     
-    // showTutorialViewPublisher: とかになる予定
-    public let isTutorialViewPresentedPublisher: AnyPublisher<Bool, Never>
-    public let isWeaponSelectViewPresentedPublisher: AnyPublisher<Bool, Never>
-    public let isResultViewPresentedPublisher: AnyPublisher<(Bool, Double), Never>
-    
+    public let showTutorialViewStream: AsyncStream<Void>
+    public let showWeaponSelectViewStream: AsyncStream<Void>
+    public let closeWeaponSelectViewStream: AsyncStream<Void>
+    public let showResultViewStream: AsyncStream<Double>
+
     private let arGameEngineHandler: ARGameEngineHandlerInterface
     private let soundPlayer: SoundPlayerInterface
     private let motionSensorHandler: MotionSensorHandlerInterface
@@ -47,10 +46,11 @@ public final class GamePresenter {
     private let gameFlowDriveUseCase: GameFlowDriveUseCaseInterface
     private let weaponControlMotionDetectUseCase: WeaponControlMotionDetectUseCaseInterface
     
-    private let isTutorialViewPresentedSubject = CurrentValueSubject<Bool, Never>(false)
-    private let isWeaponSelectViewPresentedSubject = CurrentValueSubject<Bool, Never>(false)
-    private let isResultViewPresentedSubject = CurrentValueSubject<(Bool, Double), Never>((false, 0.0))
-        
+    private let showTutorialViewContinuation: AsyncStream<Void>.Continuation
+    private let showWeaponSelectViewContinuation: AsyncStream<Void>.Continuation
+    private let closeWeaponSelectViewContinuation: AsyncStream<Void>.Continuation
+    private let showResultViewContinuation: AsyncStream<Double>.Continuation
+    
     public init(
         arGameEngineHandler: ARGameEngineHandlerInterface,
         soundPlayer: SoundPlayerInterface,
@@ -76,9 +76,10 @@ public final class GamePresenter {
         self.gameFlowDriveUseCase = gameFlowDriveUseCase
         self.weaponControlMotionDetectUseCase = weaponControlMotionDetectUseCase
         
-        isTutorialViewPresentedPublisher = isTutorialViewPresentedSubject.eraseToAnyPublisher()
-        isWeaponSelectViewPresentedPublisher = isWeaponSelectViewPresentedSubject.eraseToAnyPublisher()
-        isResultViewPresentedPublisher = isResultViewPresentedSubject.eraseToAnyPublisher()
+        (showTutorialViewStream, showTutorialViewContinuation) = AsyncStream.makeStream()
+        (showWeaponSelectViewStream, showWeaponSelectViewContinuation) = AsyncStream.makeStream()
+        (closeWeaponSelectViewStream, closeWeaponSelectViewContinuation) = AsyncStream.makeStream()
+        (showResultViewStream, showResultViewContinuation) = AsyncStream.makeStream()
         
         arGameEngineHandler.targetHit = { [weak self] weaponType in
             self?.handleTargetHit(weaponType)
@@ -131,7 +132,7 @@ public final class GamePresenter {
     }
     
     public func weaponChangeButtonTapped() {
-        isWeaponSelectViewPresentedSubject.send(true)
+        showWeaponSelectViewContinuation.yield()
 
         // 武器選択中はタイムカウントの更新を止める
         gameFlowDriveUseCase.pauseTimer()
@@ -178,15 +179,16 @@ public final class GamePresenter {
         case .timerEndedAndWaitingForFlowEnd:
             soundPlayer.play(.endWhistle)
             motionSensorHandler.stopDetection()
+            closeWeaponSelectViewContinuation.yield()
             
         case .flowEnded:
             soundPlayer.play(.rankingAppear)
-            isResultViewPresentedSubject.send((true, gameRepository.score))
+            showResultViewContinuation.yield(gameRepository.score)
             
         case .blocked(let reason):
             switch reason {
             case .tutorialNotCompleted:
-                isTutorialViewPresentedSubject.send(true)
+                showTutorialViewContinuation.yield()
                 
             case .timerPaused:
                 break

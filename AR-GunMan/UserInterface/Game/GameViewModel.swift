@@ -6,7 +6,6 @@
 //
 
 import Observation
-import Combine
 import Domain
 import Presentation
 import SwiftUI
@@ -38,28 +37,33 @@ final class GameViewModel {
     var isResultViewPresented: (isPresented: Bool, score: Double) = (false, 0.0)
     
     private let presenter: GamePresenter
-    private var cancellables: Set<AnyCancellable> = []
 
     init(presenter: GamePresenter) {
         self.presenter = presenter
         
-        presenter.isTutorialViewPresentedPublisher
-            .sink { [weak self] isPresented in
-                self?.isTutorialViewPresented = isPresented
+        Task {
+            for await _ in presenter.showTutorialViewStream {
+                isTutorialViewPresented = true
             }
-            .store(in: &cancellables)
+        }
         
-        presenter.isWeaponSelectViewPresentedPublisher
-            .sink { [weak self] isPresented in
-                self?.isWeaponSelectViewPresented = isPresented
+        Task {
+            for await _ in presenter.showWeaponSelectViewStream {
+                isWeaponSelectViewPresented = true
             }
-            .store(in: &cancellables)
+        }
         
-        presenter.isResultViewPresentedPublisher
-            .sink { [weak self] isPresented in
-                self?.isResultViewPresented = isPresented
+        Task {
+            for await _ in presenter.closeWeaponSelectViewStream {
+                isWeaponSelectViewPresented = false
             }
-            .store(in: &cancellables)
+        }
+        
+        Task {
+            for await score in presenter.showResultViewStream {
+                isResultViewPresented = (true, score)
+            }
+        }
     }
     
     func onViewAppear() {
