@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Presentation
 
 struct TopView: View {
     @State var viewModel: TopViewModel
@@ -32,17 +33,29 @@ struct TopView: View {
                         .frame(maxHeight: .infinity)
                     
                     VStack(spacing: 0) {
-                        targetIconButton(title: "Start", isIconSwitched: viewModel.isStartButtonIconSwitched) {
-                            viewModel.startButtonTapped()
-                        }
-                                                
-                        targetIconButton(title: "Settings", isIconSwitched: viewModel.isSettingsButtonIconSwitched) {
-                            viewModel.settingsButtonTapped()
-                        }
+                        targetIconButton(
+                            title: TopViewConst.buttonTitleStart,
+                            isIconSwitched: viewModel.isStartButtonIconSwitched,
+                            onTap: {
+                                viewModel.startButtonTapped()
+                            }
+                        )
+
+                        targetIconButton(
+                            title: TopViewConst.buttonTitleSettings,
+                            isIconSwitched: viewModel.isSettingsButtonIconSwitched,
+                            onTap: {
+                                viewModel.settingsButtonTapped()
+                            }
+                        )
                         
-                        targetIconButton(title: "HowToPlay", isIconSwitched: viewModel.isHowToPlayButtonIconSwitched) {
-                            viewModel.howToPlayButtonTapped()
-                        }
+                        targetIconButton(
+                            title: TopViewConst.buttonTitleHowToPlay,
+                            isIconSwitched: viewModel.isHowToPlayButtonIconSwitched,
+                            onTap: {
+                                viewModel.howToPlayButtonTapped()
+                            }
+                        )
                     }
                     .frame(width: (geometry.size.width) * 0.54)
                     .frame(maxHeight: .infinity)

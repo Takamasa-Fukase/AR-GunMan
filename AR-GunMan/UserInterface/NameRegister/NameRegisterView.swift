@@ -8,6 +8,7 @@
 import SwiftUI
 import Combine
 import Domain
+import Presentation
 
 struct NameRegisterView: View {
     @State var viewModel: NameRegisterViewModel
@@ -22,13 +23,13 @@ struct NameRegisterView: View {
                 Spacer()
                     .frame(height: 14)
                 
-                Text("Congratulations!")
+                Text(NameRegisterViewConst.labelTitle)
                     .font(.custom("Copperplate Bold", size: 25))
                     .foregroundStyle(Color.paper)
                     .frame(height: 25)
                 
                 HStack(spacing: 0) {
-                    Text("You're ranked at ")
+                    Text(NameRegisterViewConst.labelMessage1)
                         .font(.custom("Copperplate", size: 21))
                         .foregroundStyle(Color.paper)
                     
@@ -48,19 +49,19 @@ struct NameRegisterView: View {
                     }
                     .frame(minWidth: 58)
                     
-                    Text(" in")
+                    Text(NameRegisterViewConst.labelMessage2)
                         .font(.custom("Copperplate", size: 21))
                         .foregroundStyle(Color.paper)
                 }
                 .frame(height: 25.5)
                 
-                Text("the world!")
+                Text(NameRegisterViewConst.labelMessage3)
                     .font(.custom("Copperplate", size: 21))
                     .foregroundStyle(Color.paper)
                     .frame(height: 21.5)
                 
                 // スコア表示
-                Text("Score: \(viewModel.score.scoreText)")
+                Text(NameRegisterViewConst.labelScore(viewModel.score.scoreText))
                     .font(.custom("Copperplate Bold", size: 38))
                     .foregroundStyle(Color.paper)
                     .frame(height: 36)
@@ -69,7 +70,7 @@ struct NameRegisterView: View {
                     Spacer()
                         .frame(width: 24)
                     
-                    Text("Name:")
+                    Text(NameRegisterViewConst.labelName)
                         .font(.custom("Copperplate", size: 20))
                         .foregroundStyle(Color.paper)
                     
@@ -105,7 +106,7 @@ struct NameRegisterView: View {
                 Button {
                     viewModel.noButtonTapped()
                 } label: {
-                    Text("No, thanks")
+                    Text(NameRegisterViewConst.buttonTitleNo)
                         .font(.custom("Copperplate Bold", size: 22))
                         .foregroundStyle(Color(.darkGray))
                 }
@@ -125,7 +126,7 @@ struct NameRegisterView: View {
                             .tint(Color.paper)
                         
                     } else {
-                        Text("Register!")
+                        Text(NameRegisterViewConst.buttonTitleRegister)
                             .font(.custom("Copperplate Bold", size: 28))
                             .foregroundStyle(.black)
                             .opacity(viewModel.isRegisterButtonEnabled ? 1 : 0.1)
