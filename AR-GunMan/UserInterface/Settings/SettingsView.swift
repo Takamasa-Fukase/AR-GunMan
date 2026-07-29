@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Presentation
 
 struct SettingsView: View {
     @Environment(\.dismiss) var dismiss
@@ -46,14 +47,14 @@ struct SettingsView: View {
         // プライバシーポリシーをWebView表示
         .fullScreenCover(isPresented: $viewModel.isPrivacyPolicyViewPresented) {
             SafariViewControllerRepresentable(
-                url: URL(string: "https://takamasa-fukase.github.io/AR-GunMan/PrivacyPolicy")!
+                url: URL(string: URLConst.PRIVACY_POLICY)!
             )
             .ignoresSafeArea()
         }
         // 開発者への問い合わせ画面をWebView表示
         .fullScreenCover(isPresented: $viewModel.isDeveloperContactViewPresented) {
             SafariViewControllerRepresentable(
-                url: URL(string: "https://www.instagram.com/takamasa_fukase/")!
+                url: URL(string: URLConst.DEVELOPER_CONTACT)!
             )
             .ignoresSafeArea()
         }
