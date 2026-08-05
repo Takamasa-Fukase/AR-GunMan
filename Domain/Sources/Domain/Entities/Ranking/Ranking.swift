@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Ranking: Codable, Identifiable, Equatable {
+public struct RankingItem: Codable, Identifiable, Equatable {
     public let id = UUID()
     public let score: Double
     public let userName: String
@@ -23,5 +23,24 @@ public struct Ranking: Codable, Identifiable, Equatable {
     ) {
         self.score = score
         self.userName = userName
+    }
+}
+
+public struct Ranking {
+    public private(set) var items: [RankingItem]
+    
+    public init(items: [RankingItem]) {
+        self.items = items
+    }
+    
+    public func getTentativeRankIndex(for score: Double) -> Int {
+        return items.firstIndex(where: { $0.score <= score }) ?? 0
+    }
+    
+    public mutating func insertRegisteredRanking(
+        at index: Int,
+        item: RankingItem
+    ) {
+        items.insert(item, at: index)
     }
 }
