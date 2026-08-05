@@ -30,7 +30,9 @@ public struct Ranking {
     public private(set) var items: [RankingItem]
     
     public init(items: [RankingItem]) {
-        self.items = items
+        // スコアの高い順にソート
+        let sortedItems = items.sorted { $0.score > $1.score }
+        self.items = sortedItems
     }
     
     public func getTentativeRankIndex(for score: Double) -> Int {
