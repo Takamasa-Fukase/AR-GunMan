@@ -35,7 +35,7 @@ public struct Ranking {
         self.items = sortedItems
     }
     
-    func getTentativeRankIndex(for score: Double) -> Int {
+    public func getTentativeRankIndex(for score: Double) -> Int {
         return items.firstIndex(where: { $0.score <= score }) ?? 0
     }
     

@@ -9,6 +9,7 @@ import Foundation
 import Observation
 import Combine
 
+@MainActor
 @Observable
 final class TutorialViewModel {
     enum OutputEventType {

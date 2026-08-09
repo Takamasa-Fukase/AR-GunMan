@@ -12,7 +12,7 @@ import Domain
 struct NameRegisterView: View {
     @State var viewModel: NameRegisterViewModel
     let dismissRequestReceiver: DismissRequestReceiver
-    let onRegistered: (Ranking) -> Void
+    let onRegistered: () -> Void
         
     var body: some View {
         @Bindable var viewModel = viewModel
@@ -153,8 +153,8 @@ struct NameRegisterView: View {
         }
         .onReceive(viewModel.outputEvent) { outputEventType in
             switch outputEventType {
-            case .notifyRegistrationCompletion(let ranking):
-                onRegistered(ranking)
+            case .notifyRegistrationCompletion:
+                onRegistered()
             case .dismiss:
                 dismissRequestReceiver.subject.send(())
             }
@@ -170,9 +170,8 @@ struct NameRegisterView: View {
     CenterPreviewView(backgroundColor: .black) {
         NameRegisterViewBuilder.build(
             score: 0.0,
-            temporaryRankTextSubject: CurrentValueSubject<String, Never>(""),
             dismissRequestReceiver: DismissRequestReceiver(),
-            onRegistered: { _ in }
+            onRegistered: {}
         )
     }
 }

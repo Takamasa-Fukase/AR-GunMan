@@ -10,6 +10,7 @@ import Observation
 import Domain
 import Presentation
 
+@MainActor
 @Observable
 final class WeaponSelectViewModel {
     var weaponListItems: [WeaponListItem] = []

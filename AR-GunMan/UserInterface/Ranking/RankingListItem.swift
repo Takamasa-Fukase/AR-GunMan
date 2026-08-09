@@ -7,10 +7,15 @@
 
 import SwiftUI
 
-struct RankingListItem: View {
-    let rank: Int
-    let score: Double
+struct RankingListItemData: Identifiable {
+    let id: UUID = UUID()
+    let rank: String
+    let score: String
     let userName: String
+}
+
+struct RankingListItem: View {
+    let data: RankingListItemData
     
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -30,7 +35,7 @@ struct RankingListItem: View {
             
             HStack(alignment: .bottom, spacing: 0) {
                 // 順位
-                Text(String(rank))
+                Text(data.rank)
                     .font(.custom("Copperplate Bold", size: 22))
                     .minimumScaleFactor(0.5) // 文字数が多い場合は50%まで縮小
                     .frame(width: 32, height: 22)
@@ -38,13 +43,13 @@ struct RankingListItem: View {
                     .padding(EdgeInsets(top: 0, leading: 8, bottom: 4, trailing: 0))
                 
                 // スコア
-                Text(score.scoreText)
+                Text(data.score)
                     .font(.custom("Copperplate", size: 22))
                     .frame(alignment: .centerLastTextBaseline)
                     .padding(EdgeInsets(top: 0, leading: 8, bottom: 13, trailing: 10))
                 
                 // ユーザー名
-                Text(userName)
+                Text(data.userName)
                     .font(.custom("Copperplate Bold", size: 38))
                     .minimumScaleFactor(0.5) // 文字数が多い場合は50%まで縮小
                     .frame(height: 38)
@@ -87,12 +92,12 @@ struct RankingListItem: View {
 #Preview {
     CenterPreviewView(backgroundColor: .black) {
         VStack(alignment: .center, spacing: 0) {
-            RankingListItem(rank: 1, score: 100.00, userName: "マイケル")
-            RankingListItem(rank: 2, score: 99.000, userName: "Adam")
-            RankingListItem(rank: 3, score: 98.000, userName: "Jof")
-            RankingListItem(rank: 4, score: 97.000, userName: "次郎")
-            RankingListItem(rank: 5, score: 96.000, userName: "ジェシー")
-            RankingListItem(rank: 6, score: 95.000, userName: "田中太郎")
+            RankingListItem(data: .init(rank: "1", score: "100.00", userName: "マイケル"))
+            RankingListItem(data: .init(rank: "2", score: "99.000", userName: "Adam"))
+            RankingListItem(data: .init(rank: "3", score: "98.000", userName: "Jof"))
+            RankingListItem(data: .init(rank: "4", score: "97.000", userName: "次郎"))
+            RankingListItem(data: .init(rank: "5", score: "96.000", userName: "ジェシー"))
+            RankingListItem(data: .init(rank: "6", score: "95.000", userName: "田中太郎"))
         }
         .frame(width: 341.33, height: 319)
     }

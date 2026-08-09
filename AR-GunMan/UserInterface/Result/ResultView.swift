@@ -37,7 +37,7 @@ struct ResultView: View {
                             ScrollViewReader { scrollProxy in
                                 // ランキング
                                 RankingListView(
-                                    rankingList: viewModel.rankingList,
+                                    dataList: viewModel.dataList,
                                     isLoading: $viewModel.isLoading
                                 )
                                 // MEMO: scrollProxyを使用する為この位置で.onReceiveしている
@@ -195,10 +195,9 @@ struct ResultView: View {
         ) { dismissRequestReceiver in
             NameRegisterViewBuilder.build(
                 score: viewModel.score,
-                temporaryRankTextSubject: viewModel.temporaryRankTextSubject,
                 dismissRequestReceiver: dismissRequestReceiver,
-                onRegistered: { ranking in
-                    viewModel.rankingRegistered(ranking)
+                onRegistered: {
+                    viewModel.rankingRegistered()
                 }
             )
         }

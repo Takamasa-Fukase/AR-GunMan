@@ -10,15 +10,22 @@ import Observation
 import Combine
 import Domain
 
+@MainActor
 @Observable
 final class NameRegisterViewModel {
     enum OutputEventType {
-        case notifyRegistrationCompletion(Ranking)
+        case notifyRegistrationCompletion
         case dismiss
     }
     
     let score: Double
-    private(set) var temporaryRankText = ""
+    var temporaryRankText: String {
+        guard let temporaryRankIndex = rankingStore.ranking?.getTentativeRankIndex(for: score),
+              let itemsCount = rankingStore.ranking?.items.count else {
+            return ""
+        }
+        return "\(temporaryRankIndex + 1) / \(itemsCount)"
+    }
     private(set) var isRegistering = false
     private(set) var isRegisterButtonEnabled = false
     var error: (error: Error?, isAlertPresented: Bool) = (nil, false)
@@ -30,32 +37,28 @@ final class NameRegisterViewModel {
     
     let outputEvent = PassthroughSubject<OutputEventType, Never>()
     
-    private let rankingUseCase: RankingUseCaseInterface
+    private let rankingRegisterUseCase: RankingRegisterUseCaseInterface
+    private let rankingStore: RankingStoreInterface
     private var cancellables = Set<AnyCancellable>()
     
     init(
-        rankingUseCase: RankingUseCaseInterface,
-        score: Double,
-        temporaryRankTextSubject: CurrentValueSubject<String, Never>
+        rankingRegisterUseCase: RankingRegisterUseCaseInterface,
+        rankingStore: RankingStoreInterface,
+        score: Double
     ) {
-        self.rankingUseCase = rankingUseCase
+        self.rankingRegisterUseCase = rankingRegisterUseCase
+        self.rankingStore = rankingStore
         self.score = score
-        
-        temporaryRankTextSubject
-            .sink { [weak self] rankText in
-                self?.temporaryRankText = rankText
-            }
-            .store(in: &cancellables)
     }
     
     func registerButtonTapped() {
         Task {
-            let ranking = Ranking(score: score, userName: nameText)
+            let item = RankingItem(score: score, userName: nameText)
             
             isRegistering = true
             do {
-                try await rankingUseCase.registerRanking(ranking)
-                outputEvent.send(.notifyRegistrationCompletion(ranking))
+                try await rankingRegisterUseCase.execute(item: item)
+                outputEvent.send(.notifyRegistrationCompletion)
                 outputEvent.send(.dismiss)
                 
             } catch {

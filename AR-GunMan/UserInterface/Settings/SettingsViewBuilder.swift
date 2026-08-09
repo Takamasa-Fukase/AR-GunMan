@@ -10,7 +10,7 @@ import Foundation
 struct SettingsViewBuilder {
     private init() {}
 
-    static func build() -> SettingsView {
+    @MainActor static func build() -> SettingsView {
         let viewModel = SettingsViewModel()
         return SettingsView(viewModel: viewModel)
     }

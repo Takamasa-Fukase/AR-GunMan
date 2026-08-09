@@ -31,7 +31,7 @@ struct RankingView: View {
                         ZStack {
                             // ランキング
                             RankingListView(
-                                rankingList: viewModel.rankingList,
+                                dataList: viewModel.dataList,
                                 isLoading: $viewModel.isLoading
                             )
 

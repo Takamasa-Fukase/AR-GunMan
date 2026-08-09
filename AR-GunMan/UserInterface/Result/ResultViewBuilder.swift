@@ -6,17 +6,19 @@
 //
 
 import Foundation
+import Presentation
 
 struct ResultViewBuilder {
     private init() {}
 
-    static func build(
+    @MainActor static func build(
         score: Double,
         replayButtonTapped: @escaping () -> Void,
         toHomeButtonTapped: @escaping () -> Void
     ) -> ResultView {
         let viewModel = ResultViewModel(
-            rankingUseCase: Factory.create(),
+            rankingGetUseCase: Factory.create(),
+            rankingStore: RankingStore.shared,
             score: score
         )
         return ResultView(

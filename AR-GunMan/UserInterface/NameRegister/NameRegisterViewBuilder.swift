@@ -8,20 +8,20 @@
 import Foundation
 import Combine
 import Domain
+import Presentation
 
 struct NameRegisterViewBuilder {
     private init() {}
 
-    static func build(
+    @MainActor static func build(
         score: Double,
-        temporaryRankTextSubject: CurrentValueSubject<String, Never>,
         dismissRequestReceiver: DismissRequestReceiver,
-        onRegistered: @escaping (Ranking) -> Void
+        onRegistered: @escaping () -> Void
     ) -> NameRegisterView {
         let viewModel = NameRegisterViewModel(
-            rankingUseCase: Factory.create(),
-            score: score,
-            temporaryRankTextSubject: temporaryRankTextSubject
+            rankingRegisterUseCase: Factory.create(),
+            rankingStore: RankingStore.shared,
+            score: score
         )
         return NameRegisterView(
             viewModel: viewModel,

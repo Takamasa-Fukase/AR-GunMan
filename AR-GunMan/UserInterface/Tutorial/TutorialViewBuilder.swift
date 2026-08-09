@@ -10,7 +10,7 @@ import Foundation
 struct TutorialViewBuilder {
     private init() {}
     
-    static func build(
+    @MainActor static func build(
         dismissRequestReceiver: DismissRequestReceiver? = nil
     ) -> TutorialView {
         let viewModel = TutorialViewModel()

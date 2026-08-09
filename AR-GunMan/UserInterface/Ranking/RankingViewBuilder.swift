@@ -6,14 +6,18 @@
 //
 
 import Foundation
+import Presentation
 
 struct RankingViewBuilder {
     private init() {}
 
-    static func build(
+    @MainActor static func build(
         dismissRequestReceiver: DismissRequestReceiver
     ) -> RankingView {
-        let viewModel = RankingViewModel(rankingUseCase: Factory.create())
+        let viewModel = RankingViewModel(
+            rankingGetUseCase: Factory.create(),
+            rankingStore: RankingStore.shared
+        )
         return RankingView(
             viewModel: viewModel,
             dismissRequestReceiver: dismissRequestReceiver

@@ -9,7 +9,7 @@ import SwiftUI
 import Domain
 
 struct RankingListView: View {
-    let rankingList: [Ranking]
+    let dataList: [RankingListItemData]
     @Binding var isLoading: Bool
     
     var body: some View {
@@ -20,16 +20,17 @@ struct RankingListView: View {
                 .tint(Color.paper)
                 .scaleEffect(1.8)
             
-        }else {
+        } else {
             // ランキング
             ScrollView(.vertical) {
                 LazyVStack(spacing: 0) {
                     Spacer()
                         .frame(height: 10)
                     
-                    ForEach(Array(rankingList.enumerated()), id: \.offset) { (index, ranking) in
-                        RankingListItem(rank: index + 1, score: ranking.score, userName: ranking.userName)
-                            .id(index) // 特定セルを画面中央までスクロールさせる制御の為にidが必要なので設定する
+                    ForEach(dataList) { data in
+                        // 特定セルを画面中央までスクロールさせる制御の為にidが必要なので設定する
+                        RankingListItem(data: data)
+                            .id(data.id)
                     }
                     
                     Spacer()
@@ -43,8 +44,8 @@ struct RankingListView: View {
 #Preview {
     CenterPreviewView(backgroundColor: .black) {
         RankingListView(
-            rankingList: Array<Int>(1...100).map({
-                return .init(score: Double(101 - $0), userName: "ユーザー\($0)")
+            dataList: Array<Int>(1...100).map({
+                return .init(rank: String(101 - $0), score: String(101 - $0), userName: "ユーザー\($0)")
             }),
             isLoading: .constant(false)
         )

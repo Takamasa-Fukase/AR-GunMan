@@ -10,7 +10,7 @@ import Foundation
 struct TopViewBuilder {
     private init() {}
 
-    static func build() -> TopView {
+    @MainActor static func build() -> TopView {
         let viewModel = TopViewModel(
             cameraPermissionHandler: Factory.create(),
             soundPlayer: Factory.create()

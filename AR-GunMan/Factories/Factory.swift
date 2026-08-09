@@ -20,6 +20,7 @@ typealias Factory = ProdFactory
 typealias Factory = ProdFactory
 #endif
 
+@MainActor
 protocol FactoryInterface {
     // MARK: Devices
     static func create(frame: CGRect, targetCount: Int) -> (ARGameEngineHandlerInterface, ARSCNViewRepresentable)
@@ -36,7 +37,7 @@ protocol FactoryInterface {
     static func create() -> RankingRepositoryInterface
     
     // MARK: UseCases
-    static func create(rankingStore: RankingStoreInterface) -> RankingGetUseCaseInterface
-    static func create(rankingStore: RankingStoreInterface) -> RankingRegisterUseCaseInterface
+    static func create() -> RankingGetUseCaseInterface
+    static func create() -> RankingRegisterUseCaseInterface
     static func create() -> WeaponControlMotionDetectUseCaseInterface
 }

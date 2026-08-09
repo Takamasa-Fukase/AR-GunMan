@@ -22,38 +22,36 @@ struct GameViewBuilder {
             targetCount: 50
         )
         let tutorialRepository: TutorialRepositoryInterface = Factory.create()
-        let weaponStore = InMemoryWeaponStore()
-        let weaponRepository = WeaponRepository(weaponStore: weaponStore)
-        let gameStore = InMemoryGameStore()
-        let gameRepository = GameRepository(gameStore: gameStore)
-        
-        let weaponReloadUseCase = WeaponReloadUseCase(
-            weaponRepository: weaponRepository
-        )
+        let weaponStore = WeaponStore()
+        let gameStore = GameStore()
+        let weaponReloadUseCase = WeaponReloadUseCase(weaponStore: weaponStore)
         let weaponFireUseCase = WeaponFireUseCase(
-            weaponRepository: weaponRepository,
+            weaponStore: weaponStore,
             weaponReloadUseCase: weaponReloadUseCase
         )
         let weaponChangeUseCase = WeaponChangeUseCase(
-            weaponRepository: weaponRepository,
+            weaponStore: weaponStore,
             weaponReloadUseCase: weaponReloadUseCase
         )
         let gameFlowDriveUseCase = GameFlowDriveUseCase(
-            gameRepository: gameRepository,
-            tutorialRepository: tutorialRepository
+            tutorialRepository: tutorialRepository,
+            gameStore: gameStore
         )
-        
+        let scoreAddUseCase = ScoreAddUseCase(gameStore: gameStore)
+        let reloadingMotionCountUpdateUseCase = ReloadingMotionCountUpdateUseCase(gameStore: gameStore)
         let presenter = GamePresenter(
             arGameEngineHandler: arShootingLibHandler,
             soundPlayer: Factory.create(),
             motionSensorHandler: Factory.create(),
             tutorialRepository: tutorialRepository,
-            gameRepository: gameRepository,
-            weaponRepository: weaponRepository,
+            gameStore: gameStore,
+            weaponStore: weaponStore,
             weaponFireUseCase: weaponFireUseCase,
             weaponReloadUseCase: weaponReloadUseCase,
             weaponChangeUseCase: weaponChangeUseCase,
             gameFlowDriveUseCase: gameFlowDriveUseCase,
+            scoreAddUseCase: scoreAddUseCase,
+            reloadingMotionCountUpdateUseCase: reloadingMotionCountUpdateUseCase,
             weaponControlMotionDetectUseCase: Factory.create()
         )
         let viewModel = GameViewModel(presenter: presenter)

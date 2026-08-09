@@ -10,8 +10,10 @@ import ARShootingLib
 import Data
 import DeviceInterface
 import Domain
+import Presentation
 import Infrastructure
 
+@MainActor
 final class ProdFactory: FactoryInterface {
     // MARK: Devices
     static func create(frame: CGRect, targetCount: Int) -> (ARGameEngineHandlerInterface, ARSCNViewRepresentable) {
@@ -55,17 +57,17 @@ final class ProdFactory: FactoryInterface {
     }
     
     // MARK: UseCases
-    static func create(rankingStore: RankingStoreInterface) -> RankingGetUseCaseInterface {
+    static func create() -> RankingGetUseCaseInterface {
         return RankingGetUseCase(
             rankingRepository: create(),
-            rankingStore: rankingStore
+            rankingStore: RankingStore.shared
         )
     }
     
-    static func create(rankingStore: RankingStoreInterface) -> RankingRegisterUseCaseInterface {
+    static func create() -> RankingRegisterUseCaseInterface {
         return RankingRegisterUseCase(
             rankingRepository: create(),
-            rankingStore: rankingStore
+            rankingStore: RankingStore.shared
         )
     }
     

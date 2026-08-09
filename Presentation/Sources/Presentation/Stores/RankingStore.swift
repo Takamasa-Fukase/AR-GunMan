@@ -12,7 +12,9 @@ import Domain
 @Observable
 @MainActor
 public final class RankingStore: RankingStoreInterface {
-    public init() {}
+    public static let shared = RankingStore()
     
     public var ranking: Ranking?
+    
+    private init() {}
 }

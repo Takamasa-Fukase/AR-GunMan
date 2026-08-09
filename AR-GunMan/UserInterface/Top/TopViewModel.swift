@@ -10,6 +10,7 @@ import Observation
 import Combine
 import DeviceInterface
 
+@MainActor
 @Observable
 final class TopViewModel {
     enum IconButtonType {

@@ -11,7 +11,7 @@ import Domain
 struct WeaponSelectViewBuilder {
     private init() {}
 
-    static func build(
+    @MainActor static func build(
         initialDisplayWeaponType: WeaponType,
         weaponSelected: @escaping (WeaponType) -> Void
     ) -> WeaponSelectView {
