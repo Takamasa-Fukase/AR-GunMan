@@ -43,9 +43,9 @@ struct ResultView: View {
                                 // MEMO: scrollProxyを使用する為この位置で.onReceiveしている
                                 .onReceive(viewModel.outputEvent) { outputEventType in
                                     switch outputEventType {
-                                    case .scrollCellToCenter(let index):
+                                    case .scrollCellToCenter(let rankText):
                                         withAnimation {
-                                            scrollProxy.scrollTo(index, anchor: .center)
+                                            scrollProxy.scrollTo(rankText, anchor: .center)
                                         }
                                     default:
                                         break

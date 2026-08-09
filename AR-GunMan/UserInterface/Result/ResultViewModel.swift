@@ -17,7 +17,7 @@ final class ResultViewModel {
         case showButtons
         case dismissAndNotifyReplayButtonTap
         case notifyHomeButtonTap
-        case scrollCellToCenter(index: Int)
+        case scrollCellToCenter(rankText: String)
     }
     
     let score: Double
@@ -46,29 +46,6 @@ final class ResultViewModel {
     }
     
     func onViewAppear() {
-        executeSimultaneously()
-    }
-    
-    func rankingRegistered() {
-        guard let rankIndex = rankingStore.ranking?.getTentativeRankIndex(for: score) else {
-            return
-        }
-        outputEvent.send(.scrollCellToCenter(index: rankIndex))
-    }
-    
-    func nameRegisterViewClosed() {
-        outputEvent.send(.showButtons)
-    }
-    
-    func replayButtonTapped() {
-        outputEvent.send(.dismissAndNotifyReplayButtonTap)
-    }
-    
-    func toHomeButtonTapped() {
-        outputEvent.send(.notifyHomeButtonTap)
-    }
-    
-    private func executeSimultaneously() {
         Task {
             do {
                 // 0.5秒後に名前登録ダイアログを表示する
@@ -89,5 +66,24 @@ final class ResultViewModel {
             }
             self.isLoading = false
         }
+    }
+    
+    func rankingRegistered() {
+        guard let rankIndex = rankingStore.ranking?.getTentativeRankIndex(for: score) else {
+            return
+        }
+        outputEvent.send(.scrollCellToCenter(rankText: String(rankIndex + 1)))
+    }
+    
+    func nameRegisterViewClosed() {
+        outputEvent.send(.showButtons)
+    }
+    
+    func replayButtonTapped() {
+        outputEvent.send(.dismissAndNotifyReplayButtonTap)
+    }
+    
+    func toHomeButtonTapped() {
+        outputEvent.send(.notifyHomeButtonTap)
     }
 }
