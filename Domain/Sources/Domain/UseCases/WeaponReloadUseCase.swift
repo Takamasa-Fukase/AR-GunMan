@@ -21,24 +21,24 @@ extension WeaponReloadUseCaseInterface {
 public final class WeaponReloadUseCase: WeaponReloadUseCaseInterface {
     public let startResultStream: AsyncStream<WeaponReloadStartResult>
     
-    private var weaponRepository: WeaponRepositoryInterface
+    private var weaponStore: WeaponStoreInterface
     private let startResultContinuation: AsyncStream<WeaponReloadStartResult>.Continuation
     private var reloadTask: Task<Void, Never>?
 
-    public init(weaponRepository: WeaponRepositoryInterface) {
-        self.weaponRepository = weaponRepository
-        
+    public init(weaponStore: WeaponStoreInterface) {
+        self.weaponStore = weaponStore
+
         (startResultStream, startResultContinuation) = AsyncStream.makeStream()
     }
     
     public func execute() {
-        let startResult = weaponRepository.startReload()
+        let startResult = weaponStore.weapon.startReload()
         startResultContinuation.yield(startResult)
 
-        let reloadWaitingTimeMillisec = weaponRepository.weaponType.reloadWaitingTimeMillisec
+        let reloadWaitingTimeMillisec = weaponStore.weapon.currentType.reloadWaitingTimeMillisec
         reloadTask = Task {
             try? await Task.sleep(for: .milliseconds(reloadWaitingTimeMillisec))
-            weaponRepository.finishReload()
+            weaponStore.weapon.finishReload()
         }
     }
     

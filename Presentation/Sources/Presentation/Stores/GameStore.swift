@@ -1,18 +1,17 @@
 //
-//  InMemoryGameStore.swift
-//  Infrastructure
+//  GameStore.swift
+//  Presentation
 //
 //  Created by ウルトラ深瀬 on 2026/07/15.
 //
 
 import Foundation
 import Observation
-import Data
 import Domain
 
 @Observable
 @MainActor
-public final class InMemoryGameStore: GameStoreInterface {
+public final class GameStore: GameStoreInterface {
     @ObservationIgnored
     public var gameFlow = GameFlow()
     

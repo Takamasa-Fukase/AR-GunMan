@@ -12,16 +12,16 @@ import Domain
 @MainActor
 public final class GamePresenter {
     public var timeCountText: String {
-        return gameRepository.timeCountMillisec.timeCountText
+        return gameStore.timeCount.countMillisec.timeCountText
     }
     public var currentWeaponType: WeaponType {
-        return weaponRepository.weaponType
+        return weaponStore.weapon.currentType
     }
     public var bulletsCount: Int {
-        return weaponRepository.bulletsCount
+        return weaponStore.weapon.bulletsCount
     }
     public var isWeaponChangeButtonEnabled: Bool {
-        switch gameRepository.gameFlowStatus {
+        switch gameStore.gameFlow.status {
         case .timerStartedAndWaitingForTimerEnd, .timerResumedAndWaitingForTimerEnd:
             return true
         default:
@@ -38,12 +38,14 @@ public final class GamePresenter {
     private let soundPlayer: SoundPlayerInterface
     private let motionSensorHandler: MotionSensorHandlerInterface
     private let tutorialRepository: TutorialRepositoryInterface
-    private let gameRepository: GameRepositoryInterface
-    private let weaponRepository: WeaponRepositoryInterface
+    private let gameStore: GameStoreInterface
+    private let weaponStore: WeaponStoreInterface
     private let weaponFireUseCase: WeaponFireUseCaseInterface
     private let weaponReloadUseCase: WeaponReloadUseCaseInterface
     private let weaponChangeUseCase: WeaponChangeUseCaseInterface
     private let gameFlowDriveUseCase: GameFlowDriveUseCaseInterface
+    private let scoreAddUseCase: ScoreAddUseCaseInterface
+    private let reloadingMotionCountUpdateUseCase: ReloadingMotionCountUpdateUseCaseInterface
     private let weaponControlMotionDetectUseCase: WeaponControlMotionDetectUseCaseInterface
     
     private let showTutorialViewContinuation: AsyncStream<Void>.Continuation
@@ -56,24 +58,28 @@ public final class GamePresenter {
         soundPlayer: SoundPlayerInterface,
         motionSensorHandler: MotionSensorHandlerInterface,
         tutorialRepository: TutorialRepositoryInterface,
-        gameRepository: GameRepositoryInterface,
-        weaponRepository: WeaponRepositoryInterface,
+        gameStore: GameStoreInterface,
+        weaponStore: WeaponStoreInterface,
         weaponFireUseCase: WeaponFireUseCaseInterface,
         weaponReloadUseCase: WeaponReloadUseCaseInterface,
         weaponChangeUseCase: WeaponChangeUseCaseInterface,
         gameFlowDriveUseCase: GameFlowDriveUseCaseInterface,
+        scoreAddUseCase: ScoreAddUseCaseInterface,
+        reloadingMotionCountUpdateUseCase: ReloadingMotionCountUpdateUseCaseInterface,
         weaponControlMotionDetectUseCase: WeaponControlMotionDetectUseCaseInterface
     ) {
         self.arGameEngineHandler = arGameEngineHandler
         self.soundPlayer = soundPlayer
         self.motionSensorHandler = motionSensorHandler
         self.tutorialRepository = tutorialRepository
-        self.gameRepository = gameRepository
-        self.weaponRepository = weaponRepository
+        self.gameStore = gameStore
+        self.weaponStore = weaponStore
         self.weaponFireUseCase = weaponFireUseCase
         self.weaponReloadUseCase = weaponReloadUseCase
         self.weaponChangeUseCase = weaponChangeUseCase
         self.gameFlowDriveUseCase = gameFlowDriveUseCase
+        self.scoreAddUseCase = scoreAddUseCase
+        self.reloadingMotionCountUpdateUseCase = reloadingMotionCountUpdateUseCase
         self.weaponControlMotionDetectUseCase = weaponControlMotionDetectUseCase
         
         (showTutorialViewStream, showTutorialViewContinuation) = AsyncStream.makeStream()
@@ -149,7 +155,7 @@ public final class GamePresenter {
     
     // MARK: Privateメソッド
     private func handleTargetHit(_ weaponType: WeaponType) {
-        gameRepository.addScore(targetHitPoint: weaponType.targetHitPoint)
+        scoreAddUseCase.execute(targetHitPoint: weaponType.targetHitPoint)
         soundPlayer.play(.targetHit)
         if let bulletHitSound = weaponType.resources.bulletHitSound {
             soundPlayer.play(bulletHitSound)
@@ -183,7 +189,7 @@ public final class GamePresenter {
             
         case .flowEnded:
             soundPlayer.play(.rankingAppear)
-            showResultViewContinuation.yield(gameRepository.score)
+            showResultViewContinuation.yield(gameStore.score.value)
             
         case .blocked(let reason):
             switch reason {
@@ -203,14 +209,14 @@ public final class GamePresenter {
         switch result {
         case .success:
             arGameEngineHandler.renderWeaponFiring()
-            soundPlayer.play(weaponRepository.weaponType.resources.firingSound)
+            soundPlayer.play(weaponStore.weapon.currentType.resources.firingSound)
             
         case .failure(let reason):
             switch reason {
             case .reloading:
                 break
             case .outOfBullets:
-                if let outOfBulletsSound = weaponRepository.weaponType.resources.outOfBulletsSound {
+                if let outOfBulletsSound = weaponStore.weapon.currentType.resources.outOfBulletsSound {
                     soundPlayer.play(outOfBulletsSound)
                 }
             }
@@ -220,14 +226,14 @@ public final class GamePresenter {
     private func handleWeaponReloadStartResult(_ result: WeaponReloadStartResult) {
         switch result {
         case .success:
-            soundPlayer.play(weaponRepository.weaponType.resources.reloadingSound)
+            soundPlayer.play(weaponStore.weapon.currentType.resources.reloadingSound)
         case .failure:
             break
         }
     }
     
     private func updateReloadingMotionDetectedCount() {
-        let result = gameRepository.updateReloadingMotionDetectedCount()
+        let result = reloadingMotionCountUpdateUseCase.execute()
         switch result {
         case .notExceededLimit:
             break

@@ -12,7 +12,7 @@ public struct GameFlow {
     
     public init() {}
     
-    public mutating func drive(to nextStatus: GameFlowStatus) {
+    mutating func drive(to nextStatus: GameFlowStatus) {
         status = nextStatus
     }
 }

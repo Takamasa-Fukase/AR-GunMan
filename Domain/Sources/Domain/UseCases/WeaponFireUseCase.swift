@@ -17,24 +17,24 @@ public protocol WeaponFireUseCaseInterface {
 public final class WeaponFireUseCase: WeaponFireUseCaseInterface {
     public let resultStream: AsyncStream<WeaponFireResult>
     
-    private var weaponRepository: WeaponRepositoryInterface
+    private var weaponStore: WeaponStoreInterface
     private let weaponReloadUseCase: WeaponReloadUseCaseInterface
     private let resultContinuation: AsyncStream<WeaponFireResult>.Continuation
 
     public init(
-        weaponRepository: WeaponRepositoryInterface,
+        weaponStore: WeaponStoreInterface,
         weaponReloadUseCase: WeaponReloadUseCaseInterface
     ) {
-        self.weaponRepository = weaponRepository
+        self.weaponStore = weaponStore
         self.weaponReloadUseCase = weaponReloadUseCase
         
         (resultStream, resultContinuation) = AsyncStream.makeStream()
     }
     
     public func execute() {
-        let result = weaponRepository.fire()
+        let result = weaponStore.weapon.fire()
         resultContinuation.yield(result)
-        if result == .success && weaponRepository.weaponType.reloadType == .auto {
+        if result == .success && weaponStore.weapon.currentType.reloadType == .auto {
             // リロードを自動的に実行
             weaponReloadUseCase.execute()
         }

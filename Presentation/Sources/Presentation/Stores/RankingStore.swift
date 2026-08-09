@@ -1,19 +1,18 @@
 //
-//  InMemoryWeaponStore.swift
-//  Infrastructure
+//  RankingStore.swift
+//  Presentation
 //
 //  Created by ウルトラ深瀬 on 2026/07/10.
 //
 
 import Foundation
 import Observation
-import Data
 import Domain
 
 @Observable
 @MainActor
-public final class InMemoryWeaponStore: WeaponStoreInterface {
+public final class RankingStore: RankingStoreInterface {
     public init() {}
     
-    public var weapon = Weapon()
+    public var ranking: Ranking?
 }

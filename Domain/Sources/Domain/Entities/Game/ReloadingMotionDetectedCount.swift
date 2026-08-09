@@ -12,7 +12,7 @@ public struct ReloadingMotionDetectedCount {
     
     public init() {}
 
-    public mutating func update() -> ReloadingMotionDetectedCountUpdateResult {
+    mutating func update() -> ReloadingMotionDetectedCountUpdateResult {
         count += 1
         if count == 20 {
             return .exceededLimit

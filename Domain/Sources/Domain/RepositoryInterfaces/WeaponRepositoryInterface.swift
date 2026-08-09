@@ -7,12 +7,12 @@
 
 import Foundation
 
-@MainActor
-public protocol WeaponRepositoryInterface: AnyObject {
-    var weaponType: WeaponType { get }
-    var bulletsCount: Int { get }
-    func fire() -> WeaponFireResult
-    func startReload() -> WeaponReloadStartResult
-    func finishReload()
-    func change(to newType: WeaponType)
-}
+//@MainActor
+//public protocol WeaponRepositoryInterface: AnyObject {
+//    var weaponType: WeaponType { get }
+//    var bulletsCount: Int { get }
+//    func fire() -> WeaponFireResult
+//    func startReload() -> WeaponReloadStartResult
+//    func finishReload()
+//    func change(to newType: WeaponType)
+//}

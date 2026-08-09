@@ -14,7 +14,7 @@ public struct Weapon {
     
     public init() {}
     
-    public mutating func fire() -> WeaponFireResult {
+    mutating func fire() -> WeaponFireResult {
         guard !isReloading else {
             return .failure(reason: .reloading)
         }
@@ -25,7 +25,7 @@ public struct Weapon {
         return .success
     }
     
-    public mutating func startReload() -> WeaponReloadStartResult {
+    mutating func startReload() -> WeaponReloadStartResult {
         guard !isReloading && bulletsCount <= 0 else {
             return .failure
         }
@@ -33,12 +33,12 @@ public struct Weapon {
         return .success
     }
     
-    public mutating func finishReload() {
+    mutating func finishReload() {
         bulletsCount = currentType.capacity
         isReloading = false
     }
     
-    public mutating func change(to newType: WeaponType) {
+    mutating func change(to newType: WeaponType) {
         currentType = newType
         finishReload()
     }

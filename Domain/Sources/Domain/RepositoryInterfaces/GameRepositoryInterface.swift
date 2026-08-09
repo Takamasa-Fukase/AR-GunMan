@@ -7,14 +7,14 @@
 
 import Foundation
 
-@MainActor
-public protocol GameRepositoryInterface: AnyObject {
-    var gameFlowStatus: GameFlowStatus { get }
-    var timeCountMillisec: Int { get }
-    var isTimeUp: Bool { get }
-    var score: Double { get }
-    func driveGameFlow(to nextStatus: GameFlowStatus)
-    func decrementTimeCount()
-    func addScore(targetHitPoint: Int)
-    func updateReloadingMotionDetectedCount() -> ReloadingMotionDetectedCountUpdateResult
-}
+//@MainActor
+//public protocol GameRepositoryInterface: AnyObject {
+//    var gameFlowStatus: GameFlowStatus { get }
+//    var timeCountMillisec: Int { get }
+//    var isTimeUp: Bool { get }
+//    var score: Double { get }
+//    func driveGameFlow(to nextStatus: GameFlowStatus)
+//    func decrementTimeCount()
+//    func addScore(targetHitPoint: Int)
+//    func updateReloadingMotionDetectedCount() -> ReloadingMotionDetectedCountUpdateResult
+//}

@@ -39,7 +39,7 @@ public struct Ranking {
         return items.firstIndex(where: { $0.score <= score }) ?? 0
     }
     
-    public mutating func insertRegisteredRanking(
+    mutating func insertRegisteredRanking(
         at index: Int,
         item: RankingItem
     ) {

@@ -18,7 +18,7 @@ public struct GameTimeCount {
         
     public init() {}
 
-    public mutating func decrement() {
+    mutating func decrement() {
         countMillisec = max(0, countMillisec - GameTimeCount.updateIntervalMillisec)
     }
 }

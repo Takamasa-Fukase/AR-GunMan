@@ -20,29 +20,29 @@ public final class GameFlowDriveUseCase: GameFlowDriveUseCaseInterface {
     public let statusStream: AsyncStream<GameFlowStatus>
     
     private let tutorialRepository: TutorialRepositoryInterface
-    private var gameRepository: GameRepositoryInterface
+    private var gameStore: GameStoreInterface
     private var timerTask: Task<Void, Never>?
     private let statusContinuation: AsyncStream<GameFlowStatus>.Continuation
     
     public init(
-        gameRepository: GameRepositoryInterface,
-        tutorialRepository: TutorialRepositoryInterface
+        tutorialRepository: TutorialRepositoryInterface,
+        gameStore: GameStoreInterface
     ) {
-        self.gameRepository = gameRepository
         self.tutorialRepository = tutorialRepository
+        self.gameStore = gameStore
         
         (statusStream, statusContinuation) = AsyncStream.makeStream()
     }
     
     public func start() {
-        guard gameRepository.gameFlowStatus == .flowNotStarted else {
+        guard gameStore.gameFlow.status == .flowNotStarted else {
             return
         }
         updateAndHandleNextStatus(nextStatus: .checkingTutorialCompletedStatus)
     }
     
     public func pauseTimer() {
-        guard gameRepository.gameFlowStatus == .timerStartedAndWaitingForTimerEnd else {
+        guard gameStore.gameFlow.status == .timerStartedAndWaitingForTimerEnd else {
             return
         }
         disposeTimer()
@@ -50,7 +50,7 @@ public final class GameFlowDriveUseCase: GameFlowDriveUseCaseInterface {
     }
     
     public func resolveBlocked() {
-        guard case .blocked(let reason) = gameRepository.gameFlowStatus else {
+        guard case .blocked(let reason) = gameStore.gameFlow.status else {
             return
         }
         switch reason {
@@ -63,7 +63,7 @@ public final class GameFlowDriveUseCase: GameFlowDriveUseCaseInterface {
     }
     
     private func updateAndHandleNextStatus(nextStatus: GameFlowStatus) {
-        gameRepository.driveGameFlow(to: nextStatus)
+        gameStore.gameFlow.drive(to: nextStatus)
         handleUpdatedStatus(nextStatus)
         statusContinuation.yield(nextStatus)
     }
@@ -89,14 +89,14 @@ public final class GameFlowDriveUseCase: GameFlowDriveUseCaseInterface {
             timerTask = Task {
                 // タイマーループ開始
                 while !Task.isCancelled {
-                    if gameRepository.isTimeUp {
+                    if gameStore.timeCount.isTimeUp {
                         updateAndHandleNextStatus(nextStatus: .timerEndedAndWaitingForFlowEnd)
                         disposeTimer()
                         break
                     }
                     
                     try? await Task.sleep(for: .milliseconds(GameTimeCount.updateIntervalMillisec))
-                    gameRepository.decrementTimeCount()
+                    gameStore.timeCount.decrement()
                 }
             }
             
