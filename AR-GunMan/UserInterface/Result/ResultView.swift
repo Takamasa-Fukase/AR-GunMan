@@ -43,9 +43,18 @@ struct ResultView: View {
                                 // MEMO: scrollProxyを使用する為この位置で.onReceiveしている
                                 .onReceive(viewModel.outputEvent) { outputEventType in
                                     switch outputEventType {
-                                    case .scrollCellToCenter(let rankText):
+                                    case .scrollCellToCenter(let index):
                                         withAnimation {
-                                            scrollProxy.scrollTo(rankText, anchor: .center)
+                                            scrollProxy.scrollTo(index, anchor: .center)
+                                        }
+                                    case .scrollToBottom:
+                                        // 最下位の場合は新たに増えたindexとなり描画のキャッシュが無い為、
+                                        // 件数の多さによってはスクロールに失敗する可能性が高い。
+                                        // その為、1つ上のランクのindex（結果画面表示時に既に存在したindex）
+                                        // を使う、且つ「anchor: .top」でスクロールさせることで、
+                                        // その下の最下位のアイテムも画面内に表示させる
+                                        withAnimation {
+                                            scrollProxy.scrollTo(viewModel.dataList.count - 2, anchor: .top)
                                         }
                                     default:
                                         break

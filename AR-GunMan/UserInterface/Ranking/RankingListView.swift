@@ -27,9 +27,9 @@ struct RankingListView: View {
                     Spacer()
                         .frame(height: 10)
                     
-                    ForEach(dataList) { data in
+                    ForEach(Array(dataList.enumerated()), id: \.offset) { (index, data) in
                         RankingListItem(data: data)
-                            .id(data.rank) // 特定セルを画面中央までスクロールさせる制御の為に判別用のidentifierが必要なので設定する
+                            .id(index) // 特定セルを画面中央までスクロールさせる制御の為の判別用のidentifier
                     }
                     
                     Spacer()

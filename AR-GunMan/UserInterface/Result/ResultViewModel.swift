@@ -17,7 +17,8 @@ final class ResultViewModel {
         case showButtons
         case dismissAndNotifyReplayButtonTap
         case notifyHomeButtonTap
-        case scrollCellToCenter(rankText: String)
+        case scrollCellToCenter(index: Int)
+        case scrollToBottom
     }
     
     let score: Double
@@ -72,10 +73,16 @@ final class ResultViewModel {
     }
     
     func rankingRegistered() {
-        guard let rankIndex = rankingStore.ranking?.getTentativeRankIndex(for: score) else {
-            return
+        guard let ranking = rankingStore.ranking else { return }
+        let rankIndex = ranking.getTentativeRankIndex(for: score)
+        if rankIndex == (ranking.items.count - 1) {
+            // 最下位の場合は新たに増えたindexとなり描画のキャッシュが無い為、
+            // 件数の多さによってはスクロールに失敗する可能性が高いので別の表示方法を使用する
+            outputEvent.send(.scrollToBottom)
+            
+        } else {
+            outputEvent.send(.scrollCellToCenter(index: rankIndex))
         }
-        outputEvent.send(.scrollCellToCenter(rankText: String(rankIndex + 1)))
     }
     
     func nameRegisterViewClosed() {
