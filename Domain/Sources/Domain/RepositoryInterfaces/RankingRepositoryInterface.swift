@@ -7,11 +7,7 @@
 
 import Foundation
 
-@MainActor
 public protocol RankingRepositoryInterface: AnyObject {
-    var items: [RankingItem]? { get }
-    func getRankingItems() async throws
-    func getTentativeRankIndex(for score: Double) -> Int
-    func registerRankingItem(_ item: RankingItem) async throws
-    func insertRegisteredRanking(at index: Int, item: RankingItem)
+    func getItems() async throws -> [RankingItem]
+    func registerItem(_ item: RankingItem) async throws
 }

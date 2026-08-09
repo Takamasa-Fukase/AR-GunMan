@@ -52,9 +52,19 @@ final class MockFactory: FactoryInterface {
     }
     
     // MARK: UseCases
-//    static func create() -> RankingUseCaseInterface {
-//        return RankingUseCase(rankingRepository: create())
-//    }
+    static func create(rankingStore: RankingStoreInterface) -> RankingGetUseCaseInterface {
+        return RankingGetUseCase(
+            rankingRepository: create(),
+            rankingStore: rankingStore
+        )
+    }
+    
+    static func create(rankingStore: RankingStoreInterface) -> RankingRegisterUseCaseInterface {
+        return RankingRegisterUseCase(
+            rankingRepository: create(),
+            rankingStore: rankingStore
+        )
+    }
     
     static func create() -> WeaponControlMotionDetectUseCaseInterface {
         return WeaponControlMotionDetectUseCase()

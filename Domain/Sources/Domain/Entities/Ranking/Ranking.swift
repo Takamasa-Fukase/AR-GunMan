@@ -35,14 +35,12 @@ public struct Ranking {
         self.items = sortedItems
     }
     
-    public func getTentativeRankIndex(for score: Double) -> Int {
+    func getTentativeRankIndex(for score: Double) -> Int {
         return items.firstIndex(where: { $0.score <= score }) ?? 0
     }
     
-    mutating func insertRegisteredRanking(
-        at index: Int,
-        item: RankingItem
-    ) {
-        items.insert(item, at: index)
+    mutating func insertRegisteredRanking(item: RankingItem) {
+        let tentativeRankIndex = getTentativeRankIndex(for: item.score)
+        items.insert(item, at: tentativeRankIndex)
     }
 }

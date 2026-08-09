@@ -36,6 +36,7 @@ protocol FactoryInterface {
     static func create() -> RankingRepositoryInterface
     
     // MARK: UseCases
-//    static func create() -> RankingUseCaseInterface
+    static func create(rankingStore: RankingStoreInterface) -> RankingGetUseCaseInterface
+    static func create(rankingStore: RankingStoreInterface) -> RankingRegisterUseCaseInterface
     static func create() -> WeaponControlMotionDetectUseCaseInterface
 }
