@@ -14,7 +14,7 @@ import Domain
 @Observable
 final class NameRegisterViewModel {
     enum OutputEventType {
-        case notifyRegistrationCompletion
+        case notifyRegistered
         case dismiss
     }
     
@@ -43,7 +43,6 @@ final class NameRegisterViewModel {
     
     private let rankingRegisterUseCase: RankingRegisterUseCaseInterface
     private let rankingStore: RankingStoreInterface
-    private var cancellables = Set<AnyCancellable>()
     
     init(
         rankingRegisterUseCase: RankingRegisterUseCaseInterface,
@@ -62,7 +61,7 @@ final class NameRegisterViewModel {
             isRegistering = true
             do {
                 try await rankingRegisterUseCase.execute(item: item)
-                outputEvent.send(.notifyRegistrationCompletion)
+                outputEvent.send(.notifyRegistered)
                 outputEvent.send(.dismiss)
                 
             } catch {

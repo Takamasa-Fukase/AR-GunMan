@@ -153,7 +153,7 @@ struct NameRegisterView: View {
         }
         .onReceive(viewModel.outputEvent) { outputEventType in
             switch outputEventType {
-            case .notifyRegistrationCompletion:
+            case .notifyRegistered:
                 onRegistered()
             case .dismiss:
                 dismissRequestReceiver.subject.send(())
