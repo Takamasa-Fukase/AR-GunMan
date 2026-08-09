@@ -51,24 +51,19 @@ final class ResultViewModel {
         rankingStore.reset()
         
         Task {
-            do {
-                // 0.5秒後に名前登録ダイアログを表示する
-                try await Task.sleep(nanoseconds: 500000000)
-                self.isNameRegisterViewPresented = true
-                
-            } catch {
-                self.error = (error: error, isAlertPresented: true)
-            }
+            // 0.5秒後に名前登録ダイアログを表示する
+            try? await Task.sleep(nanoseconds: 500000000)
+            isNameRegisterViewPresented = true
         }
         Task {
-            self.isLoading = true
+            isLoading = true
             do {
-                try await self.rankingGetUseCase.execute()
+                try await rankingGetUseCase.execute()
 
             } catch {
                 self.error = (error: error, isAlertPresented: true)
             }
-            self.isLoading = false
+            isLoading = false
         }
     }
     
