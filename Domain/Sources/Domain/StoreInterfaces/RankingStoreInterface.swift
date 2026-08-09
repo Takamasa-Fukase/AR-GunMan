@@ -10,4 +10,7 @@ import Foundation
 @MainActor
 public protocol RankingStoreInterface: AnyObject {
     var ranking: Ranking? { get set }
+    
+    // TODO: 後でRankingPresenterを作ったらインターナル呼び出しのみになるのでDomain側のIFからは削除する
+    func reset()
 }

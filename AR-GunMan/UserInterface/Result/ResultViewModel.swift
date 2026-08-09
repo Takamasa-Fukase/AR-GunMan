@@ -46,6 +46,9 @@ final class ResultViewModel {
     }
     
     func onViewAppear() {
+        // 結果画面では毎回まっさらな状態から表示する為、キャッシュをリセットする
+        rankingStore.reset()
+        
         Task {
             do {
                 // 0.5秒後に名前登録ダイアログを表示する

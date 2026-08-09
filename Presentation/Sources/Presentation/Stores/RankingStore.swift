@@ -17,4 +17,8 @@ public final class RankingStore: RankingStoreInterface {
     public var ranking: Ranking?
     
     private init() {}
+    
+    public func reset() {
+        ranking = nil
+    }
 }
