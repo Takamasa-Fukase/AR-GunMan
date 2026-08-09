@@ -19,12 +19,16 @@ final class NameRegisterViewModel {
     }
     
     let score: Double
-    var temporaryRankText: String {
-        guard let temporaryRankIndex = rankingStore.ranking?.getTentativeRankIndex(for: score),
-              let itemsCount = rankingStore.ranking?.items.count else {
-            return ""
+    var temporaryRankText: String? {
+        guard let ranking = rankingStore.ranking else {
+            // ランキング取得中の場合はrankingがnilなのでnilを返す
+            return nil
         }
-        return "\(temporaryRankIndex + 1) / \(itemsCount)"
+        // 今回のscoreで仮に登録した場合の順位
+        let temporaryRank = ranking.getTentativeRankIndex(for: score) + 1
+        // 登録済みランキング数に今回の結果を加えた数
+        let totalCount = ranking.items.count + 1
+        return "\(temporaryRank) / \(totalCount)"
     }
     private(set) var isRegistering = false
     private(set) var isRegisterButtonEnabled = false

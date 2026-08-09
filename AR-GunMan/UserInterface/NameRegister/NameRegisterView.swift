@@ -33,17 +33,17 @@ struct NameRegisterView: View {
                         .foregroundStyle(Color.paper)
                     
                     Group {
-                        if viewModel.temporaryRankText.isEmpty {
+                        if let temporaryRankText = viewModel.temporaryRankText {
+                            // ランク表示
+                            Text(temporaryRankText)
+                                .font(.custom("Copperplate", size: 25))
+                                .foregroundStyle(Color.customDarkBrown)
+                            
+                        } else {
                             // インジケーター
                             ProgressView()
                                 .progressViewStyle(.circular)
                                 .tint(Color.paper)
-                            
-                        } else {
-                            // ランク表示
-                            Text(viewModel.temporaryRankText)
-                                .font(.custom("Copperplate", size: 25))
-                                .foregroundStyle(Color.customDarkBrown)
                         }
                     }
                     .frame(minWidth: 58)

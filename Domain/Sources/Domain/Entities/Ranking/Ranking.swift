@@ -36,7 +36,14 @@ public struct Ranking {
     }
     
     public func getTentativeRankIndex(for score: Double) -> Int {
-        return items.firstIndex(where: { $0.score <= score }) ?? 0
+        // 引数のスコアと同じ or 引数のスコアよりも小さい最初の要素のindexを取得
+        if let tentativeRankIndex = items.firstIndex(where: { $0.score <= score }) {
+            return tentativeRankIndex
+            
+        } else {
+            // 上記の条件を満たす要素が存在しない場合は最下位ということなので、itemsのcountを返す
+            return items.count
+        }
     }
     
     mutating func insertRegisteredRanking(item: RankingItem) {
