@@ -7,7 +7,6 @@
 
 import Foundation
 import Observation
-import Combine
 import Domain
 
 @MainActor
@@ -22,6 +21,7 @@ final class ResultViewModel {
     }
     
     let score: Double
+    let outputEvent: AsyncStream<OutputEventType>
     var dataList: [RankingListItemData] {
         return rankingStore.ranking?.items.enumerated().map { (index, item) in
             return item.toRankingListItemData(rankIndex: index)
@@ -30,12 +30,11 @@ final class ResultViewModel {
     var isNameRegisterViewPresented = false
     var isLoading = false
     var error: (error: Error?, isAlertPresented: Bool) = (nil, false)
-    
-    let outputEvent = PassthroughSubject<OutputEventType, Never>()
-    
+        
     private let rankingGetUseCase: RankingGetUseCaseInterface
     private let rankingStore: RankingStoreInterface
-    
+    private let outputEventContinuation: AsyncStream<OutputEventType>.Continuation
+
     init(
         rankingGetUseCase: RankingGetUseCaseInterface,
         rankingStore: RankingStoreInterface,
@@ -44,6 +43,8 @@ final class ResultViewModel {
         self.rankingGetUseCase = rankingGetUseCase
         self.rankingStore = rankingStore
         self.score = score
+        
+        (outputEvent, outputEventContinuation) = AsyncStream.makeStream()
     }
     
     func onViewAppear() {
@@ -73,22 +74,22 @@ final class ResultViewModel {
         if rankIndex == (ranking.items.count - 1) {
             // 最下位の場合は新たに増えたindexとなり描画のキャッシュが無い為、
             // 件数の多さによってはスクロールに失敗する可能性が高いので別の表示方法を使用する
-            outputEvent.send(.scrollToBottom)
+            outputEventContinuation.yield(.scrollToBottom)
             
         } else {
-            outputEvent.send(.scrollCellToCenter(index: rankIndex))
+            outputEventContinuation.yield(.scrollCellToCenter(index: rankIndex))
         }
     }
     
     func nameRegisterViewClosed() {
-        outputEvent.send(.showButtons)
+        outputEventContinuation.yield(.showButtons)
     }
     
     func replayButtonTapped() {
-        outputEvent.send(.dismissAndNotifyReplayButtonTap)
+        outputEventContinuation.yield(.dismissAndNotifyReplayButtonTap)
     }
     
     func toHomeButtonTapped() {
-        outputEvent.send(.notifyHomeButtonTap)
+        outputEventContinuation.yield(.notifyHomeButtonTap)
     }
 }

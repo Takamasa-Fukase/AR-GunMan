@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Combine
 
 public protocol UserDefaultsClientInterface {
     var isTutorialCompleted: Bool { get set }

@@ -7,7 +7,6 @@
 
 import Foundation
 import Observation
-import Combine
 import DeviceInterface
 
 @MainActor

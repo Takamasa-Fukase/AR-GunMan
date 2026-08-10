@@ -7,7 +7,6 @@
 
 import Foundation
 import Observation
-import Combine
 
 @MainActor
 @Observable
@@ -18,14 +17,23 @@ final class TutorialViewModel {
     }
     
     let contents: [TutorialContent] = TutorialConst.contents
+    let outputEvent: AsyncStream<OutputEventType>
     private(set) var currentPageIndex: Int = 0
     private(set) var buttonTitle: String = "NEXT"
     
-    let outputEvent = PassthroughSubject<OutputEventType, Never>()
+    private let outputEventContinuation: AsyncStream<OutputEventType>.Continuation
+    
+    private var isLastPage: Bool {
+        return currentPageIndex == (contents.count - 1)
+    }
+    
+    init() {
+        (outputEvent, outputEventContinuation) = AsyncStream.makeStream()
+    }
     
     func onScroll(_ contentFrame: CGRect) {
         currentPageIndex = abs(Int(round(contentFrame.minX / (contentFrame.width / CGFloat(contents.count)))))
-        if isLastPage() {
+        if isLastPage {
             buttonTitle = "OK"
         }else {
             buttonTitle = "NEXT"
@@ -33,18 +41,14 @@ final class TutorialViewModel {
     }
     
     func buttonTapped() {
-        if isLastPage() {
-            outputEvent.send(.dismiss)
+        if isLastPage {
+            outputEventContinuation.yield(.dismiss)
         }else {
-            outputEvent.send(.scrollToPageIndex(index: currentPageIndex + 1))
+            outputEventContinuation.yield(.scrollToPageIndex(index: currentPageIndex + 1))
         }
     }
     
     func backgroundViewTapped() {
-        outputEvent.send(.dismiss)
-    }
-    
-    private func isLastPage() -> Bool {
-        return currentPageIndex == (contents.count - 1)
+        outputEventContinuation.yield(.dismiss)
     }
 }

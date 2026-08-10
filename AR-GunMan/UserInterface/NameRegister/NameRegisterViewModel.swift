@@ -7,7 +7,6 @@
 
 import Foundation
 import Observation
-import Combine
 import Domain
 
 @MainActor
@@ -19,6 +18,7 @@ final class NameRegisterViewModel {
     }
     
     let score: Double
+    let outputEvent: AsyncStream<OutputEventType>
     var temporaryRankText: String? {
         guard let ranking = rankingStore.ranking else {
             // ランキング取得中の場合はrankingがnilなのでnilを返す
@@ -38,11 +38,10 @@ final class NameRegisterViewModel {
             isRegisterButtonEnabled = !nameText.isEmpty
         }
     }
-    
-    let outputEvent = PassthroughSubject<OutputEventType, Never>()
-    
+        
     private let rankingRegisterUseCase: RankingRegisterUseCaseInterface
     private let rankingStore: RankingStoreInterface
+    private let outputEventContinuation: AsyncStream<OutputEventType>.Continuation
     
     init(
         rankingRegisterUseCase: RankingRegisterUseCaseInterface,
@@ -52,6 +51,8 @@ final class NameRegisterViewModel {
         self.rankingRegisterUseCase = rankingRegisterUseCase
         self.rankingStore = rankingStore
         self.score = score
+        
+        (outputEvent, outputEventContinuation) = AsyncStream.makeStream()
     }
     
     func registerButtonTapped() {
@@ -61,8 +62,8 @@ final class NameRegisterViewModel {
             isRegistering = true
             do {
                 try await rankingRegisterUseCase.execute(item: item)
-                outputEvent.send(.notifyRegistered)
-                outputEvent.send(.dismiss)
+                outputEventContinuation.yield(.notifyRegistered)
+                outputEventContinuation.yield(.dismiss)
                 
             } catch {
                 self.error = (error: error, isAlertPresented: true)
@@ -72,6 +73,6 @@ final class NameRegisterViewModel {
     }
     
     func noButtonTapped() {
-        outputEvent.send(.dismiss)
+        outputEventContinuation.yield(.dismiss)
     }
 }

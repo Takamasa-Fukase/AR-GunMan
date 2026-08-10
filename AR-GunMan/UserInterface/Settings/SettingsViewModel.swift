@@ -7,7 +7,6 @@
 
 import Foundation
 import Observation
-import Combine
 
 @MainActor
 @Observable
@@ -16,12 +15,17 @@ final class SettingsViewModel {
         case dismiss
     }
     
+    let outputEvent: AsyncStream<OutputEventType>
     var isRankingViewPresented = false
     var isPrivacyPolicyViewPresented = false
     var isDeveloperContactViewPresented = false
     
-    let outputEvent = PassthroughSubject<OutputEventType, Never>()
-
+    private let outputEventContinuation: AsyncStream<OutputEventType>.Continuation
+    
+    init() {
+        (outputEvent, outputEventContinuation) = AsyncStream.makeStream()
+    }
+    
     func worldRankingButtonTapped() {
         isRankingViewPresented = true
     }
@@ -35,6 +39,6 @@ final class SettingsViewModel {
     }
     
     func backButtonTapped() {
-        outputEvent.send(.dismiss)
+        outputEventContinuation.yield(.dismiss)
     }
 }

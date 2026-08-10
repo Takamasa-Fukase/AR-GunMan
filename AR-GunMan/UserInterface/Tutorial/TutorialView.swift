@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TutorialView: View {
     @State var viewModel: TutorialViewModel
+    @State var scrollProxy: ScrollViewProxy?
     @Environment(\.dismiss) var dismiss
     let dismissRequestReceiver: DismissRequestReceiver?
     
@@ -42,17 +43,9 @@ struct TutorialView: View {
                         RoundedRectangle(cornerRadius: 20)
                             .stroke(Color.goldLeaf, lineWidth: 5)
                     }
-                    // MEMO: scrollProxyを使用する為この位置で.onReceiveしている
-                    .onReceive(viewModel.outputEvent) { outputEventType in
-                        switch outputEventType {
-                        case .scrollToPageIndex(let pageIndex):
-                            // 受け取ったpageIndexまでアニメーション付きでスクロールさせる
-                            withAnimation {
-                                scrollProxy.scrollTo(pageIndex)
-                            }
-                        default:
-                            break
-                        }
+                    .onAppear {
+                        // Viewの出現時に proxy を保持する
+                        self.scrollProxy = scrollProxy
                     }
                 }
                 
@@ -91,17 +84,22 @@ struct TutorialView: View {
             .padding(EdgeInsets(top: 20, leading: 0, bottom: 24, trailing: 0))
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
-        .onReceive(viewModel.outputEvent) { outputEventType in
-            switch outputEventType {
-            case .dismiss:
-                if let dismissRequestReceiver = dismissRequestReceiver {
-                    dismissRequestReceiver.subject.send(())
-                }else {
-                    dismiss()
+        .task {
+            for await event in viewModel.outputEvent {
+                switch event {
+                case .dismiss:
+                    if let dismissRequestReceiver = dismissRequestReceiver {
+                        dismissRequestReceiver.subject.send(())
+                    } else {
+                        dismiss()
+                    }
+                    
+                case .scrollToPageIndex(let pageIndex):
+                    // 受け取ったpageIndexまでアニメーション付きでスクロールさせる
+                    withAnimation {
+                        scrollProxy?.scrollTo(pageIndex)
+                    }
                 }
-            default:
-                // MEMO: case .scrollToPageIndexはscrollProxyを使用する関係で別の場所でonReceiveしている
-                break
             }
         }
     }

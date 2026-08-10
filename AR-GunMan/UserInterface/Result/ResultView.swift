@@ -11,6 +11,7 @@ struct ResultView: View {
     @State var viewModel: ResultViewModel
     @State var isButtonsBaseViewVisible = false
     @State var buttonsOpacity = 0.0
+    @State var scrollProxy: ScrollViewProxy?
     @Environment(\.dismiss) var dismiss
     let replayButtonTapped: () -> Void
     let toHomeButtonTapped: () -> Void
@@ -40,25 +41,9 @@ struct ResultView: View {
                                     dataList: viewModel.dataList,
                                     isLoading: $viewModel.isLoading
                                 )
-                                // MEMO: scrollProxyを使用する為この位置で.onReceiveしている
-                                .onReceive(viewModel.outputEvent) { outputEventType in
-                                    switch outputEventType {
-                                    case .scrollCellToCenter(let index):
-                                        withAnimation {
-                                            scrollProxy.scrollTo(index, anchor: .center)
-                                        }
-                                    case .scrollToBottom:
-                                        // 最下位の場合は新たに増えたindexとなり描画のキャッシュが無い為、
-                                        // 件数の多さによってはスクロールに失敗する可能性が高い。
-                                        // その為、1つ上のランクのindex（結果画面表示時に既に存在したindex）
-                                        // を使う、且つ「anchor: .top」でスクロールさせることで、
-                                        // その下の最下位のアイテムも画面内に表示させる
-                                        withAnimation {
-                                            scrollProxy.scrollTo(viewModel.dataList.count - 2, anchor: .top)
-                                        }
-                                    default:
-                                        break
-                                    }
+                                .onAppear {
+                                    // Viewの出現時に proxy を保持する
+                                    self.scrollProxy = scrollProxy
                                 }
                             }
                             
@@ -167,32 +152,45 @@ struct ResultView: View {
         .onAppear {
             viewModel.onViewAppear()
         }
-        .onReceive(viewModel.outputEvent) { outputEventType in
-            switch outputEventType {
-            case .showButtons:
-                withAnimation(.linear(duration: 0.6)) {
-                    isButtonsBaseViewVisible = true
-                }
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.35, execute: {
-                    withAnimation(.linear(duration: 0.25)) {
-                        buttonsOpacity = 1
+        .task {
+            for await event in viewModel.outputEvent {
+                switch event {
+                case .showButtons:
+                    withAnimation(.linear(duration: 0.6)) {
+                        isButtonsBaseViewVisible = true
                     }
-                })
-                
-            case .dismissAndNotifyReplayButtonTap:
-                var transaction = Transaction()
-                transaction.disablesAnimations = true
-                withTransaction(transaction) {
-                    dismiss()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.35, execute: {
+                        withAnimation(.linear(duration: 0.25)) {
+                            buttonsOpacity = 1
+                        }
+                    })
+                    
+                case .dismissAndNotifyReplayButtonTap:
+                    var transaction = Transaction()
+                    transaction.disablesAnimations = true
+                    withTransaction(transaction) {
+                        dismiss()
+                    }
+                    replayButtonTapped()
+                    
+                case .notifyHomeButtonTap:
+                    toHomeButtonTapped()
+
+                case .scrollCellToCenter(let index):
+                    withAnimation {
+                        scrollProxy?.scrollTo(index, anchor: .center)
+                    }
+                    
+                case .scrollToBottom:
+                    // 最下位の場合は新たに増えたindexとなり描画のキャッシュが無い為、
+                    // 件数の多さによってはスクロールに失敗する可能性が高い。
+                    // その為、1つ上のランクのindex（結果画面表示時に既に存在したindex）
+                    // を使う、且つ「anchor: .top」でスクロールさせることで、
+                    // その下の最下位のアイテムも画面内に表示させる
+                    withAnimation {
+                        scrollProxy?.scrollTo(viewModel.dataList.count - 2, anchor: .top)
+                    }
                 }
-                replayButtonTapped()
-                
-            case .notifyHomeButtonTap:
-                toHomeButtonTapped()
-                
-            default:
-                // MEMO: case .scrollCellToCenterはscrollProxyを使用する関係で別の場所でonReceiveしている
-                break
             }
         }
         // 名前登録画面へ遷移

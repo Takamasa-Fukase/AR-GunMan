@@ -7,7 +7,6 @@
 
 import Foundation
 import Observation
-import Combine
 import Domain
 import FirebaseFirestore
 
@@ -18,6 +17,7 @@ final class RankingViewModel {
         case dismiss
     }
     
+    let outputEvent: AsyncStream<OutputEventType>
     var dataList: [RankingListItemData] {
         return rankingStore.ranking?.items.enumerated().map { (index, item) in
             return item.toRankingListItemData(rankIndex: index)
@@ -26,10 +26,9 @@ final class RankingViewModel {
     var isLoading = false
     var error: (error: Error?, isAlertPresented: Bool) = (nil, false)
     
-    let outputEvent = PassthroughSubject<OutputEventType, Never>()
-
     private let rankingGetUseCase: RankingGetUseCaseInterface
     private let rankingStore: RankingStoreInterface
+    private let outputEventContinuation: AsyncStream<OutputEventType>.Continuation
 
     init(
         rankingGetUseCase: RankingGetUseCaseInterface,
@@ -37,6 +36,8 @@ final class RankingViewModel {
     ) {
         self.rankingGetUseCase = rankingGetUseCase
         self.rankingStore = rankingStore
+        
+        (outputEvent, outputEventContinuation) = AsyncStream.makeStream()
     }
     
     func onViewAppear() {
@@ -44,7 +45,7 @@ final class RankingViewModel {
     }
     
     func closeButtonTapped() {
-        outputEvent.send(.dismiss)
+        outputEventContinuation.yield(.dismiss)
     }
     
     private func getRanking() {

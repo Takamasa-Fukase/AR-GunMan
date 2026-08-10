@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Combine
 import Domain
 
 struct NameRegisterView: View {
@@ -151,12 +150,15 @@ struct NameRegisterView: View {
             RoundedRectangle(cornerRadius: 5)
                 .stroke(Color.paper, lineWidth: 2)
         }
-        .onReceive(viewModel.outputEvent) { outputEventType in
-            switch outputEventType {
-            case .notifyRegistered:
-                onRegistered()
-            case .dismiss:
-                dismissRequestReceiver.subject.send(())
+        .task {
+            for await event in viewModel.outputEvent {
+                switch event {
+                case .notifyRegistered:
+                    onRegistered()
+                    
+                case .dismiss:
+                    dismissRequestReceiver.subject.send(())
+                }
             }
         }
         .errorAlert(
