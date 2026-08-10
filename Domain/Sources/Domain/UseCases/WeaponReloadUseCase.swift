@@ -35,6 +35,8 @@ public final class WeaponReloadUseCase: WeaponReloadUseCaseInterface {
                 )
             )
             
+            // reloadTaskがキャンセルされている場合はfinishReloadさせない
+            guard !Task.isCancelled else { return }
             
             weaponStore.weapon.finishReload()
         }
