@@ -13,14 +13,15 @@ import Presentation
 struct NameRegisterViewBuilder {
     private init() {}
 
-    @MainActor static func build(
+    @MainActor
+    static func build(
         score: Double,
         dismissRequestReceiver: DismissRequestReceiver,
         onRegistered: @escaping () -> Void
     ) -> NameRegisterView {
         let viewModel = NameRegisterViewModel(
             rankingRegisterUseCase: Factory.create(),
-            rankingStore: RankingStore.shared,
+            rankingStore: Factory.create(),
             score: score
         )
         return NameRegisterView(

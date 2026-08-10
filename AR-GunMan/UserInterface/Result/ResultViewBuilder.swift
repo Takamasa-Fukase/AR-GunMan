@@ -11,14 +11,15 @@ import Presentation
 struct ResultViewBuilder {
     private init() {}
 
-    @MainActor static func build(
+    @MainActor
+    static func build(
         score: Double,
         replayButtonTapped: @escaping () -> Void,
         toHomeButtonTapped: @escaping () -> Void
     ) -> ResultView {
         let viewModel = ResultViewModel(
             rankingGetUseCase: Factory.create(),
-            rankingStore: RankingStore.shared,
+            rankingStore: Factory.create(),
             score: score
         )
         return ResultView(

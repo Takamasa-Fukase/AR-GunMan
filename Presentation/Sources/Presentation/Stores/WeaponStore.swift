@@ -12,7 +12,13 @@ import Domain
 @Observable
 @MainActor
 public final class WeaponStore: WeaponStoreInterface {
-    public init() {}
+    public static let shared = WeaponStore()
     
     public var weapon = Weapon()
+    
+    private init() {}
+    
+    func reset() {
+        weapon = .init()
+    }
 }

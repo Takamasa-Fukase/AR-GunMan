@@ -16,42 +16,30 @@ import Presentation
 struct GameViewBuilder {
     private init() {}
     
-    @MainActor static func build(frame: CGRect) -> GameView<ARSCNViewRepresentable> {
+    @MainActor
+    static func build(frame: CGRect) -> GameView<ARSCNViewRepresentable> {
         let (arShootingLibHandler, arView) = Factory.create(
             frame: frame,
             targetCount: 50
         )
-        let tutorialRepository: TutorialRepositoryInterface = Factory.create()
-        let weaponStore = WeaponStore()
-        let gameStore = GameStore()
-        let weaponReloadUseCase = WeaponReloadUseCase(weaponStore: weaponStore)
-        let weaponFireUseCase = WeaponFireUseCase(
-            weaponStore: weaponStore,
-            weaponReloadUseCase: weaponReloadUseCase
-        )
-        let weaponChangeUseCase = WeaponChangeUseCase(
-            weaponStore: weaponStore,
-            weaponReloadUseCase: weaponReloadUseCase
-        )
-        let gameFlowDriveUseCase = GameFlowDriveUseCase(
-            tutorialRepository: tutorialRepository,
-            gameStore: gameStore
-        )
-        let scoreAddUseCase = ScoreAddUseCase(gameStore: gameStore)
-        let reloadingMotionCountUpdateUseCase = ReloadingMotionCountUpdateUseCase(gameStore: gameStore)
+        let weaponReloadUseCase: WeaponReloadUseCaseInterface = Factory.create()
         let presenter = GamePresenter(
             arGameEngineHandler: arShootingLibHandler,
             soundPlayer: Factory.create(),
             motionSensorHandler: Factory.create(),
-            tutorialRepository: tutorialRepository,
-            gameStore: gameStore,
-            weaponStore: weaponStore,
-            weaponFireUseCase: weaponFireUseCase,
+            tutorialRepository: Factory.create(),
+            gameStore: Factory.create(),
+            weaponStore: Factory.create(),
+            weaponFireUseCase: Factory.create(
+                weaponReloadUseCase: weaponReloadUseCase
+            ),
             weaponReloadUseCase: weaponReloadUseCase,
-            weaponChangeUseCase: weaponChangeUseCase,
-            gameFlowDriveUseCase: gameFlowDriveUseCase,
-            scoreAddUseCase: scoreAddUseCase,
-            reloadingMotionCountUpdateUseCase: reloadingMotionCountUpdateUseCase,
+            weaponChangeUseCase: Factory.create(
+                weaponReloadUseCase: weaponReloadUseCase
+            ),
+            gameFlowDriveUseCase: Factory.create(),
+            scoreAddUseCase: Factory.create(),
+            reloadingMotionCountUpdateUseCase: Factory.create(),
             weaponControlMotionDetectUseCase: Factory.create()
         )
         let viewModel = GameViewModel(presenter: presenter)

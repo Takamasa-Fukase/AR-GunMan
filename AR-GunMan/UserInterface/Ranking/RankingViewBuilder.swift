@@ -11,12 +11,13 @@ import Presentation
 struct RankingViewBuilder {
     private init() {}
 
-    @MainActor static func build(
+    @MainActor
+    static func build(
         dismissRequestReceiver: DismissRequestReceiver
     ) -> RankingView {
         let viewModel = RankingViewModel(
             rankingGetUseCase: Factory.create(),
-            rankingStore: RankingStore.shared
+            rankingStore: Factory.create()
         )
         return RankingView(
             viewModel: viewModel,

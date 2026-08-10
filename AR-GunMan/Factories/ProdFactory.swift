@@ -48,12 +48,26 @@ final class ProdFactory: FactoryInterface {
         return UserDefaultsClient()
     }
     
+    // MARK: Repositories
     static func create() -> TutorialRepositoryInterface {
         return TutorialRepository(userDefaultsClient: create())
     }
     
     static func create() -> RankingRepositoryInterface {
         return RankingRepository(firestoreClient: create())
+    }
+    
+    // MARK: Stores
+    static func create() -> RankingStoreInterface {
+        return RankingStore.shared
+    }
+    
+    static func create() -> WeaponStoreInterface {
+        return WeaponStore.shared
+    }
+    
+    static func create() -> GameStoreInterface {
+        return GameStore.shared
     }
     
     // MARK: UseCases
@@ -69,6 +83,43 @@ final class ProdFactory: FactoryInterface {
             rankingRepository: create(),
             rankingStore: RankingStore.shared
         )
+    }
+    
+    static func create(
+        weaponReloadUseCase: WeaponReloadUseCaseInterface
+    ) -> WeaponFireUseCaseInterface {
+        return WeaponFireUseCase(
+            weaponStore: create(),
+            weaponReloadUseCase: weaponReloadUseCase
+        )
+    }
+    
+    static func create() -> WeaponReloadUseCaseInterface {
+        return WeaponReloadUseCase(weaponStore: create())
+    }
+    
+    static func create(
+        weaponReloadUseCase: WeaponReloadUseCaseInterface
+    ) -> WeaponChangeUseCaseInterface {
+        return WeaponChangeUseCase(
+            weaponStore: create(),
+            weaponReloadUseCase: weaponReloadUseCase
+        )
+    }
+    
+    static func create() -> GameFlowDriveUseCaseInterface {
+        return GameFlowDriveUseCase(
+            tutorialRepository: create(),
+            gameStore: create()
+        )
+    }
+    
+    static func create() -> ScoreAddUseCaseInterface {
+        return ScoreAddUseCase(gameStore: create())
+    }
+    
+    static func create() -> ReloadingMotionCountUpdateUseCaseInterface {
+        return ReloadingMotionCountUpdateUseCase(gameStore: create())
     }
     
     static func create() -> WeaponControlMotionDetectUseCaseInterface {

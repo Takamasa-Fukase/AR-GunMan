@@ -36,8 +36,19 @@ protocol FactoryInterface {
     static func create() -> TutorialRepositoryInterface
     static func create() -> RankingRepositoryInterface
     
+    // MARK: Stores
+    static func create() -> RankingStoreInterface
+    static func create() -> WeaponStoreInterface
+    static func create() -> GameStoreInterface
+    
     // MARK: UseCases
     static func create() -> RankingGetUseCaseInterface
     static func create() -> RankingRegisterUseCaseInterface
+    static func create(weaponReloadUseCase: WeaponReloadUseCaseInterface) -> WeaponFireUseCaseInterface
+    static func create() -> WeaponReloadUseCaseInterface
+    static func create(weaponReloadUseCase: WeaponReloadUseCaseInterface) -> WeaponChangeUseCaseInterface
+    static func create() -> GameFlowDriveUseCaseInterface
+    static func create() -> ScoreAddUseCaseInterface
+    static func create() -> ReloadingMotionCountUpdateUseCaseInterface
     static func create() -> WeaponControlMotionDetectUseCaseInterface
 }

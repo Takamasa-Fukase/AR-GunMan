@@ -12,6 +12,8 @@ import Domain
 @Observable
 @MainActor
 public final class GameStore: GameStoreInterface {
+    public static let shared = GameStore()
+
     @ObservationIgnored
     public var gameFlow = GameFlow()
     
@@ -19,5 +21,12 @@ public final class GameStore: GameStoreInterface {
     public var score = GameScore()
     public var reloadingMotionDetectedCount = ReloadingMotionDetectedCount()
     
-    public init() {}
+    private init() {}
+    
+    func reset() {
+        gameFlow = .init()
+        timeCount = .init()
+        score = .init()
+        reloadingMotionDetectedCount = .init()
+    }
 }

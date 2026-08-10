@@ -53,6 +53,19 @@ final class MockFactory: FactoryInterface {
         return RankingRepositoryStub()
     }
     
+    // MARK: Stores
+    static func create() -> RankingStoreInterface {
+        return RankingStore.shared
+    }
+    
+    static func create() -> WeaponStoreInterface {
+        return WeaponStore.shared
+    }
+    
+    static func create() -> GameStoreInterface {
+        return GameStore.shared
+    }
+    
     // MARK: UseCases
     static func create() -> RankingGetUseCaseInterface {
         return RankingGetUseCase(
@@ -66,6 +79,43 @@ final class MockFactory: FactoryInterface {
             rankingRepository: create(),
             rankingStore: RankingStore.shared
         )
+    }
+    
+    static func create(
+        weaponReloadUseCase: WeaponReloadUseCaseInterface
+    ) -> WeaponFireUseCaseInterface {
+        return WeaponFireUseCase(
+            weaponStore: create(),
+            weaponReloadUseCase: weaponReloadUseCase
+        )
+    }
+    
+    static func create() -> WeaponReloadUseCaseInterface {
+        return WeaponReloadUseCase(weaponStore: create())
+    }
+    
+    static func create(
+        weaponReloadUseCase: WeaponReloadUseCaseInterface
+    ) -> WeaponChangeUseCaseInterface {
+        return WeaponChangeUseCase(
+            weaponStore: create(),
+            weaponReloadUseCase: weaponReloadUseCase
+        )
+    }
+    
+    static func create() -> GameFlowDriveUseCaseInterface {
+        return GameFlowDriveUseCase(
+            tutorialRepository: create(),
+            gameStore: create()
+        )
+    }
+    
+    static func create() -> ScoreAddUseCaseInterface {
+        return ScoreAddUseCase(gameStore: create())
+    }
+    
+    static func create() -> ReloadingMotionCountUpdateUseCaseInterface {
+        return ReloadingMotionCountUpdateUseCase(gameStore: create())
     }
     
     static func create() -> WeaponControlMotionDetectUseCaseInterface {
