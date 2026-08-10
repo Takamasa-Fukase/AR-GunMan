@@ -27,7 +27,6 @@ struct GameViewBuilder {
             arGameEngineHandler: arShootingLibHandler,
             soundPlayer: Factory.create(),
             motionSensorHandler: Factory.create(),
-            tutorialRepository: Factory.create(),
             gameStore: Factory.create(),
             weaponStore: Factory.create(),
             weaponFireUseCase: Factory.create(

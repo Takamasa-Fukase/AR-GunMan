@@ -37,7 +37,6 @@ public final class GamePresenter {
     private let arGameEngineHandler: ARGameEngineHandlerInterface
     private let soundPlayer: SoundPlayerInterface
     private let motionSensorHandler: MotionSensorHandlerInterface
-    private let tutorialRepository: TutorialRepositoryInterface
     private let gameStore: GameStoreInterface
     private let weaponStore: WeaponStoreInterface
     private let weaponFireUseCase: WeaponFireUseCaseInterface
@@ -57,7 +56,6 @@ public final class GamePresenter {
         arGameEngineHandler: ARGameEngineHandlerInterface,
         soundPlayer: SoundPlayerInterface,
         motionSensorHandler: MotionSensorHandlerInterface,
-        tutorialRepository: TutorialRepositoryInterface,
         gameStore: GameStoreInterface,
         weaponStore: WeaponStoreInterface,
         weaponFireUseCase: WeaponFireUseCaseInterface,
@@ -71,7 +69,6 @@ public final class GamePresenter {
         self.arGameEngineHandler = arGameEngineHandler
         self.soundPlayer = soundPlayer
         self.motionSensorHandler = motionSensorHandler
-        self.tutorialRepository = tutorialRepository
         self.gameStore = gameStore
         self.weaponStore = weaponStore
         self.weaponFireUseCase = weaponFireUseCase
@@ -202,7 +199,6 @@ public final class GamePresenter {
     }
     
     public func tutorialEnded() {
-        tutorialRepository.updateTutorialCompletedFlag(isCompleted: true)
         gameFlowDriveUseCase.resolveBlocked()
     }
     

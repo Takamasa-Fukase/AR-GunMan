@@ -55,6 +55,7 @@ public final class GameFlowDriveUseCase: GameFlowDriveUseCaseInterface {
         }
         switch reason {
         case .tutorialNotCompleted:
+            tutorialRepository.updateTutorialCompletedFlag(isCompleted: true)
             updateAndHandleNextStatus(nextStatus: .waitingForTimerStart)
 
         case .timerPaused:
