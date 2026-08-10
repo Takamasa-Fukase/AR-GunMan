@@ -9,17 +9,13 @@ import Foundation
 
 @MainActor
 public protocol WeaponFireUseCaseInterface {
-    var resultStream: AsyncStream<WeaponFireResult> { get }
-    func execute()
+    func execute() -> WeaponFireResult
 }
 
 @MainActor
 public final class WeaponFireUseCase: WeaponFireUseCaseInterface {
-    public let resultStream: AsyncStream<WeaponFireResult>
-    
     private var weaponStore: WeaponStoreInterface
     private let weaponReloadUseCase: WeaponReloadUseCaseInterface
-    private let resultContinuation: AsyncStream<WeaponFireResult>.Continuation
 
     public init(
         weaponStore: WeaponStoreInterface,
@@ -27,16 +23,14 @@ public final class WeaponFireUseCase: WeaponFireUseCaseInterface {
     ) {
         self.weaponStore = weaponStore
         self.weaponReloadUseCase = weaponReloadUseCase
-        
-        (resultStream, resultContinuation) = AsyncStream.makeStream()
     }
     
-    public func execute() {
+    public func execute() -> WeaponFireResult {
         let result = weaponStore.weapon.fire()
-        resultContinuation.yield(result)
         if result == .success && weaponStore.weapon.currentType.reloadType == .auto {
             // リロードを自動的に実行
             weaponReloadUseCase.execute()
         }
+        return result
     }
 }

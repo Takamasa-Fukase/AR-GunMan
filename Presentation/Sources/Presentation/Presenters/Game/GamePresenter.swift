@@ -87,31 +87,104 @@ public final class GamePresenter {
         (closeWeaponSelectViewEvent, closeWeaponSelectViewEventContinuation) = AsyncStream.makeStream()
         (showResultViewEvent, showResultViewEventContinuation) = AsyncStream.makeStream()
         
+        // TODO: weak selfが危険なのでクロージャーじゃ無い書き方に差し替えを検討したい
         arGameEngineHandler.targetHit = { [weak self] weaponType in
-            self?.handleTargetHit(weaponType)
+            scoreAddUseCase.execute(targetHitPoint: weaponType.targetHitPoint)
+            soundPlayer.play(.targetHit)
+            if let bulletHitSound = weaponType.resources.bulletHitSound {
+                soundPlayer.play(bulletHitSound)
+            }
         }
         
+        // TODO: weak selfが危険なのでクロージャーじゃ無い書き方に差し替えを検討したい
         motionSensorHandler.motionUpdated = { [weak self] motion in
-            let result = self?.weaponControlMotionDetectUseCase.execute(motion: motion)
-            guard let result = result else { return }
-            self?.handleDetectedMotion(result)
+            // 物理モーションを武器の操作モーションに変換
+            let weaponControlMotion = weaponControlMotionDetectUseCase.execute(motion: motion)
+            
+            // 武器の操作モーションでは無い場合はreturn
+            guard let weaponControlMotion = weaponControlMotion else { return }
+            
+            // 武器の操作モーション種別をハンドリング
+            switch weaponControlMotion {
+            case .fire:
+                // 武器の発射
+                let weaponFireResult = weaponFireUseCase.execute()
+                
+                // 発射結果のハンドリング
+                switch weaponFireResult {
+                case .success:
+                    arGameEngineHandler.renderWeaponFiring()
+                    soundPlayer.play(weaponStore.weapon.currentType.resources.firingSound)
+                    
+                case .failure(let reason):
+                    switch reason {
+                    case .reloading:
+                        break
+                    case .outOfBullets:
+                        if let outOfBulletsSound = weaponStore.weapon.currentType.resources.outOfBulletsSound {
+                            soundPlayer.play(outOfBulletsSound)
+                        }
+                    }
+                }
+                
+            case .reload:
+                // 武器のリロード
+                let reloadStartResult = weaponReloadUseCase.execute()
+                
+                // リロード開始結果のハンドリング
+                switch reloadStartResult {
+                case .success:
+                    soundPlayer.play(weaponStore.weapon.currentType.resources.reloadingSound)
+                    
+                case .failure:
+                    break
+                }
+                
+                // リロードモーションの検知回数をカウント
+                let reloadingMotionCountUpdateResult = reloadingMotionCountUpdateUseCase.execute()
+                
+                // リロードモーションの検知回数に応じた結果のハンドリング
+                switch reloadingMotionCountUpdateResult {
+                case .notExceededLimit:
+                    break
+                case .exceededLimit:
+                    soundPlayer.play(.targetAppearanceChange)
+                    arGameEngineHandler.changeTargetsAppearance(to: "taimeisan.jpg")
+                }
+            }
         }
         
         Task {
             for await status in gameFlowDriveUseCase.statusStream {
-                handleGameFlowStatus(status)
-            }
-        }
-        
-        Task {
-            for await result in weaponFireUseCase.resultStream {
-                handleWeaponFireResult(result)
-            }
-        }
-        
-        Task {
-            for await result in weaponReloadUseCase.startResultStream {
-                handleWeaponReloadStartResult(result)
+                switch status {
+                case .waitingForTimerStart:
+                    soundPlayer.play(WeaponType.defaultType.resources.appearingSound)
+                    
+                case .timerStartedAndWaitingForTimerEnd:
+                    soundPlayer.play(.startWhistle)
+                    motionSensorHandler.startDetection()
+                    
+                case .timerEndedAndWaitingForFlowEnd:
+                    soundPlayer.play(.endWhistle)
+                    motionSensorHandler.stopDetection()
+                    closeWeaponSelectViewEventContinuation.yield()
+                    
+                case .flowEnded:
+                    soundPlayer.play(.rankingAppear)
+                    showResultViewEventContinuation.yield(gameStore.score.value)
+                    
+                case .blocked(let reason):
+                    switch reason {
+                    case .tutorialNotCompleted:
+                        showTutorialViewEventContinuation.yield()
+                        
+                    case .timerPaused:
+                        break
+                    }
+                    
+                case .flowNotStarted, .timerResumedAndWaitingForTimerEnd, .checkingTutorialCompletedStatus:
+                    break
+                }
             }
         }
     }
@@ -147,95 +220,5 @@ public final class GamePresenter {
         
         // タイムカウントの更新を再開する
         gameFlowDriveUseCase.resolveBlocked()
-    }
-    
-    // MARK: Privateメソッド
-    private func handleTargetHit(_ weaponType: WeaponType) {
-        scoreAddUseCase.execute(targetHitPoint: weaponType.targetHitPoint)
-        soundPlayer.play(.targetHit)
-        if let bulletHitSound = weaponType.resources.bulletHitSound {
-            soundPlayer.play(bulletHitSound)
-        }
-    }
-    
-    private func handleDetectedMotion(_ motion: WeaponControlMotion) {
-        switch motion {
-        case .fire:
-            weaponFireUseCase.execute()
-            
-        case .reload:
-            weaponReloadUseCase.execute()
-            updateReloadingMotionDetectedCount()
-        }
-    }
-    
-    private func handleGameFlowStatus(_ status: GameFlowStatus) {
-        switch status {
-        case .waitingForTimerStart:
-            soundPlayer.play(WeaponType.defaultType.resources.appearingSound)
-            
-        case .timerStartedAndWaitingForTimerEnd:
-            soundPlayer.play(.startWhistle)
-            motionSensorHandler.startDetection()
-            
-        case .timerEndedAndWaitingForFlowEnd:
-            soundPlayer.play(.endWhistle)
-            motionSensorHandler.stopDetection()
-            closeWeaponSelectViewEventContinuation.yield()
-            
-        case .flowEnded:
-            soundPlayer.play(.rankingAppear)
-            showResultViewEventContinuation.yield(gameStore.score.value)
-            
-        case .blocked(let reason):
-            switch reason {
-            case .tutorialNotCompleted:
-                showTutorialViewEventContinuation.yield()
-                
-            case .timerPaused:
-                break
-            }
-            
-        case .flowNotStarted, .timerResumedAndWaitingForTimerEnd, .checkingTutorialCompletedStatus:
-            break
-        }
-    }
-    
-    private func handleWeaponFireResult(_ result: WeaponFireResult) {
-        switch result {
-        case .success:
-            arGameEngineHandler.renderWeaponFiring()
-            soundPlayer.play(weaponStore.weapon.currentType.resources.firingSound)
-            
-        case .failure(let reason):
-            switch reason {
-            case .reloading:
-                break
-            case .outOfBullets:
-                if let outOfBulletsSound = weaponStore.weapon.currentType.resources.outOfBulletsSound {
-                    soundPlayer.play(outOfBulletsSound)
-                }
-            }
-        }
-    }
-    
-    private func handleWeaponReloadStartResult(_ result: WeaponReloadStartResult) {
-        switch result {
-        case .success:
-            soundPlayer.play(weaponStore.weapon.currentType.resources.reloadingSound)
-        case .failure:
-            break
-        }
-    }
-    
-    private func updateReloadingMotionDetectedCount() {
-        let result = reloadingMotionCountUpdateUseCase.execute()
-        switch result {
-        case .notExceededLimit:
-            break
-        case .exceededLimit:
-            soundPlayer.play(.targetAppearanceChange)
-            arGameEngineHandler.changeTargetsAppearance(to: "taimeisan.jpg")
-        }
     }
 }
