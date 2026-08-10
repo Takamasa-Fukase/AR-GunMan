@@ -92,13 +92,9 @@ public final class GamePresenter {
         }
         
         motionSensorHandler.motionUpdated = { [weak self] motion in
-            self?.weaponControlMotionDetectUseCase.execute(motion: motion)
-        }
-        
-        Task {
-            for await motion in weaponControlMotionDetectUseCase.detectedMotionStream {
-                handleDetectedMotion(motion)
-            }
+            let result = self?.weaponControlMotionDetectUseCase.execute(motion: motion)
+            guard let result = result else { return }
+            self?.handleDetectedMotion(result)
         }
         
         Task {

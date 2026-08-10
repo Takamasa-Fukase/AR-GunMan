@@ -8,35 +8,25 @@
 import Foundation
 
 public protocol WeaponControlMotionDetectUseCaseInterface {
-    var detectedMotionStream: AsyncStream<WeaponControlMotion> { get }
-    func execute(motion: PhysicalMotion)
+    func execute(motion: PhysicalMotion) -> WeaponControlMotion?
 }
 
 public final class WeaponControlMotionDetectUseCase: WeaponControlMotionDetectUseCaseInterface {
-    public let detectedMotionStream: AsyncStream<WeaponControlMotion>
 
     private var latestGyro: PhysicalMotion?
-    private let detectedMotionContinuation: AsyncStream<WeaponControlMotion>.Continuation
 
-    public init() {
-        (detectedMotionStream, detectedMotionContinuation) = AsyncStream.makeStream()
-    }
+    public init() {}
 
-    public func execute(motion: PhysicalMotion) {
+    public func execute(motion: PhysicalMotion) -> WeaponControlMotion? {
         switch motion.type {
         case .acceleration:
-            guard let firingMotion = WeaponControlMotion.from(acceleration: motion, gyro: latestGyro) else {
-                return
-            }
-            detectedMotionContinuation.yield(firingMotion)
+            return WeaponControlMotion.from(acceleration: motion, gyro: latestGyro)
             
         case .gyro:
             // ジャイロの値は発射モーションの判別にも使うので最新値を保持
             latestGyro = motion
-            guard let reloadingMotion = WeaponControlMotion.from(gyro: motion) else {
-                return
-            }
-            detectedMotionContinuation.yield(reloadingMotion)
+            
+            return WeaponControlMotion.from(gyro: motion)
         }
     }
 }
