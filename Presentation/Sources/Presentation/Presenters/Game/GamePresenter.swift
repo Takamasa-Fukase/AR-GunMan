@@ -29,10 +29,10 @@ public final class GamePresenter {
         }
     }
     
-    public let showTutorialViewStream: AsyncStream<Void>
-    public let showWeaponSelectViewStream: AsyncStream<Void>
-    public let closeWeaponSelectViewStream: AsyncStream<Void>
-    public let showResultViewStream: AsyncStream<Double>
+    public let showTutorialViewEvent: AsyncStream<Void>
+    public let showWeaponSelectViewEvent: AsyncStream<Void>
+    public let closeWeaponSelectViewEvent: AsyncStream<Void>
+    public let showResultViewEvent: AsyncStream<Double>
 
     private let arGameEngineHandler: ARGameEngineHandlerInterface
     private let soundPlayer: SoundPlayerInterface
@@ -48,10 +48,10 @@ public final class GamePresenter {
     private let reloadingMotionCountUpdateUseCase: ReloadingMotionCountUpdateUseCaseInterface
     private let weaponControlMotionDetectUseCase: WeaponControlMotionDetectUseCaseInterface
     
-    private let showTutorialViewContinuation: AsyncStream<Void>.Continuation
-    private let showWeaponSelectViewContinuation: AsyncStream<Void>.Continuation
-    private let closeWeaponSelectViewContinuation: AsyncStream<Void>.Continuation
-    private let showResultViewContinuation: AsyncStream<Double>.Continuation
+    private let showTutorialViewEventContinuation: AsyncStream<Void>.Continuation
+    private let showWeaponSelectViewEventContinuation: AsyncStream<Void>.Continuation
+    private let closeWeaponSelectViewEventContinuation: AsyncStream<Void>.Continuation
+    private let showResultViewEventContinuation: AsyncStream<Double>.Continuation
     
     public init(
         arGameEngineHandler: ARGameEngineHandlerInterface,
@@ -82,10 +82,10 @@ public final class GamePresenter {
         self.reloadingMotionCountUpdateUseCase = reloadingMotionCountUpdateUseCase
         self.weaponControlMotionDetectUseCase = weaponControlMotionDetectUseCase
         
-        (showTutorialViewStream, showTutorialViewContinuation) = AsyncStream.makeStream()
-        (showWeaponSelectViewStream, showWeaponSelectViewContinuation) = AsyncStream.makeStream()
-        (closeWeaponSelectViewStream, closeWeaponSelectViewContinuation) = AsyncStream.makeStream()
-        (showResultViewStream, showResultViewContinuation) = AsyncStream.makeStream()
+        (showTutorialViewEvent, showTutorialViewEventContinuation) = AsyncStream.makeStream()
+        (showWeaponSelectViewEvent, showWeaponSelectViewEventContinuation) = AsyncStream.makeStream()
+        (closeWeaponSelectViewEvent, closeWeaponSelectViewEventContinuation) = AsyncStream.makeStream()
+        (showResultViewEvent, showResultViewEventContinuation) = AsyncStream.makeStream()
         
         arGameEngineHandler.targetHit = { [weak self] weaponType in
             self?.handleTargetHit(weaponType)
@@ -138,7 +138,7 @@ public final class GamePresenter {
     }
     
     public func weaponChangeButtonTapped() {
-        showWeaponSelectViewContinuation.yield()
+        showWeaponSelectViewEventContinuation.yield()
 
         // 武器選択中はタイムカウントの更新を止める
         gameFlowDriveUseCase.pauseTimer()
@@ -185,16 +185,16 @@ public final class GamePresenter {
         case .timerEndedAndWaitingForFlowEnd:
             soundPlayer.play(.endWhistle)
             motionSensorHandler.stopDetection()
-            closeWeaponSelectViewContinuation.yield()
+            closeWeaponSelectViewEventContinuation.yield()
             
         case .flowEnded:
             soundPlayer.play(.rankingAppear)
-            showResultViewContinuation.yield(gameStore.score.value)
+            showResultViewEventContinuation.yield(gameStore.score.value)
             
         case .blocked(let reason):
             switch reason {
             case .tutorialNotCompleted:
-                showTutorialViewContinuation.yield()
+                showTutorialViewEventContinuation.yield()
                 
             case .timerPaused:
                 break

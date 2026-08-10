@@ -38,7 +38,7 @@ final class NameRegisterViewModel {
             isRegisterButtonEnabled = !nameText.isEmpty
         }
     }
-        
+    
     private let rankingRegisterUseCase: RankingRegisterUseCaseInterface
     private let rankingStore: RankingStoreInterface
     private let outputEventContinuation: AsyncStream<OutputEventType>.Continuation

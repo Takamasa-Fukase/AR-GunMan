@@ -42,25 +42,25 @@ final class GameViewModel {
         self.presenter = presenter
         
         Task {
-            for await _ in presenter.showTutorialViewStream {
+            for await _ in presenter.showTutorialViewEvent {
                 isTutorialViewPresented = true
             }
         }
         
         Task {
-            for await _ in presenter.showWeaponSelectViewStream {
+            for await _ in presenter.showWeaponSelectViewEvent {
                 isWeaponSelectViewPresented = true
             }
         }
         
         Task {
-            for await _ in presenter.closeWeaponSelectViewStream {
+            for await _ in presenter.closeWeaponSelectViewEvent {
                 isWeaponSelectViewPresented = false
             }
         }
         
         Task {
-            for await score in presenter.showResultViewStream {
+            for await score in presenter.showResultViewEvent {
                 isResultViewPresented = (true, score)
             }
         }
