@@ -74,14 +74,14 @@ final class ProdFactory: FactoryInterface {
     static func create() -> RankingGetUseCaseInterface {
         return RankingGetUseCase(
             rankingRepository: create(),
-            rankingStore: RankingStore.shared
+            rankingStore: create()
         )
     }
     
     static func create() -> RankingRegisterUseCaseInterface {
         return RankingRegisterUseCase(
             rankingRepository: create(),
-            rankingStore: RankingStore.shared
+            rankingStore: create()
         )
     }
     
