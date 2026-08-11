@@ -90,7 +90,7 @@ struct GameView<ARView: View>: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 100, height: 100)
-                    .foregroundStyle(viewModel.sightImageColor)
+                    .foregroundStyle(viewModel.currentWeaponType.resources.sightImageColor)
             }
         }
         .background(Color.black)

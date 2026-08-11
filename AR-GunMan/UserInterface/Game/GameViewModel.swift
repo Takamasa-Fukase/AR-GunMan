@@ -8,7 +8,6 @@
 import Observation
 import Domain
 import Presentation
-import SwiftUI
 
 @Observable
 @MainActor
@@ -21,9 +20,6 @@ final class GameViewModel {
     }
     var sightImageName: String {
         return currentWeaponType.resources.sightImageName
-    }
-    var sightImageColor: Color {
-        return currentWeaponType.resources.sightImageColor
     }
     var bulletsCountImageName: String {
         return currentWeaponType.resources.bulletsCountImageName(presenter.bulletsCount)
