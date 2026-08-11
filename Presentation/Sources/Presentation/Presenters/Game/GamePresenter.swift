@@ -196,6 +196,9 @@ public final class GamePresenter {
     
     // MARK: ViewからのInput
     public func onViewAppear() {
+        gameStore.reset()
+        weaponStore.reset()
+        
         // TODO: 検証 - 呼び出し順逆の方がいいか？
         arGameEngineHandler.showWeapon(of: .defaultType)
         arGameEngineHandler.run()

@@ -18,7 +18,7 @@ public final class WeaponStore: WeaponStoreInterface {
     
     private init() {}
     
-    func reset() {
+    public func reset() {
         weapon = .init()
     }
 }

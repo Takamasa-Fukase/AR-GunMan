@@ -10,4 +10,5 @@ import Foundation
 @MainActor
 public protocol WeaponStoreInterface: AnyObject {
     var weapon: Weapon { get set }
+    func reset()
 }

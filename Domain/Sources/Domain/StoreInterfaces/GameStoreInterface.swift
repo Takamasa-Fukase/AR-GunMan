@@ -13,4 +13,5 @@ public protocol GameStoreInterface: AnyObject {
     var timeCount: GameTimeCount { get set }
     var score: GameScore { get set }
     var reloadingMotionDetectedCount: ReloadingMotionDetectedCount { get set }
+    func reset()
 }

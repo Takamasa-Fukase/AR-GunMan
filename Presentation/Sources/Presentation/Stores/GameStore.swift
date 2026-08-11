@@ -23,7 +23,7 @@ public final class GameStore: GameStoreInterface {
     
     private init() {}
     
-    func reset() {
+    public func reset() {
         gameFlow = .init()
         timeCount = .init()
         score = .init()
