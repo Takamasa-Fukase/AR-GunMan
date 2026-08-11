@@ -9,7 +9,8 @@ import Foundation
 
 @MainActor
 public protocol WeaponReloadUseCaseInterface {
-    func execute() -> WeaponReloadStartResult
+    var reloadStartResultEvent: AsyncStream<WeaponReloadStartResult> { get }
+    func execute()
 }
 
 extension WeaponReloadUseCaseInterface {
@@ -18,15 +19,21 @@ extension WeaponReloadUseCaseInterface {
 
 @MainActor
 public final class WeaponReloadUseCase: WeaponReloadUseCaseInterface {
+    public let reloadStartResultEvent: AsyncStream<WeaponReloadStartResult>
+
     private var weaponStore: WeaponStoreInterface
     private var reloadTask: Task<Void, Never>?
+    private let reloadStartResultEventContinuation: AsyncStream<WeaponReloadStartResult>.Continuation
 
     public init(weaponStore: WeaponStoreInterface) {
         self.weaponStore = weaponStore
+        
+        (reloadStartResultEvent, reloadStartResultEventContinuation) = AsyncStream.makeStream()
     }
     
-    public func execute() -> WeaponReloadStartResult {
+    public func execute() {
         let startResult = weaponStore.weapon.startReload()
+        reloadStartResultEventContinuation.yield(startResult)
 
         reloadTask = Task {
             try? await Task.sleep(
@@ -40,8 +47,6 @@ public final class WeaponReloadUseCase: WeaponReloadUseCaseInterface {
             
             weaponStore.weapon.finishReload()
         }
-        
-        return startResult
     }
     
     func stopCurrentReloadIfExists() {

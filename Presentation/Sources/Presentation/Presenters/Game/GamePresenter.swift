@@ -105,10 +105,30 @@ public final class GamePresenter {
             switch weaponControlMotion {
             case .fire:
                 // 武器の発射
-                let weaponFireResult = weaponFireUseCase.execute()
+                weaponFireUseCase.execute()
                 
+            case .reload:
+                // 武器のリロード
+                weaponReloadUseCase.execute()
+                
+                // リロードモーションの検知回数をカウント
+                let reloadingMotionCountUpdateResult = reloadingMotionCountUpdateUseCase.execute()
+                
+                // リロードモーションの検知回数に応じた結果のハンドリング
+                switch reloadingMotionCountUpdateResult {
+                case .notExceededLimit:
+                    break
+                case .exceededLimit:
+                    soundPlayer.play(.targetAppearanceChange)
+                    arGameEngineHandler.changeTargetsAppearance(to: "taimeisan.jpg")
+                }
+            }
+        }
+        
+        Task {
+            for await fireResult in weaponFireUseCase.fireResultEvent {
                 // 発射結果のハンドリング
-                switch weaponFireResult {
+                switch fireResult {
                 case .success:
                     arGameEngineHandler.renderWeaponFiring()
                     soundPlayer.play(weaponStore.weapon.currentType.resources.firingSound)
@@ -123,11 +143,11 @@ public final class GamePresenter {
                         }
                     }
                 }
-                
-            case .reload:
-                // 武器のリロード
-                let reloadStartResult = weaponReloadUseCase.execute()
-                
+            }
+        }
+        
+        Task {
+            for await reloadStartResult in weaponReloadUseCase.reloadStartResultEvent {
                 // リロード開始結果のハンドリング
                 switch reloadStartResult {
                 case .success:
@@ -135,18 +155,6 @@ public final class GamePresenter {
                     
                 case .failure:
                     break
-                }
-                
-                // リロードモーションの検知回数をカウント
-                let reloadingMotionCountUpdateResult = reloadingMotionCountUpdateUseCase.execute()
-                
-                // リロードモーションの検知回数に応じた結果のハンドリング
-                switch reloadingMotionCountUpdateResult {
-                case .notExceededLimit:
-                    break
-                case .exceededLimit:
-                    soundPlayer.play(.targetAppearanceChange)
-                    arGameEngineHandler.changeTargetsAppearance(to: "taimeisan.jpg")
                 }
             }
         }
