@@ -13,7 +13,7 @@ import Domain
 @Observable
 final class NameRegisterViewModel {
     enum OutputEventType {
-        case notifyRegistered
+        case notifyRegisteredAndDismiss
         case dismiss
     }
     
@@ -62,8 +62,7 @@ final class NameRegisterViewModel {
             isRegistering = true
             do {
                 try await rankingRegisterUseCase.execute(item: item)
-                outputEventContinuation.yield(.notifyRegistered)
-                outputEventContinuation.yield(.dismiss)
+                outputEventContinuation.yield(.notifyRegisteredAndDismiss)
                 
             } catch {
                 self.error = (error: error, isAlertPresented: true)

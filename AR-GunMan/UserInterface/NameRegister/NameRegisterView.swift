@@ -153,8 +153,9 @@ struct NameRegisterView: View {
         .task {
             for await event in viewModel.outputEvent {
                 switch event {
-                case .notifyRegistered:
+                case .notifyRegisteredAndDismiss:
                     onRegistered()
+                    dismissRequestReceiver.subject.send(())
                     
                 case .dismiss:
                     dismissRequestReceiver.subject.send(())
