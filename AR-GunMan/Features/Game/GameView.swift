@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Presentation
 import Domain
 
 struct GameView<ARView: View>: View {
@@ -90,7 +89,7 @@ struct GameView<ARView: View>: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 100, height: 100)
-                    .foregroundStyle(viewModel.currentWeaponType.resources.sightImageColor)
+                    .foregroundStyle(viewModel.currentWeaponType.uiResources.sightImageColor)
             }
         }
         .background(Color.black)

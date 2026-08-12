@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Presentation
 
 struct ResultViewBuilder {
     private init() {}

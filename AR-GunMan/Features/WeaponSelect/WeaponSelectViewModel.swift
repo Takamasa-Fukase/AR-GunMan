@@ -8,7 +8,6 @@
 import Foundation
 import Observation
 import Domain
-import Presentation
 
 @MainActor
 @Observable
@@ -26,7 +25,7 @@ final class WeaponSelectViewModel {
         var weaponListItems = WeaponType.allCases.map({ weaponType in
             return WeaponListItem(
                 weaponType: weaponType,
-                weaponImageName: weaponType.resources.weaponImageName
+                weaponImageName: weaponType.uiResources.weaponImageName
             )
         })
         // MEMO: 今は武器が2つしかないので簡素なロジックで初期表示武器を書き換えている

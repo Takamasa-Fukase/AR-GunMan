@@ -88,7 +88,7 @@ public final class GamePresenter {
         arGameEngineHandler.targetHit = { [weak self] weaponType in
             scoreAddUseCase.execute(targetHitPoint: weaponType.targetHitPoint)
             soundPlayer.play(.targetHit)
-            if let bulletHitSound = weaponType.resources.bulletHitSound {
+            if let bulletHitSound = weaponType.soundResources.bulletHitSound {
                 soundPlayer.play(bulletHitSound)
             }
         }
@@ -131,14 +131,14 @@ public final class GamePresenter {
                 switch fireResult {
                 case .success:
                     arGameEngineHandler.renderWeaponFiring()
-                    soundPlayer.play(weaponStore.weapon.currentType.resources.firingSound)
+                    soundPlayer.play(weaponStore.weapon.currentType.soundResources.firingSound)
                     
                 case .failure(let reason):
                     switch reason {
                     case .reloading:
                         break
                     case .outOfBullets:
-                        if let outOfBulletsSound = weaponStore.weapon.currentType.resources.outOfBulletsSound {
+                        if let outOfBulletsSound = weaponStore.weapon.currentType.soundResources.outOfBulletsSound {
                             soundPlayer.play(outOfBulletsSound)
                         }
                     }
@@ -151,7 +151,7 @@ public final class GamePresenter {
                 // リロード開始結果のハンドリング
                 switch reloadStartResult {
                 case .success:
-                    soundPlayer.play(weaponStore.weapon.currentType.resources.reloadingSound)
+                    soundPlayer.play(weaponStore.weapon.currentType.soundResources.reloadingSound)
                     
                 case .failure:
                     break
@@ -163,7 +163,7 @@ public final class GamePresenter {
             for await status in gameFlowDriveUseCase.statusStream {
                 switch status {
                 case .waitingForTimerStart:
-                    soundPlayer.play(WeaponType.defaultType.resources.appearingSound)
+                    soundPlayer.play(WeaponType.defaultType.soundResources.appearingSound)
                     
                 case .timerStartedAndWaitingForTimerEnd:
                     soundPlayer.play(.startWhistle)
@@ -223,7 +223,7 @@ public final class GamePresenter {
     public func weaponSelected(weaponType: WeaponType) {
         weaponChangeUseCase.execute(newType: weaponType)
         arGameEngineHandler.showWeapon(of: weaponType)
-        soundPlayer.play(weaponType.resources.appearingSound)
+        soundPlayer.play(weaponType.soundResources.appearingSound)
         
         // タイムカウントの更新を再開する
         gameFlowDriveUseCase.resolveBlocked()

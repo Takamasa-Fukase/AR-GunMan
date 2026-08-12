@@ -8,7 +8,6 @@
 import Foundation
 import Observation
 import Domain
-import Presentation
 
 @Observable
 @MainActor
@@ -20,10 +19,10 @@ final class GameViewModel {
         return presenter.currentWeaponType
     }
     var sightImageName: String {
-        return currentWeaponType.resources.sightImageName
+        return currentWeaponType.uiResources.sightImageName
     }
     var bulletsCountImageName: String {
-        return currentWeaponType.resources.bulletsCountImageName(presenter.bulletsCount)
+        return currentWeaponType.uiResources.bulletsCountImageName(presenter.bulletsCount)
     }
     var isWeaponChangeButtonEnabled: Bool {
         return presenter.isWeaponChangeButtonEnabled

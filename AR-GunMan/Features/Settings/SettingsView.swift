@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Presentation
 
 struct SettingsView: View {
     @Environment(\.dismiss) var dismiss

@@ -10,7 +10,6 @@ import ARShootingLib
 import Data
 import DeviceInterface
 import Domain
-import Presentation
 import Infrastructure
 
 @MainActor
