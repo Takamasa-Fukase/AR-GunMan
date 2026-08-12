@@ -22,7 +22,7 @@ struct GameViewBuilder {
             targetCount: 50
         )
         let weaponReloadUseCase: WeaponReloadUseCaseInterface = Factory.create()
-        let presenter = GamePresenter(
+        let viewModel = GameViewModel(
             arGameEngineHandler: arShootingLibHandler,
             soundPlayer: Factory.create(),
             motionSensorHandler: Factory.create(),
@@ -40,7 +40,6 @@ struct GameViewBuilder {
             reloadingMotionCountUpdateUseCase: Factory.create(),
             weaponControlMotionDetectUseCase: Factory.create()
         )
-        let viewModel = GameViewModel(presenter: presenter)
         return GameView(
             arView: arView,
             viewModel: viewModel

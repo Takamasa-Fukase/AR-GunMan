@@ -1,26 +1,31 @@
 //
-//  GamePresenter.swift
+//  GameViewModel.swift
 //  AR-GunMan
 //
 //  Created by ウルトラ深瀬 on 2026/06/19.
 //
 
 import Foundation
+import Observation
 import DeviceInterface
 import Domain
 
+@Observable
 @MainActor
-public final class GamePresenter {
-    public var timeCountText: String {
+final class GameViewModel {
+    var timeCountText: String {
         return gameStore.timeCount.countMillisec.timeCountText
     }
-    public var currentWeaponType: WeaponType {
+    var currentWeaponType: WeaponType {
         return weaponStore.weapon.currentType
     }
-    public var bulletsCount: Int {
-        return weaponStore.weapon.bulletsCount
+    var sightImageName: String {
+        return currentWeaponType.uiResources.sightImageName
     }
-    public var isWeaponChangeButtonEnabled: Bool {
+    var bulletsCountImageName: String {
+        return currentWeaponType.uiResources.bulletsCountImageName(weaponStore.weapon.bulletsCount)
+    }
+    var isWeaponChangeButtonEnabled: Bool {
         switch gameStore.gameFlow.status {
         case .timerStartedAndWaitingForTimerEnd, .timerResumedAndWaitingForTimerEnd:
             return true
@@ -28,12 +33,10 @@ public final class GamePresenter {
             return false
         }
     }
+    var isTutorialViewPresented = false
+    var isWeaponSelectViewPresented = false
+    var isResultViewPresented: (isPresented: Bool, score: Double) = (false, 0.0)
     
-    public let showTutorialViewEvent: AsyncStream<Void>
-    public let showWeaponSelectViewEvent: AsyncStream<Void>
-    public let closeWeaponSelectViewEvent: AsyncStream<Void>
-    public let showResultViewEvent: AsyncStream<Double>
-
     private let arGameEngineHandler: ARGameEngineHandlerInterface
     private let soundPlayer: SoundPlayerInterface
     private let motionSensorHandler: MotionSensorHandlerInterface
@@ -47,12 +50,7 @@ public final class GamePresenter {
     private let reloadingMotionCountUpdateUseCase: ReloadingMotionCountUpdateUseCaseInterface
     private let weaponControlMotionDetectUseCase: WeaponControlMotionDetectUseCaseInterface
     
-    private let showTutorialViewEventContinuation: AsyncStream<Void>.Continuation
-    private let showWeaponSelectViewEventContinuation: AsyncStream<Void>.Continuation
-    private let closeWeaponSelectViewEventContinuation: AsyncStream<Void>.Continuation
-    private let showResultViewEventContinuation: AsyncStream<Double>.Continuation
-    
-    public init(
+    init(
         arGameEngineHandler: ARGameEngineHandlerInterface,
         soundPlayer: SoundPlayerInterface,
         motionSensorHandler: MotionSensorHandlerInterface,
@@ -78,11 +76,6 @@ public final class GamePresenter {
         self.scoreAddUseCase = scoreAddUseCase
         self.reloadingMotionCountUpdateUseCase = reloadingMotionCountUpdateUseCase
         self.weaponControlMotionDetectUseCase = weaponControlMotionDetectUseCase
-        
-        (showTutorialViewEvent, showTutorialViewEventContinuation) = AsyncStream.makeStream()
-        (showWeaponSelectViewEvent, showWeaponSelectViewEventContinuation) = AsyncStream.makeStream()
-        (closeWeaponSelectViewEvent, closeWeaponSelectViewEventContinuation) = AsyncStream.makeStream()
-        (showResultViewEvent, showResultViewEventContinuation) = AsyncStream.makeStream()
         
         // TODO: weak selfが危険なのでクロージャーじゃ無い書き方に差し替えを検討したい
         arGameEngineHandler.targetHit = { [weak self] weaponType in
@@ -172,16 +165,16 @@ public final class GamePresenter {
                 case .timerEndedAndWaitingForFlowEnd:
                     soundPlayer.play(.endWhistle)
                     motionSensorHandler.stopDetection()
-                    closeWeaponSelectViewEventContinuation.yield()
+                    isWeaponSelectViewPresented = false
                     
                 case .flowEnded:
                     soundPlayer.play(.rankingAppear)
-                    showResultViewEventContinuation.yield(gameStore.score.value)
+                    isResultViewPresented = (true, gameStore.score.value)
                     
                 case .blocked(let reason):
                     switch reason {
                     case .tutorialNotCompleted:
-                        showTutorialViewEventContinuation.yield()
+                        isTutorialViewPresented = true
                         
                     case .timerPaused:
                         break
@@ -195,7 +188,7 @@ public final class GamePresenter {
     }
     
     // MARK: ViewからのInput
-    public func onViewAppear() {
+    func onViewAppear() {
         gameStore.reset()
         weaponStore.reset()
         
@@ -205,22 +198,22 @@ public final class GamePresenter {
         gameFlowDriveUseCase.start()
     }
     
-    public func onViewDisappear() {
+    func onViewDisappear() {
         arGameEngineHandler.pause()
     }
     
-    public func tutorialEnded() {
+    func tutorialEnded() {
         gameFlowDriveUseCase.resolveBlocked()
     }
     
-    public func weaponChangeButtonTapped() {
-        showWeaponSelectViewEventContinuation.yield()
+    func weaponChangeButtonTapped() {
+        isWeaponSelectViewPresented = true
 
         // 武器選択中はタイムカウントの更新を止める
         gameFlowDriveUseCase.pauseTimer()
     }
     
-    public func weaponSelected(weaponType: WeaponType) {
+    func weaponSelected(weaponType: WeaponType) {
         weaponChangeUseCase.execute(newType: weaponType)
         arGameEngineHandler.showWeapon(of: weaponType)
         soundPlayer.play(weaponType.soundResources.appearingSound)
