@@ -7,7 +7,6 @@
 
 import Foundation
 
-// TODO: 後でおそらくPresentationパッケージに移動になるので不要になったら消す
 extension Double {
     var scoreText: String {
         // （例）100点（3桁）の時は少数を2桁にする -> 100.00

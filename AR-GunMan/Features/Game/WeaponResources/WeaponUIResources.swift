@@ -1,14 +1,14 @@
 //
-//  WeaponResources.swift
+//  WeaponUIResources.swift
 //  AR-GunMan
 //
-//  Created by ウルトラ深瀬 on 2026/06/30.
+//  Created by ウルトラ深瀬 on 2026/08/12.
 //
 
 import Foundation
 import SwiftUI
 
-struct WeaponResources {
+struct WeaponUIResources {
     let weaponImageName: String
     let sightImageName: String
     let sightImageColor: Color
@@ -27,7 +27,7 @@ struct WeaponResources {
         self.bulletsCountImageBaseName = bulletsCountImageBaseName
     }
     
-    public func bulletsCountImageName(_ count: Int) -> String {
+    func bulletsCountImageName(_ count: Int) -> String {
         return bulletsCountImageBaseName + String(count)
     }
 }
