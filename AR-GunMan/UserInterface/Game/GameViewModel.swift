@@ -5,6 +5,7 @@
 //  Created by ウルトラ深瀬 on 29/11/24.
 //
 
+import Foundation
 import Observation
 import Domain
 import Presentation

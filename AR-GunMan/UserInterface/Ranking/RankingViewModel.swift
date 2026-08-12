@@ -8,7 +8,6 @@
 import Foundation
 import Observation
 import Domain
-import FirebaseFirestore
 
 @MainActor
 @Observable
