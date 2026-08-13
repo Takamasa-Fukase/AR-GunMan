@@ -31,4 +31,13 @@ public enum GameFlowStatus: Equatable {
         case tutorialNotCompleted
         case timerPaused
     }
+    
+    var isTimerRunning: Bool {
+        switch self {
+        case .timerStartedAndWaitingForTimerEnd, .timerResumedAndWaitingForTimerEnd:
+            return true
+        default:
+            return false
+        }
+    }
 }

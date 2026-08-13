@@ -42,9 +42,7 @@ public final class GameFlowDriveUseCase: GameFlowDriveUseCaseInterface {
     }
     
     public func pauseTimer() {
-        guard gameStore.gameFlow.status == .timerStartedAndWaitingForTimerEnd else {
-            return
-        }
+        guard gameStore.gameFlow.status.isTimerRunning else { return }
         disposeTimer()
         updateAndHandleNextStatus(nextStatus: .blocked(reason: .timerPaused))
     }
