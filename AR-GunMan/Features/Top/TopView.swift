@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TopView: View {
     @State var viewModel: TopViewModel
+    @State var gameViewId = UUID()
     
     var body: some View {
         @Bindable var viewModel = viewModel
@@ -58,7 +59,13 @@ struct TopView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             // ゲーム画面への遷移
             .fullScreenCover(isPresented: $viewModel.isGameViewPresented) {
-                GameViewBuilder.build(frame: geometry.frame(in: .global))
+                GameViewBuilder.build(
+                    frame: geometry.frame(in: .global),
+                    replayButtonTapped: {
+                        gameViewId = .init()
+                    }
+                )
+                .id(gameViewId)
             }
         }
         .background(Color.goldLeaf)

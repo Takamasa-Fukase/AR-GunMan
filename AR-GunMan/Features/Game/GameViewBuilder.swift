@@ -16,7 +16,10 @@ struct GameViewBuilder {
     private init() {}
     
     @MainActor
-    static func build(frame: CGRect) -> GameView<ARSCNViewRepresentable> {
+    static func build(
+        frame: CGRect,
+        replayButtonTapped: @escaping () -> Void
+    ) -> GameView<ARSCNViewRepresentable> {
         let (arShootingLibHandler, arView) = Factory.create(
             frame: frame,
             targetCount: 50
@@ -42,6 +45,7 @@ struct GameViewBuilder {
         )
         return GameView(
             arView: arView,
+            replayButtonTapped: replayButtonTapped,
             viewModel: viewModel
         )
     }

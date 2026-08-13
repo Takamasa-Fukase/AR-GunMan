@@ -10,9 +10,8 @@ import Domain
 
 struct GameView<ARView: View>: View {
     let arView: ARView
+    let replayButtonTapped: () -> Void
     @State var viewModel: GameViewModel
-    // TODO: リトライ方法の再検討の時に消せるかどうか見直し
-    @State var gameViewId = UUID()
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
@@ -125,42 +124,19 @@ struct GameView<ARView: View>: View {
             ResultViewBuilder.build(
                 score: viewModel.isResultViewPresented.score,
                 replayButtonTapped: {
-                    resetAllAndRestartGame()
+                    replayButtonTapped()
                 },
                 toHomeButtonTapped: {
                     dismiss()
                 }
             )
         }
-        .id(gameViewId)
-    }
-    
-    // TODO: リトライ時には画面自体を外側から丸ごと初期化し直させるようにしたい
-    private func resetAllAndRestartGame() {
-        // 依存を初期化し直してリセット
-//        let (arShootingLibHandler, arView) = Factory.create(
-//            frame: .zero,
-//            // TODO: targetCountはConstにしたい
-//            targetCount: 50
-//        )
-//        self.arView = arView as! ARView
-//        let viewModel = GameViewModel(
-//            arShootingLibHandler: arShootingLibHandler,
-//            tutorialRepository: Factory.create(),
-//            gameTimerCreateUseCase: Factory.create(),
-//            weaponResourceGetUseCase: Factory.create(),
-//            weaponActionExecuteUseCase: Factory.create()
-//        )
-//        let motionDetector = WeaponControlMotionDetector()
-//        self.motionDetector = motionDetector
-//        self.viewModel = viewModel
-//        // 依存先からのコールバックをVMに接続しなおし
-//        connectDependencyCallbacksToViewModel()
-//        // ルート階層のidを更新してビューを丸ごと再描画し、onAppearを呼ばせることでゲームをリスタートさせる
-//        gameViewId = UUID()
     }
 }
 
 #Preview {
-    GameViewBuilder.build(frame: .zero)
+    GameViewBuilder.build(
+        frame: .zero,
+        replayButtonTapped: {}
+    )
 }
