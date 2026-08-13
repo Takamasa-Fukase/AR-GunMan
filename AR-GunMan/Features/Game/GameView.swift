@@ -15,14 +15,6 @@ struct GameView<ARView: View>: View {
     @State var gameViewId = UUID()
     @Environment(\.dismiss) var dismiss
     
-    init(
-        arView: ARView,
-        viewModel: GameViewModel
-    ) {
-        self.arView = arView
-        self.viewModel = viewModel
-    }
-    
     var body: some View {
         @Bindable var viewModel = viewModel
         
