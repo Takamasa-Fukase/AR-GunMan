@@ -104,7 +104,8 @@ final class ARShootingController: NSObject, ARShootingControllerInterface {
         weaponResources: WeaponObjectResources,
         particleResources: TargetHitParticleResources?,
         isGunnerHandShakingAnimationEnabled: Bool
-    ) {        // 武器の親Nodeと武器自体のNodeをロード
+    ) {
+        // 武器の親Nodeと武器自体のNodeをロード
         let (weaponParentNode, weaponNode) = createWeaponNode(
             fileName: weaponResources.fileName,
             parentNodeName: weaponResources.parentObjectName,

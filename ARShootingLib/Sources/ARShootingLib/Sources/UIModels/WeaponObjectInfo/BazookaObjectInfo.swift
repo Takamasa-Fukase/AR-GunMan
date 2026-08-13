@@ -11,7 +11,7 @@ struct BazookaObjectInfo: WeaponObjectInfo {
     let isGunnerHandShakingAnimationEnabled: Bool
     let isRecoilAnimationEnabled: Bool
     let weaponResources: WeaponResources
-    let particleResources: ParticleResources
+    let particleResources: ParticleResources?
     let bulletName: String
 
     struct WeaponResources: WeaponObjectResources {
