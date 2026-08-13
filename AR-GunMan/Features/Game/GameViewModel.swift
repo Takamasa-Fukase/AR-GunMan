@@ -77,8 +77,7 @@ final class GameViewModel {
         self.reloadingMotionCountUpdateUseCase = reloadingMotionCountUpdateUseCase
         self.weaponControlMotionDetectUseCase = weaponControlMotionDetectUseCase
         
-        // TODO: weak selfが危険なのでクロージャーじゃ無い書き方に差し替えを検討したい
-        arGameEngineHandler.targetHit = { [weak self] weaponType in
+        arGameEngineHandler.targetHit = { weaponType in
             scoreAddUseCase.execute(targetHitPoint: weaponType.targetHitPoint)
             soundPlayer.play(.targetHit)
             if let bulletHitSound = weaponType.soundResources.bulletHitSound {
@@ -86,8 +85,7 @@ final class GameViewModel {
             }
         }
         
-        // TODO: weak selfが危険なのでクロージャーじゃ無い書き方に差し替えを検討したい
-        motionSensorHandler.motionUpdated = { [weak self] motion in
+        motionSensorHandler.motionUpdated = { motion in
             // 物理モーションを武器の操作モーションに変換
             let weaponControlMotion = weaponControlMotionDetectUseCase.execute(motion: motion)
             
