@@ -206,26 +206,21 @@ extension ARShootingController: ARSCNViewDelegate {
 
 extension ARShootingController: SCNPhysicsContactDelegate {
     func physicsWorld(_ world: SCNPhysicsWorld, didEnd contact: SCNPhysicsContact) {
-//        if contact.nodeA.name == "target" && contact.nodeB.name == "bullet"
-//            || contact.nodeB.name == "target" && contact.nodeA.name == "bullet" {
-        if let targetNode = [contact.nodeA, contact.nodeB].first(where: { $0.name == "target" }),
-           let bulletNode = [contact.nodeA, contact.nodeB].first(where: { ($0.name ?? "").contains("Bullet") }) {
-            // どの武器の弾かを判別
-            guard let weaponType = WeaponType.allCases.first(where: { $0.objectInfo.bulletName == bulletNode.name }) else {
-                fatalError("bulletNameが一致するWeaponTypeがありません")
-            }
-            
-            // 弾がターゲットに命中したことを通知
-            targetHit?(weaponType)
-            
-            // 着弾時の特殊効果（爆発など）を描画
-            renderTargetHitParticle(to: contact.contactPoint)
-            
-            // 衝突した2つのNode（弾とターゲット）を削除
-//            contact.nodeA.removeFromParentNode()
-//            contact.nodeB.removeFromParentNode()
-            targetNode.removeFromParentNode()
-            bulletNode.removeFromParentNode()
+        // 的と弾の衝突であることを検証
+        guard let targetNode = [contact.nodeA, contact.nodeB].first(where: { $0.name == "target" }),
+              let bulletNode = [contact.nodeA, contact.nodeB].first(where: { ($0.name ?? "").contains("Bullet") }) else { return }
+        // どの武器の弾かを判別
+        guard let weaponType = WeaponType.allCases.first(where: { $0.objectInfo.bulletName == bulletNode.name }) else {
+            fatalError("bulletNameが一致するWeaponTypeがありません")
         }
+        
+        // 弾がターゲットに命中したことを通知
+        targetHit?(weaponType)
+        
+        // 着弾時の特殊効果（爆発など）を描画
+        renderTargetHitParticle(to: contact.contactPoint)
+        
+        targetNode.removeFromParentNode()
+        bulletNode.removeFromParentNode()
     }
 }
