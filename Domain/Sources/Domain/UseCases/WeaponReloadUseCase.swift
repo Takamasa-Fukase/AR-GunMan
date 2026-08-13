@@ -11,11 +11,9 @@ import Foundation
 public protocol WeaponReloadUseCaseInterface {
     var reloadStartResultEvent: AsyncStream<WeaponReloadStartResult> { get }
     func execute()
+    func stopCurrentReloadIfExists()
 }
 
-extension WeaponReloadUseCaseInterface {
-    func stopCurrentReloadIfExists() {}
-}
 
 @MainActor
 public final class WeaponReloadUseCase: WeaponReloadUseCaseInterface {
@@ -49,7 +47,7 @@ public final class WeaponReloadUseCase: WeaponReloadUseCaseInterface {
         }
     }
     
-    func stopCurrentReloadIfExists() {
+    public func stopCurrentReloadIfExists() {
         reloadTask?.cancel()
         reloadTask = nil
     }
