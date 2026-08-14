@@ -14,7 +14,7 @@ public struct PhysicalMotion {
     enum Dimension {
         case x, y, z
     }
-    struct DimensionAndValue: Hashable {
+    private struct DimensionAndValue: Hashable {
         let dimension: Dimension
         let value: Double
     }
