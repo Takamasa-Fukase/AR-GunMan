@@ -12,7 +12,7 @@ public struct GameTimeCount {
     
     public private(set) var countMillisec: Int = 30000
     
-    public var isTimeUp: Bool {
+    var isTimeUp: Bool {
         return countMillisec <= 0
     }
         
