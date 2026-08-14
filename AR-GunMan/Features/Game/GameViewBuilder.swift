@@ -8,9 +8,7 @@
 import Foundation
 import SwiftUI
 import ARShootingLib
-import Data
 import Domain
-import Infrastructure
 
 struct GameViewBuilder {
     private init() {}

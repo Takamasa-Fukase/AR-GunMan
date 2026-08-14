@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Domain
 
 struct NameRegisterViewBuilder {
     private init() {}
