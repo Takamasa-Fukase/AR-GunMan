@@ -28,15 +28,6 @@
 		BC0D547A2D432FAE00D69795 /* bazooka_appear.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BC0D54602D432FAE00D69795 /* bazooka_appear.mp3 */; };
 		BC0D547B2D432FAE00D69795 /* bazooka_reload.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BC0D54632D432FAE00D69795 /* bazooka_reload.mp3 */; };
 		BC18CDC5302C20E7003443DD /* URLConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18CDC3302C20E7003443DD /* URLConst.swift */; };
-		BC18CDCA302C2235003443DD /* RankingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18CDC7302C2235003443DD /* RankingStore.swift */; };
-		BC18CDCB302C2235003443DD /* WeaponStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18CDC8302C2235003443DD /* WeaponStore.swift */; };
-		BC18CDCC302C2235003443DD /* GameStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18CDC6302C2235003443DD /* GameStore.swift */; };
-		BC18CDCD302C2235003443DD /* RankingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18CDC7302C2235003443DD /* RankingStore.swift */; };
-		BC18CDCE302C2235003443DD /* WeaponStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18CDC8302C2235003443DD /* WeaponStore.swift */; };
-		BC18CDCF302C2235003443DD /* GameStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18CDC6302C2235003443DD /* GameStore.swift */; };
-		BC18CDD0302C2235003443DD /* RankingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18CDC7302C2235003443DD /* RankingStore.swift */; };
-		BC18CDD1302C2235003443DD /* WeaponStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18CDC8302C2235003443DD /* WeaponStore.swift */; };
-		BC18CDD2302C2235003443DD /* GameStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18CDC6302C2235003443DD /* GameStore.swift */; };
 		BC18CDD6302C22A9003443DD /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18CDD4302C22A9003443DD /* Int+Extension.swift */; };
 		BC18CDDD302C22BC003443DD /* WeaponSoundResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18CDDB302C22BC003443DD /* WeaponSoundResources.swift */; };
 		BC18CDDE302C22BC003443DD /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18CDDC302C22BC003443DD /* GameViewModel.swift */; };
@@ -156,9 +147,6 @@
 		BC0D546C2D432FAE00D69795 /* target_hit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = target_hit.mp3; sourceTree = "<group>"; };
 		BC0D546D2D432FAE00D69795 /* western_pistol_fire.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = western_pistol_fire.mp3; sourceTree = "<group>"; };
 		BC18CDC3302C20E7003443DD /* URLConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLConst.swift; sourceTree = "<group>"; };
-		BC18CDC6302C2235003443DD /* GameStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameStore.swift; sourceTree = "<group>"; };
-		BC18CDC7302C2235003443DD /* RankingStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingStore.swift; sourceTree = "<group>"; };
-		BC18CDC8302C2235003443DD /* WeaponStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponStore.swift; sourceTree = "<group>"; };
 		BC18CDD4302C22A9003443DD /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
 		BC18CDDB302C22BC003443DD /* WeaponSoundResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponSoundResources.swift; sourceTree = "<group>"; };
 		BC18CDDC302C22BC003443DD /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
@@ -316,7 +304,6 @@
 				BCFDECE82D3B45BD0023DC8A /* Preview Content */,
 				BC0D545E2D432F8600D69795 /* Resources */,
 				BCFDECE52D3B45BD0023DC8A /* Features */,
-				BC18CDC9302C2235003443DD /* Stores */,
 				BCFDECBC2D3B45BD0023DC8A /* Utillities */,
 				BCFDECFB2D3B45BD0023DC8A /* Extensions */,
 				BC18CDC4302C20E7003443DD /* Constants */,
@@ -387,16 +374,6 @@
 				BC18CDC3302C20E7003443DD /* URLConst.swift */,
 			);
 			path = Constants;
-			sourceTree = "<group>";
-		};
-		BC18CDC9302C2235003443DD /* Stores */ = {
-			isa = PBXGroup;
-			children = (
-				BC18CDC6302C2235003443DD /* GameStore.swift */,
-				BC18CDC7302C2235003443DD /* RankingStore.swift */,
-				BC18CDC8302C2235003443DD /* WeaponStore.swift */,
-			);
-			path = Stores;
 			sourceTree = "<group>";
 		};
 		BC18CDE1302C25E5003443DD /* WeaponResources */ = {
@@ -896,9 +873,6 @@
 				BCFDED152D3B45BE0023DC8A /* ResultViewModel.swift in Sources */,
 				BCFDED202D3B45BE0023DC8A /* TutorialViewModel.swift in Sources */,
 				BCFDED1C2D3B45BE0023DC8A /* TutorialConst.swift in Sources */,
-				BC18CDD0302C2235003443DD /* RankingStore.swift in Sources */,
-				BC18CDD1302C2235003443DD /* WeaponStore.swift in Sources */,
-				BC18CDD2302C2235003443DD /* GameStore.swift in Sources */,
 				BC18CDDD302C22BC003443DD /* WeaponSoundResources.swift in Sources */,
 				BC18CDDE302C22BC003443DD /* GameViewModel.swift in Sources */,
 				BC18CDE3302C2C92003443DD /* WeaponUIResources.swift in Sources */,
@@ -924,9 +898,6 @@
 			files = (
 				BCBCFC3D2D53373B00499C21 /* GameViewModelTests.swift in Sources */,
 				BCBCFC402D53A0C900499C21 /* TestData.swift in Sources */,
-				BC18CDCA302C2235003443DD /* RankingStore.swift in Sources */,
-				BC18CDCB302C2235003443DD /* WeaponStore.swift in Sources */,
-				BC18CDCC302C2235003443DD /* GameStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -934,9 +905,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BC18CDCD302C2235003443DD /* RankingStore.swift in Sources */,
-				BC18CDCE302C2235003443DD /* WeaponStore.swift in Sources */,
-				BC18CDCF302C2235003443DD /* GameStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1139,7 +1107,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 279BF58C8346A5E3B5866A1B /* Pods-AR-GunManTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -1164,7 +1131,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 922E5AAB43CC9536D84EF020 /* Pods-AR-GunManTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -1189,7 +1155,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7CD697C6E134C845527E1E4C /* Pods-AR-GunMan-AR-GunManUITests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 37MFDT4LMQ;
@@ -1213,7 +1178,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F878AB940BB378E586D8EE82 /* Pods-AR-GunMan-AR-GunManUITests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 37MFDT4LMQ;
@@ -1324,7 +1288,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C0D6D2E34680E66FD3B0D563 /* Pods-AR-GunManTests.test.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -1349,7 +1312,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 486BFFA827CE9F2E5AD9BB20 /* Pods-AR-GunMan-AR-GunManUITests.test.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 37MFDT4LMQ;

@@ -1,6 +1,6 @@
 //
 //  GameStore.swift
-//  AR-GunMan
+//  Data
 //
 //  Created by ウルトラ深瀬 on 2026/07/15.
 //
