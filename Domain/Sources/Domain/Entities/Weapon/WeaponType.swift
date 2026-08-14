@@ -11,6 +11,19 @@ public enum WeaponType: CaseIterable {
     case pistol
     case bazooka
     
+    public enum ReloadType {
+        case manual
+        case auto
+    }
+    
+    private struct WeaponInfo {
+        let isDefault: Bool
+        let capacity: Int
+        let reloadWaitingTimeMillisec: Int
+        let reloadType: ReloadType
+        let targetHitPoint: Int
+    }
+    
     public static var defaultType: Self {
         guard let defaultWeaponType = allCases.first(where: { $0.isDefault }) else {
             fatalError("デフォルトのWeaponTypeが存在しません")
@@ -30,17 +43,15 @@ public enum WeaponType: CaseIterable {
         return info.reloadWaitingTimeMillisec
     }
     
-    public var reloadType: WeaponInfo.ReloadType {
+    public var reloadType: ReloadType {
         return info.reloadType
     }
     
     public var targetHitPoint: Int {
         return info.targetHitPoint
     }
-}
-
-private extension WeaponType {
-    var info: WeaponInfo {
+    
+    private var info: WeaponInfo {
         switch self {
         case .pistol:
             return WeaponInfo(
