@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import SwiftUI
 import ARShootingLib
 
 public class ARShootingControllerMock: ARShootingControllerInterface {
