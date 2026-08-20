@@ -8,9 +8,8 @@
 import Foundation
 import ARShootingLib
 import Data
-import DeviceInterface
+import Device
 import Domain
-import Infrastructure
 
 @MainActor
 final class MockFactory: FactoryInterface {

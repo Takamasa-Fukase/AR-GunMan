@@ -1,13 +1,17 @@
 //
 //  CameraPermissionHandler.swift
-//  Infrastructure
+//  Device
 //
 //  Created by ウルトラ深瀬 on 2026/06/08.
 //
 
 import Foundation
 import AVFoundation
-import DeviceInterface
+
+public protocol CameraPermissionHandlerInterface: AnyObject {
+    func getCameraUsagePermissionGrantedFlag() -> Bool
+    func requestCameraUsagePermission()
+}
 
 public final class CameraPermissionHandler: CameraPermissionHandlerInterface {
     public init() {}

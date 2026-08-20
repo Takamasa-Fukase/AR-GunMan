@@ -1,14 +1,19 @@
 //
 //  CoreMotionHandler.swift
-//  Infrastructure
+//  Device
 //
 //  Created by ウルトラ深瀬 on 2026/06/05.
 //
 
 import Foundation
 import CoreMotion
-import DeviceInterface
 import Domain
+
+public protocol MotionSensorHandlerInterface: AnyObject {
+    var motionUpdated: ((PhysicalMotion) -> Void)? { get set }
+    func startDetection()
+    func stopDetection()
+}
 
 public class CoreMotionHandler: MotionSensorHandlerInterface {
     public var motionUpdated: ((PhysicalMotion) -> Void)?

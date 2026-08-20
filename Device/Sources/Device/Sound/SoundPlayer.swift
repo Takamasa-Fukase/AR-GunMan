@@ -1,12 +1,15 @@
 //
 //  SoundPlayer.swift
-//  Infrastructure
+//  Device
 //
 //  Created by ウルトラ深瀬 on 2026/06/10.
 //
 
 import AVFoundation
-import DeviceInterface
+
+public protocol SoundPlayerInterface: AnyObject {
+    func play(_ sound: SoundType)
+}
 
 public final class SoundPlayer: SoundPlayerInterface {
     public static let shared = SoundPlayer()
