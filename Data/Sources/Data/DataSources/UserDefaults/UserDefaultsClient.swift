@@ -1,12 +1,15 @@
 //
 //  UserDefaultsClient.swift
-//  Infrastructure
+//  Data
 //
 //  Created by ウルトラ深瀬 on 2026/05/30.
 //
 
 import Foundation
-import Data
+
+public protocol UserDefaultsClientInterface {
+    var isTutorialCompleted: Bool { get set }
+}
 
 public final class UserDefaultsClient: UserDefaultsClientInterface {
     private struct Keys {

@@ -1,14 +1,18 @@
 //
 //  FirestoreClient.swift
-//  Infrastructure
+//  Data
 //
 //  Created by ウルトラ深瀬 on 2026/05/30.
 //
 
 import Foundation
 import Core
-import Data
 import FirebaseFirestore
+
+public protocol FirestoreClientInterface {
+    func getItems<ResponseEntity: Decodable>(collectionPath: String) async throws -> [ResponseEntity]
+    func addItem(collectionPath: String, requestEntity: Encodable) async throws
+}
 
 public final class FirestoreClient: FirestoreClientInterface {
     private let db = Firestore.firestore()
