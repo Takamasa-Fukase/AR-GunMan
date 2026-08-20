@@ -33,12 +33,11 @@
 		BC18CDDE302C22BC003443DD /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18CDDC302C22BC003443DD /* GameViewModel.swift */; };
 		BC18CDE3302C2C92003443DD /* WeaponUIResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18CDE2302C2C92003443DD /* WeaponUIResources.swift */; };
 		BC2BF8892D49DDE400E202F0 /* Core in Frameworks */ = {isa = PBXBuildFile; productRef = BC2BF8882D49DDE400E202F0 /* Core */; };
-		BC31075B2FF72D77005B48CD /* DeviceInterface in Frameworks */ = {isa = PBXBuildFile; productRef = BC31075A2FF72D77005B48CD /* DeviceInterface */; };
 		BC330B2B2D499261007C4501 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = BC330B2A2D499261007C4501 /* FirebaseFirestore */; };
+		BC5382E83036C513005D5434 /* Device in Frameworks */ = {isa = PBXBuildFile; productRef = BC5382E73036C513005D5434 /* Device */; };
 		BC5F56002D3B533500EA397A /* Data in Frameworks */ = {isa = PBXBuildFile; productRef = BC5F55FF2D3B533500EA397A /* Data */; };
 		BC5F56022D3B533500EA397A /* Domain in Frameworks */ = {isa = PBXBuildFile; productRef = BC5F56012D3B533500EA397A /* Domain */; };
 		BC7B6CA72FCFF4D4001A2CFA /* ARShootingLib in Frameworks */ = {isa = PBXBuildFile; productRef = BC7B6CA62FCFF4D4001A2CFA /* ARShootingLib */; };
-		BC7B6CA92FCFF5C4001A2CFA /* Infrastructure in Frameworks */ = {isa = PBXBuildFile; productRef = BC7B6CA82FCFF5C4001A2CFA /* Infrastructure */; };
 		BC7FBB7C2D4A434A00911B38 /* ErrorAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7FBB7B2D4A434A00911B38 /* ErrorAlert.swift */; };
 		BC8F93152D800E43000CA6DA /* Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8F93142D800E28000CA6DA /* Factory.swift */; };
 		BC8F93172D8017EF000CA6DA /* ProdFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8F93162D8017B6000CA6DA /* ProdFactory.swift */; };
@@ -161,9 +160,7 @@
 		BC90ECDF2D47BD3400B34E4B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BC9112DB301886AA00214D87 /* WeaponType+Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WeaponType+Resources.swift"; sourceTree = "<group>"; };
 		BCA514092FF63010007B47E3 /* WeaponListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponListItem.swift; sourceTree = "<group>"; };
-		BCA5140B2FF6A84F007B47E3 /* DeviceInterface */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DeviceInterface; sourceTree = "<group>"; };
 		BCAD29752FC9D07400E5D2AB /* ARShootingLib */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ARShootingLib; sourceTree = "<group>"; };
-		BCAD29762FC9D13900E5D2AB /* Infrastructure */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Infrastructure; sourceTree = "<group>"; };
 		BCB93BA82C36DA9800DBFC46 /* GoogleService-Info.dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.dev.plist"; sourceTree = "<group>"; };
 		BCBCFC3F2D53A0BD00499C21 /* TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
 		BCFDECB12D3B45BC0023DC8A /* Color+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
@@ -219,14 +216,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BC31075B2FF72D77005B48CD /* DeviceInterface in Frameworks */,
 				BC5F56022D3B533500EA397A /* Domain in Frameworks */,
 				BC5F56002D3B533500EA397A /* Data in Frameworks */,
 				226019EB1C6C0B4EEDECE581 /* Pods_AR_GunMan.framework in Frameworks */,
 				BC7B6CA72FCFF4D4001A2CFA /* ARShootingLib in Frameworks */,
 				BC2BF8892D49DDE400E202F0 /* Core in Frameworks */,
+				BC5382E83036C513005D5434 /* Device in Frameworks */,
 				BC330B2B2D499261007C4501 /* FirebaseFirestore in Frameworks */,
-				BC7B6CA92FCFF5C4001A2CFA /* Infrastructure in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,9 +268,7 @@
 				BC2BF8872D49DB9600E202F0 /* Core */,
 				BC067F762D3B4CEA00E58C56 /* Data */,
 				BC5382E630368487005D5434 /* Device */,
-				BCA5140B2FF6A84F007B47E3 /* DeviceInterface */,
 				BC067F772D3B4CF900E58C56 /* Domain */,
-				BCAD29762FC9D13900E5D2AB /* Infrastructure */,
 				59D2D4D72552DE66006DDB70 /* AR-GunMan */,
 				59D2D4EE2552DE67006DDB70 /* AR-GunManTests */,
 				59D2D4F92552DE67006DDB70 /* AR-GunManUITests */,
@@ -586,8 +580,7 @@
 				BC330B2A2D499261007C4501 /* FirebaseFirestore */,
 				BC2BF8882D49DDE400E202F0 /* Core */,
 				BC7B6CA62FCFF4D4001A2CFA /* ARShootingLib */,
-				BC7B6CA82FCFF5C4001A2CFA /* Infrastructure */,
-				BC31075A2FF72D77005B48CD /* DeviceInterface */,
+				BC5382E73036C513005D5434 /* Device */,
 			);
 			productName = "AR-GunMan";
 			productReference = 59D2D4D52552DE66006DDB70 /* AR-GunMan Dev.app */;
@@ -1394,14 +1387,14 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = Core;
 		};
-		BC31075A2FF72D77005B48CD /* DeviceInterface */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = DeviceInterface;
-		};
 		BC330B2A2D499261007C4501 /* FirebaseFirestore */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = BC330B292D499261007C4501 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
+		};
+		BC5382E73036C513005D5434 /* Device */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Device;
 		};
 		BC5F55FF2D3B533500EA397A /* Data */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -1414,10 +1407,6 @@
 		BC7B6CA62FCFF4D4001A2CFA /* ARShootingLib */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ARShootingLib;
-		};
-		BC7B6CA82FCFF5C4001A2CFA /* Infrastructure */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Infrastructure;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
