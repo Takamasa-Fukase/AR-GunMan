@@ -10,10 +10,10 @@ import ARShootingLib
 import Domain
 
 public protocol ARGameEngineHandlerInterface: AnyObject {
-    var targetHit: ((WeaponType) -> Void)? { get set }
+    var targetHit: ((Domain.WeaponType) -> Void)? { get set }
     func run()
     func pause()
-    func showWeapon(of type: WeaponType)
+    func showWeapon(of type: Domain.WeaponType)
     func renderWeaponFiring()
     func changeTargetsAppearance(to imageName: String)
 }
