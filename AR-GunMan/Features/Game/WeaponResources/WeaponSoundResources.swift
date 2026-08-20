@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import DeviceInterface
+import Device
 
 protocol WeaponSoundResources {
     var appearingSound: SoundType { get }

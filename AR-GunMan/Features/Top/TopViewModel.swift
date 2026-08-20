@@ -7,7 +7,7 @@
 
 import Foundation
 import Observation
-import DeviceInterface
+import Device
 
 @MainActor
 @Observable
