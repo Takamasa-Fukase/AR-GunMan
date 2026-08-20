@@ -153,6 +153,7 @@
 		BC18CDE2302C2C92003443DD /* WeaponUIResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponUIResources.swift; sourceTree = "<group>"; };
 		BC2BF8872D49DB9600E202F0 /* Core */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Core; sourceTree = "<group>"; };
 		BC2C98412D5312EF000E3D4B /* GameViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModelTests.swift; sourceTree = "<group>"; };
+		BC5382E630368487005D5434 /* Device */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Device; sourceTree = "<group>"; };
 		BC7FBB7B2D4A434A00911B38 /* ErrorAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlert.swift; sourceTree = "<group>"; };
 		BC8F93142D800E28000CA6DA /* Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factory.swift; sourceTree = "<group>"; };
 		BC8F93162D8017B6000CA6DA /* ProdFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProdFactory.swift; sourceTree = "<group>"; };
@@ -270,6 +271,7 @@
 				BCAD29752FC9D07400E5D2AB /* ARShootingLib */,
 				BC2BF8872D49DB9600E202F0 /* Core */,
 				BC067F762D3B4CEA00E58C56 /* Data */,
+				BC5382E630368487005D5434 /* Device */,
 				BCA5140B2FF6A84F007B47E3 /* DeviceInterface */,
 				BC067F772D3B4CF900E58C56 /* Domain */,
 				BCAD29762FC9D13900E5D2AB /* Infrastructure */,
