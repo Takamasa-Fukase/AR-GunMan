@@ -35,6 +35,15 @@
 		BC2BF8892D49DDE400E202F0 /* Core in Frameworks */ = {isa = PBXBuildFile; productRef = BC2BF8882D49DDE400E202F0 /* Core */; };
 		BC330B2B2D499261007C4501 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = BC330B2A2D499261007C4501 /* FirebaseFirestore */; };
 		BC5382E83036C513005D5434 /* Device in Frameworks */ = {isa = PBXBuildFile; productRef = BC5382E73036C513005D5434 /* Device */; };
+		BC5382ED3036C8A6005D5434 /* RankingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5382EA3036C8A6005D5434 /* RankingStore.swift */; };
+		BC5382EE3036C8A6005D5434 /* WeaponStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5382EB3036C8A6005D5434 /* WeaponStore.swift */; };
+		BC5382EF3036C8A6005D5434 /* GameStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5382E93036C8A6005D5434 /* GameStore.swift */; };
+		BC5382F03036C8A6005D5434 /* RankingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5382EA3036C8A6005D5434 /* RankingStore.swift */; };
+		BC5382F13036C8A6005D5434 /* WeaponStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5382EB3036C8A6005D5434 /* WeaponStore.swift */; };
+		BC5382F23036C8A6005D5434 /* GameStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5382E93036C8A6005D5434 /* GameStore.swift */; };
+		BC5382F33036C8A6005D5434 /* RankingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5382EA3036C8A6005D5434 /* RankingStore.swift */; };
+		BC5382F43036C8A6005D5434 /* WeaponStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5382EB3036C8A6005D5434 /* WeaponStore.swift */; };
+		BC5382F53036C8A6005D5434 /* GameStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5382E93036C8A6005D5434 /* GameStore.swift */; };
 		BC5F56002D3B533500EA397A /* Data in Frameworks */ = {isa = PBXBuildFile; productRef = BC5F55FF2D3B533500EA397A /* Data */; };
 		BC5F56022D3B533500EA397A /* Domain in Frameworks */ = {isa = PBXBuildFile; productRef = BC5F56012D3B533500EA397A /* Domain */; };
 		BC7B6CA72FCFF4D4001A2CFA /* ARShootingLib in Frameworks */ = {isa = PBXBuildFile; productRef = BC7B6CA62FCFF4D4001A2CFA /* ARShootingLib */; };
@@ -153,6 +162,9 @@
 		BC2BF8872D49DB9600E202F0 /* Core */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Core; sourceTree = "<group>"; };
 		BC2C98412D5312EF000E3D4B /* GameViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModelTests.swift; sourceTree = "<group>"; };
 		BC5382E630368487005D5434 /* Device */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Device; sourceTree = "<group>"; };
+		BC5382E93036C8A6005D5434 /* GameStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameStore.swift; sourceTree = "<group>"; };
+		BC5382EA3036C8A6005D5434 /* RankingStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingStore.swift; sourceTree = "<group>"; };
+		BC5382EB3036C8A6005D5434 /* WeaponStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponStore.swift; sourceTree = "<group>"; };
 		BC7FBB7B2D4A434A00911B38 /* ErrorAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlert.swift; sourceTree = "<group>"; };
 		BC8F93142D800E28000CA6DA /* Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factory.swift; sourceTree = "<group>"; };
 		BC8F93162D8017B6000CA6DA /* ProdFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProdFactory.swift; sourceTree = "<group>"; };
@@ -293,16 +305,17 @@
 			children = (
 				BCFDED3A2D3B46950023DC8A /* App */,
 				BCFDECE92D3B45BD0023DC8A /* Assets.xcassets */,
+				BC18CDC4302C20E7003443DD /* Constants */,
+				BCFDECFB2D3B45BD0023DC8A /* Extensions */,
 				BCFDECB02D3B45BC0023DC8A /* Factories */,
+				BCFDECE52D3B45BD0023DC8A /* Features */,
 				BCB93BAA2C36DE7D00DBFC46 /* FirebaseInfoPlist */,
 				59D2D4E62552DE67006DDB70 /* Info.plist */,
 				59D2D4E32552DE67006DDB70 /* LaunchScreen.storyboard */,
 				BCFDECE82D3B45BD0023DC8A /* Preview Content */,
 				BC0D545E2D432F8600D69795 /* Resources */,
-				BCFDECE52D3B45BD0023DC8A /* Features */,
+				BC5382EC3036C8A6005D5434 /* Stores */,
 				BCFDECBC2D3B45BD0023DC8A /* Utillities */,
-				BCFDECFB2D3B45BD0023DC8A /* Extensions */,
-				BC18CDC4302C20E7003443DD /* Constants */,
 			);
 			path = "AR-GunMan";
 			sourceTree = "<group>";
@@ -380,6 +393,16 @@
 				BC9112DB301886AA00214D87 /* WeaponType+Resources.swift */,
 			);
 			path = WeaponResources;
+			sourceTree = "<group>";
+		};
+		BC5382EC3036C8A6005D5434 /* Stores */ = {
+			isa = PBXGroup;
+			children = (
+				BC5382E93036C8A6005D5434 /* GameStore.swift */,
+				BC5382EA3036C8A6005D5434 /* RankingStore.swift */,
+				BC5382EB3036C8A6005D5434 /* WeaponStore.swift */,
+			);
+			path = Stores;
 			sourceTree = "<group>";
 		};
 		BCB93BAA2C36DE7D00DBFC46 /* FirebaseInfoPlist */ = {
@@ -849,6 +872,9 @@
 				BCFDED142D3B45BE0023DC8A /* ResultViewBuilder.swift in Sources */,
 				BCFDED262D3B45BE0023DC8A /* WeaponSelectViewBuilder.swift in Sources */,
 				BCFDED0F2D3B45BE0023DC8A /* RankingListView.swift in Sources */,
+				BC5382ED3036C8A6005D5434 /* RankingStore.swift in Sources */,
+				BC5382EE3036C8A6005D5434 /* WeaponStore.swift in Sources */,
+				BC5382EF3036C8A6005D5434 /* GameStore.swift in Sources */,
 				BCFDED082D3B45BD0023DC8A /* GameView.swift in Sources */,
 				BCFDED1B2D3B45BE0023DC8A /* TopViewModel.swift in Sources */,
 				BC90ECE02D47BD3500B34E4B /* AppDelegate.swift in Sources */,
@@ -893,6 +919,9 @@
 			files = (
 				BCBCFC3D2D53373B00499C21 /* GameViewModelTests.swift in Sources */,
 				BCBCFC402D53A0C900499C21 /* TestData.swift in Sources */,
+				BC5382F03036C8A6005D5434 /* RankingStore.swift in Sources */,
+				BC5382F13036C8A6005D5434 /* WeaponStore.swift in Sources */,
+				BC5382F23036C8A6005D5434 /* GameStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -900,6 +929,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC5382F33036C8A6005D5434 /* RankingStore.swift in Sources */,
+				BC5382F43036C8A6005D5434 /* WeaponStore.swift in Sources */,
+				BC5382F53036C8A6005D5434 /* GameStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

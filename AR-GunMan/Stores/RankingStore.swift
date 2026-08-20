@@ -1,6 +1,6 @@
 //
 //  RankingStore.swift
-//  Data
+//  AR-GunMan
 //
 //  Created by ウルトラ深瀬 on 2026/07/10.
 //
