@@ -13,7 +13,7 @@ public protocol ARShootingControllerInterface: AnyObject {
     func pauseSession()
     func showWeapon(of type: WeaponType)
     func renderWeaponFiring()
-    func changeTargetsAppearance(to imageName: String)
+    func changeTargetsAppearance()
 }
 
 final class ARShootingController: NSObject, ARShootingControllerInterface {
@@ -85,7 +85,8 @@ final class ARShootingController: NSObject, ARShootingControllerInterface {
         }
     }
     
-    func changeTargetsAppearance(to imageName: String) {
+    func changeTargetsAppearance() {
+        let newImageName = "taimeisan.jpg"
         arView.scene.rootNode.childNodes.forEach({ node in
             if node.name == "target" {
                 while node.childNode(withName: "torus", recursively: false) != nil {
@@ -94,7 +95,7 @@ final class ARShootingController: NSObject, ARShootingControllerInterface {
                 }
             }
             node.childNode(withName: "sphere", recursively: false)?
-                .geometry?.firstMaterial?.diffuse.contents = UIImage(named: imageName, in: Bundle.module, with: nil)
+                .geometry?.firstMaterial?.diffuse.contents = UIImage(named: newImageName, in: Bundle.module, with: nil)
         })
     }
     

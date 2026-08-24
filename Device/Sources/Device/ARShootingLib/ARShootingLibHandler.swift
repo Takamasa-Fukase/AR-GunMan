@@ -15,7 +15,7 @@ public protocol ARGameEngineHandlerInterface: AnyObject {
     func pause()
     func showWeapon(of type: Domain.WeaponType)
     func renderWeaponFiring()
-    func changeTargetsAppearance(to imageName: String)
+    func changeTargetsAppearance()
 }
 
 public final class ARShootingLibHandler: ARGameEngineHandlerInterface {
@@ -47,8 +47,8 @@ public final class ARShootingLibHandler: ARGameEngineHandlerInterface {
         arShootingController.renderWeaponFiring()
     }
     
-    public func changeTargetsAppearance(to imageName: String) {
-        arShootingController.changeTargetsAppearance(to: imageName)
+    public func changeTargetsAppearance() {
+        arShootingController.changeTargetsAppearance()
     }
 }
 

@@ -111,7 +111,7 @@ final class GameViewModel {
                     break
                 case .exceededLimit:
                     soundPlayer.play(.targetAppearanceChange)
-                    arGameEngineHandler.changeTargetsAppearance(to: "taimeisan.jpg")
+                    arGameEngineHandler.changeTargetsAppearance()
                 }
             }
         }

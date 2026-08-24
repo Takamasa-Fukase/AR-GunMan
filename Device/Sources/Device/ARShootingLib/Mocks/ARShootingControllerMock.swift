@@ -25,5 +25,5 @@ public class ARShootingControllerMock: ARShootingControllerInterface {
     
     public func renderWeaponFiring() {}
     
-    public func changeTargetsAppearance(to imageName: String) {}
+    public func changeTargetsAppearance() {}
 }
