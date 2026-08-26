@@ -7,7 +7,7 @@
 
 import Foundation
 import ARKit
-@testable import ARShootingLib
+@testable import ARShootingEngine
 
 final class SceneManagerMock: SceneManagerInterface {
     var runSessionCalledCount = 0

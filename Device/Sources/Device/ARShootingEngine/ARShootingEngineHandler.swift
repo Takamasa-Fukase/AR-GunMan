@@ -1,15 +1,15 @@
 //
-//  ARShootingLibHandler.swift
+//  ARShootingEngineHandler.swift
 //  Device
 //
 //  Created by ウルトラ深瀬 on 2026/06/03.
 //
 
 import Foundation
-import ARShootingLib
+import ARShootingEngine
 import Domain
 
-public protocol ARGameEngineHandlerInterface: AnyObject {
+public protocol ARShootingEngineHandlerInterface: AnyObject {
     var targetHit: ((Domain.WeaponType) -> Void)? { get set }
     func run()
     func pause()
@@ -18,7 +18,7 @@ public protocol ARGameEngineHandlerInterface: AnyObject {
     func changeTargetsAppearance()
 }
 
-public final class ARShootingLibHandler: ARGameEngineHandlerInterface {
+public final class ARShootingEngineHandler: ARShootingEngineHandlerInterface {
     public var targetHit: ((Domain.WeaponType) -> Void)?
     
     private let arShootingController: ARShootingControllerInterface
@@ -40,7 +40,7 @@ public final class ARShootingLibHandler: ARGameEngineHandlerInterface {
     }
     
     public func showWeapon(of type: Domain.WeaponType) {
-        arShootingController.showWeapon(of: type.toARShootingLibWeaponType)
+        arShootingController.showWeapon(of: type.toARShootingWeaponType)
     }
     
     public func renderWeaponFiring() {
@@ -53,7 +53,7 @@ public final class ARShootingLibHandler: ARGameEngineHandlerInterface {
 }
 
 private extension Domain.WeaponType {
-    var toARShootingLibWeaponType: ARShootingLib.WeaponType {
+    var toARShootingWeaponType: ARShootingEngine.WeaponType {
         switch self {
         case .pistol:
             return .pistol
@@ -63,7 +63,7 @@ private extension Domain.WeaponType {
     }
 }
 
-private extension ARShootingLib.WeaponType {
+private extension ARShootingEngine.WeaponType {
     var toDomainWeaponType: Domain.WeaponType {
         switch self {
         case .pistol:

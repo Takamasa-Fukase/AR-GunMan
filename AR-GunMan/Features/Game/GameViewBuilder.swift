@@ -7,7 +7,7 @@
 
 import Foundation
 import SwiftUI
-import ARShootingLib
+import ARShootingEngine
 import Domain
 
 struct GameViewBuilder {
@@ -18,13 +18,13 @@ struct GameViewBuilder {
         frame: CGRect,
         replayButtonTapped: @escaping () -> Void
     ) -> GameView<ARSCNViewRepresentable> {
-        let (arShootingLibHandler, arView) = Factory.create(
+        let (arShootingEngineHandler, arView) = Factory.create(
             frame: frame,
             targetCount: 50
         )
         let weaponReloadUseCase: WeaponReloadUseCaseInterface = Factory.create()
         let viewModel = GameViewModel(
-            arGameEngineHandler: arShootingLibHandler,
+            arShootingEngineHandler: arShootingEngineHandler,
             soundPlayer: Factory.create(),
             motionSensorHandler: Factory.create(),
             gameStore: Factory.create(),

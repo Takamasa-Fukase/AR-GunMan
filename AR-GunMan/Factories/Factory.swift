@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import ARShootingLib
+import ARShootingEngine
 import Data
 import Device
 import Domain
@@ -22,7 +22,7 @@ typealias Factory = ProdFactory
 @MainActor
 protocol FactoryInterface {
     // MARK: Devices
-    static func create(frame: CGRect, targetCount: Int) -> (ARGameEngineHandlerInterface, ARSCNViewRepresentable)
+    static func create(frame: CGRect, targetCount: Int) -> (ARShootingEngineHandlerInterface, ARSCNViewRepresentable)
     static func create() -> CameraPermissionHandlerInterface
     static func create() -> MotionSensorHandlerInterface
     static func create() -> SoundPlayerInterface

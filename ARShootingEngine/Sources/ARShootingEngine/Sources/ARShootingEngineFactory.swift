@@ -1,5 +1,5 @@
 //
-//  ARShootingLibBuilder.swift
+//  ARShootingEngineFactory.swift
 //  ARShootingEngine
 //
 //  Created by ウルトラ深瀬 on 2026/06/14.
@@ -7,8 +7,8 @@
 
 import Foundation
 
-public struct ARShootingLibBuilder {
-    public static func build(
+public struct ARShootingEngineFactory {
+    public static func create(
         frame: CGRect,
         targetCount: Int
     ) -> (ARShootingControllerInterface, ARSCNViewRepresentable) {

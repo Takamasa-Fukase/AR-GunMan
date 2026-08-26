@@ -1,12 +1,12 @@
 //
 //  ARShootingControllerMock.swift
-//  Infrastructure
+//  Device
 //
 //  Created by ウルトラ深瀬 on 2026/06/04.
 //
 
 import Foundation
-import ARShootingLib
+import ARShootingEngine
 
 public class ARShootingControllerMock: ARShootingControllerInterface {
     public var targetHit: ((WeaponType) -> Void)?

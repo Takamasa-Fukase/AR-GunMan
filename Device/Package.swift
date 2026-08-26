@@ -12,14 +12,14 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(path: "ARShootingLib"),
+        .package(path: "ARShootingEngine"),
         .package(path: "Domain"),
     ],
     targets: [
         .target(
             name: "Device",
             dependencies: [
-                "ARShootingLib",
+                "ARShootingEngine",
                 "Domain",
             ]
         ),

@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import ARShootingLib
+import ARShootingEngine
 import Data
 import Device
 import Domain
@@ -14,11 +14,11 @@ import Domain
 @MainActor
 final class MockFactory: FactoryInterface {
     // MARK: Devices
-    static func create(frame: CGRect, targetCount: Int) -> (ARGameEngineHandlerInterface, ARSCNViewRepresentable) {
+    static func create(frame: CGRect, targetCount: Int) -> (ARShootingEngineHandlerInterface, ARSCNViewRepresentable) {
         let mockController = ARShootingControllerMock()
-        let arShootingLibHandler = ARShootingLibHandler(arShootingController: mockController)
+        let arShootingEngineHandler = ARShootingEngineHandler(arShootingController: mockController)
         let mockARView = ARSCNViewRepresentable.createMock()
-        return (arShootingLibHandler, mockARView)
+        return (arShootingEngineHandler, mockARView)
     }
     
     static func create() -> CameraPermissionHandlerInterface {

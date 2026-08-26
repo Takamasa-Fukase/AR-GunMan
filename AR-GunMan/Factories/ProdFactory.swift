@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import ARShootingLib
+import ARShootingEngine
 import Data
 import Device
 import Domain
@@ -14,15 +14,15 @@ import Domain
 @MainActor
 final class ProdFactory: FactoryInterface {
     // MARK: Devices
-    static func create(frame: CGRect, targetCount: Int) -> (ARGameEngineHandlerInterface, ARSCNViewRepresentable) {
-        let (arShootingController, arView) = ARShootingLibBuilder.build(
+    static func create(frame: CGRect, targetCount: Int) -> (ARShootingEngineHandlerInterface, ARSCNViewRepresentable) {
+        let (arShootingController, arView) = ARShootingEngineFactory.create(
             frame: frame,
             targetCount: targetCount
         )
-        let arShootingLibHandler = ARShootingLibHandler(
+        let arShootingEngineHandler = ARShootingEngineHandler(
             arShootingController: arShootingController
         )
-        return (arShootingLibHandler, arView)
+        return (arShootingEngineHandler, arView)
     }
     
     static func create() -> CameraPermissionHandlerInterface {

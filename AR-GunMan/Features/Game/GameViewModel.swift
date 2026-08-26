@@ -37,7 +37,7 @@ final class GameViewModel {
     var isWeaponSelectViewPresented = false
     var isResultViewPresented: (isPresented: Bool, score: Double) = (false, 0.0)
     
-    private let arGameEngineHandler: ARGameEngineHandlerInterface
+    private let arShootingEngineHandler: ARShootingEngineHandlerInterface
     private let soundPlayer: SoundPlayerInterface
     private let motionSensorHandler: MotionSensorHandlerInterface
     private let gameStore: GameStoreInterface
@@ -51,7 +51,7 @@ final class GameViewModel {
     private let weaponControlMotionDetectUseCase: WeaponControlMotionDetectUseCaseInterface
     
     init(
-        arGameEngineHandler: ARGameEngineHandlerInterface,
+        arShootingEngineHandler: ARShootingEngineHandlerInterface,
         soundPlayer: SoundPlayerInterface,
         motionSensorHandler: MotionSensorHandlerInterface,
         gameStore: GameStoreInterface,
@@ -64,7 +64,7 @@ final class GameViewModel {
         reloadingMotionCountUpdateUseCase: ReloadingMotionCountUpdateUseCaseInterface,
         weaponControlMotionDetectUseCase: WeaponControlMotionDetectUseCaseInterface
     ) {
-        self.arGameEngineHandler = arGameEngineHandler
+        self.arShootingEngineHandler = arShootingEngineHandler
         self.soundPlayer = soundPlayer
         self.motionSensorHandler = motionSensorHandler
         self.gameStore = gameStore
@@ -77,7 +77,7 @@ final class GameViewModel {
         self.reloadingMotionCountUpdateUseCase = reloadingMotionCountUpdateUseCase
         self.weaponControlMotionDetectUseCase = weaponControlMotionDetectUseCase
         
-        arGameEngineHandler.targetHit = { weaponType in
+        arShootingEngineHandler.targetHit = { weaponType in
             scoreAddUseCase.execute(targetHitPoint: weaponType.targetHitPoint)
             soundPlayer.play(.targetHit)
             if let bulletHitSound = weaponType.soundResources.bulletHitSound {
@@ -111,7 +111,7 @@ final class GameViewModel {
                     break
                 case .exceededLimit:
                     soundPlayer.play(.targetAppearanceChange)
-                    arGameEngineHandler.changeTargetsAppearance()
+                    arShootingEngineHandler.changeTargetsAppearance()
                 }
             }
         }
@@ -121,7 +121,7 @@ final class GameViewModel {
                 // 発射結果のハンドリング
                 switch fireResult {
                 case .success:
-                    arGameEngineHandler.renderWeaponFiring()
+                    arShootingEngineHandler.renderWeaponFiring()
                     soundPlayer.play(weaponStore.weapon.currentType.soundResources.firingSound)
                     
                 case .failure(let reason):
@@ -190,13 +190,13 @@ final class GameViewModel {
         gameStore.reset()
         weaponStore.reset()
         
-        arGameEngineHandler.run()
-        arGameEngineHandler.showWeapon(of: .defaultType)
+        arShootingEngineHandler.run()
+        arShootingEngineHandler.showWeapon(of: .defaultType)
         gameFlowDriveUseCase.start()
     }
     
     func onViewDisappear() {
-        arGameEngineHandler.pause()
+        arShootingEngineHandler.pause()
     }
     
     func tutorialEnded() {
@@ -212,7 +212,7 @@ final class GameViewModel {
     
     func weaponSelected(weaponType: WeaponType) {
         weaponChangeUseCase.execute(newType: weaponType)
-        arGameEngineHandler.showWeapon(of: weaponType)
+        arShootingEngineHandler.showWeapon(of: weaponType)
         soundPlayer.play(weaponType.soundResources.appearingSound)
         
         // タイムカウントの更新を再開する
