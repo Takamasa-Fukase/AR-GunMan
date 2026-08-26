@@ -13,7 +13,10 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "ARShootingEngine"
+            name: "ARShootingEngine",
+            resources: [
+                .process("Resources")
+            ]
         ),
         .testTarget(
             name: "ARShootingEngineTests",
