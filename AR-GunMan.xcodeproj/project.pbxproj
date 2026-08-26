@@ -46,7 +46,6 @@
 		BC5382F53036C8A6005D5434 /* GameStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5382E93036C8A6005D5434 /* GameStore.swift */; };
 		BC5F56002D3B533500EA397A /* Data in Frameworks */ = {isa = PBXBuildFile; productRef = BC5F55FF2D3B533500EA397A /* Data */; };
 		BC5F56022D3B533500EA397A /* Domain in Frameworks */ = {isa = PBXBuildFile; productRef = BC5F56012D3B533500EA397A /* Domain */; };
-		BC7B6CA72FCFF4D4001A2CFA /* ARShootingLib in Frameworks */ = {isa = PBXBuildFile; productRef = BC7B6CA62FCFF4D4001A2CFA /* ARShootingLib */; };
 		BC7FBB7C2D4A434A00911B38 /* ErrorAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7FBB7B2D4A434A00911B38 /* ErrorAlert.swift */; };
 		BC8F93152D800E43000CA6DA /* Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8F93142D800E28000CA6DA /* Factory.swift */; };
 		BC8F93172D8017EF000CA6DA /* ProdFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8F93162D8017B6000CA6DA /* ProdFactory.swift */; };
@@ -174,7 +173,6 @@
 		BC9112DB301886AA00214D87 /* WeaponType+Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WeaponType+Resources.swift"; sourceTree = "<group>"; };
 		BC9B5A57303F16A20036A91D /* ARShootingEngine */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ARShootingEngine; sourceTree = "<group>"; };
 		BCA514092FF63010007B47E3 /* WeaponListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponListItem.swift; sourceTree = "<group>"; };
-		BCAD29752FC9D07400E5D2AB /* ARShootingLib */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ARShootingLib; sourceTree = "<group>"; };
 		BCB93BA82C36DA9800DBFC46 /* GoogleService-Info.dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.dev.plist"; sourceTree = "<group>"; };
 		BCBCFC3F2D53A0BD00499C21 /* TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
 		BCFDECB12D3B45BC0023DC8A /* Color+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
@@ -233,7 +231,6 @@
 				BC5F56022D3B533500EA397A /* Domain in Frameworks */,
 				BC5F56002D3B533500EA397A /* Data in Frameworks */,
 				226019EB1C6C0B4EEDECE581 /* Pods_AR_GunMan.framework in Frameworks */,
-				BC7B6CA72FCFF4D4001A2CFA /* ARShootingLib in Frameworks */,
 				BC9B5A59303F16E10036A91D /* ARShootingEngine in Frameworks */,
 				BC2BF8892D49DDE400E202F0 /* Core in Frameworks */,
 				BC5382E83036C513005D5434 /* Device in Frameworks */,
@@ -280,7 +277,6 @@
 			isa = PBXGroup;
 			children = (
 				BC9B5A57303F16A20036A91D /* ARShootingEngine */,
-				BCAD29752FC9D07400E5D2AB /* ARShootingLib */,
 				BC2BF8872D49DB9600E202F0 /* Core */,
 				BC067F762D3B4CEA00E58C56 /* Data */,
 				BC5382E630368487005D5434 /* Device */,
@@ -606,7 +602,6 @@
 				BC5F56012D3B533500EA397A /* Domain */,
 				BC330B2A2D499261007C4501 /* FirebaseFirestore */,
 				BC2BF8882D49DDE400E202F0 /* Core */,
-				BC7B6CA62FCFF4D4001A2CFA /* ARShootingLib */,
 				BC5382E73036C513005D5434 /* Device */,
 				BC9B5A58303F16E10036A91D /* ARShootingEngine */,
 			);
@@ -1440,10 +1435,6 @@
 		BC5F56012D3B533500EA397A /* Domain */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Domain;
-		};
-		BC7B6CA62FCFF4D4001A2CFA /* ARShootingLib */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ARShootingLib;
 		};
 		BC9B5A58303F16E10036A91D /* ARShootingEngine */ = {
 			isa = XCSwiftPackageProductDependency;
