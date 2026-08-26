@@ -53,6 +53,7 @@
 		BC8F93192D801870000CA6DA /* MockFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8F93182D80186D000CA6DA /* MockFactory.swift */; };
 		BC90ECE02D47BD3500B34E4B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC90ECDF2D47BD3400B34E4B /* AppDelegate.swift */; };
 		BC9112DC301886AA00214D87 /* WeaponType+Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9112DB301886AA00214D87 /* WeaponType+Resources.swift */; };
+		BC9B5A59303F16E10036A91D /* ARShootingEngine in Frameworks */ = {isa = PBXBuildFile; productRef = BC9B5A58303F16E10036A91D /* ARShootingEngine */; };
 		BCA5140A2FF63010007B47E3 /* WeaponListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA514092FF63010007B47E3 /* WeaponListItem.swift */; };
 		BCB93BA92C36DA9800DBFC46 /* GoogleService-Info.dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = BCB93BA82C36DA9800DBFC46 /* GoogleService-Info.dev.plist */; };
 		BCBCFC3D2D53373B00499C21 /* GameViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2C98412D5312EF000E3D4B /* GameViewModelTests.swift */; };
@@ -233,6 +234,7 @@
 				BC5F56002D3B533500EA397A /* Data in Frameworks */,
 				226019EB1C6C0B4EEDECE581 /* Pods_AR_GunMan.framework in Frameworks */,
 				BC7B6CA72FCFF4D4001A2CFA /* ARShootingLib in Frameworks */,
+				BC9B5A59303F16E10036A91D /* ARShootingEngine in Frameworks */,
 				BC2BF8892D49DDE400E202F0 /* Core in Frameworks */,
 				BC5382E83036C513005D5434 /* Device in Frameworks */,
 				BC330B2B2D499261007C4501 /* FirebaseFirestore in Frameworks */,
@@ -606,6 +608,7 @@
 				BC2BF8882D49DDE400E202F0 /* Core */,
 				BC7B6CA62FCFF4D4001A2CFA /* ARShootingLib */,
 				BC5382E73036C513005D5434 /* Device */,
+				BC9B5A58303F16E10036A91D /* ARShootingEngine */,
 			);
 			productName = "AR-GunMan";
 			productReference = 59D2D4D52552DE66006DDB70 /* AR-GunMan Dev.app */;
@@ -1441,6 +1444,10 @@
 		BC7B6CA62FCFF4D4001A2CFA /* ARShootingLib */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ARShootingLib;
+		};
+		BC9B5A58303F16E10036A91D /* ARShootingEngine */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ARShootingEngine;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
