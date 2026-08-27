@@ -38,8 +38,8 @@ final class GameViewModel {
     var isResultViewPresented: (isPresented: Bool, score: Double) = (false, 0.0)
     
     private let arShootingEngineHandler: ARShootingEngineHandlerInterface
-    private let soundPlayer: SoundPlayerInterface
     private let motionSensorHandler: MotionSensorHandlerInterface
+    private let soundPlayer: SoundPlayerInterface
     private let gameStore: GameStoreInterface
     private let weaponStore: WeaponStoreInterface
     private let weaponFireUseCase: WeaponFireUseCaseInterface
@@ -52,8 +52,8 @@ final class GameViewModel {
     
     init(
         arShootingEngineHandler: ARShootingEngineHandlerInterface,
-        soundPlayer: SoundPlayerInterface,
         motionSensorHandler: MotionSensorHandlerInterface,
+        soundPlayer: SoundPlayerInterface,
         gameStore: GameStoreInterface,
         weaponStore: WeaponStoreInterface,
         weaponFireUseCase: WeaponFireUseCaseInterface,
@@ -65,8 +65,8 @@ final class GameViewModel {
         weaponControlMotionDetectUseCase: WeaponControlMotionDetectUseCaseInterface
     ) {
         self.arShootingEngineHandler = arShootingEngineHandler
-        self.soundPlayer = soundPlayer
         self.motionSensorHandler = motionSensorHandler
+        self.soundPlayer = soundPlayer
         self.gameStore = gameStore
         self.weaponStore = weaponStore
         self.weaponFireUseCase = weaponFireUseCase

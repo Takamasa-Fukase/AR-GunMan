@@ -25,8 +25,8 @@ struct GameViewBuilder {
         let weaponReloadUseCase: WeaponReloadUseCaseInterface = Factory.create()
         let viewModel = GameViewModel(
             arShootingEngineHandler: arShootingEngineHandler,
-            soundPlayer: Factory.create(),
             motionSensorHandler: Factory.create(),
+            soundPlayer: Factory.create(),
             gameStore: Factory.create(),
             weaponStore: Factory.create(),
             weaponFireUseCase: Factory.create(
