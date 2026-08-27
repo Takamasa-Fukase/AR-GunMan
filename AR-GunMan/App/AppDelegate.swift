@@ -10,7 +10,6 @@ import FirebaseCore
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-//        SoundPlayer.shared.setup()
         setupFirebaseApp()
         return true
     }
@@ -18,11 +17,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // 環境毎の設定を行う
     private func setupFirebaseApp() {
         let configFileName: String = {
-#if DEBUG
+        #if DEBUG
             return "GoogleService-Info.dev"
-#else
+        #else
             return "GoogleService-Info"
-#endif
+        #endif
         }()
         guard let filePath = Bundle.main.path(forResource: configFileName, ofType: "plist"),
               let options = FirebaseOptions(contentsOfFile: filePath) else {

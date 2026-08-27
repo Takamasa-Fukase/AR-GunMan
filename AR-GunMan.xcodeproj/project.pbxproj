@@ -84,7 +84,6 @@
 		BCFDED262D3B45BE0023DC8A /* WeaponSelectViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECE22D3B45BD0023DC8A /* WeaponSelectViewBuilder.swift */; };
 		BCFDED272D3B45BE0023DC8A /* WeaponSelectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECE32D3B45BD0023DC8A /* WeaponSelectViewModel.swift */; };
 		BCFDED282D3B45BE0023DC8A /* AR_GunManApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFDECE62D3B45BD0023DC8A /* AR_GunManApp.swift */; };
-		BCFDED292D3B45BE0023DC8A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BCFDECE72D3B45BD0023DC8A /* Preview Assets.xcassets */; };
 		BCFDED2A2D3B45BE0023DC8A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BCFDECE92D3B45BD0023DC8A /* Assets.xcassets */; };
 		C1B1295B52FACFE6075CE774 /* Pods_AR_GunManTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B833C027CCAFA467D01B22BB /* Pods_AR_GunManTests.framework */; };
 /* End PBXBuildFile section */
@@ -188,7 +187,6 @@
 		BCFDECE22D3B45BD0023DC8A /* WeaponSelectViewBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeaponSelectViewBuilder.swift; sourceTree = "<group>"; };
 		BCFDECE32D3B45BD0023DC8A /* WeaponSelectViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeaponSelectViewModel.swift; sourceTree = "<group>"; };
 		BCFDECE62D3B45BD0023DC8A /* AR_GunManApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AR_GunManApp.swift; sourceTree = "<group>"; };
-		BCFDECE72D3B45BD0023DC8A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		BCFDECE92D3B45BD0023DC8A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C0D6D2E34680E66FD3B0D563 /* Pods-AR-GunManTests.test.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-GunManTests.test.xcconfig"; path = "Target Support Files/Pods-AR-GunManTests/Pods-AR-GunManTests.test.xcconfig"; sourceTree = "<group>"; };
 		F04E46645750BF2C9B420DED /* Pods-AR-GunMan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-GunMan.release.xcconfig"; path = "Target Support Files/Pods-AR-GunMan/Pods-AR-GunMan.release.xcconfig"; sourceTree = "<group>"; };
@@ -284,7 +282,6 @@
 				BCB93BAA2C36DE7D00DBFC46 /* FirebaseInfoPlist */,
 				59D2D4E62552DE67006DDB70 /* Info.plist */,
 				59D2D4E32552DE67006DDB70 /* LaunchScreen.storyboard */,
-				BCFDECE82D3B45BD0023DC8A /* Preview Content */,
 				BC5382EC3036C8A6005D5434 /* Stores */,
 				BCFDECBC2D3B45BD0023DC8A /* Utillities */,
 			);
@@ -493,14 +490,6 @@
 			path = Features;
 			sourceTree = "<group>";
 		};
-		BCFDECE82D3B45BD0023DC8A /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				BCFDECE72D3B45BD0023DC8A /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
-			sourceTree = "<group>";
-		};
 		BCFDECFB2D3B45BD0023DC8A /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -645,7 +634,6 @@
 				BCB93BA92C36DA9800DBFC46 /* GoogleService-Info.dev.plist in Resources */,
 				59940B882552F54900EC20C1 /* GoogleService-Info.plist in Resources */,
 				BCFDED2A2D3B45BE0023DC8A /* Assets.xcassets in Resources */,
-				BCFDED292D3B45BE0023DC8A /* Preview Assets.xcassets in Resources */,
 				BCFDED222D3B45BE0023DC8A /* WeaponSelectCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
