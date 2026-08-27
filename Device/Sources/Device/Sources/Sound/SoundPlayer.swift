@@ -41,7 +41,7 @@ public final class SoundPlayer: SoundPlayerInterface {
             audioPlayers.removeAll()
         }
         SoundType.allCases.forEach({ sound in
-            guard let path = Bundle.main.path(forResource: sound.rawValue, ofType: "mp3") else {
+            guard let path = Bundle.module.path(forResource: sound.rawValue, ofType: "mp3") else {
                 print("音源\(sound.rawValue)が見つかりません")
                 return
             }

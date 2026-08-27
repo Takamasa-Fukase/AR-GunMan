@@ -21,6 +21,9 @@ let package = Package(
             dependencies: [
                 "ARShootingEngine",
                 "Domain",
+            ],
+            resources: [
+                .process("Resources")
             ]
         ),
         .testTarget(
