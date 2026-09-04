@@ -32,7 +32,7 @@ public enum GameFlowStatus: Equatable {
         case timerPaused
     }
     
-    var isTimerRunning: Bool {
+    public var isTimerRunning: Bool {
         switch self {
         case .timerStartedAndWaitingForTimerEnd, .timerResumedAndWaitingForTimerEnd:
             return true

@@ -26,12 +26,7 @@ final class GameViewModel {
         return currentWeaponType.uiResources.bulletsCountImageName(weaponStore.weapon.bulletsCount)
     }
     var isWeaponChangeButtonEnabled: Bool {
-        switch gameStore.gameFlow.status {
-        case .timerStartedAndWaitingForTimerEnd, .timerResumedAndWaitingForTimerEnd:
-            return true
-        default:
-            return false
-        }
+        return gameStore.gameFlow.status.isTimerRunning
     }
     var isTutorialViewPresented = false
     var isWeaponSelectViewPresented = false
