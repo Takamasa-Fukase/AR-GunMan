@@ -1,21 +1,16 @@
 //
 //  ARShootingControllerMock.swift
-//  Device
+//  ARShootingEngine
 //
 //  Created by ウルトラ深瀬 on 2026/06/04.
 //
 
 import Foundation
-import ARShootingEngine
 
 public class ARShootingControllerMock: ARShootingControllerInterface {
     public var targetHit: ((WeaponType) -> Void)?
     
     public init() {}
-    
-    public func getARView() -> ARSCNViewRepresentable {
-        return ARSCNViewRepresentable.createMock()
-    }
     
     public func runSession() {}
     

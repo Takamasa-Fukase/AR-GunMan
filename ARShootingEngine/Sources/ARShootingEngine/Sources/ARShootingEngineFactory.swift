@@ -19,4 +19,11 @@ public struct ARShootingEngineFactory {
         let arView = ARSCNViewRepresentable(view: controller.arView)
         return (controller, arView)
     }
+    
+    public static func createMock() -> (ARShootingControllerInterface, ARSCNViewRepresentable) {
+        return (
+            ARShootingControllerMock(),
+            ARSCNViewRepresentable.createMock()
+        )
+    }
 }
