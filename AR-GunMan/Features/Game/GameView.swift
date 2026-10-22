@@ -68,6 +68,22 @@ struct GameView<ARView: View>: View {
                             .frame(width: 210, height: 70, alignment: .bottom)
                         
                         Spacer()
+                        
+                        // MARK: デバッグ用
+//                        HStack(spacing: 16) {
+//                            Button {
+//                                viewModel.debugFireButtonTapped()
+//                            } label: {
+//                                Text("Fire")
+//                                    .font(.custom("Copperplate Bold", size: 38))
+//                            }
+//                            Button {
+//                                viewModel.debugReloadButtonTapped()
+//                            } label: {
+//                                Text("Reload")
+//                                    .font(.custom("Copperplate Bold", size: 38))
+//                            }
+//                        }
                     }
                 }
             }

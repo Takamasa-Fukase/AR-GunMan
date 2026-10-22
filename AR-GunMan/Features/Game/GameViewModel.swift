@@ -213,4 +213,13 @@ final class GameViewModel {
         // タイムカウントの更新を再開する
         gameFlowDriveUseCase.resolveBlocked()
     }
+    
+    // MARK: デバッグ用
+//    func debugFireButtonTapped() {
+//        weaponFireUseCase.execute()
+//    }
+//    
+//    func debugReloadButtonTapped() {
+//        weaponReloadUseCase.execute()
+//    }
 }
