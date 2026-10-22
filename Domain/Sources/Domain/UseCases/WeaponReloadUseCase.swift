@@ -32,6 +32,9 @@ public final class WeaponReloadUseCase: WeaponReloadUseCaseInterface {
     public func execute() {
         let startResult = weaponStore.weapon.startReload()
         reloadStartResultEventContinuation.yield(startResult)
+        
+        // 開始成功の場合だけ通す
+        guard startResult == .success else { return }
 
         reloadTask = Task {
             try? await Task.sleep(
